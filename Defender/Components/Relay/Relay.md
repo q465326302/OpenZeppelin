@@ -279,3 +279,119 @@ const signTypedDataResponse = await relayer.signTypedData({
 ```
 
 ## Relayer信息
+可以使用 DefenderRelaySigner 类的 getAddress 方法来检索中继器的地址。
+```
+const address = await signer.getAddress();
+```
+如果您需要更多关于中继的信息，请查看客户端的getRelayer方法。它返回以下数据：
+```
+const info = await relayer.getRelayer();
+console.log('Relayer info', info);
+
+export interface RelayerModel {
+  relayerId: string;
+  name: string;
+  address: string;
+  network: string;
+  paused: boolean;
+  createdAt: string;
+  pendingTxCost: string;
+}
+```
+
+## 网络调用
+Defender还提供了一种简单的方法来向网络发出任意的JSON RPC调用。您可以使用低级别的relayer.call方法发送任何JSON RPC HTTP请求：
+```
+const balance = await relayer.call('eth_getBalance', ['0x6b175474e89094c44da98b954eedeac495271d0f', 'latest']);
+```
+如果您正在使用ethers.js，则可以通过自定义的DefenderRelayProvider[提供](https://docs.ethers.io/v5/api/providers/provider/)程序对象来支持此功能：
+```
+const provider = new DefenderRelayProvider(credentials);
+const balance = await provider.getBalance('0x6b175474e89094c44da98b954eedeac495271d0f');
+```
+
+## 自动任务集成
+一个Relayer可以附加到一个*Autotask*上，Autotask是由Defender运行的代码片段。这样做，Autotask代码将直接访问附加的Relayer方法，而不需要指定API密钥。相反，Defender将在Autotask处理程序函数中注入短暂的Relayer凭据。
+```
+const { Relayer } = require('defender-relay-client');
+
+// The credentials object is injected by the Defender Autotasks engine
+exports.handler = async function(credentials) {
+  const relayer = new Relayer(credentials);
+  // ... use relayer as usual
+}
+```
+
+>NOTE
+自动任务可以按计划或通过Webhook调用。如果您想从Web应用程序调用Relayer，则建议通过Webhook触发的自动任务来执行。永远不要将Relayer的API密钥和密钥放在前端中，因为拥有这些密钥的任何人将对您的Relayer拥有无限制的控制权。
+
+## 元交易
+Defender中继器是通用的中继器，您可以使用它们将任何您想要发送到合约的交易发送出去。特别地，它们也可用于代表您的用户中继元交易。这需要设置一个服务器端函数，该函数决定是否中继给定的元交易，并调用Defender中继器以有效地发送它。
+
+特别地，您可以使用Autotasks来托管该函数，并通过Webhook调用它。您可以在*此处阅读有关Webhook激活*的Autotasks的更多信息。
+
+### EIP2771是GSNv2兼容的元交易协议。
+我们在这里创建了一个用于Defender-powered meta-txs的[演示应用程序](https://defender-example-metatx-relay.netlify.app/)。该应用程序依赖于[EIP-2771转发器合约](https://eips.ethereum.org/EIPS/eip-2771)。该合约的唯一责任是接收签名的meta-tx请求，验证其签名，并通过将签名者地址附加到调用中将请求转发给接收方合约。
+
+这个设置与[GSNv2](https://docs.opengsn.org/)兼容，这意味着您可以使用Defender中继器发送您的meta-transactions，并且在将来的任何时候，您可以切换到GSN中继器的分散网络，而不需要对您的合约进行任何更改。
+
+>NOTE
+您可以在[此处](https://gist.github.com/spalladino/7fb3533e36e9b9a833f8e5c568c86815)探索应用程序的关键部分代码。
+
+### 更多元交易模式
+上述描述的模式只是可用的几种元交易变体之一。鉴于 Defender Relayers 是通用的，您还可以使用它们进行任何其他类型的元交易，例如使用 [EIP2612](https://eips.ethereum.org/EIPS/eip-2612) 或 [EIP3009](https://eips.ethereum.org/EIPS/eip-3009) 中继无需燃气的 ERC20 转移。
+
+特别是，您可以利用 Defender xDai Relayers 代表您的用户在 xDai 上发送交易，鉴于该侧链中交易成本较低。这样，您可以为您的 dapp 提供完整的无燃气体验。同样适用于 Defender 支持的其他侧链，如 BSC、Fuse、Fantom、Polygon、Avalanche、Celo、Moonbeam、Moonriver、Aurora、Harmony 和 Arbitrum。
+
+## 手动操作
+您还可以通过Relayer手动发送交易或直接从Defender网站上提取资金。要这样做，请转到Relayer页面，打开齿轮菜单，并选择所需的选项。
+
+### 发送交易
+您可以通过选择“发送交易”在您的中继齿轮菜单中手动向合约发送交易：
+![relay-2.png](img/Relay-2.png)
+
+在发送交易屏幕上，输入您想要与之交互的合约地址，选择要执行的函数，并输入其参数。
+
+>NOTE
+在撰写本文时，Defender仅支持向已验证源代码的合约发送交易，请确保目标合约已在Etherscan或Sourcify上进行了验证。
+![relay-3.png](img/Relay-3.png)
+
+当您点击“确认交易”时，交易将通过中继器发送。我们建议您等待交易确认，然后再离开此屏幕，或在您选择的区块链浏览器上监视它，以确保它已确认且无需进一步操作。
+
+>NOTE
+防御者将通过UI创建的中继器交易的速度设置为快速。
+
+### 提取资金
+您可以通过在Relayer页面上点击“提取资金”来从Relayer中提取资金。
+![relay-4.png](img/Relay-4.png)
+
+在提取资金屏幕上，您可以选择以ETH发送资金或从内置的ERC20令牌列表中选择。
+![relay-5.png](img/Relay-5.png)
+
+## Under the hood
+每个Relayer都与一个私钥相关联。当接收到发送交易的请求时，Relayer验证该请求，原子性地为其分配一个nonce，预留用于支付其gas费用的余额，根据其*EIP1559定价策略*将其速度解析为gasPrice或maxFeePerGas/maxPriorityFeePerGas，使用其私钥对其进行签名，并将其排队等待提交到区块链。只有在此过程完成后，响应才会发送回客户端。然后，交易会通过多个节点提供程序进行广播，以实现冗余，并在API关闭的情况下尝试重试多达三次。
+
+每分钟，系统会检查所有正在进行的交易。如果它们尚未被挖掘，并且已经过了一定的时间（取决于交易速度），则会以其各自的交易类型定价的10％增加（或者如果其速度的最新定价更高，则以其速度的最新定价），这可能高达其**速度报告的gas定价的150％**。此过程会导致交易哈希值发生更改，但其ID仍然保留。另一方面，如果交易已经被挖掘，它仍然会被监视多个块，直到我们认为它已经确认。
+
+## Concurrency and Rate Limiting
+中继器可以原子地分配nonce，从而使它们能够处理许多并发交易。但是，为了优化基础设施，确实存在一些限制（以下所有数字均为一个帐户中所有中继器的累计）：
+
+* 每小时120笔交易（仅限免费套餐）
+
+* 每秒100个总请求
+
+* 每秒10笔交易
+
+## 安全考虑
+所有私钥都存储在AWS Key Management Service中。密钥在KMS中生成，从不离开KMS，即所有签名操作都在KMS内执行。此外，我们依赖动态生成的AWS Identity and Access Management策略来隔离租户之间对私钥的访问。
+
+至于API密钥，这些仅在创建期间在内存中保留，当它们被发送到客户端时。之后，它们被哈希并安全地存储在AWS Cognito中，该服务在幕后用于验证Relayer请求。这使得API密钥易于轮换，同时保留KMS上相同的私钥。
+
+### Rollups
+当向Rollup链（如Arbitrum或Optimism）发送交易时，Relayer目前依赖于链的序列化器/聚合器。这意味着，如果序列化器崩溃或审查交易，则Relayer将无法绕过它并直接提交到第1层。
+
+## Hedera支持
+目前，在Hedera网络上，Defender Relay仅支持测试网。要启用此功能，请通过defender@openzeppelin.com与我们联系。
+
+## 即将呈现...
+我们正在开发新功能。敬请期待，如果您有任何需求，请告诉我们！
