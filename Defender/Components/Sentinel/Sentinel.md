@@ -144,3 +144,227 @@ Forta哨兵过滤Bot ID或地址，并要求至少设置其中一个过滤器。
 * **nonce**是特定交易的nonce
 
 * **status**是一个派生值，可以与 **“成功”** 或 **“失败”**进行比较。
+
+### 示例条件
+被撤销的交易
+```
+status == "failed"
+```
+排除来自0xd5180d374b6d1961ba24d0a4dbf26d696fda4cad的交易。
+```
+from != "0xd5180d374b6d1961ba24d0a4dbf26d696fda4cad"
+```
+具有gasPrice高于50 gwei和gasUsed高于20000的交易
+```
+gasPrice > 50000000000 and gasUsed > 20000
+```
+
+### 事件和功能条件
+事件和函数条件进一步缩小了触发通知的交易集。这些条件可以通过名称（如果参数有名称）或索引（例如$0、$1等）引用签名中的参数。可用的变量在您指定这些函数时在用户界面中指示。
+
+#### 示例条件
+发出值在1到100以太币之间（以十六进制表示）的Transfer（...）事件的交易
+```
+// Event Signature: Transfer(address to, address from, uint256 value)
+value > 0xde0b6b3a7640000 and value < 0x56bc75e2d63100000
+```
+发出包含第一个元素等于5的数组的 ValsEvent(…​) 事件的交易
+```
+// Event Signature: ValsEvent(uint256[3] vals)
+vals[0] == 5
+```
+调用一个未命名字符串为“hello”的greet（…）函数的事务
+```
+// Function Signature: greet(address, string)
+$1 == "hello"
+```
+### Autotask条件
+如果指定了自动任务条件，则会使用给定块找到的匹配列表来调用它。这使得哨兵可以使用其他数据源和自定义逻辑来评估一个交易是否匹配。
+
+>NOTE
+只有符合其他条件（事件、函数、交易）的交易才会调用自动任务条件。
+
+>NOTE
+每次调用最多可以包含25个交易。
+
+### 请求模式
+请求正文将包含以下结构。 如果您在TypeScript中编写Autotasks，则可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)软件包中的SentinelConditionRequest类型。
+```
+{
+  "events": [
+  {
+    "transaction": {                     // eth_getTransactionReceipt response body
+      ...                                // see https://eips.ethereum.org/EIPS/eip-1474
+    },
+    "blockHash": "0xab..123",            // block hash from where this transaction was seen
+    "matchReasons": [                    // the reasons why sentinel triggered
+      {
+        "type": "event",                 // event, function, or transaction
+        "address": "0x123..abc",         // address of the event emitting contract
+        "signature": "...",              // signature of your event/function
+        "condition": "value > 5",        // condition expression (if any)
+        "args": ["5"],                   // parameters by index (unnamed are present)
+        "params": { "value": "5" }       // parameters by name (unnamed are not present)
+      }
+    ],
+    "matchedAddresses": ["0x000..000"],  // the addresses from this transaction your are monitoring
+    "sentinel": {
+      "id": "44a7d5...31df5",            // internal ID of your sentinel
+      "name": "Sentinel Name",           // name of your sentinel
+      "abi": [...],                      // abi of your addresses (or undefined)
+      "addresses": ["0x000..000"],       // addresses your sentinel is watching
+      "confirmBlocks": 0,                // number of blocks sentinel waits (can be 'safe' or 'finalized' on PoS clients)
+      "network": "rinkeby"               // network of your addresses
+      "chainId": 4                       // chain Id of the network
+    }
+  }
+  ]
+}
+```
+### 响应模式（Response Schema）
+Autotask必须返回一个包含所有匹配项的结构。返回一个空对象表示没有匹配发生。此对象的类型为SentinelConditionResponse。
+
+>IMPORTANT
+错误将被视为不匹配。所有执行可以在Autotask的运行页面中找到。
+
+```
+{
+  "matches": [
+    {
+      "hash": "0xabc...123",   // transaction hash
+      "metadata": {
+        "foo": true            // any object to be shared with notifications
+      }
+    },
+    {
+      "hash": "0xabc...123"    // example with no metadata specified
+    }
+  ]
+}
+```
+Autotask条件示例
+```
+exports.handler = async function(payload) {
+  const conditionRequest = payload.request.body;
+  const matches = [];
+  const events = conditionRequest.events;
+  for(const evt of events) {
+
+    // add custom logic for matching here
+
+    // metadata can be any JSON-marshalable object (or undefined)
+    matches.push({
+       hash: evt.hash,
+       metadata: {
+        "id": "customId",
+        "timestamp": new Date().getTime(),
+        "numberVal": 5,
+        "nested": { "example": { "here": true } }
+       }
+    });
+  }
+  return { matches }
+}
+```
+
+#### 测试条件
+在条件表单的右侧，有一个“测试哨兵条件”的工具。该工具在一定范围内搜索与哨兵条件匹配的交易。如果指定了自动任务条件，则测试还会调用它。
+
+选项
+
+* **“最近的区块”**搜索网络最新区块之前的一定范围内的区块。
+
+* **“特定区块”**将搜索指定的区块。
+
+* **“特定交易”**将尝试匹配一个交易哈希（0xabc…def）。
+
+搜索使用当前表单中的条件。
+
+注意：运行测试不会触发通知。
+
+## 什么是 Forta 条件？
+Forta 条件作为过滤器，允许您进一步缩小 Forta 警报范围。
+
+### 严重性条件
+严重性条件允许您仅收到大于某个影响级别的警报通知。您将收到与您选择的严重性值匹配或具有更大影响级别的任何警报通知。
+
+Forta 警报可能具有以下 5 种严重性值之一，表示不同的影响级别：
+
+* **关键** - 可利用的漏洞，对用户/资金有巨大影响
+
+* **高** - 在更特定的条件下可利用，对用户/资金有重大影响
+
+* **中** - 显着的意外行为，对用户/资金的影响适中至较低
+
+* **低** - 次要的疏忽，对用户/资金影响微不足道
+
+* **信息** - 值得描述的其他行为
+
+### 警报 ID 条件
+警报 ID 条件允许您过滤警报，并仅收到特定类型的发现的通知。可以指定一个或多个警报 ID。
+
+#### 示例条件
+```
+FORTA-1, NETHFORTA-1
+```
+
+### 自动任务条件
+
+如果指定了自动任务条件，那么它将被调用并带有匹配列表。这允许哨兵使用其他数据源和自定义逻辑来评估事务是否匹配。
+
+>NOTE
+只有符合其他条件（严重程度、警报 ID）的警报才会调用自动任务条件。
+
+### 请求架构
+
+请求正文将包含以下结构。
+
+>NOTE
+我们根据新的 [Forta API](https://docs.forta.network/en/latest/api/) 更新了 Forta 警报架构。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了 Bot 名称，agent → bot。旧属性现已弃用，但我们将继续发送两者以保持向后兼容性。
+
+>NOTE
+Forta 已更改 “代理” 的术语为 “检测机器人”。我们将继续暂时将它们称为 “代理”。 sentinel.agents 将是您的机器人 ID 列表。
+```
+{
+  "events": [
+    {
+      "alert": {                            // Forta Alert
+        "addresses": [ "0xab..123" ],       // map of addresses involved in the transaction
+        "alertId": "NETHFORTA-1",           // unique string to identify this class of finding
+        "name": "High Gas Used",            // human-readable name of finding
+        "description": "Gas Used: 999999",  // brief description
+        "hash": "0xab..123",                // Forta Alert transaction hash
+        "protocol": "ethereum",             // specifies which network the transaction was mined
+        "scanNodeCount": 1,
+        "severity": "MEDIUM",               // indicates impact level of finding
+        "findingType": "SUSPICIOUS",        // indicates type of finding: Exploit, Suspicious, Degraded, Info
+        "metadata": { "gas": "999999" },    // metadata for the alert
+        "source": {
+          "transactionHash": "0xab..123",   // network transaction hash  e.g ethereum transaction hash
+          "bot": {
+            "id": "0xab..123",              // Bot ID
+          },
+          "block": {
+            "chainId": 1,                   // Chain ID of the originating network
+            "hash": "0xab..123",            // network block hash  e.g ethereum block hash
+          }
+        }
+      },
+      "matchReasons": [                     // the reasons why sentinel triggered
+        {
+          "type": "alert-id",               // Alert ID or Severity
+          "value": "NETHFORTA-1"            // Condition Value
+        }
+      ],
+      "sentinel": {
+        "id": "forta_id",                   // internal ID of your sentinel
+        "name": "forta sentinel",           // name of your sentinel
+        "addresses": [ "0xab..123" ],       // addresses your sentinel is monitoring
+        "agents": [ "0xab..123" ]           // Bot IDs your sentinel is monitoring
+        "network": "mainnet"                // network your sentinel is monitoring
+        "chainId": 1                        // chain Id of the network
+      }
+    }
+  ]
+}
+```
