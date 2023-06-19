@@ -315,7 +315,7 @@ FORTA-1, NETHFORTA-1
 >NOTE
 只有符合其他条件（严重程度、警报 ID）的警报才会调用自动任务条件。
 
-### 请求架构
+#### 请求架构
 
 请求正文将包含以下结构。
 
@@ -368,3 +368,381 @@ Forta 已更改 “代理” 的术语为 “检测机器人”。我们将继�
   ]
 }
 ```
+
+#### 响应模式
+Autotask必须返回包含所有匹配项的结构。返回空对象表示没有匹配项。此对象的类型为SentinelConditionResponse。
+
+错误将被视为不匹配。所有执行都可以在Autotask的运行页面上找到。
+```
+{
+  "matches": [
+    {
+      "hash": "0xabc...123",   // Forta Alert hash i.e events[0].alert.hash
+      "metadata": {
+        "foo": true            // any object to be shared with notifications
+      }
+    },
+    {
+      "hash": "0xabc...123"    // example with no metadata specified
+    }
+  ]
+}
+```
+
+### 示例Autotask条件
+```
+exports.handler = async function(payload) {
+  const conditionRequest = payload.request.body;
+  const matches = [];
+  const events = conditionRequest.events;
+  for(const evt of events) {
+
+    // add custom logic for matching here
+    // metadata can be any JSON-marshalable object (or undefined)
+    matches.push({
+       hash: evt.hash,
+       metadata: {
+        "id": "customId",
+        "timestamp": new Date().getTime(),
+        "numberVal": 5,
+        "nested": { "example": { "here": true } }
+       }
+    });
+  }
+  return { matches }
+}
+```
+
+## 通知
+当触发时，Sentinel可以通知一个或多个Slack Webhooks、Telegram机器人、Discord Webhooks、电子邮件列表、Datadog指标、自定义Webhooks或执行自动任务。
+
+### Slack配置
+请参阅[Slack Webhook文档](https://api.slack.com/messaging/webhooks)以配置Slack Webhook。配置完Slack后，在Defender中输入Webhook URL。
+
+* **Alias**是此Slack配置的名称。例如，您可以将其命名为通道名称。
+
+* **Webhook URL**是用于通知的Slack管理控制台中的URL。
+
+### Emails配置
+* **Alias**是此电子邮件列表的名称。（例如，开发人员）
+
+* **Emails**是您希望通知的电子邮件列表。这些可以用逗号或分号分隔。
+
+### Discord配置
+请参阅[Discord Webhook文档](https://support.discord.com/hc/en-us/articles/228383668-Intro-to-Webhooks)以配置Discord频道的Webhook。
+
+* **Alias**是此Discord配置的名称。
+
+* **Webhook URL**是您的Discord频道中用于通知的URL。
+
+### Datadog配置
+Datadog配置允许Defender将自定义指标转发到您的Datadog帐户。有关自定义指标的更多信息，请参见[Datadog指标文档](https://docs.datadoghq.com/developers/metrics/)。
+
+我们发送的指标是一个COUNT指标，表示触发Sentinel的交易数量。如果Sentinel没有触发，则不发送零，因此应预期缺少数据。对于每个指标，我们发送两个标签：网络（Rinkeby、Mainnet等）和Sentinel（Sentinel的名称）。
+
+>NOTE
+新的自定义指标可能需要几分钟才能在Datadog控制台中显示。
+
+* **Alias**是此Datadog配置的名称。
+
+* **API密钥**是来自您的Datadog管理的API密钥。
+
+* **指标前缀**将在所有指标名称之前。例如，使用defender.作为前缀，Sentinels将发送一个名为defender.sentinel的指标。
+
+### PagerDuty配置
+请查看[PagerDuty集成文档](https://support.pagerduty.com/docs/services-and-integrations)，配置一个可以创建变更和警报事件的PagerDuty API v2集成。
+
+* **事件类型** PagerDuty分类的事件类型（警报或变更）
+
+* **路由密钥**服务或全局规则集上集成的集成密钥（32个字符）
+
+* **事件动作**：事件的动作类型（触发、确认或解决）
+
+* **去重键** 用于关联触发器和解决方案的去重键（最多255个字符）
+
+* **严重性**事件描述的状态相对于受影响的系统的感知严重性（关键、错误、警告或信息）
+
+* **组件源计算机**的组件负责事件
+
+* **组逻辑**服务组件的逻辑分组
+
+* **类**事件的类/类型
+
+* **自定义**详细信息键值对映射，提供有关事件和受影响系统的其他详细信息
+
+### 电报配置
+请参阅[Telegram机器人文档](https://core.telegram.org/bots#6-botfather)，使用BotFather配置Telegram Bot
+
+>NOTE
+Telegram机器人必须添加到您的频道并具有发布消息的权限。
+
+要查找通道的聊天ID，请执行以下curl（使用您的机器人令牌值），并提取聊天的id值。如果您没有收到任何条目的响应，请先发送测试消息到您的聊天中。
+```
+curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
+{
+  "ok": true,
+  "result": [
+    {
+      "update_id": 98xxxx98,
+      "channel_post": {
+        "message_id": 26,
+        "sender_chat": {
+          "id": -100xxxxxx5976,
+          "title": "Defender Sentinel Test",
+          "type": "channel"
+        },
+        "chat": {
+          "id": -100xxxxxx5976, // <--- This is your chat ID
+          "title": "Defender Sentinel Test",
+          "type": "channel"
+        },
+        "date": 1612809138,
+        "text": "test"
+      }
+    }
+  ]
+}
+```
+* **Alias**是Telegram配置的名称。
+
+* **Chat ID**是Telegram聊天的ID。
+
+* **Bot Token**是您在创建Telegram Bot时从BotFather获得的令牌。
+
+### 自定义Webhook配置
+要配置自定义的Webhook通知渠道，您只需要提供Webhook端点URL和用于显示目的的别名。
+
+* **Alias**是此Webhook端点的名称。
+
+* **Webhook URL**是Sentinel将发送匹配事件的URL。
+
+为了避免在高匹配数下用许多并发请求淹没接收Webhook，Sentinel发送一个包含事件的JSON对象，其中包含一个包含所有匹配事件的数组。
+```
+{
+  events: [...] // See Event Schema for details on the contents of this array
+}
+```
+事件模式与*“事件模式”*中所述的完全相同。您还可以使用测试通知功能向您的Webhook发送测试通知。
+
+### Opsgenie配置
+请查看[Opsgenie集成文档](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/)，以配置可创建警报的Opsgenie API集成。
+
+* **API密钥** 集成设置中可以找到的API密钥
+
+* **实例位置** Opsgenie实例服务器所在的位置
+
+* **响应者** 将警报路由到的团队、用户、升级和计划，以发送通知。每个项目都必须具有类型字段，其中可能的值为团队、用户、升级和计划。如果API密钥属于团队集成，则此字段将被重写为所有者团队。每个响应者的id或name都应提供。您可以参考下面的示例值（50个团队、用户、升级或计划）
+
+* **可见** 团队和用户，警报将对其可见，而不发送任何通知。每个项目都必须具有类型字段，其中可能的值为团队和用户。除了类型字段外，团队应给出id或名称，用户应给出id或用户名。请注意：警报将默认对指定在responder字段中的团队可见，因此无需在visibleTo字段中重新指定它们。您可以参考下面的示例值（总共50个团队或用户）
+
+* **Alias** 警报的客户定义标识符，也是警报去重的关键元素（最多512个字符）
+
+* **优先级** 警报的优先级级别。可能的值为P1、P2、P3、P4和P5。默认值为P3
+
+* **实体** 警报的实体字段通常用于指定警报所涉及的域（最多512个字符）
+
+* **操作** 可用于警报的自定义操作（10个x 50个字符）
+
+* **注释** 创建警报时添加的附加注释（最多25000个字符）
+
+* **细节** 键值对映射，用作警报的自定义属性（最多8000个字符）
+
+* **标签** 警报的标签（20个x 50个字符）
+
+### Autotask
+如果选择自动任务，则自动任务将接收一个包含触发事件的详细信息的正文属性，可以是触发交易的交易详细信息或触发警报的Forta警报详细信息。自动任务可以执行自定义逻辑并根据需要访问外部API。
+
+>IMPORTANT
+自动任务执行受配额限制。配额用尽后，自动任务将不再执行。如果您需要提高自动任务执行配额，请发送电子邮件至defender@openzeppelin.com，并描述您的用例。
+
+## Autotask事件
+sentinel将向您的自动任务传递有关交易的信息。如果您使用TypeScript编写自动任务，则可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)包中的BlockTriggerEvent类型进行合同sentinel，使用FortaTriggerEvent类型进行Forta哨兵。
+
+### Autotask示例
+```
+exports.handler = async function(params) {
+  const payload = params.request.body;
+  const matchReasons = payload.matchReasons;
+  const sentinel = payload.sentinel;
+
+  // if contract sentinel
+  const transaction  = payload.transaction;
+  const abi = sentinel.abi;
+
+  // if Forta sentinel
+  const alert  = payload.alert;
+
+
+
+  // custom logic...
+}
+```
+
+### 事件模式（Event Schema）
+
+#### 合约Sentinel
+```
+{
+  "transaction": {                     // eth_getTransactionReceipt response body
+    ...                                // see https://eips.ethereum.org/EIPS/eip-1474
+  },
+  "blockHash": "0xab..123",            // block hash from where this transaction was seen
+  "matchReasons": [                    // the reasons why sentinel triggered
+    {
+      "type": "event",                 // event, function, or transaction
+      "address": "0x123..abc",         // address of the event emitting contract
+      "signature": "...",              // signature of your event/function
+      "condition": "value > 5",        // condition expression (if any)
+      "args": ["5"],                   // parameters by index (unnamed are present)
+      "params": { "value": "5" }       // parameters by name (unnamed are not present)
+    }
+  ],
+  "matchedAddresses":["0x000..000"]    // the addresses from this transaction your are monitoring
+  "sentinel": {
+    "id": "44a7d5...31df5",            // internal ID of your sentinel
+    "name": "Sentinel Name",           // name of your sentinel
+    "abi": [...],                      // abi of your address (or undefined)
+    "addresses": ["0x000..000"],       // addresses your sentinel is watching
+    "confirmBlocks": 0,                // number of blocks sentinel waits (can be 'safe' or 'finalized' on PoS clients)
+    "network": "rinkeby"               // network of your address
+    "chainId": 4                       // chain Id of the network
+  },
+  "value": "0x16345785D8A0000"         // value of the transaction
+  "metadata": {...}                // metadata injected by Autotask Condition (if applicable)
+}
+```
+
+#### Forta Sentinel
+
+>NOTE
+我们已经根据新的Forta API更新了Forta Alert模式。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了Bot名称，agent → bot。旧属性现已过时，但我们将继续发送两者以保持向后兼容性。
+
+>NOTE
+Forta已更改“代理”的术语为“检测机器人”。我们将继续称之为“代理”。sentinel.agents将是您的Bot ID列表。
+```
+{
+  "alert": {                            // Forta Alert
+    "addresses": [ "0xab..123" ],       // map of addresses involved in the transaction
+    "alertId": "NETHFORTA-1",           // unique string to identify this class of finding
+    "name": "High Gas Used",            // human-readable name of finding
+    "description": "Gas Used: 999999",  // brief description
+    "hash": "0xab..123",                // Forta Alert transaction hash
+    "protocol": "ethereum",             // specifies which network the transaction was mined
+    "scanNodeCount": 1,
+    "severity": "MEDIUM",               // indicates impact level of finding
+    "findingType": "SUSPICIOUS",        // indicates type of finding: Exploit, Suspicious, Degraded, Info
+    "metadata": { "gas": "999999" },    // metadata for the alert
+    "source": {
+      "transactionHash": "0xab..123",   // network transaction hash  e.g ethereum transaction hash
+      "bot": {
+        "id": "0xab..123",              // Bot ID
+      },
+      "block": {
+        "chainId": 1,                   // Chain ID of the originating network
+        "hash": "0xab..123",            // network block hash  e.g ethereum block hash
+      }
+    }
+  },
+  "matchReasons": [                     // the reasons why sentinel triggered
+    {
+      "type": "alert-id",               // Alert ID or Severity
+      "value": "NETHFORTA-1"            // Condition Value
+    }
+  ],
+  "sentinel": {
+    "id": "forta_id",                   // internal ID of your sentinel
+    "name": "forta sentinel",           // name of your sentinel
+    "addresses": [ "0xab..123" ],       // addresses your sentinel is monitoring
+    "agents": [ "0xab..123" ]           // Bot IDs your sentinel is monitoring
+    "network": "mainnet"                // network your sentinel is monitoring
+    "chainId": 1                        // chain Id of the network
+  },
+  "value": undefined                    // value will always be undefined for FORTA sentinels
+}
+```
+
+## 定制通知消息
+您可以选择使用通知渠道选择器下方的复选框修改消息主题（仅限纯文本）和正文内容和格式。
+
+### 例如
+
+#### 模板
+```
+**Sentinel Name**
+
+{{ sentinel.name }}
+
+**Network**
+
+{{ sentinel.network }}
+
+**Block Hash**
+
+{{ blockHash }}
+
+**Transaction Hash**
+
+{{ transaction.transactionHash }}
+
+**Transaction Link**
+
+[Block Explorer]({{ transaction.link }})
+
+{{ matchReasonsFormatted }}
+
+**value**
+
+{{ value }}
+```
+
+#### 预览
+**Sentinel名称**
+Sentinel
+
+**网络**
+rinkeby
+
+**块哈希**
+0x22407d00e953e5f8dabea57673b9109dad31acfc15d07126b9dc22c33521af52
+
+**交易哈希**
+0x1dc91b98249fa9f2c5c37486a2427a3a7825be240c1c84961dfb3063d9c04d50
+[块浏览器](https://rinkeby.etherscan.io/tx/0x1dc91b98249fa9f2c5c37486a2427a3a7825be240c1c84961dfb3063d9c04d50)
+
+**匹配原因 1**
+类型：函数
+匹配地址：0x1bb1b73c4f0bda4f67dca266ce6ef42f520fbb98
+签名：greet(name)
+条件：name == 'test'
+参数：
+name：test
+
+**匹配原因 2**
+类型：交易
+条件：gasPrice > 10
+
+**价值**
+0x16345785D8A0000
+
+### 消息语法
+自定义消息主题（电子邮件和Opsgenie）仅支持纯文本，而自定义消息正文内容支持有限的Markdown语法：
+
+加粗（**此文本加粗**）
+
+斜体（*此文本*和_此文本_为斜体）
+
+链接（这是一个[链接](http://example.com)）
+
+对于其他Markdown语法，部分支持，但渲染行为因平台而异。电子邮件支持完整的HTML并具有最丰富的功能集，但其他消息平台存在局限性，包括对标准Markdown功能（如标题、块引用和表格）的支持。支持的功能的组合（例如粗体和斜体文本）也有不同的支持。如果您的Markdown包含任何具有混合平台支持的语法，则在编辑器下方会出现警告消息。
+
+动态内容
+自定义通知模板使用内联模板呈现动态内容。任何用双花括号括起来的字符串都将根据事件模式解析。可以使用点表示法访问深度嵌套的项（包括数组中的项）。
+
+除了标准事件模式外，还注入了以下参数以供在自定义通知消息中使用：
+
+transaction.link
+
+matchReasonsFormatted
+
+字符限制
+如果消息超过平台的字符限制，消息将被截断。最佳做法是将消息限制为1900个字符。
