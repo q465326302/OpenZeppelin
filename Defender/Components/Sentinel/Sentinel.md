@@ -13,18 +13,18 @@ Defender Sentinel服务提供3种类型的Sentinels，分别是Contract Sentinel
 * 通过Slack、Telegram、Discord、电子邮件或自定义Autotask集成与现有工具集成
 
 ### 何时使用合同而不是Forta Sentinel
-合约哨兵特别适用于监测单个合约的交易。通过合约条件，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、价值等。
+合约Sentinels特别适用于监测单个合约的交易。通过合约条件，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、价值等。
 
-Forta哨兵适用于使用更复杂的条件来监测一个或多个智能合约，通过连接到Forta机器人开发者定义的事件和条件。Forta机器人比合约哨兵更具灵活性，可以定义更多的交易条件。
+FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合约，通过连接到Forta机器人开发者定义的事件和条件。Forta机器人比合约Sentinels更具灵活性，可以定义更多的交易条件。
 
-## 合约哨兵中有什么？
-合约哨兵会监视与您选择的地址相关的交易，通过您指定的任何条件过滤这些交易，然后在这些交易发生时通知您。
+## 合约Sentinels中有什么？
+合约Sentinels会监视与您选择的地址相关的交易，通过您指定的任何条件过滤这些交易，然后在这些交易发生时通知您。
 
 >IMPORTANT
 目前，Sentinels 在除 Fantom 之外的所有网络上都得到支持。此外，Sentinels 只能监视 Mainnet、Ropsten 和 Kovan 上的内部函数调用。如果内部调用发出事件，请考虑监视该事件，因为从内部调用发出的事件在所有支持的网络上都可以检测到。
 
 ### 指定地址
-* **地址**：选择智能合约或外部拥有的账户进行监控。每个哨兵只能有一个ABI，如果选择多个智能合约，则它们必须遵守相同的ABI/接口。
+* **地址**：选择智能合约或外部拥有的账户进行监控。每个Sentinels只能有一个ABI，如果选择多个智能合约，则它们必须遵守相同的ABI/接口。
 
 * **ABI**：指定合约的ABI。如果源代码已经验证，Defender将自动加载ABI。
 
@@ -77,9 +77,9 @@ Forta提供了在本地运行扫描节点的能力，这对于仅运行特定的
 ### 指定Forta检测机器人和地址
 
 >NOTE
-Forta本地模式哨兵没有指定Bot ID的选项，因为在本地模式下运行的扫描节点不支持Bot ID。
+Forta本地模式Sentinels没有指定Bot ID的选项，因为在本地模式下运行的扫描节点不支持Bot ID。
 
-Forta哨兵过滤Bot ID或地址，并要求至少设置其中一个过滤器。可以指定多个Bot ID和地址进行过滤。
+FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器。可以指定多个Bot ID和地址进行过滤。
 
 * **Bot ID**：指定要过滤的Bot ID。这些可以用逗号分隔以指定多个Bot ID。
 
@@ -179,7 +179,7 @@ vals[0] == 5
 $1 == "hello"
 ```
 ### Autotask条件
-如果指定了自动任务条件，则会使用给定块找到的匹配列表来调用它。这使得哨兵可以使用其他数据源和自定义逻辑来评估一个交易是否匹配。
+如果指定了自动任务条件，则会使用给定块找到的匹配列表来调用它。这使得Sentinels可以使用其他数据源和自定义逻辑来评估一个交易是否匹配。
 
 >NOTE
 只有符合其他条件（事件、函数、交易）的交易才会调用自动任务条件。
@@ -268,7 +268,7 @@ exports.handler = async function(payload) {
 ```
 
 #### 测试条件
-在条件表单的右侧，有一个“测试哨兵条件”的工具。该工具在一定范围内搜索与哨兵条件匹配的交易。如果指定了自动任务条件，则测试还会调用它。
+在条件表单的右侧，有一个“测试Sentinels条件”的工具。该工具在一定范围内搜索与Sentinels条件匹配的交易。如果指定了自动任务条件，则测试还会调用它。
 
 选项
 
@@ -310,7 +310,7 @@ FORTA-1, NETHFORTA-1
 
 ### 自动任务条件
 
-如果指定了自动任务条件，那么它将被调用并带有匹配列表。这允许哨兵使用其他数据源和自定义逻辑来评估事务是否匹配。
+如果指定了自动任务条件，那么它将被调用并带有匹配列表。这允许Sentinels使用其他数据源和自定义逻辑来评估事务是否匹配。
 
 >NOTE
 只有符合其他条件（严重程度、警报 ID）的警报才会调用自动任务条件。
@@ -556,7 +556,7 @@ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 自动任务执行受配额限制。配额用尽后，自动任务将不再执行。如果您需要提高自动任务执行配额，请发送电子邮件至defender@openzeppelin.com，并描述您的用例。
 
 ## Autotask事件
-sentinel将向您的自动任务传递有关交易的信息。如果您使用TypeScript编写自动任务，则可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)包中的BlockTriggerEvent类型进行合同sentinel，使用FortaTriggerEvent类型进行Forta哨兵。
+sentinel将向您的自动任务传递有关交易的信息。如果您使用TypeScript编写自动任务，则可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)包中的BlockTriggerEvent类型进行合同sentinel，使用FortaTriggerEvent类型进行FortaSentinels。
 
 ### Autotask示例
 ```
@@ -756,7 +756,7 @@ name：test
 >NOTE
 该阈值对每个交易进行评估。一旦超过阈值，那么通知将继续触发，直到在当前交易之前的时间窗口内金额低于阈值。考虑使用超时值以防止后续通知。
 
-* 金额是此哨兵必须触发的次数。
+* 金额是此Sentinels必须触发的次数。
 
 * 窗口是考虑的秒数
 
@@ -772,4 +772,4 @@ name：test
 **避免每小时通知超过一次**应指定超时为3600
 
 ## 暂停
-暂停哨兵将暂停监视您的地址。
+暂停Sentinels将暂停监视您的地址。

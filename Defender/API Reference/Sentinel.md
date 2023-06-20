@@ -1,5 +1,5 @@
 # Sentinel API Referencev
-Sentinel API允许您以编程方式创建和管理哨兵。
+Sentinel API允许您以编程方式创建和管理Sentinels。
 
 请求需要使用从Team API Key协商的相应能力的令牌进行身份验证。有关如何协商它的信息，请参阅*身份验证*部分。
 
@@ -15,7 +15,7 @@ const client = new SentinelClient(creds);
 ```
 
 ## 通知端点
-哨兵需要通知配置来在触发事件时警报正确的渠道。为此，您可以使用现有的通知ID（例如来自另一个哨兵），或创建一个新的通知ID。
+Sentinels需要通知配置来在触发事件时警报正确的渠道。为此，您可以使用现有的通知ID（例如来自另一个Sentinels），或创建一个新的通知ID。
 
 以下通知渠道可用：
 
@@ -148,11 +148,11 @@ const deleted = await client.deleteNotificationChannel(notificationToDelete);
 ## Sentinels终端
 
 ### 列出Sentinels
-要列出现有的哨兵，您可以在客户端上调用list函数，该函数返回一个ListSentinelResponse对象：
+要列出现有的Sentinels，您可以在客户端上调用list函数，该函数返回一个ListSentinelResponse对象：
 ```
 await client.list();
 ```
-订阅者端点用于通过GET请求检索现有哨兵的列表。
+订阅者端点用于通过GET请求检索现有Sentinels的列表。
 ```
 curl \
   -X GET \
@@ -193,8 +193,8 @@ curl \
 ]
 ```
 
-### 创建哨兵
-要创建一个新的哨兵，您需要提供网络、名称、暂停状态、条件、警报阈值和通知配置。该请求被导出为CreateSentinelRequest类型。
+### 创建Sentinels
+要创建一个新的Sentinels，您需要提供网络、名称、暂停状态、条件、警报阈值和通知配置。该请求被导出为CreateSentinelRequest类型。
 ```
 type CreateSentinelRequest =
   | ExternalCreateBlockSubscriberRequest
@@ -237,7 +237,7 @@ interface ExternalCreateFortaSubscriberRequest {
   privateFortaNodeId?: string;
 }
 ```
-以下是一个合约（BLOCK）哨兵的示例。此哨兵将被命名为“我的新哨兵”，并将监视Rinkeby网络上0x0f06aB75c7DD497981b75CD82F6566e3a5CAd8f2合约中的renounceOwnership函数。警报阈值设置为1小时内2次，并通过电子邮件通知用户。
+以下是一个合约（BLOCK）Sentinels的示例。此Sentinels将被命名为“我的新Sentinels”，并将监视Rinkeby网络上0x0f06aB75c7DD497981b75CD82F6566e3a5CAd8f2合约中的renounceOwnership函数。警报阈值设置为1小时内2次，并通过电子邮件通知用户。
 ```
 const requestParameters = {
   type: 'BLOCK',
@@ -269,7 +269,7 @@ const requestParameters = {
   notificationChannels: [notification.notificationId],
 };
 ```
-如果您希望基于其他事件触发哨兵，可以添加另一个EventCondition或FunctionCondition对象，例如：
+如果您希望基于其他事件触发Sentinels，可以添加另一个EventCondition或FunctionCondition对象，例如：
 ```
 functionConditions: [{ functionSignature: 'renounceOwnership()' }],
 eventConditions: [
@@ -283,7 +283,7 @@ eventConditions: [
 ```
 txCondition: 'gasPrice > 0',
 ```
-您也可以按照以下方式构建一个请求Forta（FORTA）哨兵。
+您也可以按照以下方式构建一个请求Forta（FORTA）Sentinels。
 ```
 const requestParameters = {
   type: 'FORTA',
@@ -323,17 +323,17 @@ const requestParameters = {
 ```
 await client.create(requestParameters);
 ```
-此外，哨兵还可以调用自动任务进行进一步评估。有关此内容的文档可以在此处找到：https://docs.openzeppelin.com/defender/sentinel#autotask_conditions。
+此外，Sentinels还可以调用自动任务进行进一步评估。有关此内容的文档可以在此处找到：https://docs.openzeppelin.com/defender/sentinel#autotask_conditions。
 ```
 // If other conditions match, the sentinel will invoke this autotask to further evaluate.
 autotaskCondition: '3dcfee82-f5bd-43e3-8480-0676e5c28964',
 // Define autotask within the notification configuration
 autotaskTrigger: '1abfee11-a5bc-51e5-1180-0675a5b24c61',
 ```
-订阅者终端点用于通过POST请求创建新的哨兵。如果您希望直接调用API，则需要构建CreateBlockSubscriberRequest对象。
+订阅者终端点用于通过POST请求创建新的Sentinels。如果您希望直接调用API，则需要构建CreateBlockSubscriberRequest对象。
 
 >CANTION
-Defender目前仅支持有限的哨兵子集（仅支持单个addressRule），我们强烈建议通过JS客户端进行操作，以避免不兼容性。
+Defender目前仅支持有限的Sentinels子集（仅支持单个addressRule），我们强烈建议通过JS客户端进行操作，以避免不兼容性。
 
 ```
 interface CreateBlockSubscriberRequest {
@@ -435,12 +435,12 @@ type Network =
   | 'linea-goerli';
 ```
 
-### 获取哨兵
+### 获取Sentinels
 您可以通过ID检索Sentinel。这将返回一个CreateSentinelResponse对象。
 ```
 await client.get('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1');
 ```
-订阅者/{id}端点用于通过GET请求检索哨兵。
+订阅者/{id}端点用于通过GET请求检索Sentinels。
 ```
 curl \
   -X GET \
@@ -451,12 +451,12 @@ curl \
     "https://defender-api.openzeppelin.com/sentinel/subscribers/{id}"
 ```
 
-### 更新哨兵
-要更新哨兵，您可以在客户端上调用更新函数。这将需要哨兵ID和UpdateSentinelRequest对象作为参数：
+### 更新Sentinels
+要更新Sentinels，您可以在客户端上调用更新函数。这将需要SentinelsID和UpdateSentinelRequest对象作为参数：
 ```
 await client.update('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1', {name: 'My Updated Name', paused: true});
 ```
-订阅者/{id}端点用于通过PUT请求更新现有的哨兵。
+订阅者/{id}端点用于通过PUT请求更新现有的Sentinels。
 
 如果您希望直接调用API，则需要构造一个CreateBlockSubscriberRequest对象。
 ```
@@ -470,12 +470,12 @@ curl \
     "https://defender-api.openzeppelin.com/sentinel/subscribers/{id}"
 ```
 
-### 删除哨兵
-您可以通过ID删除一个哨兵。这将返回一个DeletedSentinelResponse对象。
+### 删除Sentinels
+您可以通过ID删除一个Sentinels。这将返回一个DeletedSentinelResponse对象。
 ```
 await client.delete('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1');
 ```
-订阅者/{id}端点用于通过DELETE请求删除哨兵。
+订阅者/{id}端点用于通过DELETE请求删除Sentinels。
 ```
 curl \
   -X DELETE \
