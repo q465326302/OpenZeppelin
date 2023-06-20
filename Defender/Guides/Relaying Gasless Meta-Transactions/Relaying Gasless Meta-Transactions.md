@@ -1,145 +1,269 @@
-# Registering an Upkeep on Chainlink Keepers
-本文将指导您使用Defender Admin在Chainlink Keepers上注册您的合同作为**Upkeep**，并利用Relayers、Autotasks和Sentinels进行[监控和操作](https://andrecronje.medium.com/scaling-keep3r-with-chainlink-2832bbc76506)，这是[Keep3r Network](https://keep3r.network/)的一次改进。
+# How to Relay Gasless Meta-Transactions
+*无燃气元交易*为用户提供了更无缝的体验，并且潜在地使他们不必花费太多资金与区块链互动。这种方法为用户提供了免费签署交易的选项，并由第三方安全地执行，该第三方支付燃气费用以执行交易。
 
-## 什么是Chainlink Keepers？
-Chainlink Keepers旨在提供智能合约选项，以信任最小化（去中心化）的方式外包常规维护任务（收获、清算、重新基准等）。该网络旨在为保持者生态系统提供激励和治理协议。
+使用OpenZeppelin Defender可以轻松安全地实现无燃气元交易中继，通过[Relayer](https://docs.openzeppelin.com/defender/relay)。Defender Relay允许您轻松发送交易，并处理私钥存储、交易签名、nonce管理、燃气估算以及必要时的自动重新提交。
 
-此网络有三个主要角色：
+此[演示应用程序](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)使用*MinimalForwarder*和*ERC2771Context*实现元交易，以将msg.sender与中继器的地址分离。所有用户需要做的就是使用他们想要发出交易的账户签署消息。签名是使用用户的私钥从目标合约和所需交易的数据形成的。这种签名在链外进行，不需要燃气费用。将签名传递给Relayer，以便它可以为用户执行交易（并支付燃气费用）。
 
-* Upkeep：这些是需要外部实体服务其维护任务的智能合约。
-* Keepers：执行发布的维护的外部参与者。
-* Registry：为上述参与者提供发现机制，并提供钩子以保持网络的健康。
+## 演示应用程序概述
+您可以在此处查看[实时演示dapp](https://defender-metatx-workshop-demo.openzeppelin.com/)。如果用户有可用的资金支付交易，则直接接受注册，否则将数据作为元交易发送。
 
-## 先决条件
-您需要LINK代币以支付Upkeep合同的执行。对于Kovan，您可以在此[水龙头](https://kovan.chain.link/)中获取它们。对于Mainnet，您可以在Uniswap上购买它们。您还需要ETH来支付任何需要发送的交易。
+在示例代码中，[SimpleRegistry合约](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/SimpleRegistry.sol)的功能是获取字符串并存储它。通过将签署者与交易发送者解耦，合约的[元交易实现](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/Registry.sol)可以实现相同的结果。
 
-## 实现Upkeep接口
-将合同注册为Upkeep的第一步是实现所需的Upkeep接口，该接口由以下[两种方法](https://docs.chain.link/docs/chainlink-keepers/compatible-contracts/)组成：
+在比较代码时，请注意元交易使用_msgSender()而不是SimpleRegistry使用的msg.sender。通过从ERC2771Context和MinimalForwarder扩展，合约变得具有元交易功能。（请注意，所有OpenZeppelin合约都兼容使用_msgSender()。）
 
-* checkUpKeep：此函数将在每个块（约15秒）中调用，布尔返回值决定此时是否需要为合同提供服务。如果需要维护，您还可以返回将传递给performUpkeep函数的字节。
+两个合约之间的第二个基本变化是元交易合约需要指定受信任的转发器地址，本例中为MinimalForwarder合约的地址。
 
-* performUpkeep：这个函数是合同需要维护的实际维护。只有在checkUpKeep返回true时才会调用此函数。
-
+## 配置项目
+首先，fork存储库，然后将其git clone到您的计算机并安装依赖项：
 ```
-pragma solidity 0.7.6;
+$ git clone https://github.com/[GitHub username]/workshops.git
+$ cd workshops/25-defender-metatx-api/
+$ yarn
+```
 
-interface KeeperCompatibleInterface {
+在项目根目录中创建一个.env文件，并提供来自Defender的Team API密钥和密钥。本地测试将使用私钥，但中继器将用于实际的合约部署。
+```
+PRIVATE_KEY="Goerli private key"
+TEAM_API_KEY="Defender Team API key, used for uploading autotask code"
+TEAM_API_SECRET="Defender Team API secret"
+```
 
-  /**
-   * @notice method that is simulated by the keepers to see if any work actually
-   * needs to be performed. This method does does not actually need to be
-   * executable, and since it is only ever simulated it can consume lots of gas.
-   * @dev To ensure that it is never called, you may want to add the
-   * cannotExecute modifier from KeeperBase to your implementation of this
-   * method.
-   * @param checkData specified in the upkeep registration so it is always the
-   * same for a registered upkeep. This can easily be broken down into specific
-   * arguments using `abi.decode`, so multiple upkeeps can be registered on the
-   * same contract and easily differentiated by the contract.
-   * @return upkeepNeeded boolean to indicate whether the keeper should call
-   * performUpkeep or not.
-   * @return performData bytes that the keeper should call performUpkeep with, if
-   * upkeep is needed. If you would like to encode data to decode later, try
-   * `abi.encode`.
-   */
-  function checkUpkeep(
-    bytes calldata checkData
-  )
-    external
-    returns (
-      bool upkeepNeeded,
-      bytes memory performData
-    );
+## 创建中继器
+运行中继器创建脚本：
+```
+$ yarn create-relay
+```
 
-  /**
-   * @notice method that is actually executed by the keepers, via the registry.
-   * The data returned by the checkUpkeep simulation will be passed into
-   * this method to actually be executed.
-   * @dev The input to this method should not be trusted, and the caller of the
-   * method should not even be restricted to any single registry. Anyone should
-   * be able call it, and the input should be validated, there is no guarantee
-   * that the data passed in is the performData returned from checkUpkeep. This
-   * could happen due to malicious keepers, racing keepers, or simply a state
-   * change while the performUpkeep transaction is waiting for confirmation.
-   * Always validate the data passed in.
-   * @param performData is the data which was passed back from the checkData
-   * simulation. If it is encoded, it can easily be decoded into other types by
-   * calling `abi.decode`. This data should not be trusted, and should be
-   * validated against the contract's current state.
-   */
-  function performUpkeep(
-    bytes calldata performData
-  ) external;
+编辑 [scripts/createRelay.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/scripts/createRelay.js) 文件，在 .env 文件中提供您的 Defender API 密钥，并根据需要调整变量名称。
+
+使用 create 方法创建中继器：
+```
+const relayClient = new RelayClient({ apiKey, apiSecret });
+
+const requestParams = {
+  name: 'MetaTxRelayer',
+  network: 'goerli',
+  minBalance: BigInt(1e17).toString(),
+};
+const relayer = await relayClient.create(requestParams);
+```
+
+请注意，您稍后需要从控制台日志或创建的relay.json文件中获取relayerId。在创建Autotask时，您将使用此ID。
+
+当您想要通过API发送交易时，将使用Relayer的API密钥和密钥。在上面的代码中，它附加到现有的.env文件中。
+
+## 使用Hardhat编译合同
+请使用以下代码编写您的Registry.sol合同：
+```
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
+import "@openzeppelin/contracts/metatx/MinimalForwarder.sol";
+
+contract Registry is ERC2771Context {
+  event Registered(address indexed who, string name);
+
+  mapping(address => string) public names;
+  mapping(string => address) public owners;
+
+  constructor(MinimalForwarder forwarder) // Initialize trusted forwarder
+    ERC2771Context(address(forwarder)) {
+  }
+
+  function register(string memory name) external {
+    require(owners[name] == address(0), "Name taken");
+    address owner = _msgSender(); // Changed from msg.sender
+    owners[name] = owner;
+    names[owner] = name;
+    emit Registered(owner, name);
+  }
 }
 ```
-完成这些方法后，您可以使用您喜欢的工具链编译和部署您的合约。
 
-## 在Etherscan上验证您的合约代码
-为了被Chainlink Keepers网络接受，您的Upkeep合约源代码需要在Etherscan上进行验证。您可以使用您喜欢的[工具链](https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html)来完成这个过程。
+运行npx hardhat compile以准备部署代码。
 
-## 在网络上注册
-一旦部署完成，您可以将您的合约注册为Keeper网络上的Upkeep。使用Defender来完成此操作，首先在Admin中添加您的合约。Defender将自动检查您的合约是否正确实现了Upkeep接口。
-![guide-chainlink-1.png](img/guide-chainlink-1.png)
+## 使用Relayer进行部署
+您可以轻松地部署已编译的智能合约，而无需处理私钥，方法是使用Defender Relayer客户端。
 
-从您的合同页面开始，您现在可以通过点击“在Chainlink Keeper中注册”来开始Chainlink Keeper的维护注册。
-![guide-chainlink-2.png](img/guide-chainlink-2.png)
+创建relay-client的实例，将Relay的API密钥和密钥作为其凭据提供，并在调用deploy()时连接到它。
+```
+// ...
+  const credentials = {
+    apiKey: process.env.RELAYER_API_KEY,
+    apiSecret: process.env.RELAYER_API_SECRET,
+  }
+  const provider = new DefenderRelayProvider(credentials)
+  const relaySigner = new DefenderRelaySigner(credentials, provider, {
+    speed: 'fast',
+  })
 
-为开始注册流程，Defender会要求您填写一个注册Google表单。这个表格将由Chainlink Keepers入门团队进行审查，作为开放测试版批准流程的一部分。您填写的信息将有助于改进Chainlink Keepers，为您的用例提供最佳解决方案。
+  const Forwarder = await ethers.getContractFactory('MinimalForwarder')
+  const forwarder = await Forwarder.connect(relaySigner)
+    .deploy()
+    .then((f) => f.deployed())
+// ...
+```
 
-点击打开注册Google表单，填写详细信息，在完成后返回Defender。
-![guide-chainlink-3.png](img/guide-chainlink-3.png)
+deploy.js脚本从本地的.env文件中获取Relayer的凭据，以及Registry和MinimalForwarder合约的Artifacts，并使用ethers.js进行部署。这些合约的相关地址保存在本地文件deploy.json中。
 
-当您填写完注册Google表格后返回，Defender将要求您输入管理员地址（可以提取资金）、电子邮件（用于Chainlink的通知目的）和Keeper调用的Gas限制（在2300和2500000之间）。
+在演示应用程序中，使用yarn deploy运行此脚本。
 
-在撰写本文时，注册流程要求您为您的合同提供至少5个LINK的初始资金，因此请确保您用于请求注册的帐户至少拥有该金额的LINK。您可以选择将这个初始资金变得更大，以节省未来的加油费。
-![guide-chainlink-4.png](img/guide-chainlink-4.png)
+代码部署后，可以安全地删除Relayer密钥和密钥。除非需要进行其他本地测试，否则它们不需要。
 
-一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合同页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时您的合同页面的外观。
-![guide-chainlink-5.png](img/guide-chainlink-5.png)
+## 通过API创建Autotask
+演示应用程序使用*Autotask*提供必要的逻辑，告诉Relayer向转发器合约发送交易，提供签名者的地址。每次从dapp调用其webhook时，Autotask将被触发。
 
-当您的注册被批准后，Defender将向您显示您的Upkeep余额以及网络保管人的最新执行情况。请注意，为了使您的合约得到网络的服务，您还需要用LINK令牌为其提供资金。您也可以通过在Defender上点击“存入LINK”来完成这个过程。
-![guide-chainlink-6.png](img/guide-chainlink-6.png)
+由于组件之间的紧密关系，只需实例化新的提供程序和签名者即可将Relayer凭据安全地提供给Autotask。
 
-## 监控您的Upkeep
-您可以利用Defender *Sentinel*和*Autotasks*监控网络中的Upkeep。例如，您可以监控执行失败、低资金或未执行任务等情况。
+Autotask的位置非常重要-仅将Autotask的webhook暴露给前端。 Autotask的角色是根据分配给它的逻辑执行交易：如果用户有资金，则支付交易费用。如果没有，则Relayer支付交易费用。
 
-### 执行失败
-您可以设置*Sentinels*，在一段时间内警报您的合约有一个或多个执行失败，以便您调查失败原因并根据需要调整您的Upkeep代码。
+重要的是，Relayer的API密钥和密钥与前端隔离。如果Relayer密钥暴露，任何人都可以潜在地使用Relayer发送他们想要的任何交易。
+```
+const ethers = require('ethers');
+const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-client/lib/ethers');
 
-要做到这一点，首先创建一个新的Sentinel来[监视Chainlink Keeper Registry](https://kovan.etherscan.io/address/0xAaaD7966EBE0663b8C9C6f683FB9c3e66E03467F)（Kovan上的0x109A81F1E0A35D4c1D0cae8aCc6597cd54b47Bc6）。
-![guide-chainlink-7.png](img/guide-chainlink-7.png)
+const { ForwarderAbi } = require('../../src/forwarder');
+const ForwarderAddress = require('../../deploy.json').MinimalForwarder;
+const RegistryAddress = require('../../deploy.json').Registry;
 
-并监听UpkeepPerformed事件，其中作业ID与您自己的匹配，并且执行未成功。
-![guide-chainlink-8.png](img/guide-chainlink-8.png)
+async function relay(forwarder, request, signature, whitelist) {
+  // Decide if we want to relay this request based on a whitelist
+  const accepts = !whitelist || whitelist.includes(request.to);
+  if (!accepts) throw new Error(`Rejected request to ${request.to}`);
 
-接下来，您可以选择如何接收通知。Sentinels支持电子邮件、Slack、Telegram和Discord通知。
-![guide-chainlink-9.png](img/guide-chainlink-9.png)
+  // Validate request on the forwarder contract
+  const valid = await forwarder.verify(request, signature);
+  if (!valid) throw new Error(`Invalid request`);
 
-最后，你可以选择在每次执行失败时接收提醒，或者只在一段时间窗口内出现多次失败时接收提醒，例如半小时内出现五次失败。你还可以过滤通知，以免频繁接收提醒，例如每小时不超过一次。
-![guide-chainlink-10.png](img/guide-chainlink-10.png)
+  // Send meta-tx through relayer to the forwarder contract
+  const gasLimit = (parseInt(request.gas) + 50000).toString();
+  return await forwarder.execute(request, signature, { gasLimit });
+}
 
-###资金短缺
+async function handler(event) {
+  // Parse webhook payload
+  if (!event.request || !event.request.body) throw new Error(`Missing payload`);
+  const { request, signature } = event.request.body;
+  console.log(`Relaying`, request);
 
-当您的LINK余额不足时，您可以将*Sentinels*与*Autotasks*和*Relayers*结合使用，以补充您的维护费用。
+  // Initialize Relayer provider and signer, and forwarder contract
+  const credentials = { ... event };
+  const provider = new DefenderRelayProvider(credentials);
+  const signer = new DefenderRelaySigner(credentials, provider, { speed: 'fast' });
+  const forwarder = new ethers.Contract(ForwarderAddress, ForwarderAbi, signer);
 
->NOTE
-作为自动资金的替代方案，您也可以让Autotask发送通知，以便您手动添加资金。
+  // Relay transaction!
+  const tx = await relay(forwarder, request, signature);
+  console.log(`Sent meta-tx: ${tx.hash}`);
+  return { txHash: tx.hash };
+}
 
-要这样做，首先创建一个Relayer，我们将用它来补充您的Upkeep。您在Defender中创建的每个Relayer都有一个唯一的地址，并且只能由您的团队使用。请确保您在Kovan或Mainnet网络中创建您的Relayer，具体取决于您在哪个网络上运行您的Upkeep。
-![guide-chainlink-11.png](img/guide-chainlink-11.png)
+module.exports = {
+  handler,
+  relay,
+}
+```
 
-创建完成后，将一些LINK和ETH转移到Relayer的地址，以便它可以为您的Upkeep工作充值，并支付它发送的交易的燃气费用。在Kovan上，您可以从[此水龙头](https://kovan.chain.link/)获取测试LINK。
+请注意，Autotask代码必须包括一个导出处理程序入口的index.js文件。如果代码依赖于任何外部依赖项（例如导入的ABI），则需要使用webpack、rollup等打包Autotask。
 
-下一步是创建一个Autotask，该Autotask可以查询您的Upkeep余额，并在其低于阈值时添加LINK资金。将此Autotask设置为在连接到您先前创建的Relayer的Webhook上运行，并使用[defender-autotask-examples存储库](https://github.com/OpenZeppelin/defender-autotask-examples/)中的[low-funds代码](https://github.com/OpenZeppelin/defender-autotask-examples/blob/master/chainlink/src/low-funds.js)。
-![guide-chainlink-12.png](img/guide-chainlink-12.png)
+虽然可以使用Defender网页客户端创建Autotask，但使用脚本利用[Defender的API](https://www.npmjs.com/package/defender-autotask-client)可能更方便。
 
-每当这个Autotask运行时，如果它检测到余额低于您配置的令牌数量，它将使用您的Relayer发送更多的LINK来资助您的Upkeep。
+在演示应用程序中，运行yarn create-autotask编译Autotask代码、在Defender中创建Autotask并通过调用Autotask客户端的.create()方法上传打包的代码：
+```
+// ...
+  const client = new AutotaskClient({ apiKey, apiSecret });
+  const {autotaskId } = await client.create({
+    name: "Relay MetaTX",
+    encodedZippedCode: await client.getEncodedZippedCodeFromFolder('./build/relay'),
+    relayerId: relayerId,
+    trigger: {
+      type: 'webhook'
+    },
+    paused: false
+  });
+// ...
+```
 
-最后一步是触发这个Autotask。您可以将其设置为定时运行，而不是Webhook模式，也可以在执行作业后触发它。如果您选择后者，您将需要创建一个Sentinel来监视[Chainlink Keeper Registry](https://kovan.etherscan.io/address/0x109A81F1E0A35D4c1D0cae8aCc6597cd54b47Bc6)（Kovan上的0x42dD7716721ba279dA2f1F06F97025d739BD79a8），并按照前面的场景过滤您的作业上的所有UpkeepPerformed事件。
-![guide-chainlink-13.png](img/guide-chainlink-13.png)
+前往[Defender](https://defender.openzeppelin.com/)并获取Autotask的Webhook，以便您可以测试功能并将应用程序连接到Autotask以中继元交易。
+![guide-metatx-1.gif](img/guide-metatx-1.gif)
 
-并将其设置为在工作完成后立即调用您的Autotask。您还可以限制Autotask的调用频率，例如每十分钟最多一次。
-![guide-chainlink-14.png](img/guide-chainlink-14.png)
+将Autotask webhook保存到您的.env文件中，命名为WEBHOOK_URL，并在/app .env文件中命名为REACT_APP_WEBHOOK_URL。
 
-## 问题
-如果您有任何问题或评论，请在论坛上毫不犹豫地提出！
+通过yarn sign和yarn invoke测试元交易的功能。
+
+## 创建Web应用程序
+关键构建块已经建立，下一步是创建一个利用这些组件的Web应用程序。
+
+您可以在[register.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js)文件中查看此关系的详细信息。用户的交易请求通过Autotask的webhook发送到Relayer，这将根据应用程序提供的参数执行Autotask的逻辑。请注意，签名者的nonce将从交易中递增。
+```
+import { ethers } from 'ethers';
+import { createInstance } from './forwarder';
+import { signMetaTxRequest } from './signer';
+
+async function sendTx(registry, name) {
+  console.log(`Sending register tx to set name=${name}`);
+  return registry.register(name);
+}
+
+async function sendMetaTx(registry, provider, signer, name) {
+  console.log(`Sending register meta-tx to set name=${name}`);
+  const url = process.env.REACT_APP_WEBHOOK_URL;
+  if (!url) throw new Error(`Missing relayer url`);
+
+  const forwarder = createInstance(provider);
+  const from = await signer.getAddress();
+  const data = registry.interface.encodeFunctionData('register', [name]);
+  const to = registry.address;
+
+  const request = await signMetaTxRequest(signer.provider, forwarder, { to, from, data });
+
+  return fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(request),
+    headers: { 'Content-Type': 'application/json' },
+  });
+}
+
+export async function registerName(registry, provider, name) {
+  if (!name) throw new Error(`Name cannot be empty`);
+  if (!window.ethereum) throw new Error(`User wallet not found`);
+
+  await window.ethereum.enable();
+  const userProvider = new ethers.providers.Web3Provider(window.ethereum);
+  const userNetwork = await userProvider.getNetwork();
+  if (userNetwork.chainId !== 5) throw new Error(`Please switch to Goerli for signing`);
+
+  const signer = userProvider.getSigner();
+  const from = await signer.getAddress();
+  const balance = await provider.getBalance(from);
+
+  const canSendTx = balance.gt(1e15);
+  if (canSendTx) return sendTx(registry.connect(signer), name);
+  else return sendMetaTx(registry, provider, signer, name);
+}
+```
+
+## 尝试应用程序
+使用所需的依赖项安装并运行应用程序。
+```
+$ cd app
+$ yarn
+$ yarn start
+```
+
+1. 打开应用程序：http://localhost:3000/
+
+2. 在Metamask中切换到Goerli网络
+
+3. 输入一个名称以注册并在MetaMask中签署元交易
+
+4. 您的名称将被注册，显示创建元交易的地址和名称。
+
+使用前端界面自行查看它的工作原理！比较使用具有资金的帐户签署注册表时会发生什么，然后尝试使用余额为零的帐户进行操作。
+
+## 资源
+[演示存储库-元交易名称注册表](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)
+
+[文档-元交易](https://docs.openzeppelin.com/contracts/4.x/api/metatx)
