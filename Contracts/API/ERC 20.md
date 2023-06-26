@@ -1065,3 +1065,344 @@ Transfer(from, to, value)
 Approval(owner, spender, value)
 
 #### constructor(contract IERC20 asset_)
+内部#
+设置基础资产合约。这必须是一个ERC20兼容合约（ERC20或ERC777）。
+
+#### decimals() → uint8
+公开#
+十进制数是通过将十进制偏移量加到基础资产的小数位上计算出来的。在构建保险库合约期间，这个“原始”值被缓存。如果读取操作失败（例如，资产尚未创建），则默认值为18，表示基础资产的小数位数。
+
+请参阅*IERC20Metadata.decimals*。
+
+#### asset() → address
+公开#
+请参阅*IERC4626.asset*.
+
+#### totalAssets() → uint256
+公开#
+请参阅*IERC4626.totalAssets*.
+
+#### convertToShares(uint256 assets) → uint256
+公开#
+请参阅*IERC4626.convertToShares*.
+
+#### convertToAssets(uint256 shares) → uint256
+公开#
+请参阅*IERC4626.convertToAssets*.
+
+#### maxDeposit(address) → uint256
+公开#
+请参阅 *IERC4626.maxDeposit*.
+
+##### maxMint(address) → uint256
+公开#
+请参阅 *IERC4626.maxMint*.
+
+#### maxWithdraw(address owner) → uint256
+公开#
+请参阅 *IERC4626.maxWithdraw*.
+
+#### maxRedeem(address owner) → uint256
+公开#
+请参阅 *IERC4626.maxRedeem*.
+
+#### previewDeposit(uint256 assets) → uint256
+公开#
+请参阅 *IERC4626.previewDeposit*.
+
+#### previewMint(uint256 shares) → uint256
+公开#
+请参阅 *IERC4626.previewMint*.
+
+####  previewWithdraw(uint256 assets) → uint256
+公开#
+请参阅 *IERC4626.previewWithdraw*.
+
+#### previewRedeem(uint256 shares) → uint256
+公开#
+请参阅 *IERC4626.previewRedeem*.
+
+#### deposit(uint256 assets, address receiver) → uint256
+公开#
+请参阅 *IERC4626.deposit*.
+
+#### mint(uint256 shares, address receiver) → uint256
+公开#
+请参阅 *IERC4626.mint*.
+与*deposit*相反，即使保险库处于份额价格为零的状态，也允许进行铸造。在这种情况下，股份将被铸造而无需存入任何资产。
+
+#### withdraw(uint256 assets, address receiver, address owner) → uint256
+公开#
+请参阅 *IERC4626.withdraw*.
+
+#### redeem(uint256 shares, address receiver, address owner) → uint256
+公开#
+请参阅*IERC4626.redeem*.
+
+#### _convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256
+内部#
+内部转换函数（从资产到股份），支持舍入方向。
+
+#### _convertToAssets(uint256 shares, enum Math.Rounding rounding) → uint256
+内部#
+支持舍入方向的内部转换函数（从股份转换为资产）。
+
+#### _deposit(address caller, address receiver, uint256 assets, uint256 shares)
+内部#
+存款/铸造常见工作流程。
+
+#### _withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)
+内部#
+撤回/兑现常见的工作流程。
+
+#### _decimalsOffset() → uint8
+内部#
+
+## 预设
+这些合约是上述功能的预配置组合。它们可以通过继承或复制粘贴其源代码作为模型使用。
+
+### ERC20PresetMinterPauser
+```
+import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol";
+```
+*ERC20*代币，包括：
+* 持有者可以烧毁（销毁）他们的代币的能力
+* 允许代币铸造（创建）的铸造者角色
+* 允许停止所有代币转移的暂停者角色
+
+该合约使用*AccessControl*锁定使用不同角色的权限函数-有关详细信息，请查阅其文档。
+
+部署合约的账户将被授予铸造者和暂停者角色，以及默认管理员角色，这将使其授予其他账户铸造者和暂停者角色。
+
+弃用，有利于[合同向导](https://wizard.openzeppelin.com/)。
+
+**FUNCTIONS**
+constructor(name, symbol)
+mint(to, amount)
+pause()
+unpause()
+_beforeTokenTransfer(from, to, amount)
+
+PAUSABLE
+paused()
+_requireNotPaused()
+_requirePaused()
+_pause()
+_unpause()
+
+ERC20BURNABLE
+burn(amount)
+burnFrom(account, amount)
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_afterTokenTransfer(from, to, amount)
+
+ACCESSCONTROLENUMERABLE
+supportsInterface(interfaceId)
+getRoleMember(role, index)
+getRoleMemberCount(role)
+_grantRole(role, account)
+_revokeRole(role, account)
+
+ACCESSCONTROL
+hasRole(role, account)
+_checkRole(role)
+_checkRole(role, account)
+getRoleAdmin(role)
+grantRole(role, account)
+revokeRole(role, account)
+renounceRole(role, account)
+_setupRole(role, account)
+_setRoleAdmin(role, adminRole)
+
+**EVENTS**
+PAUSABLE
+Paused(account)
+Unpaused(account)
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+IACCESSCONTROL
+RoleAdminChanged(role, previousAdminRole, newAdminRole)
+RoleGranted(role, account, sender)
+RoleRevoked(role, account, sender)
+
+#### constructor(string name, string symbol)
+公开#
+将DEFAULT_ADMIN_ROLE、MINTER_ROLE和PAUSER_ROLE授权给部署合约的账户。
+请参阅*ERC20.constructor*。
+
+#### mint(address to, uint256 amount)
+公开#
+为to创建指定数量的新代币。
+请参考*ERC20._mint*。
+要求：
+* 调用者必须具有MINTER_ROLE角色。
+
+#### pause()
+公开#
+暂停所有代币转移。
+请参阅 *ERC20Pausable* 和 *Pausable._pause*。
+要求：
+* 调用者必须具有 PAUSER_ROLE。
+
+#### unpause()
+公开#
+取消所有代币转移的暂停状态。
+请参阅*ERC20Pausable*和*Pausable._unpause*。
+要求：
+* 调用者必须具有PAUSER_ROLE。
+
+#### _beforeTokenTransfer(address from, address to, uint256 amount)
+内部#
+
+### ERC20PresetFixedSupply
+```
+import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
+```
+*ERC20*代币，包括：
+* 预先发行的初始供应量
+* 持有人可以烧毁（销毁）他们的代币的能力
+* 没有访问控制机制（用于铸造/暂停），因此没有治理
+
+该合同使用*ERC20Burnable*包括烧毁功能-请查看其文档以获取详细信息。
+
+*自v3.4以来可用。*
+
+弃用，推荐使用[Contracts Wizard](https://wizard.openzeppelin.com/)。
+
+**FUNCTIONS**
+constructor(name, symbol, initialSupply, owner)
+
+ERC20BURNABLE
+burn(amount)
+burnFrom(account, amount)
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### constructor(string name, string symbol, uint256 initialSupply, address owner)
+公开#
+Mint函数会初始化一定数量的代币并将它们转移到所有者账户中。
+请参阅*ERC20.constructor*。
+
+## 应用程序
+
+### SafeERC20
+```
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+```
+SafeERC20是一种在ERC20操作失败时（当代币合约返回false时）抛出异常的包装器。它还支持返回无值（而是在失败时回滚或抛出异常）的代币，假定非回滚调用是成功的。要使用此库，您可以在合约中添加一个using SafeERC20 for IERC20;语句，这允许您调用安全操作，例如token.safeTransfer(…​)等。
+
+**FUNCTIONS**
+safeTransfer(token, to, value)
+safeTransferFrom(token, from, to, value)
+safeApprove(token, spender, value)
+safeIncreaseAllowance(token, spender, value)
+safeDecreaseAllowance(token, spender, value)
+forceApprove(token, spender, value)
+safePermit(token, owner, spender, value, deadline, v, r, s)
+
+#### safeTransfer(contract IERC20 token, address to, uint256 value)
+内部#
+将代币的价值数量从调用合约转移到to地址。如果代币没有返回值，则假定不会发生错误的调用是成功的。
+
+#### safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)
+内部#
+从发送者向接收者转移指定数量的代币价值，并使用发送者授权给调用合约的批准。如果代币没有返回任何值，则假定非撤销调用成功。
+
+#### safeApprove(contract IERC20 token, address spender, uint256 value)
+内部#
+已弃用。此功能存在与*IERC20.approve*类似的问题，不建议使用。
+尽可能使用*safeIncreaseAllowance*和*safeDecreaseAllowance*。
+
+#### safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)
+内部#
+增加调用合约对spender的授权值。如果代币没有返回值，则假定非reverting调用成功。
+
+#### safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)
+内部#
+将调用合约对spender的授权减少value。如果代币没有返回值，则假定非回滚调用成功。
+
+#### forceApprove(contract IERC20 token, address spender, uint256 value)
+内部#
+将调用合约的授权向spender设置为value。如果代币没有返回任何值，则假定非reverting调用成功。与需要将批准设置为0后再将其设置为非零值的代币兼容。
+
+#### safePermit(contract IERC20Permit token, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
+内部#
+使用 ERC-2612 签名来设置令牌所有者对支出者的批准。在无效签名的情况下回滚。
+
+### TokenTimelock
+```
+import "@openzeppelin/contracts/token/ERC20/utils/TokenTimelock.sol";
+```
+一个代币持有者合约，允许受益人在给定的释放时间后提取代币。
+适用于简单的归属计划，如“顾问在1年后获得全部代币”。
+
+**FUNCTIONS**
+constructor(token_, beneficiary_, releaseTime_)
+token()
+beneficiary()
+releaseTime()
+release()
+
+#### constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)
+公开#
+部署一个时间锁实例，能够持有指定的代币，并在 *releaseTime_* 后调用 release 时才释放给 beneficiary_。释放时间以 Unix 时间戳（以秒为单位）指定。
+
+#### token() → contract IERC20
+公开#
+返回当前持有的令牌。
+
+#### beneficiary() → address
+公开#
+返回将收到代币的受益人。
+
+#### releaseTime() → uint256
+公开#
+返回令牌释放时间，以自 Unix 纪元以来的秒数表示（即 Unix 时间戳）。
+
+#### release()
+公开#
+将由时间锁持有的代币转移给受益人。只有在释放时间之后调用才会成功。
