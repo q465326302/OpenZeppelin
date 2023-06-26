@@ -310,6 +310,530 @@ Approval(owner, spender, value)
 * 当 from 为零时，将为 to 铸造 amount 个代币。
 * 当 to 为零时，将销毁 from 的代币数量。
 * from 和 to 永远不会同时为零。
-要了解更多关于挂钩的信息，请前往*使用挂钩*。
+要了解更多关于挂钩的信息，请前往使用*挂钩*。
 
 #### _afterTokenTransfer(address from, address to, uint256 amount)
+内部#
+在任何代币转移之后调用的钩子。这包括铸造和销毁。
+调用条件：
+* 当 from 和 to 都不为零时，将 from 的代币数量转移到 to。
+* 当 from 为零时，为 to 铸造了 amount 个代币。
+* 当 to 为零时，从 from 销毁了 amount 个代币。
+* from 和 to 永远不会同时为零。
+要了解更多关于钩子的信息，请前往使用*挂钩*。
+
+## 扩展程序
+
+### ERC20Burnable
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+```
+*ERC20*的扩展，允许代币持有者销毁他们自己的代币和他们允许的代币，以一种可以通过事件分析在链外识别的方式。
+
+**FUNCTIONS**
+burn(amount)
+burnFrom(account, amount)
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### burn(uint256 amount)
+公开#
+销毁调用者的代币数量。
+参见 *ERC20._burn*。
+
+#### burnFrom(address account, uint256 amount)
+公开#
+销毁账户中指定数量的代币，从调用者的授权中扣除。
+请参阅*ERC20._burn*和*ERC20.allowance*。
+
+要求：
+* 调用者必须具有至少等于销毁数量的账户代币授权。
+
+#### ERC20Capped
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
+```
+将ERC20扩展，以添加令牌供应量上限。
+
+**FUNCTIONS**
+constructor(cap_)
+cap()
+_mint(account, amount)
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### constructor(uint256 cap_)
+内部#
+设置帽子的价值。这个值是不可变的，只能在构造过程中设置一次。
+
+#### cap() → uint256
+公开#
+返回代币总供应量的上限。
+
+#### _mint(address account, uint256 amount)
+内部#
+请参阅ERC20._mint。
+
+### ERC20Pausable
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
+```
+具有可暂停令牌转移、铸造和销毁的ERC20令牌。
+适用于防止交易直到评估期结束或在出现大规模漏洞时有一个紧急开关以冻结所有令牌转移的情况等场景。
+>IMPORTANT
+此合约不包括公共暂停和取消暂停函数。除了继承此合约外，您还必须定义这两个函数，并使用适当的访问控制（例如使用*AccessControl*或*Ownable*）调用*Pausable._pause*和*Pausable._unpause*内部函数。否则，合约将无法暂停。
+
+**FUNCTIONS**
+_beforeTokenTransfer(from, to, amount)
+
+PAUSABLE
+paused()
+_requireNotPaused()
+_requirePaused()
+_pause()
+_unpause()
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+PAUSABLE
+Paused(account)
+Unpaused(account)
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### _beforeTokenTransfer(address from, address to, uint256 amount)
+内部#
+请参阅 *ERC20._beforeTokenTransfer*.
+要求：
+* 合约不能暂停。
+
+### ERC20Permit
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+```
+实现了ERC20 Permit扩展，允许通过签名进行批准，该扩展在*EIP-2612*中定义。
+添加了*permit*方法，可以通过提供由账户签名的消息来改变账户的ERC20允许额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有人账户不需要发送交易，因此根本不需要持有以太币。
+*自v3.4版本以来可用。*
+
+**FUNCTIONS**
+constructor(name)
+permit(owner, spender, value, deadline, v, r, s)
+nonces(owner)
+DOMAIN_SEPARATOR()
+_useNonce(owner)
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+IERC5267
+EIP712DomainChanged()
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### constructor(string name)
+内部#
+使用name参数初始化*EIP712*域分隔符，并将version设置为“1”。最好使用与ERC20代币名称相同的名称。
+
+#### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
+公开#
+请参阅 *IERC20Permit.permit*.
+
+#### nonces(address owner) → uint256
+公开#
+请参阅 *IERC20Permit.nonces*.
+
+#### DOMAIN_SEPARATOR() → bytes32
+外部#
+请参阅 *IERC20Permit.DOMAIN_SEPARATOR*.
+
+#### _useNonce(address owner) → uint256 current
+内部#
+"消耗一个随机数": 返回当前值并递增。 
+*自v4.1版本起可用。*
+
+### ERC20Snapshot
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
+```
+这份合约扩展了一个带有快照机制的ERC20代币。当创建快照时，记录当前时间的余额和总供应量以便以后访问。
+
+这可以用于安全地创建基于代币余额的机制，例如无信任股息或加权投票。在天真的实现中，可以通过从不同的账户重复使用同一余额来执行“双重花费”攻击。通过使用快照来计算股息或投票权，这些攻击不再适用。它也可以用于创建高效的ERC20分叉机制。
+
+快照是通过内部的 *_snapshot* 函数创建的，该函数将触发*Snapshot*事件并返回快照ID。要获取快照时的总供应量，请使用快照ID调用 *totalSupplyAt* 函数。要获取快照时某个账户的余额，请使用快照ID和账户地址调用 *balanceOfAt* 函数。
+
+>NOTE
+可以通过覆盖 *_getCurrentSnapshotId* 方法来自定义快照策略。例如，让它返回 block.number 将在每个新块的开头触发快照的创建。在覆盖此函数时，要小心其结果的单调性。非单调的快照ID会破坏合约。
+
+使用此方法为每个块实现快照将产生显著的燃气成本。对于燃气效率更高的替代方案，请考虑使用 *ERC20Votes*。
+
+#### 燃气成本
+快照是高效的。快照创建是 O(1)。从快照中检索余额或总供应量的成本是 O(log n)，其中 n 是已创建的快照数量，尽管对于特定账户的 n 通常会更小，因为连续快照中相同的余额将存储为一个条目。
+
+由于额外的快照记账，普通 ERC20 转账存在常数开销。对于特定账户的第一次转账，这种开销是显著的。随后的转账将具有正常的成本，直到下一次快照，以此类推。
+
+**FUNCTIONS**
+_snapshot()
+_getCurrentSnapshotId()
+balanceOfAt(account, snapshotId)
+totalSupplyAt(snapshotId)
+_beforeTokenTransfer(from, to, amount)
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_afterTokenTransfer(from, to, amount)
+
+#### _snapshot() → uint256
+内部#
+创建一个新的快照并返回其快照ID。
+触发一个包含相同ID的*Snapshot* 事件。
+*_snapshot*是内部的，你必须决定如何将其外部公开。它的使用可能会受到一组帐户的限制，例如使用*AccessControl*，或者它可能向公众开放。
+
+>WARNING
+虽然需要一种开放的调用*_snapshot*的方式来实现某些信任最小化机制，例如分叉，但您必须考虑它可能被攻击者以两种方式使用。
+
+首先，它可以用于增加从快照检索值的成本，尽管它将呈对数增长，因此从长远来看，这种攻击将变得无效。其次，它可以用于针对特定帐户，并增加ERC20转移对它们的成本，以Gas Costs部分中指定的方式。
+
+我们没有测量实际数字；如果您对此有兴趣，请与我们联系。
+
+#### _getCurrentSnapshotId() → uint256
+内部#
+获取当前snapshotId
+
+#### balanceOfAt(address account, uint256 snapshotId) → uint256
+公开#
+检索创建snapshotId时账户的余额。
+
+#### totalSupplyAt(uint256 snapshotId) → uint256
+公开#
+检索创建snapshotId时的总供应量。
+
+#### _beforeTokenTransfer(address from, address to, uint256 amount)
+内部#
+在任何代币转移之前调用的钩子。这包括铸造和销毁。
+
+调用条件：
+* 当 from 和 to 都不为零时，from 的代币数量将转移到 to。
+* 当 from 为零时，将为 to 铸造 amount 个代币。
+* 当 to 为零时，将销毁 from 的代币数量。
+* from 和 to 永远不会同时为零。
+
+要了解更多有关钩子的信息，请前往使用*钩子*。
+
+#### Snapshot(uint256 id)
+事件#
+当由id标识的快照创建时，由_snapshot发出。
+
+#### ERC20Votes
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+```
+
+ERC20的扩展，支持类似Compound的投票和委托。这个版本比Compound的更通用，支持令牌供应量高达2^224-1, 而COMP仅限于2^96-1。
+
+>NOTE
+如果需要完全兼容COMP，则使用此模块的*ERC20VotesComp*变体。
+
+此扩展会保留每个帐户的投票权历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供签名以与*delegateBySig*一起使用来委托。可以通过公共访问器*getVotes*和*getPastVotes*查询投票权。
+
+默认情况下，令牌余额不考虑投票权。这使转账更便宜。缺点是需要用户委托给自己以激活检查点并跟踪其投票权。
+
+*自v4.2以来可用。*
+
+**FUNCTIONS**
+clock()
+CLOCK_MODE()
+checkpoints(account, pos)
+numCheckpoints(account)
+delegates(account)
+getVotes(account)
+getPastVotes(account, timepoint)
+getPastTotalSupply(timepoint)
+delegate(delegatee)
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+_maxSupply()
+_mint(account, amount)
+_burn(account, amount)
+_afterTokenTransfer(from, to, amount)
+_delegate(delegator, delegatee)
+
+ERC20PERMIT
+permit(owner, spender, value, deadline, v, r, s)
+nonces(owner)
+DOMAIN_SEPARATOR()
+_useNonce(owner)
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+
+**EVENTS**
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+DelegateVotesChanged(delegate, previousBalance, newBalance)
+
+IERC5267
+EIP712DomainChanged()
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### clock() → uint48
+公开#
+用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票）。
+
+#### CLOCK_MODE() → string
+公开#
+时钟的描述
+
+#### checkpoints(address account, uint32 pos) → struct ERC20Votes.Checkpoint
+公开#
+获取账户的第pos个检查点。
+
+#### numCheckpoints(address account) → uint32
+公开#
+获取账户的检查点数量。
+
+#### delegates(address account) → address
+公开#
+获取当前账户正在委托给的地址。
+
+#### getVotes(address account) → uint256
+公开#
+获取账户当前的投票余额
+
+#### getPastVotes(address account, uint256 timepoint) → uint256
+公开#
+获取账户在时间点结束时的投票数。
+
+要求：
+* 时间点必须在过去。
+
+#### getPastTotalSupply(uint256 timepoint) → uint256
+公开#
+在时间点结束时检索totalSupply。注意，这个值是所有余额的总和。它不是所有委托投票的总和！
+
+要求：
+* 时间点必须在过去。
+
+#### delegate(address delegatee)
+公开#
+将选票从发件人委派给受委托人。
+
+#### delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)
+公开#
+将签署者的投票委托给代表
+
+#### _maxSupply() → uint224
+内部#
+最大代币供应量。默认为type(uint224).max（2^224-1）。
+
+#### _mint(address account, uint256 amount)
+内部#
+在总供应量增加之后totalSupply。
+
+#### _burn(address account, uint256 amount)
+内部#
+在减少totalSupply之后Snapshots。
+
+#### _afterTokenTransfer(address from, address to, uint256 amount)
+内部#
+当代币转移时移动投票权。
+发出一个*IVotes.DelegateVotesChanged*事件。
+
+#### _delegate(address delegator, address delegatee)
+内部#
+将委托从委托者更改为委托受托人。
+
+发出事件 *IVotes.DelegateChanged* 和 *IVotes.DelegateVotesChanged*。
+
+### ERC20VotesComp
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol";
+```
+ERC20的扩展，支持Compound的投票和委托。该版本完全符合Compound的接口，但缺点是只支持供应量高达（2^96-1）。
+
+>NOTE
+如果您需要与COMP完全兼容（例如为了在Governor Alpha或Bravo中使用您的代币），并且您确定2^96的供应上限足够您使用，请使用此合约。否则，请使用此模块的*ERC20Votes*变体。
+
+此扩展保留每个帐户投票权的历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供用于*delegateBySig*的签名来委托。可以通过公共访问器*getCurrentVotes*和*getPriorVotes*查询投票权。
+
+默认情况下，代币余额不考虑投票权。这使得转账更便宜。缺点是需要用户委托给自己，以激活检查点并跟踪其投票权。
+
+*自v4.2以来可用。*
+
+**FUNCTIONS**
+getCurrentVotes(account)
+getPriorVotes(account, blockNumber)
+_maxSupply()
+
+ERC20VOTES
+clock()
+CLOCK_MODE()
+checkpoints(account, pos)
+numCheckpoints(account)
+delegates(account)
+getVotes(account)
+getPastVotes(account, timepoint)
+getPastTotalSupply(timepoint)
+delegate(delegatee)
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+_mint(account, amount)
+_burn(account, amount)
+_afterTokenTransfer(from, to, amount)
+_delegate(delegator, delegatee)
+
+ERC20PERMIT
+permit(owner, spender, value, deadline, v, r, s)
+nonces(owner)
+DOMAIN_SEPARATOR()
+_useNonce(owner)
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
