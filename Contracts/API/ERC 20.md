@@ -837,3 +837,231 @@ _transfer(from, to, amount)
 _approve(owner, spender, amount)
 _spendAllowance(owner, spender, amount)
 _beforeTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+DelegateVotesChanged(delegate, previousBalance, newBalance)
+
+IERC5267
+EIP712DomainChanged()
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### getCurrentVotes(address account) → uint96
+外部#
+*getVotes*信息的Comp版本访问器，返回类型为uint96。
+
+#### getPriorVotes(address account, uint256 blockNumber) → uint96
+外部#
+*getPastVotes*记录的访问器的Comp版本，返回类型为uint96。
+
+#### _maxSupply() → uint224
+内部#
+最大代币供应量。缩小至type(uint96).max（2^96-1）以适应COMP接口。
+
+### ERC20Wrapper
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol";
+```
+
+ERC20代币合约的扩展，以支持代币包装。
+
+用户可以存入和取出“基础代币”，并获得相应数量的“包装代币”。这在与其他模块结合使用时非常有用。例如，将此包装机制与*ERC20Votes*结合使用，可以将现有的“基本”ERC20包装成治理代币。
+
+*自v4.2以来可用。*
+
+**FUNCTIONS**
+constructor(underlyingToken)
+decimals()
+underlying()
+depositFor(account, amount)
+withdrawTo(account, amount)
+_recover(account)
+
+ERC20
+name()
+symbol()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### constructor(contract IERC20 underlyingToken)
+内部#
+
+#### decimals() → uint8
+公开#
+请查看 *ERC20.decimals*.
+
+#### underlying() → contract IERC20
+公开#
+返回被包装的基础ERC返回被封装的基础ERC-20代币的地址。
+
+#### depositFor(address account, uint256 amount) → bool
+公开#
+允许用户存入基础代币，并铸造相应数量的封装代币。
+
+#### withdrawTo(address account, uint256 amount) → bool
+公开#
+允许用户烧掉一定数量的封装代币，并提取相应数量的基础代币。
+
+#### _recover(address account) → uint256
+内部#
+Mint包装代币以覆盖可能因错误而转移的任何基础代币。如果需要，此内部函数可以通过访问控制公开。
+
+### ERC20FlashMint
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
+```
+实现 ERC3156 闪电贷扩展，如 [ERC-3156](https://eips.ethereum.org/EIPS/eip-3156) 中所定义。
+
+添加 *flashLoan* 方法，为代币级别提供闪电贷支持。默认情况下没有费用，但可以通过覆盖 *flashFee* 进行更改。
+
+*自 v4.1 版本起可用。*
+
+**FUNCTIONS**
+maxFlashLoan(token)
+flashFee(token, amount)
+_flashFee(token, amount)
+_flashFeeReceiver()
+flashLoan(receiver, token, amount, data)
+
+ERC20
+name()
+symbol()
+decimals()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### maxFlashLoan(address token) → uint256
+公开#
+返回可供借贷的最大代币数量。
+
+#### flashFee(address token, uint256 amount) → uint256
+公开#
+返回执行闪电贷款时应用的费用。该函数调用 *_flashFee* 函数，该函数返回执行闪电贷款时应用的费用。
+
+#### _flashFee(address token, uint256 amount) → uint256
+内部#
+返回进行闪电贷款时应用的费用。默认情况下，此实现没有任何费用。可以重载此函数，使闪电贷款机制通缩。
+
+#### _flashFeeReceiver() → address
+内部#
+返回闪电交易手续费的接收地址。默认情况下，此实现返回地址(0)，这意味着手续费金额将被烧掉。可以重载此函数以更改手续费接收者。
+
+#### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool
+公开#
+执行闪电贷款。新的代币被铸造并发送给接收方，接收方需要实现*IERC3156FlashBorrower*接口。在闪电贷款结束时，接收方应当拥有amount + fee代币并将其批准回到代币合约本身，以便它们可以被销毁。
+
+### ERC4626
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
+```
+实施 ERC4626“代币化保险库标准”，如 [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) 中定义的。
+
+该扩展允许通过标准化的*存款*、*铸造*、*赎回*和*销毁*流程，以“资产”为代价铸造和销毁“股份”（使用 ERC20 继承表示）。此合约扩展了 ERC20 标准。与它一起包含的任何其他扩展都会影响由此合约表示的“股份”代币，而不是独立合约的“资产”代币。
+
+>CAUTION
+在空的（或几乎空的）ERC-4626保险库中，存款有高风险通过“捐款”到保险库中被抢走，从而使股份的价格膨胀。这通常称为“捐赠”或通货膨胀攻击，本质上是滑点问题。保险库部署者可以通过进行一笔非微不足道的资产存款来防止这种攻击，从而使价格操纵变得不可行。提款也可能受到滑点的影响。用户也可以通过验证所接收的金额与预期金额相符来保护自己免受这种攻击以及意外滑点的影响，使用执行这些检查的包装器，例如 [ERC4626Router](https://github.com/fei-protocol/ERC4626#erc4626router-and-base)。
+
+自 v4.9 以来，该实现使用虚拟资产和股份来缓解这种风险。_decimalsOffset() 对应于基础资产的小数位数和保险库小数位数之间的小数表示之间的偏移量。此偏移量还确定了保险库中虚拟股份与虚拟资产之间的比率，这本身确定了初始汇率。虽然不能完全防止攻击，但分析表明，默认偏移量（0）使其不赚钱，因为虚拟股份捕获的价值（来自攻击者的捐赠）与攻击者的预期收益相匹配。使用较大的偏移量，攻击变得比盈利昂贵几个数量级。有关底层数学的更多详细信息，请参见*此处*。
+
+这种方法的缺点是虚拟股份确实捕获了（非常小的）部分累积到保险库的价值。此外，如果保险库遭受损失，用户试图退出保险库，虚拟股份和资产将导致第一个用户退出时经历减少的损失，而最后的用户将经历更大的损失。愿意恢复到 v4.9 之前行为的开发人员只需覆盖 _convertToShares 和 _convertToAssets 函数即可。
+
+要了解更多信息，请查看我们的 *ERC-4626 指南*。
+
+*自 v4.7 以来可用。*
+
+**FUNCTIONS**
+constructor(asset_)
+decimals()
+asset()
+totalAssets()
+convertToShares(assets)
+convertToAssets(shares)
+maxDeposit()
+maxMint()
+maxWithdraw(owner)
+maxRedeem(owner)
+previewDeposit(assets)
+previewMint(shares)
+previewWithdraw(assets)
+previewRedeem(shares)
+deposit(assets, receiver)
+mint(shares, receiver)
+withdraw(assets, receiver, owner)
+redeem(shares, receiver, owner)
+_convertToShares(assets, rounding)
+_convertToAssets(shares, rounding)
+_deposit(caller, receiver, assets, shares)
+_withdraw(caller, receiver, owner, assets, shares)
+_decimalsOffset()
+
+ERC20
+name()
+symbol()
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+increaseAllowance(spender, addedValue)
+decreaseAllowance(spender, subtractedValue)
+_transfer(from, to, amount)
+_mint(account, amount)
+_burn(account, amount)
+_approve(owner, spender, amount)
+_spendAllowance(owner, spender, amount)
+_beforeTokenTransfer(from, to, amount)
+_afterTokenTransfer(from, to, amount)
+
+**EVENTS**
+IERC4626
+Deposit(sender, owner, assets, shares)
+Withdraw(sender, receiver, owner, assets, shares)
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### constructor(contract IERC20 asset_)
