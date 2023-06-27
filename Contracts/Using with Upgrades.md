@@ -25,7 +25,7 @@ npm install @openzeppelin/contracts-upgradeable
 +contract MyCollectible is ERC721Upgradeable {
 ```
 
-构造函数被内部初始化函数所替代，遵循命名约定__{ContractName}_init。由于这些是内部的，您必须始终定义自己的公共初始化函数并调用您扩展的合同的父初始化函数。
+构造函数被内部初始化函数所替代，遵循命名约定__{ContractName}_init。由于这些是内部的，您必须始终定义自己的公共初始化函数并调用您扩展的合约的父初始化函数。
 ```
 -    constructor() ERC721("MyCollectible", "MCO") public {
 +    function initialize() initializer public {

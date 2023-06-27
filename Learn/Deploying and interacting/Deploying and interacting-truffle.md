@@ -154,7 +154,7 @@ BigNumber { _hex: '0x2a', _isBigNumber: true }
 在本节中，我们将学习如何从JavaScript与我们的合约进行交互，并使用Hardhat在我们的[Hardhat配置中运行我们的脚本](https://hardhat.org/guides/scripts.html)。
 
 >TIP
-请记住，还有许多其他JavaScript库可用，您可以使用您最喜欢的任何一个。一旦合同部署，您可以通过任何库与其交互！
+请记住，还有许多其他JavaScript库可用，您可以使用您最喜欢的任何一个。一旦合约部署，您可以通过任何库与其交互！
 
 ### 设置
 让我们在一个新的scripts/index.js文件中开始编写我们的JavaScript代码，从一些样板开始，包括[编写异步代码](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)的样板。
@@ -204,7 +204,7 @@ const Box = await ethers.getContractFactory('Box');
 const box = await Box.attach(address);
 ```
 >NOTE
-请确保将地址替换为部署合同时获得的地址，该地址可能与此处显示的地址不同。
+请确保将地址替换为部署合约时获得的地址，该地址可能与此处显示的地址不同。
 
 现在，我们可以使用这个JavaScript对象与我们的合约进行交互。
 

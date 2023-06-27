@@ -12,19 +12,19 @@ Defender Admin 服务充当通过安全的多重签名合约或时间锁管理�
 
 * 在紧急情况下暂停合约
 
-## 合同和提案
+## 合约和提案
 要开始在Defender Admin中管理您的合约，第一步是注册它。这是一个一次性的过程，您需要指定网络和地址，并为您的合约分配一个名称。如果合约已经被验证，合约的ABI将自动从etherscan或sourcify中提取，否则您需要手动输入它。
 
 >NOTE
 Defender Admin会自动尝试检测您的合约的一些特征。今天，它将检测它是否是一个[EIP1967兼容](https://eips.ethereum.org/EIPS/eip-1967)或传统的zOS代理（在这种情况下加载实现的ABI），以及它是否由*ProxyAdmin*合约管理。如果您已经使用[Sourcify](https://sourcify.dev/)验证了您的合约，您的NatSpec注释将在管理面板中可用。
 
-添加合同后，您可以为其创建新的提案。每个提案都是您要在合同上执行的操作，该操作通过多重签名合同执行，并需要达成一定数量的管理员同意。创建后，其他管理员可以审查和批准提案，直到其达到批准阈值并被执行。
+添加合约后，您可以为其创建新的提案。每个提案都是您要在合约上执行的操作，该操作通过多重签名合约执行，并需要达成一定数量的管理员同意。创建后，其他管理员可以审查和批准提案，直到其达到批准阈值并被执行。
 
-或者，如果该函数未限制只能通过多重签名调用，则还可以选择直接在管理员上执行合同上的操作。
+或者，如果该函数未限制只能通过多重签名调用，则还可以选择直接在管理员上执行合约上的操作。
 ![admin-1.png](img/admin-1.png)
 
 >NOTE
-在创建新提案时，Defender Admin将首先模拟它，并且如果该操作回退，它将拒绝创建它，并显示合同返回的回退原因。
+在创建新提案时，Defender Admin将首先模拟它，并且如果该操作回退，它将拒绝创建它，并显示合约返回的回退原因。
 ![admin-2.png](img/admin-2.png)
 
 这是一个视频演示，展示了使用EOA和多重签名来提出和批准管理操作的过程：
@@ -106,10 +106,10 @@ Gnosis Safe钱包还允许执行DELEGATECALL到其他合约中，以在多签上
 ### 发送资金
 Gnosis Safe钱包上的发送资金功能可以让您将网络原生资产从您的Gnosis Safe转移到您选择的接收者。
 
-要使用此功能，您需要将Gnosis Safe钱包添加到Defender Admin合同集合中。在Admin中转到您的Gnosis Safe页面，点击新建提案→发送资金。然后选择收件人地址和要转移的资金金额。从那时起，它就像任何其他管理提案一样运作：您需要从足够的Gnosis Safe所有者那里收集批准才能执行交易。Defender会指导您完成该过程。
+要使用此功能，您需要将Gnosis Safe钱包添加到Defender Admin合约集合中。在Admin中转到您的Gnosis Safe页面，点击新建提案→发送资金。然后选择收件人地址和要转移的资金金额。从那时起，它就像任何其他管理提案一样运作：您需要从足够的Gnosis Safe所有者那里收集批准才能执行交易。Defender会指导您完成该过程。
 
 >NOTE
-如果您最初从Defender部署了您的Gnosis Safe，它已经在您的Defender Admin合同列表中的Multisigs部分中。
+如果您最初从Defender部署了您的Gnosis Safe，它已经在您的Defender Admin合约列表中的Multisigs部分中。
 
 我们正在努力扩展此功能，使其能够发送ERC20代币资金，请保持关注。
 
@@ -123,7 +123,7 @@ Gnosis MultisigWallet要求每个管理员提交新的交易以获得他们的�
 
 使用Defender创建Gnosis Safe多重签名
 https://youtu.be/IOescPDrF7Y
-您可以直接从Defender创建和部署新的Gnosis Safe多重签名钱包。这在官方Gnosis Safe UI尚未可用的网络中特别方便。要创建新的Gnosis Safe，请转到“管理”并单击“合同”，然后单击“创建Gnosis Safe”。您将进入一个简单的表单，要求您提供多重签名的初始所有者列表和门槛。就是这样！
+您可以直接从Defender创建和部署新的Gnosis Safe多重签名钱包。这在官方Gnosis Safe UI尚未可用的网络中特别方便。要创建新的Gnosis Safe，请转到“管理”并单击“合约”，然后单击“创建Gnosis Safe”。您将进入一个简单的表单，要求您提供多重签名的初始所有者列表和门槛。就是这样！
 
 ### 从Defender修改您的多重签名设置
 您可以通过创建自定义操作提案来修改您的多重签名设置，以执行管理函数addOwner或changeThreshold，就像您导入Defender中的任何其他合约一样。
@@ -132,13 +132,13 @@ https://youtu.be/IOescPDrF7Y
 ## 时间锁
 从Defender创建一个时间锁控制器
 https://youtu.be/Yi9Y0bcj-Zc
-您可以直接从Defender创建和部署新的Timelock Controller。要创建新的Timelock，请转到“管理”并单击“合同”，然后单击“创建Timelock”。您将进入一个简单的表格，在那里您将被要求提供最初的提议者和执行者列表，以及提议执行的最小延迟时间。
+您可以直接从Defender创建和部署新的Timelock Controller。要创建新的Timelock，请转到“管理”并单击“合约”，然后单击“创建Timelock”。您将进入一个简单的表格，在那里您将被要求提供最初的提议者和执行者列表，以及提议执行的最小延迟时间。
 
-为了在etherscan上验证合同，您可以在下面找到源代码和编译器设置：
+为了在etherscan上验证合约，您可以在下面找到源代码和编译器设置：
 
-部署使用OpenZeppelin Contracts库提供的[TimelockController合同v4.8.1的原始实例](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.1/contracts/governance/TimelockController.sol)。
+部署使用OpenZeppelin Contracts库提供的[TimelockController合约v4.8.1的原始实例](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.8.1/contracts/governance/TimelockController.sol)。
 
-部署合同的编译器设置：
+部署合约的编译器设置：
 ```
 solidity: {
     version: "0.8.4",
@@ -151,7 +151,7 @@ solidity: {
 }
 ```
 
-### 将合同所有权转移给TimelockController
+### 将合约所有权转移给TimelockController
 为了利用时间锁执行函数，需要将其分配访问权限到相应的智能合约，可以通过角色或所有权来实现。可以通过调用transferOwnership或相*关角色*分配函数来完成。
 https://youtu.be/cXDp2n5al7U
 
@@ -175,9 +175,9 @@ https://youtu.be/59p98wGqdVo
 
 1. 收集足够的多签所有者批准（根据多签的当前配置）。
 
-2. 安排行动，具有指定的延迟期。请注意，使用的多签需要是TimelockController合同中的提议者。在此阅读更多信息。
+2. 安排行动，具有指定的延迟期。请注意，使用的多签需要是TimelockController合约中的提议者。在此阅读更多信息。
 
-3. 在指定的延迟期结束后执行操作。值得注意的是，在TimelockController合同中执行此操作的EOA需要是执行者。
+3. 在指定的延迟期结束后执行操作。值得注意的是，在TimelockController合约中执行此操作的EOA需要是执行者。
 
 >NOTE
 目前Defender不支持定时锁定的升级提案。这项能力正在开发中，我们计划很快发布它。
@@ -227,14 +227,14 @@ Defender Admin支持在OpenZeppelin的Governor合约以及Compound的Alpha和Bra
 今天在Defender Admin中的所有批准都通过Metamask处理。Defender Admin还通过[Metamask支持硬件钱包](https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet)。到目前为止，我们已经测试了与[Ledger Nano](https://www.ledger.com/)的支持。如果您想使用不同的钱包（软件或硬件）与Defender配合使用，请联系我们。
 
 ## 地址簿
-您团队的所有成员都可以共享一个地址簿，您可以在其中为您的账户或合同定义用户友好的名称。您可以在 Defender 中任何看到地址的地方单击它来设置这些名称，或者您可以在右上角用户菜单中的相应部分管理您的整个地址簿。当您将新合同导入 Admin 时，Defender 也会自动为您创建地址簿条目。
+您团队的所有成员都可以共享一个地址簿，您可以在其中为您的账户或合约定义用户友好的名称。您可以在 Defender 中任何看到地址的地方单击它来设置这些名称，或者您可以在右上角用户菜单中的相应部分管理您的整个地址簿。当您将新合约导入 Admin 时，Defender 也会自动为您创建地址簿条目。
 ![admin-20.png](img/admin-20.png)
 
 Defender还将在需要输入地址时从通讯录中获取信息，因此您可以轻松地从通讯录中获取地址以创建新的提案或发送交易。
 ![admin-21.png](img/admin-21.png)
 
 ## 模拟和影响
-Defender可以模拟与任何待处理提案相关的交易，因此您可以在批准提案之前审查执行提案的影响。该交易被模拟，就像在最近的已确定块上运行一样，确认数取决于网络，并直接从执行合同（通常是多签）发送到接收方。模拟使用Hardhat分叉作为动力，并存储供其他团队成员审查。
+Defender可以模拟与任何待处理提案相关的交易，因此您可以在批准提案之前审查执行提案的影响。该交易被模拟，就像在最近的已确定块上运行一样，确认数取决于网络，并直接从执行合约（通常是多签）发送到接收方。模拟使用Hardhat分叉作为动力，并存储供其他团队成员审查。
 
 模拟将显示：
 
@@ -242,9 +242,9 @@ Defender可以模拟与任何待处理提案相关的交易，因此您可以在
 
 * 在交易中发出的事件
 
-* 所有涉及到的合同的存储更改
+* 所有涉及到的合约的存储更改
 
-* 所有涉及到的合同的公共getter的更改
+* 所有涉及到的合约的公共getter的更改
 ![admin-22.png](img/admin-22.png)
 
 >NOTE
@@ -293,7 +293,7 @@ Defender将要求您提供三个信息以继续验证过程：
 
 为了进行程序验证，我们强烈建议使用hardhat-defender插件。但是，您也可以使用defender-client包（请参见此处的验证示例），或直接与原始REST API进行交互。这些组件相互构建，因此最终所有功能都可通过任何一个组件使用。我们仍然建议您使用hardhat-defender插件以获得最流畅的体验。
 
-### 验证任何合同
+### 验证任何合约
 虽然我们预计大多数Defender用户将使用此功能来帮助确保其升级工作流程的安全性，但值得注意的是，无论是否是可升级实现，验证功能都可用于任何合约。
 
 在这种情况下，验证的UI可以在Defender中悬停任何合约地址并单击“验证”来找到。

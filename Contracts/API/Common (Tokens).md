@@ -4,7 +4,7 @@
 * *ERC2981*：NFT版税与ERC721和ERC1155兼容。
     * 对于ERC721，请考虑*ERC721Royalty*，它会在销毁时从存储中清除版税信息。
 
-## 合同
+## 合约
 
 ## ERC2981
 ```
@@ -44,7 +44,7 @@ _resetTokenRoyalty(tokenId)
 
 #### _setDefaultRoyalty(address receiver, uint96 feeNumerator)
 内部#
-设置所有合同中的ID默认的版税信息。
+设置所有合约中的ID默认的版税信息。
 要求：
 * 接收方地址不能为零地址。
 * 费用分子不能大于费用分母。

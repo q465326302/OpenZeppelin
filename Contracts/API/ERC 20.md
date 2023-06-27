@@ -196,7 +196,7 @@ Approval(owner, spender, value)
 代币通常选择18的值，模仿以太和Wei之间的关系。除非被覆盖，否则该函数返回默认值18。
 
 >NOTE
-这些信息仅用于显示目的，它不会影响合同的任何算术，包括*IERC20.balanceOf*和*IERC20.transfer*。
+这些信息仅用于显示目的，它不会影响合约的任何算术，包括*IERC20.balanceOf*和*IERC20.transfer*。
 
 #### totalSupply() → uint256
 公开#
@@ -1174,7 +1174,7 @@ import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol"
 
 部署合约的账户将被授予铸造者和暂停者角色，以及默认管理员角色，这将使其授予其他账户铸造者和暂停者角色。
 
-弃用，有利于[合同向导](https://wizard.openzeppelin.com/)。
+弃用，有利于[合约向导](https://wizard.openzeppelin.com/)。
 
 **FUNCTIONS**
 constructor(name, symbol)
@@ -1283,7 +1283,7 @@ import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
 * 持有人可以烧毁（销毁）他们的代币的能力
 * 没有访问控制机制（用于铸造/暂停），因此没有治理
 
-该合同使用*ERC20Burnable*包括烧毁功能-请查看其文档以获取详细信息。
+该合约使用*ERC20Burnable*包括烧毁功能-请查看其文档以获取详细信息。
 
 *自v3.4以来可用。*
 

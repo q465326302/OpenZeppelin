@@ -1,14 +1,14 @@
 # Extending Contracts 
-大多数OpenZeppelin合同都预计通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用：在编写自己的合同时，您将继承它们。
+大多数OpenZeppelin合约都预计通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用：在编写自己的合约时，您将继承它们。
 
-这是常见的语法，例如合同MyToken是ERC20。
+这是常见的语法，例如合约MyToken是ERC20。
 
 >NOTE
-与合同不同，Solidity库不是继承自的，而是依赖于使用[for语法](https://solidity.readthedocs.io/en/latest/contracts.html#using-for)。
-OpenZeppelin合同有一些库：大多数位于[Utils](https://docs.openzeppelin.com/contracts/4.x/api/utils)目录中。
+与合约不同，Solidity库不是继承自的，而是依赖于使用[for语法](https://solidity.readthedocs.io/en/latest/contracts.html#using-for)。
+OpenZeppelin合约有一些库：大多数位于[Utils](https://docs.openzeppelin.com/contracts/4.x/api/utils)目录中。
 
 ## 覆盖
-继承通常用于将父合同的功能添加到您自己的合同中，但这不是它的全部作用。您还可以使用覆盖来更改父级的某些部分行为。
+继承通常用于将父合约的功能添加到您自己的合约中，但这不是它的全部作用。您还可以使用覆盖来更改父级的某些部分行为。
 
 例如，想象一下，您想更改*AccessControl*，以便无法调用*revokeRole*。这可以使用覆盖来实现：
 ```
@@ -61,7 +61,7 @@ super.revokeRole语句在最后将调用AccessControl的原始版本revokeRole�
 *AccessControlDefaultAdminRules*中实现并扩展了相同的规则，该扩展还为DEFAULT_ADMIN_ROLE添加了强制安全措施。
 
 ## 使用钩子
-有时，为了扩展父合同，您需要覆盖多个相关函数，这会导致代码重复和错误的可能性增加。
+有时，为了扩展父合约，您需要覆盖多个相关函数，这会导致代码重复和错误的可能性增加。
 
 例如，考虑以*IERC721Receiver*的方式实现安全的*ERC20*转账。您可能认为覆盖*transfer*和*transferFrom*就足够了，但是*_transfer*和*_mint*呢？为了防止您处理这些细节，我们引入了**钩子**。
 
@@ -95,9 +95,9 @@ contract ERC20WithSafeTransfer is ERC20 {
 ### 钩子的规则
 在编写使用钩子的代码时，应遵循一些指导方针以防止出现问题。它们非常简单，但确保您遵循它们：
 
-1. 每当覆盖父级的钩子时，请重新应用虚拟属性到钩子上。这将允许子合同向钩子添加更多功能。
+1. 每当覆盖父级的钩子时，请重新应用虚拟属性到钩子上。这将允许子合约向钩子添加更多功能。
 
-2. **始终**在覆盖中使用super调用父级的钩子。这将确保调用继承树中的所有钩子：像*ERC20Pausable*这样的合同依赖于这种行为。
+2. **始终**在覆盖中使用super调用父级的钩子。这将确保调用继承树中的所有钩子：像*ERC20Pausable*这样的合约依赖于这种行为。
 
 ```
 contract MyToken is ERC20 {

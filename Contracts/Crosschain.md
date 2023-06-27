@@ -1,12 +1,12 @@
 # Adding cross-chain support to contracts
-如果您的合同旨在用于多链操作的上下文中，您可能需要特定的工具来识别和处理这些跨链操作。
+如果您的合约旨在用于多链操作的上下文中，您可能需要特定的工具来识别和处理这些跨链操作。
 
-OpenZeppelin提供了*CrossChainEnabled*抽象合同，其中包括专用的内部函数。
+OpenZeppelin提供了*CrossChainEnabled*抽象合约，其中包括专用的内部函数。
 
 在本指南中，我们将通过一个示例用例来介绍如何构建一个可升级和可铸造的ERC20代币，由一个存在于外部链上的治理者控制。
 
-## 起点，我们的ERC20合同
-让我们从一个小的ERC20合同开始，我们使用[OpenZeppelin Contracts Wizard](https://wizard.openzeppelin.com/)引导并扩展了一个具有铸造能力的所有者。请注意，出于演示目的，我们没有使用内置的Ownable合同。
+## 起点，我们的ERC20合约
+让我们从一个小的ERC20合约开始，我们使用[OpenZeppelin Contracts Wizard](https://wizard.openzeppelin.com/)引导并扩展了一个具有铸造能力的所有者。请注意，出于演示目的，我们没有使用内置的Ownable合约。
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;

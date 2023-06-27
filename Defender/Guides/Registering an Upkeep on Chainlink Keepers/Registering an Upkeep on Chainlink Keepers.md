@@ -1,5 +1,5 @@
 # Registering an Upkeep on Chainlink Keepers
-本文将指导您使用Defender Admin在Chainlink Keepers上注册您的合同作为**Upkeep**，并利用Relayers、Autotasks和Sentinels进行[监控和操作](https://andrecronje.medium.com/scaling-keep3r-with-chainlink-2832bbc76506)，这是[Keep3r Network](https://keep3r.network/)的一次改进。
+本文将指导您使用Defender Admin在Chainlink Keepers上注册您的合约作为**Upkeep**，并利用Relayers、Autotasks和Sentinels进行[监控和操作](https://andrecronje.medium.com/scaling-keep3r-with-chainlink-2832bbc76506)，这是[Keep3r Network](https://keep3r.network/)的一次改进。
 
 ## 什么是Chainlink Keepers？
 Chainlink Keepers旨在提供智能合约选项，以信任最小化（去中心化）的方式外包常规维护任务（收获、清算、重新基准等）。该网络旨在为保持者生态系统提供激励和治理协议。
@@ -11,14 +11,14 @@ Chainlink Keepers旨在提供智能合约选项，以信任最小化（去中心
 * Registry：为上述参与者提供发现机制，并提供钩子以保持网络的健康。
 
 ## 先决条件
-您需要LINK代币以支付Upkeep合同的执行。对于Kovan，您可以在此[水龙头](https://kovan.chain.link/)中获取它们。对于Mainnet，您可以在Uniswap上购买它们。您还需要ETH来支付任何需要发送的交易。
+您需要LINK代币以支付Upkeep合约的执行。对于Kovan，您可以在此[水龙头](https://kovan.chain.link/)中获取它们。对于Mainnet，您可以在Uniswap上购买它们。您还需要ETH来支付任何需要发送的交易。
 
 ## 实现Upkeep接口
-将合同注册为Upkeep的第一步是实现所需的Upkeep接口，该接口由以下[两种方法](https://docs.chain.link/docs/chainlink-keepers/compatible-contracts/)组成：
+将合约注册为Upkeep的第一步是实现所需的Upkeep接口，该接口由以下[两种方法](https://docs.chain.link/docs/chainlink-keepers/compatible-contracts/)组成：
 
-* checkUpKeep：此函数将在每个块（约15秒）中调用，布尔返回值决定此时是否需要为合同提供服务。如果需要维护，您还可以返回将传递给performUpkeep函数的字节。
+* checkUpKeep：此函数将在每个块（约15秒）中调用，布尔返回值决定此时是否需要为合约提供服务。如果需要维护，您还可以返回将传递给performUpkeep函数的字节。
 
-* performUpkeep：这个函数是合同需要维护的实际维护。只有在checkUpKeep返回true时才会调用此函数。
+* performUpkeep：这个函数是合约需要维护的实际维护。只有在checkUpKeep返回true时才会调用此函数。
 
 ```
 pragma solidity 0.7.6;
@@ -81,7 +81,7 @@ interface KeeperCompatibleInterface {
 一旦部署完成，您可以将您的合约注册为Keeper网络上的Upkeep。使用Defender来完成此操作，首先在Admin中添加您的合约。Defender将自动检查您的合约是否正确实现了Upkeep接口。
 ![guide-chainlink-1.png](img/guide-chainlink-1.png)
 
-从您的合同页面开始，您现在可以通过点击“在Chainlink Keeper中注册”来开始Chainlink Keeper的维护注册。
+从您的合约页面开始，您现在可以通过点击“在Chainlink Keeper中注册”来开始Chainlink Keeper的维护注册。
 ![guide-chainlink-2.png](img/guide-chainlink-2.png)
 
 为开始注册流程，Defender会要求您填写一个注册Google表单。这个表格将由Chainlink Keepers入门团队进行审查，作为开放测试版批准流程的一部分。您填写的信息将有助于改进Chainlink Keepers，为您的用例提供最佳解决方案。
@@ -91,10 +91,10 @@ interface KeeperCompatibleInterface {
 
 当您填写完注册Google表格后返回，Defender将要求您输入管理员地址（可以提取资金）、电子邮件（用于Chainlink的通知目的）和Keeper调用的Gas限制（在2300和2500000之间）。
 
-在撰写本文时，注册流程要求您为您的合同提供至少5个LINK的初始资金，因此请确保您用于请求注册的帐户至少拥有该金额的LINK。您可以选择将这个初始资金变得更大，以节省未来的加油费。
+在撰写本文时，注册流程要求您为您的合约提供至少5个LINK的初始资金，因此请确保您用于请求注册的帐户至少拥有该金额的LINK。您可以选择将这个初始资金变得更大，以节省未来的加油费。
 ![guide-chainlink-4.png](img/guide-chainlink-4.png)
 
-一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合同页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时您的合同页面的外观。
+一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合约页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时您的合约页面的外观。
 ![guide-chainlink-5.png](img/guide-chainlink-5.png)
 
 当您的注册被批准后，Defender将向您显示您的Upkeep余额以及网络保管人的最新执行情况。请注意，为了使您的合约得到网络的服务，您还需要用LINK令牌为其提供资金。您也可以通过在Defender上点击“存入LINK”来完成这个过程。

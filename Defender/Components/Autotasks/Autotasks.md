@@ -1,16 +1,16 @@
 # Autotasks
-Defender Autotasks服务允许您定期运行代码片段，通过Webhooks或响应交易。由于与*Relay*和*Sentinels*的紧密集成，您可以使用Autotasks通过轻松发送交易或对合同事件做出反应来自动化定期操作。
+Defender Autotasks服务允许您定期运行代码片段，通过Webhooks或响应交易。由于与*Relay*和*Sentinels*的紧密集成，您可以使用Autotasks通过轻松发送交易或对合约事件做出反应来自动化定期操作。
 
 ## 使用案例
-在您需要定期运行的合同操作时，请使用Autotasks。由于您可以运行任意代码片段，因此可以触发任何所需的交易，检查任何所需的条件，并从任何外部API中收集信息。
+在您需要定期运行的合约操作时，请使用Autotasks。由于您可以运行任意代码片段，因此可以触发任何所需的交易，检查任何所需的条件，并从任何外部API中收集信息。
 
-* 检查合同余额，并在达到阈值时将**资金转移到钱包**中
+* 检查合约余额，并在达到阈值时将**资金转移到钱包**中
 
 * 使用外部API的信息**更新链上oracle**
 
-* **监视您的合同**以验证其状态或检查离线数据源是否同步
+* **监视您的合约**以验证其状态或检查离线数据源是否同步
 
-* 在满足一组条件后，触发合同以使其**转换到新状态**
+* 在满足一组条件后，触发合约以使其**转换到新状态**
 
 * 通过Webhooks与**外部第三方服务**集成
 
@@ -325,7 +325,7 @@ defender-autotask update-code $AUTOTASK_ID ./path/to/code
 代码包在压缩和base64编码后不得超过5MB的大小，并且您必须始终在zip文件的根目录中包含一个index.js作为入口点。
 
 ## 一个完整的例子
-以下示例使用ethers.js和Autotask-Relayer集成来发送调用给定合同的execute的交易。在发送交易之前，它使用Defender提供程序检查canExecute视图函数，并验证通过Webhook接收到的参数是否与本地秘密匹配。如果发送了交易，则返回哈希值作为响应，该哈希值将发送回Webhook调用者。
+以下示例使用ethers.js和Autotask-Relayer集成来发送调用给定合约的execute的交易。在发送交易之前，它使用Defender提供程序检查canExecute视图函数，并验证通过Webhook接收到的参数是否与本地秘密匹配。如果发送了交易，则返回哈希值作为响应，该哈希值将发送回Webhook调用者。
 ```
 const { ethers } = require("ethers");
 const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-client/lib/ethers');

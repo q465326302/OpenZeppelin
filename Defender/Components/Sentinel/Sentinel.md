@@ -12,7 +12,7 @@ Defender Sentinel服务提供3种类型的Sentinels，分别是Contract Sentinel
 
 * 通过Slack、Telegram、Discord、电子邮件或自定义Autotask集成与现有工具集成
 
-### 何时使用合同而不是Forta Sentinel
+### 何时使用合约而不是Forta Sentinel
 合约Sentinels特别适用于监测单个合约的交易。通过合约条件，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、价值等。
 
 FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合约，通过连接到Forta机器人开发者定义的事件和条件。Forta机器人比合约Sentinels更具灵活性，可以定义更多的交易条件。
@@ -103,7 +103,7 @@ FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器
 >NOTE
 如果未指定严重性或警报ID，则Sentinel将监视与您指定的Bot ID和/或地址匹配的所有警报。
 
-## 合同条件是什么?
+## 合约条件是什么?
 条件作为过滤器，允许您进一步缩小交易范围。这些条件被输入为表达式，提供了很大的灵活性。条件非常像Javascript表达式。为了适应校验和和非校验和地址的比较，比较是不区分大小写的。
 
 >NOTE
@@ -556,7 +556,7 @@ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 自动任务执行受配额限制。配额用尽后，自动任务将不再执行。如果您需要提高自动任务执行配额，请发送电子邮件至defender@openzeppelin.com，并描述您的用例。
 
 ## Autotask事件
-sentinel将向您的自动任务传递有关交易的信息。如果您使用TypeScript编写自动任务，则可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)包中的BlockTriggerEvent类型进行合同sentinel，使用FortaTriggerEvent类型进行FortaSentinels。
+sentinel将向您的自动任务传递有关交易的信息。如果您使用TypeScript编写自动任务，则可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)包中的BlockTriggerEvent类型进行合约sentinel，使用FortaTriggerEvent类型进行FortaSentinels。
 
 ### Autotask示例
 ```

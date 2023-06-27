@@ -150,10 +150,10 @@ exports.handler = async function (event) {
 然后在下一个屏幕上，验证信息并选择批准和执行并支付燃气费。
 ![guide-factory-6.png](img/guide-factory-6.png)
 
-前往日志以验证管理员提案的状态、Sentinel的解雇、Autotask的执行以及合同是否已添加到管理员控制面板。
+前往日志以验证管理员提案的状态、Sentinel的解雇、Autotask的执行以及合约是否已添加到管理员控制面板。
 ![guide-factory-7.png](img/guide-factory-7.png)
 
-转到管理员页面，在仪表板中查看新合同以及其他合同。
+转到管理员页面，在仪表板中查看新合约以及其他合约。
 ![guide-factory-8.png](img/guide-factory-8.png)
 
 您需要克隆合约的地址，以进行下一步操作。从仪表板上的列表中复制其地址。
@@ -207,9 +207,9 @@ await sentinelClient.update(subscriberId, { addresses: subscribedAddresses })
 ```
 点击保存更改。
 
-现在当Autotask运行时，它不仅会将合同添加到管理员仪表板中，还会将新创建的克隆合同添加到Contract Sentinel监视的地址数组中。
+现在当Autotask运行时，它不仅会将合约添加到管理员仪表板中，还会将新创建的克隆合约添加到Contract Sentinel监视的地址数组中。
 
-为了验证，从工厂创建另一个Box克隆合同。在日志中，您将看到成功触发的一系列步骤。
+为了验证，从工厂创建另一个Box克隆合约。在日志中，您将看到成功触发的一系列步骤。
 
 ![guide-factory-10.png](img/guide-factory-10.png)
 

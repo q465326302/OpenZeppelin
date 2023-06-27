@@ -12,19 +12,19 @@
 Defender Admin允许用户将现有智能合约导入到Defender中，以更轻松地管理它们。可以通过以下方式实现：
 1. 导航到管理页面。
 
-2. 点击“添加合同”。
+2. 点击“添加合约”。
 
-3. 选择“导入合同”。
+3. 选择“导入合约”。
 ![guide-timelock-roles-1.png](img/guide-timelock-roles-1.png)
-4. 给合同起一个相关的名称，以便您可以轻松识别它。
+4. 给合约起一个相关的名称，以便您可以轻松识别它。
 
-5. 选择合同部署的网络。
+5. 选择合约部署的网络。
 
-6. 复制合同地址，可选择给它起一个别名以便于识别。
+6. 复制合约地址，可选择给它起一个别名以便于识别。
 
-7. 如果您的合同未在Etherscan上进行验证，Defender将无法自动检索ABI。您需要手动粘贴ABI。
+7. 如果您的合约未在Etherscan上进行验证，Defender将无法自动检索ABI。您需要手动粘贴ABI。
 
-8. 添加您的合同。
+8. 添加您的合约。
 
 ![guide-timelock-roles-2.png](img/guide-timelock-roles-2.png)
 
@@ -38,7 +38,7 @@ Defender管理员允许用户创建和管理提案。提案反过来允许您直
 3. 创建一个新的提案（“管理员操作”）。
 ![guide-timelock-roles-3.png](img/guide-timelock-roles-3.png)
 
-在右侧，您将看到合同状态，包括与前述角色相关联的三个值。
+在右侧，您将看到合约状态，包括与前述角色相关联的三个值。
 ![guide-timelock-roles-4.png](img/guide-timelock-roles-4.png)
 
 ## 授予角色
@@ -48,7 +48,7 @@ Defender管理员允许用户创建和管理提案。提案反过来允许您直
 
 2. 从下拉菜单中选择grantRole函数。
 
-3. 输入您希望授予的角色的值（您可以从右侧的合同状态中复制和粘贴此值）。
+3. 输入您希望授予的角色的值（您可以从右侧的合约状态中复制和粘贴此值）。
 
 4. 选择您希望授予角色的帐户。
 ![guide-timelock-roles-5.png](img/guide-timelock-roles-5.png)

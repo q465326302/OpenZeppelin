@@ -10,7 +10,7 @@ Admin API允许您以编程方式创建新的Admin提案。
 不建议在浏览器环境中使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包，因为敏感密钥将被公开显示。
 
 ## 提案端点
-通过POST请求使用/proposals端点创建新的Admin操作提案。通过此方式创建的任何操作最初都没有批准。如果提案的接收方合同不存在，则将使用提供的参数创建它。
+通过POST请求使用/proposals端点创建新的Admin操作提案。通过此方式创建的任何操作最初都没有批准。如果提案的接收方合约不存在，则将使用提供的参数创建它。
 ```
 type Network =
   | 'mainnet'
@@ -158,7 +158,7 @@ curl \
 ```
 
 >WARNING
-Defender API仅验证函数输入是否符合签名，但不验证提案是否实际可执行。这意味着您可以创建调用合同上不存在的函数或尝试升级无法升级的合同的提案。但是，您将无法之后批准它们。
+Defender API仅验证函数输入是否符合签名，但不验证提案是否实际可执行。这意味着您可以创建调用合约上不存在的函数或尝试升级无法升级的合约的提案。但是，您将无法之后批准它们。
 
 ### 存档提案
 可以通过API调用通过在PUT调用有效负载中传递布尔归档值来存档（和取消存档）提案：
@@ -194,7 +194,7 @@ curl \
   -d "$DATA" \
     "https://defender-api.openzeppelin.com/admin/contracts/${CONTRACT_ID}/proposals/${PROPOSAL_ID}"
 ```
-可以使用defender-admin-client通过传递合同和提案ID进行相同的调用：
+可以使用defender-admin-client通过传递合约和提案ID进行相同的调用：
 ```
 await client.getProposal(contractId, proposalId);
 ```
@@ -303,7 +303,7 @@ curl \
   -d "$DATA" \
     "https://defender-api.openzeppelin.com/admin/contracts"
 ```
-您还可以向相同的端点发出GET请求，以检索导入的所有合同列表。
+您还可以向相同的端点发出GET请求，以检索导入的所有合约列表。
 
 ## 验证端点
 /verifications端点可用于验证Defender支持的任何网络中任何合约的部署字节码。通过向端点发出POST请求，您可以发出验证请求，其结果将存储在Defender的地址簿中。这反过来将使任何具有访问您的Defender工作区的权限的人都可以访问这些结果。

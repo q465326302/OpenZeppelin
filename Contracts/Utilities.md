@@ -32,7 +32,7 @@ function _verify(bytes32 data, bytes memory signature, address account) internal
 
 * *IERC165* - 这是定义 *supportsInterface* 的 ERC165 接口。在实现 ERC165 时，您将符合此接口。
 
-* *ERC165* - 如果您想使用合同存储中的查找表支持接口检测，请继承此合约。您可以使用 *_registerInterface(bytes4)* 注册接口：请查看作为 ERC721 实现的示例用法。
+* *ERC165* - 如果您想使用合约存储中的查找表支持接口检测，请继承此合约。您可以使用 *_registerInterface(bytes4)* 注册接口：请查看作为 ERC721 实现的示例用法。
 
 * ERC165Checker - ERC165Checker 简化了检查合约是否支持您关心的接口的过程。
 

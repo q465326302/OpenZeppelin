@@ -19,11 +19,11 @@ $ npm install
 
 在本地的 .env 文件中提供必要的 API 密钥。以下值是期望的：
 
-* PRIVATE_KEY：用于在 Goerli 网络上部署合同
+* PRIVATE_KEY：用于在 Goerli 网络上部署合约
 * API_KEY：Defender 团队 API 密钥
 * API_SECRET：Defender 团队 API 密钥
 
-## 部署 ERC20 合同
+## 部署 ERC20 合约
 OpenZeppelin [Contracts Wizard](https://wizard.openzeppelin.com/) 提供了一个易于创建智能合约的 API。生成一个*可暂停的* ERC20 合约，它是可铸造的、可暂停的，并实现*基于角色的访问控制*，预铸 100 万令牌。预提供的脚本自动化了这个过程：
 ```
 import { erc20 } from '@openzeppelin/wizard'

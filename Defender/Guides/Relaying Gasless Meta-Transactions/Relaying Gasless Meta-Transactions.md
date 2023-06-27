@@ -53,8 +53,8 @@ const relayer = await relayClient.create(requestParams);
 
 当您想要通过API发送交易时，将使用Relayer的API密钥和密钥。在上面的代码中，它附加到现有的.env文件中。
 
-## 使用Hardhat编译合同
-请使用以下代码编写您的Registry.sol合同：
+## 使用Hardhat编译合约
+请使用以下代码编写您的Registry.sol合约：
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;

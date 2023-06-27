@@ -29,7 +29,7 @@ yarn add defender-serverless
 
 * 利用defender-serverless存储库中提供的示例模板。
 
-如果您已经在Defender中拥有资源，例如合同、通知、中继、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
+如果您已经在Defender中拥有资源，例如合约、通知、中继、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
 ![serverless-plugin-1.png](img/serverless-plugin-1.png)
 
 >NOTE

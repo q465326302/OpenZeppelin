@@ -153,7 +153,7 @@ contract Auth {
     }
 }
 ```
-要使用来自Box的此合同，我们使用一个导入语句，通过其相对路径引用Auth：
+要使用来自Box的此合约，我们使用一个导入语句，通过其相对路径引用Auth：
 ```
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
@@ -193,11 +193,11 @@ contract Box {
 可重用的模块和库是优秀软件的基石。*OpenZeppelin Contracts* 包含许多有用的智能合约构建模块。当你在这些模块上构建时，你可以放心：它们经过多次审计，其安全性和正确性经过了实战检验。
 
 ### 关于继承
-库中的许多合同不是独立的，也就是说，你不需要将它们原封不动地部署。相反，你将使用它们作为起点，通过添加功能来构建自己的合同。Solidity 提供了多重继承作为实现此目的的机制：请查看 [Solidity 文档](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)以获取更多详细信息。
+库中的许多合约不是独立的，也就是说，你不需要将它们原封不动地部署。相反，你将使用它们作为起点，通过添加功能来构建自己的合约。Solidity 提供了多重继承作为实现此目的的机制：请查看 [Solidity 文档](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)以获取更多详细信息。
 
-例如，*Ownable* 合同将部署者帐户标记为合同的所有者，并提供了一个名为 onlyOwner 的修改器。当应用于函数时，onlyOwner 会导致所有不是由所有者帐户发起的函数调用失败。还提供了*转移*和*放弃*所有权的函数。
+例如，*Ownable* 合约将部署者帐户标记为合约的所有者，并提供了一个名为 onlyOwner 的修改器。当应用于函数时，onlyOwner 会导致所有不是由所有者帐户发起的函数调用失败。还提供了*转移*和*放弃*所有权的函数。
 
-使用这种方式，继承成为一种强大的机制，允许进行模块化，而不需要强制部署和管理多个合同。
+使用这种方式，继承成为一种强大的机制，允许进行模块化，而不需要强制部署和管理多个合约。
 
 ### 导入OpenZeppelin Contracts
 最新发布的OpenZeppelin Contracts库可以通过运行以下命令下载：

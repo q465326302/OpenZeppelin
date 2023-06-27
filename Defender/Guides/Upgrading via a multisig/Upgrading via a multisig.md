@@ -7,7 +7,7 @@
 * 通过Defender Admin在多重签名钱包中执行升级
 
 ## 什么是升级？
-以太坊中的智能合约默认情况下是不可变的。一旦创建，就无法更改它们，实际上它们在参与者之间充当不可打破的合同。
+以太坊中的智能合约默认情况下是不可变的。一旦创建，就无法更改它们，实际上它们在参与者之间充当不可打破的合约。
 
 可升级合约允许我们修改智能合约以修复错误、添加其他功能或仅仅更改其强制执行的规则。
 
@@ -196,7 +196,7 @@ Transferred ownership of ProxyAdmin to: 0xFb2C6465654024c03DC564d237713F620d1E94
 >NOTE
 我们不能对我们的合约进行任意更改，有关哪些修改是有效的的详细信息，请参见*升级*。
 
-在您的合同目录中创建新的实现，BoxV2.sol，其中包含以下Solidity代码。
+在您的合约目录中创建新的实现，BoxV2.sol，其中包含以下Solidity代码。
 ```
 // contracts/BoxV2.sol
 // SPDX-License-Identifier: MIT
@@ -305,7 +305,7 @@ Upgrade proposal created at: https://defender.openzeppelin.com/#/admin/contracts
 ```
 
 ## 升级合约
-一旦我们提出了升级建议，多重签名的所有者可以使用Defender Admin进行审查和批准。使用propose-upgrade.js中的链接，我们团队的每个成员都可以在Defender中审查该建议。多重签名的所需所有者可以批准该建议，然后最终执行以升级我们的合同。
+一旦我们提出了升级建议，多重签名的所有者可以使用Defender Admin进行审查和批准。使用propose-upgrade.js中的链接，我们团队的每个成员都可以在Defender中审查该建议。多重签名的所需所有者可以批准该建议，然后最终执行以升级我们的合约。
 ![guide-upgrades-2.png](img/guide-upgrades-2.png)
 
 我们可以在Defender管理员的提案列表中看到已执行的升级提案，我们的合约已经升级。

@@ -111,7 +111,7 @@ Starting migrations...
 ```
 
 >NOTE
-Truffle将跟踪您部署的合同，但在部署时它还会显示它们的地址（在我们的示例中为0xCfEB869F69431e42cdB54A4F4f105C19C080A601）。这些值在以编程方式与它们交互时将非常有用。
+Truffle将跟踪您部署的合约，但在部署时它还会显示它们的地址（在我们的示例中为0xCfEB869F69431e42cdB54A4F4f105C19C080A601）。这些值在以编程方式与它们交互时将非常有用。
 
 完成了！在真实的网络上，这个过程可能需要几秒钟，但在本地区块链上几乎是瞬间完成的。
 
@@ -170,7 +170,7 @@ truffle(development)> (await box.retrieve()).toString()
 在本节中，我们将看到如何从 JavaScript 与我们的合约进行交互，并使用 Truffle 在我们的 [Truffle 配置中执行我们的脚本](https://www.trufflesuite.com/docs/truffle/getting-started/writing-external-scripts)。
 
 >TIP
-请记住，还有许多其他JavaScript库可用，您可以使用您最喜欢的任何一个。一旦合同部署，您可以通过任何库与其交互！
+请记住，还有许多其他JavaScript库可用，您可以使用您最喜欢的任何一个。一旦合约部署，您可以通过任何库与其交互！
 
 ### 设置
 让我们在一个新的scripts/index.js文件中开始编写我们的JavaScript代码，从一些样板开始，包括[编写异步代码](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)的样板。
