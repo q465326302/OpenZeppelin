@@ -151,8 +151,368 @@ governor实例的版本（用于构建ERC712域分隔符）。默认值为“1�
 可以增加此延迟时间，以便用户有时间购买投票权或委托投票权，然后再开始对提案进行投票。
 
 #### votingPeriod() → uint256
+公开#
 投票开始和投票结束之间的延迟。此持续时间的单位取决于此合约使用的时钟（参见EIP-6372）。
 
 votingDelay可以延迟投票的开始。在设置投票持续时间与投票延迟相比时，必须考虑到这一点。
 
 #### quorum(uint256 timepoint) → uint256
+公开#
+成功提案所需的最低投票数。
+
+> NOTE
+时间点参数对应于用于计算投票的快照。这允许根据此时间点的总供应量等值来调整法定人数（请参阅*ERC20Votes*）。
+
+#### getVotes(address account, uint256 timepoint) → uint256
+公开#
+特定时间点上帐户的投票权力。
+
+注意：这可以通过多种方式实现，例如通过从一个（或多个）ERC20Votes代币中读取委托余额来实现。
+
+#### getVotesWithParams(address account, uint256 timepoint, bytes params) → uint256
+公开#
+给定额外的编码参数，一个账户在特定时间点的投票权力。
+
+#### hasVoted(uint256 proposalId, address account) → bool
+公开#
+返回帐户是否对提案ID投票。
+
+#### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256 proposalId
+公开#
+
+创建一个新提案。投票在*IGovernor.votingDelay*指定的延迟后开始，并持续*IGovernor.votingPeriod*指定的持续时间。
+
+发出一个*ProposalCreated*事件。
+
+#### execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256 proposalId
+公开#
+
+成功执行提案。这需要达到法定人数，投票成功，并达到截止日期。
+
+发布*ProposalExecuted*事件。
+
+注意：某些模块可以修改执行要求，例如添加额外的时间锁。
+
+#### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256 proposalId
+公开#
+取消提案。提案可以被提出者取消，但只能在待定状态下取消，即在投票开始之前。
+
+发出一个*ProposalCanceled*事件。
+
+#### castVote(uint256 proposalId, uint8 support) → uint256 balance
+公开#
+投票
+
+发出一个*VoteCast*事件。
+
+#### castVoteWithReason(uint256 proposalId, uint8 support, string reason) → uint256 balance
+公开#
+投票并附上理由。
+
+触发VoteCast事件。
+
+#### castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) → uint256 balance
+公开#
+根据参数的长度，发出*VoteCast*或*VoteCastWithParams*事件。
+
+#### castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) → uint256 balance
+公开#
+使用用户的密码签名进行投票。
+
+发出一个*VoteCast*事件。
+
+#### castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) → uint256 balance
+公开#
+使用用户的加密签名进行投票，并附加编码参数进行投票。
+
+根据params的长度发出*VoteCast*或*VoteCastWithParams*事件。
+
+#### ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)
+事件#
+当提案被创建时发出。
+
+#### ProposalCanceled(uint256 proposalId)
+事件#
+当一个提案被取消时发出的信号。
+
+#### ProposalExecuted(uint256 proposalId)
+事件#
+当提案执行时发出。
+
+#### VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason)
+事件#
+当没有参数投票时发出的信号。
+
+注意：支持值应视为桶。它们的解释取决于所使用的投票模块。
+
+#### VoteCastWithParams(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params)
+事件#
+在使用参数进行投票时发出。
+
+注意：支持值应被视为桶。它们的解释取决于所使用的投票模块。参数是额外编码的参数。它们的解释也取决于所使用的投票模块。
+
+### Governor
+```
+import "@openzeppelin/contracts/governance/Governor.sol";
+```
+这个治理系统的核心是被设计成可以通过各种模块进行扩展的。
+
+该合约是抽象的，并需要在各个模块中实现几个函数：
+
+* 计数模块必须实现*quorum*、*_quorumReached*、*_voteSucceeded*和*_countVote*函数。
+
+* 投票模块必须实现*_getVotes*函数。
+
+* 此外，还必须实现*votingPeriod*函数。
+
+*该功能从v4.3版本开始提供。*
+
+**MODIFIERS**
+onlyGovernance()
+
+**FUNCTIONS**
+constructor(name_)
+receive()
+supportsInterface(interfaceId)
+name()
+version()
+hashProposal(targets, values, calldatas, descriptionHash)
+state(proposalId)
+proposalThreshold()
+proposalSnapshot(proposalId)
+proposalDeadline(proposalId)
+proposalProposer(proposalId)
+_quorumReached(proposalId)
+_voteSucceeded(proposalId)
+_getVotes(account, timepoint, params)
+_countVote(proposalId, account, support, weight, params)
+_defaultParams()
+propose(targets, values, calldatas, description)
+execute(targets, values, calldatas, descriptionHash)
+cancel(targets, values, calldatas, descriptionHash)
+_execute(, targets, values, calldatas, )
+_beforeExecute(, targets, , calldatas, )
+_afterExecute(, , , , )
+_cancel(targets, values, calldatas, descriptionHash)
+getVotes(account, timepoint)
+getVotesWithParams(account, timepoint, params)
+castVote(proposalId, support)
+castVoteWithReason(proposalId, support, reason)
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+castVoteBySig(proposalId, support, v, r, s)
+castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)
+_castVote(proposalId, account, support, reason)
+_castVote(proposalId, account, support, reason, params)
+relay(target, value, data)
+_executor()
+onERC721Received(, , , )
+onERC1155Received(, , , , )
+onERC1155BatchReceived(, , , , )
+_isValidDescriptionForProposer(proposer, description)
+
+IGOVERNOR
+clock()
+CLOCK_MODE()
+COUNTING_MODE()
+votingDelay()
+votingPeriod()
+quorum(timepoint)
+hasVoted(proposalId, account)
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+EVENTS
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+ProposalCanceled(proposalId)
+ProposalExecuted(proposalId)
+VoteCast(voter, proposalId, support, weight, reason)
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+#### onlyGovernance()
+修饰符#
+限制一个函数，只能通过治理提案执行。例如，*GovernorSettings*中的治理参数设置器使用此修饰符进行保护。
+
+治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过覆盖*_executor*函数来实现。执行者只能在治理程序的*执行*函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
+
+#### constructor(string name_)
+内部#
+设置*name*和*version*的值
+
+#### receive()
+外部#
+接收ETH的函数，将由治理者处理（如果执行者是第三方合约，则禁用）
+
+#### supportsInterface(bytes4 interfaceId) → bool
+公开#
+请参见 *IERC165.supportsInterface*。
+
+#### name() → string
+公开#
+请参见 *IGovernor.name*.
+
+#### version() → string
+公开#
+请参见 *IGovernor.version*.
+
+#### hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+公开#
+请参考 *IGovernor.hashProposal*。
+
+提案ID是通过对ABI编码的targets数组、values数组、calldatas数组和descriptionHash（bytes32，它本身是描述字符串的keccak256哈希）进行哈希计算得到的。这个提案ID可以从*ProposalCreated*事件的提案数据中生成。甚至可以在提案提交之前提前计算出来。
+
+请注意，chainId和governor地址不是提案ID计算的一部分。因此，如果在多个网络上的多个治理者提交相同的提案（具有相同的操作和相同的描述），则它们将具有相同的ID。这也意味着为了在同一个治理者上执行相同的操作两次，提案人必须更改描述以避免提案ID冲突。
+
+#### state(uint256 proposalId) → enum IGovernor.ProposalState
+公开#
+请参考 *IGovernor.state*.
+
+#### proposalThreshold() → uint256
+公开#
+Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*。
+
+#### proposalSnapshot(uint256 proposalId) → uint256
+公开#
+请参阅*IGovernor.proposalSnapshot*。
+
+#### proposalDeadline(uint256 proposalId) → uint256
+公开#
+请参阅 *IGovernor.proposalDeadline*.
+
+#### proposalProposer(uint256 proposalId) → address
+公开#
+返回创建给定提案的账户。
+
+#### _quorumReached(uint256 proposalId) → bool
+内部#
+已经投票的数量超过了阈值限制。
+
+#### _voteSucceeded(uint256 proposalId) → bool
+内部#
+提案成功与否
+
+#### _getVotes(address account, uint256 timepoint, bytes params) → uint256
+内部#
+获取特定时间点的帐户的投票权重，用params描述的投票方式。
+
+#### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes params)
+内部#
+
+根据给定的支持、投票权重和投票参数，为提案ID的账户注册一次投票。
+
+注意：支持是通用的，根据所使用的投票系统可以代表各种不同的含义。
+
+#### _defaultParams() → bytes
+内部#
+默认情况下，castVote方法使用的附加编码参数（不包括它们）。
+
+注意：应该由特定的实现来覆盖以使用适当的值，附加参数的含义在该实现的上下文中。
+
+#### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
+公开#
+查看 *IGovernor.propose* 函数。该函数包含 opt-in 前置交易保护，其描述在 *_isValidDescriptionForProposer* 中说明。
+
+#### execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+公开#
+请参阅 *IGovernor.execute*.
+
+#### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+公开#
+请参阅 *IGovernor.cancel*.
+
+#### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
+内部#
+内部执行机制。可以被覆盖以实现不同的执行机制。
+
+#### _beforeExecute(uint256, address[] targets, uint256[], bytes[] calldatas, bytes32)
+内部#
+在执行触发之前的钩子。
+
+#### _afterExecute(uint256, address[], uint256[], bytes[], bytes32)
+内部#
+在执行被触发后的钩子。
+
+#### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+内部#
+内部取消机制：锁定提案计时器，防止其重新提交。将其标记为已取消，以便与已执行的提案区分。
+
+发出*IGovernor.ProposalCanceled*事件。
+
+#### getVotes(address account, uint256 timepoint) → uint256
+公开#
+请参阅 *IGovernor.getVotes*.
+
+#### getVotesWithParams(address account, uint256 timepoint, bytes params) → uint256
+公开#
+请参阅 *IGovernor.getVotesWithParams*.
+
+#### castVote(uint256 proposalId, uint8 support) → uint256
+公开#
+请参阅 *IGovernor.castVote*.
+
+#### castVoteWithReason(uint256 proposalId, uint8 support, string reason) → uint256
+公开#
+请参阅 *IGovernor.castVoteWithReason*.
+
+#### castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) → uint256
+公开#
+请参阅 *IGovernor.castVoteWithReasonAndParams*.
+
+#### castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) → uint256
+公开#
+请参阅 *IGovernor.castVoteBySig*.
+
+#### castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) → uint256
+公开#
+请参阅 *IGovernor.castVoteWithReasonAndParamsBySig*.
+
+#### _castVote(uint256 proposalId, address account, uint8 support, string reason) → uint256
+内部#
+
+内部投票机制：检查投票是否待定，尚未投票，使用*IGovernor.getVotes*检索投票权重，并调用*_countVote*内部函数。使用_defaultParams()。
+
+触发*IGovernor.VoteCast*事件。
+
+#### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
+内部#
+内部投票投票机制：检查投票是否挂起，是否尚未投票，使用*IGovernor.getVotes*检索投票权重，并调用*_countVote*内部函数。
+
+发出*IGovernor.VoteCast*事件。
+
+#### relay(address target, uint256 value, bytes data)
+外部#
+将交易或函数调用转发到任意目标。在使用时间锁定等合约作为治理执行者的情况下，可以在治理提案中调用此函数来恢复错误发送到治理合约的代币或以太币。请注意，如果执行者只是治理本身，则使用中继是多余的。
+
+#### _executor() → address
+内部#
+governor执行行动的地址。将通过执行通过另一个合同（如时间锁）的模块来进行重载。
+
+#### onERC721Received(address, address, uint256, bytes) → bytes4
+公开#
+请参阅  *IERC721Receiver.onERC721Received*.
+
+####  onERC1155Received(address, address, uint256, uint256, bytes) → bytes4
+公开#
+请参阅 IERC1155Receiver.onERC1155Received.
+
+#### onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) → bytes4
+公开#
+请参阅 IERC1155Receiver.onERC1155BatchReceived.
+
+#### _isValidDescriptionForProposer(address proposer, string description) → bool
+内部#
+检查提案人是否被授权提交具有给定描述的提案。
+
+如果提案描述以#proposer=0x???结尾，其中0x???是以十六进制字符串（不区分大小写）表示的地址，则只有该地址被授权提交此提案。
+
+这用于防止前置交易。通过在其提案末尾添加此模式，提案人可以确保没有其他地址可以提交相同的提案。攻击者必须删除或更改该部分，这将导致不同的提案ID。
+
+如果描述不符合此模式，则不受限制，任何人都可以提交。这包括： - 如果0x???部分不是有效的十六进制字符串。 - 如果0x???部分是有效的十六进制字符串，但不包含确切的40个十六进制数字。 - 如果以预期的后缀后跟换行符或其他空格符号结尾。 - 如果以其他类似的后缀结尾，例如#other=abc。 - 如果没有以任何此类后缀结尾。
+
+#### 模块
