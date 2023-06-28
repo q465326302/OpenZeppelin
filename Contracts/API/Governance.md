@@ -1933,3 +1933,176 @@ RoleRevoked(role, account, sender)
 返回操作是否准备好执行。请注意，“准备就绪”的操作也是“待处理”的。
 
 #### isOperationDone(bytes32 id) → bool
+公开#
+返回操作是否已完成。
+
+#### getTimestamp(bytes32 id) → uint256
+公开#
+返回操作准备就绪的时间戳（未设置操作为0，完成操作为1）。
+
+#### getMinDelay() → uint256
+公开#
+返回操作变得有效所需的最小延迟。
+
+通过执行调用updateDelay的操作可以更改该值。
+
+#### hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) → bytes32
+公开#
+返回包含单个交易的操作的标识符。
+
+#### hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) → bytes32
+公开#
+返回包含一批交易的操作的标识符。
+
+#### schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)
+公开#
+安排一个包含单个交易的操作。
+
+如果盐值不为零，则发出CallSalt；同时发出CallScheduled。
+要求：
+* 调用者必须具有“提议者”角色。
+
+#### scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)
+公开#
+安排一个包含一批交易的操作。
+
+如果盐不为零，则发出*CallSalt*，如果批处理中的每个交易发出一个*CallScheduled*事件。
+要求：
+* 调用者必须具有“提议者”角色。
+
+#### cancel(bytes32 id)
+公开#
+取消一个操作。
+
+要求：
+* 呼叫者必须拥有“取消者”角色。
+
+#### execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt)
+公开#
+执行一个包含单个事务的（准备好的）操作。
+
+发出*CallExecuted*事件。
+要求：
+* 调用者必须具有“executor”角色。
+
+#### executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt)
+
+执行一个包含一批交易的（准备好的）操作。
+
+每个交易在批处理中发出一个*CallExecuted*事件。
+要求：
+* 调用者必须具有'executor'角色。
+  
+#### _execute(address target, uint256 value, bytes data)
+内部#
+执行一个操作的调用。
+
+#### updateDelay(uint256 newDelay)
+外部#
+更改未来操作的最小时间锁定持续时间。
+
+发出*MinDelayChange*事件。
+
+要求：
+* 调用者必须是时间锁本身。只有通过安排并稍后执行一个将时间锁定设为目标，数据为ABI编码调用此函数的操作，才能实现这一要求。
+
+#### onERC721Received(address, address, uint256, bytes) → bytes4
+
+公开#
+请参阅 *IERC721Receiver.onERC721Received*.
+
+#### onERC1155Received(address, address, uint256, uint256, bytes) → bytes4
+公开#
+请参阅 *IERC1155Receiver.onERC1155Received*.
+
+#### onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) → bytes4
+请参阅 *IERC1155Receiver.onERC1155BatchReceived*.
+
+#### CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)
+事件#
+当一个调用被安排作为操作ID的一部分时发出。
+
+#### CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)
+事件#
+当作为操作id的一部分执行调用时发出。
+
+#### CallSalt(bytes32 indexed id, bytes32 salt)
+事件#
+当使用非零盐值调度新提案时发出。
+
+#### Cancelled(bytes32 indexed id)
+事件# 
+当操作ID被取消时发出。
+
+#### MinDelayChange(uint256 oldDuration, uint256 newDuration)
+事件# 
+当未来操作的最小延迟被修改时发出。
+
+## 术语
+* **Operation**：一个交易（或一组交易），是定时锁的主题。它必须由提议者安排并由执行者执行。定时锁强制在提议和执行之间有最小延迟（参见*操作生命周期*）。如果操作包含多个交易（批处理模式），它们将以原子方式执行。操作通过其内容的哈希值进行标识。
+
+* **操作状态**：
+    * **Unset**：不是定时锁机制的一部分的操作。
+    * **Pending**：已安排但计时器尚未到期的操作。
+    * **Ready**：已安排且计时器已到期的操作。
+    * **Done**：已执行的操作。
+
+* **前置操作**：操作之间的（可选）依赖关系。一个操作可以依赖于另一个操作（其前置操作），从而强制这两个操作的执行顺序。
+
+* **角色**：
+    * **Admin**：负责授予提议者和执行者角色的地址（智能合约或EOA）。
+    * **提议者**：负责安排（和取消）操作的地址（智能合约或EOA）。
+    * **执行者**：负责在定时锁过期后执行操作的地址（智能合约或EOA）。可以将此角色授予零地址，以允许任何人执行操作。
+
+### 操作结构
+由*TimelockController*执行的操作可以包含一个或多个后续调用。根据是否需要原子执行多个调用，可以使用简单操作或批处理操作。
+
+两种操作都包含：
+* **目标**：定时锁应该操作的智能合约的地址。
+* **价值**：以wei为单位，应该与交易一起发送的价值。大多数情况下，这将为0。在执行交易时可以在结束前存入以太币或传递。
+* **数据**：包含调用的编码函数选择器和参数。可以使用多种工具生成。例如，使用web3js可以如下编码授予账户ROLE角色的维护操作：
+
+```
+const data = timelock.contract.methods.grantRole(ROLE, ACCOUNT).encodeABI()
+```
+* **Predecessor**，用于指定操作之间的依赖关系。此依赖关系是可选的。如果操作没有任何依赖关系，则使用bytes32(0)。
+* **Salt**，用于消除两个否则相同的操作之间的歧义。可以是任意随机值。
+对于批量操作，目标（target）、值（value）和数据（data）被指定为数组，这些数组必须具有相同的长度。
+
+### 操作生命周期
+具有时间锁定的操作通过唯一的id（其哈希）进行识别，并遵循特定的生命周期：
+
+未设置 → 待处理 → 待处理 + 准备完成 → 已完成
+
+* 通过调用*schedule*（或*scheduleBatch*），提议者将操作从未设置状态移至待处理状态。这将启动一个计时器，该计时器的时间必须超过最小延迟。计时器在一个可以通过*getTimestamp*方法访问的时间戳到期。
+* 一旦计时器到期，操作会自动进入准备完成状态。此时，可以执行该操作。
+* 通过调用*execute*（或*executeBatch*），执行者触发操作的基础交易，并将其移至已完成状态。如果操作有前任操作，则前任操作必须处于已完成状态，此次转换才会成功。
+* cancel允许提议者取消任何待处理操作。这将将操作重置为未设置状态。因此，提议者可以重新安排已取消的操作。在这种情况下，操作重新安排时计时器重新启动。
+
+可以使用以下函数查询操作的状态：
+* *isOperationPending(bytes32)*
+* *isOperationReady(bytes32)*
+* *isOperationDone(bytes32)*
+
+### 角色
+
+#### 管理员
+管理员负责管理提议者和执行者。为了使时间锁能够自我管理，该角色只应该授予时间锁本身。在部署之后，管理员角色可以授予任何地址（除了时间锁本身）。在进一步配置和测试之后，这个可选的管理员应该放弃其角色，以便所有后续的维护操作都必须通过时间锁流程进行。
+
+该角色由**TIMELOCK_ADMIN_ROLE**值标识：0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5
+
+#### 提议者
+提议者负责安排（和取消）操作。这是一个关键的角色，应该授予治理实体。这可以是一个EOA，一个多签名账户或一个DAO。
+
+> WARNING
+**提议者之争**：拥有多个提议者可以在一个提议者不可用时提供冗余，但这可能是危险的。由于提议者对所有操作都有发言权，他们可以取消他们不同意的操作，包括删除他们作为提议者的操作。
+
+该角色由**PROPOSER_ROLE**值标识：0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1
+
+#### 执行者
+执行者负责在时间锁到期后执行提议者安排的操作。逻辑上讲，多签名账户或DAO作为提议者也应该是执行者，以确保已安排的操作最终会被执行。然而，拥有额外的执行者可以降低成本（执行交易不需要多签名账户或DAO的验证），同时确保负责执行的人不能触发未经提议者安排的操作。另外，也可以通过将执行者角色授予零地址，允许任何地址在时间锁到期后执行提案。
+
+该角色由**EXECUTOR_ROLE**值标识：0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63
+
+> WARNING
+没有至少一个提议者和一个执行者的活跃合约是被锁定的。在部署者放弃其管理权利，将其转交给时间锁合约本身之前，请确保这些角色由可靠的实体填充。请参阅*AccessControl文档*以了解更多关于角色管理的信息。
