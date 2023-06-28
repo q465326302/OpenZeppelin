@@ -1426,4 +1426,339 @@ IERC5267
 EIP712DomainChanged()
 
 #### constructor(uint64 initialVoteExtension)
-内部
+内部#
+初始化投票扩展参数：从提案达到法定人数到投票期结束所需的时间，以块数或秒数（取决于议长时钟模式）计算。如有需要，投票期限将延长超过提案创建时设定的期限。
+
+#### proposalDeadline(uint256 proposalId) → uint256
+公开#
+如果提案在投票期结束时才达到法定人数，那么返回的提案截止日期可能会超过提案创建时设定的截止日期。请参阅*Governor.proposalDeadline*。
+
+#### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
+内部#
+投票并检测是否导致法定人数达到，有可能延长投票期。参见*Governor._castVote*。
+
+可能会发出*ProposalExtended*事件。
+
+#### lateQuorumVoteExtension() → uint64
+公开#
+返回投票扩展参数的当前值：从提案达到法定人数直到其投票期结束所需通过的区块数量。
+
+#### setLateQuorumVoteExtension(uint64 newVoteExtension)
+公开#
+更改*lateQuorumVoteExtension*。此操作只能由治理执行者执行，通常是通过治理提案进行。
+
+发出*LateQuorumVoteExtensionSet*事件。
+
+#### _setLateQuorumVoteExtension(uint64 newVoteExtension)
+内部#
+更改*lateQuorumVoteExtension*。这是一个内部函数，如果需要另一个访问控制机制，则可以在公共函数中公开，如*setLateQuorumVoteExtension*。
+
+发出*LateQuorumVoteExtensionSet*事件。
+
+#### ProposalExtended(uint256 indexed proposalId, uint64 extendedDeadline)
+事件#
+当提案的截止日期因在投票期间达到法定人数而被推迟时发出。
+
+#### LateQuorumVoteExtensionSet(uint64 oldVoteExtension, uint64 newVoteExtension)
+事件#
+当*lateQuorumVoteExtension*参数被更改时发出。
+
+### GovernorCompatibilityBravo
+```
+import "@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBravo.sol";
+```
+GovernorBravo是一种*Governor*的兼容性层，它在Governor之上实现GovernorBravo的兼容性。
+
+该兼容性层包括一个投票系统，并通过继承要求添加一个兼容*IGovernorTimelock*的模块。它不包括令牌绑定，也不包括任何变量升级模式。
+
+在使用此模块时，您可能需要启用Solidity优化器，以避免达到合约大小限制。
+
+*自v4.3版本起可用。*
+
+**FUNCTIONS**
+COUNTING_MODE()
+propose(targets, values, calldatas, description)
+propose(targets, values, signatures, calldatas, description)
+queue(proposalId)
+execute(proposalId)
+cancel(proposalId)
+cancel(targets, values, calldatas, descriptionHash)
+proposals(proposalId)
+getActions(proposalId)
+getReceipt(proposalId, voter)
+quorumVotes()
+hasVoted(proposalId, account)
+_quorumReached(proposalId)
+_voteSucceeded(proposalId)
+_countVote(proposalId, account, support, weight, )
+
+**GOVERNOR**
+receive()
+supportsInterface(interfaceId)
+name()
+version()
+hashProposal(targets, values, calldatas, descriptionHash)
+state(proposalId)
+proposalThreshold()
+proposalSnapshot(proposalId)
+proposalDeadline(proposalId)
+proposalProposer(proposalId)
+_getVotes(account, timepoint, params)
+_defaultParams()
+execute(targets, values, calldatas, descriptionHash)
+_execute(, targets, values, calldatas, )
+_beforeExecute(, targets, , calldatas, )
+_afterExecute(, , , , )
+_cancel(targets, values, calldatas, descriptionHash)
+getVotes(account, timepoint)
+getVotesWithParams(account, timepoint, params)
+castVote(proposalId, support)
+castVoteWithReason(proposalId, support, reason)
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+castVoteBySig(proposalId, support, v, r, s)
+castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)
+_castVote(proposalId, account, support, reason)
+_castVote(proposalId, account, support, reason, params)
+relay(target, value, data)
+_executor()
+onERC721Received(, , , )
+onERC1155Received(, , , , )
+onERC1155BatchReceived(, , , , )
+_isValidDescriptionForProposer(proposer, description)
+
+IGOVERNORTIMELOCK
+timelock()
+proposalEta(proposalId)
+queue(targets, values, calldatas, descriptionHash)
+
+IGOVERNOR
+clock()
+CLOCK_MODE()
+votingDelay()
+votingPeriod()
+quorum(timepoint)
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+**EVENTS**
+IGOVERNORTIMELOCK
+ProposalQueued(proposalId, eta)
+
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalCanceled(proposalId)
+
+ProposalExecuted(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+### COUNTING_MODE() → string
+公开#
+这是一个用于解释支持和解释*castVote*结果的字符串，旨在被UI界面使用以显示正确的投票选项和解释结果。该字符串是一个URL编码的键值对序列，每个键值对描述一个方面，例如support=bravo&quorum=for,abstain。
+
+有两个标准键：support和quorum。
+* support=bravo指的是投票选项0 = 反对，1 = 赞成，2 = 弃权，就像GovernorBravo中的投票选项。
+* quorum=bravo表示只有赞成票计入法定人数。
+* quorum=for,abstain表示赞成票和弃权票都计入法定人数。
+
+如果计数模块使用了编码参数，则应将其包含在一个具有描述行为的唯一名称的params键下。例如：
+* params=fractional可能指的是一种方案，其中投票在赞成/反对/弃权之间按比例分配。
+* params=erc721可能指的是一种方案，其中特定的NFT被委托进行投票。
+
+>NOTE
+这个字符串可以通过标准的URLSearchParams JavaScript类进行解码。
+
+#### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
+公开#
+请参阅 *IGovernor.propose*.
+
+#### propose(address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description) → uint256
+公开#
+请参阅 *IGovernorCompatibilityBravo.propose*.
+
+#### queue(uint256 proposalId)
+公开#
+请参阅 *IGovernorCompatibilityBravo.queue*.
+
+#### execute(uint256 proposalId)
+公开#
+请参阅 *IGovernorCompatibilityBravo.execute*.
+
+#### cancel(uint256 proposalId)
+公开#
+取消与GovernorBravo逻辑的提案。
+
+#### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+公开#
+使用GovernorBravo逻辑取消提案。在任何时刻，提案可以被取消，无论是由提案人取消，还是由第三方取消，前提是提案人的投票权已经降低到提案阈值以下。
+
+#### proposals(uint256 proposalId) → uint256 id, address proposer, uint256 eta, uint256 startBlock, uint256 endBlock, uint256 forVotes, uint256 againstVotes, uint256 abstainVotes, bool canceled, bool executed
+公开#
+请参阅 *IGovernorCompatibilityBravo.proposals*.
+
+#### getActions(uint256 proposalId) → address[] targets, uint256[] values, string[] signatures, bytes[] calldatas
+公开#
+请参阅 *IGovernorCompatibilityBravo.getActions*.
+
+#### getReceipt(uint256 proposalId, address voter) → struct IGovernorCompatibilityBravo.Receipt
+公开#
+请参阅 *IGovernorCompatibilityBravo.getReceipt*.
+
+#### quorumVotes() → uint256
+公开#
+请参阅 *IGovernorCompatibilityBravo.quorumVotes*.
+
+#### hasVoted(uint256 proposalId, address account) → bool
+公开#
+请参阅 *IGovernor.hasVoted*.
+
+#### _quorumReached(uint256 proposalId) → bool
+内部#
+请参阅 *Governor._quorumReached*。在此模块中，只有对投票进行计数才能达到法定人数。
+
+#### _voteSucceeded(uint256 proposalId) → bool
+内部#
+请参阅 *Governor._voteSucceeded*。在这个模块中，支持票必须严格超过反对票。
+
+#### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes)
+内部#
+请参阅 Governor._countVote.在这个模块中，支持者们追随着 Governor Bravo。
+
+### Deprecated
+
+#### GovernorProposalThreshold
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorProposalThreshold.sol";
+```
+将提案限制扩展到仅允许拥有最低余额的代币持有者。
+
+*从v4.3开始可用。从v4.4开始已弃用。*
+
+**FUNCTIONS**
+propose(targets, values, calldatas, description)
+
+GOVERNOR
+receive()
+supportsInterface(interfaceId)
+name()
+version()
+hashProposal(targets, values, calldatas, descriptionHash)
+state(proposalId)
+proposalThreshold()
+proposalSnapshot(proposalId)
+proposalDeadline(proposalId)
+proposalProposer(proposalId)
+_quorumReached(proposalId)
+_voteSucceeded(proposalId)
+_getVotes(account, timepoint, params)
+_countVote(proposalId, account, support, weight, params)
+_defaultParams()
+execute(targets, values, calldatas, descriptionHash)
+cancel(targets, values, calldatas, descriptionHash)
+_execute(, targets, values, calldatas, )
+_beforeExecute(, targets, , calldatas, )
+_afterExecute(, , , , )
+_cancel(targets, values, calldatas, descriptionHash)
+getVotes(account, timepoint)
+getVotesWithParams(account, timepoint, params)
+castVote(proposalId, support)
+castVoteWithReason(proposalId, support, reason)
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+castVoteBySig(proposalId, support, v, r, s)
+castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)
+_castVote(proposalId, account, support, reason)
+_castVote(proposalId, account, support, reason, params)
+relay(target, value, data)
+_executor()
+onERC721Received(, , , )
+onERC1155Received(, , , , )
+onERC1155BatchReceived(, , , , )
+_isValidDescriptionForProposer(proposer, description)
+
+IGOVERNOR
+clock()
+CLOCK_MODE()
+COUNTING_MODE()
+votingDelay()
+votingPeriod()
+quorum(timepoint)
+hasVoted(proposalId, account)
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+**EVENTS**
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+ProposalCanceled(proposalId)
+ProposalExecuted(proposalId)
+VoteCast(voter, proposalId, support, weight, reason)
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+#### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
+公开#
+请查看*IGovernor.propose*函数。该函数具有opt-in的前运行保护，其描述在*_isValidDescriptionForProposer*中解释。
+
+## 实用程序
+
+### Votes
+```
+import "@openzeppelin/contracts/governance/utils/Votes.sol";
+```
+这是一个基本的抽象合约，用于跟踪投票单位，投票单位是可以转让的投票权力的度量，并提供投票委托系统，其中一个账户可以将其投票单位委托给一种“代表”，该代表将从不同账户汇集委托的投票单位，然后可以用它来投票决策。实际上，只有委托了投票单位才能算作实际投票，如果一个账户希望参与决策但没有可信的代表，它必须将这些投票委托给自己。
+
+这个合约通常与一个代币合约结合使用，使得投票单位对应于代币单位。例如，参见*ERC721Votes*。
+
+委托投票的完整历史记录被跟踪在链上，以便治理协议可以将投票视为在特定区块号分布的，以防止闪电贷和双重投票。选择性的委托系统使得跟踪历史记录的成本可选。
+
+在使用这个模块时，派生合约必须实现*_getVotingUnits*（例如，使其返回*ERC721.balanceOf*），并可以使用*_transferVotingUnits*来跟踪这些单位分布的变化（在前面的例子中，它将包含在*ERC721._beforeTokenTransfer*中）。
+
+*自v4.5起可用。*
+
+**FUNCTIONS**
+clock()
+CLOCK_MODE()
+getVotes(account)
+getPastVotes(account, timepoint)
+getPastTotalSupply(timepoint)
+_getTotalSupply()
+delegates(account)
+delegate(delegatee)
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+_delegate(account, delegatee)
+_transferVotingUnits(from, to, amount)
+_useNonce(owner)
+nonces(owner)
+DOMAIN_SEPARATOR()
+_getVotingUnits()
+
+EIP712
+_domainSeparatorV4()
+_hashTypedDataV4(structHash)
+eip712Domain()
+
+**EVENTS**
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+DelegateVotesChanged(delegate, previousBalance, newBalance)
+
+IERC5267
+EIP712DomainChanged()
+
+#### clock() → uint48
+公开#
+用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票），在这种情况下，*CLOCK_MODE*也应该被覆盖以匹配。
