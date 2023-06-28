@@ -1762,3 +1762,174 @@ EIP712DomainChanged()
 #### clock() → uint48
 公开#
 用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票），在这种情况下，*CLOCK_MODE*也应该被覆盖以匹配。
+
+#### CLOCK_MODE() → string
+公开#
+
+EIP-6372规定的时钟的机器可读描述。
+
+#### getVotes(address account) → uint256
+公开#
+返回该账户当前的投票数量。
+
+#### getPastVotes(address account, uint256 timepoint) → uint256
+公开#
+返回特定时刻过去账户的投票数量。如果时钟（clock()）配置为使用区块号，则会返回相应区块结束时的值。
+
+要求：
+* timepoint 必须在过去。如果使用区块号进行操作，则该区块必须已经被挖掘。
+
+#### getPastTotalSupply(uint256 timepoint) → uint256
+公开#
+在过去的特定时刻返回可用的总票数。如果时钟（clock()）配置为使用区块号，这将返回相应区块结束时的值。
+
+> NOTE
+该值是所有可用票数的总和，不一定是所有委派票数的总和。尚未委派的票数仍然是总供应的一部分，即使它们不参与投票。
+
+要求：
+* timepoint必须在过去。如果使用区块号进行操作，则该区块必须已经被挖掘。
+
+#### _getTotalSupply() → uint256
+内部#
+返回当前总投票供应量。
+
+#### delegates(address account) → address
+公开#
+返回账户选择的代表。
+
+#### delegate(address delegatee)
+公开#
+将发件人的选票委托给受托人。
+
+#### delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)
+公开#
+将签名者的选票授予代表。
+
+#### _delegate(address account, address delegatee)
+内部#
+将账户的所有投票单位委托给委托人。
+
+触发事件*IVotes.DelegateChanged*和*IVotes.DelegateVotesChanged*。
+
+#### _transferVotingUnits(address from, address to, uint256 amount)
+内部#
+转让、铸造或销毁投票单位。要注册一个铸造，from 应该是零。要注册一个销毁，to 应该是零。铸造和销毁将调整投票单位的总供应量。
+
+#### _useNonce(address owner) → uint256 current
+内部#
+消耗一个随机数。
+
+返回当前值并增加随机数。
+
+#### nonces(address owner) → uint256
+公开#
+返回一个地址的nonce。
+
+#### DOMAIN_SEPARATOR() → bytes32
+外部#
+返回合同的*EIP712*域分隔符。
+
+#### _getVotingUnits(address) → uint256
+内部#
+必须返回一个账户持有的投票单位。
+
+## 时间锁定
+在一种治理系统中，*TimelockController*合约负责在提案和执行之间引入延迟。它可以与*Governor*一起使用，也可以单独使用。
+
+### TimelockController
+```
+import "@openzeppelin/contracts/governance/TimelockController.sol";
+```
+合同模块充当一个定时锁定的控制器。当设置为可拥有智能合约的所有者时，它会对所有仅所有者维护操作进行时间锁定。这样，在应用潜在危险的维护操作之前，用户可以有时间退出受控合约。
+
+默认情况下，该合同是自我管理的，这意味着管理任务必须通过时间锁定流程进行。建议人（执行人）角色负责提出（执行）操作。一个常见的用例是将该*TimelockController*定位为智能合约的所有者，由多重签名或DAO作为唯一的建议人。
+
+*自v3.3起可用。*
+
+**MODIFIERS**
+onlyRoleOrOpenRole(role)
+
+**FUNCTIONS**
+constructor(minDelay, proposers, executors, admin)
+receive()
+supportsInterface(interfaceId)
+isOperation(id)
+isOperationPending(id)
+isOperationReady(id)
+isOperationDone(id)
+getTimestamp(id)
+getMinDelay()
+hashOperation(target, value, data, predecessor, salt)
+hashOperationBatch(targets, values, payloads, predecessor, salt)
+schedule(target, value, data, predecessor, salt, delay)
+scheduleBatch(targets, values, payloads, predecessor, salt, delay)
+cancel(id)
+execute(target, value, payload, predecessor, salt)
+executeBatch(targets, values, payloads, predecessor, salt)
+_execute(target, value, data)
+updateDelay(newDelay)
+onERC721Received(, , , )
+onERC1155Received(, , , , )
+onERC1155BatchReceived(, , , , )
+
+ACCESSCONTROL
+hasRole(role, account)
+_checkRole(role)
+_checkRole(role, account)
+getRoleAdmin(role)
+grantRole(role, account)
+revokeRole(role, account)
+renounceRole(role, account)
+_setupRole(role, account)
+_setRoleAdmin(role, adminRole)
+_grantRole(role, account)
+_revokeRole(role, account)
+
+**EVENTS**
+CallScheduled(id, index, target, value, data, predecessor, delay)
+CallExecuted(id, index, target, value, data)
+CallSalt(id, salt)
+Cancelled(id)
+MinDelayChange(oldDuration, newDuration)
+
+IACCESSCONTROL
+RoleAdminChanged(role, previousAdminRole, newAdminRole)
+RoleGranted(role, account, sender)
+RoleRevoked(role, account, sender)
+
+#### onlyRoleOrOpenRole(bytes32 role)
+修饰符#
+对函数进行修改，使其只能被特定角色调用。除了检查发送者的角色外，还要考虑 address(0) 的角色。将角色授予 address(0) 相当于为所有人启用此角色。
+
+#### constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)
+公开#
+使用以下参数初始化合约：
+* minDelay: 操作的初始最小延迟
+* proposers: 被授予提案人和取消人角色的账户
+* executors: 被授予执行者角色的账户
+* admin: 可选的账户，被授予管理员角色；使用零地址来禁用
+
+> IMPORTANT
+可选的管理员可以在部署后帮助进行角色的初始配置，而不受延迟的限制，但是应该在之后放弃此角色，改为通过时间锁定的提案进行管理。之前的合约版本会自动将此管理员分配给部署者，也应该放弃此角色。
+
+#### receive()
+外部#
+合同可能会在维护过程中收到/持有ETH。
+
+#### supportsInterface(bytes4 interfaceId) → bool
+公开#
+请查阅 *IERC165.supportsInterface*.
+
+#### isOperation(bytes32 id) → bool
+公开#
+返回一个id是否对应于注册的操作。这包括待处理、准备好和完成的操作。
+
+#### isOperationPending(bytes32 id) → bool
+公开#
+返回操作是否挂起。请注意，“挂起”操作也可能是“就绪”的。
+
+#### isOperationReady(bytes32 id) → bool
+公开#
+返回操作是否准备好执行。请注意，“准备就绪”的操作也是“待处理”的。
+
+#### isOperationDone(bytes32 id) → bool
