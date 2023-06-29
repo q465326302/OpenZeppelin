@@ -211,3 +211,220 @@ import "@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol";
 *ERC-3156*定义的ERC3156 FlashLender的接口。
 
 *从v4.1版本开始可用。*
+
+**FUNCTIONS**
+maxFlashLoan(token)
+flashFee(token, amount)
+flashLoan(receiver, token, amount, data)
+
+#### maxFlashLoan(address token) → uint256
+外部#
+可供借出的货币数量。
+
+#### flashFee(address token, uint256 amount) → uint256
+外部#
+给定贷款的费用。
+
+#### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool
+外部#
+发起闪电贷。
+
+### IERC3156FlashBorrower
+```
+import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
+```
+
+[ERC-3156](https://eips.ethereum.org/EIPS/eip-3156)定义的ERC3156 FlashBorrower的接口。
+
+*从v4.1版本开始可用。*
+
+**FUNCTIONS**
+onFlashLoan(initiator, token, amount, fee, data)
+
+#### onFlashLoan(address initiator, address token, uint256 amount, uint256 fee, bytes data) → bytes32
+外部#
+接收一笔闪电贷款。
+
+### IERC4626
+```
+import "@openzeppelin/contracts/interfaces/IERC4626.sol";
+```
+
+**FUNCTIONS**
+asset()
+totalAssets()
+convertToShares(assets)
+convertToAssets(shares)
+maxDeposit(receiver)
+previewDeposit(assets)
+deposit(assets, receiver)
+maxMint(receiver)
+previewMint(shares)
+mint(shares, receiver)
+maxWithdraw(owner)
+previewWithdraw(assets)
+withdraw(assets, receiver, owner)
+maxRedeem(owner)
+previewRedeem(shares)
+redeem(shares, receiver, owner)
+
+IERC20METADATA
+
+name()
+symbol()
+decimals()
+
+IERC20
+totalSupply()
+balanceOf(account)
+transfer(to, amount)
+allowance(owner, spender)
+approve(spender, amount)
+transferFrom(from, to, amount)
+
+**EVENTS**
+Deposit(sender, owner, assets, shares)
+Withdraw(sender, receiver, owner, assets, shares)
+
+IERC20
+Transfer(from, to, value)
+Approval(owner, spender, value)
+
+#### asset() → address assetTokenAddress
+外部#
+返回用于Vault的账户、存款和提款的底层令牌的地址。
+
+* 必须是一个ERC-20令牌合约。
+* 不得回滚。
+
+#### totalAssets() → uint256 totalManagedAssets
+外部#
+返回Vault管理的基础资产的总金额。
+
+* 应包括从收益中产生的任何复利。
+* 必须包括对Vault中的资产收取的任何费用。
+* 不能回滚。
+
+#### convertToShares(uint256 assets) → uint256 shares
+外部#
+在理想情况下，返回Vault将为提供的资产交换的股份数量。
+
+* 必须不包括针对Vault中资产收取的任何费用。
+* 必须不显示根据调用者而异的任何变化。
+* 在执行实际交换时，必须不反映滑点或其他链上条件。
+* 必须不回滚。
+
+> NOTE
+此计算可能不反映“每个用户”的每股价格，而应反映“平均用户”的每股价格，即用户在兑换时应该期望看到的价格。
+
+#### convertToAssets(uint256 shares) → uint256 assets
+外部#
+通过存款调用，返回可以存入接收方保险库的基础资产的最大金额。
+
+* 如果接收方受到存款限制，则必须返回有限的值。
+* 如果没有对可以存入的资产金额设置限制，则必须返回2 ** 256 - 1。
+* 不能引发错误。
+
+#### previewDeposit(uint256 assets) → uint256 shares
+外部#
+允许链上或链下用户模拟其存款在当前区块的影响，考虑当前链上条件。
+
+* 在同一笔交易中，必须返回与预览存款相同或更多的 Vault 份额。换句话说，如果在同一笔交易中调用存款函数，存款应该返回与预览存款相同或更多的份额。
+
+* 不应考虑存款限制，比如从最大存款返回的限制，无论用户是否已经批准足够的代币。
+
+* 必须包括存款费用。集成商应意识到存款费用的存在。
+
+* 不得出现错误回滚。
+
+> NOTE
+在 convertToShares 和 previewDeposit 之间的不利差异应被视为份额价格滑点或其他类型的条件，这意味着存款人将通过存款失去资产。
+
+#### deposit(uint256 assets, address receiver) → uint256 shares
+外部#
+Mints（铸造）通过存入与基础代币数量完全相等的份额将Vault（保险库）份额分享给接收者。
+
+* 必须触发Deposit（存款）事件。
+* 可以支持一种额外的流程，在存款执行之前，基础代币由Vault合约拥有，并在存款期间进行核算。
+* 如果无法存入所有资产（由于达到存款限制、滑点、用户未向Vault合约批准足够的基础代币等），必须回滚（revert）。
+
+> NOTE
+大多数实现都需要预先批准Vault对其基础资产代币的使用权。
+
+#### maxMint(address receiver) → uint256 maxShares
+外部#
+如果通过铸造调用，返回接收者可以铸造的Vault股份的最大数量。- 如果接收者受到某些铸造限制，则必须返回有限值。- 如果没有关于可以铸造的最大股份数的限制，则必须返回2 ** 256 - 1。- 不能回滚。
+
+#### previewMint(uint256 shares) → uint256 assets
+外部#
+允许在链上或链外的用户在当前区块模拟其铸币操作的影响，根据当前链上的条件。
+
+* 必须返回尽可能接近并且不少于在同一交易中进行铸币调用时将存入的确切资产数量。也就是说，如果在同一交易中调用，铸币应该返回与预览铸币相同或更少的资产数量。
+*  不得考虑像从maxMint返回的铸币限制，并且始终应该像铸币将被接受一样行事，无论用户是否拥有足够的代币批准等。
+* 必须包括存款费用。集成者应该意识到存款费用的存在。
+* 不得回滚。
+
+convertToAssets和previewMint之间的任何不利差异应被视为份额价格滑点或其他类型的条件，这意味着存款人通过铸币将失去资产。
+
+#### mint(uint256 shares, address receiver) → uint256 assets
+外部#
+Mints（铸币）通过存入相应数量的基础代币将Vault（保险库）的份额准确地分享给接收者。
+
+* 必须触发Deposit（存款）事件。
+* 可以支持另一种流程，即在铸币执行之前，基础代币由Vault合约拥有，并在铸币过程中予以记录。
+* 如果无法铸造所有份额（由于达到存款限制、滑点、用户未向Vault合约批准足够的基础代币等原因），必须回滚（revert）。
+
+> NOTE
+大多数实现将要求预先批准Vault合约与Vault的基础资产代币。
+
+#### maxWithdraw(address owner) → uint256 maxAssets
+外部#
+通过提款调用，返回从Vault中的所有者余额中可以提取的基础资产的最大金额。
+
+* 如果所有者受到提款限制或时间锁的限制，必须返回有限的值。
+* 不得回滚。
+
+#### previewWithdraw(uint256 assets) → uint256 shares
+外部#
+允许链上或链下用户模拟其在当前区块中提现的影响，根据当前的链上条件。
+
+* 必须返回尽可能接近并且不少于在同一笔交易中调用提现时将烧毁的确切Vault股份数量。换句话说，如果在同一笔交易中调用，提现应该返回与previewWithdraw相同或更少的股份。
+* 不得考虑像从maxWithdraw返回的提现限制，并且应始终表现为接受提现，无论用户是否拥有足够的股份等。
+* 必须包括提现费用。集成者应意识到存在提现费用。
+* 不得回滚。
+
+> NOTE
+convertToShares和previewWithdraw之间的任何不利差异应被视为份额价格滑点或其他类型的条件，这意味着存款人将通过存款损失资产。
+
+#### withdraw(uint256 assets, address receiver, address owner) → uint256 shares
+外部#
+将所有者的股份销毁，并将底层代币的确切资产发送给接收者。
+
+* 必须发出Withdraw事件。
+* 可以支持一种额外的流程，在执行提款操作之前，底层代币由Vault合约拥有，并在提款期间进行核算。
+* 如果无法提取所有资产（由于达到提款限额、滑点、所有者股份不足等），必须回滚。
+
+请注意，某些实现可能要求在执行提款之前向Vault发出预请求。这些方法应在单独执行。
+
+#### maxRedeem(address owner) → uint256 maxShares
+外部#
+通过赎回调用，返回可以从Vault中的所有者余额中赎回的最大数量的Vault股份。
+
+* 如果所有者受到某种提款限制或时间锁定的限制，必须返回有限的值。
+* 如果所有者没有受到任何提款限制或时间锁定的限制，必须返回balanceOf(owner)。
+* 不能回滚。
+
+#### previewRedeem(uint256 shares) → uint256 assets
+外部#
+允许链上或链下用户模拟在当前区块下他们的赎回效果允许链上或链下用户在当前区块模拟其赎回的效果，给定当前链上条件。
+
+* 在同一交易中，必须返回尽可能接近且不超过赎回调用中将提取的确切资产金额。也就是说，如果在同一交易中调用redeem，它应返回与previewRedeem相同或更多的资产。
+
+* 不应考虑像从maxRedeem返回的赎回限制，并且应始终假设赎回将被接受，无论用户是否拥有足够的份额等。
+
+* 必须包括提现费用。集成者应意识到提现费用的存在。
+
+* 不得回滚。
+
+> NOTE
+convertToAssets和previewRedeem之间的任何不利差异应被视为份额价格滑动或其他类型的条件，这意味着存款人通过赎回将损失资产。
