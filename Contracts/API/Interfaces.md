@@ -428,3 +428,98 @@ convertToShares和previewWithdraw之间的任何不利差异应被视为份额�
 
 > NOTE
 convertToAssets和previewRedeem之间的任何不利差异应被视为份额价格滑动或其他类型的条件，这意味着存款人通过赎回将损失资产。
+
+#### redeem(uint256 shares, address receiver, address owner) → uint256 assets
+外部#
+准确地从所有者处销毁份额，并将基础代币的资产发送给接收者。
+
+* 必须发出撤回事件。
+* 可以支持一种额外的流程，在赎回执行之前，基础代币由Vault合约拥有，并在赎回过程中进行核算。
+* 如果无法赎回所有份额（由于达到提款限额、滑点、所有者份额不足等），必须回滚。
+
+> NOTE
+一些实现将要求在进行提款之前向Vault预请求。这些方法应该分别执行。
+
+#### Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
+事件#
+
+#### Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
+事件#
+
+### IERC5313
+```
+import "@openzeppelin/contracts/interfaces/IERC5313.sol";
+```
+光合约所有权标准的界面。
+
+一个标准化的最小界面，用于识别控制合约的账户。
+*从v4.9版本开始可用。*
+
+**FUNCTIONS**
+owner()
+
+#### owner() → address
+外部#
+获取所有者的地址。
+
+### IERC5267
+```
+import "@openzeppelin/contracts/interfaces/IERC5267.sol";
+```
+
+**FUNCTIONS**
+eip712Domain()
+
+**EVENTS**
+EIP712DomainChanged()
+
+#### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
+外部#
+返回描述此合约用于EIP-712签名的域分隔符使用的字段和值。
+
+#### EIP712DomainChanged()
+事件#
+可能会发出信号，表明域名可能已更改。
+
+### IERC5805
+```
+import "@openzeppelin/contracts/interfaces/IERC5805.sol";
+```
+
+**FUNCTIONS**
+
+IVOTES
+getVotes(account)
+getPastVotes(account, timepoint)
+getPastTotalSupply(timepoint)
+delegates(account)
+delegate(delegatee)
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+
+IERC6372
+clock()
+CLOCK_MODE()
+
+**EVENTS**
+
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+DelegateVotesChanged(delegate, previousBalance, newBalance)
+
+### IERC6372
+```
+import "@openzeppelin/contracts/interfaces/IERC6372.sol";
+```
+
+**FUNCTIONS**
+clock()
+
+CLOCK_MODE()
+
+#### clock() → uint48
+外部#
+用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票）。
+
+#### CLOCK_MODE() → string
+外部#
+时钟描述
