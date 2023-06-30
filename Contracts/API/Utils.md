@@ -551,3 +551,133 @@ toInt256(value)
 * 输入必须适应40位
 
 *自v4.7以来可用。*
+
+#### toUint32(uint256 value) → uint32
+内部#
+从uint256返回downcasted uint32，当输入大于最大uint32时，返回溢出（Overflow）。
+
+与Solidity的uint32操作符相对应。
+
+要求：
+*输入必须适合32位
+
+*自v2.5起可用。*
+
+#### toUint24(uint256 value) → uint24
+内部#
+从uint256返回downcasted uint24，在溢出时回滚（当输入大于最大uint24时）。
+
+与Solidity的uint24操作符相对应。
+
+要求：
+* 输入必须适合24位
+
+*自v4.7起可用。*
+
+#### toUint16(uint256 value) → uint16
+内部#
+将uint256转换为uint16，并在溢出时返回（当输入大于最大的uint16时）。
+
+与Solidity的uint16操作符相对应。
+
+要求：
+* 输入必须适合16位
+
+*自v2.5起可用。*
+
+#### toUint8(uint256 value) → uint8
+内部#
+将uint256类型下转型为uint8类型，在溢出时进行回滚（当输入大于最大的uint8时）。
+
+与Solidity的uint8运算符相对应。
+
+要求：
+* 输入必须适合8位
+
+*从v2.5版本开始提供。*
+
+#### toUint256(int256 value) → uint256
+内部#
+将有符号的int256转换为无符号的uint256。
+
+要求：
+* 输入必须大于或等于0。
+
+*从v3.0开始可用。*
+
+#### toInt248(int256 value) → int248 downcasted
+内部#
+将int256转换为int248，并在溢出时进行还原（当输入小于最小的int248或大于最大的int248时）。
+
+与Solidity的int248运算符相对应。
+
+要求：
+* 输入必须适合248位
+
+*自v4.7起可用。*
+
+#### toInt240(int256 value) → int240 downcasted
+内部#
+将int256转换为下降的int240，当溢出时回滚（当输入小于最小的int240或大于最大的int240时）。
+
+与Solidity的int240运算符相对应。
+
+要求：
+* 输入必须适合240位
+
+*自v4.7起可用。*
+
+#### toInt232(int256 value) → int232 downcasted
+内部#
+将int256的值向下转换为int232，并在溢出时恢复（当输入小于最小int232或大于最大int232时）。
+
+与Solidity的int232运算符相对应。
+
+要求：
+ * 输入必须适应232位
+
+*自v4.7起可用。*
+
+#### toInt224(int256 value) → int224 downcasted
+内部#
+将int256转换为下限为int224的整数，当溢出时恢复（当输入小于最小int224或大于最大int224时）。
+
+与Solidity的int224运算符相对应。
+
+要求：
+* 输入必须适合224位
+
+*自v4.7起可用。*
+
+#### toInt216(int256 value) → int216 downcasted
+内部#
+将int256类型的数值转换为int216类型的数值，并在溢出时进行回滚（当输入小于最小的int216或大于最大的int216时）。
+
+与Solidity的int216操作符相对应。
+
+要求：
+* 输入必须适合216位
+
+*自v4.7起可用。*
+
+#### toInt208(int256 value) → int208 downcasted
+内部#
+将int256转换为int208，并在溢出时进行回滚（当输入小于最小的int208或大于最大的int208时）。
+
+与Solidity的int208操作符相对应。
+
+要求：
+* 输入必须适合208位
+
+*从v4.7开始可用。*
+
+#### toInt200(int256 value) → int200 downcasted
+内部#
+将int256强制转换为int200，并在溢出时回滚（当输入小于最小的int200或大于最大的int200时）。
+
+与Solidity的int200运算符相对应。
+
+要求：
+*输入必须适合200位
+
+*自v4.7起可用。*
