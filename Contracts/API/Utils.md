@@ -1527,3 +1527,184 @@ OwnershipTransferred(previousOwner, newOwner)
 #### deposit(address payee)
 公开#
 将发送的金额存为信用以便提取。
+
+#### withdraw(address payable payee)
+公开#
+提取累积余额给收款人，将所有的gas转发给收款人。
+
+> WARNING
+转发所有的gas会打开重入漏洞的可能性。请确保你信任收款人，或者遵循检查-效应-交互模式或使用*ReentrancyGuard*。
+
+#### Deposited(address indexed payee, uint256 weiAmount)
+事件#
+
+#### Withdrawn(address indexed payee, uint256 weiAmount)
+事件#
+
+### RefundEscrow
+```
+import "@openzeppelin/contracts/utils/escrow/RefundEscrow.sol";
+```
+托管款项的托管账户，款项由多方存入并用于受益人。预期用途：参见*Escrow*。同样适用于此处的使用指南。拥有者账户（即，实例化此合约的合约）可以存款、关闭存款期，并允许受益人提款或向存款人退款。所有与退款托管账户的互动将通过拥有者合约进行。
+
+**FUNCTIONS**
+constructor(beneficiary_)
+
+state()
+
+beneficiary()
+
+deposit(refundee)
+
+close()
+
+enableRefunds()
+
+beneficiaryWithdraw()
+
+withdrawalAllowed()
+
+CONDITIONALESCROW
+withdraw(payee)
+
+ESCROW
+depositsOf(payee)
+
+OWNABLE
+owner()
+
+_checkOwner()
+
+renounceOwnership()
+
+transferOwnership(newOwner)
+
+_transferOwnership(newOwner)
+
+*EVENTS*
+RefundsClosed()
+
+RefundsEnabled()
+
+ESCROW
+Deposited(payee, weiAmount)
+
+Withdrawn(payee, weiAmount)
+
+OWNABLE
+OwnershipTransferred(previousOwner, newOwner)
+
+#### constructor(address payable beneficiary_)
+公开#
+构造函数。
+
+#### state() → enum RefundEscrow.State
+公开#
+
+#### beneficiary() → address payable
+公开#
+
+#### deposit(address refundee)
+公开#
+存储可能稍后退还的资金。
+
+#### close()
+公开#
+允许受益人取款并拒绝进一步存款。
+
+#### enableRefunds()
+公开#
+允许退款，并拒绝进一步存款
+
+#### beneficiaryWithdraw()
+公开#
+撤回受益人的资金。
+
+#### withdrawalAllowed(address) → bool
+公开#
+返回退款人是否可以取回他们的存款（退款）。重写的函数接收一个“受款人”参数，但在这里我们忽略它，因为条件是全局的，不是针对每个受款人的。
+
+#### RefundsClosed()
+事件#
+
+#### RefundsEnabled()
+事件#
+
+## Introspection
+这组接口和合约处理合约的类型内省，即[检查可以在合约上调用](https://en.wikipedia.org/wiki/Type_introspection)的函数。这通常被称为合约的接口。
+
+以太坊合约没有本地的接口概念，因此应用程序通常必须简单地相信它们没有进行错误的调用。对于可信的设置，这不是个问题，但是通常需要与未知和不可信的第三方地址进行交互。甚至可能没有直接的调用！（例如，ERC20代币可能会被发送到一个缺乏将其转移出去的方法的合约中，从而永久锁定它们）。在这些情况下，声明其接口的合约可以非常有帮助，以防止错误发生。
+
+有两种主要的方法来处理这个问题。
+
+* 在本地进行处理，其中一个合约实现了IERC165并声明了一个接口，第二个合约通过ERC165Checker直接查询它。
+* 全局处理，其中使用一个全局且唯一的注册表（IERC1820Registry）来注册某个接口的实现者（IERC1820Implementer）。然后查询该注册表，这允许更复杂的设置，例如合约为外部拥有的账户实现接口。
+
+请注意，在所有情况下，账户仅声明其接口，但不需要实际实现它们。因此，该机制既可以用于防止错误，又可以用于允许复杂的交互（参见ERC777），但不能依赖它来提供安全性。
+
+#### IERC165
+```
+import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+```
+ERC165标准的接口，如在[EIP](https://eips.ethereum.org/EIPS/eip-165)中定义。
+
+实现者可以声明对合约接口的支持，然后其他人可以查询（使用*ERC165Checker*）。
+
+有关实现的详细信息，请参见*ERC165*。
+
+**FUNCTIONS**
+supportsInterface(interfaceId)
+
+#### supportsInterface(bytes4 interfaceId) → bool
+外部#
+如果此合约实现了interfaceId定义的接口，则返回true。有关如何创建这些id的详细信息，请参阅相应的[EIP部分](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)。
+
+此函数调用必须使用少于30,000 gas。
+
+### ERC165
+```
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+```
+实现*IERC165*接口。
+
+想要实现ERC165的合约应该继承自这个合约，并重写*supportsInterface*函数来检查额外的接口ID是否被支持。例如：
+```
+function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
+}
+```
+相反，*ERC165Storage*提供了一种更易于使用但更昂贵的实现方式。
+
+**FUNCTIONS**
+supportsInterface(interfaceId)
+
+#### supportsInterface(bytes4 interfaceId) → bool
+公开#
+请查阅 *IERC165.supportsInterface*.
+
+### ERC165Storage
+```
+import "@openzeppelin/contracts/utils/introspection/ERC165Storage.sol";
+```
+基于存储的* IERC165* 接口实现。
+
+合约可以继承此合约，并调用 *_registerInterface* 来声明它们支持的接口。
+
+**FUNCTIONS**
+supportsInterface(interfaceId)
+
+_registerInterface(interfaceId)
+
+#### supportsInterface(bytes4 interfaceId) → bool
+公开#
+请查阅 *IERC165.supportsInterface*.
+
+#### _registerInterface(bytes4 interfaceId)
+内部#
+将合约注册为接口标识符（interfaceId）所定义的接口的实现者。对于实际的ERC165接口的支持是自动的，不需要注册其接口标识符。
+
+参见*IERC165.supportsInterface*。
+
+要求：
+
+interfaceId不能是ERC165的无效接口（0xffffffff）。
