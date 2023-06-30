@@ -300,3 +300,254 @@ toInt256(value)
 * 输入必须适合232位。
 
 *从v4.7开始可用。*
+
+#### toUint224(uint256 value) → uint224
+内部#
+将uint256向下转换为uint224，并在溢出时回滚（当输入大于最大的uint224时）。
+
+与Solidity的uint224操作符相对应。
+
+要求：
+* 输入必须适合224位
+
+*自v4.2起可用。*
+
+#### toUint216(uint256 value) → uint216
+内部#
+将uint256转换为downcasted uint216，并在溢出时回滚（当输入大于最大的uint216时）。
+
+对应Solidity的uint216运算符。
+
+要求：
+* 输入必须适应216位
+
+*自v4.7起可用。*
+
+#### toUint208(uint256 value) → uint208
+内部#
+将uint256转换为downcasted uint208，如果溢出（输入大于最大的uint208）则回滚。
+
+与Solidity的uint208操作符相对应。
+
+要求：
+* 输入必须适合208位
+
+*自v4.7起可用。*
+
+#### toUint200(uint256 value) → uint200
+内部#
+从uint256返回下转型的uint200，当输入大于最大的uint200时会回滚（溢出）。
+
+与Solidity的uint200操作符相对应。
+
+要求：
+* 输入必须适合200位
+
+*自v4.7起可用。*
+
+#### toUint192(uint256 value) → uint192
+内部#
+将uint256向下转换为uint192，并在溢出时回滚（当输入大于最大的uint192时）。
+
+这是Solidity中uint192运算符的对应物。
+
+要求：
+* 输入必须适应192位
+
+*从v4.7开始提供。*
+
+#### toUint184(uint256 value) → uint184
+内部#
+将uint256转换为uint184，并在溢出时回滚（当输入大于最大的uint184时）。
+
+与Solidity的uint184运算符相对应。
+
+要求：
+* 输入必须适合184位
+
+*从v4.7开始可用。*
+
+#### toUint176(uint256 value) → uint176
+内部#
+将uint256从uint176中向下转换，当溢出时返回（当输入大于最大的uint176时）。
+
+与Solidity的uint176运算符相对应。
+
+要求：
+* 输入必须适合176位
+
+*自v4.7起可用。*
+
+#### toUint168(uint256 value) → uint168
+内部#
+将uint256从uint168向下转换，并在溢出时返回（当输入大于最大uint168时）。
+
+与Solidity的uint168操作符相对应。
+
+要求：
+* 输入必须适合168位
+
+*自v4.7起可用。*
+
+#### toUint160(uint256 value) → uint160
+内部#
+将uint256从uint160降低，并在溢出时返回（当输入大于最大的uint160时）。
+
+与Solidity的uint160操作符相对应。
+
+要求：
+* 输入必须适应160位
+
+*自v4.7以来可用。*
+
+#### toUint152(uint256 value) → uint152
+内部#
+将uint256类型的数字向下转换为uint152类型的数字，并在溢出时回滚（当输入大于最大的uint152时）。
+
+这是Solidity中uint152运算符的对应函数。
+
+要求：
+* 输入必须适合152位
+
+*从v4.7版本开始可用。*
+
+#### toUint144(uint256 value) → uint144
+内部#
+将uint256从uint144返回为向下转型，溢出时回滚（当输入大于最大的uint144时）。
+
+与Solidity的uint144操作符相对应。
+
+要求：
+* 输入必须适合144位
+
+*自v4.7起可用。*
+
+#### toUint136(uint256 value) → uint136
+内部#
+将uint256从uint136返回为降低，当溢出时回滚（当输入大于最大的uint136时）。
+
+与Solidity的uint136操作符相对应。
+
+要求：
+* 输入必须适合136位
+
+*自v4.7起可用。*
+
+#### toUint128(uint256 value) → uint128
+内部#
+将uint256转换为uint128，并在溢出时引发错误（当输入大于最大的uint128时）。
+
+与Solidity的uint128操作符相对应。
+
+要求：
+* 输入必须适合128位
+
+*从v2.5开始提供。*
+
+#### toUint120(uint256 value) → uint120
+内部#
+将uint256向下转换为uint120，并在溢出时返回（当输入大于最大的uint120时）。
+
+与Solidity的uint120运算符相对应。
+
+要求：
+* 输入必须适合120位
+
+*自v4.7以来可用。*
+
+#### toUint112(uint256 value) → uint112
+内部#
+从uint256返回向下转换的uint112，当输入大于最大的uint112时，会发生溢出并导致程序回滚。
+
+与Solidity的uint112运算符相对应。
+
+要求：
+* 输入必须适合112位
+
+*自v4.7起可用。*
+
+#### toUint104(uint256 value) → uint104
+内部#
+将uint256转换为downcasted uint104，并在溢出时进行回滚（当输入大于最大的uint104时）。
+
+与Solidity的uint104运算符相对应。
+
+要求：
+* 输入必须适合104位
+
+*自v4.7起可用。*
+
+#### toUint96(uint256 value) → uint96
+内部#
+将uint256类型的值向下转换为uint96类型的值，当输入值大于最大的uint96时，将引发错误。
+
+这是Solidity中uint96操作符的对应函数。
+
+要求：
+* 输入值必须适合96位
+
+*从v4.2版本开始可用。*
+
+#### toUint88(uint256 value) → uint88
+内部#
+将uint256转换为uint88，并在溢出时回滚（当输入大于最大的uint88时）。
+
+与Solidity的uint88操作符相对应。
+
+要求：
+* 输入必须适合88位
+
+*自v4.7起可用。*
+
+#### toUint80(uint256 value) → uint80
+内部#
+将uint256向下转换为uint80，当输入大于最大uint80时会发生溢出，从而导致回滚。
+
+要求：
+* 输入必须适应80位
+
+从v4.7开始提供。
+
+#### toUint72(uint256 value) → uint72
+内部#
+将uint256转换为下投uint64，当输入大于最大的uint64时会回滚（即溢出）。
+
+与Solidity的uint64操作符相对应。
+
+要求：
+* 输入必须适应64位
+
+*从v2.5开始可用。*
+
+#### toUint56(uint256 value) → uint56
+内部#
+将uint256转换为downcasted uint56，当输入大于最大的uint56时会回滚（溢出）。
+
+与Solidity的uint56操作符相对应。
+
+要求：
+* 输入必须适合56位
+
+*自v4.7起可用。*
+
+#### toUint48(uint256 value) → uint48
+内部#
+将uint256转换为uint48，并在溢出时回滚（当输入大于最大的uint48时）。
+
+与Solidity的uint48运算符相对应。
+
+要求：
+* 输入必须适合48位
+
+*从v4.7开始可用。*
+
+#### toUint40(uint256 value) → uint40
+内部#
+将uint256强制转换为uint40，并在溢出时回滚（当输入大于最大的uint40时）。
+
+与Solidity的uint40操作符相对应。
+
+要求：
+* 输入必须适应40位
+
+*自v4.7以来可用。*
