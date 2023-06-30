@@ -1004,3 +1004,369 @@ div(a, b, errorMessage)
 mod(a, b, errorMessage)
 
 #### tryAdd(uint256 a, uint256 b) → bool, uint256
+内部#
+返回两个无符号整数的加法结果，同时返回溢出标志。
+
+*自版本3.4起可用。*
+
+#### trySub(uint256 a, uint256 b) → bool, uint256
+内部#
+返回两个无符号整数的减法结果，并带有溢出标志。
+
+*自v3.4起可用。*
+
+#### tryMul(uint256 a, uint256 b) → bool, uint256
+内部#
+返回两个无符号整数的乘积，并带有溢出标志。
+
+*自 v3.4 版本起可用。*
+
+#### tryDiv(uint256 a, uint256 b) → bool, uint256
+内部#
+返回两个无符号整数的除法结果，并带有除零标志。
+
+*自v3.4版本起可用。*
+
+#### tryMod(uint256 a, uint256 b) → bool, uint256
+内部#
+返回两个无符号整数相除的余数，并标记除以零的情况。
+
+*从v3.4版本开始可用。*
+
+#### add(uint256 a, uint256 b) → uint256
+内部#
+返回两个无符号整数的加法结果，当溢出时返回反向结果。
+
+与Solidity的+运算符相对应。
+
+要求：
+* 加法不能溢出。
+
+#### sub(uint256 a, uint256 b) → uint256
+内部#
+返回两个无符号整数的减法结果，在溢出时返回反转的结果（当结果为负数时）。
+
+与Solidity的-运算符相对应。
+
+要求：
+* 减法不能溢出。
+
+#### mul(uint256 a, uint256 b) → uint256
+内部#
+返回两个无符号整数的乘积，如果溢出则返回零。
+
+与Solidity的*操作符相对应。
+
+要求：
+* 乘法不能溢出。
+
+#### div(uint256 a, uint256 b) → uint256
+内部#
+返回两个无符号整数的整数除法，如果除以零则返回反转。结果向零舍入。
+
+与Solidity的/运算符相对应。
+
+要求：
+* 除数不能为零。
+
+#### mod(uint256 a, uint256 b) → uint256
+内部#
+返回两个无符号整数相除的余数（无符号整数取模），在除以零时回退。
+
+这个函数是 Solidity 中 % 运算符的对应函数。该函数使用了一个 revert 指令（保留剩余的 gas），而 Solidity 使用了一个无效的指令来回退（消耗所有剩余的 gas）。
+
+要求：
+* 除数不能为零。
+
+#### sub(uint256 a, uint256 b, string errorMessage) → uint256
+内部#
+返回两个无符号整数的减法结果，在溢出时使用自定义消息进行回退（当结果为负数时）。
+
+> CAUTION
+该函数已弃用，因为它不必要地需要为错误消息分配内存。对于自定义的回退原因，请使用*trySub*。
+Solidity的-运算符的对应物。
+
+要求：
+* 减法不能溢出。
+
+#### div(uint256 a, uint256 b, string errorMessage) → uint256
+内部#
+返回两个无符号整数的整数除法，如果除零则返回自定义消息。结果向零舍入。
+
+这是Solidity中/操作符的对应函数。注意：此函数使用revert操作码（保留剩余的gas），而Solidity使用无效操作码来回滚（消耗所有剩余的gas）。
+
+要求：
+* 除数不能为零。
+
+#### mod(uint256 a, uint256 b, string errorMessage) → uint256
+内部#
+返回两个无符号整数相除的余数（无符号整数取模），在除以零时返回自定义消息。
+
+> CAUTION
+该函数已被弃用，因为它不必要地为错误消息分配内存。对于自定义的还原原因，请使用*tryMod*。
+与Solidity的%运算符相对应。此函数使用revert操作码（保留剩余的gas），而Solidity使用无效操作码来还原（消耗所有剩余的gas）。
+
+要求：
+* 除数不能为零。
+
+### SignedSafeMath
+```
+import "@openzeppelin/contracts/utils/math/SignedSafeMath.sol";
+```
+Solidity的算术操作封装。
+
+> NOTE
+从Solidity 0.8开始，不再需要SignedSafeMath。编译器现在具有内置的溢出检查功能。
+
+**FUNCTIONS**
+mul(a, b)
+
+div(a, b)
+
+sub(a, b)
+
+add(a, b)
+
+#### mul(int256 a, int256 b) → int256
+内部#
+返回两个有符号整数的乘积，如果溢出则返回相反数。
+
+与Solidity的*运算符相对应。
+
+要求：
+* 乘法不能溢出。
+
+#### div(int256 a, int256 b) → int256
+内部#
+返回两个有符号整数的整数除法结果。在除以零时会回滚。结果向零舍入。
+
+这是 Solidity 中 / 运算符的对应操作。
+
+要求：
+* 被除数不能为零。
+
+#### sub(int256 a, int256 b) → int256
+内部#
+返回两个有符号整数的减法结果，如果溢出则返回相反数。
+
+与Solidity的-运算符相对应。
+
+要求：
+* 减法不能溢出。
+
+#### add(int256 a, int256 b) → int256
+内部#
+返回两个有符号整数的加法结果，如果溢出则返回相反数。
+
+与Solidity的+运算符相对应。
+
+要求：
+* 加法不能溢出。
+
+## 加密
+
+### ECDSA
+```
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+```
+椭圆曲线数字签名算法（ECDSA）操作。
+
+这些函数可用于验证消息是否由给定地址的私钥持有者签名。
+
+**FUNCTIONS**
+tryRecover(hash, signature)
+
+recover(hash, signature)
+
+tryRecover(hash, r, vs)
+
+recover(hash, r, vs)
+
+tryRecover(hash, v, r, s)
+
+recover(hash, v, r, s)
+
+toEthSignedMessageHash(hash)
+
+toEthSignedMessageHash(s)
+
+toTypedDataHash(domainSeparator, structHash)
+
+toDataWithIntendedValidatorHash(validator, data)
+
+#### tryRecover(bytes32 hash, bytes signature) → address, enum ECDSA.RecoverError
+内部#
+返回使用签名或错误字符串对哈希消息（哈希）进行签名的地址。然后可以使用该地址进行验证。
+
+ecrecover EVM 操作码允许生成可塑（非唯一）的签名：该函数通过要求 s 值位于低半序列中，并且 v 值为 27 或 28 来拒绝这些签名。
+
+> IMPORTANT
+为了确保验证的安全性，哈希必须是用于验证的哈希操作的结果：可以为非哈希数据制作恢复到任意地址的签名。确保此安全性的一种方法是接收原始消息的哈希（否则可能太长），然后对其调用 *toEthSignedMessageHash*。
+签名生成的文档：- 使用 [Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign) - 使用 [ethers](https://docs.ethers.io/v5/api/signer/#Signer-signMessage)
+
+*自 v4.3 起可用。*
+
+#### recover(bytes32 hash, bytes signature) → address
+内部#
+返回使用签名对哈希消息（hash）进行签名的地址。可以将此地址用于验证目的。
+
+ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s值在低半序中，并且v值为27或28来拒绝它们。
+
+> IMPORTANT
+为了确保验证安全，哈希必须是对原始消息进行哈希操作的结果：可以通过接收原始消息的哈希（否则可能过长），然后对其调用*toEthSignedMessageHash*来确保这一点。
+
+#### tryRecover(bytes32 hash, bytes32 r, bytes32 vs) → address, enum ECDSA.RecoverError
+内部#
+*ECDSA.tryRecover*的重载函数，接收r和vs字段作为独立参数。
+
+参考[EIP-2098的短签名](https://eips.ethereum.org/EIPS/eip-2098)。
+
+*自v4.3版本开始可用。*
+
+#### recover(bytes32 hash, bytes32 r, bytes32 vs) → address
+内部#
+*ECDSA.recover*的重载版本，可以分别接收r和vs字段的短签名。
+
+*自v4.2版本起可用。*
+
+#### tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) → address, enum ECDSA.RecoverError
+内部#
+*ECDSA.tryRecover*的重载版本，接收单独的v、r和s签名字段。
+
+*自v4.3版本开始提供。*
+
+#### recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) → address
+内部#
+*ECDSA.recover*的重载版本，接收单独的v、r和s签名字段。
+
+#### toEthSignedMessageHash(bytes32 hash) → bytes32 message
+内部#
+返回一个以哈希值创建的以太坊已签名消息。这个方法会产生与使[用eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应的哈希值，作为EIP-191的一部分。
+
+参见*recover*。
+
+#### toEthSignedMessageHash(bytes s) → bytes32
+内部#
+返回一个以s创建的以太坊签名消息。这将产生与使用[eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应，作为EIP-191的一部分。
+
+参见 *recove*r。
+
+#### toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) → bytes32 data
+内部#
+返回一个以域分隔符（domainSeparator）和结构哈希（structHash）创建的以太坊签名类型数据。这个方法生成的哈希与使用[eth_signTypedData](https://eips.ethereum.org/EIPS/eip-712) JSON-RPC方法作为EIP-712的一部分进行签名的哈希相对应。
+
+参见*recover*。
+
+#### toDataWithIntendedValidatorHash(address validator, bytes data) → bytes32
+内部#
+根据EIP-191版本0，从验证器和数据创建一个带有预期验证者的以太坊签名数据。
+
+请参见*recover*。
+
+### SignatureChecker
+```
+import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+```
+签名验证助手，可用于无缝支持来自外部拥有账户（EOAs）的ECDSA签名和来自智能合约钱包（如Argent和Gnosis Safe）的ERC1271签名。
+
+*自v4.1版本开始提供。*
+
+*FUNCTIONS*
+isValidSignatureNow(signer, hash, signature)
+
+isValidERC1271SignatureNow(signer, hash, signature)
+
+#### isValidSignatureNow(address signer, bytes32 hash, bytes signature) → bool
+内部#
+检查给定签名者和数据哈希是否有效。如果签名者是智能合约，则使用ERC1271对该智能合约进行验证签名，否则使用ECDSA.recover进行验证。
+
+> NOTE
+与ECDSA签名不同，合约签名是可撤销的，因此该函数的结果可能随时间而变化。它可以在第N个区块返回true，在第N+1个区块返回false（或反之）。
+
+#### isValidERC1271SignatureNow(address signer, bytes32 hash, bytes signature) → bool
+检查给定签名者和数据哈希是否有效。该签名将使用ERC1271验证签名者智能合约。
+
+> NOTE
+与ECDSA签名不同，合约签名是可撤销的，因此此函数的结果可能会随时间变化。它可以在N块返回true，并在N+1块返回false（或相反）。
+
+### MerkleProof
+```
+import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+```
+这些函数处理Merkle树证明的验证。
+
+树和证明可以使用我们的[JavaScript库](https://github.com/OpenZeppelin/merkle-tree)生成。您可以在自述文件中找到快速入门指南。
+
+> WARNING
+在进行哈希之前，应避免使用长度为64字节的叶值，或者使用除keccak256之外的哈希函数进行哈希。这是因为Merkle树中内部节点的排序对的拼接可能会被重新解释为叶值。OpenZeppelin的JavaScript库可以直接生成抵御此攻击的Merkle树。
+
+**FUNCTIONS**
+verify(proof, root, leaf)
+
+verifyCalldata(proof, root, leaf)
+
+processProof(proof, leaf)
+
+processProofCalldata(proof, leaf)
+
+multiProofVerify(proof, proofFlags, root, leaves)
+
+multiProofVerifyCalldata(proof, proofFlags, root, leaves)
+
+processMultiProof(proof, proofFlags, leaves)
+
+processMultiProofCalldata(proof, proofFlags, leaves)
+
+#### verify(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
+内部#
+如果可以通过提供包含从叶子到树根的分支上的兄弟哈希的证明来证明叶子是Merkle树的一部分，则返回true。假设每对叶子和每对原始图像都已排序。
+
+#### verifyCalldata(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
+内部#
+verify的Calldata版本
+
+*从v4.7版本开始可用。*
+
+#### processProof(bytes32[] proof, bytes32 leaf) → bytes32
+内部#
+从叶节点开始使用证明，通过遍历 Merkle 树返回重建的哈希值。只有当重建的哈希值与树的根节点匹配时，证明才有效。在处理证明时，假设叶节点和预映像的配对已经排序。
+
+*自 v4.4 版本起可用。*
+
+#### processProofCalldata(bytes32[] proof, bytes32 leaf) → bytes32
+内部#
+processProof的Calldata版本
+
+*自v4.7版本开始可用。*
+
+#### multiProofVerify(bytes32[] proof, bool[] proofFlags, bytes32 root, bytes32[] leaves) → bool
+内部#
+如果根据processMultiProof中的proof和proofFlags描述，可以同时*证明叶子节点是merkle树*的一部分，则返回true。
+
+并非所有的merkle树都支持多证明。详情请参见*processMultiProof*。
+
+*自v4.7版本开始可用。*
+
+#### multiProofVerifyCalldata(bytes32[] proof, bool[] proofFlags, bytes32 root, bytes32[] leaves) → bool
+内部#
+*multiProofVerify*的Calldata版本
+
+并非所有的Merkle树都支持多重验证。有关详细信息，请参阅*processMultiProof*。
+**自v4.7起可用。**
+
+#### processMultiProof(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
+从叶子节点和兄弟节点的证明中返回重建的树的根节点。重建过程是通过将叶子节点/内部节点与另一个叶子节点/内部节点或证明兄弟节点组合来逐步重建所有内部节点，具体取决于每个proofFlags项是true还是false。
+
+> CAUTION
+并非所有的默克尔树都支持多证明。要使用多证明，只需确保：1）树是完整的（但不一定是完美的），2）要被证明的叶子节点的顺序与它们在树中的顺序相反（即，从最深的层开始从右向左看，然后继续下一层）。
+
+*自v4.7起可用。*
+
+#### processMultiProofCalldata(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
+*processMultiProof*的calldata版本。
+
+> CAUTION
+并非所有的默克尔树都支持多重证明。有关详细信息，请参阅*processMultiProof*。
+*自v4.7版本开始提供。*
+
+### EIP712
