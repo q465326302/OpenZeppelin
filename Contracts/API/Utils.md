@@ -681,3 +681,326 @@ toInt256(value)
 *输入必须适合200位
 
 *自v4.7起可用。*
+
+#### toInt192(int256 value) → int192 downcasted
+内部#
+将int256转换为int192，并在溢出时返回，当输入小于最小int192或大于最大int192时会发生溢出。
+
+与Solidity的int192运算符相对应。
+
+要求：
+* 输入必须适合192位
+
+*自v4.7起可用。*
+
+#### toInt184(int256 value) → int184 downcasted
+内部#
+将int256返回为downcasted int184，当溢出时进行回滚（当输入小于最小int184或大于最大int184时）。
+
+与Solidity的int184运算符相对应。
+
+要求：
+* 输入必须适合184位
+
+*自v4.7起可用。*
+
+#### toInt176(int256 value) → int176 downcasted
+内部#
+返回从int256到int176的向下转换，当溢出时恢复（当输入小于最小int176或大于最大int176时）。
+
+这是Solidity的int176运算符的对应物。
+
+要求：
+* 输入必须适合176位
+
+**自v4.7起可用。**
+
+#### toInt168(int256 value) → int168 downcasted
+内部#
+将int256转换为int168，并在溢出时进行回滚（当输入小于最小的int168或大于最大的int168时）。
+
+与Solidity的int168运算符相对应。
+
+要求：
+* 输入必须适合168位
+
+*自v4.7起可用。*
+
+#### toInt160(int256 value) → int160 downcasted
+内部#
+将int256转换为int160，并在溢出时恢复（当输入小于最小int160或大于最大int160时）。
+
+与Solidity的int160操作符相对应。
+
+要求：
+* 输入必须适合160位
+
+*从v4.7版本开始提供。*
+
+#### toInt152(int256 value) → int152 downcasted
+内部#
+将int256转换为int152，并在溢出时返回，当输入小于最小的int152或大于最大的int152时进行回滚。
+
+与Solidity的int152操作符相对应。
+
+要求：
+* 输入必须适合152位
+
+**自v4.7起可用。**
+
+#### toInt144(int256 value) → int144 downcasted
+内部#
+将int256转换为int144，并在溢出时进行回滚（当输入小于最小的int144或大于最大的int144时）。
+
+与Solidity的int144操作符相对应。
+
+要求：
+* 输入必须适合144位
+
+*自v4.7起可用。*
+
+#### toInt136(int256 value) → int136 downcasted
+内部#
+将int256转换为int136，如果溢出则返回错误（当输入小于最小的int136或大于最大的int136时）。
+
+与Solidity的int136运算符相对应。
+
+要求：
+* 输入必须适合136位
+
+*从v4.7开始可用。*
+
+#### toInt128(int256 value) → int128 downcasted
+内部#
+将int256从int128反向转换为int128，当输入小于最小int128或大于最大int128时，返回溢出（revert）。
+
+与Solidity的int128操作符相对应。
+
+要求：
+* 输入必须适合128位
+
+*自v3.1起可用。*
+
+#### toInt120(int256 value) → int120 downcasted
+内部#
+将int256转换为int120，并在溢出时回滚（当输入小于最小int120或大于最大int120时）。
+
+与Solidity的int120运算符相对应。
+
+要求：
+* 输入必须适合120位
+
+*自v4.7起可用。*
+
+#### toInt112(int256 value) → int112 downcasted
+内部#
+将int256向下转换为int112，并在溢出时进行回滚（当输入小于最小的int112或大于最大的int112时）。
+
+与Solidity的int112运算符相对应。
+
+要求：
+* 输入必须适合112位
+
+*自v4.7起可用。*
+
+#### toInt104(int256 value) → int104 downcasted
+内部#
+将int256转换为int104，并在溢出时恢复（当输入小于最小int104或大于最大int104时）。
+
+与Solidity的int104运算符相对应。
+
+要求：
+* 输入必须适合104位
+
+从v4.7开始提供。
+
+#### toInt96(int256 value) → int96 downcasted
+内部#
+将int256转换为int96，并在溢出时返回，当输入小于最小int96或大于最大int96时将回滚。
+
+与Solidity的int96运算符相对应。
+
+要求：
+* 输入必须适合96位
+
+从v4.7开始提供。
+
+#### toInt88(int256 value) → int88 downcasted
+内部#
+从int256返回向下转型的int88，当输入小于最小的int88或大于最大的int88时会回滚（溢出）。
+
+与Solidity的int88操作符相对应。
+
+要求：
+* 输入必须适合88位
+
+*自v4.7开始可用。*
+
+#### toInt80(int256 value) → int80 downcasted
+内部#
+将int256强制转换为int80，并在溢出时回滚（当输入小于最小的int80或大于最大的int80时）。
+
+与Solidity的int80运算符相对应。
+
+要求：
+* 输入必须适合80位
+
+*自v4.7以来可用。*
+
+#### toInt72(int256 value) → int72 downcasted
+内部#
+将int256强制转换为int72，并在溢出时回滚（当输入小于最小int72或大于最大int72时）。
+
+与Solidity的int72操作符相对应。
+
+要求：
+* 输入必须适合72位。
+
+**从v4.7开始可用。**
+
+#### toInt64(int256 value) → int64 downcasted
+内部#
+将int256转换为int64，并在溢出时回滚（当输入小于最小的int64或大于最大的int64时）。
+
+与Solidity的int64操作符相对应。
+
+要求：
+* 输入必须适合64位
+
+*自v3.1起可用。*
+
+#### toInt56(int256 value) → int56 downcasted
+内部#
+将int256转换为int56，当输入小于最小int56或大于最大int56时，将返回溢出（revert）。
+
+与Solidity的int56操作符相对应。
+
+要求：
+* 输入必须适合56位
+
+*从v4.7开始提供。*
+
+#### toInt48(int256 value) → int48 downcasted
+内部#
+将int256转换为int48，并在溢出时进行回滚（当输入小于最小int48或大于最大int48时）。
+
+与Solidity的int48运算符相对应。
+
+要求：
+* 输入必须适合48位
+
+*自v4.7起可用。*
+
+#### toInt40(int256 value) → int40 downcasted
+内部#
+将int256转换为downcasted int40，当溢出时返回（当输入小于最小int40或大于最大int40时）。
+
+与Solidity的int40操作符相对应。
+
+要求：
+* 输入必须适合40位
+
+*从v4.7开始可用。*
+
+#### toInt32(int256 value) → int32 downcasted
+内部#
+将int256转换为int32，如果溢出则返回错误（当输入小于最小int32或大于最大int32时）。
+
+与Solidity的int32操作符相对应。
+
+要求：
+* 输入必须适合32位
+
+*自v3.1起可用。*
+
+#### toInt24(int256 value) → int24 downcasted
+内部#
+将int256转换为int24，如果溢出则返回revert（当输入小于最小int24或大于最大int24时）。
+
+与Solidity的int24运算符对应。
+
+要求：
+* 输入必须适合24位。
+
+*自v4.7起可用。*
+
+#### toInt16(int256 value) → int16 downcasted
+内部#
+将int256转换为int16，并在溢出时返回，即当输入小于最小int16或大于最大int16时返回。
+
+与Solidity的int16操作符相对应。
+
+要求：
+* 输入必须适合16位
+
+*自v3.1起可用。*
+
+#### toInt16(int256 value) → int16 downcasted
+内部#
+将int256类型的值向下转换为int16类型的值，并在溢出时返回（当输入值小于最小int16或大于最大int16时）。
+
+这是Solidity中int16运算符的对应方法。
+
+要求：
+* 输入值必须在16位范围内
+
+*自v3.1版本起可用。*
+
+#### toInt8(int256 value) → int8 downcasted
+内部#
+将int256转换为int8，并在溢出时进行回滚（当输入小于最小int8或大于最大int8时）。
+
+与Solidity的int8操作符相对应。
+
+要求：
+* 输入必须适合8位
+
+*自v3.1起可用。*
+
+#### toInt256(uint256 value) → int256
+内部#
+将无符号的uint256转换为有符号的int256。
+
+要求：
+* 输入必须小于或等于maxInt256。
+
+*自v3.0起可用。*
+
+### SafeMath
+```
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+```
+
+对Solidity算术操作的包装器。
+
+> NOTE
+从Solidity 0.8开始，通常不再需要SafeMath，因为编译器现在内置了溢出检查。
+
+**FUNCTIONS**
+tryAdd(a, b)
+
+trySub(a, b)
+
+tryMul(a, b)
+
+tryDiv(a, b)
+
+tryMod(a, b)
+
+add(a, b)
+
+sub(a, b)
+
+mul(a, b)
+
+div(a, b)
+
+mod(a, b)
+
+sub(a, b, errorMessage)
+
+div(a, b, errorMessage)
+
+mod(a, b, errorMessage)
+
+#### tryAdd(uint256 a, uint256 b) → bool, uint256
