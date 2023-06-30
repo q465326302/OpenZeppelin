@@ -1355,6 +1355,7 @@ processProof的Calldata版本
 **自v4.7起可用。**
 
 #### processMultiProof(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
+内部#
 从叶子节点和兄弟节点的证明中返回重建的树的根节点。重建过程是通过将叶子节点/内部节点与另一个叶子节点/内部节点或证明兄弟节点组合来逐步重建所有内部节点，具体取决于每个proofFlags项是true还是false。
 
 > CAUTION
@@ -1370,3 +1371,159 @@ processProof的Calldata版本
 *自v4.7版本开始提供。*
 
 ### EIP712
+```
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
+```
+[EIP 712](https://eips.ethereum.org/EIPS/eip-712)是一种用于对类型化结构化数据进行哈希和签名的标准。
+
+EIP中指定的编码非常通用，Solidity中的这种通用实现是不可行的，因此该合约不实现编码本身。协议需要使用abi.encode和keccak256的组合来在其合约中实现所需的特定类型编码。
+
+该合约实现了作为编码方案的一部分使用的EIP 712域分隔符（*_domainSeparatorV4*），以及获取消息摘要后通过ECDSA进行签名的编码的最后一步（*_hashTypedDataV4*）。
+
+域分隔符的实现旨在尽可能高效，同时仍然正确地更新链ID，以防止在未来的链分叉上进行重放攻击。
+
+> NOTE
+该合约实现了被称为“v4”的编码版本，由[MetaMask中](https://docs.metamask.io/guide/signing-data.html)的JSON RPC方法[eth_signTypedDataV4](https://docs.metamask.io/guide/signing-data.html)实现。
+
+> NOTE
+在可升级版本的合约中，缓存的值将对应于实现合约的地址和域分隔符。这将导致_domainSeparatorV4函数始终从不可变值重新构建分隔符，这比访问冷存储中的缓存版本更便宜。
+
+*自v3.4版本起可用。*
+
+**FUNCTIONS**
+constructor(name, version)
+
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+**EVENTS**
+IERC5267
+EIP712DomainChanged()
+
+#### constructor(string name, string version)
+内部#
+初始化域分隔符和参数缓存。
+
+名称和版本的含义在[EIP 712](https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator)中指定：
+* 名称：签名域的用户可读名称，即DApp或协议的名称。
+* 版本：签名域的当前主要版本。
+
+> NOTE
+除非通过*智能合约升级*，否则这些参数不能更改。
+
+#### _domainSeparatorV4() → bytes32
+内部#
+返回当前链的域分隔符。
+
+#### _hashTypedDataV4(bytes32 structHash) → bytes32
+内部#
+给定一个已经[哈希的结构体](https://eips.ethereum.org/EIPS/eip-712#definition-of-hashstruct)，这个函数返回完全编码的 EIP712 消息在该域中的哈希值。
+
+这个哈希值可以与 *ECDSA.recover* 一起使用，以获得消息的签名者。例如：
+```
+bytes32 digest = _hashTypedDataV4(keccak256(abi.encode(
+    keccak256("Mail(address to,string contents)"),
+    mailTo,
+    keccak256(bytes(mailContents))
+)));
+address signer = ECDSA.recover(digest, signature);
+```
+
+#### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
+公开#
+请参阅{EIP-5267}。
+
+*自v4.9版本起可用。*
+
+## Escrow
+
+### ConditionalEscrow
+```
+import "@openzeppelin/contracts/utils/escrow/ConditionalEscrow.sol";
+```
+基于抽象的托管只允许在满足条件时进行提款。预期用法：请参见*Escrow*。相同的用法指南适用于此处。
+
+**FUNCTIONS**
+withdrawalAllowed(payee)
+
+withdraw(payee)
+
+ESCROW
+depositsOf(payee)
+
+deposit(payee)
+
+OWNABLE
+owner()
+
+_checkOwner()
+
+renounceOwnership()
+
+transferOwnership(newOwner)
+
+_transferOwnership(newOwner)
+
+**EVENTS**
+ESCROW
+Deposited(payee, weiAmount)
+
+Withdrawn(payee, weiAmount)
+
+OWNABLE
+OwnershipTransferred(previousOwner, newOwner)
+
+#### withdrawalAllowed(address payee) → bool
+公开#
+返回地址是否被允许提取资金。由派生合约实现。
+
+#### withdraw(address payable payee)
+公开#
+将累积余额提取给收款人，并将所有燃气转发给收款人。
+
+> WARNING
+将所有燃气转发给收款人会打开重入漏洞的大门。请确保您信任收款人，或者遵循检查-效果-交互模式或使用*ReentrancyGuard*。
+
+### Escrow
+```
+import "@openzeppelin/contracts/utils/escrow/Escrow.sol";
+```
+基本的托管合约，将款项保留给收款人，直到他们提取这些款项。
+
+预期使用方式：该合约（以及派生的托管合约）应该是一个独立的合约，只与实例化它的合约进行交互。这样，可以确保所有以太币都按照托管规则进行处理，而不需要在继承树中检查可支付的函数或转账。使用托管作为付款方式的合约应该是其所有者，并提供公共方法重定向到托管的存款和提款。
+
+**FUNCTIONS**
+depositsOf(payee)
+
+deposit(payee)
+
+withdraw(payee)
+
+OWNABLE
+owner()
+
+_checkOwner()
+
+renounceOwnership()
+
+transferOwnership(newOwner)
+
+_transferOwnership(newOwner)
+
+**EVENTS**
+Deposited(payee, weiAmount)
+
+Withdrawn(payee, weiAmount)
+
+OWNABLE
+OwnershipTransferred(previousOwner, newOwner)
+
+#### depositsOf(address payee) → uint256
+公开#
+
+#### deposit(address payee)
+公开#
+将发送的金额存为信用以便提取。
