@@ -2462,39 +2462,280 @@ values(set)
 
 如果该值从集合中被删除，即存在于集合中，则返回true。
 
+#### contains(struct EnumerableSet.UintSet set, uint256 value) → bool
+内部#
+如果值在集合中，则返回true。O(1)。
 
+#### length(struct EnumerableSet.UintSet set) → uint256
+内部#
+返回集合中的值的数量。O(1)。
 
+#### at(struct EnumerableSet.UintSet set, uint256 index) → uint256
+内部#
+在集合中返回存储在索引位置上的值。O(1)。
 
+请注意，数组内部的值的排序没有保证，并且当添加或删除更多值时可能会改变。
 
+要求：
+* 索引必须严格小于长度。
 
+#### values(struct EnumerableSet.UintSet set) → uint256[]
+内部#
+将整个集合作为数组返回
 
+> WARNING
+此操作将整个存储复制到内存中，这可能非常昂贵。这主要用于无需任何gas费用查询的视图访问器。开发人员应该记住，此函数的成本是无限的，如果集合增长到将复制到内存的gas消耗过多而无法适应一个区块，那么在状态更改函数的一部分中使用它可能导致该函数无法调用。
 
+#### DoubleEndedQueue
+```
+import "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol";
+```
+一个具有在序列的两端（称为前端和后端）高效地插入和删除项目（即推入和弹出）的能力的序列。它可以用于实现高效的LIFO和FIFO队列，除了其他访问模式。存储使用被优化，并且所有操作都是O(1)常数时间。这包括*清除*，因为现有队列内容保留在存储中。
 
+该结构体被称为Bytes32Deque。其他类型可以转换为bytes32并从bytes32转换。这个数据结构只能在存储中使用，不能在内存中使用。
+```
+DoubleEndedQueue.Bytes32Deque queue;
+```
+**自v4.6版本开始可用。**
 
+**FUNCTIONS**
+pushBack(deque, value)
 
+popBack(deque)
 
+pushFront(deque, value)
 
+popFront(deque)
 
+front(deque)
 
+back(deque)
 
+at(deque, index)
 
+clear(deque)
 
+length(deque)
 
+empty(deque)
 
+#### pushBack(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
+内部#
+在队列的末尾插入一个项目。
 
+#### popBack(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+内部#
+删除队列末尾的项并返回它。
 
+如果队列为空，则返回Empty。
 
+#### pushFront(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
+内部#
+在队列的开头插入一个项目。
 
+#### popFront(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+内部#
+从队列的开头移除并返回该项。
 
+如果队列为空，则返回Empty。
 
+#### front(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+内部#
+返回队列开头的项目。
 
+如果队列为空，则返回Empty。
 
+#### back(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+内部#
+返回队列末尾的项。
 
+如果队列为空，则返回Empty。
 
+#### at(struct DoubleEndedQueue.Bytes32Deque deque, uint256 index) → bytes32 value
+内部#
+根据索引返回队列中位置处的项，其中第一个项为0，最后一个项为length(deque) - 1。
 
+如果索引超出了边界，则返回越界错误。
 
+#### clear(struct DoubleEndedQueue.Bytes32Deque deque)
+内部#
+将队列重置为空。
 
+> NOTE
+当前的项目将被留在存储中。这不会影响队列的功能，但会错过潜在的gas退款。
 
+#### length(struct DoubleEndedQueue.Bytes32Deque deque) → uint256
+内部#
+返回队列中的项目数量。
 
+#### empty(struct DoubleEndedQueue.Bytes32Deque deque) → bool
+内部#
+如果队列为空，则返回true。
 
+### Checkpoints
+```
+import "@openzeppelin/contracts/utils/Checkpoints.sol";
+```
+这个库定义了History结构体，用于在不同时间点上对数值进行检查点，并在以后通过区块号查找过去的数值。以*Votes*为例。
+
+要创建一个检查点历史，请在您的合约中定义一个变量类型Checkpoints.History，并使用*push*函数为当前交易块存储一个新的检查点。
+
+*从版本4.5开始提供。*
+
+**FUNCTIONS**
+getAtBlock(self, blockNumber)
+
+getAtProbablyRecentBlock(self, blockNumber)
+
+push(self, value)
+
+push(self, op, delta)
+
+latest(self)
+
+latestCheckpoint(self)
+
+length(self)
+
+push(self, key, value)
+
+lowerLookup(self, key)
+
+upperLookup(self, key)
+
+upperLookupRecent(self, key)
+
+latest(self)
+
+latestCheckpoint(self)
+
+length(self)
+
+push(self, key, value)
+
+lowerLookup(self, key)
+
+upperLookup(self, key)
+
+upperLookupRecent(self, key)
+
+latest(self)
+
+latestCheckpoint(self)
+
+length(self)
+
+#### getAtBlock(struct Checkpoints.History self, uint256 blockNumber) → uint256
+内部#
+返回给定块号的值。如果该块的检查点不可用，则返回其之前最近的检查点，否则返回零。由于返回的数字对应于该块的结束处，所以请求的块号必须在过去，不包括当前块。
+
+#### getAtProbablyRecentBlock(struct Checkpoints.History self, uint256 blockNumber) → uint256
+内部#
+返回给定区块号的值。如果该区块上没有可用的检查点，则返回其之前最近的检查点，否则返回零。类似于*upperLookup*，但针对可能是“最近”的检查点进行了优化，其中“最近”定义为最后sqrt(N)个检查点之一，其中N是检查点的数量。
+
+#### push(struct Checkpoints.History self, uint256 value) → uint256, uint256
+内部#
+将一个值推入历史记录，以便将其存储为当前块的检查点。
+
+返回先前的值和新值。
+
+#### push(struct Checkpoints.History self, function (uint256,uint256) view returns (uint256) op, uint256 delta) → uint256, uint256
+内部#
+通过使用二元运算op更新最新值，将一个值推入历史记录。新值将设置为op（最新值，增量）。
+
+返回先前的值和新值。
+
+#### latest(struct Checkpoints.History self) → uint224
+内部#
+返回最近的检查点中的值，如果没有检查点，则返回零。
+
+#### latestCheckpoint(struct Checkpoints.History self) → bool exists, uint32 _blockNumber, uint224 _value
+内部#
+返回结构中是否存在检查点（即它不为空），如果存在，则返回最新检查点中的键和值。
+
+#### length(struct Checkpoints.History self) → uint256
+内部#
+返回检查点的数量。
+
+#### push(struct Checkpoints.Trace224 self, uint32 key, uint224 value) → uint224, uint224
+内部#
+将一个（键，值）对推送到Trace224中，以便将其存储为检查点。
+
+返回先前的值和新值。
+
+#### lowerLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224
+内部#
+如果存在大于或等于搜索键的第一个（最旧的）检查点的键，则返回该键的值；如果不存在，则返回零。
+
+#### upperLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224
+内部#
+返回key小于或等于搜索key的最后一个（最近的）检查点中的值，如果没有，则返回零。
+
+#### upperLookupRecent(struct Checkpoints.Trace224 self, uint32 key) → uint224
+内部#
+返回最近的键值小于或等于搜索键的最后一个检查点中的值，如果没有，则返回零。
+
+> NOTE
+这是一种经过优化的upperLookup变体，用于查找“最近”的检查点（具有高键值的检查点）。
+
+#### latest(struct Checkpoints.Trace224 self) → uint224
+内部#
+返回最近的检查点中的值，如果没有检查点，则返回零。
+
+#### latestCheckpoint(struct Checkpoints.Trace224 self) → bool exists, uint32 _key, uint224 _value
+内部#
+返回结构中是否有检查点（即它不为空），如果有，则返回最近检查点中的键和值。
+
+#### length(struct Checkpoints.Trace224 self) → uint256
+内部#
+返回检查点的数量。
+
+#### push(struct Checkpoints.Trace160 self, uint96 key, uint160 value) → uint160, uint160
+内部#
+将（键，值）对推入Trace160，以便将其存储为检查点。
+
+返回先前的值和新值。
+
+#### lowerLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160
+内部#
+如果有，则返回第一个（最旧的）检查点中大于或等于搜索键的键的值；如果没有，则返回零。
+
+#### upperLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160
+内部#
+如果没有，则返回小于或等于搜索键的最后一个（最新的）检查点中的值，如果没有，则返回零。
+
+#### upperLookupRecent(struct Checkpoints.Trace160 self, uint96 key) → uint160
+返回最后一个（最近的）键小于或等于搜索键的检查点中的值，如果没有，则返回零。
+
+> NOTE
+这是*upperLookup*的一个变体，它被优化用于查找“最近的”检查点（具有较高键的检查点）。
+
+#### latest(struct Checkpoints.Trace160 self) → uint160
+内部#
+如果没有检查点，则返回最近检查点中的值，否则返回零。
+
+#### latestCheckpoint(struct Checkpoints.Trace160 self) → bool exists, uint96 _key, uint160 _value
+内部#
+返回结构中是否存在检查点（即它不为空），如果存在，则返回最近检查点中的键和值。
+
+#### length(struct Checkpoints.Trace160 self) → uint256
+内部#
+返回检查点的数量。
+
+## Libraries
+
+### Create2
+```
+import "@openzeppelin/contracts/utils/Create2.sol";
+```
+CREATE2 EVM指令的辅助工具旨在使使用更加简便和安全。CREATE2可以提前计算智能合约部署的地址，从而实现一种称为“反事实交互”的有趣的新机制。
+
+有关更多信息，请参阅[EIP](https://eips.ethereum.org/EIPS/eip-1014#motivation)。
+
+**FUNCTIONS**
+deploy(amount, salt, bytecode)
+
+computeAddress(salt, bytecodeHash)
+
+computeAddress(salt, bytecodeHash, deployer)
 
