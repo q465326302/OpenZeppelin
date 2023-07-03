@@ -1708,3 +1708,187 @@ _registerInterface(interfaceId)
 要求：
 
 interfaceId不能是ERC165的无效接口（0xffffffff）。
+
+### ERC16Checker
+```
+import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+```
+用于查询通过*IERC165*声明的接口支持的库。
+
+请注意，这些函数返回查询的实际结果：如果不支持某个接口，它们不会回滚。在这些情况下，由调用者决定要采取什么操作。
+
+**FUNCTIONS**
+supportsERC165(account)
+
+supportsInterface(account, interfaceId)
+
+getSupportedInterfaces(account, interfaceIds)
+
+supportsAllInterfaces(account, interfaceIds)
+
+supportsERC165InterfaceUnchecked(account, interfaceId)
+
+#### supportsERC165(address account) → bool
+内部#
+如果账户支持*IERC165*接口，则返回true。
+
+#### supportsInterface(address account, bytes4 interfaceId) → bool
+内部#
+如果账户支持由interfaceId定义的接口，则返回true。对于*IERC165*本身的支持会自动查询。
+
+参见*IERC165.supportsInterface*。
+
+#### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
+内部#
+返回一个布尔数组，其中每个值对应于传入的接口和它们是否被支持。这使您可以批量检查合约的接口，其中您的期望是某些接口可能不被支持。
+
+请参阅*IERC165.supportsInterface*。
+
+*自v3.4起可用。*
+
+#### supportsAllInterfaces(address account, bytes4[] interfaceIds) → bool
+内部#
+如果帐户支持interfaceIds中定义的所有接口，则返回true。自动查询对*IERC16*5本身的支持。
+
+通过批量查询可以节省燃气费，跳过重复的*IERC165*支持检查。
+
+参见*IERC165.supportsInterface*。
+
+#### supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) → bool
+内部#
+假设账户包含支持ERC165的合约，否则此方法的行为是未定义的。可以使用*supportsERC165*来检查此前提条件。
+
+某些预编译合约可能错误地表示支持给定的接口，因此在使用此函数时应谨慎。
+
+接口标识在ERC-165中有规定。
+
+### IERC1820Registry
+```
+import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
+```
+全球ERC1820注册表的接口，根据[EIP](https://eips.ethereum.org/EIPS/eip-1820)的定义。账户可以在该注册表中注册接口的实现者，并查询支持。
+
+实现者可以由多个账户共享，并且每个账户还可以实现多个接口。合约可以为自己实现接口，但外部拥有的账户（EOA）必须委托给合约。
+
+还可以通过注册表查询*IERC165*接口。
+
+有关详细说明和源代码分析，请参阅EIP文本。
+
+**FUNCTIONS**
+setManager(account, newManager)
+
+getManager(account)
+
+setInterfaceImplementer(account, _interfaceHash, implementer)
+
+getInterfaceImplementer(account, _interfaceHash)
+
+interfaceHash(interfaceName)
+
+updateERC165Cache(account, interfaceId)
+
+implementsERC165Interface(account, interfaceId)
+
+implementsERC165InterfaceNoCache(account, interfaceId)
+
+**EVENTS**
+InterfaceImplementerSet(account, interfaceHash, implementer)
+
+ManagerChanged(account, newManager)
+
+### setManager(address account, address newManager)
+外部#
+将newManager设置为account的管理者。账户的管理者可以为其设置接口实现者。
+
+默认情况下，每个账户都是其自己的管理者。将0x0的值传递给newManager将重置管理者为初始状态。
+
+发出*ManagerChanged*事件。
+
+要求：
+* 调用者必须是account的当前管理者。
+
+#### getManager(address account) → address
+外部#
+返回账户的经理。
+
+参见*setManager*。
+
+#### setInterfaceImplementer(address account, bytes32 _interfaceHash, address implementer)
+外部#
+将实现者合约设置为账户的实现者，用于接口哈希。
+
+账户是调用者地址的别名。零地址也可以用于实现者中以移除旧的地址。
+
+查看 *interfaceHash*以了解如何创建它们。
+
+触发 *InterfaceImplementerSet* 事件。
+
+要求：
+* 调用者必须是账户的当前管理者。
+
+* 接口哈希不能是一个*IERC165*接口id（即它不能以28个零结尾）。
+
+* 实现者必须实现IERC1820Implementer接口并在查询支持时返回true，除非实现者是调用者。参见*IERC1820Implementer.canImplementInterfaceForAddress*。
+
+#### getInterfaceImplementer(address account, bytes32 _interfaceHash) → address
+外部#
+返回接口哈希在账户上的实现者。如果没有注册这样的实现者，则返回零地址。
+
+如果接口哈希是一个*IERC165*接口id（即以28个零结尾），将查询账户是否支持它。
+
+账户为零地址是调用者地址的别名。
+
+#### interfaceHash(string interfaceName) → bytes32
+外部#
+返回与接口名称对应的接口哈希，该[哈希在EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-name)的相应部分中定义。
+
+#### updateERC165Cache(address account, bytes4 interfaceId)
+外部#
+
+#### implementsERC165Interface(address account, bytes4 interfaceId) → bool
+外部#
+
+#### implementsERC165InterfaceNoCache(address account, bytes4 interfaceId) → bool
+外部#
+
+#### InterfaceImplementerSet(address indexed account, bytes32 indexed interfaceHash, address indexed implementer)
+事件#
+
+#### ManagerChanged(address indexed account, address indexed newManager)
+事件#
+
+### IERC1820Implementer
+```
+import "@openzeppelin/contracts/utils/introspection/IERC1820Implementer.sol";
+```
+ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-implementation-erc1820implementerinterface)中所定义。用于将合约注册为*IERC1820Registry*中的实现者。
+
+**FUNCTIONS**
+canImplementInterfaceForAddress(interfaceHash, account)
+
+#### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
+外部#
+如果该合约为帐户实现了interfaceHash，则返回特殊值（ERC1820_ACCEPT_MAGIC）。
+
+请参阅*IERC1820Registry.setInterfaceImplementer*。
+
+### ERC1820Implementer
+```
+import "@openzeppelin/contracts/utils/introspection/ERC1820Implementer.sol";
+```
+*IERC1820Implementer*接口的实现。
+
+合约可以继承此接口，并调用*_registerInterfaceForAddress*来声明它们愿意成为实现者。
+然后，应调用*IERC1820Registry.setInterfaceImplementer*来完成注册。
+
+> CAUTION
+自v4.9起，此文件已被弃用，并将在下一个主要版本中删除。
+
+**FUNCTIONS**
+canImplementInterfaceForAddress(interfaceHash, account)
+
+_registerInterfaceForAddress(interfaceHash, account)
+
+#### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
+公开#
+请查阅 *IERC1820Implementer.canImplementInterfaceForAddress*.
