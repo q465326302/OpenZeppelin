@@ -2965,3 +2965,214 @@ reset(counter)
 
 #### current(struct Counters.Counter counter) → uint256
 内部#
+
+#### increment(struct Counters.Counter counter)
+内部#
+
+#### decrement(struct Counters.Counter counter)
+内部#
+
+#### reset(struct Counters.Counter counter)
+内部#
+
+### Strings
+```
+import "@openzeppelin/contracts/utils/Strings.sol";
+```
+字符串运算
+
+**FUNCTIONS**
+toString(value)
+
+toString(value)
+
+toHexString(value)
+
+toHexString(value, length)
+
+toHexString(addr)
+
+equal(a, b)
+
+#### toString(uint256 value) → string
+内部#
+将uint256转换为其ASCII字符串十进制表示形式。
+
+#### toString(int256 value) → string
+内部#
+将int256转换为其ASCII字符串十进制表示。
+
+#### toHexString(uint256 value) → string
+内部#
+将一个uint256转换为其ASCII字符串十六进制表示形式。
+
+#### toHexString(uint256 value, uint256 length) → string
+内部#
+将uint256转换为固定长度的ASCII字符串十六进制表示形式。
+
+#### toHexString(address addr) → string
+内部#
+将长度固定为20字节的地址转换为其非校验的ASCII字符串十六进制表示形式。
+
+#### equal(string a, string b) → bool
+内部#
+如果两个字符串相等，则返回true。
+
+### ShortStrings
+```
+import "@openzeppelin/contracts/utils/ShortStrings.sol";
+```
+该库提供了将短内存字符串转换为可用作不可变变量的ShortString类型的函数。
+
+如果任意长度的字符串足够短（最多31个字节），则可以使用该库对其进行优化，通过将其与长度（1个字节）打包在单个EVM字中（32个字节）。此外，对于其他情况，可以使用回退机制。
+
+使用示例：
+```
+contract Named {
+    using ShortStrings for *;
+
+    ShortString private immutable _name;
+    string private _nameFallback;
+
+    constructor(string memory contractName) {
+        _name = contractName.toShortStringWithFallback(_nameFallback);
+    }
+
+    function name() external view returns (string memory) {
+        return _name.toStringWithFallback(_nameFallback);
+    }
+}
+```
+
+**FUNCTIONS**
+toShortString(str)
+
+toString(sstr)
+
+byteLength(sstr)
+
+toShortStringWithFallback(value, store)
+
+toStringWithFallback(value, store)
+
+byteLengthWithFallback(value, store)
+
+#### toShortString(string str) → ShortString
+内部#
+将最多31个字符的字符串编码为ShortString。
+
+如果输入字符串过长，将触发StringTooLong错误。
+
+#### toString(ShortString sstr) → string
+内部#
+将短字符串解码回“正常”字符串
+
+#### byteLength(ShortString sstr) → uint256
+内部#
+返回ShortString的长度。
+
+#### toShortStringWithFallback(string value, string store) → ShortString
+内部#
+将字符串编码为ShortString，如果字符串太长则写入存储。
+
+#### toStringWithFallback(ShortString value, string store) → string
+内部#
+解码一个被编码为ShortString或使用{setWithFallback}写入存储的字符串。
+
+#### byteLengthWithFallback(ShortString value, string store) → uint256
+内部#
+返回使用ShortString编码或使用{setWithFallback}写入存储的字符串的长度。
+
+> WARNING
+这将返回字符串的“字节长度”。这可能不反映实际字符长度，因为单个字符的UTF-8编码可能跨越多个字节。
+
+### StorageSlot
+```
+import "@openzeppelin/contracts/utils/StorageSlot.sol";
+```
+用于读取和写入特定存储槽的原始类型的库。
+
+在处理可升级合约时，通常使用存储槽来避免存储冲突。该库帮助读取和写入这些存储槽，而无需使用内联汇编。
+
+该库中的函数返回包含值成员的Slot结构，可以用于读取或写入。
+
+以下是设置ERC1967实现存储槽的示例用法：
+```
+contract ERC1967 {
+    bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;
+
+    function _getImplementation() internal view returns (address) {
+        return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;
+    }
+
+    function _setImplementation(address newImplementation) internal {
+        require(Address.isContract(newImplementation), "ERC1967: new implementation is not a contract");
+        StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;
+    }
+}
+```
+*自v4.1起，地址（address），布尔（bool），字节数组（bytes32），无符号整数（uint256）可用。自v4.9起，字符串（string），字节数组（bytes）可用。*
+
+**FUNCTIONS**
+getAddressSlot(slot)
+
+getBooleanSlot(slot)
+
+getBytes32Slot(slot)
+
+getUint256Slot(slot)
+
+getStringSlot(slot)
+
+getStringSlot(store)
+
+getBytesSlot(slot)
+
+getBytesSlot(store)
+
+#### getAddressSlot(bytes32 slot) → struct StorageSlot.AddressSlot r
+内部#
+返回在slot中位于成员值的AddressSlot。
+
+#### getBooleanSlot(bytes32 slot) → struct StorageSlot.BooleanSlot r
+内部#
+返回一个位于槽位的BooleanSlot的成员值。
+
+#### getBytes32Slot(bytes32 slot) → struct StorageSlot.Bytes32Slot r
+内部#
+返回一个位于slot的成员值的Bytes32Slot。
+
+#### getUint256Slot(bytes32 slot) → struct StorageSlot.Uint256Slot r
+内部#
+返回一个位于slot位置的具有成员值的Uint256Slot。
+
+#### getStringSlot(bytes32 slot) → struct StorageSlot.StringSlot r
+内部#
+返回一个StringSlot，其成员值位于slot中。
+
+#### getStringSlot(string store) → struct StorageSlot.StringSlot r
+内部#
+将字符串存储指针存储的字符串表示转换为StringSlot。
+
+#### getBytesSlot(bytes32 slot) → struct StorageSlot.BytesSlot r
+内部#
+返回一个位于slot位置的BytesSlot，其成员值为value。
+
+#### 返回一个位于slot位置的BytesSlot，其成员值为value。
+内部#
+将字节存储指针存储的表示形式返回为BytesSlot。
+
+### Multicall
+```
+import "@openzeppelin/contracts/utils/Multicall.sol";
+```
+提供一个函数，可以将多个调用批量合并为一个单独的外部调用。
+
+*自v4.1起可用。*
+
+**FUNCTIONS**
+multicall(data)
+
+#### multicall(bytes[] data) → bytes[] results
+外部# 
+接收并执行这个合约上的一批函数调用。
