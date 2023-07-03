@@ -1892,3 +1892,263 @@ _registerInterfaceForAddress(interfaceHash, account)
 #### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
 公开#
 请查阅 *IERC1820Implementer.canImplementInterfaceForAddress*.
+
+#### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
+内部#
+将合同声明为愿意成为帐户的interfaceHash实现者。
+
+请参考*IERC1820Registry.setInterfaceImplementer*和*IERC1820Registry.interfaceHash*。
+
+## Data Structures
+
+### BitMaps
+```
+import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
+```
+这是一个用于以紧凑高效的方式管理uint256到bool映射的库，前提是键是连续的。它在很大程度上受到了Uniswap的[ merkle-distributor](https://github.com/Uniswap/merkle-distributor/blob/master/contracts/MerkleDistributor.sol)的启发。
+
+**FUNCTIONS**
+get(bitmap, index)
+
+setTo(bitmap, index, value)
+
+set(bitmap, index)
+
+unset(bitmap, index)
+
+#### get(struct BitMaps.BitMap bitmap, uint256 index) → bool
+内部#
+返回索引处的位是否设置。
+
+#### setTo(struct BitMaps.BitMap bitmap, uint256 index, bool value)
+内部#
+将索引处的位设置为布尔值。
+
+#### set(struct BitMaps.BitMap bitmap, uint256 index)
+内部#
+设置索引处的位。
+
+#### unset(struct BitMaps.BitMap bitmap, uint256 index)
+内部#
+取消设置在索引处的位。
+
+### EnumerableMap
+```
+import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
+```
+管理Solidity映射类型的[可枚举](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)变体的库。
+
+映射具有以下属性：
+* 添加、删除和检查条目的存在性的时间复杂度为常数时间(O(1))。
+* 条目的枚举时间复杂度为O(n)。对于排序不做任何保证。
+
+```
+contract Example {
+    // Add the library methods
+    using EnumerableMap for EnumerableMap.UintToAddressMap;
+
+    // Declare a set state variable
+    EnumerableMap.UintToAddressMap private myMap;
+}
+```
+支持以下地图类型：
+
+* uint256 → 地址 (UintToAddressMap) 自v3.0.0起
+
+* 地址 → uint256 (AddressToUintMap) 自v4.6.0起
+
+* bytes32 → bytes32 (Bytes32ToBytes32Map) 自v4.6.0起
+
+* uint256 → uint256 (UintToUintMap) 自v4.7.0起
+
+* bytes32 → uint256 (Bytes32ToUintMap) 自v4.7.0起
+
+ > WARNING
+ 尝试从存储中删除这样的结构可能会导致数据损坏，使该结构无法使用。有关更多信息，请参阅[ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
+要清理一个可枚举地图，您可以逐个删除所有元素，或者使用一个可枚举地图的数组创建一个新的实例。
+
+**FUNCTIONS**
+set(map, key, value)
+
+remove(map, key)
+
+contains(map, key)
+
+length(map)
+
+at(map, index)
+
+tryGet(map, key)
+
+get(map, key)
+
+get(map, key, errorMessage)
+
+keys(map)
+
+set(map, key, value)
+
+remove(map, key)
+
+contains(map, key)
+
+length(map)
+
+at(map, index)
+
+tryGet(map, key)
+
+get(map, key)
+
+get(map, key, errorMessage)
+
+keys(map)
+
+set(map, key, value)
+
+remove(map, key)
+
+contains(map, key)
+
+length(map)
+
+at(map, index)
+
+tryGet(map, key)
+
+get(map, key)
+
+get(map, key, errorMessage)
+
+keys(map)
+
+set(map, key, value)
+
+remove(map, key)
+
+contains(map, key)
+
+length(map)
+
+at(map, index)
+
+tryGet(map, key)
+
+get(map, key)
+
+get(map, key, errorMessage)
+
+keys(map)
+
+set(map, key, value)
+
+remove(map, key)
+
+contains(map, key)
+
+length(map)
+
+at(map, index)
+
+tryGet(map, key)
+
+get(map, key)
+
+get(map, key, errorMessage)
+
+keys(map)
+
+#### set(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key, bytes32 value) → bool
+内部#
+向映射中添加一个键值对，或者更新现有键的值。O(1)。
+
+如果键被添加到映射中，即如果它之前不存在，则返回true。
+
+#### remove(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool
+内部#
+从映射中删除一个键值对。O(1)。
+
+如果键被从映射中删除，即键存在，则返回true。
+
+#### contains(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool
+内部#
+如果键在映射中，则返回true。O(1)。
+
+#### length(struct EnumerableMap.Bytes32ToBytes32Map map) → uint256
+内部#
+返回地图中键值对的数量。O(1)。
+
+#### at(struct EnumerableMap.Bytes32ToBytes32Map map, uint256 index) → bytes32, bytes32
+内部#
+在地图中返回存储在位置索引处的键值对。 O(1)。
+
+请注意，对于数组中条目的顺序没有任何保证，并且当添加或删除更多条目时，它可能会发生变化。
+
+要求：
+* 索引必须严格小于*长度*。
+
+#### tryGet(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool, bytes32
+内部#
+尝试返回与键关联的值。O(1)时间复杂度。如果键不在映射中，则不会回滚。
+
+#### get(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bytes32
+内部#
+返回与键关联的值。O(1)。
+
+要求：
+* 键必须在映射中。
+
+#### get(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key, string errorMessage) → bytes32
+内部#
+与*get*相同，当key不在map中时，使用自定义错误消息。
+
+由于此函数需要不必要地为错误消息分配内存，因此此函数已弃用。对于自定义的回滚原因，请使用*tryGet*。
+
+#### keys(struct EnumerableMap.Bytes32ToBytes32Map map) → bytes32[]
+内部#
+返回包含所有键的数组
+
+> WARNING
+此操作将整个存储复制到内存中，这可能非常昂贵。这主要是为了供无需任何燃气费用的视图访问器查询而设计的。开发人员应该记住，此函数的成本是没有限制的，如果映射增长到复制到内存所需的燃气太多而无法适应一个块，则将无法调用该函数。
+
+#### set(struct EnumerableMap.UintToUintMap map, uint256 key, uint256 value) → bool
+内部#
+向映射中添加一个键值对，或者更新现有键的值。O(1)。
+
+如果键被添加到映射中（即如果它之前不存在），则返回true。
+
+#### remove(struct EnumerableMap.UintToUintMap map, uint256 key) → bool
+内部#
+从映射中删除一个值。O(1)。
+
+如果键从映射中被删除，也就是说它存在，则返回true。
+
+#### contains(struct EnumerableMap.UintToUintMap map, uint256 key) → bool
+内部#
+如果键存在于映射中，则返回true。O(1)。
+
+#### length(struct EnumerableMap.UintToUintMap map) → uint256
+内部#
+返回映射中元素的数量。O(1)。
+
+#### at(struct EnumerableMap.UintToUintMap map, uint256 index) → uint256, uint256
+内部#
+返回映射中存储在位置索引处的元素。O(1)。请注意，对数组中值的排序没有任何保证，当添加或删除更多值时，它可能会发生变化。
+
+要求：
+* 索引必须严格小于*长度*。
+
+#### tryGet(struct EnumerableMap.UintToUintMap map, uint256 key) → bool, uint256
+内部#
+尝试返回与键相关联的值。O(1)时间复杂度。如果键不在映射中，则不会回滚。
+
+####
+
+
+
+
+
+
+
+
+
