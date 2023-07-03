@@ -2269,3 +2269,232 @@ keys(map)
 向地图中添加一个键值对，或者更新一个已存在键的值。O(1)。
 
 如果键被添加到地图中（即原先不存在），则返回true。
+
+#### remove(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
+内部#
+从映射中删除一个值。O(1)。
+
+如果键从映射中被删除（即存在），则返回true。
+
+#### contains(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
+内部#
+如果键在地图中，则返回true。O(1)。
+
+#### length(struct EnumerableMap.Bytes32ToUintMap map) → uint256
+内部#
+返回映射中的元素数量。O(1)。
+
+#### at(struct EnumerableMap.Bytes32ToUintMap map, uint256 index) → bytes32, uint256
+内部#
+在地图中返回存储在位置索引处的元素。O(1)。请注意，数组中的值的排序没有任何保证，并且当添加或删除更多值时，它可能会发生变化。
+
+要求：
+* 索引必须严格小于*长度*。
+
+#### tryGet(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool, uint256
+内部#
+尝试返回与键关联的值。O(1)。如果键不在映射中，则不会回退。
+
+#### get(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → uint256
+内部#
+返回与键关联的值。O(1)。
+
+要求：
+* 键必须在映射中存在。
+
+#### get(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, string errorMessage) → uint256
+内部#
+与*get*相同，当键不在映射中时，显示自定义错误消息。
+
+这个函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。如果需要自定义的还原原因，请使用*tryGet*。
+
+#### keys(struct EnumerableMap.Bytes32ToUintMap map) → bytes32[]
+内部#
+返回包含所有键的数组
+
+> WARNING
+此操作将整个存储复制到内存中，这可能非常昂贵。这主要用于无需任何gas费用查询的视图访问器。开发人员应该记住，此函数的成本是无限的，如果映射增长到复制到内存所消耗的gas太多以适应一个块，使用它作为状态更改函数的一部分可能会导致函数无法调用。
+
+### EnumerableSet
+```
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+```
+用于管理原始类型[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))的库。
+
+集合具有以下属性：
+
+* 元素的添加、删除和检查存在性都是常数时间（O(1))。
+* 元素的枚举时间复杂度为O(n)。对于排序没有任何保证。
+```
+contract Example {
+    // Add the library methods
+    using EnumerableSet for EnumerableSet.AddressSet;
+
+    // Declare a set state variable
+    EnumerableSet.AddressSet private mySet;
+}
+```
+从v3.3.0版本开始，支持bytes32（Bytes32Set）、address（AddressSet）和uint256（UintSet）类型的集合。
+
+> WARNING
+尝试从存储中删除这样的结构很可能导致数据损坏，使结构无法使用。有关更多信息，请参阅 [ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
+
+为了清理一个EnumerableSet，您可以逐个删除所有元素，或者使用一个EnumerableSet数组创建一个全新的实例。
+
+**FUNCTIONS**
+add(set, value)
+
+remove(set, value)
+
+contains(set, value)
+
+length(set)
+
+at(set, index)
+
+values(set)
+
+add(set, value)
+
+remove(set, value)
+
+contains(set, value)
+
+length(set)
+
+at(set, index)
+
+values(set)
+
+add(set, value)
+
+remove(set, value)
+
+contains(set, value)
+
+length(set)
+
+at(set, index)
+
+values(set)
+
+#### add(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
+内部#
+向集合中添加一个值。O(1)。
+
+如果值被添加到集合中（即之前不存在），则返回true。
+
+#### remove(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
+内部#
+从集合中删除一个值。O(1)。
+
+如果该值从集合中被删除，即存在，则返回true。
+
+#### contains(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
+内部#
+如果值在集合中，则返回true。O(1)。
+
+#### length(struct EnumerableSet.Bytes32Set set) → uint256
+内部#
+返回集合中的值的数量。O(1)。
+
+#### at(struct EnumerableSet.Bytes32Set set, uint256 index) → bytes32
+内部#
+在集合中返回存储在位置index处的值。时间复杂度为O(1)。
+
+请注意，数组中的值的顺序没有任何保证，并且当添加或删除更多值时，它可能会发生改变。
+
+要求：
+* index必须严格小于length。
+
+#### values(struct EnumerableSet.Bytes32Set set) → bytes32[]
+内部#
+将整个集合作为数组返回
+
+> WARNING
+此操作将整个存储复制到内存中，这可能非常昂贵。这主要用于无需支付任何gas费用的视图访问器进行查询。开发人员应该记住，这个函数的成本是无限的，如果集合增长到需要消耗太多gas无法适应一个区块的情况下，将其用作状态更改函数的一部分可能导致该函数无法调用。
+
+#### add(struct EnumerableSet.AddressSet set, address value) → bool
+内部#
+向一个集合中添加一个值。O(1)。
+
+如果该值被成功添加到集合中（即之前不存在），则返回true。
+
+#### remove(struct EnumerableSet.AddressSet set, address value) → bool
+内部#
+从集合中移除一个值。O(1)。
+
+如果值被从集合中移除，也就是说它存在于集合中，则返回true。
+
+#### contains(struct EnumerableSet.AddressSet set, address value) → bool
+内部#
+如果值在集合中，则返回true。O(1)。
+
+#### length(struct EnumerableSet.AddressSet set) → uint256
+内部#
+返回集合中的值的数量。O(1)。
+
+#### at(struct EnumerableSet.AddressSet set, uint256 index) → address
+内部#
+返回集合中存储在索引位置的值。O(1)。
+
+请注意，数组内的值的顺序没有任何保证，并且在添加或删除更多值时可能会发生变化。
+
+要求：
+* 索引必须严格小于*长度*。
+
+#### values(struct EnumerableSet.AddressSet set) → address[]
+内部#
+将整个集合作为数组返回
+
+> WARNING
+这个操作将整个存储复制到内存中，这可能会非常昂贵。这主要是为了供没有任何gas费用的查询访问器使用。开发人员应该记住，这个函数的成本是无限制的，如果集合增长到一个复制到内存消耗太多gas而无法适应一个块的程度，使用它作为状态更改函数的一部分可能会导致该函数无法调用。
+
+#### add(struct EnumerableSet.UintSet set, uint256 value) → bool
+内部#
+向集合中添加一个值。O(1)。
+
+如果该值被添加到集合中（即如果它之前不存在），则返回true。
+
+#### remove(struct EnumerableSet.UintSet set, uint256 value) → bool
+内部#
+从集合中删除一个值。O(1)。
+
+如果该值从集合中被删除，即存在于集合中，则返回true。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
