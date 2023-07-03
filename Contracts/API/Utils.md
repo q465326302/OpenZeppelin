@@ -2739,3 +2739,229 @@ computeAddress(salt, bytecodeHash)
 
 computeAddress(salt, bytecodeHash, deployer)
 
+#### deploy(uint256 amount, bytes32 salt, bytes bytecode) → address addr
+内部#
+使用CREATE2部署合约。可以通过*computeAddress*提前知道合约将被部署的地址。
+
+合约的字节码可以通过Solidity中的type(contractName).creationCode获得。
+
+要求:
+* 字节码不能为空。
+* 字节码之前不能使用salt。
+* 工厂必须至少有amount的余额。
+* 如果amount非零，则字节码必须有一个可支付的构造函数。
+
+#### computeAddress(bytes32 salt, bytes32 bytecodeHash) → address
+内部#
+如果通过*deploy*部署合约，将返回合约存储的地址。如果bytecodeHash或salt发生变化，将导致一个新的目标地址。
+
+#### computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) → address addr
+内部#
+如果通过位于deployer的合约部署，返回合约存储的地址。如果*deployer*是该合约的地址，则返回与*computeAddress*相同的值。
+
+### Address
+```
+import "@openzeppelin/contracts/utils/Address.sol";
+```
+与地址类型相关的函数集合
+
+**FUNCTIONS**
+isContract(account)
+
+sendValue(recipient, amount)
+
+functionCall(target, data)
+
+functionCall(target, data, errorMessage)
+
+functionCallWithValue(target, data, value)
+
+functionCallWithValue(target, data, value, errorMessage)
+
+functionStaticCall(target, data)
+
+functionStaticCall(target, data, errorMessage)
+
+functionDelegateCall(target, data)
+
+functionDelegateCall(target, data, errorMessage)
+
+verifyCallResultFromTarget(target, success, returndata, errorMessage)
+
+verifyCallResult(success, returndata, errorMessage)
+
+#### isContract(address account) → bool
+内部#
+如果账户是合约，则返回true。
+
+> IMPORTANT
+不能假设该函数返回false的地址是一个外部拥有账户（EOA），而不是一个合约。
+isContract函数会返回false的地址包括但不限于以下类型：
+* 外部拥有账户
+* 正在构建中的合约
+* 将要创建合约的地址
+* 曾经存在合约但已被销毁的地址
+此外，如果同一笔交易中的目标合约已经通过SELFDESTRUCT计划进行销毁，isContract函数也会返回true。SELFDESTRUCT只在交易结束时生效。
+
+> IMPORTANT
+不应该依赖isContract函数来防止闪电贷攻击！
+强烈不建议阻止合约之间的调用。这会破坏可组合性，破坏对智能钱包（如Gnosis Safe）的支持，并且不能提供安全性，因为可以通过从合约构造函数中调用来绕过阻止。
+
+#### sendValue(address payable recipient, uint256 amount)
+内部#
+Solidity的transfer方法的替代方案：将amount wei发送给recipient，并转发所有可用的gas，在发生错误时回滚。
+
+[EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能会导致合约超过transfer方法所施加的2300 gas限制，从而无法通过transfer方法接收资金。*sendValue*方法消除了这个限制。
+
+[了解更多](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/)。
+
+> IMPORTANT
+由于控制权转移到了recipient，必须注意不要创建可重入漏洞。考虑使用ReentrancyGuard或checks-effects-interactions模式。
+
+#### functionCall(address target, bytes data) → bytes
+内部#
+使用低级别调用执行Solidity函数调用。普通调用是对函数调用的不安全替代：请改用此函数。
+
+如果目标合约使用revert原因进行还原，则此函数将其上升（类似于常规的Solidity函数调用）。
+
+返回原始返回数据。要转换为预期的返回值，请使用[abi.decode](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html?highlight=abi.decode#abi-encoding-and-decoding-functions)。
+
+要求：
+* 目标必须是一个合约。
+* 使用数据调用目标不得还原。
+
+*自v3.1以来可用。*
+
+#### functionCall(address target, bytes data, string errorMessage) → bytes
+内部#
+与**functionCall**相同，但在目标函数发生回滚时，使用errorMessage作为回退原因的回滚。
+
+*自v3.1起可用。*
+
+#### functionCallWithValue(address target, bytes data, uint256 value) → bytes
+内部#
+与*functionCall*相同，但还将wei的值转移到目标。
+
+要求：
+* 调用合约的ETH余额必须至少为value。
+* 被调用的Solidity函数必须是可支付的。
+
+*自v3.1起可用。*
+
+#### functionCallWithValue(address target, bytes data, uint256 value, string errorMessage) → bytes
+内部#
+与*functionCallWithValue*相同，但当目标函数回退时，errorMessage作为回退原因的回退。
+
+*从v3.1版本开始可用。*
+
+#### functionStaticCall(address target, bytes data) → bytes
+内部#
+与*functionCall*相同，但执行静态调用。
+
+*自v3.3起可用。*
+
+#### functionStaticCall(address target, bytes data, string errorMessage) → bytes
+内部#
+与*functionCall*相同，但执行静态调用。
+
+*自v3.3起可用。*
+
+#### functionDelegateCall(address target, bytes data) → bytes
+与*functionCall*相同，但执行委托调用。
+
+*从v3.4版本开始提供。*
+
+#### functionDelegateCall(address target, bytes data, string errorMessage) → bytes
+内部#
+与*functionCall*相同，但执行委托调用。
+
+*自v3.4起可用。*
+
+#### verifyCallResultFromTarget(address target, bool success, bytes returndata, string errorMessage) → bytes
+内部#
+用于验证低级调用智能合约是否成功的工具，并在调用失败或目标不是合约的情况下回滚（通过冒泡回滚原因或使用提供的原因）。
+
+*自v4.8版本起可用。*
+
+#### verifyCallResult(bool success, bytes returndata, string errorMessage) → bytes
+内部#
+用于验证低级调用是否成功并在失败时回滚的工具，可以通过冒泡回滚原因或使用提供的原因来实现。
+
+*自v4.3版本起可用。*
+
+### Arrays
+```
+import "@openzeppelin/contracts/utils/Arrays.sol";
+```
+与数组类型相关的函数集合。
+
+**FUNCTIONS**
+findUpperBound(array, element)
+
+unsafeAccess(arr, pos)
+
+unsafeAccess(arr, pos)
+
+unsafeAccess(arr, pos)
+
+#### findUpperBound(uint256[] array, uint256 element) → uint256
+内部#
+搜索一个排序数组并返回第一个大于或等于元素的索引。如果不存在这样的索引（即数组中的所有值都严格小于元素），则返回数组的长度。时间复杂度为O(log n)。
+
+数组应按升序排序，并且不包含重复元素。
+
+#### unsafeAccess(address[] arr, uint256 pos) → struct StorageSlot.AddressSlot
+内部#
+以"不安全"的方式访问数组。跳过Solidity的"索引超出范围"检查。
+
+>WARNING
+只在确定pos小于数组长度的情况下使用。
+
+#### unsafeAccess(bytes32[] arr, uint256 pos) → struct StorageSlot.Bytes32Slot
+内部#
+以"不安全"的方式访问数组。跳过Solidity的"索引超出范围"检查。
+
+> WARNING
+只有在确定pos小于数组长度时才使用。
+
+#### unsafeAccess(uint256[] arr, uint256 pos) → struct StorageSlot.Uint256Slot
+内部#
+以一种“不安全”的方式访问数组。跳过Solidity的“索引超出范围”检查。
+
+> WARNING
+只有在确定pos小于数组长度时才使用。
+
+### Base64
+```
+import "@openzeppelin/contracts/utils/Base64.sol";
+```
+提供一组用于操作Base64字符串的函数。
+
+*自v4.5起可用。*
+
+**FUNCTIONS**
+encode(data)
+
+#### encode(bytes data) → string
+内部#
+将一个字节转换为其Base64字符串表示形式。
+
+### Counters
+```
+import "@openzeppelin/contracts/utils/Counters.sol";
+```
+提供的计数器只能递增、递减或重置。这可以用于跟踪映射中的元素数量、发行ERC721 ID或计算请求ID。
+
+使用Counters.Counter导入Counters。
+
+**FUNCTIONS**
+current(counter)
+
+increment(counter)
+
+decrement(counter)
+
+reset(counter)
+
+#### current(struct Counters.Counter counter) → uint256
+内部#
