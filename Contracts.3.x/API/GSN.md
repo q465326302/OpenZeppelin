@@ -149,4 +149,287 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 当合约将其 *IRelayHub* 合约更改为新的合约时发出。
 
 ## Strategies
-###
+### GSNRecipientSignature
+一种*GSN策略*，允许在伴有受信任签名者签名的情况下进行中继交易。这个签名的生成是由一个在链下执行验证的服务器完成的。需要注意的是，在这个方案中用户不会被收费。因此，服务器在经济和威胁模型中应该考虑到这一点。
+
+**FUNCTIONS**
+constructor(trustedSigner)
+
+acceptRelayedCall(relay, from, encodedFunction, transactionFee, gasPrice, gasLimit, nonce, approvalData, _)
+
+_preRelayedCall(_)
+
+_postRelayedCall(_, _, _, _)
+
+GSNRECIPIENT
+getHubAddr()
+
+_upgradeRelayHub(newRelayHub)
+
+relayHubVersion()
+
+_withdrawDeposits(amount, payee)
+
+_msgSender()
+
+_msgData()
+
+preRelayedCall(context)
+
+postRelayedCall(context, success, actualCharge, preRetVal)
+
+_approveRelayedCall()
+
+_approveRelayedCall(context)
+
+_rejectRelayedCall(errorCode)
+
+_computeCharge(gas, gasPrice, serviceFee)
+
+**EVENTS**
+GSNRECIPIENT
+RelayHubChanged(oldRelayHub, newRelayHub)
+
+#### constructor(address trustedSigner)
+公开#
+设置可信的签名者，该签名者将会产生用于批准中继调用的签名。
+
+#### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256) → uint256, bytes
+公开#
+确保只有带有可信签名的交易才能通过GSN中继。
+
+#### _preRelayedCall(bytes) → bytes32
+内部#
+
+#### _postRelayedCall(bytes, bool, uint256, bytes32)
+内部#
+
+### GSNRecipientERC20Fee
+一种*GSN策略*是以一种特殊目的的ERC20代币收取交易费用，我们将其称为燃气支付代币。所收取的金额恰好等于收款方收取的以太币金额。这意味着该代币基本上与以太币的价值挂钩。
+
+燃气支付代币向用户的分发策略没有在该合约中定义。它是一种可铸造的代币，其唯一的铸造者是收款方，因此该策略必须在派生合约中实施，利用内部的*_mint*函数。
+
+**FUNCTIONS**
+constructor(name, symbol)
+
+token()
+
+_mint(account, amount)
+
+acceptRelayedCall(_, from, _, transactionFee, gasPrice, _, _, _, maxPossibleCharge)
+
+_preRelayedCall(context)
+
+_postRelayedCall(context, _, actualCharge, _)
+
+GSNRECIPIENT
+getHubAddr()
+
+_upgradeRelayHub(newRelayHub)
+
+relayHubVersion()
+
+_withdrawDeposits(amount, payee)
+
+_msgSender()
+
+_msgData()
+
+preRelayedCall(context)
+
+postRelayedCall(context, success, actualCharge, preRetVal)
+
+_approveRelayedCall()
+
+_approveRelayedCall(context)
+
+_rejectRelayedCall(errorCode)
+
+_computeCharge(gas, gasPrice, serviceFee)
+
+**EVENTS**
+GSNRECIPIENT
+RelayHubChanged(oldRelayHub, newRelayHub)
+
+#### constructor(string name, string symbol)
+公开#
+构造函数的参数是燃料支付令牌的详细信息：名称和符号。小数位数被硬编码为18。
+
+#### token() → contract __unstable__ERC20Owned
+公开#
+返回燃气支付令牌。
+
+#### _mint(address account, uint256 amount)
+内部#
+内部函数用于铸造燃气支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
+
+#### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
+公开#
+确保只有拥有足够的Gas支付令牌余额的用户才能通过GSN中继交易。
+
+#### _preRelayedCall(bytes context) → bytes32
+内部#
+对用户进行预付费。最大可能的费用（取决于燃气限制、燃气价格和费用）将从用户的燃气支付代币余额中扣除。请注意，这是对实际费用的过估计，这是因为我们无法预测执行实际需要多少燃气。剩余部分将在*_postRelayedCall*中退还给用户。
+
+#### _postRelayedCall(bytes context, bool, uint256 actualCharge, bytes32)
+内部#
+一旦实际执行成本知道，将向用户返还之前多收取的金额。
+
+## 协议
+
+### IRelayRecipient
+一个合同的基本接口，将通过*IRelayHub*从GSN调用。
+
+> TIP
+您不需要自己编写实现！请继承自*GSNRecipient*。
+
+**FUNCTIONS**
+getHubAddr()
+
+acceptRelayedCall(relay, from, encodedFunction, transactionFee, gasPrice, gasLimit, nonce, approvalData, maxPossibleCharge)
+
+preRelayedCall(context)
+
+postRelayedCall(context, success, actualCharge, preRetVal)
+
+#### getHubAddr() → address
+外部#
+返回此收件人与之交互的*IRelayHub*实例的地址。
+
+#### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256 maxPossibleCharge) → uint256, bytes
+外部#
+*IRelayHub*调用acceptRelayedCall方法来验证接收者是否同意为中继调用支付费用。需要注意的是，无论中继调用的执行结果如何（即是否回滚），接收者都将被收取费用。
+
+中继请求由from发起，并将由relay提供服务。encodedFunction是中继调用的calldata，因此它的前四个字节是函数选择器。中继调用将转发gasLimit gas，并以至少gasPrice的燃料价格执行事务。relay的费用是transactionFee，接收者的最大可能费用为maxPossibleCharge（以wei为单位）。nonce是发送者（from）在*IRelayHub*中用于防止重放攻击的nonce，approvalData是一个可选参数，可以用于保存对所有或部分先前值的签名。
+
+返回一个元组，其中第一个值用于表示批准（0）或拒绝（自定义非零错误代码，值为1到10保留），第二个值是要传递给其他*IRelayRecipient*函数的数据。
+
+*acceptRelayedCall*方法使用50k gas进行调用：如果在执行过程中用尽，则该请求将被视为被拒绝。正常的回滚也会触发拒绝。
+
+#### preRelayedCall(bytes context) → bytes32
+外部#
+在被*IRelayHub*批准的中继调用请求上调用，在执行中继调用之前。这允许例如预先收取交易发送者的费用。
+
+上下文是通过*acceptRelayedCall*返回的元组的第二个值。
+
+返回一个值以传递给*postRelayedCall*。
+
+*preRelayedCall*使用100k gas进行调用：如果在执行过程中用尽gas或者发生回滚，中继调用将不会被执行，但是收件人仍然需要支付交易的费用。
+
+#### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
+外部#
+在*IRelayHub*对已批准的中继调用请求进行调用后，中继调用执行完成。这允许例如收取用户中继调用费用、返回*preRelayedCall*的超额收费或执行与合约特定的簿记。
+
+context是通过*acceptRelayedCall*返回的元组的第二个值。success是中继调用的执行状态。actualCharge是接收者将为交易支付的估计费用，不包括*postRelayedCall*本身使用的任何gas。preRetVal是*preRelayedCall*的返回值。
+
+*postRelayedCall*使用100k gas进行调用：如果在执行过程中gas耗尽或发生其他还原，中继调用和对*preRelayedCall*的调用将被还原，但接收者仍然需要支付交易的费用。
+
+### IRelayHub
+RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
+
+有关如何在本地测试网络上部署RelayHub实例的更多信息，请参阅[OpenZeppelin GSN助手](https://github.com/OpenZeppelin/openzeppelin-gsn-helpers)。
+
+**FUNCTIONS**
+stake(relayaddr, unstakeDelay)
+
+registerRelay(transactionFee, url)
+
+removeRelayByOwner(relay)
+
+unstake(relay)
+
+getRelay(relay)
+
+depositFor(target)
+
+balanceOf(target)
+
+withdraw(amount, dest)
+
+canRelay(relay, from, to, encodedFunction, transactionFee, gasPrice, gasLimit, nonce, signature, approvalData)
+
+relayCall(from, to, encodedFunction, transactionFee, gasPrice, gasLimit, nonce, signature, approvalData)
+
+requiredGas(relayedCallStipend)
+
+maxPossibleCharge(relayedCallStipend, gasPrice, transactionFee)
+
+penalizeRepeatedNonce(unsignedTx1, signature1, unsignedTx2, signature2)
+
+penalizeIllegalTransaction(unsignedTx, signature)
+
+getNonce(from)
+
+**EVENTS**
+Staked(relay, stake, unstakeDelay)
+
+RelayAdded(relay, owner, transactionFee, stake, unstakeDelay, url)
+
+RelayRemoved(relay, unstakeTime)
+
+Unstaked(relay, stake)
+
+Deposited(recipient, from, amount)
+
+Withdrawn(account, dest, amount)
+
+CanRelayFailed(relay, from, to, selector, reason)
+
+TransactionRelayed(relay, from, to, selector, status, charge)
+
+Penalized(relay, sender, amount)
+
+#### stake(address relayaddr, uint256 unstakeDelay)
+外部# 
+向中继添加股份并设置其解锁延迟。如果中继不存在，则创建它，并且调用此函数的调用者成为其所有者。如果中继已经存在，则只有所有者可以调用此函数。中继不能成为自己的所有者。
+
+此函数调用中的所有以太币将被添加到中继的股份中。其解锁延迟将分配给unstakeDelay，但新值必须大于或等于当前值。
+
+触发一个*Staked*事件。
+
+#### registerRelay(uint256 transactionFee, string url)
+外部# 
+将调用者注册为中继。中继必须进行抵押，并且不能是合约（即必须直接从EOA调用此函数）。
+
+此函数可以被多次调用，每次调用都会发出新的*RelayAdded*事件。注意，*relayCall*不强制执行接收到的transactionFee。
+
+发出一个*RelayAdded*事件。
+
+#### removeRelayByOwner(address relay)
+外部# 
+移除（注销）一个中继。已注销（但已抵押）的中继也可以被移除。
+
+只能由中继的所有者调用。在中继的解除锁定延迟过后，可以调用解锁（*unstake*）函数。
+
+发出一个*RelayRemoved*事件。
+
+#### unstake(address relay)
+外部# 
+
+#### getRelay(address relay) → uint256 totalStake, uint256 unstakeDelay, uint256 unstakeTime, address payable owner, enum IRelayHub.RelayState state
+外部# 
+返回中继的状态。请注意，中继在解除抵押或受到惩罚时可以被删除，导致此函数返回一个空条目。
+
+#### depositFor(address target)
+外部# 
+存入以太币到合约中，以便能够接收（和支付）中继的交易。
+
+未使用的余额只能通过合约本身调用*withdraw*来提取。
+
+触发一个*Deposited*事件。
+
+#### balanceOf(address target) → uint256
+外部# 
+返回一个账户的存款。这些存款可以是合同的资金，也可以是中继所有者的收入。
+
+#### withdraw(uint256 amount, address payable dest)
+外部# 
+
+#### canRelay(address relay, address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData) → uint256 status, bytes recipientContext
+外部#
+检查RelayHub是否接受中继操作。为了实现这一点，必须满足多个条件： - 所有参数必须由发送者（from）签名 - 发送者的nonce必须是当前的nonce - 收件人必须接受此交易（通过*acceptRelayedCall*）
+
+返回PreconditionCheck值（如果可以中继交易则返回OK），或者如果在*acceptRelayedCall*中返回了收件人特定的错误代码，则返回该错误代码。
+
+#### relayCall(address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData)
+外部#
