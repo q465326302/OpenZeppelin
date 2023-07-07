@@ -433,3 +433,79 @@ Penalized(relay, sender, amount)
 
 #### relayCall(address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData)
 外部#
+转发一个交易。
+
+为了成功，必须满足多个条件：- *canRelay*必须返回PreconditionCheck.OK- 发送方必须是注册的中继- 交易的燃气价格必须大于或等于发送方请求的燃气价格- 如果所有内部交易（对接收方的调用）使用了它们可用的所有燃气，则交易必须有足够的燃气，以免燃气耗尽- 接收方必须有足够的余额来支付最坏情况下的中继费用（即当所有燃气都用尽时）
+
+如果所有条件都满足，将转发调用并向接收方收费。按顺序调用*preRelayedCall*、编码函数和*postRelayedCall*。
+
+参数：- from：发起请求的客户端- to：目标*IRelayRecipient*合约- encodedFunction：要转发的函数调用，包括数据- transactionFee：中继接管的实际燃气成本的费用（%）- gasPrice：客户端愿意支付的燃气价格- gasLimit：调用编码函数时要转发的燃气- nonce：客户端的nonce- signature：客户端对所有先前参数的签名，加上中继和RelayHub地址- approvalData：转发到*acceptRelayedCall*的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
+
+发出*TransactionRelayed*事件。
+
+#### requiredGas(uint256 relayedCallStipend) → uint256
+外部#
+返回应向*relayCall*的调用转发多少gas，以便中继事务可以花费多达relayedCallStipend gas。
+
+#### maxPossibleCharge(uint256 relayedCallStipend, uint256 gasPrice, uint256 transactionFee) → uint256
+外部#
+根据转发的燃料量、燃料价格和中继费用，返回最大的接收者费用。
+
+#### penalizeRepeatedNonce(bytes unsignedTx1, bytes signature1, bytes unsignedTx2, bytes signature2)
+外部#
+对使用相同nonce签署了两个交易的中继进行惩罚（只有第一个交易有效），并且数据不同（例如，燃料价格、燃料限制等可能不同）。
+
+必须提供两个交易的（未签名的）交易数据和签名。
+
+#### penalizeIllegalTransaction(bytes unsignedTx, bytes signature)
+外部#
+对于发送了未针对RelayHub的*registerRelay*或*relayCall*的交易的中继进行惩罚。
+
+#### getNonce(address from) → uint256
+外部#
+在RelayHub中返回账户的nonce。
+
+#### Staked(address relay, uint256 stake, uint256 unstakeDelay)
+事件# 
+当中继器的质押或取消质押延迟增加时发出
+
+#### RelayAdded(address relay, address owner, uint256 transactionFee, uint256 stake, uint256 unstakeDelay, string url)
+事件# 
+当一个中继被注册或重新注册时发出。查看这些事件（并过滤掉*RelayRemoved*事件）可以让客户端发现可用的中继列表。
+
+#### RelayRemoved(address relay, uint256 unstakeTime)
+事件# 
+当继电器被移除（取消注册）时发出。unstakeTime是解除质押可调用的时间。
+
+#### Unstaked(address relay, uint256 stake)
+事件# 
+当一个Relay取消质押时，包括返回的质押金额时发出。
+
+#### Deposited(address recipient, address from, uint256 amount)
+事件#
+
+当调用*depositFor*时发出，包括所存入的金额和账户。
+
+#### Withdrawn(address account, address dest, uint256 amount)
+事件#
+当一个账户从RelayHub中提取资金时发出。
+
+#### CanRelayFailed(address relay, address from, address to, bytes4 selector, uint256 reason)
+事件#
+当尝试中继呼叫失败时发出。
+
+这可能是由于错误的*relayCall*参数或接收方不接受中继呼叫。实际的中继呼叫未执行，并且接收方未收费。
+
+reason参数包含一个错误代码：值1-10对应于PreconditionCheck条目，而大于10的值是从*acceptRelayedCall*返回的自定义接收方错误代码。
+
+#### TransactionRelayed(address relay, address from, address to, bytes4 selector, enum IRelayHub.RelayCallStatus status, uint256 charge)
+事件#
+当一个交易被中继时发出。在监控中继的操作和中继调用合约时非常有用。
+
+请注意，实际的编码函数可能会被还原：这在状态参数中表示。
+
+charge 是从接收者的余额中扣除的以太币价值，支付给中继的所有者。
+
+#### Penalized(address relay, address sender, uint256 amount)
+事件#
+当继电器受到惩罚时发出的信号。
