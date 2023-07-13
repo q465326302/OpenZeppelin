@@ -632,3 +632,83 @@ IERC20
 Transfer(from, to, value)
 
 Approval(owner, spender, value)
+
+#### constructor(uint256 cap)
+公开#
+设置上限的值。这个值是不可变的，只能在构造过程中设置一次。
+
+#### cap() → uint256
+公开#
+返回令牌总供应量的上限。
+
+#### _mint(address account, uint256 value)
+内部#
+请参阅*ERC20Mintable.mint*。
+
+要求：
+
+* value的值不能导致总供应量超过上限。
+
+## Utilities
+
+### SafeERC20
+在ERC20操作周围包装器，当代币合约返回false时会抛出异常。也支持返回无值（而是在失败时回滚或抛出异常）的代币，假设非回滚调用是成功的。要使用这个库，您可以在您的合约中添加一个using SafeERC20 for ERC20;语句，这样您就可以调用安全操作，如token.safeTransfer(…​)等。
+
+**FUNCTIONS**
+safeTransfer(token, to, value)
+
+safeTransferFrom(token, from, to, value)
+
+safeApprove(token, spender, value)
+
+safeIncreaseAllowance(token, spender, value)
+
+safeDecreaseAllowance(token, spender, value)
+
+#### safeTransfer(contract IERC20 token, address to, uint256 value)
+内部#
+
+#### safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)
+内部#
+
+#### safeApprove(contract IERC20 token, address spender, uint256 value)
+内部#
+
+#### safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)
+内部#
+
+#### safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)
+内部#
+
+### TokenTimelock
+一个令牌持有者合约，允许受益人在给定的释放时间后提取令牌。
+
+适用于简单的解锁计划，例如“顾问在1年后获得所有令牌”。
+
+对于更完整的解锁计划，请参阅*TokenVesting*。
+
+**FUNCTIONS**
+constructor(token, beneficiary, releaseTime)
+
+token()
+
+beneficiary()
+
+releaseTime()
+
+release()
+
+#### constructor(contract IERC20 token, address beneficiary, uint256 releaseTime)
+公开#
+
+#### token() → contract IERC20
+公开#
+
+#### beneficiary() → address
+公开#
+
+#### releaseTime() → uint256
+公开
+
+#### release()
+公开#
