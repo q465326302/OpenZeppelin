@@ -343,13 +343,3 @@ from_: felt
 to: felt
 value: Uint256
 ```
-
-#### Approval (event)
-当通过调用*approve*设置所有者的支出者的津贴时发出。value是新的津贴。
-
-参数:
-```
-owner: felt
-spender: felt
-value: Uint256
-```
