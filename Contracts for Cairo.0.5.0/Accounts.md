@@ -10,8 +10,6 @@
 
 * 账户入口点
 
-    * 反事实部署
-
 * 标准接口
 
 * 密钥、签名和签名者
@@ -47,8 +45,6 @@
     * __validate__
 
     * __validate_declare__
-
-    * __validate_deploy__
 
     * __execute__
 
@@ -114,9 +110,9 @@ await signer.send_transaction(
 await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])
 ```
 
-> NOTE
-您可以阅读有关[账户消息方案讨论中消息结构和哈希](https://github.com/OpenZeppelin/cairo-contracts/discussions/24)的更多信息。有关多调用的设计选择和实现的更多信息，请阅读[账户多调用应如何工作](https://github.com/OpenZeppelin/cairo-contracts/discussions/27)讨论。
-__validate__和__execute__方法接受相同的参数；然而，__execute__方法返回一个交易响应。
+您可以在“账户消息方案讨论”中阅读有关消息结构和哈希的更多信息。有关多调用的设计选择和实现的更多信息，请阅读“账户多调用应如何工作讨论”。
+
+“validate”和“execute”方法接受相同的参数；然而，“execute”方法返回一个交易响应。
 
 ```
 func __validate__(
@@ -142,32 +138,9 @@ func __execute__(
 > NOTE
 一旦StarkNet允许在结构数组中使用指针，构建__execute__方法中的多次调用事务的方案将发生变化。在这种情况下，可以将多个事务传递给（而不是在内部构建）__execute__。
 
-账户的第四个规范入口点是__validate_deploy__方法。它只能在执行DeployAccount类型的事务期间由**协议调用**，而不能由任何其他合约调用。此入口点用于反事实部署。
-
-### 反事实部署
-反事实意味着尚未发生的事情。
-
-当部署的合约为其支付时，部署被称为反事实。这样称呼是因为我们需要在部署之前将资金发送到地址。一个尚未发生的部署。
-
-步骤如下：
-
-1. 根据class_hash、salt和构造函数calldata预先计算地址。
-
-2. 向地址发送资金。
-
-3. 发送DeployAccount类型的事务。
-
-4. 然后协议将使用__validate_deploy__进行验证。
-
-5. 如果成功，协议将部署合约，并且合约本身支付事务。
-
-由于地址最终取决于class_hash和calldata，因此协议验证签名并在该地址上花费资金是安全的。
-
 ## 标准接口
 [IAccount.cairo](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/account/IAccount.cairo)合约接口包含了[#41](https://github.com/OpenZeppelin/cairo-contracts/discussions/41)提出的标准账户接口，并被OpenZeppelin和Argent采用。它实现了[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)，并且与签名验证无关。此外，协议级别处理nonce管理。
 
-> NOTE
-__validate_deploy__不是接口的一部分，因为它只能由协议调用。此外，合约不需要实现它才能被视为账户。
 
 ```
 struct Call {
@@ -210,7 +183,7 @@ namespace IAccount {
 ```
 
 ## 密钥、签名和签署者
-尽管接口对签名验证方案是中立的，但该实现假设有一个控制账户的公私钥对。因此，构造函数需要一个public_key参数来设置它。由于还有一个setPublicKey()方法，因此可以有效地转移账户。
+尽管接口与签名验证方案无关，但该实现假设存在一个控制账户的公私钥对。这就是为什么构造函数期望一个public_key参数来设置它。由于还有一个setPublicKey()方法，因此可以有效地转移账户。
 
 ### 签名验证
 签名验证在Cairo v0.10中与执行分离。在接收到交易时，账户合约首先调用__validate__。只有当签名有效时，账户才会执行交易。这种解耦允许在协议级别上区分无效和回滚的交易。请参阅*账户入口点*。
@@ -245,21 +218,23 @@ sign_transaction对每个交易期望以下参数：
 虽然Signer类执行了大部分发送交易所需的工作，但它既不管理nonce，也不在Account合约上调用实际的交易。为了简化账户管理，大部分工作都通过MockSigner进行了抽象。
 
 ### MockSigner实用程序
-[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/signers.py)中的MockSigner类用于在给定的账户上执行交易，构建交易并管理nonce。
+[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/signers.py)中的MockSigner类用于在给定的账户上执行交易，构建交易并管理nonce。
+
+交易的流程始于检查nonce并将每个调用的合约地址转换为十六进制格式。十六进制转换是必要的，因为Nile的Signer将地址转换为一个十六进制整数（需要一个字符串参数）。注意，直接转换为字符串最终会导致一个超过Cairo的FIELD_PRIME的整数。
+
+交易中包含的值被传递给Nile的Signer的sign_transaction方法，该方法创建并返回一个签名。最后，MockSigner实例调用账户合约的__execute__方法来执行交易数据。
 
 > NOTE
-StarkNet的测试框架目前不支持从账户合约中调用交易。因此，MockSigner利用StarkNet的API网关手动执行InvokeFunction进行测试。
-MockSigner实例提供以下方法：
+StarkNet的测试框架目前不支持从账户合约进行事务调用。因此，MockSigner利用StarkNet的API网关来手动执行
+InvokeFunction进行测试。
 
-* send_transaction(account, to, selector_name, calldata, nonce=None, max_fee=0)返回一个已签名的交易的[future](https://docs.python.org/3/library/asyncio-future.html)，准备发送。
+用户只需要与以下公开的方法交互来执行交易：
 
-* send_transactions(account, calls, nonce=None, max_fee=0)返回一个批量已签名的交易的future，准备发送。
+* send_transaction(account, to, selector_name, calldata, nonce=None, max_fee=0)返回一个已签名的交易的future，准备发送。
 
-* declare_class(account, contract_name, nonce=None, max_fee=0)返回一个声明交易的future。
+* send_transactions(account, calls, nonce=None, max_fee=0)返回一个已批处理的已签名交易的future，准备发送。
 
-* deploy_account(state, calldata, salt=0, nonce=0, max_fee=0)：返回一个计数器事实部署的future。
-
-要使用MockSigner，请在实例化类时传递一个私钥:
+要使用MockSigner，在实例化类时传递一个私钥。
 ```
 from utils import MockSigner
 
@@ -268,7 +243,6 @@ signer = MockSigner(PRIVATE_KEY)
 ```
 
 然后使用send_transaction方法发送单个交易。
-
 ```
 await signer.send_transaction(account, contract_address, 'method_name', [])
 ```
@@ -282,16 +256,6 @@ await signer.send_transactions(
         (contract_address, 'another_method', [])
     ]
 )
-```
-
-使用declare_class声明一个合约:
-```
-await signer.declare_class(account, "MyToken")
-```
-
-并且deploy_account用于*反事实*地部署一个账户
-```
-await signer.deploy_account(state, [signer.public_key])
 ```
 
 ### MockEthSigner utility
@@ -474,21 +438,6 @@ calldata: felt*
 参数:
 ```
 class_hash: felt
-```
-返回：无。
-
-### __validate_deploy__
-验证反事实部署交易的签名。
-
-它接收部署账户的class_hash、salt和calldata，后者被展开。例如，如果账户是使用calldata [arg_1, …​, arg_n]部署的：
-
-参数:
-```
-class_hash: felt
-salt: felt
-arg_1: felt
-...
-arg_n: felt
 ```
 返回：无。
 
