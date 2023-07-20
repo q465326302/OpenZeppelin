@@ -38,24 +38,11 @@ pip install openzeppelin-cairo-contracts
 ### 使用基本预设
 预设是可以立即部署的即用合约。它们还可以作为使用库模块的示例。了解更多*关于预设*的信息。
 ```
-// contracts/MyToken.cairo
+# contracts/MyToken.cairo
 
 %lang starknet
 
-from openzeppelin.token.erc20.presets.ERC20 import (
-    constructor,
-    name,
-    symbol,
-    totalSupply,
-    decimals,
-    balanceOf,
-    allowance,
-    transfer,
-    transferFrom,
-    approve,
-    increaseAllowance,
-    decreaseAllowance
-)
+from openzeppelin.token.erc20.presets.ERC20 import constructor
 ```
 
 立即编译并部署它。
@@ -82,10 +69,13 @@ from openzeppelin.token.erc20.library import ERC20
 (...)
 
 @external
-func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    recipient: felt, amount: Uint256
-) -> (success: felt) {
-    Pausable.assert_not_paused();
-    return ERC20.transfer(recipient, amount);
-}
+func transfer{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(recipient: felt, amount: Uint256) -> (success: felt):
+    Pausable.assert_not_paused()
+    ERC20.transfer(recipient, amount)
+    return (TRUE)
+end
 ```
