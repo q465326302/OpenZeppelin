@@ -468,15 +468,6 @@ calldata_len: felt
 calldata: felt*
 ```
 
-### __validate_declare__
-验证声明交易的签名。
-
-参数:
-```
-class_hash: felt
-```
-返回：无。
-
 ### __validate_deploy__
 验证反事实部署交易的签名。
 

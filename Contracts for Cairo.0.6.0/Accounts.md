@@ -445,7 +445,7 @@ isValid: felt
 如果给定的签名无效，将来可能会返回FALSE（请参[考此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)的讨论）。
 
 ### __validate__
-验证交易签名，并在执行之前调用。
+验证交易签名，并在-执行-之前调用。
 
 参数:
 ```
@@ -455,17 +455,6 @@ calldata_len: felt
 calldata: felt*
 ```
 返回值：无。
-
-### __validate_declare__
-验证交易签名，并在__执行__之前调用。
-
-参数:
-```
-call_array_len: felt
-call_array: AccountCallArray*
-calldata_len: felt
-calldata: felt*
-```
 
 ### __validate_declare__
 验证声明交易的签名。

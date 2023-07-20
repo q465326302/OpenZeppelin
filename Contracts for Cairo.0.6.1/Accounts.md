@@ -457,17 +457,6 @@ calldata: felt*
 返回值：无。
 
 ### __validate_declare__
-验证交易签名，并在__执行__之前调用。
-
-参数:
-```
-call_array_len: felt
-call_array: AccountCallArray*
-calldata_len: felt
-calldata: felt*
-```
-
-### __validate_declare__
 验证声明交易的签名。
 
 参数:
