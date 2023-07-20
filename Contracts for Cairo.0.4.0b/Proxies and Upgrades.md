@@ -34,33 +34,35 @@
 * 预设
 
 ## 快速入门
-一般的工作流程是：
+一般的工作流程如下：
 
-1. 声明一个实现合约类。
+1. 声明一个实现合约类
 
-2. 使用实现合约的类哈希和描述从实现中初始化代理的调用的输入部署代理合约（如果需要）。这将将调用重定向为一个库调用到实现（类似于 Solidity 的 delegatecall）。
+2. 部署代理合约，将实现合约的类哈希设置在代理的构造函数调用数据中
 
-在 Python 中，这看起来如下所示:
+3. 通过向代理合约发送调用来初始化实现合约。这将重定向调用到实现合约类，并表现得像实现合约的构造函数一样
+
+在Python中，这将如下所示：
 ```
-# declare implementation contract
-IMPLEMENTATION = await starknet.declare(
-    "path/to/implementation.cairo",
-)
+    # declare implementation contract
+    IMPLEMENTATION = await starknet.declare(
+        "path/to/implementation.cairo",
+    )
 
-# deploy proxy
-selector = get_selector_from_name('initializer')
-params = [
-    proxy_admin   # admin account
-]
-PROXY = await starknet.deploy(
-    "path/to/proxy.cairo",
-    constructor_calldata=[
-        IMPLEMENTATION.class_hash,  # set implementation contract class hash
-        selector,                   # initializer function selector
-        len(params),                # calldata length in felt
-        *params                     # actual calldata
-    ]
-)
+    # deploy proxy
+    PROXY = await starknet.deploy(
+        "path/to/proxy.cairo",
+        constructor_calldata=[
+            IMPLEMENTATION.class_hash,  # set implementation contract class hash
+        ]
+    )
+
+    # users should only interact with the proxy contract
+    await signer.send_transaction(
+        account, PROXY.contract_address, 'initializer', [
+            proxy_admin
+        ]
+    )
 ```
 
 ## Solidity/Cairo升级比较
@@ -220,39 +222,37 @@ newAdmin: felt
 ### 合约升级
 要升级合约，实现合约应该包含一个升级方法，当调用时，将引用更改为一个新部署的合约，如下所示。
 ```
-# declare first implementation
-IMPLEMENTATION = await starknet.declare(
-    "path/to/implementation.cairo",
-)
+    # declare first implementation
+    IMPLEMENTATION = await starknet.declare(
+        "path/to/implementation.cairo",
+    )
 
-# deploy proxy
-PROXY = await starknet.deploy(
-    "path/to/proxy.cairo",
-    constructor_calldata=[
-        IMPLEMENTATION.class_hash,  # set implementation hash
-        0,                          # selector set to 0 ignores initialization
-        0,                          # calldata length in felt
-        *[]                         # empty calldata
-    ]
-)
+    # deploy proxy
+    PROXY = await starknet.deploy(
+        "path/to/proxy.cairo",
+        constructor_calldata=[
+            IMPLEMENTATION.class_hash,  # set implementation hash
+        ]
+    )
 
-# declare implementation v2
-IMPLEMENTATION_V2 = await starknet.declare(
-    "path/to/implementation_v2.cairo",
-)
+    # declare implementation v2
+    IMPLEMENTATION_V2 = await starknet.declare(
+        "path/to/implementation_v2.cairo",
+    )
 
-# call upgrade with the new implementation contract class hash
-await signer.send_transaction(
-    account, PROXY.contract_address, 'upgrade', [
-        IMPLEMENTATION_V2.class_hash
-    ]
-)
+    # call upgrade with the new implementation contract class hash
+    await signer.send_transaction(
+        account, PROXY.contract_address, 'upgrade', [
+            IMPLEMENTATION_V2.class_hash
+        ]
+    )
 ```
 完整的部署和升级实施请参见：
 
-* [升级 V1](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/mocks/UpgradesMockV1.cairo)
+* [升级 V1](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/mocks/UpgradesMockV1.cairo)
 
-* [升级 V2](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/mocks/UpgradesMockV2.cairo)
+
+* [升级 V2](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/mocks/UpgradesMockV2.cairo)
 
 ### 声明合约
 StarkNet 合约有两种形式：合约类和合约实例。合约类表示未实例化的无状态代码；而合约实例被实例化并包含状态。由于代理合约通过其类哈希引用实现合约，因此仅声明一个实现合约即足够（而不是进行完整的部署）。有关声明类的更多信息，请参阅 [StarkNet 的文档](https://starknet.io/docs/hello_starknet/intro.html#declare-contract)。
@@ -266,8 +266,8 @@ result = await erc20.totalSupply().call()
 
 # upgradeable ERC20 call
 result = await signer.send_transaction(
-    account, PROXY.contract_address, 'totalSupply', []
-)
+        account, PROXY.contract_address, 'totalSupply', []
+    )
 ```
 
 ## 预设

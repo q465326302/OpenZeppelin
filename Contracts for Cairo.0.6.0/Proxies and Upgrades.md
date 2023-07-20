@@ -250,9 +250,9 @@ await signer.send_transaction(
 ```
 完整的部署和升级实施请参见：
 
-* [升级 V1](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/mocks/UpgradesMockV1.cairo)
+* [升级 V1](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/tests/mocks/UpgradesMockV1.cairo)
 
-* [升级 V2](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/mocks/UpgradesMockV2.cairo)
+* [升级 V2](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/tests/mocks/UpgradesMockV2.cairo)
 
 ### 声明合约
 StarkNet 合约有两种形式：合约类和合约实例。合约类表示未实例化的无状态代码；而合约实例被实例化并包含状态。由于代理合约通过其类哈希引用实现合约，因此仅声明一个实现合约即足够（而不是进行完整的部署）。有关声明类的更多信息，请参阅 [StarkNet 的文档](https://starknet.io/docs/hello_starknet/intro.html#declare-contract)。
