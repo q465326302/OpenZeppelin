@@ -166,9 +166,9 @@ utils.py中的MockSigner类用于在给定的账户上执行交易，构建交�
 
 用户只需要与以下公开的方法交互来执行交易：
 
-send_transaction(account, to, selector_name, calldata, nonce=None, max_fee=0)返回一个已签名的交易的future，准备发送。
+* send_transaction(account, to, selector_name, calldata, nonce=None, max_fee=0)返回一个已签名的交易的future，准备发送。
 
-send_transactions(account, calls, nonce=None, max_fee=0)返回一个批处理的已签名交易的future，准备发送。
+* send_transactions(account, calls, nonce=None, max_fee=0)返回一个批处理的已签名交易的future，准备发送。
 
 要使用MockSigner，请在实例化类时传递一个私钥。
 ```
@@ -193,6 +193,13 @@ await signer.send_transaction(account, contract_address, 'method_name', [])
         ]
     )
 ```
+
+### MockEthSigner实用程序
+[utils.py](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/utils.py)中的MockEthSigner类用于使用secp256k1曲线密钥对在给定的帐户上执行交易，构建交易并管理nonce。它与MockSigner实现不同之处在于：
+
+* 不使用公钥，而是使用其派生地址（公钥的keccak256哈希的最后20个字节，并在开头添加0x）
+
+* 使用secp256k1曲线地址对消息进行签名
 
 ### 账户入口点
 __execute__作为所有用户与任何合约进行交互的单一入口，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您需要发送一个针对账户合约的交易的原因。
@@ -231,25 +238,18 @@ end
 > NOTE
 一旦StarkNet允许在结构数组中使用指针，构建__execute__方法中的多个调用事务的方案将发生变化。在这种情况下，可以将多个事务传递给__execute__（而不是在其中构建）。
 
-### MockEthSigner utility
-[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/signers.py)中的MockEthSigner类用于使用secp256k1曲线密钥对在给定的账户上执行交易，构建交易并管理nonce。它与MockSigner实现不同之处在于：
-
-* 不使用公钥，而是使用派生的地址（公钥的keccak256哈希的最后20个字节，并在开头添加0x）。
-
-* 使用secp256k1曲线地址对消息进行签名。
-
 ### 调用和AccountCallArray格式
 这个想法是将所有用户意图编码为表示智能合约调用的Call。用户还可以将多个消息打包到单个交易中（创建多个调用事务）。Cairo目前不支持带有指针的结构体数组，这意味着__execute__函数无法正确迭代多个调用。因此，该实现使用了AccountCallArray结构的解决方法。请参阅*多调用事务*。
 
 #### 调用
 单个调用的结构如下：
 ```
-struct Call {
-    to: felt
-    selector: felt
-    calldata_len: felt
-    calldata: felt*
-}
+struct Call:
+    member to: felt
+    member selector: felt
+    member calldata_len: felt
+    member calldata: felt*
+end
 ```
 
 * to是消息的目标合约地址。
@@ -263,12 +263,12 @@ struct Call {
 ### AccountCallArray
 AccountCallArray的结构如下：
 ```
-struct AccountCallArray {
-    to: felt
-    selector: felt
-    data_offset: felt
-    data_len: felt
-}
+struct AccountCallArray:
+    member to: felt
+    member selector: felt
+    member data_offset: felt
+    member data_len: felt
+end
 ```
 
 * to是消息的目标合约的地址。
@@ -288,16 +288,16 @@ struct AccountCallArray {
 首先，用户通过Signer实例化将事务的消息发送出去，其形式如下：
 ```
 await signer.send_transaction(
-    account, [
-        (contract_address, 'contract_method', [arg_1]),
-        (contract_address, 'another_method', [arg_1, arg_2])
-    ]
-)
+        account, [
+            (contract_address, 'contract_method', [arg_1]),
+            (contract_address, 'another_method', [arg_1, arg_2])
+        ]
+    )
 ```
 
-然后，[Nile的签名者](https://github.com/OpenZeppelin/nile/blob/main/src/nile/signer.py)中的from_call_to_call_array方法将每个调用转换为AccountCallArray格式，并将每个调用的calldata累积存储到一个单独的数组中。接下来，这两个数组（以及发送者、nonce和max_fee）被用来创建交易哈希。然后，签名者使用签名调用_execute_并传递AccountCallArray、calldata和nonce作为参数。
+然后，在[utils.py](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/utils.py)中的_from_call_to_call_array方法将每个调用转换为AccountCallArray格式，并将每个调用的calldata累积存储到单个数组中。接下来，这两个数组（以及发送者、nonce和最大费用）被用来创建交易哈希。然后，签名者使用签名调用__execute__方法，并将AccountCallArray、calldata和nonce作为参数传递。
 
-最后，__execute__方法接受AccountCallArray和calldata，并构建一个Calls（MultiCall）数组。
+最后，__execute__方法接受AccountCallArray和calldata，并构建一个Calls数组（MultiCall）。
 
 > NOTE
 每个交易都使用AccountCallArray。一个单独的Call被视为一个带有一条消息的捆绑。
@@ -305,46 +305,30 @@ await signer.send_transaction(
 ## API规范
 这是Account合约的公共API的简要概述
 ```
-namespace Account {
-    func constructor(publicKey: felt) {
-    }
+func get_public_key() -> (res: felt):
+end
 
-    func getPublicKey() -> (publicKey: felt) {
-    }
+func get_nonce() -> (res: felt):
+end
 
-    func supportsInterface(interfaceId: felt) -> (success: felt) {
-    }
+func set_public_key(new_public_key: felt):
+end
 
-    func setPublicKey(newPublicKey: felt) {
-    }
+func is_valid_signature(hash: felt,
+        signature_len: felt,
+        signature: felt*
+    ) -> (is_valid: felt):
+end
 
-    func isValidSignature(hash: felt, signature_len: felt, signature: felt*) -> (isValid: felt) {
-    }
-
-    func __validate__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-    }
-
-    func __validate_declare__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-    }
-
-    func __execute__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-}
+func __execute__(
+        call_array_len: felt,
+        call_array: AccountCallArray*,
+        calldata_len: felt,
+        calldata: felt*,
+        nonce: felt
+    ) -> (response_len: felt, response: felt*):
+end
 ```
-
-### 构造函数
-初始化并设置Account合约的公钥。
-
-参数:
-```
-publicKey: felt
-```
-返回：无。
 
 ### getPublicKey
 返回与账户关联的公钥。
@@ -356,14 +340,15 @@ publicKey: felt
 publicKey: felt
 ```
 
-### supportsInterface
-设置将控制此账户的公钥。它可以用于在安全性方面旋转密钥，更改被破坏密钥的情况，甚至转移账户的所有权。
+### get_nonce
+返回账户的当前交易nonce。
 
-参数:
+参数：无。
+
+返回：
 ```
-newPublicKey: felt
+nonce: felt
 ```
-返回：无。
 
 ### isValidSignature
 该函数受[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)的启发，如果给定的签名有效，则返回TRUE，否则会回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查[看此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。

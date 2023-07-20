@@ -392,6 +392,16 @@ newPublicKey: felt
 ```
 返回：无。
 
+### setPublicKey
+设置将控制此账户的公钥。它可以用于安全地轮换密钥、在密钥被泄露的情况下更改密钥，甚至转移账户的所有权。
+
+参数：
+
+```
+newPublicKey: 新公钥
+```
+返回值：无。
+
 ### isValidSignature
 该函数受[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)的启发，如果给定的签名有效，则返回TRUE，否则会回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查[看此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
 
@@ -409,37 +419,6 @@ isValid: felt
 >NOTE
 如果给定的签名无效，将来可能会返回FALSE（请参[考此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)的讨论）。
 
-### __validate__
-验证交易签名，并在执行之前调用。
-
-参数:
-```
-call_array_len: felt
-call_array: AccountCallArray*
-calldata_len: felt
-calldata: felt*
-```
-返回值：无。
-
-### __validate_declare__
-验证交易签名，并在__执行__之前调用。
-
-参数:
-```
-call_array_len: felt
-call_array: AccountCallArray*
-calldata_len: felt
-calldata: felt*
-```
-
-### __validate_declare__
-验证声明交易的签名。
-
-参数:
-```
-class_hash: felt
-```
-返回：无。
 
 ### __execute__
 这是与Account合约进行交互的唯一外部入口。它：
@@ -465,6 +444,53 @@ response_len: felt
 response: felt*
 ```
 
+#### is_valid_eth_signature
+如果在secp256k1曲线上给定的签名有效，则返回TRUE，否则将回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查看[此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
+
+参数：
+```
+signature_len: felt
+signature: felt*
+```
+返回：
+```
+is_valid: felt
+```
+
+> NOTE
+如果给定的签名无效，将来可能返回FALSE（请参阅此问题的[讨论](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
+
+#### eth_execute
+这个函数与原始版本的execute函数的思路相同，唯一的区别在于签名验证是在secp256k1曲线上进行的。
+
+参数：
+```
+call_array_len: felt
+call_array: AccountCallArray*
+calldata_len: felt
+calldata: felt*
+nonce: felt
+```
+返回值：
+```
+response_len: felt
+response: felt*
+```
+> NOTE
+当前的签名方案期望一个由7个元素组成的数组，如[sig_v, uint256_sig_r_low, uint256_sig_r_high, uint256_sig_s_low, uint256_sig_s_high, uint256_hash_low, uint256_hash_high]，其中验证的参数比一个felt更大。
+
+#### _unsafe_execute
+
+这是一个*内部方法*，执行以下任务：
+
+1. 递增nonce。
+
+2. 为每个迭代的消息构建一个Call。有关更多信息，请参阅*多合一交易*。
+
+3. 使用预期的函数选择器和calldata参数调用目标合约。
+ 
+4. 将合约调用的响应数据作为返回值转发。
+
 ## 预设
 以下合约预设已准备就绪，可用于快速原型设计和测试。每个预设在使用的账户签名类型上有所不同。
 
@@ -483,18 +509,16 @@ response: felt*
 对于账户合约，ERC165支持是静态的，不需要账户合约进行注册。
 
 ## 扩展账户合约
-账户合约可以通过遵循*可扩展性模式*进行扩展。
+账户合约可以通过遵循*可扩展性模式*来进行扩展。
 
-要实现自定义账户合约，StarkNet编译器要求其包含三个入口函数__validate__、__validate_declare__和__execute__。
+要实现自定义账户合约，应该暴露一对验证函数和执行函数。这就是为什么Account库提供了不同类型的这样的函数对，比如原始的is_valid_signature和execute，或者以太坊风格的is_valid_eth_signature和eth_execute。
 
-__validate__和__validate_declare__应包含相同的签名验证方法；而__execute__只需处理实际的交易。只需通过__validate__和__validate_declare__调用新的验证方案。
+鼓励账户合约开发者实现[标准的Account接口](https://github.com/OpenZeppelin/cairo-contracts/discussions/41)，然后再加入自定义逻辑。
 
-这就是为什么账户库提供了不同类型的签名验证方法，如is_valid_eth_signature和普通的is_valid_signature。
-
-鼓励账户合约开发者实现[标准的账户接口](https://github.com/OpenZeppelin/cairo-contracts/discussions/41)，然后再加入自定义逻辑。
+要实现替代的执行函数，在调用_unsafe_execute构建块之前，确保检查相应的验证函数，就像当前的预设函数所做的那样。不要直接暴露_unsafe_execute。
 
 > IMPORTANT
-由于测试框架与实际的StarkNet网络之间存在当前的不一致性，当集成新的账户合约时应格外谨慎。已经出现过在本地节点上账户功能测试通过且交易执行正确，但在公共网络上失败的情况。因此，强烈建议在公共测试网络上部署和测试新的账户合约。有关更多信息，请参见问题[#386](https://github.com/OpenZeppelin/cairo-contracts/issues/386)。
+新方法中应包含ecdsa_ptr隐式参数，该参数在调用_unsafe_execute时使用（即使ecdsa_ptr未被使用）。否则，账户的功能可能在测试和本地开发网络环境中都能正常工作，但在公共网络上可能因为[SignatureBuiltinRunner](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/lang/builtins/signature/signature_builtin_runner.py)而失败。有关更多信息，请参见[问题＃386](https://github.com/OpenZeppelin/cairo-contracts/issues/386)。
 
 未来可能要注意的其他验证方案：
 
