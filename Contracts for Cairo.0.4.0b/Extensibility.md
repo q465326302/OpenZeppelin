@@ -82,52 +82,24 @@
 
 一些预设包括：
 
-* [账户](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/account/presets/Account.cairo)
+* [账户](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/account/presets/Account.cairo)
 
-* [ERC165](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/mocks/ERC165.cairo)
+* [ERC165](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/tests/mocks/ERC165.cairo)
 
-* [ERC20可铸造](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)
+* [ERC20可铸造](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)
 
-* [ERC20可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)
+* [ERC20可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)
 
-* [ERC20可升级](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)
+* [ERC20可升级](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)
 
-* [ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20.cairo)
+* [ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20.cairo)
 
-* [ERC721可铸造可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc721/presets/ERC721MintableBurnable.cairo)
+* [ERC721可铸造可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc721/presets/ERC721MintableBurnable.cairo)
 
-* [ERC721可铸造可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc721/presets/ERC721MintablePausable.cairo)
+* [ERC721可铸造可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc721/presets/ERC721MintablePausable.cairo)
 
-* [ERC721可枚举可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc721/enumerable/presets/ERC721EnumerableMintableBurnable.cairo)
+* [ERC721可枚举可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc721/enumerable/presets/ERC721EnumerableMintableBurnable.cairo)
 
-在之前的Cairo版本中，从模块导入任何函数都会自动导入所有的@external函数。我们过去利用这种行为来仅导入预设合同的构造函数以加载它。然而，自从Cairo v0.10版本以后，利用预设合同的合同应该从中导入所有公开的函数。例如：
-
-```
-%lang starknet
-
-from openzeppelin.token.erc20.presets.ERC20 import constructor
-```
-
-现在应该看起来像什么:
-
-```
-%lang starknet
-
-from openzeppelin.token.erc20.presets.ERC20 import (
-    constructor,
-    name,
-    symbol,
-    totalSupply,
-    decimals,
-    balanceOf,
-    allowance,
-    transfer,
-    transferFrom,
-    approve,
-    increaseAllowance,
-    decreaseAllowance
-)
-```
 
 ## 函数名称和编码风格
 * 根据Cairo的编程风格，我们在库API中使用snake_case（例如ERC20.transfer_from，ERC721.safe_transfer_from）。
@@ -153,10 +125,13 @@ abstract contract ERC20Pausable is ERC20, Pausable {
 相反，可扩展性模式允许我们通过在调用函数（即transfer）之前或之后添加代码行来简单地扩展库的实现。这样，我们可以轻松地完成任务。
 ```
 @external
-func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    recipient: felt, amount: Uint256
-) -> (success: felt) {
-    Pausable.assert_not_paused();
-    return ERC20.transfer(recipient, amount);
-}
+func transfer{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(recipient: felt, amount: Uint256) -> (success: felt):
+    Pausable.assert_not_paused()
+    ERC20.transfer(recipient, amount)
+    return (TRUE)
+end
 ```

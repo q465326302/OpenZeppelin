@@ -82,23 +82,23 @@
 
 一些预设包括：
 
-* [账户](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/account/presets/Account.cairo)
+* [账户](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/account/presets/Account.cairo)
 
-* [ERC165](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/mocks/ERC165.cairo)
+* [ERC165](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/tests/mocks/ERC165.cairo)
 
-* [ERC20可铸造](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)
+* [ERC20可铸造](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)
 
-* [ERC20可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)
+* [ERC20可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)
 
-* [ERC20可升级](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)
+* [ERC20可升级](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)
 
-* [ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20.cairo)
+* [ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20.cairo)
 
-* [ERC721可铸造可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc721/presets/ERC721MintableBurnable.cairo)
+* [ERC721可铸造可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc721/presets/ERC721MintableBurnable.cairo)
 
-* [ERC721可铸造可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc721/presets/ERC721MintablePausable.cairo)
+* [ERC721可铸造可暂停](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc721/presets/ERC721MintablePausable.cairo)
 
-* [ERC721可枚举可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc721/enumerable/presets/ERC721EnumerableMintableBurnable.cairo)
+* [ERC721可枚举可销毁](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc721/enumerable/presets/ERC721EnumerableMintableBurnable.cairo)
 
 在之前的Cairo版本中，从模块导入任何函数都会自动导入所有的@external函数。我们过去利用这种行为来仅导入预设合同的构造函数以加载它。然而，自从Cairo v0.10版本以后，利用预设合同的合同应该从中导入所有公开的函数。例如：
 
