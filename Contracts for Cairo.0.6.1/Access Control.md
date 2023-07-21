@@ -52,7 +52,7 @@ func protected_function{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_ch
 }
 ```
 
-Ownable库API
+### Ownable库API
 ```
 func initializer(owner: felt) {
 }
@@ -137,6 +137,8 @@ new_owner: felt
 func OwnershipTransferred(previousOwner: felt, newOwner: felt) {
 }
 ```
+
+#### OwnershipTransferred
 当合约的所有权从previousOwner转移到newOwner时发出。
 
 参数:

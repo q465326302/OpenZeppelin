@@ -28,49 +28,57 @@
 ## Ownable
 访问控制最常见和基本的形式是所有权的概念：有一个账户是合约的所有者，并且可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
 
-OpenZeppelin Contracts for Cairo提供了[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/access/ownable/library.cairo)来在合约中实现所有权。
+OpenZeppelin Contracts for Cairo提供了[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/access/ownable/library.cairo)来在合约中实现所有权。
 
 ### 快速入门
-将[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/access/ownable/library.cairo)集成到合约中首先需要分配一个所有者。实现合约的构造函数应该通过将所有者的地址传递给Ownable的*初始化器*来设置初始所有者，就像这样:
+将[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/access/ownable/library.cairo)集成到合约中首先需要分配一个所有者。实现合约的构造函数应该通过将所有者的地址传递给Ownable的*初始化器*来设置初始所有者，就像这样:
 ```
 from openzeppelin.access.ownable.library import Ownable
 
 @constructor
-func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(owner: felt) {
-    Ownable.initializer(owner);
-    return ();
-}
+func constructor{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(owner: felt):
+    Ownable.initializer(owner)
+    return ()
+end
 ```
 为了限制函数只能被所有者访问，可以添加assert_only_owner方法。
 
 ```
 from openzeppelin.access.ownable.library import Ownable
 
-func protected_function{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}() {
-    Ownable.assert_only_owner();
-    return ();
-}
+func protected_function{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }():
+    Ownable.assert_only_owner()
+    return ()
+end
 ```
 
 ### Ownable库API
 ```
-func initializer(owner: felt) {
-}
+func initializer(owner: felt):
+end
 
-func assert_only_owner() {
-}
+func assert_only_owner():
+end
 
-func owner() -> (owner: felt) {
-}
+func owner() -> (owner: felt):
+end
 
-func transfer_ownership(new_owner: felt) {
-}
+func transfer_ownership(new_owner: felt):
+end
 
-func renounce_ownership() {
-}
+func renounce_ownership():
+end
 
-func _transfer_ownership(new_owner: felt) {
-}
+func _transfer_ownership(new_owner: felt):
+end
 ```
 
 #### initializer
@@ -157,7 +165,7 @@ newOwner: felt
 ### 用法
 对于要定义的每个角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色（有关*创建标识符的信息*，请参见创建角色标识符）。
 
-下面是在[ERC20代币合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20.cairo)的一部分上实现AccessControl的简单示例，该示例定义并设置了“铸造者”角色。
+下面是在[ERC20代币合约](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20.cairo)的一部分上实现AccessControl的简单示例，该示例定义并设置了“铸造者”角色。
 ```
 from openzeppelin.token.erc20.library import ERC20
 
@@ -167,23 +175,32 @@ from openzeppelin.access.accesscontrol.library import AccessControl
 const MINTER_ROLE = 0x4f96f87f6963bb246f2c30526628466840c642dc5c50d5a67777c6cc0e44ab5
 
 @constructor
-func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    name: felt, symbol: felt, decimals: felt, minter: felt
-) {
-    ERC20.initializer(name, symbol, decimals);
-    AccessControl.initializer();
-    AccessControl._grant_role(MINTER_ROLE, minter);
-    return ();
-}
+func constructor{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(
+        name: felt,
+        symbol: felt,
+        decimals: felt,
+        minter: felt
+    ):
+    ERC20.initializer(name, symbol, decimals)
+    AccessControl.initializer()
+    AccessControl._grant_role(MINTER_ROLE, minter)
+    return ()
+end
 
 @external
-func mint{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    to: felt, amount: Uint256
-) {
-    AccessControl.assert_only_role(MINTER_ROLE);
-    ERC20._mint(to, amount);
-    return ();
-}
+func mint{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(to: felt, amount: Uint256):
+    AccessControl.assert_only_role(MINTER_ROLE)
+    ERC20._mint(to, amount)
+    return ()
+end
 ```
 
 > CAUTION
@@ -202,33 +219,45 @@ const MINTER_ROLE = 0x4f96f87f6963bb246f2c30526628466840c642dc5c50d5a67777c6cc0e
 const BURNER_ROLE = 0x7823a2d975ffa03bed39c38809ec681dc0ae931ebe0048c321d4a8440aed509
 
 @constructor
-func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    name: felt, symbol: felt, decimals: felt, minter: felt, burner: felt
-) {
-    ERC20.initializer(name, symbol, decimals);
-    AccessControl.initializer();
-    AccessControl._grant_role(MINTER_ROLE, minter);
-    AccessControl._grant_role(BURNER_ROLE, burner);
-    return ();
-}
+func constructor{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(
+        name: felt,
+        symbol: felt,
+        decimals: felt,
+        minter: felt,
+        burner: felt
+    ):
+    ERC20.initializer(name, symbol, decimals)
+    AccessControl.initializer()
+    AccessControl._grant_role(MINTER_ROLE, minter)
+    AccessControl._grant_role(BURNER_ROLE, burner)
+    return ()
+end
 
 @external
-func mint{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    to: felt, amount: Uint256
-) {
-    AccessControl.assert_only_role(MINTER_ROLE);
-    ERC20._mint(to, amount);
-    return ();
-}
+func mint{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(to: felt, amount: Uint256):
+    AccessControl.assert_only_role(MINTER_ROLE)
+    ERC20._mint(to, amount)
+    return ()
+end
 
 @external
-func burn{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    from_: felt, amount: Uint256
-) {
-    AccessControl.assert_only_role(BURNER_ROLE);
-    ERC20._burn(from_, amount);
-    return ();
-}
+func burn{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(from_: felt, amount: Uint256):
+    AccessControl.assert_only_role(BURNER_ROLE)
+    ERC20._burn(from_, amount)
+    return ()
+end
 ```
 
 如此干净！通过这种方式分离关注点，可以实现比简单的所有权访问控制更细粒度的权限级别。限制系统的每个组件能够做什么被称为[最小特权原则](https://en.wikipedia.org/wiki/Principle_of_least_privilege)，这是一个良好的安全实践。请注意，如果需要，每个账户仍然可以拥有多个角色。
@@ -255,40 +284,51 @@ const MINTER_ROLE = 0x4f96f87f6963bb246f2c30526628466840c642dc5c50d5a67777c6cc0e
 const BURNER_ROLE = 0x7823a2d975ffa03bed39c38809ec681dc0ae931ebe0048c321d4a8440aed509
 
 @constructor
-func constructor{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    name: felt, symbol: felt, decimals: felt, admin: felt,
-) {
-    ERC20.initializer(name, symbol, decimals);
-    AccessControl.initializer();
+func constructor{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(
+        name: felt,
+        symbol: felt,
+        decimals: felt,
+        admin: felt,
+    ):
+    ERC20.initializer(name, symbol, decimals)
+    AccessControl.initializer()
 
-    AccessControl._grant_role(DEFAULT_ADMIN_ROLE, admin);
-    return ();
-}
-
-@external
-func mint{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    to: felt, amount: Uint256
-) {
-    AccessControl.assert_only_role(MINTER_ROLE);
-    ERC20._mint(to, amount);
-    return ();
-}
+    AccessControl._grant_role(DEFAULT_ADMIN_ROLE, admin)
+    return ()
+end
 
 @external
-func burn{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    from_: felt, amount: Uint256
-) {
-    AccessControl.assert_only_role(BURNER_ROLE);
-    ERC20._burn(from_, amount);
-    return ();
-}
+func mint{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(to: felt, amount: Uint256):
+    AccessControl.assert_only_role(MINTER_ROLE)
+    ERC20._mint(to, amount)
+    return ()
+end
+
+@external
+func burn{
+        syscall_ptr: felt*,
+        pedersen_ptr: HashBuiltin*,
+        range_check_ptr
+    }(from_: felt, amount: Uint256):
+    AccessControl.assert_only_role(BURNER_ROLE)
+    ERC20._burn(from_, amount)
+    return ()
+end
 ```
 
 请注意，与之前的示例不同，没有任何账户被授予“铸币者”或“销毁者”角色。然而，因为这些角色的管理员角色是默认的管理员角色，并且该角色被授予了“管理员”，同样的账户可以调用grant_role来授予铸币或销毁权限，并调用revoke_role来删除它。
 
 动态角色分配通常是一种理想的属性，例如在信任参与者的程度可能随时间变化的系统中。它还可以用于支持诸如[KYC](https://en.wikipedia.org/wiki/Know_your_customer)之类的用例，其中角色承担者的列表可能事先不知道，或者将其包含在单个事务中可能代价太高。
 
-下面的示例使用了公开角色管理函数的[AccessControl模拟合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/mocks/AccessControl.cairo)。例如，在Python中授予和撤销角色：
+下面的示例使用了公开角色管理函数的[AccessControl模拟合约](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/mocks/AccessControl.cairo)。例如，在Python中授予和撤销角色：
 ```
 MINTER_ROLE = 0x4f96f87f6963bb246f2c30526628466840c642dc5c50d5a67777c6cc0e44ab5
 BURNER_ROLE = 0x7823a2d975ffa03bed39c38809ec681dc0ae931ebe0048c321d4a8440aed509
@@ -320,41 +360,41 @@ bytes32 public constant SOME_ROLE = keccak256("SOME_ROLE")
 
 Cairo字段元素最多存储252位。更进一步，StarkNet合约中声明的常量字段元素存储的位数更少（请参阅[cairo_constants](https://github.com/starkware-libs/cairo-lang/blob/release-v0.6.1/src/starkware/cairo/lang/cairo_constants.py#L1)）。鉴于这种差异，该库对于合约如何创建标识符保持中立立场。以下是一些可以考虑的想法：
 
-使用keccak256哈希摘要的前251位或后251位。
+* 使用keccak256哈希摘要的前251位或后251位。
 
-使用Cairo的[hash2](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/hash.cairo)函数。
+* 使用Cairo的[hash2](https://github.com/starkware-libs/cairo-lang/blob/master/src/starkware/cairo/common/hash.cairo)函数。
 
 ### AccessControl library API
 ```
-func initializer() {
-}
+func initializer():
+end
 
-func assert_only_role(role: felt) {
-}
+func assert_only_role(role: felt):
+end
 
-func has_role(role: felt, user: felt) -> (has_role: felt) {
-}
+func has_role(role: felt, user: felt) -> (has_role: felt):
+end
 
-func get_role_admin(role: felt) -> (admin: felt) {
-}
+func get_role_admin(role: felt) -> (admin: felt):
+end
 
-func grant_role(role: felt, user: felt) {
-}
+func grant_role(role: felt, user: felt):
+end
 
-func revoke_role(role: felt, user: felt) {
-}
+func revoke_role(role: felt, user: felt):
+end
 
-func renounce_role(role: felt, user: felt) {
-}
+func renounce_role(role: felt, user: felt):
+end
 
-func _grant_role(role: felt, user: felt) {
-}
+func _grant_role(role: felt, user: felt):
+end
 
-func _revoke_role(role: felt, user: felt) {
-}
+func _revoke_role(role: felt, user: felt):
+end
 
-func _set_role_admin(role: felt, admin_role: felt) {
-}
+func _set_role_admin(role: felt, admin_role: felt):
+end
 ```
 
 #### initializer
@@ -453,6 +493,20 @@ user: felt
 ```
 返回值：无。
 
+#### _grant_role
+授予用户角色。
+
+*内部函数*，没有访问限制。
+
+发出*RoleGranted*事件。
+
+参数：
+```
+role: felt
+user: felt
+```
+返回值：无。
+
 #### _revoke_role
 撤销用户的角色。
 
@@ -481,14 +535,18 @@ admin_role: felt
 
 ### AccessControl events
 ```
-func RoleGranted(role: felt, account: felt, sender: felt) {
-}
+func RoleGranted(role: felt, account: felt, sender: felt):
+end
 
-func RoleRevoked(role: felt, account: felt, sender: felt) {
-}
+func RoleRevoked(role: felt, account: felt, sender: felt):
+end
 
-func RoleAdminChanged(role: felt, previousAdminRole: felt, newAdminRole: felt) {
-}
+func RoleAdminChanged(
+    role: felt,
+    previousAdminRole: felt,
+    newAdminRole: felt
+  ):
+end
 ```
 
 #### RoleGranted
