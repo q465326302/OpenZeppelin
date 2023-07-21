@@ -28,10 +28,10 @@
 ## Ownable
 访问控制最常见和基本的形式是所有权的概念：有一个账户是合约的所有者，并且可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
 
-OpenZeppelin Contracts for Cairo提供了[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/access/ownable/library.cairo)来在合约中实现所有权。
+OpenZeppelin Contracts for Cairo提供了[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/access/ownable/library.cairo)来在合约中实现所有权。
 
 ### 快速入门
-将[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/access/ownable/library.cairo)集成到合约中首先需要分配一个所有者。实现合约的构造函数应该通过将所有者的地址传递给Ownable的*初始化器*来设置初始所有者，就像这样:
+将[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/access/ownable/library.cairo)集成到合约中首先需要分配一个所有者。实现合约的构造函数应该通过将所有者的地址传递给Ownable的*初始化器*来设置初始所有者，就像这样:
 ```
 from openzeppelin.access.ownable.library import Ownable
 
@@ -157,7 +157,7 @@ newOwner: felt
 ### 用法
 对于要定义的每个角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色（有关*创建标识符的信息*，请参见创建角色标识符）。
 
-下面是在[ERC20代币合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20.cairo)的一部分上实现AccessControl的简单示例，该示例定义并设置了“铸造者”角色。
+下面是在[ERC20代币合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20.cairo)的一部分上实现AccessControl的简单示例，该示例定义并设置了“铸造者”角色。
 ```
 from openzeppelin.token.erc20.library import ERC20
 
@@ -288,7 +288,7 @@ func burn{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 
 动态角色分配通常是一种理想的属性，例如在信任参与者的程度可能随时间变化的系统中。它还可以用于支持诸如[KYC](https://en.wikipedia.org/wiki/Know_your_customer)之类的用例，其中角色承担者的列表可能事先不知道，或者将其包含在单个事务中可能代价太高。
 
-下面的示例使用了公开角色管理函数的[AccessControl模拟合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/mocks/AccessControl.cairo)。例如，在Python中授予和撤销角色：
+下面的示例使用了公开角色管理函数的[AccessControl模拟合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/tests/mocks/AccessControl.cairo)。例如，在Python中授予和撤销角色：
 ```
 MINTER_ROLE = 0x4f96f87f6963bb246f2c30526628466840c642dc5c50d5a67777c6cc0e44ab5
 BURNER_ROLE = 0x7823a2d975ffa03bed39c38809ec681dc0ae931ebe0048c321d4a8440aed509
@@ -318,7 +318,7 @@ bytes32 public constant SOME_ROLE = keccak256("SOME_ROLE")
 
 这些标识符占用32字节（256位）。
 
-Cairo字段元素最多存储252位。更进一步，StarkNet合约中声明的常量字段元素存储的位数更少（请参阅[cairo_constants](https://github.com/starkware-libs/cairo-lang/blob/release-v0.6.1/src/starkware/cairo/lang/cairo_constants.py#L1)）。鉴于这种差异，该库对于合约如何创建标识符保持中立立场。以下是一些可以考虑的想法：
+Cairo字段元素最多存储252位。更进一步，StarkNet合约中声明的常量字段元素存储的位数更少（请参阅[cairo_constants](https://github.com/starkware-libs/cairo-lang/blob/release-v0.6.0/src/starkware/cairo/lang/cairo_constants.py#L1)）。鉴于这种差异，该库对于合约如何创建标识符保持中立立场。以下是一些可以考虑的想法：
 
 使用keccak256哈希摘要的前251位或后251位。
 

@@ -7,47 +7,47 @@ ERC20代币标准是一种对*可互换代币*的规范，这种代币的所有�
 
   * ERC20兼容性
 
-使用方法
+* 使用方法
 
-可扩展性
+* 可扩展性
 
-预设
+* 预设
 
-ERC20（基本）
+  * ERC20（基本）
 
-ERC20Mintable
+  * ERC20Mintable
 
-ERC20Pausable
+  * ERC20Pausable
 
-ERC20Upgradeable
+  * ERC20Upgradeable
 
-API规范
+* API规范
 
-方法
+  * 方法
 
-名称
+    * 名称
 
-符号
+    * 符号
 
-小数位数
+    * 小数位数
 
-总供应量
+    * 总供应量
 
-余额
+    * 余额
 
-授权额度
+    * 授权额度
 
-转账
+    * 转账
 
-从授权额度转账
+    * 从授权额度转账
 
-批准
+    * 批准
 
-事件
+  * 事件
 
-转账（事件）
+    * 转账（事件）
 
-授权（事件）
+    * 授权（事件）
 
 ## 接口
 ```
@@ -97,7 +97,7 @@ namespace IERC20 {
 
 * transfer、transferFrom和approve永远不会返回与TRUE不同的值，因为它们在任何错误时都会回滚。
 
-* Cairo和Solidity之间的函数选择器计算方式不同。
+* [Cairo](https://github.com/starkware-libs/cairo-lang/blob/7712b21fc3b1cb02321a58d0c0579f5370147a8b/src/starkware/starknet/public/abi.py#L25)和[Solidity](https://solidity-by-example.org/function-selector/)之间的函数选择器计算方式不同。
 
 ## 用途
 使用案例从交换货币到投票权、质押等各种场景。
@@ -143,7 +143,7 @@ await signer.send_transaction(account, erc20.contract_address, 'transfer', [reci
 ```
 
 ## 可扩展性
-ERC20合约可以通过遵循*可扩展性模式进行扩展*。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
+ERC20合约可以通过遵循*可扩展性模式进行扩展*。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
 
 ```
 @external
@@ -171,16 +171,16 @@ func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 以下合约预设已准备好部署，可以直接使用于快速原型设计和测试。每个预设都铸造了一个初始供应量，这对于不公开铸造方法的预设尤其必要。
 
 ### ERC20 (basic)
-[ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20.cairo)预设提供了一个快速简便的设置，用于部署基本的ERC20代币。
+[ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20.cairo)预设提供了一个快速简便的设置，用于部署基本的ERC20代币。
 
 ### ERC20Mintable
-[ERC20Mintable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)预设允许合约所有者铸造新的代币。
+[ERC20Mintable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)预设允许合约所有者铸造新的代币。
 
 ### ERC20Pausable
-[ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)预设允许合约所有者暂停/取消暂停所有修改状态的方法，例如转账、批准等。这个预设在以下情况下非常有用：在评估期结束之前阻止交易，并在出现严重错误时紧急关闭所有代币转移。
+[ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)预设允许合约所有者暂停/取消暂停所有修改状态的方法，例如转账、批准等。这个预设在以下情况下非常有用：在评估期结束之前阻止交易，并在出现严重错误时紧急关闭所有代币转移。
 
 ### ERC20Upgradeable
-[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅*合约升级*。
+[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅*合约升级*。
 
 ## API Specification
 

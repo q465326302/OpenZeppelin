@@ -52,34 +52,38 @@ ERC20代币标准是一种对*可互换代币*的规范，这种代币的所有�
 ## 接口
 ```
 @contract_interface
-namespace IERC20 {
-    func name() -> (name: felt) {
-    }
+namespace IERC20:
+    func name() -> (name: felt):
+    end
 
-    func symbol() -> (symbol: felt) {
-    }
+    func symbol() -> (symbol: felt):
+    end
 
-    func decimals() -> (decimals: felt) {
-    }
+    func decimals() -> (decimals: felt):
+    end
 
-    func totalSupply() -> (totalSupply: Uint256) {
-    }
+    func totalSupply() -> (totalSupply: Uint256):
+    end
 
-    func balanceOf(account: felt) -> (balance: Uint256) {
-    }
+    func balanceOf(account: felt) -> (balance: Uint256):
+    end
 
-    func allowance(owner: felt, spender: felt) -> (remaining: Uint256) {
-    }
+    func allowance(owner: felt, spender: felt) -> (remaining: Uint256):
+    end
 
-    func transfer(recipient: felt, amount: Uint256) -> (success: felt) {
-    }
+    func transfer(recipient: felt, amount: Uint256) -> (success: felt):
+    end
 
-    func transferFrom(sender: felt, recipient: felt, amount: Uint256) -> (success: felt) {
-    }
+    func transferFrom(
+            sender: felt,
+            recipient: felt,
+            amount: Uint256
+        ) -> (success: felt):
+    end
 
-    func approve(spender: felt, amount: Uint256) -> (success: felt) {
-    }
-}
+    func approve(spender: felt, amount: Uint256) -> (success: felt):
+    end
+end
 ```
 
 ### ERC20兼容性
@@ -105,13 +109,12 @@ namespace IERC20 {
 考虑到构造函数的方法如下：
 ```
 func constructor(
-    name: felt,               // Token name as Cairo short string
-    symbol: felt,             // Token symbol as Cairo short string
-    decimals: felt            // Token decimals (usually 18)
-    initial_supply: Uint256,  // Amount to be minted
-    recipient: felt           // Address where to send initial supply to
-) {
-}
+    name: felt,               # Token name as Cairo short string
+    symbol: felt,             # Token symbol as Cairo short string
+    decimals: felt            # Token decimals (usually 18)
+    initial_supply: Uint256,  # Amount to be minted
+    recipient: felt           # Address where to send initial supply to
+):
 ```
 
 要创建令牌，您需要像这样部署它:
@@ -143,16 +146,19 @@ await signer.send_transaction(account, erc20.contract_address, 'transfer', [reci
 ```
 
 ## 可扩展性
-ERC20合约可以通过遵循*可扩展性模式进行扩展*。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
+ERC20合约可以通过遵循*可扩展性模式进行扩展*。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
 
 ```
 @external
-func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
-    recipient: felt, amount: Uint256
-) -> (success: felt) {
-    Pausable.assert_not_paused();                 // imported extended logic
-    return ERC20.transfer(recipient, amount);     // imported library method
-}
+func transfer{
+        syscall_ptr : felt*,
+        pedersen_ptr : HashBuiltin*,
+        range_check_ptr
+    }(recipient: felt, amount: Uint256) -> (success: felt):
+    Pausable.assert_not_paused()          # imported extended logic
+    ERC20.transfer(recipient, amount)     # imported library method
+    return (TRUE)
+end
 ```
 
 请注意，可扩展性不一定只限于像上面例子中的基于库的方式。例如，具有暂停机制的ERC20合约可以直接在合约中定义暂停方法，甚至可以从库中导入可暂停的方法并进行进一步定制。
@@ -171,47 +177,51 @@ func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 以下合约预设已准备好部署，可以直接使用于快速原型设计和测试。每个预设都铸造了一个初始供应量，这对于不公开铸造方法的预设尤其必要。
 
 ### ERC20 (basic)
-[ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20.cairo)预设提供了一个快速简便的设置，用于部署基本的ERC20代币。
+[ERC20](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20.cairo)预设提供了一个快速简便的设置，用于部署基本的ERC20代币。
 
 ### ERC20Mintable
-[ERC20Mintable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)预设允许合约所有者铸造新的代币。
+[ERC20Mintable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Mintable.cairo)预设允许合约所有者铸造新的代币。
 
 ### ERC20Pausable
-[ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)预设允许合约所有者暂停/取消暂停所有修改状态的方法，例如转账、批准等。这个预设在以下情况下非常有用：在评估期结束之前阻止交易，并在出现严重错误时紧急关闭所有代币转移。
+[ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)预设允许合约所有者暂停/取消暂停所有修改状态的方法，例如转账、批准等。这个预设在以下情况下非常有用：在评估期结束之前阻止交易，并在出现严重错误时紧急关闭所有代币转移。
 
 ### ERC20Upgradeable
-[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅*合约升级*。
+[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅*合约升级*。
 
 ## API Specification
 
 ### 方法
 ```
-func name() -> (name: felt) {
-}
+func name() -> (name: felt):
+end
 
-func symbol() -> (symbol: felt) {
-}
+func symbol() -> (symbol: felt):
+end
 
-func decimals() -> (decimals: felt) {
-}
+func decimals() -> (decimals: felt):
+end
 
-func totalSupply() -> (totalSupply: Uint256) {
-}
+func totalSupply() -> (totalSupply: Uint256):
+end
 
-func balanceOf(account: felt) -> (balance: Uint256) {
-}
+func balanceOf(account: felt) -> (balance: Uint256):
+end
 
-func allowance(owner: felt, spender: felt) -> (remaining: Uint256) {
-}
+func allowance(owner: felt, spender: felt) -> (remaining: Uint256):
+end
 
-func transfer(recipient: felt, amount: Uint256) -> (success: felt) {
-}
+func transfer(recipient: felt, amount: Uint256) -> (success: felt):
+end
 
-func transferFrom(sender: felt, recipient: felt, amount: Uint256) -> (success: felt) {
-}
+func transferFrom(
+        sender: felt,
+        recipient: felt,
+        amount: Uint256
+    ) -> (success: felt):
+end
 
-func approve(spender: felt, amount: Uint256) -> (success: felt) {
-}
+func approve(spender: felt, amount: Uint256) -> (success: felt):
+end
 ```
 
 #### name
@@ -325,11 +335,11 @@ success: felt
 
 #### Events
 ```
-func Transfer(from_: felt, to: felt, value: Uint256) {
-}
+func Transfer(from_: felt, to: felt, value: Uint256):
+end
 
-func Approval(owner: felt, spender: felt, value: Uint256) {
-}
+func Approval(owner: felt, spender: felt, value: Uint256):
+end
 ```
 
 #### Transfer (event)
