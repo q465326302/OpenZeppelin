@@ -36,31 +36,33 @@
 ## 快速入门
 一般的工作流程是：
 
-1. 声明一个实现合约类。
+1. 声明一个实现[合约类](https://starknet.io/docs/hello_starknet/intro.html#declare-the-contract-on-the-starknet-testnet)
 
-2. 使用实现合约的类哈希和描述从实现中初始化代理的调用的输入部署代理合约（如果需要）。这将将调用重定向为一个库调用到实现（类似于 Solidity 的 delegatecall）。
+2. 部署代理合约，并在代理的构造函数calldata中设置实现合约类的哈希值
+
+3. 通过向代理合约发送调用来初始化实现合约。这将重定向调用到实现合约类，并表现得像实现合约的构造函数一样。
 
 在 Python 中，这看起来如下所示:
 ```
-# declare implementation contract
-IMPLEMENTATION = await starknet.declare(
-    "path/to/implementation.cairo",
-)
+    # declare implementation contract
+    IMPLEMENTATION = await starknet.declare(
+        "path/to/implementation.cairo",
+    )
 
-# deploy proxy
-selector = get_selector_from_name('initializer')
-params = [
-    proxy_admin   # admin account
-]
-PROXY = await starknet.deploy(
-    "path/to/proxy.cairo",
-    constructor_calldata=[
-        IMPLEMENTATION.class_hash,  # set implementation contract class hash
-        selector,                   # initializer function selector
-        len(params),                # calldata length in felt
-        *params                     # actual calldata
-    ]
-)
+    # deploy proxy
+    PROXY = await starknet.deploy(
+        "path/to/proxy.cairo",
+        constructor_calldata=[
+            IMPLEMENTATION.class_hash,  # set implementation contract class hash
+        ]
+    )
+
+    # users should only interact with the proxy contract
+    await signer.send_transaction(
+        account, PROXY.contract_address, 'initializer', [
+            proxy_admin
+        ]
+    )
 ```
 
 ## Solidity/Cairo升级比较
@@ -83,7 +85,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在合约升级的情况下，只需将代理的引用更改为声明的实现类的类哈希即可。这允许开发人员添加功能，更新逻辑和修复错误，而无需触及状态或与应用程序交互的合约地址。
 
 ### 代理合约
-代理合约包括两个核心方法：
+[代理合约](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/upgrades/presets/Proxy.cairo)包括两个核心方法：
 
 1. __default__方法是一个回退方法，将函数调用和关联的calldata重定向到实现合约。
 
@@ -94,13 +96,13 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在与合约交互时，用户应将函数调用发送到代理。代理的回退函数将函数调用重定向到实现合约以执行。
 
 ### 实现合约
-实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/upgrades/library.cairo)导入。
+实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/upgrades/library.cairo)导入。
 
 实现合约应：
 
 * 导入代理命名空间。
 
-* 提供一个外部初始化函数（调用Proxy.initializer）以在部署后立即初始化代理。
+* 在合约部署后立即使用Proxy.initializer初始化代理。
 
 如果实现是可升级的，则应：
 
@@ -114,6 +116,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 
 * 使用传统构造函数设置其初始状态（用@constructor修饰）。而是使用调用代理构造函数的初始化方法。
 
+> NOTE
 代理构造函数包括一个检查，确保初始化方法只能被调用一次；但是_set_implementation不包括此检查。开发人员需要使用访问控制（如*assert_only_admin*）保护其实现合约的可升级性。
 
 有关完整的实现合约示例，请参见：
@@ -124,23 +127,23 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 
 ### 方法
 ```
-func initializer(proxy_admin: felt) {
-}
+func initializer(proxy_admin: felt):
+end
 
-func assert_only_admin() {
-}
+func assert_only_admin():
+end
 
-func get_implementation_hash() -> (implementation: felt) {
-}
+func get_implementation_hash() -> (implementation: felt):
+end
 
-func get_admin() -> (admin: felt) {
-}
+func get_admin() -> (admin: felt):
+end
 
-func _set_admin(new_admin: felt) {
-}
+func _set_admin(new_admin: felt):
+end
 
-func _set_implementation_hash(new_implementation: felt) {
-}
+func _set_implementation_hash(new_implementation: felt):
+end
 ```
 
 #### 初始化器
@@ -200,14 +203,14 @@ new_implementation: felt
 
 ### Events
 ```
-func Upgraded(implementation: felt) {
-}
+func Upgraded(implementation: felt):
+end
 
-func AdminChanged(previousAdmin: felt, newAdmin: felt) {
-}
+func AdminChanged(previousAdmin: felt, newAdmin: felt):
+end
 ```
 
-#### 升级
+#### Upgraded
 当代理合约设置新的实现类哈希时发出。
 
 参数：
@@ -229,39 +232,36 @@ newAdmin: felt
 ### 合约升级
 要升级合约，实现合约应该包含一个升级方法，当调用时，将引用更改为一个新部署的合约，如下所示。
 ```
-# declare first implementation
-IMPLEMENTATION = await starknet.declare(
-    "path/to/implementation.cairo",
-)
+    # declare first implementation
+    IMPLEMENTATION = await starknet.declare(
+        "path/to/implementation.cairo",
+    )
 
-# deploy proxy
-PROXY = await starknet.deploy(
-    "path/to/proxy.cairo",
-    constructor_calldata=[
-        IMPLEMENTATION.class_hash,  # set implementation hash
-        0,                          # selector set to 0 ignores initialization
-        0,                          # calldata length in felt
-        *[]                         # empty calldata
-    ]
-)
+    # deploy proxy
+    PROXY = await starknet.deploy(
+        "path/to/proxy.cairo",
+        constructor_calldata=[
+            IMPLEMENTATION.class_hash,  # set implementation hash
+        ]
+    )
 
-# declare implementation v2
-IMPLEMENTATION_V2 = await starknet.declare(
-    "path/to/implementation_v2.cairo",
-)
+    # declare implementation v2
+    IMPLEMENTATION_V2 = await starknet.declare(
+        "path/to/implementation_v2.cairo",
+    )
 
-# call upgrade with the new implementation contract class hash
-await signer.send_transaction(
-    account, PROXY.contract_address, 'upgrade', [
-        IMPLEMENTATION_V2.class_hash
-    ]
-)
+    # call upgrade with the new implementation contract class hash
+    await signer.send_transaction(
+        account, PROXY.contract_address, 'upgrade', [
+            IMPLEMENTATION_V2.class_hash
+        ]
+    )
 ```
 完整的部署和升级实施请参见：
 
-* [升级 V1](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/mocks/UpgradesMockV1.cairo)
+* [升级 V1](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/mocks/UpgradesMockV1.cairo)
 
-* [升级 V2](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/mocks/UpgradesMockV2.cairo)
+* [升级 V2](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/mocks/UpgradesMockV2.cairo)
 
 ### 声明合约
 StarkNet 合约有两种形式：合约类和合约实例。合约类表示未实例化的无状态代码；而合约实例被实例化并包含状态。由于代理合约通过其类哈希引用实现合约，因此仅声明一个实现合约即足够（而不是进行完整的部署）。有关声明类的更多信息，请参阅 [StarkNet 的文档](https://starknet.io/docs/hello_starknet/intro.html#declare-contract)。
@@ -275,8 +275,8 @@ result = await erc20.totalSupply().call()
 
 # upgradeable ERC20 call
 result = await signer.send_transaction(
-    account, PROXY.contract_address, 'totalSupply', []
-)
+        account, PROXY.contract_address, 'totalSupply', []
+    )
 ```
 
 ## 预设

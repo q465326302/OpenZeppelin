@@ -200,6 +200,15 @@ new_implementation: felt
 ```
 返回：无。
 
+### Events
+```
+func Upgraded(implementation: felt):
+end
+
+func AdminChanged(previousAdmin: felt, newAdmin: felt):
+end
+```
+
 #### 升级
 当代理合约设置新的实现类哈希时发出。
 
@@ -208,7 +217,7 @@ new_implementation: felt
 implementation: felt
 ```
 
-#### implementation: felt
+#### AdminChanged
 当管理员从previousAdmin更改为newAdmin时触发。
 
 参数: 

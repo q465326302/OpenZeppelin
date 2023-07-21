@@ -94,7 +94,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在与合约交互时，用户应将函数调用发送到代理。代理的回退函数将函数调用重定向到实现合约以执行。
 
 ### 实现合约
-实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/upgrades/library.cairo)导入。
+实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/upgrades/library.cairoo)导入。
 
 实现合约应：
 
@@ -198,6 +198,15 @@ new_implementation: felt
 ```
 返回：无。
 
+### Events
+```
+func Upgraded(implementation: felt) {
+}
+
+func AdminChanged(previousAdmin: felt, newAdmin: felt) {
+}
+```
+
 #### 升级
 当代理合约设置新的实现类哈希时发出。
 
@@ -206,7 +215,7 @@ new_implementation: felt
 implementation: felt
 ```
 
-#### implementation: felt
+#### AdminChanged
 当管理员从previousAdmin更改为newAdmin时触发。
 
 参数: 
