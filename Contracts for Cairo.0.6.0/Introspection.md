@@ -29,7 +29,7 @@ ERC165标准允许智能合约对其他合约[进行类型内省](https://en.wik
 
 与以太坊合约一样，Cairo合约没有本地的接口概念，因此应用程序通常必须简单地相信它们没有进行错误的调用。对于受信任的设置，这不是一个问题，但通常需要与未知和不受信任的第三方地址进行交互。甚至可能没有直接调用它们的方式！（例如，ERC20代币可能被发送到一个缺乏将其转出的方法的合约中，从而永久锁定它们）。在这些情况下，声明接口的合约可以非常有助于防止错误。
 
-应注意的是，[常量库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/utils/constants/library.cairo)包括引用这些合约中使用的所有接口ID的常量变量。这使得代码更易读，例如使用IERC165_ID而不是0x01ffc9a7。
+应注意的是，[常量库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/utils/constants/library.cairo)包括引用这些合约中使用的所有接口ID的常量变量。这使得代码更易读，例如使用IERC165_ID而不是0x01ffc9a7。
 
 ### 接口计算
 为了确保EVM/StarkNet的兼容性，接口标识符不是在StarkNet上计算的。相反，接口ID是从函数签名的哈希的前四个字节的选择器计算得出的，而Cairo的选择器长度为252字节。由于这种差异，将EVM已经计算过的接口ID硬编码是遵循EIP165标准和EVM兼容性的最一致的方法。
@@ -63,7 +63,7 @@ func check_support{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_p
 }
 ```
 > NOTE
-supportsInterface是使用驼峰命名法的，因为它是ERC165接口中的一个公开的合约方法。这与库方法（例如[ERC165库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/introspection/erc165/library.cairo)中的supports_interface）不同，库方法使用下划线命名法，并且不是公开的。有关更多细节，请参阅*函数名称和编码风格*。
+supportsInterface是使用驼峰命名法的，因为它是ERC165接口中的一个公开的合约方法。这与库方法（例如[ERC165库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/introspection/erc165/library.cairo)中的supports_interface）不同，库方法使用下划线命名法，并且不是公开的。有关更多细节，请参阅*函数名称和编码风格*。
 
 ### IERC165
 ```
