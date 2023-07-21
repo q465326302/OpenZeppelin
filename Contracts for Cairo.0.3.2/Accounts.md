@@ -3,22 +3,24 @@
 
 因此，在StarkNet中，签名验证必须在合约层面上完成。为了减轻智能合约应用程序（如ERC20代币或交易所）的负担，我们使用账户合约来处理交易认证。
 
-有关该主题的更详细的写作可以在[Perama的博客文章](https://perama-v.github.io/cairo/account-abstraction/)中找到。
+有关账户抽象的概述，请参阅StarkWare的[StarkNet Alpha 0.10](https://medium.com/starkware/starknet-alpha-0-10-0-923007290470)。关于这个主题的更详细讨论可以在[StarkNet账户抽象第1部分](https://community.starknet.io/t/starknet-account-abstraction-model-part-1/781)中找到。
 
 ## 目录
 * 快速入门
 
+* 账户入口点
+
 * 标准接口
 
 * 密钥、签名和签名者
+
+    * 签名验证
 
     * 签名者
 
     * MockSigner实用程序
 
     * MockEthSigner实用程序
-
-* 账户入口点
 
 * 调用和AccountCallArray格式
 
@@ -30,21 +32,21 @@
 
 * API规范
 
-  * get_public_key
+    * 构造函数
 
-  * get_nonce
+    * getPublicKey
 
-  * set_public_key
+    * supportsInterface
 
-  * is_valid_signature
+    * setPublicKey
 
-  * __execute__
+    * isValidSignature
 
-  * is_valid_eth_signature
+    * __validate__
 
-  * eth_execute
+    * __validate_declare__
 
-  * _unsafe_execute
+    * __execute__
 
 * 预设
 
@@ -86,6 +88,55 @@ account = await starknet.deploy(
 # 2. Send transaction through Account
 await signer.send_transaction(account, some_contract_address, 'some_function', [some_parameter])
 ```
+
+### 账户入口点
+账户合约只有三个入口点用于所有用户交互：
+
+1. __validate_declare__ 在声明之前验证声明签名。从Cairo v0.10.0开始，合约类应从一个账户合约中声明。
+
+2. __validate__ 在执行交易之前验证交易签名，然后再使用__execute__执行交易。
+
+3. __execute__ 作为所有用户与任何合约进行交互的改变状态的入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因。
+```
+await signer.send_transaction(
+    account,
+    account.contract_address,
+    'set_public_key',
+    [NEW_KEY]
+)
+```
+或者，如果您想要在AccountRegistry合约上更新账户的L1地址，您可以执行以下操作
+```
+await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])
+```
+
+您可以在“账户消息方案讨论”中阅读有关消息结构和哈希的更多信息。有关多调用的设计选择和实现的更多信息，请阅读“账户多调用应如何工作讨论”。
+
+“validate”和“execute”方法接受相同的参数；然而，“execute”方法返回一个交易响应。
+
+```
+func __validate__(
+    call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*) {
+}
+
+func __execute__(
+    call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
+) -> (response_len: felt, response: felt*) {
+}
+```
+
+在哪里：
+
+* call_array_len是调用数量。
+
+* call_array是表示每个调用的数组。
+
+* calldata_len是calldata参数的数量。
+
+* calldata是表示函数参数的数组。
+
+> NOTE
+一旦StarkNet允许在结构数组中使用指针，构建__execute__方法中的多次调用事务的方案将发生变化。在这种情况下，可以将多个事务传递给（而不是在内部构建）__execute__。
 
 ## 标准接口
 [IAccount.cairo](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/account/IAccount.cairo)合约接口包含了[#41](https://github.com/OpenZeppelin/cairo-contracts/discussions/41)提出的标准账户接口，并被OpenZeppelin和Argent采用。它实现了[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)，并且与签名验证无关。此外，协议级别处理nonce管理。
