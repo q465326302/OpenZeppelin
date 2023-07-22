@@ -3,24 +3,22 @@
 
 因此，在StarkNet中，签名验证必须在合约层面上完成。为了减轻智能合约应用程序（如ERC20代币或交易所）的负担，我们使用账户合约来处理交易认证。
 
-有关账户抽象的概述，请参阅StarkWare的[StarkNet Alpha 0.10](https://medium.com/starkware/starknet-alpha-0-10-0-923007290470)。关于这个主题的更详细讨论可以在[StarkNet账户抽象第1部分](https://community.starknet.io/t/starknet-account-abstraction-model-part-1/781)中找到。
+有关该主题的更详细的写作可以在[Perama的博客文章](https://perama-v.github.io/cairo/account-abstraction/)中找到。
 
 ## 目录
 * 快速入门
 
-* 账户入口点
-
 * 标准接口
 
 * 密钥、签名和签名者
-
-    * 签名验证
 
     * 签名者
 
     * MockSigner实用程序
 
     * MockEthSigner实用程序
+
+* 账户入口点
 
 * 调用和AccountCallArray格式
 
@@ -32,21 +30,21 @@
 
 * API规范
 
-    * 构造函数
+  * get_public_key
 
-    * getPublicKey
+  * get_nonce
 
-    * supportsInterface
+  * set_public_key
 
-    * setPublicKey
+  * is_valid_signature
 
-    * isValidSignature
+  * __execute__
 
-    * __validate__
+  * is_valid_eth_signature
 
-    * __validate_declare__
+  * eth_execute
 
-    * __execute__
+  * _unsafe_execute
 
 * 预设
 
@@ -89,97 +87,40 @@ account = await starknet.deploy(
 await signer.send_transaction(account, some_contract_address, 'some_function', [some_parameter])
 ```
 
-### 账户入口点
-账户合约只有三个入口点用于所有用户交互：
-
-1. __validate_declare__ 在声明之前验证声明签名。从Cairo v0.10.0开始，合约类应从一个账户合约中声明。
-
-2. __validate__ 在执行交易之前验证交易签名，然后再使用__execute__执行交易。
-
-3. __execute__ 作为所有用户与任何合约进行交互的改变状态的入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因。
-```
-await signer.send_transaction(
-    account,
-    account.contract_address,
-    'set_public_key',
-    [NEW_KEY]
-)
-```
-或者，如果您想要在AccountRegistry合约上更新账户的L1地址，您可以执行以下操作
-```
-await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])
-```
-
-您可以在“账户消息方案讨论”中阅读有关消息结构和哈希的更多信息。有关多调用的设计选择和实现的更多信息，请阅读“账户多调用应如何工作讨论”。
-
-“validate”和“execute”方法接受相同的参数；然而，“execute”方法返回一个交易响应。
-
-```
-func __validate__(
-    call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*) {
-}
-
-func __execute__(
-    call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-) -> (response_len: felt, response: felt*) {
-}
-```
-
-在哪里：
-
-* call_array_len是调用数量。
-
-* call_array是表示每个调用的数组。
-
-* calldata_len是calldata参数的数量。
-
-* calldata是表示函数参数的数组。
-
-> NOTE
-一旦StarkNet允许在结构数组中使用指针，构建__execute__方法中的多次调用事务的方案将发生变化。在这种情况下，可以将多个事务传递给（而不是在内部构建）__execute__。
-
 ## 标准接口
-[IAccount.cairo](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/account/IAccount.cairo)合约接口包含了[#41](https://github.com/OpenZeppelin/cairo-contracts/discussions/41)提出的标准账户接口，并被OpenZeppelin和Argent采用。它实现了[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)，并且与签名验证无关。此外，协议级别处理nonce管理。
+[IAccount.cairo](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/account/IAccount.cairo)合约接口包含了[#41](https://github.com/OpenZeppelin/cairo-contracts/discussions/41)提出的标准账户接口，并被OpenZeppelin和Argent采用。它实现了[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)，并且与签名验证无关。此外，协议级别处理nonce管理。
 
 
 ```
-struct Call {
-    to: felt,
-    selector: felt,
-    calldata_len: felt,
-    calldata: felt*,
-}
-
-// Tmp struct introduced while we wait for Cairo to support passing `[Call]` to __execute__
-struct CallArray {
-    to: felt,
-    selector: felt,
-    data_offset: felt,
-    data_len: felt,
-}
-
-
 @contract_interface
-namespace IAccount {
-    func supportsInterface(interfaceId: felt) -> (success: felt) {
-    }
+namespace IAccount:
+    #
+    # Getters
+    #
 
-    func isValidSignature(hash: felt, signature_len: felt, signature: felt*) -> (isValid: felt) {
-    }
+    func get_nonce() -> (res : felt):
+    end
 
-    func __validate__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) {
-    }
+    #
+    # Business logic
+    #
 
-    func __validate_declare__(class_hash: felt) {
-    }
+    func is_valid_signature(
+            hash: felt,
+            signature_len: felt,
+            signature: felt*
+        ) -> (is_valid: felt):
+    end
 
     func __execute__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-    }
-}
+            call_array_len: felt,
+            call_array: AccountCallArray*,
+            calldata_len: felt,
+            calldata: felt*,
+            nonce: felt
+        ) -> (response_len: felt, response: felt*):
+    end
+end
 ```
 
 ## 密钥、签名和签署者
@@ -332,100 +273,86 @@ await signer.send_transaction(
 ## API规范
 这是Account合约的公共API的简要概述
 ```
-namespace Account {
-    func constructor(publicKey: felt) {
-    }
+func get_public_key() -> (res: felt):
+end
 
-    func getPublicKey() -> (publicKey: felt) {
-    }
+func get_nonce() -> (res: felt):
+end
 
-    func supportsInterface(interfaceId: felt) -> (success: felt) {
-    }
+func set_public_key(new_public_key: felt):
+end
 
-    func setPublicKey(newPublicKey: felt) {
-    }
+func is_valid_signature(hash: felt,
+        signature_len: felt,
+        signature: felt*
+    ) -> (is_valid: felt):
+end
 
-    func isValidSignature(hash: felt, signature_len: felt, signature: felt*) -> (isValid: felt) {
-    }
-
-    func __validate__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-    }
-
-    func __validate_declare__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-    }
-
-    func __execute__(
-        call_array_len: felt, call_array: AccountCallArray*, calldata_len: felt, calldata: felt*
-    ) -> (response_len: felt, response: felt*) {
-}
+func __execute__(
+        call_array_len: felt,
+        call_array: AccountCallArray*,
+        calldata_len: felt,
+        calldata: felt*,
+        nonce: felt
+    ) -> (response_len: felt, response: felt*):
+end
 ```
 
-### 构造函数
-初始化并设置Account合约的公钥。
-
-参数:
-```
-publicKey: felt
-```
-返回：无。
-
-### getPublicKey
-返回与账户关联的公钥。
+#### get_public_key
+返回与账户合约关联的公钥。
 
 参数：无。
 
-返回值：公钥。
+返回值：
 ```
-publicKey: felt
+public_key: felt
 ```
 
-### supportsInterface
-设置将控制此账户的公钥。它可以用于在安全性方面旋转密钥，更改被破坏密钥的情况，甚至转移账户的所有权。
+#### get_nonce
+返回账户的当前交易nonce。
 
-参数:
-```
-newPublicKey: felt
-```
-返回：无。
+参数：无。
 
-### setPublicKey
-设置将控制此账户的公钥。它可以用于安全地轮换密钥、在密钥被泄露的情况下更改密钥，甚至转移账户的所有权。
+返回值：
+```
+nonce: felt
+```
+
+#### set_public_key
+设置将控制此账户的公钥。可以用于安全地更换密钥、在密钥被泄露的情况下更换密钥，甚至转移账户的所有权。
 
 参数：
-
 ```
-newPublicKey: 新公钥
+public_key: felt
 ```
 返回值：无。
 
-### isValidSignature
-该函数受[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)的启发，如果给定的签名有效，则返回TRUE，否则会回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查[看此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
-
-参数:
+#### is_valid_signature
+这个函数受到[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)的启发，如果给定的签名有效，则返回TRUE，否则会回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查看[此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
+参数：
 ```
 hash: felt
 signature_len: felt
 signature: felt*
 ```
-
-返回:
+返回值：
 ```
-isValid: felt
+is_valid: felt
 ```
->NOTE
-如果给定的签名无效，将来可能会返回FALSE（请参[考此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)的讨论）。
 
+> NOTE
+如果给定的签名无效，将来可能返回FALSE（请参考[此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)的讨论）。
 
-### __execute__
-这是与Account合约进行交互的唯一外部入口。它：
+#### __execute__
+这是与Account合约进行交互的唯一外部入口。它执行以下操作：
 
-1. 使用预期的函数选择器和calldata参数调用目标合约。
+1. 验证交易签名与消息匹配（包括nonce）
 
-2. 将合约调用的响应数据作为返回值转发。
+2. 增加nonce
+
+3. 使用预期的函数选择器和calldata参数调用目标合约
+
+4. 将合约调用的响应数据作为返回值转发
 
 参数:
 ```
@@ -433,21 +360,22 @@ call_array_len: felt
 call_array: AccountCallArray*
 calldata_len: felt
 calldata: felt*
+nonce: felt
 ```
 
 > NOTE
-当前的签名方案期望一个包含两个元素的数组，例如 [sig_r, sig_s]。
+当前的签名方案期望一个包含两个元素的数组，格式为 [sig_r, sig_s]。
 
-返回值:
+返回：
 ```
 response_len: felt
 response: felt*
 ```
 
 #### is_valid_eth_signature
-如果在secp256k1曲线上给定的签名有效，则返回TRUE，否则将回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查看[此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
+如果在secp256k1曲线上给定的签名有效，则返回TRUE，否则将还原。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查看此问题）。
 
-参数：
+参数:
 ```
 signature_len: felt
 signature: felt*
@@ -458,12 +386,12 @@ is_valid: felt
 ```
 
 > NOTE
-如果给定的签名无效，将来可能返回FALSE（请参阅此问题的[讨论](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
+如果给定的签名无效，将来可能返回FALSE（请参考[此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)的讨论）。
 
 #### eth_execute
-这个函数与原始版本的execute函数的思路相同，唯一的区别在于签名验证是在secp256k1曲线上进行的。
+这个版本的execute与原始版本的execute遵循相同的思路，唯一的区别在于签名验证是基于secp256k1曲线。
 
-参数：
+参数:
 ```
 call_array_len: felt
 call_array: AccountCallArray*
@@ -471,24 +399,23 @@ calldata_len: felt
 calldata: felt*
 nonce: felt
 ```
-返回值：
+返回:
 ```
 response_len: felt
 response: felt*
 ```
 > NOTE
-当前的签名方案期望一个由7个元素组成的数组，如[sig_v, uint256_sig_r_low, uint256_sig_r_high, uint256_sig_s_low, uint256_sig_s_high, uint256_hash_low, uint256_hash_high]，其中验证的参数比一个felt更大。
+当前的签名方案期望一个包含7个元素的数组，格式如下：[sig_v, uint256_sig_r_low, uint256_sig_r_high, uint256_sig_s_low, uint256_sig_s_high, uint256_hash_low, uint256_hash_high]，其中验证的参数比一个felt更大。
 
 #### _unsafe_execute
-
 这是一个*内部方法*，执行以下任务：
 
 1. 递增nonce。
 
-2. 为每个迭代的消息构建一个Call。有关更多信息，请参阅*多合一交易*。
+2. 为每个迭代的消息构建一个调用。有关更多信息，请参阅*多合一交易*。
 
 3. 使用预期的函数选择器和calldata参数调用目标合约。
- 
+
 4. 将合约调用的响应数据作为返回值转发。
 
 ## 预设
