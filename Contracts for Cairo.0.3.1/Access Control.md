@@ -112,7 +112,7 @@ owner: felt
 #### transfer_ownership
 将合同的所有权转移到一个新账户（new_owner）。只能由当前所有者调用。
 
-触发一个OwnershipTransferred事件。
+触发一个*OwnershipTransferred*事件。
 
 参数:
 ```

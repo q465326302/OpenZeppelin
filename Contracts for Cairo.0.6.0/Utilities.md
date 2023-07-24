@@ -254,4 +254,4 @@ fetch_class = Account.get_class
 ```
 
 ## MockSigner
-MockSigner用于在给定的账户上使用[Nile的Signer](https://github.com/OpenZeppelin/nile/blob/main/src/nile/signer.py)实例执行交易，构建交易并管理nonce。Signer实例管理签名，并由MockSigner利用Account合约的__execute__方法进行操作。有关更多信息，请参阅[MockSigner实用程序](https://docs.openzeppelin.com/contracts-cairo/0.6.1/accounts#mocksigner_utility)。
+MockSigner用于在给定的账户上使用[Nile的Signer](https://github.com/OpenZeppelin/nile/blob/main/src/nile/signer.py)实例执行交易，构建交易并管理nonce。Signer实例管理签名，并由MockSigner利用Account合约的__execute__方法进行操作。有关更多信息，请参阅*MockSigner实用程序*。
