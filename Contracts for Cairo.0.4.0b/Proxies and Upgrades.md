@@ -36,7 +36,7 @@
 ## 快速入门
 一般的工作流程如下：
 
-1. 声明一个实现合约类
+1. 声明一个实现[合约类](https://starknet.io/docs/hello_starknet/intro.html#declare-the-contract-on-the-starknet-testnet)
 
 2. 部署代理合约，将实现合约的类哈希设置在代理的构造函数调用数据中
 
@@ -85,7 +85,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在合约升级的情况下，只需将代理的引用更改为声明的实现类的类哈希即可。这允许开发人员添加功能，更新逻辑和修复错误，而无需触及状态或与应用程序交互的合约地址。
 
 ### 代理合约
-代理合约包括两个核心方法：
+[代理合约](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/upgrades/presets/Proxy.cairo)包括两个核心方法：
 
 1. __default__方法是一个回退方法，将函数调用和关联的calldata重定向到实现合约。
 
@@ -96,7 +96,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在与合约交互时，用户应将函数调用发送到代理。代理的回退函数将函数调用重定向到实现合约以执行。
 
 ### 实现合约
-实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/upgrades/library.cairo)导入。
+实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/upgrades/library.cairo)导入。
 
 实现合约应：
 
@@ -116,6 +116,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 
 * 使用传统构造函数设置其初始状态（用@constructor修饰）。而是使用调用代理构造函数的初始化方法。
 
+> NOTE
 代理构造函数包括一个检查，确保初始化方法只能被调用一次；但是_set_implementation不包括此检查。开发人员需要使用访问控制（如*assert_only_admin*）保护其实现合约的可升级性。
 
 有关完整的实现合约示例，请参见：
@@ -126,23 +127,23 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 
 ### 方法
 ```
-func initializer(proxy_admin: felt) {
-}
+func initializer(proxy_admin: felt):
+end
 
-func assert_only_admin() {
-}
+func assert_only_admin():
+end
 
-func get_implementation_hash() -> (implementation: felt) {
-}
+func get_implementation_hash() -> (implementation: felt):
+end
 
-func get_admin() -> (admin: felt) {
-}
+func get_admin() -> (admin: felt):
+end
 
-func _set_admin(new_admin: felt) {
-}
+func _set_admin(new_admin: felt):
+end
 
-func _set_implementation_hash(new_implementation: felt) {
-}
+func _set_implementation_hash(new_implementation: felt):
+end
 ```
 
 #### 初始化器
@@ -155,14 +156,14 @@ proxy_admin: felt
 
 返回：无。
 
-##### assert_only_admin
+#### assert_only_admin
 如果被非管理员账户调用，则回滚。
 
 参数：无。
 
 返回：无。
 
-##### get_implementation
+#### get_implementation
 返回当前实现的哈希值。
 
 参数：无。
@@ -172,7 +173,7 @@ proxy_admin: felt
 implementation: felt
 ```
 
-##### get_admin
+#### get_admin
 获取当前管理员。
 
 参数：无。
@@ -182,7 +183,7 @@ implementation: felt
 admin: felt
 ```
 
-##### _set_admin
+#### _set_admin
 将new_admin设置为代理合约的管理员。
 
 参数：
@@ -191,7 +192,7 @@ new_admin: felt
 ```
 返回：无。
 
-##### _set_implementation_hash
+#### _set_implementation_hash
 将new_implementation设置为实现的合约类。此方法包含在代理合约的构造函数中，可用于升级合约。
 
 参数：
