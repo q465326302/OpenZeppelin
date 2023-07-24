@@ -245,10 +245,11 @@ sign_transaction对每个交易期望以下参数：
 虽然Signer类执行了大部分发送交易所需的工作，但它既不管理nonce，也不在Account合约上调用实际的交易。为了简化账户管理，大部分工作都通过MockSigner进行了抽象。
 
 ### MockSigner实用程序
-[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/signers.py)中的MockSigner类用于在给定的账户上执行交易，构建交易并管理nonce。
+[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/signers.py)中的MockSigner类用于在给定的账户上执行交易，构建交易并管理nonce。
 
 > NOTE
 StarkNet的测试框架目前不支持从账户合约中调用交易。因此，MockSigner利用StarkNet的API网关手动执行InvokeFunction进行测试。
+
 MockSigner实例提供以下方法：
 
 * send_transaction(account, to, selector_name, calldata, nonce=None, max_fee=0)返回一个已签名的交易的[future](https://docs.python.org/3/library/asyncio-future.html)，准备发送。

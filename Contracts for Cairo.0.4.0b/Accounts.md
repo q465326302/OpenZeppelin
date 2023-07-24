@@ -146,6 +146,7 @@ sign_transaction对每个交易期望以下参数：
 * max_fee用户将支付的最大费用。
 
 返回：
+* calls 要在交易中捆绑的调用列表
 
 * calldata每个调用的参数列表。
 
@@ -156,15 +157,11 @@ sign_transaction对每个交易期望以下参数：
 虽然Signer类执行了大部分发送交易所需的工作，但它既不管理nonce，也不在Account合约上调用实际的交易。为了简化账户管理，大部分工作都通过MockSigner进行了抽象。
 
 ### MockSigner实用程序
-[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/tests/signers.py)中的MockSigner类用于在给定的账户上执行交易，构建交易并管理nonce。
+[utils.py](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/utils.py)中的MockSigner类用于在给定的账户上执行交易，构建交易并管理nonce。
 
 交易的流程始于检查nonce并将每个调用的合约地址转换为十六进制格式。十六进制转换是必要的，因为Nile的Signer将地址转换为一个十六进制整数（需要一个字符串参数）。注意，直接转换为字符串最终会导致一个超过Cairo的FIELD_PRIME的整数。
 
 交易中包含的值被传递给Nile的Signer的sign_transaction方法，该方法创建并返回一个签名。最后，MockSigner实例调用账户合约的__execute__方法来执行交易数据。
-
-> NOTE
-StarkNet的测试框架目前不支持从账户合约进行事务调用。因此，MockSigner利用StarkNet的API网关来手动执行
-InvokeFunction进行测试。
 
 用户只需要与以下公开的方法交互来执行交易：
 
@@ -197,11 +194,11 @@ await signer.send_transactions(
 ```
 
 ### MockEthSigner utility
-[signers.py](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/tests/signers.py)中的MockEthSigner类用于使用secp256k1曲线密钥对在给定的账户上执行交易，构建交易并管理nonce。它与MockSigner实现不同之处在于：
+[utils.py](https://github.com/OpenZeppelin/cairo-contracts/blob/main/tests/utils.py)中的MockEthSigner类用于使用secp256k1曲线密钥对在给定的账户上执行交易，构建交易并管理nonce。它与MockSigner实现不同之处在于：
 
-* 不使用公钥，而是使用派生的地址（公钥的keccak256哈希的最后20个字节，并在开头添加0x）。
+* 不使用公钥，而是使用派生的地址（公钥的keccak256哈希的最后20个字节，并在开头添加0x）
 
-* 使用secp256k1曲线地址对消息进行签名。
+* 使用secp256k1曲线地址对消息进行签名
 
 ## Account entrypoint
 __execute__作为所有用户与任何合约进行交互的单个入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因:
@@ -407,7 +404,7 @@ response: felt*
 ```
 
 #### is_valid_eth_signature
-如果在secp256k1曲线上给定的签名有效，则返回TRUE，否则将还原。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查看此问题）。
+如果在secp256k1曲线上给定的签名有效，则返回TRUE，否则将还原。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查看[此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
 
 参数:
 ```
