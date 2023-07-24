@@ -142,8 +142,8 @@ new_owner: felt
 
 ### Ownable events
 ```
-func OwnershipTransferred(previousOwner: felt, newOwner: felt) {
-}
+func OwnershipTransferred(previousOwner: felt, newOwner: felt):
+end
 ```
 
 #### OwnershipTransferred
@@ -358,7 +358,7 @@ bytes32 public constant SOME_ROLE = keccak256("SOME_ROLE")
 
 这些标识符占用32字节（256位）。
 
-Cairo字段元素最多存储252位。更进一步，StarkNet合约中声明的常量字段元素存储的位数更少（请参阅[cairo_constants](https://github.com/starkware-libs/cairo-lang/blob/release-v0.6.1/src/starkware/cairo/lang/cairo_constants.py#L1)）。鉴于这种差异，该库对于合约如何创建标识符保持中立立场。以下是一些可以考虑的想法：
+Cairo字段元素最多存储252位。更进一步，StarkNet合约中声明的常量字段元素存储的位数更少（请参阅[cairo_constants](https://github.com/starkware-libs/cairo-lang/blob/167b28bcd940fd25ea3816204fa882a0b0a49603/src/starkware/cairo/lang/cairo_constants.py#L1)）。鉴于这种差异，该库对于合约如何创建标识符保持中立立场。以下是一些可以考虑的想法：
 
 * 使用keccak256哈希摘要的前251位或后251位。
 
@@ -567,9 +567,9 @@ sender: felt
 
 发送者是发起合约调用的账户：
 
-* 如果使用revoke_role，发送者是管理员角色的持有者。
+* 如果使用*revoke_role*，发送者是管理员角色的持有者。
 
-* 如果使用renounce_role，发送者是角色的持有者（即账户）。
+* 如果使用*renounce_role*，发送者是角色的持有者（即账户）。
 
 ```
 role: felt
