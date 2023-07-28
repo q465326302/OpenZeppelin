@@ -359,19 +359,58 @@ nile状态的别名 --debug。
 
 默认为localhost。
 
-#### nile get-balance <ADDRESS>
-Retrieve the Ether balance for a contract.
+### nile get-balance <ADDRESS>
+查询合约的以太币余额。
 
-Arguments
-ADDRESS
+#### 参数
+* ADDRESS
 
-Specify the address of the contract to query.
+指定要查询的合约地址。
 
-Options
---network
+#### 选项
+* --network
 
-Select network: one of (localhost, integration, goerli, goerli2, mainnet).
+选择网络：其中之一（localhost，integration，goerli，goerli2，mainnet）。
 
-Default to localhost.
+默认为localhost。
 
-Default to localhost.
+### nile get-balance <ADDRESS>
+检索合约的以太币余额。
+
+#### 参数
+* ADDRESS
+
+指定要查询的合约地址。
+
+#### 选项
+* --network
+
+选择网络：其中之一（localhost，integration，goerli，goerli2，mainnet）。
+
+默认为localhost。
+
+默认为localhost。
+
+### nile run <PATH_TO_SCRIPT>
+在NRE的上下文中执行脚本。
+
+#### 参数
+* PATH_TO_SCRIPT
+
+要运行的脚本的路径。
+
+#### 选项
+* --network
+
+选择网络：其中之一（localhost，integration，goerli，goerli2，mainnet）。
+
+默认为localhost。
+
+### nile clean
+删除 artifacts/ 文件夹和 deployments 文件。
+
+### nile init
+创建一个简单的 Nile 项目。
+
+### nile version
+打印出 Nile 版本。
