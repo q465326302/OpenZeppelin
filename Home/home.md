@@ -1,16 +1,16 @@
-# 文档
+# Documentation
 浏览我们的指南和示例，了解如何将OpenZeppelin安全产品集成到您的以太坊开发和运营的各个方面。
 
 # 探索使用OpenZeppelin
 OpenZeppelin提供了完整的安全产品套件，用于构建、管理和检查以太坊项目的软件开发和运营的所有方面。
 
-## [Contracts](../Contracts/Overview.md)
+## [Contracts](../Contracts/Contracts.4.x/Overview.md)
 一个由Solidity编写的模块化、可重用和安全的智能合约库。
 
-## Upgrades
+## [Upgrades](./Upgrades.md)
 一套全面的合约和工具套件，用于在以太坊上部署和管理可升级合约。
 
-## Defender
+## [Defender](../Defender/Overview.md)
 Defender是一个安全的平台，用于自动化以太坊操作。
 
 ## Test Helpers
