@@ -299,7 +299,7 @@ async function time.latestBlock()
 ```
 async function time.increase(duration)
 ```
-将区块链的时间增加duration（以秒为单位），并挖掘一个具有该时间戳的新区块。
+将区块链的时间增加[duration](#transaction)（以秒为单位），并挖掘一个具有该时间戳的新区块。
 
 ### increaseTo
 ```
