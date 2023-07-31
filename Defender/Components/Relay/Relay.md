@@ -33,7 +33,7 @@ Defender Relayers实现为外部拥有账户。我们正在努力实现智能账
 >IMPORTANT
 Relayer的API密钥与其私钥无关。私钥始终保存在安全的密钥保管库中，永远不会被公开（有关更多信息，请参阅安全注意事项部分）。这种解耦允许您自由地旋转API密钥，同时保持相同的以太坊地址用于您的Relayer。
 
->WARNING
+> WARNING
 创建新API密钥时，请记住API密钥仅在创建期间显示一次-如果您不将其写下来，则永远丢失。幸运的是，创建新API密钥就像点击一个按钮一样简单。
 
 ### 暂停
@@ -168,7 +168,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 * Goerli：通过[Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)
 
->WARING
+> WARING
 在使用私人交易时，应考虑eth_sendRawTransaction提供程序的关键考虑因素，例如[叔叔强盗风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)。
 
 ### 速度

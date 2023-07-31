@@ -1,7 +1,7 @@
 # Defender Serverless Plugin
 Defender Serverless是一个用于在Defender上自动化资源管理的Serverless Framework插件。
 
->WARNING
+> WARNING
 该插件仍在开发中，可能存在错误。请谨慎使用。
 
 ## 先决条件
@@ -134,7 +134,7 @@ secrets:
 
 此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的中继器密钥，则将这些密钥存储为JSON对象在.defender / relayer-keys文件夹中。
 
->WARNING
+> WARNING
 在安装模板时，我们确保忽略.defender文件夹中的任何git提交。但是，如果直接安装，请确保将此文件夹添加到您的.gitignore文件中。
 
 ### 信息

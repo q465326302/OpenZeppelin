@@ -157,7 +157,7 @@ curl \
     "https://defender-api.openzeppelin.com/admin/proposals"
 ```
 
->WARNING
+> WARNING
 Defender API仅验证函数输入是否符合签名，但不验证提案是否实际可执行。这意味着您可以创建调用合约上不存在的函数或尝试升级无法升级的合约的提案。但是，您将无法之后批准它们。
 
 ### 存档提案

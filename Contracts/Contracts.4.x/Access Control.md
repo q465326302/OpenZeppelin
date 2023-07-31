@@ -30,7 +30,7 @@ Ownable还允许您：
 
 * *放弃所有权*，让所有者放弃这种管理特权，这是初始阶段集中管理结束后的常见模式。
 
->WARNING
+> WARNING
 删除所有者将意味着仅由onlyOwner保护的管理任务将不再可调用！
 
 请注意，**合约也可以是另一个合约的所有者**！这打开了使用[Gnosis Safe](https://gnosis-safe.io/)、[Aragon DAO](https://aragon.org/)或您创建的完全自定义合约的大门。
@@ -185,7 +185,7 @@ for (let i = 0; i < minterCount; ++i) {
 
 下一步是可选的，即部署者放弃其管理特权，让 timelock 自我管理。如果部署者决定这样做，所有后续维护操作，包括分配新的提议者/调度程序或更改 timelock 持续时间，都必须遵循 timelock 工作流程。这将将 timelock 的治理与附加到 timelock 的合约的治理联系起来，并对 timelock 维护操作强制实施延迟。
 
->WARNING
+> WARNING
 如果部署者放弃自己的管理权而将其转移给 timelock 本身，则分配新的提议者或执行者将需要一个 timelocked 操作。这意味着如果负责这两个角色的账户不可用，那么整个合约（以及它控制的任何合约）将无限期被锁定。
 
 分配了提议者和执行者角色并让 timelock 管理自己的情况下，现在可以将任何合约的所有权/控制权转移到 timelock。

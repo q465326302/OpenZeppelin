@@ -58,7 +58,7 @@ Starting init...
 Init successful, sweet!
 ```
 
->WARNING
+> WARNING
 在运行 npx 命令时，请确保您在项目目录中！否则，它将再次下载完整的可执行文件，仅仅为了运行该命令，这在大多数情况下都不是您想要的。
 
 ## 使用版本控制跟踪
@@ -69,5 +69,5 @@ Init successful, sweet!
 > TIP
 如果您以前从未使用过Git，一个好的起点是[Git手册](https://guides.github.com/introduction/git-handbook/)。
 
->WARNING
+> WARNING
 不要将助记词、私钥和API密钥等秘密信息提交到版本控制！确保在[.gitignore](https://git-scm.com/docs/gitignore)文件中忽略包含秘密信息的文件。

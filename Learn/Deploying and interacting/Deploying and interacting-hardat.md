@@ -238,7 +238,7 @@ Using network 'development'.
 Box value is 42
 ```
 
->WARNING
+> WARNING
 如果您在任何时候重新启动了本地区块链，这个脚本可能会失败。重新启动会清除所有本地区块链状态，因此Box合约实例将不会在预期地址上。
 如果发生这种情况，只需*启动本地区块链*并*重新部署*Box合约即可。
 

@@ -56,7 +56,7 @@ npx mnemonics
 drama film snack motion ...
 ```
 
->WARNING
+> WARNING
 确认保护好你的助记词，不要将秘密信息提交到版本控制中。即使只是为了测试目的，仍有恶意用户会为了娱乐而破坏你的测试网络部署！
 
 ### 配置网络

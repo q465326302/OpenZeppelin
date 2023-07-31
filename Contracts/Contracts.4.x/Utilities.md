@@ -17,7 +17,7 @@ function _verify(bytes32 data, bytes memory signature, address account) internal
 }
 ```
 
->WARNING
+> WARNING
 获取签名验证正确并不容易：确保您完全阅读并理解 *ECDSA* 的文档。
 
 ### 验证 Merkle 证明

@@ -197,7 +197,7 @@ function foo() public {
 默认情况下，所有角色的管理员角色都是DEFAULT_ADMIN_ROLE，这意味着只有拥有此角色的帐户才能授予或撤销其他角色。可以使用*_setRoleAdmin*创建更复杂的角色关系。
 
 
->WARNING
+> WARNING
 DEFAULT_ADMIN_ROLE也是其自己的管理员：它有权限授予和撤销此角色。应该采取额外的预防措施来保护已被授予该角色的帐户。我们建议使用*AccessControlDefaultAdminRules*为该角色执行额外的安全措施。
 
 **MODIFIERS**
@@ -297,7 +297,7 @@ RoleRevoked(role, account, sender)
 授予账户角色。
 如果账户尚未被授予角色，则会发出RoleGranted事件。请注意，与grantRole不同，此函数不对调用账户进行任何检查。
 可能会发出RoleGranted事件。
->WARNING
+> WARNING
 只应该在设置系统的初始角色时从构造函数中调用此函数。
 在任何其他方式中使用此函数实际上是绕过AccessControl强制实施的管理系统。
 > NOTE
@@ -397,7 +397,7 @@ RoleRevoked(role, account, sender)
 
 角色承载者没有特定的排序方式，其排序可能随时更改。
 
->WARNING
+> WARNING
 使用*getRoleMember*和*getRoleMemberCount*时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
@@ -444,7 +444,7 @@ RoleRevoked(role, account, sender)
 
 角色持有人没有特定的排序方式，并且它们的顺序可能随时更改。
 
->WARNING
+> WARNING
 在使用*getRoleMember*和*getRoleMemberCount*时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256

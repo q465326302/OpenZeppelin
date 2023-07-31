@@ -39,7 +39,7 @@ Defender Admin目前支持三种提案类型：升级、暂停和自定义操作
 ### 升级
 升级操作只能在支持 EIP1967 或遗留的 zOS 可升级代理上执行，这些代理公开了 upgradeTo(address) 函数。Defender Admin 将直接处理由多重签名钱包直接拥有的代理或由 ProxyAdmin 管理的代理，而 ProxyAdmin 又由钱包拥有。升级操作只需要选择新的实现地址，Defender Admin 就会处理其余的事情。
 
->WARNING
+> WARNING
 Defender Admin目前不会验证实现的存储布局兼容性。因此，我们强烈建议使用openzeppelin-upgrades库来*部署目标实现*。可以使用*Truffle*中的prepareUpgrade函数或*Hardhat*中的defender.proposeUpgrade函数来完成此操作。
 
 ### 暂停/恢复
@@ -66,7 +66,7 @@ Defender提供了创建此类提案的功能，当ABI包含grantRole和revokeRol
 
 自定义操作也可以重复，这将向您呈现预填充的表单，以便您在批准之前审查和调整操作。
 
->WARNING
+> WARNING
 目前还不支持某些 ABI 类型，例如嵌套结构体。如果您需要调用当前不支持的函数，请联系我们！
 
 ### 批次

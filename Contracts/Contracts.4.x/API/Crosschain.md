@@ -79,7 +79,7 @@ Arbitrum L2包括固定地址的ArbSys合约。因此，此*CrossChainEnabled*�
 
 *自v4.6起可用。*
 
->WARNING
+> WARNING
 目前在Arbitrum中存在一个错误，导致当该合约部署在代理后面时无法检测跨链调用。这将在网络升级到Arbitrum Nitro时修复，该升级计划于2022年8月31日进行。
 
 **FUNCTIONS**
@@ -215,7 +215,7 @@ import "@openzeppelin/contracts/crosschain/arbitrum/LibArbitrumL2.sol";
 
 此版本仅用于 L2，用于处理来自 L1 的跨链消息。对于另一侧，请使用 *LibArbitrumL1*。
 
->WARNING
+> WARNING
 目前在Arbitrum中存在一个错误，当部署在代理后，该合约无法检测到跨链调用。这将在网络升级为Arbitrum Nitro时修复，目前计划于2022年8月31日进行。
 
 **FUNCTIONS**

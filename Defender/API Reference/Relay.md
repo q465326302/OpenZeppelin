@@ -392,7 +392,7 @@ export type TransactionResponse = RelayerLegacyTransaction | RelayerEIP1559Trans
 
 可用的状态及其对应的描述如下：
 
->WARNING
+> WARNING
 状态挂起，已发送和已提交可能在未来合并。避免依赖它们，因为向后兼容性不能保证。
 ```
 type Status =

@@ -111,7 +111,7 @@ DEFENDER_TEAM_API_KEY="Enter your Defender Team API Key"
 DEFENDER_TEAM_API_SECRET_KEY="Enter your Defender Team API Secret"
 ```
 
->WARNING
+> WARNING
 任何秘密信息，如助记词或API密钥都不应该提交到版本控制中。
 
 我们将使用以下hardhat.config.js来部署到Rinkeby。
@@ -160,7 +160,7 @@ Box deployed to: 0x5C1e1732274630Ac9E9cCaF05dB09da64bE190B5
 
 我们的代理管理员（可以执行升级）是一个ProxyAdmin合约。只有ProxyAdmin的所有者才能升级我们的代理。
 
->WARNING
+> WARNING
 确保仅将*ProxyAdmin*的所有权转移给我们控制的地址。
 
 在scripts目录中创建transfer-ownership.js，并使用以下JavaScript更改gnosisSafe的值为您的Gnosis Safe地址。

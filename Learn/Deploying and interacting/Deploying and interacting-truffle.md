@@ -242,35 +242,38 @@ Using network 'development'.
 Box value is 42
 ```
 
->WARNING
+> WARNING
 如果您在任何时候重新启动了本地区块链，此脚本可能会失败。重新启动会清除所有本地区块链状态，因此Box合约实例将不会在预期的地址上。
-如果发生这种情况，只需启动本地区块链并重新部署Box合约即可。
+如果发生这种情况，只需启动_本地区块链_并重新_部署Box合约_即可。
 
 ### 发送交易
 现在，我们将发送一笔交易来在我们的Box中存储一个新值。
 
 让我们将一个值23存储在我们的Box中，然后使用我们之前编写的代码来显示更新后的值：
 ```
-// Send a transaction to store() a new value in the Box
+// 发送一个交易来在Box中存储一个新值
 await box.store(23);
 
-// Call the retrieve() function of the deployed Box contract
+// 调用部署的Box合约的retrieve()函数
 const value = await box.retrieve();
 console.log('Box value is', value.toString());
 ```
+
 > NOTE
 在实际应用中，您可能希望估计您的[交易的gas](https://web3js.readthedocs.io/en/1.0/web3-eth-contract.html#methods-mymethod-estimategas)，并检查[gas价格预言机](https://ethgasstation.info/)以了解每个交易使用的最佳值。
 
 现在我们可以运行这个代码段，并检查框的值是否已更新！
 ```
-npx hardhat run --network localhost ./scripts/index.js
+npx truffle exec --network development ./scripts/index.js
+Using network 'development'.
+
 Box value is 23
 ```
 
 ## 下一步
 现在您已经知道如何设置本地区块链、部署合约并手动和编程地与它们交互，您需要学习有关测试环境、公共测试网络和进入生产的知识：
-* *编写自动化测试*
+* [编写自动化测试](../Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-truffle.md)
 
-* *连接到公共测试网络*
+* [连接到公共测试网络](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-truffle.md)
 
-* *为主网做准备*
+* [为主网做准备](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)

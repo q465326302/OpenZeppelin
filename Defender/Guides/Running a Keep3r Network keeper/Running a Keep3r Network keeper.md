@@ -1,7 +1,7 @@
 # Running a Keep3r Network keeper
 本指南将为您介绍如何通过利用Defender *Relay*和*Autotasks*在[Keep3r Network](https://keep3r.network/)中运行Keeper的过程。
 
->WARNING
+> WARNING
 Keep3r Network项目处于测试阶段。请自行承担风险。
 
 ## 什么是Keeper？
@@ -29,7 +29,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 要创建Relayer，请简单地转到Defender中的[Relay](https://docs.openzeppelin.com/defender/relay)部分，并在Mainnet网络上创建一个新的Relayer。创建后，请注意Relayer地址；您不需要为本指南生成的API密钥和密码。
 ![guide-keep3r-1.png](img/guide-keep3r-1.png)
 
->WARNING
+> WARNING
 如果创建主网中继的选项被锁定，那么这意味着您的Defender账户还没有主网访问权限。请先[申请主网访问权限](https://openzeppelin.com/apply/)，并等待我们的回复。
 
 ## 为中继筹资
@@ -89,7 +89,7 @@ Defender将根据当前网络价格自动选择您的交易的燃气价格。您
 ## 执行作业
 您设置的Autotask将自动开始查找YearnV1EarnKeep3r，HegicPoolKeep3r和UniswapV2SlidingOracle合约中的可用作业。您可以查看Autotask日志，以了解您的Keeper在每次运行中所做的工作，并在Relayer页面上监视您的奖励。
 
->WARNING
+> WARNING
 请记住，发送交易并不意味着您将自动获得奖励：其他Keeper也可能监视工作，如果他们的交易在您之前被挖掘，您将无法获得奖励！更糟糕的是：撤销的交易也要支付燃气费！
 
 ## 收集您的奖励
