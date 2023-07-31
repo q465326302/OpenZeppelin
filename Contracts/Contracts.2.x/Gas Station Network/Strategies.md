@@ -81,7 +81,7 @@ acceptRelayedCall函数的实现检查用户的代币余额。如果用户的代
 > NOTE
 燃气费用估算并不是100%准确，我们可能会在日后进行进一步调整。
 
->NOTE
+> NOTE
 始终使用_preRelayedCall和_postRelayedCall函数。内部使用_preRelayedCall和_postRelayedCall函数，而不是公共的preRelayedCall和postRelayedCall函数，因为非RelayHub合约不能调用公共函数。
 
 ### 如何使用GSNRecipientERC20Fee

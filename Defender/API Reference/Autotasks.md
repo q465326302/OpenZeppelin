@@ -3,10 +3,10 @@ Autotask API允许您以编程方式列出、创建、检索、更新、删除Au
 
 请求需要使用与相应能力的Team API Key协商的bearer token进行身份验证。有关如何协商它的信息，请参阅*身份验证*部分。
 
->NOTE
+> NOTE
 我们建议您使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包来简化与Autotask API的交互。
 
->NOTE
+> NOTE
 不建议在浏览器环境中使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包，因为敏感密钥将公开暴露。
 
 ## 创建端点
@@ -158,7 +158,7 @@ curl \
 await client.updateCodeFromFolder("671d1f80-99e3-4829-aa15-f01e3298e428", './code');
 ```
 
->NOTE
+> NOTE
 您可以在捆绑包中包含多个文件，只要捆绑包在压缩和base64编码后不超过5mb，并在zip文件的根目录下包含一个index.js作为入口点。
 
 ## Autotask Runs Endpoints

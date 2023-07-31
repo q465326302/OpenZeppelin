@@ -3,7 +3,7 @@ Defender APIs使用短暂的JWT令牌进行身份验证，可以通过[SRP协议
 
 JWT令牌将在60分钟后过期。如果您的代码需要长于60分钟的会话，请考虑重新创建JWT令牌或使用[刷新令牌](https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html)。
 
->NOTE
+> NOTE
 如果您使用defender-client npm包，则只需提供API密钥和密钥即可自动处理所有身份验证和更新。
 
 ## 进行身份验证的请求

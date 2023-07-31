@@ -1,7 +1,7 @@
 # How to set up on-chain governance
 在本指南中，我们将学习OpenZeppelin的Governor合约如何工作，如何设置它，并使用Ethers.js和Tally提供的工具创建提案、投票并执行它们。
 
->NOTE
+> NOTE
 在*Governance API*中找到详细的合约文档。
 
 ## 介绍
@@ -98,10 +98,10 @@ contract MyTokenWrapped is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
 }
 ```
 
->NOTE
+> NOTE
 目前在OpenZeppelin Contracts中唯一可用的投票权力来源是*ERC721Votes*。不提供此功能的ERC721代币可以使用*ERC721Votes*和*ERC721Wrapper*的组合将其包装成投票代币。
 
->NOTE
+> NOTE
 代币用于存储投票余额的内部时钟将决定附加到其上的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以覆盖IERC6372时钟，改用时间戳而不是块号。
 
 ### Governor

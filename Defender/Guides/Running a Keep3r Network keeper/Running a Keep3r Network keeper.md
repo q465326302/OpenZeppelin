@@ -23,7 +23,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 
 第一步是创建Defender Relayer作为您的Keeper。这个Relayer将是您执行工作的以太坊帐户。
 
->NOTE
+> NOTE
 您不需要手动在[keep3r.network](https://keep3r.network/)上注册为Keeper，这样做将会将您的钱包注册为Keeper，而不是您的Relayer。
 
 要创建Relayer，请简单地转到Defender中的[Relay](https://docs.openzeppelin.com/defender/relay)部分，并在Mainnet网络上创建一个新的Relayer。创建后，请注意Relayer地址；您不需要为本指南生成的API密钥和密码。
@@ -38,7 +38,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 交易确认后，您应该在中继的余额中看到您转移的资金。
 ![guide-keep3r-2.png](img/guide-keep3r-2.png)
 
->NOTE
+> NOTE
 当您的Relay资金低于0.1 ETH时，Defender将向您发送电子邮件提醒您补充资金。
 
 如果您想将任何KP3R代币绑定到您的Relayer上，您需要将代币转移到Relayer地址。请确保将代币发送到Relayer地址，而不是KP3R代币合约！
@@ -48,7 +48,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 
 如果您想绑定KP3R代币，现在是选择要绑定多少代币的时候了。
 
->NOTE
+> NOTE
 您可以使用零个绑定的KP3R代币，如果您想这样做，可以随后绑定更多代币。
 ![guide-keep3r-3.png](img/guide-keep3r-3.png)
 
@@ -58,7 +58,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 等待期结束后，您可以手动激活您的中继器。
 ![guide-keep3r-5.png](img/guide-keep3r-5.png)
 
->NOTE
+> NOTE
 你可以随时选择再次绑定到Keep3r网络。这将允许你绑定额外的KP3R代币，但会将等待期重置为3天，然后你需要*手动激活*成为Keeper。
 
 ## 激活你的中继器
@@ -77,7 +77,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 
 至于代码，请粘贴来自defender-autotask-examples存储库的[此代码段](https://github.com/OpenZeppelin/defender-autotask-examples/blob/master/keep3rs/src/frequent-keeper.js)，它将尝试运行YearnV1EarnKeep3r，HegicPoolKeep3r和UniswapV2SlidingOracle合约。一旦保存，Defender将开始每分钟执行Autotask。
 
->NOTE
+> NOTE
 如果您熟悉JavaScript，您随时可以编辑您的Autotask代码以添加新的作业，因为它们被发布。要执行此操作，请在代码段中将要工作的合约的ABI添加到ABIs对象中，并在Jobs中添加条目，其中包括合约名称和地址以及可工作和工作函数的名称。
 
 ### 微调
@@ -96,7 +96,7 @@ Defender将根据当前网络价格自动选择您的交易的燃气价格。您
 在完成一些作业后，您可以将赚取的KP3R代币从Relayer发送回您的钱包。要执行此操作，请转到Relayer页面，并选择提取资金。输入您的钱包地址，选择KPR作为货币，并输入您要提取的代币数量。确保正确输入您的钱包地址，否则您可能会永久性地丢失您的代币！
 ![guide-keep3r-8.png](img/guide-keep3r-8.png)
 
->NOTE
+> NOTE
 您还可以使用“提取资金”选项随时将ETH从您的Relayer发送回您的钱包。
 
 ## 离开Keeper网络

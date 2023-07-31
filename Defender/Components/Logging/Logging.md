@@ -59,13 +59,13 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 
 * **日志级别**让您指定要转发的Defender生成日志的子集，基于日志级别。例如，调试日志可用于Autotasks调试目的，并且可能包含不应导出到外部系统的数据。
 
->NOTE
+> NOTE
 在下一节中，我们将介绍如何使用Splunk和Datadog设置日志转发，但值得注意的是，日志转发适用于支持API密钥身份验证的任何其他服务。
 
 ### plunk
 将日志转发到Splunk是通过使用Splunk HEC（HTTP事件收集器）完成的。可以在[此处](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector)找到设置与Splunk HEC一起使用日志记录的文档。
 
->NOTE
+> NOTE
 由于Splunk的内部机制，日志转发不适用于Splunk试用帐户。
 示例：
 
@@ -76,10 +76,10 @@ https：//username.splunkcloud.com/services/collector/raw
 
 * API密钥：Splunk xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
->NOTE
+> NOTE
 URL值是动态的，因为URL包括帐户用户名。
 
->NOTE
+> NOTE
 API密钥应包含Splunk前缀。
 
 ### Datadog
@@ -93,8 +93,8 @@ API密钥应包含Splunk前缀。
 
 * API密钥：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
->NOTE
+> NOTE
 Datadog在世界各地使用不同的站点。例如，如果您依赖于欧盟服务器，则URL字段值应为https://http-intake.logs.datadoghq.eu/api/v2/logs
 
->NOTE
+> NOTE
 可以通过从左侧菜单中打开日志部分并选择AWS提供程序来从Datadog站点获取API密钥值。在按照这些步骤操作后，“API密钥”值将显示在页面底部的部分中。

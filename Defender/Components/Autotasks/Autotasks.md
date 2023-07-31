@@ -27,12 +27,12 @@ Defender Autotasks服务允许您定期运行代码片段，通过Webhooks或响
 
 * **Sentinel**：使用Sentinel触发器的Autotask不能按计划或使用秘密URL执行。它们只能从Sentinel或手动操作执行。
 
->NOTE
+> NOTE
 如果您收到Webhook HTTP请求的响应{"message":"Missing Authentication Token"}，请仔细检查您的请求是否实际上是POST。当发出GET请求时，您通常会看到{"message":"Missing Authentication Token"}响应。
 
 Autotask也可以从UI手动执行以进行快速测试。 Autotask视图中将显示最后30个Autotask运行，允许您访问运行日志（通过console.log生成）进行故障排除。此外，当Autotask失败时，Defender会发送通知电子邮件。
 
->NOTE
+> NOTE
 请访问[OpenZeppelin/defender-autotask-examples存储库](https://github.com/OpenZeppelin/defender-autotask-examples/)，以获取现成的Autotask示例的快速入门！
 
 ### 处理程序函数
@@ -113,7 +113,7 @@ exports.handler = async function(event) {
 }
 ```
 
->NOTE
+> NOTE
 需要超过25秒才能完成的自动任务将返回一个“待定”状态的响应。然而，自动任务将继续在后台运行，并最终完成。
 
 ### 秘密
@@ -133,7 +133,7 @@ exports.handler = async function(event) {
 您可以使用秘密来存储访问外部API的安全密钥，或任何其他您不想在Autotask代码中公开的秘密值。
 
 
->NOTE
+> NOTE
 虽然您也可以使用Autotask秘密来存储用于签署消息或交易的私钥，但我们建议您使用Relayer。 Relayer的签名操作在安全保险库中执行，比在Autotask运行中加载私钥并在那里签名提供了额外的安全级别。
 
 ### 键值数据存储
@@ -230,13 +230,13 @@ exports.handler = async function(credentials, context) {
 可以在Autotask创建/更新代码屏幕的代码编辑器下找到可用的通知渠道列表，方法是点击链接“可以使用哪些通知渠道？”
 ![aototasks-2.png](img/autotasks-2.png)
 
->NOTE
+> NOTE
 如果传递了无效或暂停的通知渠道别名，将会抛出错误。
 
->NOTE
+> NOTE
 如果由于其他原因无法发送通知，则不会抛出错误，但会将状态消息添加到Autotask日志中。例如，如果向具有非活动URL的Webhook渠道发送通知，则会添加日志条目，但不会抛出错误。
 
->NOTE
+> NOTE
 如果多个通知渠道使用相同的别名，则通知将发送到所有这些渠道。
 
 ### 错误处理
@@ -266,7 +266,7 @@ Autotasks在[16节点](https://nodejs.org/dist/latest-v16.x/docs/api/)运行时�
 >WARNING
 使用Node.js 12运行时创建的自动任务需要迁移到最新支持的运行时。\
 
->NOTE
+> NOTE
 如果您需要使用未列出的任何依赖项，您可以使用JavaScript模块打包程序（如rollup或webpack）将其包含在您的代码中，或者只需联系我们将其添加到常见依赖项集中。请参考此示例项目以获取更多信息。
 
 ### 本地开发
@@ -321,7 +321,7 @@ echo API_SECRET=$API_SECRET >> .env
 defender-autotask update-code $AUTOTASK_ID ./path/to/code
 ```
 
->NOTE
+> NOTE
 代码包在压缩和base64编码后不得超过5MB的大小，并且您必须始终在zip文件的根目录中包含一个index.js作为入口点。
 
 ## 一个完整的例子

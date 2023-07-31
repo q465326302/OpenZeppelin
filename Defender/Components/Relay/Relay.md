@@ -24,7 +24,7 @@ Defender Relayer是专门分配给您团队的以太坊账户。每当您创建�
 >IMPORTANT
 请记住，您需要为每个Relayer单独提供ETH资金，以确保它们具有足够的资金支付您发送的交易的燃气费用。如果Relayer的资金低于0.1 ETH，Defender将向您发送电子邮件通知。
 
->NOTE
+> NOTE
 Defender Relayers实现为外部拥有账户。我们正在努力实现智能账户，以支持批量交易、燃气代币和链上管理的冷钥匙。
 
 ### API密钥
@@ -54,19 +54,19 @@ Relayer的API密钥与其私钥无关。私钥始终保存在安全的密钥保�
 #### 燃料价格上限
 为中继发送的每个交易指定最大燃料价格。当启用此策略时，Defender将覆盖任何超出指定上限的交易的gasPrice或maxFeePerGas。请注意，交易的燃料价格是基于燃料价格预言机在中继实际发送交易以进行挖掘时指定的，因此此策略可用作燃料价格激增的保护。
 
->NOTE
+> NOTE
 除了此处可以指定的最大燃料价格策略外，Defender还实现了向发送到Polygon网络的交易指定最低燃料价格策略为30 Gwei。[您可以在此处阅读有关Polygon决定建立最低燃料价格的更多信息。](https://forum.polygon.technology/t/recommended-min-gas-price-setting/7604)
 
 #### 接收者白名单
 为中继发送的每个交易指定授权接收者列表。Defender将拒绝并丢弃任何收件人地址不在列表中的交易。
 
->NOTE
+> NOTE
 接收者白名单仅适用于交易的to字段。它不过滤ERC20或其他资产的接收者。
 
 #### EIP1559定价
 指定中继发送的交易是否应默认为EIP1559。这适用于中继使用*speed*参数发送交易或未指定gasPrice或maxFeePerGas / maxPriorityFeePerGas的情况。请注意，这仅适用于EIP1559兼容的网络。
 
->NOTE
+> NOTE
 EIP1559定价策略默认为新中继启用。如果您有一个没有默认选择的中继，则始终可以启用此标志。
 
 #### 私人交易
@@ -85,7 +85,7 @@ const tx = await relayer.sendTransaction({
 });
 ```
 
->NOTE
+> NOTE
 在初始化Relayer客户端时，您不需要输入私钥，因为私钥被安全保存在Defender保险库中。
 
 >IMPORTANT
@@ -140,12 +140,12 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 一旦任何交易被发送，它在其生命周期的每个阶段（例如替换和重新定价）都将具有**相同的类型**，因此如果已经提交，目前无法更改类型。
 
->NOTE
+> NOTE
 任何尝试将maxFeePerGas或maxPriorityFeePerGas发送到不兼容EIP1559的网络的尝试都将被中继器拒绝和丢弃。
 
 您可以查看中继器*策略*来确定网络是否支持EIP1559。如果没有显示EIP1559定价策略，则意味着我们尚未为该网络添加EIP1559支持。
 
->NOTE
+> NOTE
 如果您注意到我们已经支持但尚未启用支持的EIP1559兼容网络，请不要犹豫在我们的社区论坛或defender@openzeppelin.com上请求支持。
 
 ### 私人交易
@@ -160,7 +160,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 * 通过UI发送交易并勾选Mempool Visibility复选框
 ![relay-1.png](img/Relay-1.png)
 
->NOTE
+> NOTE
 将isPrivate标志设置为true的交易发送到不支持私有交易的网络将被中继器拒绝和丢弃。
 目前，仅支持以下网络：
 
@@ -176,7 +176,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 如果提供了速度参数，则交易将按照*EIP1559Pricing中继器策略定价*。
 
->NOTE
+> NOTE
 主网络的燃气价格和优先费用是根据EthGasStation、EtherChain、GasNow、BlockNative和Etherscan报告的值计算的。在Polygon及其测试网络中，使用燃气站。在其他网络中，燃气价格是通过调用eth_gasPrice或eth_feeHistory到网络获取的。
 
 ### 固定gas价
@@ -184,10 +184,10 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 请记住，您必须提供速度、gasPrice、maxFeePerGas/maxPriorityFeePerGas或不提供任何参数，但不能在发送交易请求时混合使用它们。
 
->NOTE
+> NOTE
 如果没有任何定价参数发送发送交易请求，则将使用快速默认速度定价。
 
->NOTE
+> NOTE
 如果您同时提供固定的maxFeePerGas和maxPriorityFeePerGas，请确保maxFeePerGas大于或等于maxPriorityFeePerGas。否则，它将被拒绝。
 
 ### 有效期至
@@ -200,7 +200,7 @@ validUntil默认为交易创建后的8小时。请注意，您可以将validUnti
 const signer = new DefenderRelaySigner(credentials, provider, { validForSeconds: 120 });
 ```
 
->NOTE
+> NOTE
 validUntil是一个UTC时间戳。请确保使用UTC时区而不是本地时区。
 
 ### 交易ID
@@ -209,7 +209,7 @@ validUntil是一个UTC时间戳。请确保使用UTC时区而不是本地时区�
 const tx = await relayer.query(tx.transactionId);
 ```
 
->NOTE
+> NOTE
 查询端点将返回Defender服务的最新交易视图，该视图每分钟更新一次。
 
 ### 替换交易
@@ -247,7 +247,7 @@ replaced = await erc20.methods.transfer(beneficiary, (1e18).toString()).send({
 });
 ```
 
->NOTE
+> NOTE
 你只能用相同类型的交易替换交易。例如，如果你试图替换一个EIP1559交易，它不能被替换为传统的交易。此外，如果提供的是速度，交易将被重新定价为其原始类型所需的速度。
 
 ### 列出交易记录
@@ -266,7 +266,7 @@ const txs = await relayer.list({
 const signResponse = await relayer.sign({ message });
 ```
 
->NOTE
+> NOTE
 与大多数图书馆不同，Relayer使用非确定性ECDSA签名。这意味着如果您请求Relayer多次签署相同的消息，则会获得多个不同的签名，可能与使用ethersjs或web3js签署的结果不同。所有这些不同的签名都是有效的。请参阅[RFC6979](https://datatracker.ietf.org/doc/html/rfc6979#section-3)获取更多信息。
 
 ## 签署已输入数据
@@ -322,7 +322,7 @@ exports.handler = async function(credentials) {
 }
 ```
 
->NOTE
+> NOTE
 自动任务可以按计划或通过Webhook调用。如果您想从Web应用程序调用Relayer，则建议通过Webhook触发的自动任务来执行。永远不要将Relayer的API密钥和密钥放在前端中，因为拥有这些密钥的任何人将对您的Relayer拥有无限制的控制权。
 
 ## 元交易
@@ -335,7 +335,7 @@ Defender中继器是通用的中继器，您可以使用它们将任何您想要
 
 这个设置与[GSNv2](https://docs.opengsn.org/)兼容，这意味着您可以使用Defender中继器发送您的meta-transactions，并且在将来的任何时候，您可以切换到GSN中继器的分散网络，而不需要对您的合约进行任何更改。
 
->NOTE
+> NOTE
 您可以在[此处](https://gist.github.com/spalladino/7fb3533e36e9b9a833f8e5c568c86815)探索应用程序的关键部分代码。
 
 ### 更多元交易模式
@@ -352,13 +352,13 @@ Defender中继器是通用的中继器，您可以使用它们将任何您想要
 
 在发送交易屏幕上，输入您想要与之交互的合约地址，选择要执行的函数，并输入其参数。
 
->NOTE
+> NOTE
 在撰写本文时，Defender仅支持向已验证源代码的合约发送交易，请确保目标合约已在Etherscan或Sourcify上进行了验证。
 ![relay-3.png](img/Relay-3.png)
 
 当您点击“确认交易”时，交易将通过中继器发送。我们建议您等待交易确认，然后再离开此屏幕，或在您选择的区块链浏览器上监视它，以确保它已确认且无需进一步操作。
 
->NOTE
+> NOTE
 防御者将通过UI创建的中继器交易的速度设置为快速。
 
 ### 提取资金

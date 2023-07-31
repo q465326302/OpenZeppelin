@@ -3,10 +3,10 @@ Admin API允许您以编程方式创建新的Admin提案。
 
 请求需要使用从具有相应功能的Team API Key协商的承载令牌进行身份验证。有关如何协商它的信息，请参阅*身份验证*部分。
 
->NOTE
+> NOTE
 我们建议您使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包来简化与Admin API的交互。
 
->NOTE
+> NOTE
 不建议在浏览器环境中使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包，因为敏感密钥将被公开显示。
 
 ## 提案端点
@@ -267,10 +267,10 @@ const proposalWithSimulation = await client.createProposal({
 });
 ```
 
->NOTE
+> NOTE
 目前不支持在批量提案中启用simulate标志作为createProposal请求的一部分。
 
->NOTE
+> NOTE
 模拟可能因多种原因而失败，例如网络拥塞、不稳定的提供商或达到配额限制。我们建议您跟踪响应代码以确保成功返回响应。如果事务因原因字符串而撤消，则可以从响应对象下的response.meta.returnString获取。可以从response.meta.reverted中跟踪事务撤消。
 
 ### 检索模拟。

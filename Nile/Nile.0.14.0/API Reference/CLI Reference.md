@@ -12,7 +12,7 @@
 > IMPORTANT
 该命令使用别名而不是实际私钥，以避免意外泄露私钥。该别名与同名的环境变量关联，其值为私钥。
 
->NOTE
+> NOTE
 1. 创建或更新存储与账户管理相关的所有数据的localhost.accounts.json文件。
 2. 创建或更新存储与部署相关的所有数据的localhost.deployments.txt文件。
 
@@ -90,7 +90,7 @@
 #### nile deploy <PRIVATE_KEY_ALIAS> <CONTRACT> [arg1, arg2...]
 通过账户部署合约。
 
->NOTE
+> NOTE
 1. 创建或更新localhost.deployments.txt文件，存储与部署相关的所有数据。
 
 ##### 参数

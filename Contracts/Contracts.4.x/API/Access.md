@@ -49,7 +49,7 @@ OwnershipTransferred(previousOwner, newOwner)
 #### renounceOwnership()
 函数公开可用#
 该函数使合约失去所有者身份。此后将无法调用仅限所有者使用的函数。只能由当前所有者调用。
->NOTE
+> NOTE
 放弃所有权将使合约没有所有者，从而禁用仅对所有者可用的任何功能。
 
 #### transferOwnership(address newOwner)
@@ -300,7 +300,7 @@ RoleRevoked(role, account, sender)
 >WARNING
 只应该在设置系统的初始角色时从构造函数中调用此函数。
 在任何其他方式中使用此函数实际上是绕过AccessControl强制实施的管理系统。
->NOTE
+> NOTE
 此函数已过时，建议使用_grantRole。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
@@ -559,7 +559,7 @@ RoleRevoked(role, account, sender)
 
 执行后，将无法调用onlyRole(DEFAULT_ADMIN_ROLE)函数。
 
->NOTE
+> NOTE
 放弃DEFAULT_ADMIN_ROLE将使合约失去*默认管理员*，从而禁用仅适用于其的任何功能，并且无法重新分配非受管理角色。
 
 #### _grantRole(bytes32 role, address account)
@@ -568,7 +568,7 @@ RoleRevoked(role, account, sender)
 
 对于DEFAULT_ADMIN_ROLE，只有在没有*默认管理员*或者该角色已被先前放弃的情况下才允许授予。
 
->NOTE
+> NOTE
 通过另一种机制公开此函数可能会使DEFAULT_ADMIN_ROLE再次可分配。请确保在您的实现中保证这是预期的行为。
 
 #### _revokeRole(bytes32 role, address account)
@@ -591,7 +591,7 @@ RoleRevoked(role, account, sender)
 
 acceptSchedule 中只有零值表示没有待处理的管理员转移。
 
->NOTE
+> NOTE
 一个零地址的newAdmin意味着默认管理员正在放弃。
 
 #### defaultAdminDelay() → uint48
@@ -600,7 +600,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 
 在调用*beginDefaultAdminTransfer*设置接受计划时，此延迟将添加到当前时间戳。
 
->NOTE
+> NOTE
 如果已经安排了延迟更改，则该函数将在安排过程中立即生效，返回新的延迟。请参见changeDefaultAdminDelay。
 
 #### pendingDefaultAdminDelay() → uint48 newDelay, uint48 schedule
@@ -611,7 +611,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 
 仅在effectSchedule中为零表示没有挂起的延迟更改。
 
->NOTE
+> NOTE
 一个仅为newDelay的零值意味着在效果计划之后，下一个*defaultAdminDelay*将为零。
 
 #### defaultAdminDelayIncreaseWait() → uint48

@@ -122,7 +122,7 @@ interface KeeperCompatibleInterface {
 
 当您的LINK余额不足时，您可以将*Sentinels*与*Autotasks*和*Relayers*结合使用，以补充您的维护费用。
 
->NOTE
+> NOTE
 作为自动资金的替代方案，您也可以让Autotask发送通知，以便您手动添加资金。
 
 要这样做，首先创建一个Relayer，我们将用它来补充您的Upkeep。您在Defender中创建的每个Relayer都有一个唯一的地址，并且只能由您的团队使用。请确保您在Kovan或Mainnet网络中创建您的Relayer，具体取决于您在哪个网络上运行您的Upkeep。

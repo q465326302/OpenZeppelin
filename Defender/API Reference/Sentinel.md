@@ -3,10 +3,10 @@ Sentinel API允许您以编程方式创建和管理Sentinels。
 
 请求需要使用从Team API Key协商的相应能力的令牌进行身份验证。有关如何协商它的信息，请参阅*身份验证*部分。
 
->NOTE
+> NOTE
 我们建议您使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包简化与Sentinel API的交互。
 
->NOTE
+> NOTE
 不建议在浏览器环境中使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包，因为敏感密钥将公开暴露。
 ```
 const { SentinelClient } = require('defender-sentinel-client');

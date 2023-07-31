@@ -16,7 +16,7 @@ Relay API分为两个模块：
 > NOTE
 您可以使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包简化与Relay API的交互。
 
->NOTE
+> NOTE
 不建议在浏览器环境中使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包，因为敏感密钥将被公开暴露。
 
 ## Relay客户端模块参考
@@ -187,10 +187,10 @@ curl \
 * EIP1559Pricing：一个布尔值，指示默认定价方式。如果为 true，则交易将按照 EIP1559 定价，否则按照传统交易定价。
 * privateTransactions：一个布尔值，指示默认的交易内存池可见性。如果为 true，则交易将通过私有内存池发送。
 
->NOTE
+> NOTE
 EIP1559Pricing 标志仅适用于 EIP1559 网络上的中继器。
 
->NOTE
+> NOTE
 仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[叔叔强盗风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
 ## 创建中继器密钥
@@ -246,7 +246,7 @@ curl \
     "https://defender-api.openzeppelin.com/relayer/relayers"
 ```
 
->NOTE
+> NOTE
 如果直接进行请求（而不是使用defender-relay-client），任何策略更新都需要通过以下端点直接进行请求，请求体类型为UpdateRelayerPoliciesRequest。
 
 ```
@@ -266,7 +266,7 @@ curl \
 await client.deleteKey('58b3d255-e357-4b0d-aa16-e86f745e63b9', 'j3bru93-k32l-3p1s-pp56-u43f675e92p1');
 ```
 
->NOTE
+> NOTE
 deleteKey的第二个参数是keyId，而不是apiKey。区分两者的一种方法是keyId包含连字符。可以通过上面描述的列表操作获取它，也可以在创建密钥的响应中获取它。
 
 通过向/relayers/${relayerId}/keys/${keyId}端点发出DELETE请求：

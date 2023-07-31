@@ -1574,7 +1574,7 @@ EIP712DomainChanged()
 * params=fractional可能指的是一种方案，其中投票在赞成/反对/弃权之间按比例分配。
 * params=erc721可能指的是一种方案，其中特定的NFT被委托进行投票。
 
->NOTE
+> NOTE
 这个字符串可以通过标准的URLSearchParams JavaScript类进行解码。
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256

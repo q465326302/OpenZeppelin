@@ -13,7 +13,7 @@
 
 请记住，将项目部署到公共测试网络是开发以太坊项目的必要步骤。它们提供了一个安全的测试环境，可以紧密模拟主网络 - 您不希望在一个会让您和用户损失资金的网络中测试您的项目！
 
->NOTE
+> NOTE
 有关Truffle和Hardhat的说明都可用。使用此切换选择您的首选项！
 
 ## 可用的测试网络
@@ -25,7 +25,7 @@ Sepolia
 Goerli
 也是一种权益证明网络，兼容Geth和OpenEthereum客户端，具有15秒的块时间。(id=5)
 
->NOTE
+> NOTE
 每个网络都有一个数字ID进行标识。本地网络通常具有大的随机值，而id = 1则保留用于主要的以太坊网络。
 
 ## 将项目连接到公共网络
@@ -42,7 +42,7 @@ Goerli
 
 虽然您可以自己创建连接到测试网络的[Geth](https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options)或[OpenEthereum](https://openethereum.github.io/wiki/Chain-specification)节点，但最简单的访问测试网络的方法是通过公共节点服务，例如[Alchemy](https://alchemy.com/)或[Infura](https://infura.io/)。Alchemy和Infura通过免费和付费计划提供所有测试网络和主网络的公共节点访问。
 
->NOTE
+> NOTE
 当一个节点可以被公众访问，并且不管理任何账户时，我们称其为公共节点。这意味着它可以回复查询和中继已签名的交易，但不能自行签署交易。
 
 在本指南中，我们将使用Alchemy，但您也可以使用[Infura](https://infura.io/)或其他公共节点提供者。
@@ -62,7 +62,7 @@ drama film snack motion ...
 ### 配置网络
 由于我们使用公共节点，因此我们需要在本地签署所有交易。我们将使用我们的助记词和Alchemy端点来配置网络。
 
->NOTE
+> NOTE
 这部分假定您已经设置好了一个项目。如果您还没有这样做，请转到*设置Solidity项目的指南*。
 
 我们需要更新我们的配置文件，添加一个连接到测试网络的新网络连接。在这里，我们将使用Goerli，但您可以使用任何您想要的网络。
@@ -81,7 +81,7 @@ drama film snack motion ...
 };
 ```
 
->NOTE
+> NOTE
 请查看[HDWalletProvider文档](https://github.com/trufflesuite/truffle/tree/master/packages/hdwallet-provider)以获取有关配置选项的信息。
 
 请注意第一行中，我们正在从一个名为 secrets.json 的文件中加载项目 ID 和助记词，该文件应该看起来像以下内容，但要使用您自己的值。请务必将其加入 .gitignore 中，以确保您不会将机密信息提交到版本控制中！

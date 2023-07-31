@@ -73,7 +73,7 @@ contract MyToken is ERC20, AccessControl {
 }
 ```
 
->NOTE
+> NOTE
 在使用*AccessControl*之前，请确保您完全理解它的工作原理，或者从本指南中复制粘贴示例之前，请确保您已经完全理解它的工作原理。
 
 尽管清晰明确，但这并不是我们无法通过Ownable实现的任何内容。事实上，AccessControl的优势在于需要实现精细权限的场景，可以通过定义多个角色来实现。

@@ -24,16 +24,16 @@
 有了这些基础知识，让我们开始吧！
 
 ## 设置项目
-创建项目后的第一步是*安装开发工具*。
+创建项目后的第一步是[安装开发工具](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)。
 
 以太坊最流行的开发框架是[Hardhat](https://hardhat.org/)，并且我们使用[ethers.js](https://docs.ethers.io/)介绍其最常见用法。其次最流行的是[Truffle](https://www.trufflesuite.com/truffle)，它使用[web3.js](https://web3js.readthedocs.io/)。每个工具都有其优点，熟练掌握所有工具是很有用的。
 
 在这些指南中，我们将展示如何使用Truffle和Hardhat开发、测试和部署智能合约。
 
->NOTE
+> NOTE
 Truffle和Hardhat都提供了说明。使用此切换选择您的首选项！
 
-为了开始使用Truffle，我们将在*项目目录*中安装它。
+为了开始使用Truffle，我们将在[项目目录](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)中安装它。
 ```
 npm install --save-dev truffle
 ```
@@ -110,8 +110,9 @@ contract Box {
   ...
 ```
 编译可以通过运行一个单独的编译命令来实现：
->NOTE
-如果您不熟悉npx命令，请查看我们的*Node项目设置指南*。
+
+> NOTE
+如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)。
 ```
 npx truffle compile
 
@@ -204,7 +205,7 @@ contract Box {
 ```
 npm install @openzeppelin/contracts
 ```
->NOTE
+> NOTE
 你应该始终使用这些已发布的版本库：将库源代码复制粘贴到你的项目中是一种危险的做法，这样很容易在你的合约中引入安全漏洞。
 
 要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的*Auth*合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。

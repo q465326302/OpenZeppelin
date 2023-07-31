@@ -6,7 +6,7 @@
 [演示仓库](https://github.com/offgridauthor/automate-balance-topping-demo)
 
 ## 安装依赖项
->NOTE
+> NOTE
 尽管本指南使用defender-client包创建中继器、哨兵和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
 
 您需要安装相关的Defender NPM包。请注意，Forta机器人的创建还需要安装[Docker](https://www.docker.com/get-started)。

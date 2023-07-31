@@ -181,7 +181,7 @@ crossChainSender(bridge)
 内部#
 返回通过桥触发当前跨链消息的发送者地址。
 
->NOTE
+> NOTE
 在尝试恢复发送者之前，应该检查*isCrossChain*，因为如果当前函数调用不是跨链消息的结果，它将返回NotCrossChainCall。
 
 ### LibArbitrumL1
@@ -204,7 +204,7 @@ crossChainSender(bridge)
 内部#
 返回通过桥梁触发当前跨链消息的发送者地址。
 
->NOTE
+> NOTE
 在尝试恢复发送者之前，应该检查*isCrossChain*，因为如果当前函数调用不是跨链消息的结果，它将回滚并出现NotCrossChainCall。
 
 ### LibArbitrumL2
@@ -249,5 +249,5 @@ crossChainSender(messenger)
 内部#
 返回通过信使触发当前跨链消息的发送者地址。
 
->NOTE
+> NOTE
 在尝试恢复发送者之前，应先检查*isCrossChain*，因为如果当前函数调用不是跨链消息的结果，它将返回NotCrossChainCall。

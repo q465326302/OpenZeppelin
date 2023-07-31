@@ -13,7 +13,7 @@ Serverless Framework：https://www.serverless.com/framework/docs/getting-started
 sls install --url https://github.com/OpenZeppelin/defender-serverless/tree/main/template -n my-service
 ```
 
->NOTE
+> NOTE
 要使上述命令正确运行，您需要访问此存储库。
 
 或者，您可以使用以下命令将其直接安装到现有项目中：
@@ -32,7 +32,7 @@ yarn add defender-serverless
 如果您已经在Defender中拥有资源，例如合约、通知、中继、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
 ![serverless-plugin-1.png](img/serverless-plugin-1.png)
 
->NOTE
+> NOTE
 如果您之前已经使用defender-serverless部署到同一个账户，并且随后通过Defender用户界面创建了新的资源，则导出功能将根据最新部署堆栈的名称自动为新资源分配stackResourceId。如果您以前没有使用defender-serverless部署过，则将使用默认堆栈名称my-stack。
 
 该插件允许您从serverless.yml中声明性地定义Autotasks、Sentinels、Notifications、Relayers、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer、一个Policy和一个单一的Relayer API密钥：
@@ -145,7 +145,7 @@ secrets:
 
 您可以使用sls remove删除在serverless.yml文件中定义的所有Defender资源。
 
->NOTE
+> NOTE
 为了避免潜在的资金损失，只能直接从Defender UI中删除中继器。
 
 ### 日志
@@ -156,7 +156,7 @@ secrets:
 
 您可以使用sls invoke --function <stack_resource_id>手动运行自动任务，给定其标识符（例如mystack.autotask-example-1）。
 
->NOTE
+> NOTE
 每个命令都有一个标准输出到JSON对象。
 
 更多信息可以在我们的*文档页面*上找到。

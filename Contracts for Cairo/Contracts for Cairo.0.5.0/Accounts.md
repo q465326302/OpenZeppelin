@@ -406,7 +406,7 @@ signature: felt*
 ```
 isValid: felt
 ```
->NOTE
+> NOTE
 如果给定的签名无效，将来可能会返回FALSE（请参[考此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)的讨论）。
 
 ### __validate_declare__

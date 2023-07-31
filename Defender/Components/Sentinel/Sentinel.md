@@ -47,10 +47,10 @@ FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合
 ### 事件和函数
 选择您希望监视的任何事件和函数调用。选择事件和函数作为OR子句，即如果交易匹配所选的任何事件或函数，则会触发通知。
 
->NOTE
+> NOTE
 配置事件和函数检测需要ABI。
 
->NOTE
+> NOTE
 如果未指定任何事件或函数，则Sentinel将监视所有发送到或从您监视的地址的交易。
 
 >IMPORTANT
@@ -76,7 +76,7 @@ Forta提供了在本地运行扫描节点的能力，这对于仅运行特定的
 
 ### 指定Forta检测机器人和地址
 
->NOTE
+> NOTE
 Forta本地模式Sentinels没有指定Bot ID的选项，因为在本地模式下运行的扫描节点不支持Bot ID。
 
 FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器。可以指定多个Bot ID和地址进行过滤。
@@ -100,13 +100,13 @@ FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器
 ### 严重性和警报ID
 您可以指定警报严重性和警报ID进行监视。同时指定严重性和警报ID将作为OR子句，即如果警报与所选的任何警报ID匹配或与所选的严重性匹配，则会触发通知。
 
->NOTE
+> NOTE
 如果未指定严重性或警报ID，则Sentinel将监视与您指定的Bot ID和/或地址匹配的所有警报。
 
 ## 合约条件是什么?
 条件作为过滤器，允许您进一步缩小交易范围。这些条件被输入为表达式，提供了很大的灵活性。条件非常像Javascript表达式。为了适应校验和和非校验和地址的比较，比较是不区分大小写的。
 
->NOTE
+> NOTE
 如果您想要接收涉及您选择的事件/函数的所有交易，则不要指定任何条件。
 
 * 条件可以使用AND、OR、NOT和()
@@ -181,10 +181,10 @@ $1 == "hello"
 ### Autotask条件
 如果指定了自动任务条件，则会使用给定块找到的匹配列表来调用它。这使得Sentinels可以使用其他数据源和自定义逻辑来评估一个交易是否匹配。
 
->NOTE
+> NOTE
 只有符合其他条件（事件、函数、交易）的交易才会调用自动任务条件。
 
->NOTE
+> NOTE
 每次调用最多可以包含25个交易。
 
 ### 请求模式
@@ -312,17 +312,17 @@ FORTA-1, NETHFORTA-1
 
 如果指定了自动任务条件，那么它将被调用并带有匹配列表。这允许Sentinels使用其他数据源和自定义逻辑来评估事务是否匹配。
 
->NOTE
+> NOTE
 只有符合其他条件（严重程度、警报 ID）的警报才会调用自动任务条件。
 
 #### 请求架构
 
 请求正文将包含以下结构。
 
->NOTE
+> NOTE
 我们根据新的 [Forta API](https://docs.forta.network/en/latest/api/) 更新了 Forta 警报架构。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了 Bot 名称，agent → bot。旧属性现已弃用，但我们将继续发送两者以保持向后兼容性。
 
->NOTE
+> NOTE
 Forta 已更改 “代理” 的术语为 “检测机器人”。我们将继续暂时将它们称为 “代理”。 sentinel.agents 将是您的机器人 ID 列表。
 ```
 {
@@ -440,7 +440,7 @@ Datadog配置允许Defender将自定义指标转发到您的Datadog帐户。有�
 
 我们发送的指标是一个COUNT指标，表示触发Sentinel的交易数量。如果Sentinel没有触发，则不发送零，因此应预期缺少数据。对于每个指标，我们发送两个标签：网络（Rinkeby、Mainnet等）和Sentinel（Sentinel的名称）。
 
->NOTE
+> NOTE
 新的自定义指标可能需要几分钟才能在Datadog控制台中显示。
 
 * **Alias**是此Datadog配置的名称。
@@ -473,7 +473,7 @@ Datadog配置允许Defender将自定义指标转发到您的Datadog帐户。有�
 ### 电报配置
 请参阅[Telegram机器人文档](https://core.telegram.org/bots#6-botfather)，使用BotFather配置Telegram Bot
 
->NOTE
+> NOTE
 Telegram机器人必须添加到您的频道并具有发布消息的权限。
 
 要查找通道的聊天ID，请执行以下curl（使用您的机器人令牌值），并提取聊天的id值。如果您没有收到任何条目的响应，请先发送测试消息到您的聊天中。
@@ -614,10 +614,10 @@ exports.handler = async function(params) {
 
 #### Forta Sentinel
 
->NOTE
+> NOTE
 我们已经根据新的Forta API更新了Forta Alert模式。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了Bot名称，agent → bot。旧属性现已过时，但我们将继续发送两者以保持向后兼容性。
 
->NOTE
+> NOTE
 Forta已更改“代理”的术语为“检测机器人”。我们将继续称之为“代理”。sentinel.agents将是您的Bot ID列表。
 ```
 {
@@ -753,7 +753,7 @@ name：test
 ### 警报阈值
 要在匹配交易超过阈值时发出警报，请使用警报阈值。
 
->NOTE
+> NOTE
 该阈值对每个交易进行评估。一旦超过阈值，那么通知将继续触发，直到在当前交易之前的时间窗口内金额低于阈值。考虑使用超时值以防止后续通知。
 
 * 金额是此Sentinels必须触发的次数。

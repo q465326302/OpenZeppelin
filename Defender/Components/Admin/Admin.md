@@ -15,7 +15,7 @@ Defender Admin 服务充当通过安全的多重签名合约或时间锁管理�
 ## 合约和提案
 要开始在Defender Admin中管理您的合约，第一步是注册它。这是一个一次性的过程，您需要指定网络和地址，并为您的合约分配一个名称。如果合约已经被验证，合约的ABI将自动从etherscan或sourcify中提取，否则您需要手动输入它。
 
->NOTE
+> NOTE
 Defender Admin会自动尝试检测您的合约的一些特征。今天，它将检测它是否是一个[EIP1967兼容](https://eips.ethereum.org/EIPS/eip-1967)或传统的zOS代理（在这种情况下加载实现的ABI），以及它是否由*ProxyAdmin*合约管理。如果您已经使用[Sourcify](https://sourcify.dev/)验证了您的合约，您的NatSpec注释将在管理面板中可用。
 
 添加合约后，您可以为其创建新的提案。每个提案都是您要在合约上执行的操作，该操作通过多重签名合约执行，并需要达成一定数量的管理员同意。创建后，其他管理员可以审查和批准提案，直到其达到批准阈值并被执行。
@@ -23,7 +23,7 @@ Defender Admin会自动尝试检测您的合约的一些特征。今天，它将
 或者，如果该函数未限制只能通过多重签名调用，则还可以选择直接在管理员上执行合约上的操作。
 ![admin-1.png](img/admin-1.png)
 
->NOTE
+> NOTE
 在创建新提案时，Defender Admin将首先模拟它，并且如果该操作回退，它将拒绝创建它，并显示合约返回的回退原因。
 ![admin-2.png](img/admin-2.png)
 
@@ -72,10 +72,10 @@ Defender提供了创建此类提案的功能，当ABI包含grantRole和revokeRol
 ### 批次
 批处理提案是从多个合约（或仅一个）调用多个函数的呼叫。它允许您在单个交易中原子地执行多个操作。
 
->NOTE
+> NOTE
 目前仅支持使用多重签名（例如Gnosis Safe）进行批量交易，方法是通过将DELEGATECALL编码到[Gnosis MultiSendCallOnly](https://github.com/safe-global/safe-contracts/blob/v1.3.0/contracts/libraries/MultiSendCallOnly.sol)模块中。
 
->NOTE
+> NOTE
 批量交易也需要在同一网络上进行。
 
 Defender通过在主仪表板上点击“添加提案”选项来提供此功能，通过管理员UI实现。
@@ -84,7 +84,7 @@ Defender通过在主仪表板上点击“添加提案”选项来提供此功能
 通过使用此提案创建工作流程，您可以在定义第一步之后添加新步骤，然后再创建提案。例如，您可以添加“修改访问控制”步骤，然后添加另一个步骤来调用自定义操作。这将显示在提案创建审核页面中，并在创建之前作为整体进行验证。
 ![admin-7.png](img/admin-7.png)
 
->NOTE
+> NOTE
 目前仅支持访问控制管理和自定义操作。
 
 ## 多重签名钱包
@@ -93,12 +93,12 @@ Defender Admin支持两种多签钱包：[Gnosis Safe](https://gnosis-safe.io/)�
 ### Gnosis Safe
 Gnosis Safe钱包收集每个管理员的离线签名，然后提交一个包含所有签名的单个交易来执行操作。为了分享签名，它依赖于由Gnosis托管的[Safe Transaction Service](https://safe-transaction.gnosis.io/)。
 
->NOTE
+> NOTE
 安全交易服务仅在Mainnet、xDai、BSC、Polygon、Avalanche、Aurora、Optimism、Arbitrum、Goerli和Sepolia上可用。但是，您可以在任何网络上使用Defender Admin；如果交易服务不可用，它将跳过与其同步。
 
 使用Gnosis Safe时，Defender Admin将同步所有签名到和从Safe Transaction Service。这样，您团队中使用[Safe UI](https://gnosis-safe.io/app)的任何管理员仍将能够签署Defender Admin提议。
 
->NOTE
+> NOTE
 Safe合约要求所有提案必须按顺序执行。如果你已经收集了所有提案的签名，但仍无法执行它，请确保没有先前的提案等待执行。
 
 Gnosis Safe钱包还允许执行DELEGATECALL到其他合约中，以在多签上下文中执行任意代码。您可以使用“defender-admin-client”通过API创建管理操作提案来发出委托调用。
@@ -108,7 +108,7 @@ Gnosis Safe钱包上的发送资金功能可以让您将网络原生资产从您
 
 要使用此功能，您需要将Gnosis Safe钱包添加到Defender Admin合约集合中。在Admin中转到您的Gnosis Safe页面，点击新建提案→发送资金。然后选择收件人地址和要转移的资金金额。从那时起，它就像任何其他管理提案一样运作：您需要从足够的Gnosis Safe所有者那里收集批准才能执行交易。Defender会指导您完成该过程。
 
->NOTE
+> NOTE
 如果您最初从Defender部署了您的Gnosis Safe，它已经在您的Defender Admin合约列表中的Multisigs部分中。
 
 我们正在努力扩展此功能，使其能够发送ERC20代币资金，请保持关注。
@@ -179,7 +179,7 @@ https://youtu.be/59p98wGqdVo
 
 3. 在指定的延迟期结束后执行操作。值得注意的是，在TimelockController合约中执行此操作的EOA需要是执行者。
 
->NOTE
+> NOTE
 目前Defender不支持定时锁定的升级提案。这项能力正在开发中，我们计划很快发布它。
 
 https://youtu.be/z6EP6JTj7ME
@@ -247,7 +247,7 @@ Defender可以模拟与任何待处理提案相关的交易，因此您可以在
 * 所有涉及到的合约的公共getter的更改
 ![admin-22.png](img/admin-22.png)
 
->NOTE
+> NOTE
 模拟每个团队每小时限制为六次。如果您需要更高的配额，请与我们联系。
 
 ### 执行的提案影响
@@ -256,7 +256,7 @@ Defender可以模拟与任何待处理提案相关的交易，因此您可以在
 ## 已部署合约的字节码验证
 您可以让Defender检查合约的字节码编译产物是否与特定地址上部署的字节码相匹配。这个验证结果会被存储在Defender的地址簿中，这样您团队中的任何人都可以检查一个合约是否与编译产物相匹配。您可以依靠这个功能来实现合约的可审计部署和升级。
 
->NOTE
+> NOTE
 目前，这个 Defender 功能只支持 Hardhat 编译产物。如果你有兴趣使用这个功能，但是你使用的是不同的工具链，请告诉我们。
 
 ### 验证升级提案的新实施方案。

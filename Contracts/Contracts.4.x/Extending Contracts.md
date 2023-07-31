@@ -3,7 +3,7 @@
 
 这是常见的语法，例如合约MyToken是ERC20。
 
->NOTE
+> NOTE
 与合约不同，Solidity库不是继承自的，而是依赖于使用[for语法](https://solidity.readthedocs.io/en/latest/contracts.html#using-for)。
 OpenZeppelin合约有一些库：大多数位于[Utils](https://docs.openzeppelin.com/contracts/4.x/api/utils)目录中。
 
@@ -57,7 +57,7 @@ contract ModifiedAccessControl is AccessControl {
 ```
 super.revokeRole语句在最后将调用AccessControl的原始版本revokeRole，即如果没有覆盖，则运行的相同代码。
 
->NOTE
+> NOTE
 *AccessControlDefaultAdminRules*中实现并扩展了相同的规则，该扩展还为DEFAULT_ADMIN_ROLE添加了强制安全措施。
 
 ## 使用钩子

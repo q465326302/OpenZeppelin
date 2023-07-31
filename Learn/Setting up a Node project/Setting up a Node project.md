@@ -1,7 +1,7 @@
 # 搭建Node项目
-新的软件行业往往从每个项目共享相同的技术栈开始。以太坊生态系统也不例外，语言选择是JavaScript。包括OpenZeppelin软件在内的所有最常用的以太坊库都是用JavaScript或其变体编写的。
+新的软件行业往往从每个项目共享相同的技术栈开始。以太坊生态系统也不例外，语言选择是[JavaScript](https://en.wikipedia.org/wiki/JavaScript)。包括OpenZeppelin软件在内的所有最常用的以太坊库都是用JavaScript或其变体编写的。
 
-传统上，JavaScript代码在网页浏览器上作为网站的一部分运行，但也可以使用Node作为独立进程执行。
+传统上，JavaScript代码在网页浏览器上作为网站的一部分运行，但也可以使用[Node](https://nodejs.org/)作为独立进程执行。
 
 本指南将帮助您设置Node开发环境，这是您需要使用不同的OpenZeppelin工具和其他第三方产品的必要步骤。
 
@@ -21,7 +21,7 @@ v16.17.1
 ```
 
 ## 创建项目
-JavaScript软件通常打包成包，这些包通过[npm注册表](https://www.npmjs.com/)分发。一个包只是一个包含名为package.json的文件的目录，描述了包的名称、版本、内容等。当您构建自己的项目时，即使您不打算分发，您也将创建一个包。
+JavaScript软件通常以包的形式捆绑在一起，这些包通过[npm注册表](https://www.npmjs.com/)分发。一个包只是一个包含名为package.json的文件的目录，描述了包的名称、版本、内容等。当您构建自己的项目时，即使您不打算分发，您也将创建一个包。
 
 所有Node安装都包含一个用于npm注册表的命令行客户端，您将在开发自己的项目时使用它。要启动一个新项目，请创建一个目录：
 ```
@@ -70,4 +70,4 @@ Init successful, sweet!
 如果您以前从未使用过Git，一个好的起点是[Git手册](https://guides.github.com/introduction/git-handbook/)。
 
 >WARNING
-不要将助记词、私钥和API密钥等机密提交到版本控制！确保您忽略[包含机密](https://git-scm.com/docs/gitignore)的文件。
+不要将助记词、私钥和API密钥等秘密信息提交到版本控制！确保在[.gitignore](https://git-scm.com/docs/gitignore)文件中忽略包含秘密信息的文件。

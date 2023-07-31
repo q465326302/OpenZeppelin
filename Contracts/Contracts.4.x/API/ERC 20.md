@@ -28,7 +28,7 @@
 * *SafeERC20*：接口的包装器，消除了处理布尔返回值的需要。
 * *TokenTimelock*：将代币保留给受益人，直到指定时间。
 
->NOTE这组核心合约旨在不具有偏见，允许开发人员访问ERC20中的内部函数（如*_mint*）并以他们喜欢的方式将它们公开为外部函数。另一方面，*ERC20预设*（如*ERC20PresetMinterPauser*）使用偏见模式设计，为开发人员提供可用于部署的合约。
+> NOTE这组核心合约旨在不具有偏见，允许开发人员访问ERC20中的内部函数（如*_mint*）并以他们喜欢的方式将它们公开为外部函数。另一方面，*ERC20预设*（如*ERC20PresetMinterPauser*）使用偏见模式设计，为开发人员提供可用于部署的合约。
 
 ## 核心
 
@@ -195,7 +195,7 @@ Approval(owner, spender, value)
 返回用于用户表示的小数位数。例如，如果小数位数为2，则505个代币的余额应该显示为5.05（505 / 10 ** 2）。
 代币通常选择18的值，模仿以太和Wei之间的关系。除非被覆盖，否则该函数返回默认值18。
 
->NOTE
+> NOTE
 这些信息仅用于显示目的，它不会影响合约的任何算术，包括*IERC20.balanceOf*和*IERC20.transfer*。
 
 #### totalSupply() → uint256
@@ -221,7 +221,7 @@ Approval(owner, spender, value)
 公开#
 请查看*IERC20.approve*。
 
->NOTE
+> NOTE
 如果金额为最大的uint256，则在transferFrom上不会更新授权。这在语义上等同于无限授权。
 
 要求：
@@ -232,7 +232,7 @@ Approval(owner, spender, value)
 查看*IERC20.transferFrom*。
 触发一个*Approval*事件，表示更新的授权额度。这不是EIP所必需的。请参见*ERC20*开头的注释。
 
->NOTE
+> NOTE
 如果当前授权额度是最大的uint256，则不会更新授权额度。
 
 要求：
@@ -555,7 +555,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
 
 快照是通过内部的 *_snapshot* 函数创建的，该函数将触发*Snapshot*事件并返回快照ID。要获取快照时的总供应量，请使用快照ID调用 *totalSupplyAt* 函数。要获取快照时某个账户的余额，请使用快照ID和账户地址调用 *balanceOfAt* 函数。
 
->NOTE
+> NOTE
 可以通过覆盖 *_getCurrentSnapshotId* 方法来自定义快照策略。例如，让它返回 block.number 将在每个新块的开头触发快照的创建。在覆盖此函数时，要小心其结果的单调性。非单调的快照ID会破坏合约。
 
 使用此方法为每个块实现快照将产生显著的燃气成本。对于燃气效率更高的替代方案，请考虑使用 *ERC20Votes*。
@@ -639,7 +639,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 ERC20的扩展，支持类似Compound的投票和委托。这个版本比Compound的更通用，支持令牌供应量高达2^224-1, 而COMP仅限于2^96-1。
 
->NOTE
+> NOTE
 如果需要完全兼容COMP，则使用此模块的*ERC20VotesComp*变体。
 
 此扩展会保留每个帐户的投票权历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供签名以与*delegateBySig*一起使用来委托。可以通过公共访问器*getVotes*和*getPastVotes*查询投票权。
@@ -780,7 +780,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol";
 ```
 ERC20的扩展，支持Compound的投票和委托。该版本完全符合Compound的接口，但缺点是只支持供应量高达（2^96-1）。
 
->NOTE
+> NOTE
 如果您需要与COMP完全兼容（例如为了在Governor Alpha或Bravo中使用您的代币），并且您确定2^96的供应上限足够您使用，请使用此合约。否则，请使用此模块的*ERC20Votes*变体。
 
 此扩展保留每个帐户投票权的历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供用于*delegateBySig*的签名来委托。可以通过公共访问器*getCurrentVotes*和*getPriorVotes*查询投票权。

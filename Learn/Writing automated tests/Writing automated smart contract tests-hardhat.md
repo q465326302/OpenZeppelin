@@ -7,7 +7,7 @@
 * 编写单元测试
 
 * 执行复杂断言
->NOTE
+> NOTE
 Truffle和Hardhat都提供了说明。 使用此切换选择您的首选项！
 
 ## 关于测试
@@ -89,7 +89,7 @@ npx hardhat test
 
 *OpenZeppelin Test Helpers*是一个旨在帮助您测试所有这些属性的库。它还将简化模拟区块链上时间流逝和处理非常大的数字的任务。
 
->NOTE
+> NOTE
 OpenZeppelin Test Helpers 是基于 web3.js 的，因此 Hardhat 用户应该使用 Truffle 插件以确保兼容性。然而，我们建议使用 Hardhat Chai Matchers 作为 Ethers.js 的更好支持的替代方案。
 
 要安装OpenZeppelin测试助手，请运行以下命令：

@@ -54,7 +54,7 @@ contract GLDToken is ERC20 {
 
 您可能希望使用18个小数位的值，就像以太和大多数正在使用的ERC20代币合约一样，除非您有非常特殊的原因。在铸造代币或将其转移时，您实际上将发送数字num GLD *（10 **小数位）。
 
->NOTE
+> NOTE
 默认情况下，ERC20使用18个小数位的值。要使用不同的值，您需要在合约中覆盖decimals（）函数。
 ```
 function decimals() public view virtual override returns (uint8) {
@@ -72,5 +72,5 @@ transfer(recipient, 5 * (10 ** 18));
 
 这个合约已经准备好部署，无需编写任何Solidity代码。它可用于快速原型设计和测试，但也适用于生产环境。
 
->NOTE
+> NOTE
 合约预设现已停用，更强大的替代方案是[Contracts Wizard](https://wizard.openzeppelin.com/)。

@@ -50,7 +50,7 @@ npm install --save-dev @openzeppelin/hardhat-upgrades @openzeppelin/hardhat-defe
 ## 创建可升级合约
 创建可升级合约的第一步是创建一个可升级的合约。在本指南中，我们将使用来自*OpenZeppelin Learn指南*的Box.sol合约。在项目根目录下创建一个contracts目录，然后在contracts目录中创建Box.sol，其中包含以下Solidity代码。
 
->NOTE
+> NOTE
 可升级合约使用*初始化函数而不是构造函数*来初始化状态。为了保持简单，我们将使用公共存储函数来初始化我们的状态，该函数可以从任何帐户调用多次，而不是受保护的单次使用初始化函数。
 ```
 // contracts/Box.sol
@@ -116,7 +116,7 @@ DEFENDER_TEAM_API_SECRET_KEY="Enter your Defender Team API Secret"
 
 我们将使用以下hardhat.config.js来部署到Rinkeby。
 
->NOTE
+> NOTE
 在本指南中，我们将使用Alchemy，但您也可以使用Infura或其他公共节点提供者连接到网络。
 
 ```
@@ -144,7 +144,7 @@ module.exports = {
 
 运行我们的deploy.js并部署到Rinkeby网络。我们的实现合约、ProxyAdmin和代理将被部署。
 
->NOTE
+> NOTE
 我们需要跟踪我们的代理地址，稍后我们会用到它。
 
 ```
@@ -193,7 +193,7 @@ Transferred ownership of ProxyAdmin to: 0xFb2C6465654024c03DC564d237713F620d1E94
 ## 创建我们实现的新版本
 一段时间后，我们决定向我们的合约添加功能。在本指南中，我们将向我们的Box合约添加一个增量函数。
 
->NOTE
+> NOTE
 我们不能对我们的合约进行任意更改，有关哪些修改是有效的的详细信息，请参见*升级*。
 
 在您的合约目录中创建新的实现，BoxV2.sol，其中包含以下Solidity代码。
@@ -220,7 +220,7 @@ contract BoxV2 is Box {
 ![guide-upgrades-1.png](img/guide-upgrades-1.png)
 我们可以将API密钥和秘密密钥复制并存储在项目的.env文件中。
 
->NOTE
+> NOTE
 我们无法再从Defender中检索我们的秘密密钥。相反，我们需要创建一个新的团队API密钥。
 
 ## 提出升级建议后
@@ -273,7 +273,7 @@ module.exports = {
 
 在scripts目录中创建propose-upgrade.js，包含以下代码。
 
->NOTE
+> NOTE
 我们需要更新脚本以指定我们的代理地址。
 ```
 // scripts/propose-upgrade.js
