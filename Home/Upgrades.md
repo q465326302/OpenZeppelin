@@ -14,7 +14,7 @@ OpenZeppelin提供工具来部署和保护可升级的智能合约。
 ## Resources
 
 ### [升级插件](../Upgrades%20Plugins/Overview.md)
-用于Hardhat和Truffle的插件，可以抽象出升级的复杂性，并在运行自动化安全检查以确保成功升级时使用。
+这些插件适用于Hardhat和Truffle，可以抽象出升级的复杂性，并在运行自动化安全检查时确保成功的升级。
 
 ### [编写可升级的合同](../Upgrades%20Plugins/Writing%20Upgradeable%20Contracts.md)
 在使用OpenZeppelin Upgrades处理可升级合约时，编写Solidity代码时需要注意一些小细节。

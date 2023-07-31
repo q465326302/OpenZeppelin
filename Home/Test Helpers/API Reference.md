@@ -48,8 +48,8 @@ const currentBalance = await tracker.get() // 返回账户的当前余额
 ```
 async function tracker.delta(unit = tracker.unit)
 ```
-返回自上次查询余额（使用get、delta或deltaWithFees）以来余额的变化。
 
+返回自上次查询（使用get、delta或deltaWithFees）以来的余额变化。。
 ```
 const tracker = await balance.tracker(receiver, 'ether')
 send.ether(sender, receiver, ether('10'))
@@ -64,7 +64,7 @@ const currentBalance = await tracker.get() // 返回账户的当前余额
 (await tracker.delta()).should.be.bignumber.equal('0');
 ```
 
-追踪器还可以以特定单位返回所有余额和变化：
+一个追踪器还可以以特定单位返回所有余额和增量：
 
 ```
 const tracker = await balance.tracker(account, 'gwei');
@@ -77,7 +77,7 @@ const balanceEther = tracker.get('ether'); // 以ether为单位
 async function tracker.deltaWithFees(unit = tracker.unit)
 ```
 
-返回一个包含自上次查询余额（使用get、delta或deltaWithFees）以来余额变化和支付的燃气费用的对象。
+返回一个包含自上次查询（使用get、delta或deltaWithFees）以来余额变化和此期间支付的燃气费用的对象。
 
 ```
 const tracker = await balance.tracker(account, 'gwei');
@@ -136,7 +136,7 @@ expectEvent(receipt, 'Foo');
 ```
 async function expectEvent.inTransaction(txHash, emitter, eventName, eventArgs = {})
 ```
-与expectEvent相同，但用于在任意事务（哈希值为txHash）中由任意合约（emitter，合约实例）发出的事件，即使它是间接调用的（即如果它是由另一个智能合约而不是外部拥有的帐户调用的）。
+和expectEvent一样，但是用于在任意事务中（txHash的哈希）由任意合约（emitter，合约实例）发出的事件，即使它是间接调用的（即它是由另一个智能合约而不是外部拥有的账户调用的）。
 
 注意：emitter必须是发出预期事件的部署合约实例。
 ```

@@ -1,7 +1,7 @@
 # Configuration
-测试助手需要一些轻量级配置才能正确连接到您的测试环境。
+测试助手需要进行一些轻量级配置，以正确连接到您的测试环境。
 
-在可能的情况下，这将自动完成，但某些情况需要手动设置。这可以通过调用configure函数来实现：
+在可能的情况下，这将自动完成，但某些情况需要手动设置。这可以通过调用configure函数来实现。：
 ```
 // Apply configuration
 require('@openzeppelin/test-helpers/configure')({ ... });
@@ -13,7 +13,7 @@ const { expectRevert } = require('@openzeppelin/test-helpers');
 配置必须在所有测试文件中应用，在导入助手之前。
 
 ### provider
-用于通过web3提供者（如[余额](./API%20Reference.md)和[时间](./API%20Reference.md)）连接到测试环境的助手。
+用于通过web3提供者（如[ balance](./API%20Reference.md)和[time](./API%20Reference.md)）连接到测试环境的助手。
 
 在Truffle环境中，web3提供者将从Truffle的全局web3实例中获取。否则，默认值为http://localhost:8545/。
 
@@ -25,7 +25,7 @@ require('@openzeppelin/test-helpers/configure')({
 ```
 
 ### singletons
-单例助手返回合约对象，这些对象有多个可以配置的设置：
+singletons助手返回合约对象，这些对象有多个可以配置的设置：
 
 * abstraction：底层合约抽象类型，'web3'表示web3-eth-contract，'truffle'表示@truffle/contract实例。默认为'web3'，除非检测到Truffle环境。
 
