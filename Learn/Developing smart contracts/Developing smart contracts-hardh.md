@@ -24,7 +24,7 @@
 有了这些基础知识，让我们开始吧！
 
 ## 设置项目
-创建项目后的第一步是*安装开发工具*。
+创建项目后的第一步是[安装开发工具](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)。
 
 以太坊最流行的开发框架是[Hardhat](https://hardhat.org/)，并且我们使用[ethers.js](https://docs.ethers.io/)介绍其最常见用法。其次最流行的是[Truffle](https://www.trufflesuite.com/truffle)，它使用[web3.js](https://web3js.readthedocs.io/)。每个工具都有其优点，熟练掌握所有工具是很有用的。
 
@@ -33,7 +33,7 @@
 > NOTE
 Truffle和Hardhat都提供了说明。使用此切换选择您的首选项！
 
-为了开始使用Hardhat，我们将在*项目目录*中安装它。
+为了开始使用Hardhat，我们将在[项目目录](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)中安装它。
 ```
 npm install --save-dev hardhat
 ```
@@ -103,8 +103,9 @@ contract Box {
 };
 ```
 编译可以通过运行一个单独的编译命令来实现：
+
 > NOTE
-如果您不熟悉npx命令，请查看我们的*Node项目设置指南*。
+如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)。
 ```
 npx hardhat compile
 Solidity 0.8.4 is not fully supported yet. You can still use Hardhat, but some features, like stack traces, might not work correctly.
@@ -114,9 +115,9 @@ Learn more at https://hardhat.org/reference/solidity-support"
 Compiling 1 file with 0.8.4
 Compilation finished successfully
 ```
-内置的[编译](https://hardhat.org/guides/compile-contracts.html#compiling-your-contracts)任务将自动查找所有合约文件夹中的合约，并使用 hardhat.config.js 中的配置使用 Solidity 编译器编译它们。
+内置的[编译](https://hardhat.org/guides/compile-contracts.html#compiling-your-contracts)任务将自动查找所有合约文件夹中的合约，并使用 [hardhat.config.js](https://hardhat.org/config/#solidity-configuration) 中的配置使用 Solidity 编译器编译它们。
 
-您会注意到 artifacts 目录已创建：它保存已编译的构件（字节码和元数据），这些文件是 .json 文件。将此目录添加到 .gitignore 中是一个好主意。
+你会注意到一个artifacts目录被创建了：它保存了编译后的合约（字节码和元数据），这些文件是.json格式的。将这个目录添加到.gitignore是一个好主意。
 
 ## 添加更多合约
 随着您的项目增长，您将开始创建更多相互交互的合约：每个合约应存储在自己的.sol文件中。
@@ -179,12 +180,12 @@ contract Box {
 然而，这并不是将代码分割成模块的唯一方法。您还可以使用继承来封装和重用 Solidity 中的代码，接下来我们将看到。
 
 ## 使用OpenZeppelin Contracts
-可重用的模块和库是优秀软件的基石。*OpenZeppelin Contracts* 包含许多有用的智能合约构建模块。当你在这些模块上构建时，你可以放心：它们经过多次审计，其安全性和正确性经过了实战检验。
+可重用的模块和库是优秀软件的基石。[OpenZeppelin Contracts](../../Contracts/Contracts.4.x/Overview.md) 包含许多有用的智能合约构建模块。当你在这些模块上构建时，你可以放心：它们经过多次审计，其安全性和正确性经过了实战检验。
 
 ### 关于继承
 库中的许多合约不是独立的，也就是说，你不需要将它们原封不动地部署。相反，你将使用它们作为起点，通过添加功能来构建自己的合约。Solidity 提供了多重继承作为实现此目的的机制：请查看 [Solidity 文档](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)以获取更多详细信息。
 
-例如，*Ownable* 合约将部署者帐户标记为合约的所有者，并提供了一个名为 onlyOwner 的修改器。当应用于函数时，onlyOwner 会导致所有不是由所有者帐户发起的函数调用失败。还提供了*转移*和*放弃*所有权的函数。
+例如，_Ownable_ 合约将部署者帐户标记为合约的所有者，并提供了一个名为 onlyOwner 的修改器。当应用于函数时，onlyOwner 会导致所有不是由所有者帐户发起的函数调用失败。还提供了_transfer_和 _renounce_ 所有权的函数。
 
 使用这种方式，继承成为一种强大的机制，允许进行模块化，而不需要强制部署和管理多个合约。
 
@@ -193,10 +194,11 @@ contract Box {
 ```
 npm install @openzeppelin/contracts
 ```
+
 > NOTE
 你应该始终使用这些已发布的版本库：将库源代码复制粘贴到你的项目中是一种危险的做法，这样很容易在你的合约中引入安全漏洞。
 
-要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的*Auth*合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。
+要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的_Auth_合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。
 ```
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
@@ -222,13 +224,13 @@ contract Box is Ownable {
     }
 }
 ```
-*OpenZeppelin合约文档*是学习开发安全智能合约系统的绝佳资源。它包括指南和详细的API参考：例如，可以参考访问*控制指南*了解在上面的代码示例中使用的Ownable合约。
+[OpenZeppelin合约文档](../../Contracts/Contracts.4.x/Overview.md)是学习开发安全智能合约系统的绝佳资源。它包括指南和详细的API参考：例如，可以参考访问[控制指南](../../Contracts/Contracts.4.x/Access%20Control.md)了解在上面的代码示例中使用的Ownable合约。
 
 ## 下一步
 编写和编译Solidity合约只是在以太坊网络上运行您的去中心化应用程序的旅程中的第一步。一旦您熟悉了这个设置，您将想要转向更高级的任务：
 
-* 部署和交互
+* [部署和交互](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)
 
-* 编写自动化测试
+* [编写自动化测试](../Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-hardhat.md)
 
-* 连接到公共测试网络
+* [连接到公共测试网络](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-hardhat.md)
