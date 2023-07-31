@@ -5,13 +5,13 @@
 
 本指南将帮助您设置Node开发环境，这是您需要使用不同的OpenZeppelin工具和其他第三方产品的必要步骤。
 
->TIP
+> TIP
 如果您已经熟悉Node、npm和Git，请随意跳过本指南！
 
 ## 安装Node
 有多种方法可以在您的计算机上获取Node：您可以通过[软件包管理器](https://nodejs.org/en/download/package-manager/)获取它，也可以[直接下载安装程序](https://nodejs.org/en/download/)。
 
->TIP
+> TIP
 如果您正在运行Windows，请考虑尽可能使用[Windows子系统来运行Linux](https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2)，因为许多生态系统都是为Linux编写的。
 
 完成后，在终端上运行 node --version 检查您的安装：14.x或16.x系列的任何版本都应与大多数以太坊软件兼容。
@@ -33,7 +33,7 @@ npm init -y
 ```
 就是这样简单！您新创建的 package.json 文件将随着项目的发展而发展，例如当使用 npm install 安装依赖项时。
 
->TIP
+> TIP
 JavaScript和npm是世界上最常用的软件工具之一：如果你有疑问，你会在网上找到大量关于它们的信息。
 
 ### 使用 npx
@@ -66,7 +66,7 @@ Init successful, sweet!
 
 到目前为止，最常用的工具是[Git](https://git-scm.com/)，通常与[GitHub](https://github.com/)一起使用以进行托管。事实上，您将在我们的[GitHub存储库](https://github.com/OpenZeppelin)中找到所有OpenZeppelin软件的完整源代码和历史记录。
 
->TIP
+> TIP
 如果您以前从未使用过Git，一个好的起点是[Git手册](https://guides.github.com/introduction/git-handbook/)。
 
 >WARNING

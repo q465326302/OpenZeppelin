@@ -21,7 +21,7 @@ Truffle和Hardhat都提供了说明。您可以使用此切换选择您偏好的
 
 在开发过程中，使用本地区块链是一个更好的选择。它在你的计算机上运行，不需要互联网访问，为你提供所需的所有以太币，并立即挖掘区块。这些原因也使本地区块链非常适合*自动化测试*。
 
->TIP
+> TIP
 如果您想学习如何在公共区块链上部署和使用合约，比如以太坊测试网，可以前往我们的*连接公共测试网络指南*。
 
 最受欢迎的本地区块链是 Ganache。要在您的项目中安装它，请运行：
@@ -36,7 +36,7 @@ Ganache会打印出可用账户及其私钥列表，以及一些区块链配置�
 
 请记住，每次运行Ganache，它都会创建一个全新的本地区块链 - 以前运行的状态不会被保留。这对于短期实验来说是可以的，但这意味着您需要在这些指南的持续时间内打开运行Ganache的窗口。或者，您可以使用--db选项运行Ganache，提供一个目录以在运行之间存储其数据。
 
->TIP
+> TIP
 Truffle有一个图形化版本的ganache-cli，也称为[Ganache](https://www.trufflesuite.com/ganache)。
 
 > NOTE
@@ -115,7 +115,7 @@ Truffle将跟踪您部署的合约，但在部署时它还会显示它们的地�
 
 完成了！在真实的网络上，这个过程可能需要几秒钟，但在本地区块链上几乎是瞬间完成的。
 
->TIP
+> TIP
 如果您遇到连接错误，请确保在另一个终端中运行了*本地区块链*。
 
 > NOTE
@@ -161,7 +161,7 @@ truffle(development)> (await box.retrieve()).toString()
 '42'
 ```
 
->TIP
+> TIP
 要了解更多关于如何使用控制台的信息，请查阅[Truffle文档](https://www.trufflesuite.com/docs/truffle/getting-started/using-truffle-develop-and-the-console)。
 
 ## 以编程方式交互
@@ -169,7 +169,7 @@ truffle(development)> (await box.retrieve()).toString()
 
 在本节中，我们将看到如何从 JavaScript 与我们的合约进行交互，并使用 Truffle 在我们的 [Truffle 配置中执行我们的脚本](https://www.trufflesuite.com/docs/truffle/getting-started/writing-external-scripts)。
 
->TIP
+> TIP
 请记住，还有许多其他JavaScript库可用，您可以使用您最喜欢的任何一个。一旦合约部署，您可以通过任何库与其交互！
 
 ### 设置

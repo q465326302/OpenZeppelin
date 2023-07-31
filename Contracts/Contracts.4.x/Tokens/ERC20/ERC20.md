@@ -24,7 +24,7 @@ contract GLDToken is ERC20 {
 
 我们的合约通常通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用，这里我们重用*ERC20*作为基本标准实现和*名称*、*符号*和*小数点*可选扩展。此外，我们创建了一个初始供应量的代币，该代币将分配给部署合约的地址。
 
->TIP
+> TIP
 有关ERC20供应机制的更完整讨论，请参见*创建ERC20供应量*。
 
 就是这样！一旦部署，我们将能够查询部署者的余额：

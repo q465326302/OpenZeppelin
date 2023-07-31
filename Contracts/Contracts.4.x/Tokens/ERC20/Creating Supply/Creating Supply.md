@@ -62,7 +62,7 @@ contract MinerRewardMinter {
 ```
 当使用ERC20PresetMinterPauser实例初始化此合约并授予该合约的铸造者角色时，将得到与上一节实现完全相同的行为。使用ERC20PresetMinterPauser有趣的是，我们可以通过将角色分配给多个合约轻松结合多个供应机制，而且我们可以动态地实现这一点。
 
->TIP
+> TIP
 要了解有关角色和权限系统的更多信息，请转到我们的*访问控制指南*。
 
 ## 自动化奖励

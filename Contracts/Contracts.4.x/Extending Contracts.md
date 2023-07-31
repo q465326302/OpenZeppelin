@@ -33,7 +33,7 @@ contract ModifiedAccessControl is AccessControl {
 
 super关键字将允许您调用在父合约中定义的函数，即使它们被覆盖。可以使用此机制添加附加检查到函数中，发出事件或以您认为合适的方式添加功能。
 
->TIP
+> TIP
 有关如何使用重写的更多信息，请转到[官方Solidity文档](https://solidity.readthedocs.io/en/latest/contracts.html#index-17)。
 
 这是*AccessControl*的修改版本，其中*revokeRole*无法用于撤销DEFAULT_ADMIN_ROLE：

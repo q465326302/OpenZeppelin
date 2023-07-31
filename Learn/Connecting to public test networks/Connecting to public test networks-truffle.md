@@ -106,7 +106,7 @@ npm install --save-dev @truffle/hdwallet-provider
 }
 ```
 
->TIP
+> TIP
 你可以使用任何你喜欢的项目秘密管理解决方案，而不是一个secrets.json文件。一个流行且简单的选项是使用[dotenv](https://github.com/motdotla/dotenv)将秘密作为环境变量注入。
 
 现在我们可以通过列出我们在goerli网络中可用的账户来测试这个配置是否工作。请记住，您的账户将会不同，因为它们取决于您使用的助记词。
@@ -148,7 +148,7 @@ npx truffle migrate --network goerli
 
 您可以在区块浏览器（如[Etherscan](https://etherscan.io/)）上查看您的合约。请记住，在您部署合约的测试网络上访问浏览器，例如在goerli上访问[goerli.etherscan.io](https://goerli.etherscan.io/)。
 
->TIP
+> TIP
 您可以在上面的示例中查看我们部署的合约以及发送到它的所有交易，[链接](https://goerli.etherscan.io/address/0xA4D767f2Fba05242502ECEcb2Ae97232F7611353)在此。
 
 您也可以像平常一样与实例进行交互，可以使用*控制台*或*编程方式*。

@@ -60,7 +60,7 @@ describe('Box', function () {
 });
 ```
 
->TIP
+> TIP
 许多书籍都介绍了如何构建单元测试。请查看[Moloch测试指南](https://github.com/MolochVentures/moloch/tree/4e786db8a4aa3158287e0935dcbc7b1e43416e38/test#moloch-testing-guide)，其中包含一系列旨在测试Solidity智能合约的原则。
 
 我们现在可以运行我们的测试了！

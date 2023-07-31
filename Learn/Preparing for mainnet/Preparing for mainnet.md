@@ -28,7 +28,7 @@
 
 您可以在[Etherscan](https://etherscan.io/verifyContract)网站上手动验证您的合约。
 
->TIP
+> TIP
 当您部署可升级合约时，用户与之交互的合约将只是代理，实际逻辑将位于实现合约中。[Etherscan确实支持正确显示OpenZeppelin代理及其实现](https://medium.com/etherscan-blog/and-finally-proxy-contract-support-on-etherscan-693e3da0714b)，但其他浏览器可能不支持。
 
 ## 密钥管理

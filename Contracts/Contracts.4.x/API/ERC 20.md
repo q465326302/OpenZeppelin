@@ -1,7 +1,7 @@
 # ERC 20
 这组接口、合约和实用工具都与[ERC20代币标准](https://eips.ethereum.org/EIPS/eip-20)相关。
 
->TIP
+> TIP
 要了解ERC20代币的概述和如何创建代币合约的步骤，请阅读我们的*ERC20指南*。
 
 有一些核心合约实现了EIP中指定的行为：
@@ -139,7 +139,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 该实现与代币创建方式无关。这意味着必须在派生合约中使用*_mint*添加供应机制。对于通用机制，请参阅*ERC20PresetMinterPauser*。
 
->TIP
+> TIP
 有关详细信息，请参阅我们的指南 *如何实现供应机制*。
 
 *小数*的默认值为18。要更改此值，您应该重写此函数以返回不同的值。
