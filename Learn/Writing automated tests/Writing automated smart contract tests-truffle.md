@@ -11,49 +11,49 @@
 Truffle和Hardhat都提供了说明。 使用此切换选择您的首选项！
 
 ## 关于测试
-有许多测试技术，从*简单的手动验证*到复杂的端到端设置，它们各自都有用。
+在测试技术方面，有各种各样的技术，从[简单的手动验证](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)到复杂的端到端设置，每种技术都有其自身的用途。
 
-然而，在智能合约开发中，实践证明，[合约单元测试](https://en.wikipedia.org/wiki/Unit_testing)非常值得。这些测试易于编写和快速运行，让您有信心添加功能并修复代码中的错误。
+然而，实践表明，在智能合约开发中，[合约单元测试](https://en.wikipedia.org/wiki/Unit_testing)非常值得。这些测试易于编写和快速运行，让您能够自信地添加功能和修复代码中的错误。
 
 智能合约单元测试由多个小型、专注的测试组成，每个测试都检查合约的一个小部分是否正确。它们通常可以用单个句子来表达规范，例如“管理员能够暂停合约”、“转移代币会发出事件”或“非管理员不能铸造新代币”。
 
 ## 设置测试环境
-您可能会想知道我们将如何运行这些测试，因为智能合约是在区块链内执行的。使用实际的以太坊网络将非常昂贵，而测试网是免费的，但它们也很慢（区块时间在5到20秒之间）。如果我们打算在每次更改代码时运行数百个测试，我们需要更好的解决方案。
+你可能会想知道我们如何进行这些测试，因为智能合约是在区块链内执行的。使用实际的以太坊网络会非常昂贵，而测试网络是免费的，但也很慢（区块时间在5到20秒之间）。如果我们打算在每次更改代码时运行数百个测试，我们需要更好的解决方案。
 
-我们将使用称为本地区块链的东西：真实事物的简化版本，与互联网断开连接，在您的计算机上运行。这将大大简化事情：您不需要获取Ether，新块将立即被挖掘。
+我们将使用的是本地区块链：这是一个精简版的真实区块链，与互联网断开连接，在您的计算机上运行。这将大大简化事情：您不需要获取以太币，新区块将立即被挖掘出来。
 
 ## 编写单元测试
 我们将使用[Chai](https://www.chaijs.com/)断言进行单元测试。
 ```
 npm install --save-dev chai
 ```
-我们将把测试文件保存在一个名为test的目录中。测试最好按照*contracts目录*的结构进行组织：对于其中的每个.sol文件，创建一个相应的测试文件。
+我们将把测试文件保存在一个名为test的目录中。测试最好按照contracts[目录](../Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)的结构进行组织：对于其中的每个.sol文件，创建一个相应的测试文件。
 
-现在是编写我们的第一组测试的时候了！这些测试将测试之前介绍过的Box*合约的属性*：一个简单的合约，允许您检索先前所有者存储的值。
+现在是编写我们的第一组测试的时候了！这些测试将测试之前介绍过的Box[合约的属性](../Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)：一个简单的合约，允许您检索先前所有者存储的值。
 
 我们将把测试保存为test/Box.test.js。每个.test.js文件应该包含单个合约的测试，并以该合约的名称命名。
 ```
 // test/Box.test.js
-// Load dependencies
+// 加载依赖项
 const { expect } = require('chai');
 
-// Load compiled artifacts
+// 加载编译后的合约
 const Box = artifacts.require('Box');
 
-// Start test block
+// 开始测试块
 contract('Box', function () {
   beforeEach(async function () {
-    // Deploy a new Box contract for each test
+    // 为每个测试部署一个新的Box合约
     this.box = await Box.new();
   });
 
-  // Test case
+  // 测试用例
   it('retrieve returns a value previously stored', async function () {
-    // Store a value
+    // 存储一个值
     await this.box.store(42);
 
-    // Test if the returned value is the same one
-    // Note that we need to use strings to compare the 256 bit integers
+    // 测试返回的值是否与之前存储的值相同
+    // 注意，我们需要使用字符串来比较256位整数
     expect((await this.box.retrieve()).toString()).to.equal('42');
   });
 });
@@ -66,7 +66,7 @@ contract('Box', function () {
 运行 npx truffle test 将执行测试目录中的所有测试，检查您的合约是否按照您的意图工作。
 
 > NOTE
-请确保您正在运行*本地区块链*。
+请确保您正在运行[本地区块链](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)。
 
 ```
 npx truffle test
@@ -85,38 +85,39 @@ Compiling your contracts...
 
   1 passing (117ms)
 ```
-此时，设立一个持续集成服务（如[CircleCI](https://circleci.com/)）非常明智，这样每次将代码提交到GitHub时，测试都会自动运行。
+此时，建议设置一个持续集成服务，如[CircleCI](https://circleci.com/)，以便在每次将代码提交到GitHub时自动运行测试。
 
 ## 执行复杂的断言
 许多有趣的合约属性可能很难捕捉，例如：
 
-* 验证合约在出错时恢复
+* 验证合约在错误时是否回滚
 
-* 测量账户的以太币余额变化量
+* 测量帐户的以太币余额变化
 
 * 检查是否发出了正确的事件
 
-*OpenZeppelin测试助手*是一个旨在帮助您测试所有这些属性的库。它还将简化模拟区块链上的时间流逝和处理非常大的数字的任务。
+[OpenZeppelin测试助手](../../Home/Test%20Helpers/Overview.md)是一个旨在帮助您测试所有这些属性的库。它还将简化模拟区块链上的时间流逝和处理非常大的数字的任务。
 
 要安装OpenZeppelin测试助手，请运行：
 ```
 npm install --save-dev @openzeppelin/test-helpers
 ```
-我们可以使用OpenZeppelin Test Helpers来更新我们的测试，以支持非常大的数字，检查事件是否被触发，并检查交易是否回滚。
+
+然后，我们可以更新我们的测试以使用OpenZeppelin Test Helpers来支持非常大的数字，检查是否发出事件以及检查事务是否回滚。
 ```
 // test/Box.test.js
-// Load dependencies
+// 加载依赖项
 const { expect } = require('chai');
 
-// Import utilities from Test Helpers
+// 从测试助手导入实用程序
 const { BN, expectEvent, expectRevert } = require('@openzeppelin/test-helpers');
 
-// Load compiled artifacts
+// 加载编译后的合约
 const Box = artifacts.require('Box');
 
-// Start test block
+// 开始测试块
 contract('Box', function ([ owner, other ]) {
-  // Use large integers ('big numbers')
+  // 使用大整数（'big numbers'）
   const value = new BN('42');
 
   beforeEach(async function () {
@@ -126,14 +127,14 @@ contract('Box', function ([ owner, other ]) {
   it('retrieve returns a value previously stored', async function () {
     await this.box.store(value, { from: owner });
 
-    // Use large integer comparisons
+    // 使用大整数比较
     expect(await this.box.retrieve()).to.be.bignumber.equal(value);
   });
 
   it('store emits an event', async function () {
     const receipt = await this.box.store(value, { from: owner });
 
-    // Test that a ValueChanged event was emitted with the new value
+    // 测试是否发出了一个带有新值的ValueChanged事件
     expectEvent(receipt, 'ValueChanged', { value: value });
   });
 
@@ -146,7 +147,8 @@ contract('Box', function ([ owner, other ]) {
   });
 });
 ```
-这些测试将测试之前指南中的Ownable Box*合约的属性*：一个简单的合约，让您检索所有者先前存储的值。
+
+这些测试将测试之前指南中的Ownable Box[合约的属性](../Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)：一个简单的合约，让您检索所有者先前存储的值。
 
 再次运行测试以查看Test Helpers的作用：
 ```
@@ -164,8 +166,8 @@ npx truffle test
 
 ## 下一步
 一旦您已经彻底测试了您的合约并且相信它们的正确性，您将想要部署它们到一个真实的网络并开始与它们交互。以下指南将帮助您了解这些主题：
-* 连接公共测试网络
+* [连接公共测试网络](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-truffle.md)
 
-* 部署和交互
+*[ 部署和交互](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)
 
-* 准备主网
+* [准备主网](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)
