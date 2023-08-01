@@ -105,6 +105,7 @@ Safe合约要求所有提案必须按顺序执行。如果你已经收集了所�
 Gnosis Safe钱包还允许执行DELEGATECALL到其他合约中，以在多签上下文中执行任意代码。您可以使用“defender-admin-client”通过API创建一个Admin action提案来发出委托调用。
 
 ### 发送资金
+
 Gnosis Safe钱包上的发送资金功能可以让您将网络原生资产从您的Gnosis Safe转移到您选择的接收者。
 
 要使用此功能，您需要将Gnosis Safe钱包添加到Defender Admin合约集合中。在Admin中转到您的Gnosis Safe页面，点击New proposal→Send funds。然后选择收件人地址和要转移的资金金额。从那时起，它就像任何其他管理提案一样运作：您需要从足够的Gnosis Safe所有者那里收集批准才能执行交易。Defender会指导您完成该过程。
