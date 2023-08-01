@@ -1,5 +1,5 @@
 # 升级智能合约
-使用[OpenZeppelin Upgrades插件](../../Upgrades%20Plugins/Overview.md)部署的智能合约可以进行**升级**，修改其代码，同时保留其地址、状态和余额。这使您能够逐步为项目添加新功能，或修复在*生产*中发现的任何错误。
+使用[OpenZeppelin Upgrades插件](../../Upgrades%20Plugins/Overview.md)部署的智能合约可以进行**升级**，修改其代码，同时保留其地址、状态和余额。这使您能够逐步为项目添加新功能，或修复在[生产](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)中发现的任何错误。
 
 在本指南中，我们将学习：
 
@@ -17,22 +17,22 @@
 ## 升级包含什么内容
 以太坊中的智能合约默认情况下是不可变的。一旦创建，就没有办法修改它们，有效地成为参与者之间不可打破的合约。
 
-然而，对于某些情况，修改它们是可取的。想象一下两个当事方之间的传统合约：如果他们都同意更改它，他们将能够这样做。在以太坊上，他们可能希望修改智能合约以修复他们发现的错误（这甚至可能导致黑客窃取他们的资金！），添加其他功能，或仅仅是更改其执行的规则。
+然而，对于某些情况，有必要能够修改它们。想象一下两个当事方之间的传统合约：如果他们都同意更改它，他们将能够这样做。在以太坊上，他们可能希望修改智能合约以修复他们发现的错误（这甚至可能导致黑客窃取他们的资金！），添加其他功能，或仅仅是更改其执行的规则。
 
-要修复无法升级的合约中的错误，您需要执行以下操作：
+要修复无法升级的合约中的错误，需要执行以下操作：
 
 1. 部署合约的新版本
 
-2. 手动迁移从旧合约到新合约的所有状态（这可能非常昂贵，涉及燃气费用！）
+2. 手动迁移所有旧合约的状态到新合约（这可能非常昂贵，涉及燃气费用！）
 
-3. 更新与旧合约交互的所有合约以使用新部署的地址
+3. 更新所有与旧合约交互的合约，以使用新合约的地址
 
-4. 联系所有用户并说服他们开始使用新部署（并处理同时使用两个合约，因为用户迁移速度较慢）
+4. 联系所有用户并说服他们开始使用新合约（并同时处理维护两个合约，因为用户迁移速度较慢）
 
 为了避免经历这种混乱，我们已经将合约升级直接构建到我们的插件中。这允许我们**更改合约代码，同时保留状态、余额和地址**。让我们看看它的实际应用。
 
 ## 使用升级插件进行升级
-每当您使用*OpenZeppelin Upgrades插件*中的deployProxy部署新合约时，该合约实例可以稍后**升级**。默认情况下，只有最初部署合约的地址才有权升级它。
+每当您使用[OpenZeppelin Upgrades插件](../../Upgrades%20Plugins/Overview.md)中的deployProxy部署新合约时，该合约实例可以在以后进行**升级**。默认情况下，只有最初部署合约的地址才有权升级它。
 
 deployProxy将创建以下交易：
 
@@ -42,7 +42,7 @@ deployProxy将创建以下交易：
 
 3. 部署代理合约并运行任何初始化函数。
 
-让我们看看它是如何工作的，通过使用与*我们之前部署*时相同的设置，部署可升级版本的Box合约：
+让我们看看它是如何工作的，通过使用与[我们之前部署](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)时相同的设置，部署可升级版本的Box合约：
 ```
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
@@ -68,7 +68,7 @@ contract Box {
 ```
 我们首先需要安装Upgrades插件。
 
-安装*Truffle Upgrades*插件。
+安装[Truffle Upgrades](../../Upgrades%20Plugins/Overview.md)插件。
 ```
 npm install --save-dev @openzeppelin/truffle-upgrades
 ```
@@ -76,7 +76,7 @@ npm install --save-dev @openzeppelin/truffle-upgrades
 
 Truffle 使用[迁移](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations)来部署合约。迁移由 JavaScript 文件和一个特殊的 Migrations 合约组成，用于跟踪链上的迁移。
 
-我们将创建一个迁移脚本，使用 *deployProxy* 部署我们的可升级 Box 合约。我们将把这个文件保存为 migrations/3_deploy_upgradeable_box.js。
+我们将创建一个迁移脚本，使用 [deployProxy](../../Upgrades%20Plugins/API%20Reference/Truffle%20Upgrades.md) 部署我们的可升级 Box 合约。我们将把这个文件保存为 migrations/3_deploy_upgradeable_box.js。
 
 ```
 // migrations/3_deploy_upgradeable_box.js
@@ -88,9 +88,10 @@ module.exports = async function (deployer) {
   await deployProxy(Box, [42], { deployer, initializer: 'store' });
 };
 ```
-然后，我们可以部署可升级合约。
 
-使用迁移命令，我们可以将Box合约部署到开发网络。
+我们可以部署可升级的合约。
+
+使用[迁移](https://www.trufflesuite.com/docs/truffle/reference/truffle-commands#migrate)命令，我们可以将Box合约部署到开发网络中。
 ```
 npx truffle migrate --network development
 ...
@@ -107,6 +108,7 @@ npx truffle migrate --network development
    ---------------------------------------
 ...
 ```
+
 我们可以与我们的Box合约交互，以检索我们在初始化期间存储的值。
 
 我们将使用[Truffle控制台](https://www.trufflesuite.com/docs/truffle/getting-started/using-truffle-develop-and-the-console)与我们升级后的Box合约进行交互。
@@ -117,7 +119,8 @@ undefined
 truffle(development)> (await box.retrieve()).toString();
 '42'
 ```
-为了举例，假设我们想添加一个新功能：一个函数，可以将存储在新版本的Box中的值递增。
+
+为了举例，假设我们想添加一个新功能：一个能够增加存储在新版本的Box中的值的函数。
 ```
 // contracts/BoxV2.sol
 // SPDX-License-Identifier: MIT
@@ -141,7 +144,7 @@ upgradeProxy 将创建以下事务：
 
 2. 调用 ProxyAdmin 更新代理合约以使用新的实现。
 
-我们将创建一个迁移 JavaScript，使用 *upgradeProxy* 升级我们的 Box 合约以使用 BoxV2。我们将把这个文件保存为 migrations/4_upgrade_box.js。
+我们将创建一个迁移 JavaScript，使用 [upgradeProxy](../../Upgrades%20Plugins/API%20Reference/Truffle%20Upgrades.md) 升级我们的 Box 合约以使用 BoxV2。我们将把这个文件保存为 migrations/4_upgrade_box.js。
 ```
 // migrations/4_upgrade_box.js
 const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
@@ -168,6 +171,7 @@ npx truffle migrate --network development
    -----------------
 ...
 ```
+
 完成了！我们的Box实例已经升级到最新版本的代码，**同时保持其状态和之前相同的地址**。我们不需要在新地址部署新的Box，也不需要手动将值从旧的Box复制到新的Box。
 
 让我们尝试一下调用新的增量函数，并在此之后检查值：
@@ -188,7 +192,7 @@ truffle(development)> (await boxV2.retrieve()).toString();
 ```
 就是这样！请注意，无论您是在本地区块链、测试网络还是主网络上工作，Box 的价值和地址都在升级过程中得到保留。
 
-让我们看看 *OpenZeppelin Upgrades 插件*是如何实现这一点的。
+让我们看看 [OpenZeppelin Upgrades 插件](../../Upgrades%20Plugins/Overview.md)是如何实现这一点的。
 
 ## 升级是如何工作的
 本节内容将比其他部分更加理论化，如果您感到不感兴趣，可以跳过，稍后再回来查看。
@@ -212,18 +216,18 @@ truffle(development)> (await boxV2.retrieve()).toString();
 2. 向代理发送交易，将其实现地址更新为新的地址。
 
 > NOTE
-您可以使用相同的实现合约拥有多个代理，因此如果您计划部署多个相同合约的副本，使用此模式可以节省 gas。
+您可以使相同的实现合约拥有多个代理，因此如果您计划部署多个相同合约的副本，使用此模式可以节省 gas。
 
 任何智能合约的用户都始终与代理交互，代理永远不会更改其地址。这样可以在不要求用户做任何更改的情况下，推出升级或修复错误-他们只需像往常一样与相同的地址交互。
 
 > NOTE
-如果您想了解更多关于OpenZeppelin代理如何工作的信息，请查看*代理*。
+如果您想了解更多关于OpenZeppelin代理如何工作的信息，请查看[代理](../../Upgrades%20Plugins/Proxy%20Upgrade%20Pattern.md)。
 
 ## 合约升级的限制
 虽然任何智能合约都可以被设计成可升级的，但是 Solidity 语言的一些限制需要加以解决。这些限制在编写合约的初始版本和升级版本时都会出现。
 
 ### 初始化
-可升级合约不能有构造函数。为了帮助您运行初始化代码，*OpenZeppelin Contracts*提供了*Initializable*基础合约，允许您将方法标记为*初始化机器*，确保它只能运行一次。
+可升级合约不能有构造函数。为了帮助您运行初始化代码，[OpenZeppelin Contracts*提供了Initializable基础合约](../Upgrading%20smart%20contracts/Upgrading%20smart%20contracts-truffle.md)，允许您将方法标记为*初始化机器*，确保它只能运行一次。
 
 例如，让我们编写一个带有初始化器的Box合约的新版本，将一个管理员的地址存储在其中，只允许该管理员更改其内容。
 ```
@@ -275,7 +279,7 @@ module.exports = async function (deployer) {
 
 您可能已经注意到，我们包括了一个构造函数和一个初始化器。这个构造函数的目的是将实现合约保持在初始化状态，这是对某些潜在攻击的缓解。
 
-要了解更多关于编写可升级合约时的注意事项以及其他信息，请查看我们的*编写可升级合约指南*。
+要了解更多关于编写可升级合约时的注意事项以及其他信息，请查看我们的[编写可升级合约指南](../Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-truffle.md)。
 
 
 ### 升级
@@ -298,7 +302,7 @@ contract Box {
 > NOTE
 如果你意外地搞乱了合约的存储布局，升级插件将在你尝试升级时发出警告。
 
-要了解更多关于这个限制的信息，请转到“修改您的合约”指南。
+要了解更多关于这个限制的信息，请转到[修改您的合约指南](../../Upgrades%20Plugins/Writing%20Upgradeable%20Contracts.md)。
 
 ## 测试
 为了测试可升级合约，我们应该为实现合约创建单元测试，并创建更高级别的测试，以测试通过代理进行交互。我们可以在测试中使用deployProxy，就像我们在部署时一样。
@@ -313,4 +317,4 @@ npx truffle migrate --reset
 ```
 
 ## 下一步
-现在您已经知道如何升级智能合约，并可以迭代开发项目，是时候将项目带到*测试网*和*生产环境*了！您可以放心，如果出现错误，您有工具来修改合约并改变它。
+现在您已经知道如何升级智能合约，并可以迭代开发项目，是时候将项目带到[测试网](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-truffle.md)和[生产环境](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)了！您可以放心，如果出现错误，您有工具来修改合约并改变它。
