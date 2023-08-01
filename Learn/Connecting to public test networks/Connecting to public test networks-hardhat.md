@@ -1,9 +1,9 @@
 # 连接到公共测试网络
-在*编写合约*、*本地测试*并进*行充分测试*后，就可以进入持久的公共测试环境，让您和测试用户开始与您的应用程序交互。
+在[编写合约](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)、[本地测试](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)并进行[充分测试](../Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-hardhat.md)后，就可以进入持久的公共测试环境，让您和测试用户开始与您的应用程序交互。
 
 我们将使用**公共测试网络**（也称为测试网络）进行测试，这些网络类似于主要的以太坊网络，但以太币没有价值且可以免费获取，因此非常适合免费测试您的合约。
 
-在本指南中，我们将使用我们喜爱的*Box合约*，并将其部署到测试网络上，同时学习以下内容：
+在本指南中，我们将使用我们喜爱的[Box合约](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)，并将其部署到测试网络上，同时学习以下内容：
 
 * 可用的测试网络
 
@@ -30,13 +30,13 @@ Goerli
 
 ## 将项目连接到公共网络
 要将我们的项目连接到公共测试网络，我们需要：
-1. *获取测试网络节点*
+1. 获取测试网络节点
 
-2. *创建一个新账户*
+2. 创建一个新账户
 
-3. *更新我们的配置文件*
+3. 更新我们的配置文件
 
-4. *为我们的测试账户提供资金*
+4. 为我们的测试账户提供资金
 
 ### 访问测试网络节点
 
@@ -57,13 +57,13 @@ drama film snack motion ...
 ```
 
 > WARNING
-确认保护好你的助记词，不要将秘密信息提交到版本控制中。即使只是为了测试目的，仍有恶意用户会为了娱乐而破坏你的测试网络部署！
+确认保护好你的助记词，不要将秘密信息上传到网络中。即使只是为了测试目的，仍有恶意用户会为了娱乐而破坏你的测试网络部署！
 
 ### 配置网络
 由于我们使用公共节点，因此我们需要在本地签署所有交易。我们将使用我们的助记词和Alchemy端点来配置网络。
 
 > NOTE
-这部分假定您已经设置好了一个项目。如果您还没有这样做，请转到*设置Solidity项目的指南*。
+这部分假定您已经设置好了一个项目。如果您还没有这样做，请转到[设置Solidity项目的指南](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)。
 
 我们需要更新我们的配置文件，添加一个连接到测试网络的新网络连接。在这里，我们将使用Goerli，但您可以使用任何您想要的网络。
 ```
@@ -84,7 +84,7 @@ drama film snack motion ...
 > NOTE
 请查看[HDWalletProvider文档](https://github.com/trufflesuite/truffle/tree/master/packages/hdwallet-provider)以获取有关配置选项的信息。
 
-请注意第一行中，我们正在从一个名为 secrets.json 的文件中加载项目 ID 和助记词，该文件应该看起来像以下内容，但要使用您自己的值。请务必将其加入 .gitignore 中，以确保您不会将机密信息提交到版本控制中！
+请注意代码第一行中，我们正在从一个名为 secrets.json 的文件中加载项目 ID 和助记词，该文件应该看起来像以下内容，但要使用您自己的值。请务必将其加入 .gitignore 中，以确保您不会将机密信息上传到网络中！
 
 ```
 {
@@ -121,7 +121,7 @@ Type ".help" for more information.
 有了资金支持的账户，让我们将合约部署到测试网上！
 
 ## 在测试网络上工作
-通过配置项目以在公共测试网络上运行，我们现在终于可以*部署我们的Box合约*了。这里的命令与您在*本地开发网络*上的命令完全相同，但是由于会挖掘新块，所以需要几秒钟才能运行。
+通过配置项目以在公共测试网络上运行，我们现在终于可以[部署我们的Box合约](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)了。这里的命令与您在[本地开发网络](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)上的命令完全相同，但是由于会挖掘新块，所以需要几秒钟才能运行。
 ```
 npx hardhat run --network goerli scripts/deploy.js
 Deploying Box...
@@ -134,7 +134,7 @@ Box deployed to: 0xD7fBC6865542846e5d7236821B5e045288259cf0
 > TIP
 您可以在上面的示例中查看我们部署的合约以及发送到它的所有交易，[链接](https://goerli.etherscan.io/address/0xA4D767f2Fba05242502ECEcb2Ae97232F7611353)在此。
 
-您也可以像平常一样与实例进行交互，可以使用*控制台*或*编程方式*。
+您也可以像平常一样与实例进行交互，可以使用[控制台或编程方式](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)。
 ```
 npx hardhat console --network goerli
 Welcome to Node.js v12.22.1.
@@ -152,5 +152,5 @@ undefined
 ```
 请记住，每笔交易都会产生一定的gas，因此您最终需要用更多的资金来充值您的账户。
 
->下一步
-在公共测试网络上彻底测试您的应用程序之后，您已经准备好进行开发旅程的最后一步：*在生产环境中部署您的应用程序*。
+## 下一步
+在公共测试网络上彻底测试您的应用程序之后，您已经准备好进行开发旅程的最后一步：[在生产环境中部署您的应用程序](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)。
