@@ -7,7 +7,7 @@
 
 ## 安装依赖项
 > NOTE
-尽管本指南使用defender-client包创建> Relayer器、哨兵和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
+尽管本指南使用defender-client包创建Relayer器、哨兵和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
 
 您需要安装相关的Defender NPM包。请注意，Forta机器人的创建还需要安装[Docker](https://www.docker.com/get-started)。
 ```
@@ -16,10 +16,10 @@ $ npm init -y
 $ npm i --save-dev defender-relay-client defender-autotask-client defender-sentinel-client dotenv
 ```
 
-## 创建> Relayer器
+## 创建Relayer器
 从Defender Web界面，打开右上角的汉堡菜单。获取您的团队API密钥和密钥，并将它们保存到本地的.env文件中。
 
-使用defender-relay-client，在Polygon网络上创建一个新的*> Relayer器*，并将> Relayer器的ID保存到您的.env文件中。
+使用defender-relay-client，在Polygon网络上创建一个新的*Relayer器*，并将Relayer器的ID保存到您的.env文件中。
 ```
 const { RelayClient } = require('defender-relay-client');
 const { appendFileSync } = require('fs');

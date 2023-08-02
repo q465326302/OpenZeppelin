@@ -10,7 +10,7 @@
 
 * *GSNRecipientERC20Fee* 使用特定应用程序的*ERC20代币*为最终用户收取燃气费用
 
-* *GSNRecipientSignature* 接受已由可信第三方（例如后端中的私钥）签名的所有> Relayer调用
+* *GSNRecipientSignature* 接受已由可信第三方（例如后端中的私钥）签名的所有Relayer调用
 
 您还可以查看构成GSN协议的两个合同接口：*IRelayRecipient*和*IRelayHub*，但您不需要直接使用它们。
 
@@ -67,7 +67,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 切换到新的*IRelayHub*实例。此方法是为了未来的保护措施：没有理由不使用默认实例。
 
 > IMPORTANT
-升级后，*GSNRecipient*将无法从旧的*IRelayHub*实例接收> Relayer调用。此外，所有资金应通过*_withdrawDeposits*提前提取。
+升级后，*GSNRecipient*将无法从旧的*IRelayHub*实例接收Relayer调用。此外，所有资金应通过*_withdrawDeposits*提前提取。
 
 #### relayHubVersion() → string
 公开#
@@ -81,13 +81,13 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### _msgSender() → address payable
 内部#
-替代msg.sender的方法。返回交易的实际发送者：对于普通交易，返回msg.sender，对于GSN> Relayer调用，返回最终用户（其中msg.sender实际上是RelayHub）。
+替代msg.sender的方法。返回交易的实际发送者：对于普通交易，返回msg.sender，对于GSNRelayer调用，返回最终用户（其中msg.sender实际上是RelayHub）。
 
 > IMPORTANT
 从*GSNRecipient*派生的合约不应该使用msg.sender，而应该使用*_msgSender*。
 
 #### _msgData() → bytes
-替代msg.data。返回交易的实际calldata：对于常规交易，返回msg.data，对于GSN> Relayer调用（其中msg.data包含其他信息），返回简化版本。
+替代msg.data。返回交易的实际calldata：对于常规交易，返回msg.data，对于GSNRelayer调用（其中msg.data包含其他信息），返回简化版本。
 
 > 从*GSNRecipient*派生的合约不应使用msg.data，而应使用*_msgData*。
 
@@ -104,13 +104,13 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 内部#
 请参阅IRelayRecipient.preRelayedCall。
 
-由GSNRecipient.preRelayedCall调用，用于断言调用者是RelayHub合约。派生合约必须实现此函数以执行任何他们希望进行的> Relayer调用预处理。
+由GSNRecipient.preRelayedCall调用，用于断言调用者是RelayHub合约。派生合约必须实现此函数以执行任何他们希望进行的Relayer调用预处理。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
 公开#
 请参阅IRelayRecipient.preRelayedCall。
 
-由GSNRecipient.preRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的> Relayer调用预处理。
+由GSNRecipient.preRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的Relayer调用预处理。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
 公开#
@@ -125,11 +125,11 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 内部#
 请参阅IRelayRecipient.postRelayedCall。
 
-通过GSNRecipient.postRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的> Relayer调用后处理。
+通过GSNRecipient.postRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的Relayer调用后处理。
 
 #### _approveRelayedCall() → uint256, bytes
 内部#
-返回此值以继续执行> Relayer调用。请注意，RelayHub将向此合约收取费用。
+返回此值以继续执行Relayer调用。请注意，RelayHub将向此合约收取费用。
 
 #### _approveRelayedCall(bytes context) → uint256, bytes
 内部#
@@ -139,7 +139,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### _rejectRelayedCall(uint256 errorCode) → uint256, bytes
 内部#
-在acceptRelayedCall中返回此内容以阻止执行> Relayer调用。不会收取任何费用。
+在acceptRelayedCall中返回此内容以阻止执行Relayer调用。不会收取任何费用。
 
 #### _computeCharge(uint256 gas, uint256 gasPrice, uint256 serviceFee) → uint256
 内部#
@@ -150,7 +150,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 ## Strategies
 ### GSNRecipientSignature
-一种*GSN策略*，允许在伴有受信任签名者签名的情况下进行> Relayer交易。这个签名的生成是由一个在链下执行验证的服务器完成的。需要注意的是，在这个方案中用户不会被收费。因此，服务器在经济和威胁模型中应该考虑到这一点。
+一种*GSN策略*，允许在伴有受信任签名者签名的情况下进行Relayer交易。这个签名的生成是由一个在链下执行验证的服务器完成的。需要注意的是，在这个方案中用户不会被收费。因此，服务器在经济和威胁模型中应该考虑到这一点。
 
 **FUNCTIONS**
 constructor(trustedSigner)
@@ -192,11 +192,11 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### constructor(address trustedSigner)
 公开#
-设置可信的签名者，该签名者将会产生用于批准> Relayer调用的签名。
+设置可信的签名者，该签名者将会产生用于批准Relayer调用的签名。
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256) → uint256, bytes
 公开#
-确保只有带有可信签名的交易才能通过GSN> Relayer。
+确保只有带有可信签名的交易才能通过GSNRelayer。
 
 #### _preRelayedCall(bytes) → bytes32
 内部#
@@ -265,7 +265,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
 公开#
-确保只有拥有足够的Gas支付令牌余额的用户才能通过GSN> Relayer交易。
+确保只有拥有足够的Gas支付令牌余额的用户才能通过GSNRelayer交易。
 
 #### _preRelayedCall(bytes context) → bytes32
 内部#
@@ -298,9 +298,9 @@ postRelayedCall(context, success, actualCharge, preRetVal)
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256 maxPossibleCharge) → uint256, bytes
 外部#
-*IRelayHub*调用acceptRelayedCall方法来验证接收者是否同意为> Relayer调用支付费用。需要注意的是，无论> Relayer调用的执行结果如何（即是否回滚），接收者都将被收取费用。
+*IRelayHub*调用acceptRelayedCall方法来验证接收者是否同意为Relayer调用支付费用。需要注意的是，无论Relayer调用的执行结果如何（即是否回滚），接收者都将被收取费用。
 
-> Relayer请求由from发起，并将由relay提供服务。encodedFunction是> Relayer调用的calldata，因此它的前四个字节是函数选择器。> Relayer调用将转发gasLimit gas，并以至少gasPrice的燃料价格执行事务。relay的费用是transactionFee，接收者的最大可能费用为maxPossibleCharge（以wei为单位）。nonce是发送者（from）在*IRelayHub*中用于防止重放攻击的nonce，approvalData是一个可选参数，可以用于保存对所有或部分先前值的签名。
+Relayer请求由from发起，并将由relay提供服务。encodedFunction是Relayer调用的calldata，因此它的前四个字节是函数选择器。Relayer调用将转发gasLimit gas，并以至少gasPrice的燃料价格执行事务。relay的费用是transactionFee，接收者的最大可能费用为maxPossibleCharge（以wei为单位）。nonce是发送者（from）在*IRelayHub*中用于防止重放攻击的nonce，approvalData是一个可选参数，可以用于保存对所有或部分先前值的签名。
 
 返回一个元组，其中第一个值用于表示批准（0）或拒绝（自定义非零错误代码，值为1到10保留），第二个值是要传递给其他*IRelayRecipient*函数的数据。
 
@@ -308,21 +308,21 @@ postRelayedCall(context, success, actualCharge, preRetVal)
 
 #### preRelayedCall(bytes context) → bytes32
 外部#
-在被*IRelayHub*批准的> Relayer调用请求上调用，在执行> Relayer调用之前。这允许例如预先收取交易发送者的费用。
+在被*IRelayHub*批准的Relayer调用请求上调用，在执行Relayer调用之前。这允许例如预先收取交易发送者的费用。
 
 上下文是通过*acceptRelayedCall*返回的元组的第二个值。
 
 返回一个值以传递给*postRelayedCall*。
 
-*preRelayedCall*使用100k gas进行调用：如果在执行过程中用尽gas或者发生回滚，> Relayer调用将不会被执行，但是收件人仍然需要支付交易的费用。
+*preRelayedCall*使用100k gas进行调用：如果在执行过程中用尽gas或者发生回滚，Relayer调用将不会被执行，但是收件人仍然需要支付交易的费用。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
 外部#
-在*IRelayHub*对已批准的> Relayer调用请求进行调用后，> Relayer调用执行完成。这允许例如收取用户> Relayer调用费用、返回*preRelayedCall*的超额收费或执行与合约特定的簿记。
+在*IRelayHub*对已批准的Relayer调用请求进行调用后，Relayer调用执行完成。这允许例如收取用户Relayer调用费用、返回*preRelayedCall*的超额收费或执行与合约特定的簿记。
 
-context是通过*acceptRelayedCall*返回的元组的第二个值。success是> Relayer调用的执行状态。actualCharge是接收者将为交易支付的估计费用，不包括*postRelayedCall*本身使用的任何gas。preRetVal是*preRelayedCall*的返回值。
+context是通过*acceptRelayedCall*返回的元组的第二个值。success是Relayer调用的执行状态。actualCharge是接收者将为交易支付的估计费用，不包括*postRelayedCall*本身使用的任何gas。preRetVal是*preRelayedCall*的返回值。
 
-*postRelayedCall*使用100k gas进行调用：如果在执行过程中gas耗尽或发生其他还原，> Relayer调用和对*preRelayedCall*的调用将被还原，但接收者仍然需要支付交易的费用。
+*postRelayedCall*使用100k gas进行调用：如果在执行过程中gas耗尽或发生其他还原，Relayer调用和对*preRelayedCall*的调用将被还原，但接收者仍然需要支付交易的费用。
 
 ### IRelayHub
 RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
@@ -381,15 +381,15 @@ Penalized(relay, sender, amount)
 
 #### stake(address relayaddr, uint256 unstakeDelay)
 外部# 
-向> Relayer添加股份并设置其解锁延迟。如果> Relayer不存在，则创建它，并且调用此函数的调用者成为其所有者。如果> Relayer已经存在，则只有所有者可以调用此函数。> Relayer不能成为自己的所有者。
+向Relayer添加股份并设置其解锁延迟。如果Relayer不存在，则创建它，并且调用此函数的调用者成为其所有者。如果Relayer已经存在，则只有所有者可以调用此函数。Relayer不能成为自己的所有者。
 
-此函数调用中的所有以太币将被添加到> Relayer的股份中。其解锁延迟将分配给unstakeDelay，但新值必须大于或等于当前值。
+此函数调用中的所有以太币将被添加到Relayer的股份中。其解锁延迟将分配给unstakeDelay，但新值必须大于或等于当前值。
 
 触发一个*Staked*事件。
 
 #### registerRelay(uint256 transactionFee, string url)
 外部# 
-将调用者注册为> Relayer。> Relayer必须进行抵押，并且不能是合约（即必须直接从EOA调用此函数）。
+将调用者注册为Relayer。Relayer必须进行抵押，并且不能是合约（即必须直接从EOA调用此函数）。
 
 此函数可以被多次调用，每次调用都会发出新的*RelayAdded*事件。注意，*relayCall*不强制执行接收到的transactionFee。
 
@@ -397,9 +397,9 @@ Penalized(relay, sender, amount)
 
 #### removeRelayByOwner(address relay)
 外部# 
-移除（注销）一个> Relayer。已注销（但已抵押）的> Relayer也可以被移除。
+移除（注销）一个Relayer。已注销（但已抵押）的Relayer也可以被移除。
 
-只能由> Relayer的所有者调用。在> Relayer的解除锁定延迟过后，可以调用解锁（*unstake*）函数。
+只能由Relayer的所有者调用。在Relayer的解除锁定延迟过后，可以调用解锁（*unstake*）函数。
 
 发出一个*RelayRemoved*事件。
 
@@ -408,11 +408,11 @@ Penalized(relay, sender, amount)
 
 #### getRelay(address relay) → uint256 totalStake, uint256 unstakeDelay, uint256 unstakeTime, address payable owner, enum IRelayHub.RelayState state
 外部# 
-返回> Relayer的状态。请注意，> Relayer在解除抵押或受到惩罚时可以被删除，导致此函数返回一个空条目。
+返回Relayer的状态。请注意，Relayer在解除抵押或受到惩罚时可以被删除，导致此函数返回一个空条目。
 
 #### depositFor(address target)
 外部# 
-存入以太币到合约中，以便能够接收（和支付）> Relayer的交易。
+存入以太币到合约中，以便能够接收（和支付）Relayer的交易。
 
 未使用的余额只能通过合约本身调用*withdraw*来提取。
 
@@ -420,46 +420,46 @@ Penalized(relay, sender, amount)
 
 #### balanceOf(address target) → uint256
 外部# 
-返回一个账户的存款。这些存款可以是合同的资金，也可以是> Relayer所有者的收入。
+返回一个账户的存款。这些存款可以是合同的资金，也可以是Relayer所有者的收入。
 
 #### withdraw(uint256 amount, address payable dest)
 外部# 
 
 #### canRelay(address relay, address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData) → uint256 status, bytes recipientContext
 外部#
-检查RelayHub是否接受> Relayer操作。为了实现这一点，必须满足多个条件： - 所有参数必须由发送者（from）签名 - 发送者的nonce必须是当前的nonce - 收件人必须接受此交易（通过*acceptRelayedCall*）
+检查RelayHub是否接受Relayer操作。为了实现这一点，必须满足多个条件： - 所有参数必须由发送者（from）签名 - 发送者的nonce必须是当前的nonce - 收件人必须接受此交易（通过*acceptRelayedCall*）
 
-返回PreconditionCheck值（如果可以> Relayer交易则返回OK），或者如果在*acceptRelayedCall*中返回了收件人特定的错误代码，则返回该错误代码。
+返回PreconditionCheck值（如果可以Relayer交易则返回OK），或者如果在*acceptRelayedCall*中返回了收件人特定的错误代码，则返回该错误代码。
 
 #### relayCall(address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData)
 外部#
 转发一个交易。
 
-为了成功，必须满足多个条件：- *canRelay*必须返回PreconditionCheck.OK- 发送方必须是注册的> Relayer- 交易的燃气价格必须大于或等于发送方请求的燃气价格- 如果所有内部交易（对接收方的调用）使用了它们可用的所有燃气，则交易必须有足够的燃气，以免燃气耗尽- 接收方必须有足够的余额来支付最坏情况下的> Relayer费用（即当所有燃气都用尽时）
+为了成功，必须满足多个条件：- *canRelay*必须返回PreconditionCheck.OK- 发送方必须是注册的Relayer- 交易的燃气价格必须大于或等于发送方请求的燃气价格- 如果所有内部交易（对接收方的调用）使用了它们可用的所有燃气，则交易必须有足够的燃气，以免燃气耗尽- 接收方必须有足够的余额来支付最坏情况下的Relayer费用（即当所有燃气都用尽时）
 
 如果所有条件都满足，将转发调用并向接收方收费。按顺序调用*preRelayedCall*、编码函数和*postRelayedCall*。
 
-参数：- from：发起请求的客户端- to：目标*IRelayRecipient*合约- encodedFunction：要转发的函数调用，包括数据- transactionFee：> Relayer接管的实际燃气成本的费用（%）- gasPrice：客户端愿意支付的燃气价格- gasLimit：调用编码函数时要转发的燃气- nonce：客户端的nonce- signature：客户端对所有先前参数的签名，加上> Relayer和RelayHub地址- approvalData：转发到*acceptRelayedCall*的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
+参数：- from：发起请求的客户端- to：目标*IRelayRecipient*合约- encodedFunction：要转发的函数调用，包括数据- transactionFee：Relayer接管的实际燃气成本的费用（%）- gasPrice：客户端愿意支付的燃气价格- gasLimit：调用编码函数时要转发的燃气- nonce：客户端的nonce- signature：客户端对所有先前参数的签名，加上Relayer和RelayHub地址- approvalData：转发到*acceptRelayedCall*的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
 
 发出*TransactionRelayed*事件。
 
 #### requiredGas(uint256 relayedCallStipend) → uint256
 外部#
-返回应向*relayCall*的调用转发多少gas，以便> Relayer事务可以花费多达relayedCallStipend gas。
+返回应向*relayCall*的调用转发多少gas，以便Relayer事务可以花费多达relayedCallStipend gas。
 
 #### maxPossibleCharge(uint256 relayedCallStipend, uint256 gasPrice, uint256 transactionFee) → uint256
 外部#
-根据转发的燃料量、燃料价格和> Relayer费用，返回最大的接收者费用。
+根据转发的燃料量、燃料价格和Relayer费用，返回最大的接收者费用。
 
 #### penalizeRepeatedNonce(bytes unsignedTx1, bytes signature1, bytes unsignedTx2, bytes signature2)
 外部#
-对使用相同nonce签署了两个交易的> Relayer进行惩罚（只有第一个交易有效），并且数据不同（例如，燃料价格、燃料限制等可能不同）。
+对使用相同nonce签署了两个交易的Relayer进行惩罚（只有第一个交易有效），并且数据不同（例如，燃料价格、燃料限制等可能不同）。
 
 必须提供两个交易的（未签名的）交易数据和签名。
 
 #### penalizeIllegalTransaction(bytes unsignedTx, bytes signature)
 外部#
-对于发送了未针对RelayHub的*registerRelay*或*relayCall*的交易的> Relayer进行惩罚。
+对于发送了未针对RelayHub的*registerRelay*或*relayCall*的交易的Relayer进行惩罚。
 
 #### getNonce(address from) → uint256
 外部#
@@ -467,11 +467,11 @@ Penalized(relay, sender, amount)
 
 #### Staked(address relay, uint256 stake, uint256 unstakeDelay)
 事件# 
-当> Relayer器的质押或取消质押延迟增加时发出
+当Relayer器的质押或取消质押延迟增加时发出
 
 #### RelayAdded(address relay, address owner, uint256 transactionFee, uint256 stake, uint256 unstakeDelay, string url)
 事件# 
-当一个> Relayer被注册或重新注册时发出。查看这些事件（并过滤掉*RelayRemoved*事件）可以让客户端发现可用的> Relayer列表。
+当一个Relayer被注册或重新注册时发出。查看这些事件（并过滤掉*RelayRemoved*事件）可以让客户端发现可用的Relayer列表。
 
 #### RelayRemoved(address relay, uint256 unstakeTime)
 事件# 
@@ -492,19 +492,19 @@ Penalized(relay, sender, amount)
 
 #### CanRelayFailed(address relay, address from, address to, bytes4 selector, uint256 reason)
 事件#
-当尝试> Relayer呼叫失败时发出。
+当尝试Relayer呼叫失败时发出。
 
-这可能是由于错误的*relayCall*参数或接收方不接受> Relayer呼叫。实际的> Relayer呼叫未执行，并且接收方未收费。
+这可能是由于错误的*relayCall*参数或接收方不接受Relayer呼叫。实际的Relayer呼叫未执行，并且接收方未收费。
 
 reason参数包含一个错误代码：值1-10对应于PreconditionCheck条目，而大于10的值是从*acceptRelayedCall*返回的自定义接收方错误代码。
 
 #### TransactionRelayed(address relay, address from, address to, bytes4 selector, enum IRelayHub.RelayCallStatus status, uint256 charge)
 事件#
-当一个交易被> Relayer时发出。在监控> Relayer的操作和> Relayer调用合约时非常有用。
+当一个交易被Relayer时发出。在监控Relayer的操作和Relayer调用合约时非常有用。
 
 请注意，实际的编码函数可能会被还原：这在状态参数中表示。
 
-charge 是从接收者的余额中扣除的以太币价值，支付给> Relayer的所有者。
+charge 是从接收者的余额中扣除的以太币价值，支付给Relayer的所有者。
 
 #### Penalized(address relay, address sender, uint256 amount)
 事件#

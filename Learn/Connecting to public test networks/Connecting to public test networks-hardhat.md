@@ -43,7 +43,7 @@ Goerli
 虽然您可以自己创建连接到测试网络的[Geth](https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options)或[OpenEthereum](https://openethereum.github.io/wiki/Chain-specification)节点，但最简单的访问测试网络的方法是通过公共节点服务，例如[Alchemy](https://alchemy.com/)或[Infura](https://infura.io/)。Alchemy和Infura通过免费和付费计划提供所有测试网络和主网络的公共节点访问。
 
 > NOTE
-当一个节点可以被公众访问，并且不管理任何账户时，我们称其为公共节点。这意味着它可以回复查询和> Relayer已签名的交易，但不能自行签署交易。
+当一个节点可以被公众访问，并且不管理任何账户时，我们称其为公共节点。这意味着它可以回复查询和Relayer已签名的交易，但不能自行签署交易。
 
 在本指南中，我们将使用Alchemy，但您也可以使用[Infura](https://infura.io/)或其他公共节点提供者。
 

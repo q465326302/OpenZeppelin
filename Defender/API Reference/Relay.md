@@ -3,13 +3,13 @@
 Relay API分为两个模块：
 
 1. Relay Client
-    * 在帐户中执行创建、读取和更新操作，跨所有> Relayer器
+    * 在帐户中执行创建、读取和更新操作，跨所有Relayer器
     * 使用使用Team API Key/Secret生成的令牌进行身份验证（在创建Team API Key时可用）
 
 2. Relay Signer
 
-    * 使用特定> Relayer器执行发送、签名和其他操作
-    * 使用使用Relayer API Key/Secret生成的令牌进行身份验证（在创建> Relayer器时可用）
+    * 使用特定Relayer器执行发送、签名和其他操作
+    * 使用使用Relayer API Key/Secret生成的令牌进行身份验证（在创建Relayer器时可用）
 
 有关身份验证的更多信息，请参阅*身份验证*部分。
 
@@ -23,18 +23,18 @@ Relay API分为两个模块：
 
 Relay客户端模块公开以下终端：
 
-* list：列出与帐户关联的所有> Relayer器
-* create：创建新的> Relayer器
-* retrieve：检索单个> Relayer器的数据
-* update：更新现有> Relayer器
+* list：列出与帐户关联的所有Relayer器
+* create：创建新的Relayer器
+* retrieve：检索单个Relayer器的数据
+* update：更新现有Relayer器
 
-### 列出> Relayer器
+### 列出Relayer器
 
-要列出现有的> Relayer器，您可以在客户端上调用list函数，该函数返回ListRelayerResponse对象：
+要列出现有的Relayer器，您可以在客户端上调用list函数，该函数返回ListRelayerResponse对象：
 ```
 await client.list();
 ```
-relayers/summary端点用于通过GET请求检索现有> Relayer列表。
+relayers/summary端点用于通过GET请求检索现有Relayer列表。
 ```
 curl \
   -X GET \
@@ -61,13 +61,13 @@ curl \
 ]
 ```
 
-### 列出> Relayer器密钥
+### 列出Relayer器密钥
 
-要列出与现有> Relayer器关联的密钥，您可以在客户端上调用listKeys函数，并使用relayerId返回一个RelayerKey对象数组：
+要列出与现有Relayer器关联的密钥，您可以在客户端上调用listKeys函数，并使用relayerId返回一个RelayerKey对象数组：
 ```
 await client.listKeys('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
-/relayers/${relayerId}/keys端点用于通过GET请求检索> Relayer器密钥列表。
+/relayers/${relayerId}/keys端点用于通过GET请求检索Relayer器密钥列表。
 ```
 curl \
   -X GET \
@@ -89,8 +89,8 @@ curl \
 ]
 ```
 
-### 创建> Relayer器
-要创建新的> Relayer器，您需要按照接口CreateRelayerRequest中直接描述的参数提供参数。
+### 创建Relayer器
+要创建新的Relayer器，您需要按照接口CreateRelayerRequest中直接描述的参数提供参数。
 ```
 interface CreateRelayerRequest {
   name: string;
@@ -156,7 +156,7 @@ const requestParameters = {
 
 await client.create(requestParameters);
 ```
-您还可以通过在useAddressFromRelayerId参数中引用现有的relayerId来将现有的> Relayer克隆到不同的网络中：
+您还可以通过在useAddressFromRelayerId参数中引用现有的relayerId来将现有的Relayer克隆到不同的网络中：
 ```
 const requestParameters = {
   name: 'MyClonedRelayer',
@@ -179,22 +179,22 @@ curl \
     "https://defender-api.openzeppelin.com/relayer/relayers"
 ```
 
-#### > Relayer策略
-以下> Relayer策略可以选择性地包含在创建和更新调用中：
+#### Relayer策略
+以下Relayer策略可以选择性地包含在创建和更新调用中：
 
 * gasPriceCap：以 wei 为单位的最大 gasPrice 或 maxFeePerGas
-* whitelistReceivers：一个包含此> Relayer器可以与之交互的所有有效地址的数组；如果未定义此策略，则> Relayer器可以向任何地址发送交易。
+* whitelistReceivers：一个包含此Relayer器可以与之交互的所有有效地址的数组；如果未定义此策略，则Relayer器可以向任何地址发送交易。
 * EIP1559Pricing：一个布尔值，指示默认定价方式。如果为 true，则交易将按照 EIP1559 定价，否则按照传统交易定价。
 * privateTransactions：一个布尔值，指示默认的交易内存池可见性。如果为 true，则交易将通过私有内存池发送。
 
 > NOTE
-EIP1559Pricing 标志仅适用于 EIP1559 网络上的> Relayer器。
+EIP1559Pricing 标志仅适用于 EIP1559 网络上的Relayer器。
 
 > NOTE
 仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[叔叔强盗风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
-## 创建> Relayer器密钥
-通过 API 创建的> Relayer器默认不会有任何关联的> Relayer器密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 RelayerKey（仅在创建时可用的 secretKey）：
+## 创建Relayer器密钥
+通过 API 创建的Relayer器默认不会有任何关联的Relayer器密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 RelayerKey（仅在创建时可用的 secretKey）：
 ```
 await client.createKey('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
@@ -221,8 +221,8 @@ curl \
 ]
 ```
 
-### 更新> Relayer器
-要更新> Relayer器，您可以在客户端上调用更新函数。这将需要> Relayer器ID和UpdateRelayerRequest对象作为参数：
+### 更新Relayer器
+要更新Relayer器，您可以在客户端上调用更新函数。这将需要Relayer器ID和UpdateRelayerRequest对象作为参数：
 ```
 interface UpdateRelayerRequest {
   name?: string;
@@ -260,8 +260,8 @@ curl \
     "https://defender-api.openzeppelin.com/relayer/relayers/{relayerId}"
 ```
 
-### 删除> Relayer键
-要删除与> Relayer器关联的密钥，可以在客户端上调用deleteKey方法，该方法返回一个指示删除状态的消息：
+### 删除Relayer键
+要删除与Relayer器关联的密钥，可以在客户端上调用deleteKey方法，该方法返回一个指示删除状态的消息：
 ```
 await client.deleteKey('58b3d255-e357-4b0d-aa16-e86f745e63b9', 'j3bru93-k32l-3p1s-pp56-u43f675e92p1');
 ```
@@ -285,14 +285,14 @@ curl \
   message: 'j3bru93-k32l-3p1s-pp56-u43f675e92p1 deleted'
 }
 ```
-删除> Relayer（不仅仅是密钥）仅可通过Defender控制台进行。
+删除Relayer（不仅仅是密钥）仅可通过Defender控制台进行。
 
-## > Relayer签名模块参考资料
+## Relayer签名模块参考资料
 Relayer签名模块公开了以下端点：
 
 * txs：将交易发送到以太坊区块链并查询其状态
-* sign：使用> Relayer私钥对任意数据进行签名
-* relayer：从> Relayer获取信息
+* sign：使用Relayer私钥对任意数据进行签名
+* relayer：从Relayer获取信息
 * jsonrpc：对以太坊网络进行json-rpc调用
 
 ### 交易端点
@@ -486,7 +486,7 @@ curl \
 ```
 
 #### 列出交易记录
-要检索最近从您的> Relayer发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（已挖掘、待处理或失败）作为查询参数。
+要检索最近从您的Relayer发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（已挖掘、待处理或失败）作为查询参数。
 
 请求示例：
 ```
@@ -600,9 +600,9 @@ interface SignedMessagePayload {
 }
 ```
 
-### Relayer Endpoint（> Relayer端点）
+### Relayer Endpoint（Relayer端点）
 
-要使用Relay API检索> Relayer器的数据，请向/relayer端点发出GET请求。
+要使用Relay API检索Relayer器的数据，请向/relayer端点发出GET请求。
 
 请求示例：
 ```
@@ -640,7 +640,7 @@ interface RelayerModel {
 ```
 
 ### JSON RPC 端点
-要向您的> Relayer网络发出JSON RPC调用，请向/relayer/jsonrpc端点发出POST请求，并提供方法名称和参数。请注意，不支持事件过滤方法和WebSocket订阅。
+要向您的Relayer网络发出JSON RPC调用，请向/relayer/jsonrpc端点发出POST请求，并提供方法名称和参数。请注意，不支持事件过滤方法和WebSocket订阅。
 
 请求的示例：
 ```

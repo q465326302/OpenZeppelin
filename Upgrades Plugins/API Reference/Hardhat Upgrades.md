@@ -45,7 +45,7 @@ deployProxy和upgradeProxy函数都会返回[ethers.js合约](https://docs.ether
 
 * verifySourceCode: (boolean) 在使用Platform时，是否在区块浏览器上验证源代码。默认为true。
 
-* relayerId: (string) 在使用Platform时，要用于部署的> Relayer器的ID。默认为在Platform上配置的部署环境的> Relayer器。
+* relayerId: (string) 在使用Platform时，要用于部署的Relayer器的ID。默认为在Platform上配置的部署环境的Relayer器。
 
 * salt: (string) 在使用Platform时，使用CREATE2操作码执行部署。使用此选项提供部署的salt。默认为随机salt。
 

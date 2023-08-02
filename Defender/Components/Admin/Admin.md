@@ -207,9 +207,9 @@ Defender Admin支持在OpenZeppelin的Governor合约以及Compound的Alpha和Bra
 ![admin-13.png](img/admin-13.png)
 
 ## Relayer
-您还可以使用其中一个> Relayer器执行提案交易，这样您就无需连接钱包或签署交易的情况下在合约上执行操作。一个使用示例是在您的合约中给予您的> Relayer器特权角色，比如暂停者，然后任何在Defender中访问> Relayer器的人都可以暂停合约，而无需访问Metamask中的任何私钥。
+您还可以使用其中一个Relayer器执行提案交易，这样您就无需连接钱包或签署交易的情况下在合约上执行操作。一个使用示例是在您的合约中给予您的Relayer器特权角色，比如暂停者，然后任何在Defender中访问Relayer器的人都可以暂停合约，而无需访问Metamask中的任何私钥。
 
-要执行此操作，只需将执行策略设置为Relayer并选择有效的> Relayer器。Defender将执行基本检查以确保> Relayer器能够执行提案，然后才会让您继续。
+要执行此操作，只需将执行策略设置为Relayer并选择有效的Relayer器。Defender将执行基本检查以确保Relayer器能够执行提案，然后才会让您继续。
 ![admin-14.png](img/admin-14.png)
 
 一旦您创建了提案，您将能够使用您的Relayer执行它，而无需连接任何钱包。
