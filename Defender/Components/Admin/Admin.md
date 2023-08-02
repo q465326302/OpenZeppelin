@@ -71,7 +71,7 @@ Defender提供了创建此类提案的功能，当ABI包含grantRole和revokeRol
 目前还不支持某些 ABI 类型，例如嵌套结构体。如果您需要调用当前不支持的函数，请联系我们！
 
 ### 批处理
-批处理提案是对多个合约的多个函数进行调用（或仅一个合约）。它允许您在单个交易中原子地执行多个操作。
+批处理提案是对多个合约的多个函数进行调用（或仅一个合约）。它允许您在单个交易中执行多个原子操作。
 
 > NOTE
 目前仅支持使用多重签名（例如Gnosis Safe）进行批量交易，通过对[Gnosis MultiSendCallOnly模块](https://github.com/safe-global/safe-contracts/blob/v1.3.0/contracts/libraries/MultiSendCallOnly.sol)进行DELEGATECALL编码来实现。
@@ -100,7 +100,7 @@ Safe Transaction Service仅在Mainnet、xDai、BSC、Polygon、Avalanche、Auror
 使用Gnosis Safe时，Defender Admin将同步所有签名到和从Safe Transaction Service。这样，您团队中使用[Safe UI](https://gnosis-safe.io/app)的任何管理员仍然可以对Defender Admin提案进行签名。
 
 > NOTE
-Safe合约要求所有提案必须按顺序执行。如果你已经收集了所有提案的签名，但仍无法执行它，请确保没有先前的提案等待执行。
+Safe合约要求所有提案必须按顺序执行。如果你已经收集了所有提案的签名，但仍无法执行它，请确保没有待执行的先前提案。
 
 Gnosis Safe钱包还允许执行DELEGATECALL到其他合约中，以在多签上下文中执行任意代码。您可以使用“defender-admin-client”通过API创建一个Admin action提案来发出委托调用。
 
@@ -123,18 +123,23 @@ Gnosis MultisigWallet要求每个管理员提交新的交易以获得他们的�
 
 ### 从Defender Admin管理您的多重签名
 
-使用Defender创建Gnosis Safe多重签名
+#### 使用Defender创建Gnosis Safe多重签名
+
 https://youtu.be/IOescPDrF7Y
-您可以直接从Defender创建和部署新的Gnosis Safe多重签名钱包。这在官方Gnosis Safe UI尚未可用的网络中特别方便。要创建新的Gnosis Safe，请转到“管理”并单击“合约”，然后单击“创建Gnosis Safe”。您将进入一个简单的表单，要求您提供多重签名的初始所有者列表和门槛。就是这样！
+
+您可以直接从Defender创建和部署新的Gnosis Safe多重签名钱包。这在官方Gnosis Safe用户界面尚未可用的网络中特别方便。要创建新的Gnosis Safe，请转到“管理”并单击“合约”，然后单击“创建Gnosis Safe”。您将进入一个简单的表单，要求您提供多重签名的初始所有者列表和多签的阈值。就是这样！
 
 ### 从Defender修改您的多重签名设置
 您可以通过创建自定义操作提案来修改您的多重签名设置，以执行管理函数addOwner或changeThreshold，就像您导入Defender中的任何其他合约一样。
 ![admin-8.png](img/admin-8.png)
 
 ## 时间锁
-从Defender创建一个时间锁控制器
+
+### 从Defender创建一个时间锁控制器
+
 https://youtu.be/Yi9Y0bcj-Zc
-您可以直接从Defender创建和部署新的Timelock Controller。要创建新的Timelock，请转到“管理”并单击“合约”，然后单击“创建Timelock”。您将进入一个简单的表格，在那里您将被要求提供最初的提议者和执行者列表，以及提议执行的最小延迟时间。
+
+您可以直接从Defender创建和部署新的Timelock Controller。要创建新的Timelock，请进入“Admin”并点击“Contracts”，然后单击“Create timelock”。您将进入一个简单的表格，需要提供初始的提议者和执行者列表，以及提案执行的最小延迟时间。
 
 为了在etherscan上验证合约，您可以在下面找到源代码和编译器设置：
 
@@ -154,22 +159,25 @@ solidity: {
 ```
 
 ### 将合约所有权转移给TimelockController
-为了利用时间锁执行函数，需要将其分配访问权限到相应的智能合约，可以通过角色或所有权来实现。可以通过调用transferOwnership或相*关角色*分配函数来完成。
+为了利用时间锁执行函数，需要将其分配访问权限到相应的智能合约，可以通过角色或所有权来实现。可以通过调用transferOwnership或相关[角色分配](../../../Contracts/Contracts.3.x/Access%20Control.md)函数来完成。
+
 https://youtu.be/cXDp2n5al7U
 
 ### 创建时间锁定提案
-Defender Admin支持通过OpenZeppelin Contracts库提供的*TimelockController合约进行时间锁定的管理提案*。
+Defender Admin支持通过OpenZeppelin Contracts库提供的[TimelockController合约进行时间锁定的管理提案](../../../Contracts/Contracts.4.x/Access%20Control.md)。
+
 https://youtu.be/59p98wGqdVo
+
 要执行一个时间锁定的提案，您需要：
 
-1. 一个多重签名（或EOA），作为TimelockController中的提案人。
+1. 一个在TimelockController中作为提案者的多签名（或EOA）。
 
-2. 一个具有您想在合约上运行的操作权限的TimelockController。
+2. 一个具有对你想要在合约上运行的操作的权限的TimelockController。
 
-一旦权限得到适当的设置，只需像平常一样创建一个提案，在执行策略部分勾选Timelock复选框。然后输入您的timelock地址，并选择批准提案和执行之间的最小延迟时间。
+一旦适当的权限设置好了，只需像平常一样创建一个提案，在执行策略部分勾选Timelock复选框。然后输入您的timelock地址，并选择批准提案和执行之间的最小延迟时间。
 ![admin-9.png](img/admin-9.png)
 
-请注意，无论是通过多重签名还是EOA（外部账户）批准，您都可以创建一个时间锁定的提案。只要正确的链上权限结构得到设置，任何批准政策都应该可以运作。
+请注意，无论是通过多重签名还是EOA（外部账户）进行批准，您都可以创建一个时间锁定的提案。只要正确的链上权限结构得到设置，任何批准政策都可以起作用。
 ![admin-10.png](img/admin-10.png)
 
 ### 管理时间锁定的提案
@@ -177,7 +185,7 @@ https://youtu.be/59p98wGqdVo
 
 1. 收集足够的多签所有者批准（根据多签的当前配置）。
 
-2. 安排行动，具有指定的延迟期。请注意，使用的多签需要是TimelockController合约中的提议者。在此阅读更多信息。
+2. 安排行动，具有指定的延迟期。请注意，使用的多签需要是TimelockController合约中的提议者。[在此阅读更多信息](../../../Contracts/Contracts.4.x/Access%20Control.md)。
 
 3. 在指定的延迟期结束后执行操作。值得注意的是，在TimelockController合约中执行此操作的EOA需要是执行者。
 
@@ -189,7 +197,7 @@ https://youtu.be/z6EP6JTj7ME
 ## 治理
 您还可以将Admin提案的控制委托给Governor合约。要创建Governor提案，只需将执行策略设置为Governor，并输入有效的Governor合约地址。Defender将执行基本检查以验证合约是否实际符合Governor接口，然后才会让您继续进行。
 
-Defender Admin支持在OpenZeppelin的Governor合约以及Compound的Alpha和Bravo方言上创建提案。
+Defender Admin支持在OpenZeppelin的Governor合约以及Compound的Alpha和Bravo上创建提案。
 ![admin-11.png](img/admin-11.png)
 
 一旦您输入了这些详细信息，Defender将允许您将提案发送到Governor合约。
@@ -199,7 +207,7 @@ Defender Admin支持在OpenZeppelin的Governor合约以及Compound的Alpha和Bra
 ![admin-13.png](img/admin-13.png)
 
 ## Relayer
-您还可以使用其中一个中继器执行提案交易，这样您就无需连接钱包或签署交易即可在合约上执行操作。一个例子是将特权角色（如暂停器）授予您的中继器，这样在Defender中具有中继器访问权限的任何人都可以暂停合约，而无需访问metamask中的任何私钥。
+您还可以使用其中一个中继器执行提案交易，这样您就无需连接钱包或签署交易的情况下在合约上执行操作。一个使用示例是在您的合约中给予您的中继器特权角色，比如暂停者，然后任何在Defender中访问中继器的人都可以暂停合约，而无需访问Metamask中的任何私钥。
 
 要执行此操作，只需将执行策略设置为Relayer并选择有效的中继器。Defender将执行基本检查以确保中继器能够执行提案，然后才会让您继续。
 ![admin-14.png](img/admin-14.png)
@@ -214,39 +222,41 @@ Defender Admin支持在OpenZeppelin的Governor合约以及Compound的Alpha和Bra
 ![admin-27.png](img/admin-27.png)
 这将触发Defender生成公钥/私钥对。然后生成CSR，并用私钥签名并安全地存储以防止泄露。
 
-接下来，在创建新的API用户时，您需要在Fireblocks UI中导入CSR。请注意，API用户将需要任何至少可以启动交易的角色，例如签名者。
+接下来，在[创建新的API用户](https://support.fireblocks.io/hc/en-us/articles/4407823826194-Adding-New-API-Users#h_01FT8BDHNE49TJP8ARZ6ZYQY5J)时，您需要在Fireblocks UI中导入CSR。请注意，API用户将需要任何至少具备可以启动交易的角色，例如签名者。
 ![admin-16.png](img/admin-16.png)
-一旦API用户已经被Fireblocks工作区所有者创建并批准，复制Fireblocks API密钥并导航到Fireblocks API密钥页面。您应该会看到一个不完整的API密钥设置，您可以编辑并使用Fireblocks API密钥完成它。请注意，除非您完成设置或删除以前不完整的设置，否则您将无法生成新的CSR文件。
+
+一旦API用户已经被Fireblocks工作区所有者创建并批准，复制Fireblocks API密钥并导航到Fireblocks API密钥页面。您应该会看到一个不完整的API密钥设置，您可以编辑并使用Fireblocks API密钥完成设置。请注意，除非您完成设置或删除以前不完整的设置，否则您将无法生成新的CSR文件。
 ![admin-28.png](img/admin-28.png)
 ![admin-17.png](img/admin-17.png)
 
-要通过Defender向Fireblocks提交交易，请确保在Fireblocks中设置了正确的权限，例如相关的白名单地址和交易访问策略（TAP）。例如，您可能需要将您希望与之交互的合约地址加入白名单，同时确保新创建的API用户被允许与定义在TAP中的相关账户和保险库进行交互。
+要通过Defender向Fireblocks提交交易，请确保在Fireblocks中设置了正确的权限，例如相关的白名单地址和交易访问策略（TAP）。例如，您可能需要将您希望与之交互的合约地址加入白名单，同时确保新创建的API用户允许和定义在TAP中的相关账户和保险库进行交互。
 ![admin-18.png](img/admin-18.png)
-一旦配置完成，您将能够通过提议提交交易。选择Fireblocks作为执行策略，API密钥和您希望从中启动交易的保险库。提交后，Defender将跟踪交易的状态。请注意，Defender不允许您在UI上批准或拒绝交易。这将需要Fireblocks移动应用程序或控制台。
+
+一旦配置完成，您将能够通过提议提交交易。选择Fireblocks作为执行策略，并选择您希望从中发起交易的API密钥和保险库。提交后，Defender将跟踪交易的状态。请注意，Defender不允许您在UI上批准或拒绝交易。这将需要Fireblocks移动应用程序或控制台。
 ![admin-19.png](img/admin-19.png)
 
 ## 钱包
-今天在Defender Admin中的所有批准都通过Metamask处理。Defender Admin还通过[Metamask支持硬件钱包](https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet)。到目前为止，我们已经测试了与[Ledger Nano](https://www.ledger.com/)的支持。如果您想使用不同的钱包（软件或硬件）与Defender配合使用，请联系我们。
+Defender Admin今天所有的批准都通过Metamask处理。Defender Admin还通过[Metamask支持硬件钱包](https://metamask.zendesk.com/hc/en-us/articles/360020394612-How-to-connect-a-Trezor-or-Ledger-Hardware-Wallet)。到目前为止，我们已经测试了与[Ledger Nano](https://www.ledger.com/)的支持。如果您想使用不同的钱包（软件或硬件）与Defender配合使用，请联系我们。
 
 ## 地址簿
-您团队的所有成员都可以共享一个地址簿，您可以在其中为您的账户或合约定义用户友好的名称。您可以在 Defender 中任何看到地址的地方单击它来设置这些名称，或者您可以在右上角用户菜单中的相应部分管理您的整个地址簿。当您将新合约导入 Admin 时，Defender 也会自动为您创建地址簿条目。
+您团队的所有成员都可以共享一个地址簿，您可以在其中为您的账户或合约定义易于使用的名称。您可以在 Defender 中任何看到地址的地方单击它来设置这些名称，或者您可以在右上角用户菜单中的相应部分管理您的整个地址簿。当您将新合约导入 Admin 时，Defender 也会自动为您创建地址簿条目。
 ![admin-20.png](img/admin-20.png)
 
 Defender还将在需要输入地址时从通讯录中获取信息，因此您可以轻松地从通讯录中获取地址以创建新的提案或发送交易。
 ![admin-21.png](img/admin-21.png)
 
 ## 模拟和影响
-Defender可以模拟与任何待处理提案相关的交易，因此您可以在批准提案之前审查执行提案的影响。该交易被模拟，就像在最近的已确定块上运行一样，确认数取决于网络，并直接从执行合约（通常是多签）发送到接收方。模拟使用Hardhat分叉作为动力，并存储供其他团队成员审查。
+Defender可以模拟与任何待处理提案相关的交易，因此您可以在批准提案之前审查执行提案的影响。该交易将被模拟，就像在最近的已确定块上运行一样，确认数取决于网络，并直接从执行合约（通常是多签）发送到接收方。模拟是使用Hardhat fork技术实现的，并且存储供团队其他成员审查
 
 模拟将显示：
 
 * ERC20代币转移
 
-* 在交易中发出的事件
+* 交易中发出的事件
 
-* 所有涉及到的合约的存储更改
+* 涉及交易的所有合约的变化
 
-* 所有涉及到的合约的公共getter的更改
+* 涉及交易的所有合约的公共getter方法的变化
 ![admin-22.png](img/admin-22.png)
 
 > NOTE
@@ -267,36 +277,36 @@ Defender可以模拟与任何待处理提案相关的交易，因此您可以在
 要从用户界面验证，请导航到升级提案。您将看到一个On-chain bytecode verification status部分。当Defender没有关于所提出的新实现的字节码的任何信息时，此部分如下图所示。
 ![admin-23.png](img/admin-23.png)
 
-然后，您可以单击“验证字节码”，将Defender指向与新实现的部署字节码匹配的编译成果。
+然后，您可以单击“验证字节码”，将Defender指向与新实现的部署字节码匹配的编译产物。
 ![admin-24.png](img/admin-24.png)
 
 Defender将要求您提供三个信息以继续验证过程：
 
-* **Hardhat构建工件URL**：一个公开可访问的URL，指向Hardhat构建输出文件。Defender将提取新实现的字节码，并将其与新实现地址上链上找到的字节码进行匹配。
+* **Hardhat构建工件URL**：一个公开可访问的URL，指向Hardhat构建输出文件。Defender将提取新实现的字节码，并将其与新实现地址上的链上字节码进行匹配。
 
-* **构建工件中Solidity文件的路径**：某些构建工件格式包含多个合约的多个编译输出。此路径告诉Defender在哪里查找定义要验证的合约的.sol文件。
+* **构建工件中Solidity文件的路径**：某些构建工件格式包含多个合约的多个编译输出。此路径告诉Defender在何处查找定义要验证的合约的.sol文件。
 
 * **Solidity文件中的合约名称**：由于Solidity文件可以包含多个合约声明，因此我们要求您指示哪个合约对应于要验证的实现。
 
-单击“验证实现”后，Defender将从您提供的URL中提取工件并尝试将其与部署在新实现地址的字节码进行匹配。
+单击“验证实现”后，Defender将从您提供的URL中获取构建产物，并尝试将其与部署在新实现地址上的字节码进行匹配。
 
 这可能会产生以下四种结果之一：
 
-* **Defender无法处理您的验证请求。**例如，如果您提供的编译工件URL不是公开可访问的，或者工件格式当前不受支持，就可能发生这种情况。
+* **Defender无法处理您的验证请求。**例如，如果您提供的编译工件URL不是公开可访问的，或者产物的格式目前不受支持，就会出现这种情况。
 
-* **Defender验证编译工件与部署的字节码完全匹配。**
+* **Defender验证编译产物与部署的字节码完全匹配。**
 
-* **Defender验证编译工件与部署的字节码部分匹配。**这通常意味着字节码匹配，除了元数据哈希之外，这通常意味着编译工件和部署的字节码在功能上是等效的，但在理论上它们可能在注释或变量名称等方面不同。实际上，源代码中可能隐藏着有副作用的指令，因此对具有此验证结果的合约进行额外的评估。值得注意的是，由于Solidity编译器的内部原因，根据合约的不同，可能无法获得完全匹配。在这种情况下，部分匹配是我们可以接近字节码验证的最佳方式。
+* **Defender验证编译产物与部署的字节码部分匹配。**这通常意味着字节码匹配，除了元数据哈希之外，这通常意味着编译产物和部署的字节码在功能上是等效的，但在理论上它们可能在注释或变量名称等方面不同。实际上，源代码中可能隐藏着有副作用的指令，因此对具有此验证结果的合约进行额外的评估。值得注意的是，由于Solidity编译器的内部原因，根据合约的不同，可能无法获得完全匹配。在这种情况下，部分匹配是我们能够接近字节码验证的最佳结果。
 
-* **Defender可以处理您的验证请求，但发现编译工件和部署的字节码不匹配，甚至不部分匹配。**在这种情况下，升级提案的签署者不应批准该提案。
+* **Defender可以处理您的验证请求，但发现编译工件和部署的字节码不匹配，甚至部分匹配都没有。**在这种情况下，升级提案的签署者不应批准该提案。
 
 下面是一个完全匹配的示例。
 ![admin-25.png](img/admin-25.png)
 
-为了进行程序验证，我们强烈建议使用hardhat-defender插件。但是，您也可以使用defender-client包（请参见此处的验证示例），或直接与原始REST API进行交互。这些组件相互构建，因此最终所有功能都可通过任何一个组件使用。我们仍然建议您使用hardhat-defender插件以获得最流畅的体验。
+为了以编程方式进行验证，我们强烈推荐使用[hardhat-defender插件](https://www.npmjs.com/package/@openzeppelin/hardhat-defender#verification)。但是，您也可以使用[defender-client包](https://www.npmjs.com/package/defender-admin-client)（[请参见此处的验证示例](https://github.com/OpenZeppelin/defender-client/tree/master/examples/verify-contract)），或直接与原始REST API进行交互。这些组件彼此构建，因此最终所有功能都可通过任何一个组件使用。我们仍然建议您使用hardhat-defender插件以获得最流畅的体验。
 
 ### 验证任何合约
-虽然我们预计大多数Defender用户将使用此功能来帮助确保其升级工作流程的安全性，但值得注意的是，无论是否是可升级实现，验证功能都可用于任何合约。
+虽然我们预计大多数Defender用户将使用此功能来帮助确保其升级工作流程的安全性，但值得注意的是，验证功能适用于任何合约，无论它是否是可升级实现。
 
 在这种情况下，验证的UI可以在Defender中悬停任何合约地址并单击“验证”来找到。
 ![admin-26.png](img/admin-27.png)
@@ -304,11 +314,11 @@ Defender将要求您提供三个信息以继续验证过程：
 同样地，您也可以使用defender-admin-client客户端库或@openzeppelin/hardhat-defender插件来触发任何合约的程序验证。已验证的合约不需要参与升级。
 
 ## 安全考虑
-Defender Admin 仅作为您的合约和多重签名钱包的接口。这意味着使用 Admin 管理合约时，您不会授予 Defender 任何对您的合约的权利。所有提案批准都是通过 Metamask 使用管理员用户私钥在客户端签名的。Defender Admin 后端仅涉及存储提案元数据和共享批准签名，当这些签名未存储在链上时。最终，多重签名钱包合约会验证这些批准并执行所提议的操作。
+Defender Admin 仅作为您的合约和多重签名钱包的接口。这意味着使用 Admin 管理合约时，您不会授予 Defender 任何对您的合约的权利。所有提案批准都是通过 Metamask 使用管理员用户私钥在客户端签名的。Defender Admin 后端仅涉及存储提案元数据并在这些元数据未存储在链上时共享批准签名。最终，多重签名钱包合约会验证这些批准并执行所提议的操作。
 
-Defender Admin 对安全性的主要贡献与可用性有关。首先，它自动化了提案交易的制作过程，避免了手动错误。其次，它提供了一个清晰的界面，可以在不必手动解码提案十六进制数据的情况下查看提案。
+Defender Admin 对安全性的主要贡献与可用性有关。首先，它自动化了提案创建交易的过程，避免了手动错误。其次，它提供了一个清晰的界面，用于审查提案，而无需手动解码提案的十六进制数据。
 
 ## Hedera支持
-在Hedera网络上，目前Defender Admin只支持测试网。要使用此功能，请通过*defender@openzeppelin.com*与我们联系。
+在Hedera网络上，目前只支持测试网。一旦[Hedera JSON RPC Relay](https://docs.hedera.com/hedera/core-concepts/smart-contracts/json-rpc-relay)服务退出测试版，Defender将提供Hedera主网支持。
 
-我们目前正在测试治理执行策略和可升级合约管理，它们还未在Admin模块上可用，但很快就会推出。
+我们目前正在测试治理执行策略和可升级合约管理，它们尚未在Admin模块上可用，但将很快提供。
