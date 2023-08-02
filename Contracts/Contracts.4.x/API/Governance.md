@@ -487,7 +487,7 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### relay(address target, uint256 value, bytes data)
 外部#
-将交易或函数调用转发到任意目标。在使用时间锁定等合约作为治理执行者的情况下，可以在治理提案中调用此函数来恢复错误发送到治理合约的代币或以太币。请注意，如果执行者只是治理本身，则使用中继是多余的。
+将交易或函数调用转发到任意目标。在使用时间锁定等合约作为治理执行者的情况下，可以在治理提案中调用此函数来恢复错误发送到治理合约的代币或以太币。请注意，如果执行者只是治理本身，则使用> Relayer是多余的。
 
 #### _executor() → address
 内部#
@@ -933,7 +933,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.so
 使用这个模型意味着提案将由*TimelockController*操作，而不是由*Governor*操作。因此，资产和权限必须附加到*TimelockController*上。发送到*Governor*的任何资产将无法访问。
 
 > WARNING
-在TimelockController中设置额外的提议者，除了治理者之外，是非常危险的，因为它赋予了他们一些必须信任或者知道他们不会使用的权力：1）只有*onlyGovernance*功能（如*中继*）可以通过Timelock进行操作，2）他们可以阻止已批准的治理提案，从而有效地执行拒绝服务攻击。这个风险将在未来的版本中得到缓解。
+在TimelockController中设置额外的提议者，除了治理者之外，是非常危险的，因为它赋予了他们一些必须信任或者知道他们不会使用的权力：1）只有*onlyGovernance*功能（如*> Relayer*）可以通过Timelock进行操作，2）他们可以阻止已批准的治理提案，从而有效地执行拒绝服务攻击。这个风险将在未来的版本中得到缓解。
 *从v4.3版本开始提供。*
 
 **FUNCTIONS**

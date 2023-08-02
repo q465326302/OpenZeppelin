@@ -29,7 +29,7 @@ yarn add defender-serverless
 
 * 利用defender-serverless存储库中提供的示例模板。
 
-如果您已经在Defender中拥有资源，例如合约、通知、中继、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
+如果您已经在Defender中拥有资源，例如合约、通知、> Relayer、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
 ![serverless-plugin-1.png](img/serverless-plugin-1.png)
 
 > NOTE
@@ -89,7 +89,7 @@ plugins:
 stackName（例如mystack）与资源键（例如relayer-1）结合使用，以唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.relayer-1），允许您在同一Defender团队中管理多个部署。
 
 ### SSOT模式
-在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着，除了中继器之外，在您当前模板文件中未定义的所有Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
+在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着，除了> Relayer器之外，在您当前模板文件中未定义的所有Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
 
 任何从serverless.yml文件中删除的资源都不会自动删除，以防止意外的资源删除。为了预期这种行为，必须启用SSOT模式。
 
@@ -132,7 +132,7 @@ secrets:
 
 此外，serverless.yml文件可能包含一个ssot属性。有关更多信息，请参见*SSOT模式*部分。
 
-此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的中继器密钥，则将这些密钥存储为JSON对象在.defender / relayer-keys文件夹中。
+此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的> Relayer器密钥，则将这些密钥存储为JSON对象在.defender / relayer-keys文件夹中。
 
 > WARNING
 在安装模板时，我们确保忽略.defender文件夹中的任何git提交。但是，如果直接安装，请确保将此文件夹添加到您的.gitignore文件中。
@@ -146,7 +146,7 @@ secrets:
 您可以使用sls remove删除在serverless.yml文件中定义的所有Defender资源。
 
 > NOTE
-为了避免潜在的资金损失，只能直接从Defender UI中删除中继器。
+为了避免潜在的资金损失，只能直接从Defender UI中删除> Relayer器。
 
 ### 日志
 

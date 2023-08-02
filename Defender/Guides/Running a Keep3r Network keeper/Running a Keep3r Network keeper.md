@@ -30,12 +30,12 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 ![guide-keep3r-1.png](img/guide-keep3r-1.png)
 
 > WARNING
-如果创建主网中继的选项被锁定，那么这意味着您的Defender账户还没有主网访问权限。请先[申请主网访问权限](https://openzeppelin.com/apply/)，并等待我们的回复。
+如果创建主网> Relayer的选项被锁定，那么这意味着您的Defender账户还没有主网访问权限。请先[申请主网访问权限](https://openzeppelin.com/apply/)，并等待我们的回复。
 
-## 为中继筹资
-下一步是向您的中继发送ETH，以便它有资金执行工作。复制您的新中继的以太坊地址，并使用您喜欢的钱包向其发送ETH。您可以发送任意金额，但最好至少有大约0.2 ETH，以便在用尽之前发送一些交易。
+## 为> Relayer筹资
+下一步是向您的> Relayer发送ETH，以便它有资金执行工作。复制您的新> Relayer的以太坊地址，并使用您喜欢的钱包向其发送ETH。您可以发送任意金额，但最好至少有大约0.2 ETH，以便在用尽之前发送一些交易。
 
-交易确认后，您应该在中继的余额中看到您转移的资金。
+交易确认后，您应该在> Relayer的余额中看到您转移的资金。
 ![guide-keep3r-2.png](img/guide-keep3r-2.png)
 
 > NOTE
@@ -52,21 +52,21 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 您可以使用零个绑定的KP3R代币，如果您想这样做，可以随后绑定更多代币。
 ![guide-keep3r-3.png](img/guide-keep3r-3.png)
 
-完成将您的中继器绑定的交易后，您的中继器将进入一个**为期3天的等待期**，在此期间无法手动*激活*为Keeper。您可以随时访问您的中继器页面，以查看剩余时间。
+完成将您的> Relayer器绑定的交易后，您的> Relayer器将进入一个**为期3天的等待期**，在此期间无法手动*激活*为Keeper。您可以随时访问您的> Relayer器页面，以查看剩余时间。
 ![guide-keep3r-4.png](img/guide-keep3r-4.png)
 
-等待期结束后，您可以手动激活您的中继器。
+等待期结束后，您可以手动激活您的> Relayer器。
 ![guide-keep3r-5.png](img/guide-keep3r-5.png)
 
 > NOTE
 你可以随时选择再次绑定到Keep3r网络。这将允许你绑定额外的KP3R代币，但会将等待期重置为3天，然后你需要*手动激活*成为Keeper。
 
-## 激活你的中继器
+## 激活你的> Relayer器
 
 等待3天的期限结束后，你将有选项手动激活成为keep3r。
 ![guide-keep3r-6.png](img/guide-keep3r-6.png)
 
-这样做将发送一笔交易，将您的中继器作为网络中的管理者激活，状态将变为活跃。
+这样做将发送一笔交易，将您的> Relayer器作为网络中的管理者激活，状态将变为活跃。
 ![guide-keep3r-7.png](img/guide-keep3r-7.png)
 
 ## 创建Autotask
