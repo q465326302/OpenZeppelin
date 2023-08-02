@@ -467,7 +467,7 @@ Penalized(relay, sender, amount)
 
 #### Staked(address relay, uint256 stake, uint256 unstakeDelay)
 事件# 
-当Relayer器的质押或取消质押延迟增加时发出
+当中继器的质押或取消质押延迟增加时发出
 
 #### RelayAdded(address relay, address owner, uint256 transactionFee, uint256 stake, uint256 unstakeDelay, string url)
 事件# 

@@ -3,7 +3,7 @@
 
 使用OpenZeppelin Defender可以轻松安全地实现无燃气元交易Relayer，通过[Relayer](https://docs.openzeppelin.com/defender/relay)。Defender Relay允许您轻松发送交易，并处理私钥存储、交易签名、nonce管理、燃气估算以及必要时的自动重新提交。
 
-此[演示应用程序](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)使用*MinimalForwarder*和*ERC2771Context*实现元交易，以将msg.sender与Relayer器的地址分离。所有用户需要做的就是使用他们想要发出交易的账户签署消息。签名是使用用户的私钥从目标合约和所需交易的数据形成的。这种签名在链外进行，不需要燃气费用。将签名传递给Relayer，以便它可以为用户执行交易（并支付燃气费用）。
+此[演示应用程序](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)使用*MinimalForwarder*和*ERC2771Context*实现元交易，以将msg.sender与中继器的地址分离。所有用户需要做的就是使用他们想要发出交易的账户签署消息。签名是使用用户的私钥从目标合约和所需交易的数据形成的。这种签名在链外进行，不需要燃气费用。将签名传递给Relayer，以便它可以为用户执行交易（并支付燃气费用）。
 
 ## 演示应用程序概述
 您可以在此处查看[实时演示dapp](https://defender-metatx-workshop-demo.openzeppelin.com/)。如果用户有可用的资金支付交易，则直接接受注册，否则将数据作为元交易发送。
@@ -22,22 +22,22 @@ $ cd workshops/25-defender-metatx-api/
 $ yarn
 ```
 
-在项目根目录中创建一个.env文件，并提供来自Defender的Team API密钥和密钥。本地测试将使用私钥，但Relayer器将用于实际的合约部署。
+在项目根目录中创建一个.env文件，并提供来自Defender的Team API密钥和密钥。本地测试将使用私钥，但中继器将用于实际的合约部署。
 ```
 PRIVATE_KEY="Goerli private key"
 TEAM_API_KEY="Defender Team API key, used for uploading autotask code"
 TEAM_API_SECRET="Defender Team API secret"
 ```
 
-## 创建Relayer器
-运行Relayer器创建脚本：
+## 创建中继器
+运行中继器创建脚本：
 ```
 $ yarn create-relay
 ```
 
 编辑 [scripts/createRelay.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/scripts/createRelay.js) 文件，在 .env 文件中提供您的 Defender API 密钥，并根据需要调整变量名称。
 
-使用 create 方法创建Relayer器：
+使用 create 方法创建中继器：
 ```
 const relayClient = new RelayClient({ apiKey, apiSecret });
 

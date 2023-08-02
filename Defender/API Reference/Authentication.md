@@ -38,4 +38,4 @@ print('Access Token', tokens['AuthenticationResult']['AccessToken'])
 
 * 管理员API位于defender-api.openzeppelin.com主机上，身份验证由用户池us-west-2_94f3puJWv和客户端40e58hbc7pktmnp9i26hh5nsav提供。您将需要团队API密钥进行身份验证，这些密钥可以在Defender的右上角菜单中找到。
 
-* Relayer器API位于api.defender.openzeppelin.com主机上，身份验证由用户池us-west-2_iLmIggsiy和客户端1bpd19lcr33qvg5cr3oi79rdap提供。您将需要生成Relayer器API密钥进行身份验证，这些密钥在每个Relayer器的页面中创建。
+* 中继器API位于api.defender.openzeppelin.com主机上，身份验证由用户池us-west-2_iLmIggsiy和客户端1bpd19lcr33qvg5cr3oi79rdap提供。您将需要生成中继器API密钥进行身份验证，这些密钥在每个中继器的页面中创建。

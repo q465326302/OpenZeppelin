@@ -3,13 +3,13 @@
 Relay API分为两个模块：
 
 1. Relay Client
-    * 在帐户中执行创建、读取和更新操作，跨所有Relayer器
+    * 在帐户中执行创建、读取和更新操作，跨所有中继器
     * 使用使用Team API Key/Secret生成的令牌进行身份验证（在创建Team API Key时可用）
 
 2. Relay Signer
 
-    * 使用特定Relayer器执行发送、签名和其他操作
-    * 使用使用Relayer API Key/Secret生成的令牌进行身份验证（在创建Relayer器时可用）
+    * 使用特定中继器执行发送、签名和其他操作
+    * 使用使用Relayer API Key/Secret生成的令牌进行身份验证（在创建中继器时可用）
 
 有关身份验证的更多信息，请参阅*身份验证*部分。
 
@@ -23,14 +23,14 @@ Relay API分为两个模块：
 
 Relay客户端模块公开以下终端：
 
-* list：列出与帐户关联的所有Relayer器
-* create：创建新的Relayer器
-* retrieve：检索单个Relayer器的数据
-* update：更新现有Relayer器
+* list：列出与帐户关联的所有中继器
+* create：创建新的中继器
+* retrieve：检索单个中继器的数据
+* update：更新现有中继器
 
-### 列出Relayer器
+### 列出中继器
 
-要列出现有的Relayer器，您可以在客户端上调用list函数，该函数返回ListRelayerResponse对象：
+要列出现有的中继器，您可以在客户端上调用list函数，该函数返回ListRelayerResponse对象：
 ```
 await client.list();
 ```
@@ -61,13 +61,13 @@ curl \
 ]
 ```
 
-### 列出Relayer器密钥
+### 列出中继器密钥
 
-要列出与现有Relayer器关联的密钥，您可以在客户端上调用listKeys函数，并使用relayerId返回一个RelayerKey对象数组：
+要列出与现有中继器关联的密钥，您可以在客户端上调用listKeys函数，并使用relayerId返回一个RelayerKey对象数组：
 ```
 await client.listKeys('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
-/relayers/${relayerId}/keys端点用于通过GET请求检索Relayer器密钥列表。
+/relayers/${relayerId}/keys端点用于通过GET请求检索中继器密钥列表。
 ```
 curl \
   -X GET \
@@ -89,8 +89,8 @@ curl \
 ]
 ```
 
-### 创建Relayer器
-要创建新的Relayer器，您需要按照接口CreateRelayerRequest中直接描述的参数提供参数。
+### 创建中继器
+要创建新的中继器，您需要按照接口CreateRelayerRequest中直接描述的参数提供参数。
 ```
 interface CreateRelayerRequest {
   name: string;
@@ -183,18 +183,18 @@ curl \
 以下Relayer策略可以选择性地包含在创建和更新调用中：
 
 * gasPriceCap：以 wei 为单位的最大 gasPrice 或 maxFeePerGas
-* whitelistReceivers：一个包含此Relayer器可以与之交互的所有有效地址的数组；如果未定义此策略，则Relayer器可以向任何地址发送交易。
+* whitelistReceivers：一个包含此中继器可以与之交互的所有有效地址的数组；如果未定义此策略，则中继器可以向任何地址发送交易。
 * EIP1559Pricing：一个布尔值，指示默认定价方式。如果为 true，则交易将按照 EIP1559 定价，否则按照传统交易定价。
 * privateTransactions：一个布尔值，指示默认的交易内存池可见性。如果为 true，则交易将通过私有内存池发送。
 
 > NOTE
-EIP1559Pricing 标志仅适用于 EIP1559 网络上的Relayer器。
+EIP1559Pricing 标志仅适用于 EIP1559 网络上的中继器。
 
 > NOTE
 仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[叔叔强盗风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
-## 创建Relayer器密钥
-通过 API 创建的Relayer器默认不会有任何关联的Relayer器密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 RelayerKey（仅在创建时可用的 secretKey）：
+## 创建中继器密钥
+通过 API 创建的中继器默认不会有任何关联的中继器密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 RelayerKey（仅在创建时可用的 secretKey）：
 ```
 await client.createKey('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
@@ -221,8 +221,8 @@ curl \
 ]
 ```
 
-### 更新Relayer器
-要更新Relayer器，您可以在客户端上调用更新函数。这将需要Relayer器ID和UpdateRelayerRequest对象作为参数：
+### 更新中继器
+要更新中继器，您可以在客户端上调用更新函数。这将需要中继器ID和UpdateRelayerRequest对象作为参数：
 ```
 interface UpdateRelayerRequest {
   name?: string;
@@ -261,7 +261,7 @@ curl \
 ```
 
 ### 删除Relayer键
-要删除与Relayer器关联的密钥，可以在客户端上调用deleteKey方法，该方法返回一个指示删除状态的消息：
+要删除与中继器关联的密钥，可以在客户端上调用deleteKey方法，该方法返回一个指示删除状态的消息：
 ```
 await client.deleteKey('58b3d255-e357-4b0d-aa16-e86f745e63b9', 'j3bru93-k32l-3p1s-pp56-u43f675e92p1');
 ```
@@ -602,7 +602,7 @@ interface SignedMessagePayload {
 
 ### Relayer Endpoint（Relayer端点）
 
-要使用Relay API检索Relayer器的数据，请向/relayer端点发出GET请求。
+要使用Relay API检索中继器的数据，请向/relayer端点发出GET请求。
 
 请求示例：
 ```

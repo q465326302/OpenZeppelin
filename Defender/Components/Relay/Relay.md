@@ -47,7 +47,7 @@ Relayer的API密钥与其私钥无关。私钥始终保存在安全的密钥保�
 ### 政策
 您可以通过指定策略来限制Relayer的行为。
 
-要配置您的Relayer策略，请转到 Relayer设置页面，单击齿轮图标按钮，选择“管理策略”。然后，您将看到一个表单，您可以选择启用策略并调整其参数。
+要配置您的Relayer策略，请转到Relayer设置页面，单击齿轮图标按钮，选择“管理策略”。然后，您将看到一个表单，您可以选择启用策略并调整其参数。
 
 目前，这些是不同的可选策略：
 
@@ -64,18 +64,19 @@ Relayer的API密钥与其私钥无关。私钥始终保存在安全的密钥保�
 接收者白名单仅适用于交易的to字段。它不过滤ERC20或其他资产的接收者。
 
 #### EIP1559定价
-指定Relayer发送的交易是否应默认为EIP1559。这适用于Relayer使用*speed*参数发送交易或未指定gasPrice或maxFeePerGas / maxPriorityFeePerGas的情况。请注意，这仅适用于EIP1559兼容的网络。
+指定Relayer发送的交易是否应默认为EIP1559。这适用于Relayer使用_speed_参数发送交易或未指定gasPrice或maxFeePerGas / maxPriorityFeePerGas的情况。请注意，这仅适用于EIP1559兼容的网络。
 
 > NOTE
-EIP1559定价策略默认为新Relayer启用。如果您有一个没有默认选择的Relayer，则始终可以启用此标志。
+EIP1559定价策略默认对新Relayer启用。如果您有一个没有默认选择的Relayer，则始终可以启用此标志。
 
 #### 私人交易
-指定交易是否应通过私有mempool发送。这意味着交易在包含在块中之前不会公开显示。
+指定交易是否应通过私有mempool发送。这意味着在交易包含在区块中之前，交易不会公开可见。
 
-通过使用[Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)仅为goerli和mainnet启用私人交易。因此，发送私人交易时可能适用相同的[关键考虑因素](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)（例如[uncle bandit风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
+> NOTE
+通过使用[Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)，私有交易仅在goerli和mainnet上启用。因此，通过Defender发送私有交易时可能适用相同的[密钥注意事项](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)（例如[uncle bandit风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
 ## 发送交易
-通过Relayer发送交易的最简单方法是使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包。该客户端使用API密钥/密钥进行初始化，并公开了一个简单的API，用于通过相应的Relayer发送交易。
+通过Relayer发送交易的最简单方法是使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包。客户端使用API密钥/密钥进行初始化，并公开了一个简单的API，用于通过相应的Relayer发送交易。
 ```
 import { Relayer } from 'defender-relay-client';
 const relayer = new Relayer({apiKey: YOUR_API_KEY, apiSecret: YOUR_API_SECRET});
@@ -105,7 +106,7 @@ const erc20 = new ethers.Contract(ERC20_ADDRESS, ERC20_ABI, signer);
 const tx = await erc20.transfer(beneficiary, 1e18.toString());
 const mined = await tx.wait();
 ```
-在上面的示例中，我们还使用了 DefenderRelayProvider 来进行对网络的调用。Defender 签名器可以与任何提供程序一起工作，例如 ethers.getDefaultProvider()，但您也可以依赖 Defender 作为网络提供程序。
+在上面的示例中，我们还使用了 DefenderRelayProvider 来进行对网络的调用。Defender signer可以与任何提供者一起使用，例如ethers.getDefaultProvider()，但您也可以依赖Defender作为网络提供者。
 
 您可以在[此处](https://www.npmjs.com/package/defender-relay-client#user-content-ethersjs)阅读有关 ethers 集成的更多信息。
 
@@ -123,14 +124,14 @@ const [from] = await web3.eth.getAccounts();
 const erc20 = new web3.eth.Contract(ERC20_ABI, ERC20_ADDRESS, { from });
 const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 ```
-以上示例中，转账交易由DefenderRelayer器签名和广播，任何额外的JSON RPC调用都通过Defender私有端点路由。
+以上示例中，转账交易由Defender 中继器签名和广播，任何额外的JSON RPC调用都通过Defender私有端点路由。
 
 您可以在[此处](https://www.npmjs.com/package/defender-relay-client#user-content-web3js)阅读有关web3集成的更多信息。
 
 ### 支持EIP1559
 由于Defender支持的网络并非全部兼容EIP1559，因此团队只**启用了被认定为兼容**并启用了EIP1559的网络的EIP1559交易支持。
 
-Relayer器可以通过以下方式发送EIP1559交易：
+中继器可以通过以下方式发送EIP1559交易：
 
 * 使用启用了*EIP1559定价策略*的UI发送交易
 
@@ -141,17 +142,17 @@ Relayer器可以通过以下方式发送EIP1559交易：
 一旦任何交易被发送，它在其生命周期的每个阶段（例如替换和重新定价）都将具有**相同的类型**，因此如果已经提交，目前无法更改类型。
 
 > NOTE
-任何尝试将maxFeePerGas或maxPriorityFeePerGas发送到不兼容EIP1559的网络的尝试都将被Relayer器拒绝和丢弃。
+任何尝试将maxFeePerGas或maxPriorityFeePerGas发送到不兼容EIP1559的网络的尝试都将被中继器拒绝和丢弃。
 
-您可以查看Relayer器*策略*来确定网络是否支持EIP1559。如果没有显示EIP1559定价策略，则意味着我们尚未为该网络添加EIP1559支持。
+您可以查看中继器*策略*来确定网络是否支持EIP1559。如果没有显示EIP1559定价策略，则意味着我们尚未为该网络添加EIP1559支持。
 
 > NOTE
 如果您注意到我们已经支持但尚未启用支持的EIP1559兼容网络，请不要犹豫在我们的社区论坛或defender@openzeppelin.com上请求支持。
 
 ### 私人交易
-私人交易支持允许Relayer器发送交易，而不会出现在公共mempool中，而是通过使用特殊的eth_sendRawTransaction提供程序通过私人mempoolRelayer，这将取决于网络和当前支持（例如Flashbots网络覆盖）。
+私人交易支持允许中继器发送交易，而不会出现在公共mempool中，而是通过使用特殊的eth_sendRawTransaction提供程序通过私人mempoolRelayer，这将取决于网络和当前支持（例如Flashbots网络覆盖）。
 
-Relayer器可以通过以下任何方式发送私人交易：
+中继器可以通过以下任何方式发送私人交易：
 
 * 启用privateTransactions*策略通过API发送交易*
 
@@ -161,7 +162,7 @@ Relayer器可以通过以下任何方式发送私人交易：
 ![relay-1.png](img/Relay-1.png)
 
 > NOTE
-将isPrivate标志设置为true的交易发送到不支持私有交易的网络将被Relayer器拒绝和丢弃。
+将isPrivate标志设置为true的交易发送到不支持私有交易的网络将被中继器拒绝和丢弃。
 目前，仅支持以下网络：
 
 * Mainnet：通过[Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)
@@ -174,7 +175,7 @@ Relayer器可以通过以下任何方式发送私人交易：
 ### 速度
 与通常的gasPrice或maxFeePerGas/maxPriorityFeePerGas不同，Relayer还可以接受*速度参数*，可以是safeLow、average、fast或fastest。当交易被发送或重新提交时，这些值会映射到实际的gas价格，并根据网络状态而变化。
 
-如果提供了速度参数，则交易将按照*EIP1559PricingRelayer器策略定价*。
+如果提供了速度参数，则交易将按照*EIP1559Pricing中继器策略定价*。
 
 > NOTE
 主网络的燃气价格和优先费用是根据EthGasStation、EtherChain、GasNow、BlockNative和Etherscan报告的值计算的。在Polygon及其测试网络中，使用燃气站。在其他网络中，燃气价格是通过调用eth_gasPrice或eth_feeHistory到网络获取的。
@@ -191,7 +192,7 @@ Relayer器可以通过以下任何方式发送私人交易：
 如果您同时提供固定的maxFeePerGas和maxPriorityFeePerGas，请确保maxFeePerGas大于或等于maxPriorityFeePerGas。否则，它将被拒绝。
 
 ### 有效期至
-Defender Relay中的每个交易都在validUntil时间之前有效提交到以太坊网络。在*validUntil*时间之后，交易将被替换为一个NOOP交易，以防止Relayer器在交易的nonce上卡住。NOOP交易除了推进Relayer器的nonce之外什么也不做。
+Defender Relay中的每个交易都在validUntil时间之前有效提交到以太坊网络。在*validUntil*时间之后，交易将被替换为一个NOOP交易，以防止中继器在交易的nonce上卡住。NOOP交易除了推进中继器的nonce之外什么也不做。
 
 validUntil默认为交易创建后的8小时。请注意，您可以将validUntil与*固定定价*结合使用，以实现极快的挖矿时间，并击败其他以gasPrice或maxFeePerGas为基础的交易。
 
@@ -279,7 +280,7 @@ const signTypedDataResponse = await relayer.signTypedData({
 ```
 
 ## Relayer信息
-可以使用 DefenderRelaySigner 类的 getAddress 方法来检索Relayer器的地址。
+可以使用 DefenderRelaySigner 类的 getAddress 方法来检索中继器的地址。
 ```
 const address = await signer.getAddress();
 ```
@@ -326,14 +327,14 @@ exports.handler = async function(credentials) {
 自动任务可以按计划或通过Webhook调用。如果您想从Web应用程序调用Relayer，则建议通过Webhook触发的自动任务来执行。永远不要将Relayer的API密钥和密钥放在前端中，因为拥有这些密钥的任何人将对您的Relayer拥有无限制的控制权。
 
 ## 元交易
-DefenderRelayer器是通用的Relayer器，您可以使用它们将任何您想要发送到合约的交易发送出去。特别地，它们也可用于代表您的用户Relayer元交易。这需要设置一个服务器端函数，该函数决定是否Relayer给定的元交易，并调用DefenderRelayer器以有效地发送它。
+Defender中继器是通用的中继器，您可以使用它们将任何您想要发送到合约的交易发送出去。特别地，它们也可用于代表您的用户Relayer元交易。这需要设置一个服务器端函数，该函数决定是否Relayer给定的元交易，并调用Defender中继器以有效地发送它。
 
 特别地，您可以使用Autotasks来托管该函数，并通过Webhook调用它。您可以在*此处阅读有关Webhook激活*的Autotasks的更多信息。
 
 ### EIP2771是GSNv2兼容的元交易协议。
 我们在这里创建了一个用于Defender-powered meta-txs的[演示应用程序](https://defender-example-metatx-relay.netlify.app/)。该应用程序依赖于[EIP-2771转发器合约](https://eips.ethereum.org/EIPS/eip-2771)。该合约的唯一责任是接收签名的meta-tx请求，验证其签名，并通过将签名者地址附加到调用中将请求转发给接收方合约。
 
-这个设置与[GSNv2](https://docs.opengsn.org/)兼容，这意味着您可以使用DefenderRelayer器发送您的meta-transactions，并且在将来的任何时候，您可以切换到GSNRelayer器的分散网络，而不需要对您的合约进行任何更改。
+这个设置与[GSNv2](https://docs.opengsn.org/)兼容，这意味着您可以使用Defender中继器发送您的meta-transactions，并且在将来的任何时候，您可以切换到GSN中继器的分散网络，而不需要对您的合约进行任何更改。
 
 > NOTE
 您可以在[此处](https://gist.github.com/spalladino/7fb3533e36e9b9a833f8e5c568c86815)探索应用程序的关键部分代码。
@@ -356,10 +357,10 @@ DefenderRelayer器是通用的Relayer器，您可以使用它们将任何您想�
 在撰写本文时，Defender仅支持向已验证源代码的合约发送交易，请确保目标合约已在Etherscan或Sourcify上进行了验证。
 ![relay-3.png](img/Relay-3.png)
 
-当您点击“确认交易”时，交易将通过Relayer器发送。我们建议您等待交易确认，然后再离开此屏幕，或在您选择的区块链浏览器上监视它，以确保它已确认且无需进一步操作。
+当您点击“确认交易”时，交易将通过中继器发送。我们建议您等待交易确认，然后再离开此屏幕，或在您选择的区块链浏览器上监视它，以确保它已确认且无需进一步操作。
 
 > NOTE
-防御者将通过UI创建的Relayer器交易的速度设置为快速。
+防御者将通过UI创建的中继器交易的速度设置为快速。
 
 ### 提取资金
 您可以通过在Relayer页面上点击“提取资金”来从Relayer中提取资金。
@@ -374,7 +375,7 @@ DefenderRelayer器是通用的Relayer器，您可以使用它们将任何您想�
 每分钟，系统会检查所有正在进行的交易。如果它们尚未被挖掘，并且已经过了一定的时间（取决于交易速度），则会以其各自的交易类型定价的10％增加（或者如果其速度的最新定价更高，则以其速度的最新定价），这可能高达其**速度报告的gas定价的150％**。此过程会导致交易哈希值发生更改，但其ID仍然保留。另一方面，如果交易已经被挖掘，它仍然会被监视多个块，直到我们认为它已经确认。
 
 ## Concurrency and Rate Limiting
-Relayer器可以原子地分配nonce，从而使它们能够处理许多并发交易。但是，为了优化基础设施，确实存在一些限制（以下所有数字均为一个帐户中所有Relayer器的累计）：
+中继器可以原子地分配nonce，从而使它们能够处理许多并发交易。但是，为了优化基础设施，确实存在一些限制（以下所有数字均为一个帐户中所有中继器的累计）：
 
 * 每小时120笔交易（仅限免费套餐）
 
