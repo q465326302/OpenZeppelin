@@ -1,5 +1,5 @@
 # Defender
-OpenZeppelin Defender为以太坊提供了一个安全运营（SecOps）平台，内置最佳实践。开发团队实施Defender以加快交付速度并最小化安全风险。
+OpenZeppelin Defender为以太坊提供了一个安全运营（SecOps）平台，内置最佳实践。开发团队实施Defender以加快交付speed并最小化安全风险。
 
 # 开始
 Defender是免费的！只需前往[defender.openzeppelin.com](https://hubs.li/H0F1_Q50)，点击“登录”，然后选择创建一个新账户。验证您的电子邮件地址后，您将被重回到您自己的Defender账户。请参见下文，了解如何邀请更多用户加入您的团队！

@@ -124,7 +124,7 @@ const [from] = await web3.eth.getAccounts();
 const erc20 = new web3.eth.Contract(ERC20_ABI, ERC20_ADDRESS, { from });
 const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 ```
-以上示例中，转账交易由Defender 中继器签名和广播，任何额外的JSON RPC调用都通过Defender私有端点路由。
+以上示例中，转账交易由Defender 中继器签名和广播，任何其他的JSON RPC调用都通过Defender私有端点路由。
 
 您可以在[此处](https://www.npmjs.com/package/defender-relay-client#user-content-web3js)阅读有关web3集成的更多信息。
 
@@ -133,18 +133,18 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 中继器可以通过以下方式发送EIP1559交易：
 
-* 使用启用了*EIP1559定价策略*的UI发送交易
+* 使用启用了_EIP1559定价策略_的UI发送交易
 
-* 使用指定了maxFeePerGas和maxPriorityFeePerGas的API发送交易
+* 通过API发送交易，并指定maxFeePerGas和maxPriorityFeePerGas
 
-* 使用速度和启用了EIP1559定价策略的API发送交易
+* 通过启用EIP1559Pricing策略和speed参数的API发送交易
 
 一旦任何交易被发送，它在其生命周期的每个阶段（例如替换和重新定价）都将具有**相同的类型**，因此如果已经提交，目前无法更改类型。
 
 > NOTE
 任何尝试将maxFeePerGas或maxPriorityFeePerGas发送到不兼容EIP1559的网络的尝试都将被中继器拒绝和丢弃。
 
-您可以查看中继器*策略*来确定网络是否支持EIP1559。如果没有显示EIP1559定价策略，则意味着我们尚未为该网络添加EIP1559支持。
+您可以查看中继器_策略_来确定网络是否支持EIP1559。如果没有显示EIP1559定价策略，则意味着我们尚未为该网络添加EIP1559支持。
 
 > NOTE
 如果您注意到我们已经支持但尚未启用支持的EIP1559兼容网络，请不要犹豫在我们的社区论坛或defender@openzeppelin.com上请求支持。
@@ -154,7 +154,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 中继器可以通过以下任何方式发送私人交易：
 
-* 启用privateTransactions*策略通过API发送交易*
+* 启用privateTransactions_策略通过API发送交易_
 
 * 通过API发送交易，将isPrivate参数设置为true
 
@@ -170,33 +170,33 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 * Goerli：通过[Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start)
 
 > WARING
-在使用私人交易时，应考虑eth_sendRawTransaction提供程序的关键考虑因素，例如[叔叔强盗风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)。
+在使用私人交易时，应考虑eth_sendRawTransaction提供程序的关键考虑因素，例如[ uncle bandit risk](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)。
 
-### 速度
-与通常的gasPrice或maxFeePerGas/maxPriorityFeePerGas不同，Relayer还可以接受*速度参数*，可以是safeLow、average、fast或fastest。当交易被发送或重新提交时，这些值会映射到实际的gas价格，并根据网络状态而变化。
+### Speed
+与通常的gasPrice或maxFeePerGas/maxPriorityFeePerGas不同，Relayer还可以接受_speed参数_，可以是safeLow、average、fast或fastest。当交易被发送或重新提交时，这些值会映射到实际的gas价格，并根据网络状态而变化。
 
-如果提供了速度参数，则交易将按照*EIP1559Pricing中继器策略定价*。
+如果提供了speed参数，则交易将按照_EIP1559Pricing中继器策略定价_。
 
 > NOTE
 主网络的燃气价格和优先费用是根据EthGasStation、EtherChain、GasNow、BlockNative和Etherscan报告的值计算的。在Polygon及其测试网络中，使用燃气站。在其他网络中，燃气价格是通过调用eth_gasPrice或eth_feeHistory到网络获取的。
 
 ### 固定gas价
-或者，您可以通过设置**gasPrice参数**或**maxFeePerGas和maxPriorityFeePerGas参数**中的一个固定的*gasPrice*或*固定的组合来指定交易的定价*。具有固定定价的交易将以指定的定价进行挖掘，或者如果在validUntil时间之前无法挖掘，则被替换为NOOP交易。
+或者，您可以通过设置**gasPrice参数**或**maxFeePerGas和maxPriorityFeePerGas参数**中的一个固定的_gasPrice_或_固定的组合来指定交易的定价_。具有固定定价的交易要么使用指定的定价进行挖掘，或者如果在validUntil时间之前无法挖掘，则被替换为NOOP交易。
 
-请记住，您必须提供速度、gasPrice、maxFeePerGas/maxPriorityFeePerGas或不提供任何参数，但不能在发送交易请求时混合使用它们。
+请记住，您必须提供 speed、gasPrice、maxFeePerGas/maxPriorityFeePerGas或不提供任何参数，但不能在发送交易请求时混合使用它们。
 
 > NOTE
-如果没有任何定价参数发送发送交易请求，则将使用快速默认速度定价。
+如果发送的交易请求没有任何定价参数，它将使用快速默认speed进行定价。。
 
 > NOTE
 如果您同时提供固定的maxFeePerGas和maxPriorityFeePerGas，请确保maxFeePerGas大于或等于maxPriorityFeePerGas。否则，它将被拒绝。
 
 ### 有效期至
-Defender Relay中的每个交易都在validUntil时间之前有效提交到以太坊网络。在*validUntil*时间之后，交易将被替换为一个NOOP交易，以防止中继器在交易的nonce上卡住。NOOP交易除了推进中继器的nonce之外什么也不做。
+Defender Relay中的每个交易都在validUntil时间之前都可以提交到以太坊网络。在_validUntil_时间之后，交易将被替换为一个NOOP交易，以防止中继器在交易的nonce上卡住。NOOP交易除了推进中继器的nonce之外什么也不做。
 
-validUntil默认为交易创建后的8小时。请注意，您可以将validUntil与*固定定价*结合使用，以实现极快的挖矿时间，并击败其他以gasPrice或maxFeePerGas为基础的交易。
+validUntil默认为交易创建后的8小时。请注意，您可以将validUntil与_固定定价_结合使用，以实现极快的挖矿时间，并击败其他以gasPrice或maxFeePerGas为基础的交易。
 
-如果您正在使用ethers.js，则可以设置validForSeconds选项而不是validUntil。在下面的示例中，我们配置一个DefenderRelaySigner，以发出一个在其创建后120秒内有效的交易。
+如果您使用的是ethers.js，可以使用validForSeconds选项来设置validUntil。。在下面的示例中，我们配置一个DefenderRelaySigner，以发出一个在其创建后120秒内有效的交易。
 ```
 const signer = new DefenderRelaySigner(credentials, provider, { validForSeconds: 120 });
 ```
@@ -211,14 +211,14 @@ const tx = await relayer.query(tx.transactionId);
 ```
 
 > NOTE
-查询端点将返回Defender服务的最新交易视图，该视图每分钟更新一次。
+查询终端点将返回Defender服务的最新交易视图，该视图每分钟更新一次。
 
 ### 替换交易
-虽然Defender Relay会自动重新提交交易并提高gas价格，如果它们没有被挖掘，并且会在有效期截止时间后自动取消它们，但如果您的交易尚未被挖掘，您仍然可以手动替换或取消它。这使您可以在交易不再有效时取消交易，调整其TTL或提高其速度或gas价格。
+虽然Defender Relay会自动重新提交未被挖掘的交易，并在其有效截止时间后自动取消它们，但您仍然可以在交易尚未被挖掘时手动替换或取消它。这使您可以在交易不再有效时取消交易，调整其TTL，或提高其speed或燃气价格。
 
 要执行此操作，请使用defender-relay-client的replaceByNonce或replaceById函数。
 ```
-// Cancel tx payload (tx to a random address with zero value and data)
+// 取消交易负载（向一个随机地址发送零值和空数据的交易）
 replacement = {
   to: '0x6b175474e89094c44da98b954eedeac495271d0f',
   value: '0x00',
@@ -227,21 +227,21 @@ replacement = {
   gasLimit: 21000
 };
 
-// Replace a tx by nonce
+// 通过nonce替换交易
 tx = await relayer.replaceTransactionByNonce(42, replacement);
 
-// Or by transactionId
+// 或者通过transactionId替换交易
 tx = await relayer.replaceTransactionById('5fcb8a6d-8d3e-403a-b33d-ade27ce0f85a', replacement);
 ```
 您还可以通过在使用以太网或web3.js适配器发送交易时设置nonce来替换挂起的交易。
 ```
-// Using ethers
+// 使用ethers
 erc20 = new ethers.Contract(ERC20_ADDRESS, ERC20_ABI, signer);
 replaced = await erc20.functions.transfer(beneficiary, 1e18.toString(), {
   nonce: 42
 });
 
-// Using web3.js
+// 使用web3.js
 erc20 = new web3.eth.Contract(ERC20_ABI, ERC20_ADDRESS, { from });
 replaced = await erc20.methods.transfer(beneficiary, (1e18).toString()).send({
   nonce: 42
@@ -249,7 +249,7 @@ replaced = await erc20.methods.transfer(beneficiary, (1e18).toString()).send({
 ```
 
 > NOTE
-你只能用相同类型的交易替换交易。例如，如果你试图替换一个EIP1559交易，它不能被替换为传统的交易。此外，如果提供的是速度，交易将被重新定价为其原始类型所需的速度。
+你只能用相同类型的交易替换交易。例如，如果你试图替换一个EIP1559交易，它不能被替换为传统的交易。此外，如果提供的是speed，交易将被重新定价为其原始类型所需的speed。
 
 ### 列出交易记录
 您还可以列出通过您的Relayer发送的最新交易，可选择按状态（待处理，已挖掘或失败）进行过滤。这对于防止您的Autotask脚本重新发送已在飞行中的交易特别有用：在发送交易之前，您可以使用按待处理状态过滤的列表方法，以查看队列中是否有与您即将发送的目标和calldata相同的交易。
@@ -360,7 +360,7 @@ Defender中继器是通用的中继器，您可以使用它们将任何您想要
 当您点击“确认交易”时，交易将通过中继器发送。我们建议您等待交易确认，然后再离开此屏幕，或在您选择的区块链浏览器上监视它，以确保它已确认且无需进一步操作。
 
 > NOTE
-防御者将通过UI创建的中继器交易的速度设置为快速。
+防御者将通过UI创建的中继器交易的speed设置为快速。
 
 ### 提取资金
 您可以通过在Relayer页面上点击“提取资金”来从Relayer中提取资金。
@@ -370,9 +370,9 @@ Defender中继器是通用的中继器，您可以使用它们将任何您想要
 ![relay-5.png](img/Relay-5.png)
 
 ## Under the hood
-每个Relayer都与一个私钥相关联。当接收到发送交易的请求时，Relayer验证该请求，原子性地为其分配一个nonce，预留用于支付其gas费用的余额，根据其*EIP1559定价策略*将其速度解析为gasPrice或maxFeePerGas/maxPriorityFeePerGas，使用其私钥对其进行签名，并将其排队等待提交到区块链。只有在此过程完成后，响应才会发送回客户端。然后，交易会通过多个节点提供程序进行广播，以实现冗余，并在API关闭的情况下尝试重试多达三次。
+每个Relayer都与一个私钥相关联。当接收到发送交易的请求时，Relayer验证该请求，原子性地为其分配一个nonce，预留用于支付其gas费用的余额，根据其*EIP1559定价策略*将其speed解析为gasPrice或maxFeePerGas/maxPriorityFeePerGas，使用其私钥对其进行签名，并将其排队等待提交到区块链。只有在此过程完成后，响应才会发送回客户端。然后，交易会通过多个节点提供程序进行广播，以实现冗余，并在API关闭的情况下尝试重试多达三次。
 
-每分钟，系统会检查所有正在进行的交易。如果它们尚未被挖掘，并且已经过了一定的时间（取决于交易速度），则会以其各自的交易类型定价的10％增加（或者如果其速度的最新定价更高，则以其速度的最新定价），这可能高达其**速度报告的gas定价的150％**。此过程会导致交易哈希值发生更改，但其ID仍然保留。另一方面，如果交易已经被挖掘，它仍然会被监视多个块，直到我们认为它已经确认。
+每分钟，系统会检查所有正在进行的交易。如果它们尚未被挖掘，并且已经过了一定的时间（取决于交易speed），则会以其各自的交易类型定价的10％增加（或者如果其speed的最新定价更高，则以其speed的最新定价），这可能高达其**speed报告的gas定价的150％**。此过程会导致交易哈希值发生更改，但其ID仍然保留。另一方面，如果交易已经被挖掘，它仍然会被监视多个块，直到我们认为它已经确认。
 
 ## Concurrency and Rate Limiting
 中继器可以原子地分配nonce，从而使它们能够处理许多并发交易。但是，为了优化基础设施，确实存在一些限制（以下所有数字均为一个帐户中所有中继器的累计）：

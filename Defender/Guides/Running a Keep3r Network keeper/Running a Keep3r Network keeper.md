@@ -82,7 +82,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 
 ### 微调
 
-Defender将根据当前网络价格自动选择您的交易的燃气价格。您可以通过在脚本中更改速度参数来调整您对燃气价格的侵略性，包括safeLow，average，fast或fastest。更高的燃气价格意味着如果有多个Keeper竞争一个作业，您将有更好的机会获得作业，但是您的交易也将更加昂贵！
+Defender将根据当前网络价格自动选择您的交易的燃气价格。您可以通过在脚本中更改speed参数来调整您对燃气价格的侵略性，包括safeLow，average，fast或fastest。更高的燃气价格意味着如果有多个Keeper竞争一个作业，您将有更好的机会获得作业，但是您的交易也将更加昂贵！
 
 或者，您还可以自己设置燃气价格，如果您想最大限度地控制您的交易。只需设置gasPrice或maxFeePerGas / maxPriorityFeePerGas以进行交易，并且Defender将尊重该值。您可以依赖此来尝试在Defender上运行的所有其他Keeper之外出价，但请记住燃气费用的成本。
 

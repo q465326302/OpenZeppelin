@@ -191,7 +191,7 @@ curl \
 EIP1559Pricing 标志仅适用于 EIP1559 网络上的中继器。
 
 > NOTE
-仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[叔叔强盗风险](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
+仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[ uncle bandit risk](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
 ## 创建中继器密钥
 通过 API 创建的中继器默认不会有任何关联的中继器密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 RelayerKey（仅在创建时可用的 secretKey）：
