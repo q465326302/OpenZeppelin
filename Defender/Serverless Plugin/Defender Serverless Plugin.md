@@ -82,7 +82,7 @@ resources:
 plugins:
   - defender-serverless
 ```
-这需要在YAML文件的defender属性下设置密钥和秘密。我们建议使用环境变量或安全（gitignored）配置文件来检索这些值。相应地修改serverless.yml。
+这需要在YAML文件的defender属性下设置密钥和 secrets 。我们建议使用环境变量或安全（gitignored）配置文件来检索这些值。相应地修改serverless.yml。
 
 确保Defender团队API密钥具有所有适当的API功能。
 
@@ -93,8 +93,8 @@ stackName（例如mystack）与资源键（例如Relayer -1）结合使用，以
 
 任何从serverless.yml文件中删除的资源都不会自动删除，以防止意外的资源删除。为了预期这种行为，必须启用SSOT模式。
 
-### 秘密（Autotask）
-Autotask秘密可以全局定义和每个堆栈定义。在全局下定义的秘密不会受到stackName更改的影响，并且在重新部署到新的stack下时将保留。在堆栈下定义的秘密将在重新部署到新的stackName下时被删除（在启用*SSOT模式*的情况下）。要引用在堆栈下定义的秘密，请使用以下格式：<stackname> _ <secretkey>，例如mystack_test。
+###  secrets （Autotask）
+Autotask secrets 可以全局定义和每个堆栈定义。在全局下定义的 secrets 不会受到stackName更改的影响，并且在重新部署到新的stack下时将保留。在堆栈下定义的 secrets 将在重新部署到新的stackName下时被删除（在启用*SSOT模式*的情况下）。要引用在堆栈下定义的 secrets ，请使用以下格式：<stackname> _ <secretkey>，例如mystack_test。
 ```
 secrets:
   # optional - global secrets are not affected by stackName changes
@@ -165,7 +165,7 @@ secrets:
 
 在部署过程中抛出的错误不会撤消任何先前的更改。常见错误包括：
 
-* 未设置API密钥和秘密
+* 未设置API密钥和 secrets 
 
 * API密钥权限不足
 

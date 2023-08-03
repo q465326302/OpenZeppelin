@@ -70,4 +70,4 @@ Init successful, sweet!
 如果您以前从未使用过Git，一个好的起点是[Git手册](https://guides.github.com/introduction/git-handbook/)。
 
 > WARNING
-不要将助记词、私钥和API密钥等秘密信息提交到版本控制！确保在[.gitignore](https://git-scm.com/docs/gitignore)文件中忽略包含秘密信息的文件。
+不要将助记词、私钥和API密钥等 secrets 信息提交到版本控制！确保在[.gitignore](https://git-scm.com/docs/gitignore)文件中忽略包含 secrets 信息的文件。

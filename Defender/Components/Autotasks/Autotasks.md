@@ -23,9 +23,9 @@ Defender Autotasks服务允许您定期运行代码片段，通过Webhooks或响
 
 * **Schedule**：选择执行Autotask的频率，Defender将确保在指定的间隔内调用您的函数。请注意，指定的间隔是两个连续执行开始之间的间隔，而不是一个Autotask结束和下一个Autotask开始之间的间隔。或者，您可以使用[cron表达式](https://crontab.cronhub.io/)指定Autotask应该运行的时间。
 
-* **Webhook**：Defender将为您的Autotask创建一个秘密URL，并在将HTTP请求POST到该端点时调用它。您可以随时重新生成此URL。Defender将HTTP请求信息注入到您的Autotask中，并返回Autotask运行信息以及您从代码中返回的任何数据。
+* **Webhook**：Defender将为您的Autotask创建一个 secrets URL，并在将HTTP请求POST到该端点时调用它。您可以随时重新生成此URL。Defender将HTTP请求信息注入到您的Autotask中，并返回Autotask运行信息以及您从代码中返回的任何数据。
 
-* **Sentinel**：使用Sentinel触发器的Autotask不能按计划或使用秘密URL执行。它们只能从Sentinel或手动操作执行。
+* **Sentinel**：使用Sentinel触发器的Autotask不能按计划或使用 secrets URL执行。它们只能从Sentinel或手动操作执行。
 
 > NOTE
 如果您在Webhook HTTP请求的响应中收到{"message":"Missing Authentication Token"}，请仔细检查您的请求是否实际上是POST。当发出GET请求时，您通常会看到{"message":"Missing Authentication Token"}响应。

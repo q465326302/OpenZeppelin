@@ -112,7 +112,7 @@ DEFENDER_TEAM_API_SECRET_KEY="Enter your Defender Team API Secret"
 ```
 
 > WARNING
-任何秘密信息，如助记词或API密钥都不应该提交到版本控制中。
+任何 secrets 信息，如助记词或API密钥都不应该提交到版本控制中。
 
 我们将使用以下hardhat.config.js来部署到Rinkeby。
 
@@ -218,10 +218,10 @@ contract BoxV2 is Box {
 
 要获取密钥，请从右上角的Defender菜单中选择**Team API Keys**，然后选择**Create API Key**。我们只需要**创建管理提案和合约的能力**，因此选择此选项，并设置一个可选的注释来描述该密钥。
 ![guide-upgrades-1.png](img/guide-upgrades-1.png)
-我们可以将API密钥和秘密密钥复制并存储在项目的.env文件中。
+我们可以将API密钥和 secrets 密钥复制并存储在项目的.env文件中。
 
 > NOTE
-我们无法再从Defender中检索我们的秘密密钥。相反，我们需要创建一个新的团队API密钥。
+我们无法再从Defender中检索我们的 secrets 密钥。相反，我们需要创建一个新的团队API密钥。
 
 ## 提出升级建议后
 一旦我们将升级的控制权（ProxyAdmin的所有权）转移到了我们的多重签名账户，我们就不能简单地升级合约了。相反，我们需要首先提出一个升级建议，供多重签名账户的所有者审查，一旦审查通过，批准并执行升级合约的建议。
