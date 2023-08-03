@@ -368,7 +368,7 @@ if (require.main === module) {
 我们不需要等待交易被挖掘。Defender Relayer会负责监控交易并在需要时重新提交。Autotask只需请求发送给Relayer并退出。
 
 ## 安全考虑
-每个Autotask都作为单独的AWS Lambda实现，确保在每个单独的Autotask和Defender租户之间有强大的隔离。
+每个Autotask都作为单独的AWS Lambda实现，确保在每个单独的Autotask和Defender用户之间有强大的隔离。
 
 通过身份和访问管理，Autotasks受限于对Defender内部基础架构的零访问权限。唯一的例外是，Autotask可以访问其链接的Relayer，这是通过Defender Autotask服务在每次执行时注入的临时凭据进行协商的。但是，Autotask只能调用Relayer公开的方法，并且无法直接访问支持私钥。
 

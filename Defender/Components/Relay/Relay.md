@@ -360,7 +360,7 @@ Defender Relayers是通用的Relayers，您可以使用它们将任何交易发�
 当您点击“确认交易”时，交易将通过 Relayer发送。我们建议您等待交易确认，然后再离开此屏幕，或在您选择的区块链浏览器上监视它，以确保它已确认且无需进一步操作。
 
 > NOTE
-防御者将通过UI创建的 Relayer交易的speed设置为快速。
+防御者通过用户界面将速度设置为“快速”，以便为Relayer事务创建提供服务。
 
 ### 提取资金
 您可以通过在Relayer页面上点击“提取资金”来从Relayer中提取资金。
@@ -370,12 +370,12 @@ Defender Relayers是通用的Relayers，您可以使用它们将任何交易发�
 ![relay-5.png](img/Relay-5.png)
 
 ## Under the hood
-每个Relayer都与一个私钥相关联。当接收到发送交易的请求时，Relayer验证该请求，原子性地为其分配一个nonce，预留用于支付其gas费用的余额，根据其*EIP1559定价策略*将其speed解析为gasPrice或maxFeePerGas/maxPriorityFeePerGas，使用其私钥对其进行签名，并将其排队等待提交到区块链。只有在此过程完成后，响应才会发送回客户端。然后，交易会通过多个节点提供程序进行广播，以实现冗余，并在API关闭的情况下尝试重试多达三次。
+每个Relayer都与一个私钥相关联。当接收到发送交易的请求时，Relayer验证该请求，原子性地为其分配一个nonce，预留用于支付其gas费用的余额，根据其_EIP1559定价策略_将其speed解析为gasPrice或maxFeePerGas/maxPriorityFeePerGas，使用其私钥对其进行签名，并将其排队等待提交到区块链。只有在此过程完成后，才会响应发送回客户端。然后，交易会通过多个节点提供程序进行广播，以实现冗余，并在API关闭的情况下尝试多达三次的重试。
 
 每分钟，系统会检查所有正在进行的交易。如果它们尚未被挖掘，并且已经过了一定的时间（取决于交易speed），则会以其各自的交易类型定价的10％增加（或者如果其speed的最新定价更高，则以其speed的最新定价），这可能高达其**speed报告的gas定价的150％**。此过程会导致交易哈希值发生更改，但其ID仍然保留。另一方面，如果交易已经被挖掘，它仍然会被监视多个块，直到我们认为它已经确认。
 
 ## Concurrency and Rate Limiting
- Relayer可以原子地分配nonce，从而使它们能够处理许多并发交易。但是，为了优化基础设施，确实存在一些限制（以下所有数字均为一个帐户中所有 Relayer的累计）：
+Relayer可以原子地分配nonce，从而使它们能够处理许多并发交易。但是，为了优化基础设施，确实存在一些限制（以下所有数字均为一个帐户中所有 Relayer的累计）：
 
 * 每小时120笔交易（仅限免费套餐）
 
@@ -384,15 +384,15 @@ Defender Relayers是通用的Relayers，您可以使用它们将任何交易发�
 * 每秒10笔交易
 
 ## 安全考虑
-所有私钥都存储在AWS Key Management Service中。密钥在KMS中生成，从不离开KMS，即所有签名操作都在KMS内执行。此外，我们依赖动态生成的AWS Identity and Access Management策略来隔离租户之间对私钥的访问。
+所有私钥都存储在AWS Key Management Service中。密钥在KMS中生成，从不离开KMS，即所有签名操作都在KMS内执行。此外，我们依赖动态生成的AWS Identity and Access Management策略来隔离用户之间对私钥的访问。
 
-至于API密钥，这些仅在创建期间在内存中保留，当它们被发送到客户端时。之后，它们被哈希并安全地存储在AWS Cognito中，该服务在幕后用于验证Relayer请求。这使得API密钥易于轮换，同时保留KMS上相同的私钥。
+至于API密钥，这些只在创建过程中在内存中保留，然后被哈希并安全地存储在AWS Cognito中，这在幕后用于验证Relayer请求。这使得API密钥易于轮换，同时保留KMS上相同的私钥。
 
 ### Rollups
 当向Rollup链（如Arbitrum或Optimism）发送交易时，Relayer目前依赖于链的序列化器/聚合器。这意味着，如果序列化器崩溃或审查交易，则Relayer将无法绕过它并直接提交到第1层。
 
 ## Hedera支持
-目前，在Hedera网络上，Defender Relay仅支持测试网。要启用此功能，请通过defender@openzeppelin.com与我们联系。
+目前，在Hedera网络上，Defender Relay仅支持测试网。一旦Hedera JSON RPC Relay服务退出测试版，Defender将提供Hedera主网支持。
 
 ## 即将呈现...
 我们正在开发新功能。敬请期待，如果您有任何需求，请告诉我们！
