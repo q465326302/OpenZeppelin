@@ -68,7 +68,7 @@ nile deploy MyToken <name> <symbol> <decimals> <initial_supply> <recipient> --al
 
 ### 
 使用库模块编写自定义合同
-*阅读更多关于图书馆的信息。*
+*阅读更多关于库的信息。*
 ```
 %lang starknet
 

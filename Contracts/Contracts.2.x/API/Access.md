@@ -5,7 +5,7 @@
 ## Library
 
 ### Roles
-用于管理分配给角色的地址的图书馆。
+用于管理分配给角色的地址的库。
 
 **FUNCTIONS**
 add(role, account)

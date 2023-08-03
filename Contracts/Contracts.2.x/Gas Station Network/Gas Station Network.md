@@ -25,7 +25,7 @@ contract MyContract is GSNRecipient, ... {
 OpenZeppelin Contracts提供了一些经过验证的方法供您直接使用，但您仍然应该对底层发生的事情有一个基本的了解。
 
 #### acceptRelayedCall
-首先，RelayHub将询问您的接收者合约是否希望接收Relayer调用。请记住，中继器将向您收取产生的燃气费用，因此您应该只接受您愿意支付的调用！
+首先，RelayHub将询问您的接收者合约是否希望接收Relayer调用。请记住， Relayer将向您收取产生的燃气费用，因此您应该只接受您愿意支付的调用！
 ```
 function acceptRelayedCall(
   address relay,

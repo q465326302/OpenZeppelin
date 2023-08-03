@@ -473,7 +473,7 @@ Penalized(relay, sender, amount)
 
 #### RelayRemoved(address relay, uint256 unstakeTime)
 事件#
-当中继器被移除（取消注册）时发出。unstakeTime是可以调用解除质押的时间。
+当 Relayer被移除（取消注册）时发出。unstakeTime是可以调用解除质押的时间。
 
 #### Unstaked(address relay, uint256 stake)
 事件#
