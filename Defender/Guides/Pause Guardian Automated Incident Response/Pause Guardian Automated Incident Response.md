@@ -2,7 +2,7 @@
 OpenZeppelin Defender的关键能力之一是其在安全监控和一般自动化方面的实用性。本指南利用了多个Defender组件，以自动化应对ERC20合约上的一组条件的事件响应。
 
 ## 概述
-一个*Sentinel*监控合约上的交易，并设置在大量代币转移事件发生时自动触发*Autotask*。Autotask脚本通过*Relayer*向ERC20合约发送暂停交易。
+一个*Sentinel*监控合约上的交易，并设置在大量代币转移事件发生时自动触发*Autotask*。Autotask脚本通过*Relayer *向ERC20合约发送暂停交易。
 ![guide-pauseguardian-1.png](img/guide-pauseguardian-1.png)
 
 ## 设置
@@ -61,22 +61,22 @@ const contract = erc20.print(params)
 
 该脚本利用Defender的管理客户端，并在部署后立即将合约加载到管理员仪表板中。
 
-## 创建Relayer并分配暂停角色
-创建Relayer以通过API运行区块链交易：
+## 创建Relayer 并分配暂停角色
+创建Relayer 以通过API运行区块链交易：
 
 `$ npm run relay`
-现在您已经拥有了Relayer，需要授予它适当的角色。
+现在您已经拥有了Relayer ，需要授予它适当的角色。
 
-Defender网络界面使访问控制管理变得容易。通过Admin仪表板，选择新创建的ERC20合约，然后选择New Proposal -→ Modify Access。在下一个屏幕上，从下拉菜单中选择PAUSER角色，并提供刚刚创建的Relayer的地址。选择EOA作为执行策略，并选择用于部署合约的帐户的地址。给访问提案一个标题并执行它。
+Defender网络界面使访问控制管理变得容易。通过Admin仪表板，选择新创建的ERC20合约，然后选择New Proposal -→ Modify Access。在下一个屏幕上，从下拉菜单中选择PAUSER角色，并提供刚刚创建的Relayer 的地址。选择EOA作为执行策略，并选择用于部署合约的帐户的地址。给访问提案一个标题并执行它。
 ![guide-pauseguardian-2.gif](img/guide-pauseguardian-2.gif)
 
 ## 创建Autotask以发送暂停交易
-现在您已经拥有了适当访问权限的Relayer来暂停合约，是时候开始构建自动化功能了。
+现在您已经拥有了适当访问权限的Relayer 来暂停合约，是时候开始构建自动化功能了。
 
-创建一个Autotask，使用Relayer向部署的ERC20合约发送暂停交易。
+创建一个Autotask，使用Relayer 向部署的ERC20合约发送暂停交易。
 
 `$ npm run autotask`
-该脚本在Defender中创建一个新的Autotask，并上传Autotask代码，提供刚刚创建的Relayer的ID以使用Relayer运行交易。
+该脚本在Defender中创建一个新的Autotask，并上传Autotask代码，提供刚刚创建的Relayer 的ID以使用Relayer 运行交易。
 
 ```
 async function handler(event) {
@@ -110,7 +110,7 @@ Sentinel可以监视广泛的合约条件，并在触发时发送通知或触发
 ```
 
 ## 测试自动暂停自动化
-现在所有的构建块都已经建立，系统已经准备好进行测试。尝试将大于200000个代币从合约转移到另一个账户。Sentinel将检测到高交易量的Transfer事件并触发Autotask，Autotask将通过Relayer发送暂停交易，ERC20合约将被暂停。因此，任何后续的高交易量转移都将失败。
+现在所有的构建块都已经建立，系统已经准备好进行测试。尝试将大于200000个代币从合约转移到另一个账户。Sentinel将检测到高交易量的Transfer事件并触发Autotask，Autotask将通过Relayer 发送暂停交易，ERC20合约将被暂停。因此，任何后续的高交易量转移都将失败。
 
 ## 资源
 * [OpenZeppelin Defender Sentinel文档](https://docs.openzeppelin.com/defender/sentinel)

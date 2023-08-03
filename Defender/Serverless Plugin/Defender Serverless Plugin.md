@@ -29,13 +29,13 @@ yarn add defender-serverless
 
 * 利用defender-serverless存储库中提供的示例模板。
 
-如果您已经在Defender中拥有资源，例如合约、通知、Relayer、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
+如果您已经在Defender中拥有资源，例如合约、通知、Relayer 、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
 ![serverless-plugin-1.png](img/serverless-plugin-1.png)
 
 > NOTE
 如果您之前已经使用defender-serverless部署到同一个账户，并且随后通过Defender用户界面创建了新的资源，则导出功能将根据最新部署堆栈的名称自动为新资源分配stackResourceId。如果您以前没有使用defender-serverless部署过，则将使用默认堆栈名称my-stack。
 
-该插件允许您从serverless.yml中声明性地定义Autotasks、Sentinels、Notifications、Relayers、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer、一个Policy和一个单一的Relayer API密钥：
+该插件允许您从serverless.yml中声明性地定义Autotasks、Sentinels、Notifications、Relayer s、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer 、一个Policy和一个单一的Relayer  API密钥：
 ```
 service: defender-serverless-template
 configValidationMode: error
@@ -55,7 +55,7 @@ functions:
   autotask-example-1:
     name: 'Hello world from serverless'
     path: './autotasks/hello-world'
-    relayer: ${self:resources.Resources.relayers.relayer-1}
+    Relayer : ${self:resources.Resources.Relayer s.Relayer -1}
     trigger:
       type: 'schedule'
       frequency: 1500
@@ -70,9 +70,9 @@ resources:
           - '0x0f06aB75c7DD497981b75CD82F6566e3a5CAd8f2'
         eip1559-pricing: true
 
-    relayers:
-      relayer-1:
-        name: 'Test Relayer 1'
+    Relayer s:
+      Relayer -1:
+        name: 'Test Relayer  1'
         network: 'goerli'
         min-balance: 1000
         policy: ${self:resources.Resources.policies.policy-1}
@@ -86,10 +86,10 @@ plugins:
 
 确保Defender团队API密钥具有所有适当的API功能。
 
-stackName（例如mystack）与资源键（例如relayer-1）结合使用，以唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.relayer-1），允许您在同一Defender团队中管理多个部署。
+stackName（例如mystack）与资源键（例如Relayer -1）结合使用，以唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.Relayer -1），允许您在同一Defender团队中管理多个部署。
 
 ### SSOT模式
-在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着，除了 Relayer之外，在您当前模板文件中未定义的所有Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
+在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着，除了 Relayer 之外，在您当前模板文件中未定义的所有Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
 
 任何从serverless.yml文件中删除的资源都不会自动删除，以防止意外的资源删除。为了预期这种行为，必须启用SSOT模式。
 
@@ -118,7 +118,7 @@ secrets:
 
 * Resources Property
 
-更多关于类型的信息可以在[此处](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/index.ts)找到。具体来说，可以查看以Y开头的类型（例如YRelayer）。有关模式，可以查看[docs-schema文件夹](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs-schemas)中的文档。
+更多关于类型的信息可以在[此处](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/index.ts)找到。具体来说，可以查看以Y开头的类型（例如YRelayer ）。有关模式，可以查看[docs-schema文件夹](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs-schemas)中的文档。
 
 此外，还提供了一个[示例项目](https://github.com/OpenZeppelin/defender-serverless/blob/main/examples/defender-test-project/serverless.yml)，其中提供了可以在serverless.yml文件中定义的大部分属性。
 
@@ -132,7 +132,7 @@ secrets:
 
 此外，serverless.yml文件可能包含一个ssot属性。有关更多信息，请参见*SSOT模式*部分。
 
-此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的 Relayer密钥，则将这些密钥存储为JSON对象在.defender / relayer-keys文件夹中。
+此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的 Relayer 密钥，则将这些密钥存储为JSON对象在.defender / Relayer -keys文件夹中。
 
 > WARNING
 在安装模板时，我们确保忽略.defender文件夹中的任何git提交。但是，如果直接安装，请确保将此文件夹添加到您的.gitignore文件中。
@@ -146,7 +146,7 @@ secrets:
 您可以使用sls remove删除在serverless.yml文件中定义的所有Defender资源。
 
 > NOTE
-为了避免潜在的资金损失，只能直接从Defender UI中删除 Relayer。
+为了避免潜在的资金损失，只能直接从Defender UI中删除 Relayer 。
 
 ### 日志
 

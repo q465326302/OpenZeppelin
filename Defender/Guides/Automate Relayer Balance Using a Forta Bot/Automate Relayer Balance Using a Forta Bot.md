@@ -1,5 +1,5 @@
 # Automate ERC20 Token Balance Maintenance Using A Forta Bot and Defender Autotask
-本指南是将自定义 Forta 机器人与 Defender 集成的 A 到 Z 步骤。您将通过 Sentinel 将该机器人连接到 Defender。每当机器人触发警报时，Sentinel 将向您发送通知并触发 Autotask 运行自定义逻辑以发送交易（通过 Relayer）以自动为受监视帐户充值。在此示例中，我们将监视 Polygon 网络上的 LINK，但可以轻松替换任何 ERC20 代币。
+本指南是将自定义 Forta 机器人与 Defender 集成的 A 到 Z 步骤。您将通过 Sentinel 将该机器人连接到 Defender。每当机器人触发警报时，Sentinel 将向您发送通知并触发 Autotask 运行自定义逻辑以发送交易（通过 Relayer ）以自动为受监视帐户充值。在此示例中，我们将监视 Polygon 网络上的 LINK，但可以轻松替换任何 ERC20 代币。
 
 ![guide-balance-automation-forta-sentinel](img/guide-balance-automation-forta-sentinel-1.png)
 
@@ -7,7 +7,7 @@
 
 ## 安装依赖项
 > NOTE
-尽管本指南使用defender-client包创建 Relayer、Sentinels和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
+尽管本指南使用defender-client包创建 Relayer 、Sentinels和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
 
 您需要安装相关的Defender NPM包。请注意，Forta机器人的创建还需要安装[Docker](https://www.docker.com/get-started)。
 ```
@@ -16,10 +16,10 @@ $ npm init -y
 $ npm i --save-dev defender-relay-client defender-autotask-client defender-sentinel-client dotenv
 ```
 
-## 创建 Relayer
+## 创建 Relayer 
 从Defender Web界面，打开右上角的汉堡菜单。获取您的团队API密钥和密钥，并将它们保存到本地的.env文件中。
 
-使用defender-relay-client，在Polygon网络上创建一个新的* Relayer*，并将 Relayer的ID保存到您的.env文件中。
+使用defender-relay-client，在Polygon网络上创建一个新的* Relayer *，并将 Relayer 的ID保存到您的.env文件中。
 ```
 const { RelayClient } = require('defender-relay-client');
 const { appendFileSync } = require('fs');
@@ -31,15 +31,15 @@ async function run() {
 
   // create relay using defender client
   const requestParams = {
-    name: 'LINK Low Balance Relayer',
+    name: 'LINK Low Balance Relayer ',
     network: 'matic',
     minBalance: BigInt(1e17).toString(),
   };
-  const relayer = await relayClient.create(requestParams);
+  const Relayer  = await relayClient.create(requestParams);
 
-  // store relayer info in file (optional)
-  appendFileSync('.env', relayer.relayerId)
-  console.log('Relayer created: ', relayer);
+  // store Relayer  info in file (optional)
+  appendFileSync('.env', Relayer .Relayer Id)
+  console.log('Relayer  created: ', Relayer );
 }
 
 run().catch((error) => {
@@ -47,10 +47,10 @@ run().catch((error) => {
   process.exitCode = 1;
 });
 ```
-保存文件并运行脚本。拥有Relayer的ID就足以通过Autotask运行交易。
+保存文件并运行脚本。拥有Relayer 的ID就足以通过Autotask运行交易。
 
 ## 创建Autotask
-接下来，您需要创建一个*Autotask*，利用ethers.js将LINK从*集成的Relayer*转移到您希望由Forta机器人监视的帐户。
+接下来，您需要创建一个*Autotask*，利用ethers.js将LINK从*集成的Relayer *转移到您希望由Forta机器人监视的帐户。
 ```
 $ mkdir autotasks && touch autotasks/index.js
 ```
@@ -70,7 +70,7 @@ async function handler(event) {
 // ...
 ```
 
-Autotask可以通过在创建Autotask时指定其ID来连接到Relayer。凭据传递会自动且安全地处理。
+Autotask可以通过在创建Autotask时指定其ID来连接到Relayer 。凭据传递会自动且安全地处理。
 
 使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client)，在一个单独的文件中编写一个脚本，创建一个新的Autotask，并从autotasks/index.js上传代码。
 
@@ -95,7 +95,7 @@ async function main() {
       type: 'webhook',
     },
     paused: false,
-    relayerId: process.env.RELAYER_ID,
+    Relayer Id: process.env.Relayer _ID,
   }
 
   const createdAutotask = await autotaskClient.create(params)
@@ -229,7 +229,7 @@ successfully added agent id 0xd6d29c1584801d5baa867c9edaf595e794be63d207758155f2
 为了方便起见，将代理 ID 保存到您的主项目文件夹中的 .env 文件中。在创建订阅此机器人的 Sentinel 时，您将需要它。
 
 ## 创建 Forta Sentinel
-使用 sentinel-client 包，编写一个脚本，创建一个连接到您的 Relayer 和 Autotask 的 Forta Sentinel。
+使用 sentinel-client 包，编写一个脚本，创建一个连接到您的 Relayer  和 Autotask 的 Forta Sentinel。
 ```
 require('dotenv').config()
 const { SentinelClient } = require('defender-sentinel-client')
@@ -272,7 +272,7 @@ Sentinel被配置为在机器人发送警报时触发通知以及Autotask。为�
 
 运行脚本创建Sentinel。
 
-恭喜！您现在可以进一步尝试此集成，通过从受监视的帐户转移LINK以使余额降至0.1以下。 Forta机器人将发出警报，导致Sentinel触发Autotask，该Autotask在Relayer上运行传输函数，重新填充受监视的帐户。
+恭喜！您现在可以进一步尝试此集成，通过从受监视的帐户转移LINK以使余额降至0.1以下。 Forta机器人将发出警报，导致Sentinel触发Autotask，该Autotask在Relayer 上运行传输函数，重新填充受监视的帐户。
 
 ## 参考资料
 

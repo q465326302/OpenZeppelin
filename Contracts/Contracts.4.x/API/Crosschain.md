@@ -175,7 +175,7 @@ crossChainSender(bridge)
 
 #### isCrossChain(address bridge) → bool
 内部#
-返回当前函数调用是否是通过桥Relayer传递的跨链消息的结果。
+返回当前函数调用是否是通过桥Relayer 传递的跨链消息的结果。
 
 #### crossChainSender(address bridge) → address
 内部#
@@ -198,7 +198,7 @@ crossChainSender(bridge)
 
 #### isCrossChain(address bridge) → bool
 内部#
-返回当前函数调用是否是通过桥Relayer的跨链消息的结果。
+返回当前函数调用是否是通过桥Relayer 的跨链消息的结果。
 
 #### crossChainSender(address bridge) → address
 内部#
@@ -243,7 +243,7 @@ crossChainSender(messenger)
 
 #### isCrossChain(address messenger) → bool
 内部#
-返回当前函数调用是否是由信使Relayer的跨链消息的结果。
+返回当前函数调用是否是由信使Relayer 的跨链消息的结果。
 
 #### crossChainSender(address messenger) → address
 内部#

@@ -19,7 +19,7 @@ Defender Autotasks服务允许您定期运行代码片段，通过Webhooks或响
 ## Autotask中有什么?
 简而言之，Autotask是一段JavaScript代码片段，类似于无服务器函数，会定期调用，实际上它们是使用[Lambda函数](https://aws.amazon.com/lambda/)实现的。
 
-创建Autotask时，您提供JavaScript代码片段，选择触发器运行它，并可选择将其链接到_Relayer_。Defender目前支持两种触发器：
+创建Autotask时，您提供JavaScript代码片段，选择触发器运行它，并可选择将其链接到_Relayer _。Defender目前支持两种触发器：
 
 * **Schedule**：选择执行Autotask的频率，Defender将确保在指定的间隔内调用您的函数。请注意，指定的间隔是两个连续执行开始之间的间隔，而不是一个Autotask结束和下一个Autotask开始之间的间隔。或者，您可以使用[cron表达式](https://crontab.cronhub.io/)指定Autotask应该运行的时间。
 
@@ -43,19 +43,19 @@ exports.handler = async function(event) {
 }
 ```
 
-### Relayer集成
-如果您将Autotask连接到Relayer，那么Defender将自动注入临时凭据来从Autotask访问您的Relayer。只需将事件对象传递到Relayer客户端，而不是凭据即可：
+### Relayer 集成
+如果您将Autotask连接到Relayer ，那么Defender将自动注入临时凭据来从Autotask访问您的Relayer 。只需将事件对象传递到Relayer 客户端，而不是凭据即可：
 ```
-const { Relayer } = require('defender-relay-client');
+const { Relayer  } = require('defender-relay-client');
 
 exports.handler = async function(event) {
-  const relayer = new Relayer(event);
-  // Use relayer for sending txs or querying the network...
+  const Relayer  = new Relayer (event);
+  // Use Relayer  for sending txs or querying the network...
 }
 ```
-这使您可以在不设置任何API密钥或密码的情况下，从您的自动任务中使用Relayer发送交易。此外，您还可以使用Relayer JSON RPC端点查询任何以太坊网络，而无需为外部网络提供程序配置API密钥。
+这使您可以在不设置任何API密钥或密码的情况下，从您的自动任务中使用Relayer 发送交易。此外，您还可以使用Relayer  JSON RPC端点查询任何以太坊网络，而无需为外部网络提供程序配置API密钥。
 
-如果您想[使用ethers.js](https://www.npmjs.com/package/defender-relay-client#ethersjs)通过您的Relayer进行查询或发送交易，请更改上述内容为：
+如果您想[使用ethers.js](https://www.npmjs.com/package/defender-relay-client#ethersjs)通过您的Relayer 进行查询或发送交易，请更改上述内容为：
 ```
 const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-client/lib/ethers');
 const ethers = require('ethers');
@@ -138,7 +138,7 @@ secrets被加密并存储在安全保险库中，只有在您的自动任务运�
 
 
 > NOTE
-虽然您也可以使用Autotasksecrets来存储用于签署消息或交易的私钥，但我们建议您使用Relayer。 Relayer的签名操作在安全保险库中执行，比在Autotask运行中加载私钥并在那里签名提供了额外的安全级别。
+虽然您也可以使用Autotasksecrets来存储用于签署消息或交易的私钥，但我们建议您使用Relayer 。 Relayer 的签名操作在安全保险库中执行，比在Autotask运行中加载私钥并在那里签名提供了额外的安全级别。
 
 ### 键值数据存储
 Autotask键值数据存储允许您在Autotask运行之间以及不同的Autotask之间持久化简单的数据。您可以使用它来存储交易标识符、哈希用户电子邮件，甚至是小的序列化对象。
@@ -195,9 +195,9 @@ function generateHtmlMessage(autotaskName, txHash) {
 exports.handler = async function(event, context) {
   const { notificationClient } = context;
 
-  const relayer = new Relayer(credentials);
+  const Relayer  = new Relayer (credentials);
 
-  const txRes = await relayer.sendTransaction({
+  const txRes = await Relayer .sendTransaction({
     to: '0xc7464dbcA260A8faF033460622B23467Df5AEA42',
     value: 100,
     speed: 'fast',
@@ -284,14 +284,14 @@ exports.handler = async function(credentials, context) {
 
 * 运行yarn install --frozen-lockfile。
 
-您还可以使用以下模板进行本地开发，当使用node本地调用时，它将运行您的Autotask代码。在本地运行时，它将从环境变量中加载Relayer凭据，或者在Defender中运行时使用注入的凭据。
+您还可以使用以下模板进行本地开发，当使用node本地调用时，它将运行您的Autotask代码。在本地运行时，它将从环境变量中加载Relayer 凭据，或者在Defender中运行时使用注入的凭据。
 ```
-const { Relayer } = require('defender-relay-client');
+const { Relayer  } = require('defender-relay-client');
 
 // Entrypoint for the Autotask
 exports.handler = async function(event) {
-  const relayer = new Relayer(event);
-  // Use relayer for sending txs
+  const Relayer  = new Relayer (event);
+  // Use Relayer  for sending txs
 }
 
 // To run locally (this code will not be executed in Autotasks)
@@ -329,7 +329,7 @@ defender-autotask update-code $AUTOTASK_ID ./path/to/code
 代码包在压缩和base64编码后不得超过5MB的大小，并且您必须始终在zip文件的根目录中包含一个index.js作为入口点。
 
 ## 一个完整的例子
-以下示例使用ethers.js和Autotask-Relayer集成来发送调用给定合约的execute的交易。在发送交易之前，它使用Defender提供程序检查canExecute视图函数，并验证通过Webhook接收到的参数是否与本地secrets匹配。如果发送了交易，则返回哈希值作为响应，该哈希值将发送回Webhook调用者。
+以下示例使用ethers.js和Autotask-Relayer 集成来发送调用给定合约的execute的交易。在发送交易之前，它使用Defender提供程序检查canExecute视图函数，并验证通过Webhook接收到的参数是否与本地secrets匹配。如果发送了交易，则返回哈希值作为响应，该哈希值将发送回Webhook调用者。
 ```
 const { ethers } = require("ethers");
 const { DefenderRelaySigner, DefenderRelayProvider } = require('defender-relay-client/lib/ethers');
@@ -342,7 +342,7 @@ exports.handler = async function(event) {
   // Compare it with a local secret
   if (value !== event.secrets.expectedValue) return;
 
-  // Initialize defender relayer provider and signer
+  // Initialize defender Relayer  provider and signer
   const provider = new DefenderRelayProvider(event);
   const signer = new DefenderRelaySigner(event, provider, { speed: 'fast' });
 
@@ -365,12 +365,12 @@ if (require.main === module) {
 ```
 
 >TOTE
-我们不需要等待交易被挖掘。Defender Relayer会负责监控交易并在需要时重新提交。Autotask只需请求发送给Relayer并退出。
+我们不需要等待交易被挖掘。Defender Relayer 会负责监控交易并在需要时重新提交。Autotask只需请求发送给Relayer 并退出。
 
 ## 安全考虑
 每个Autotask都作为单独的AWS Lambda实现，确保在每个单独的Autotask和Defender用户之间有强大的隔离。
 
-通过身份和访问管理，Autotasks受限于对Defender内部基础架构的零访问权限。唯一的例外是，Autotask可以访问其链接的Relayer，这是通过Defender Autotask服务在每次执行时注入的临时凭据进行协商的。但是，Autotask只能调用Relayer公开的方法，并且无法直接访问支持私钥。
+通过身份和访问管理，Autotasks受限于对Defender内部基础架构的零访问权限。唯一的例外是，Autotask可以访问其链接的Relayer ，这是通过Defender Autotask服务在每次执行时注入的临时凭据进行协商的。但是，Autotask只能调用Relayer 公开的方法，并且无法直接访问支持私钥。
 
 ## 即将呈现...
 我们正在努力改进Autotasks与系统中其他部分的连接，例如在Admin中使用的[Address Book](../Admin/Admin.md)，以便您可以将其视为注册表。如果您有任何想法，请告诉我们！

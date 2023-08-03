@@ -3,13 +3,13 @@
 Relay API分为两个模块：
 
 1. Relay Client
-    * 在帐户中执行创建、读取和更新操作，跨所有 Relayer
+    * 在帐户中执行创建、读取和更新操作，跨所有 Relayer 
     * 使用使用Team API Key/Secret生成的令牌进行身份验证（在创建Team API Key时可用）
 
 2. Relay Signer
 
-    * 使用特定 Relayer执行发送、签名和其他操作
-    * 使用使用Relayer API Key/Secret生成的令牌进行身份验证（在创建 Relayer时可用）
+    * 使用特定 Relayer 执行发送、签名和其他操作
+    * 使用使用Relayer  API Key/Secret生成的令牌进行身份验证（在创建 Relayer 时可用）
 
 有关身份验证的更多信息，请参阅*身份验证*部分。
 
@@ -23,18 +23,18 @@ Relay API分为两个模块：
 
 Relay客户端模块公开以下终端：
 
-* list：列出与帐户关联的所有 Relayer
-* create：创建新的 Relayer
-* retrieve：检索单个 Relayer的数据
-* update：更新现有 Relayer
+* list：列出与帐户关联的所有 Relayer 
+* create：创建新的 Relayer 
+* retrieve：检索单个 Relayer 的数据
+* update：更新现有 Relayer 
 
-### 列出 Relayer
+### 列出 Relayer 
 
-要列出现有的 Relayer，您可以在客户端上调用list函数，该函数返回ListRelayerResponse对象：
+要列出现有的 Relayer ，您可以在客户端上调用list函数，该函数返回ListRelayer Response对象：
 ```
 await client.list();
 ```
-relayers/summary端点用于通过GET请求检索现有Relayer列表。
+Relayer s/summary端点用于通过GET请求检索现有Relayer 列表。
 ```
 curl \
   -X GET \
@@ -42,14 +42,14 @@ curl \
   -H 'Content-Type: application/json' \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
-    "https://defender-api.openzeppelin.com/relayer/relayers/summary"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s/summary"
 ```
 一个响应示例
 ```
 [
     {
-      relayerId: '201832e2-c612-4283-97c5-31849242c1fe',
-      name: 'MyRelayer',
+      Relayer Id: '201832e2-c612-4283-97c5-31849242c1fe',
+      name: 'MyRelayer ',
       address: '0x623e258760220127d4856fa24ff126a230560749',
       network: 'rinkeby',
       createdAt: '2022-04-05T16:57:37.154Z',
@@ -61,13 +61,13 @@ curl \
 ]
 ```
 
-### 列出 Relayer密钥
+### 列出 Relayer 密钥
 
-要列出与现有 Relayer关联的密钥，您可以在客户端上调用listKeys函数，并使用relayerId返回一个RelayerKey对象数组：
+要列出与现有 Relayer 关联的密钥，您可以在客户端上调用listKeys函数，并使用Relayer Id返回一个Relayer Key对象数组：
 ```
 await client.listKeys('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
-/relayers/${relayerId}/keys端点用于通过GET请求检索 Relayer密钥列表。
+/Relayer s/${Relayer Id}/keys端点用于通过GET请求检索 Relayer 密钥列表。
 ```
 curl \
   -X GET \
@@ -75,7 +75,7 @@ curl \
   -H 'Content-Type: application/json' \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
-    "https://defender-api.openzeppelin.com/relayer/relayers/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys"
 ```
 一个响应示例
 ```
@@ -83,24 +83,24 @@ curl \
     {
       apiKey: '5Kk12pMA6LjPSppaRAsfAJRAjYeFJzr6',
       createdAt: '2022-04-26T19:49:10.292Z',
-      relayerId: '58b3d255-e357-4b0d-aa16-e86f745e63b9',
+      Relayer Id: '58b3d255-e357-4b0d-aa16-e86f745e63b9',
       keyId: '898a952b-415b-4d4b-882b-3958f11pbeea'
   }
 ]
 ```
 
-### 创建 Relayer
-要创建新的 Relayer，您需要按照接口CreateRelayerRequest中直接描述的参数提供参数。
+### 创建 Relayer 
+要创建新的 Relayer ，您需要按照接口CreateRelayer Request中直接描述的参数提供参数。
 ```
-interface CreateRelayerRequest {
+interface CreateRelayer Request {
   name: string;
-  useAddressFromRelayerId?: string;
+  useAddressFromRelayer Id?: string;
   network: Network;
   minBalance: string;
-  policies?: UpdateRelayerPoliciesRequest;
+  policies?: UpdateRelayer PoliciesRequest;
 }
 
-interface UpdateRelayerPoliciesRequest {
+interface UpdateRelayer PoliciesRequest {
   gasPriceCap?: string;
   whitelistReceivers?: string[];
   EIP1559Pricing?: boolean;
@@ -146,7 +146,7 @@ type Network =
 使用defender-relay-client包：
 ```
 const requestParameters = {
-  name: 'MyNewRelayer',
+  name: 'MyNewRelayer ',
   network: 'rinkeby',
   minBalance: BigInt(1e17).toString(),
   policies: {
@@ -156,18 +156,18 @@ const requestParameters = {
 
 await client.create(requestParameters);
 ```
-您还可以通过在useAddressFromRelayerId参数中引用现有的relayerId来将现有的Relayer克隆到不同的网络中：
+您还可以通过在useAddressFromRelayer Id参数中引用现有的Relayer Id来将现有的Relayer 克隆到不同的网络中：
 ```
 const requestParameters = {
-  name: 'MyClonedRelayer',
-  useAddressFromRelayerId: '201832e2-c612-4283-97c5-31849242c1fe',
+  name: 'MyClonedRelayer ',
+  useAddressFromRelayer Id: '201832e2-c612-4283-97c5-31849242c1fe',
   network: 'mainnet',
   minBalance: BigInt(1e17).toString()
 };
 
 await client.create(requestParameters);
 ```
-向/relayers端点发出POST请求：
+向/Relayer s端点发出POST请求：
 ```
 curl \
   -X POST \
@@ -176,29 +176,29 @@ curl \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{...}' \
-    "https://defender-api.openzeppelin.com/relayer/relayers"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s"
 ```
 
-#### Relayer策略
-以下Relayer策略可以选择性地包含在创建和更新调用中：
+#### Relayer 策略
+以下Relayer 策略可以选择性地包含在创建和更新调用中：
 
 * gasPriceCap：以 wei 为单位的最大 gasPrice 或 maxFeePerGas
-* whitelistReceivers：一个包含此 Relayer可以与之交互的所有有效地址的数组；如果未定义此策略，则 Relayer可以向任何地址发送交易。
+* whitelistReceivers：一个包含此 Relayer 可以与之交互的所有有效地址的数组；如果未定义此策略，则 Relayer 可以向任何地址发送交易。
 * EIP1559Pricing：一个布尔值，指示默认定价方式。如果为 true，则交易将按照 EIP1559 定价，否则按照传统交易定价。
 * privateTransactions：一个布尔值，指示默认的交易内存池可见性。如果为 true，则交易将通过私有内存池发送。
 
 > NOTE
-EIP1559Pricing 标志仅适用于 EIP1559 网络上的 Relayer。
+EIP1559Pricing 标志仅适用于 EIP1559 网络上的 Relayer 。
 
 > NOTE
 仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[ uncle bandit risk](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
-## 创建 Relayer密钥
-通过 API 创建的 Relayer默认不会有任何关联的 Relayer密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 RelayerKey（仅在创建时可用的 secretKey）：
+## 创建 Relayer 密钥
+通过 API 创建的 Relayer 默认不会有任何关联的 Relayer 密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 Relayer Key（仅在创建时可用的 secretKey）：
 ```
 await client.createKey('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
-向/relayers/${relayerId}/keys端点发出POST请求：
+向/Relayer s/${Relayer Id}/keys端点发出POST请求：
 ```
 curl \
   -X POST \
@@ -206,7 +206,7 @@ curl \
   -H 'Content-Type: application/json' \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
-    "https://defender-api.openzeppelin.com/relayer/relayers/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys"
 ```
 一个响应示例
 ```
@@ -214,27 +214,27 @@ curl \
     {
       apiKey: '5Kk12pMA6LjPSppaRAsfAJRAjYeFJzr6',
       createdAt: '2022-04-26T19:49:10.292Z',
-      relayerId: '58b3d255-e357-4b0d-aa16-e86f745e63b9',
+      Relayer Id: '58b3d255-e357-4b0d-aa16-e86f745e63b9',
       keyId: '898a952b-415b-4d4b-882b-3958f11pbeea',
       secretKey: '1pDxUoWYtrAK4xMsKmOITpd1PQofWDFRRTNp2jshDhZ1XhYxDCfAvQ5vyKprFhXQ'
   }
 ]
 ```
 
-### 更新 Relayer
-要更新 Relayer，您可以在客户端上调用更新函数。这将需要 RelayerID和UpdateRelayerRequest对象作为参数：
+### 更新 Relayer 
+要更新 Relayer ，您可以在客户端上调用更新函数。这将需要 Relayer ID和UpdateRelayer Request对象作为参数：
 ```
-interface UpdateRelayerRequest {
+interface UpdateRelayer Request {
   name?: string;
   minBalance?: string;
-  policies?: UpdateRelayerPoliciesRequest;
+  policies?: UpdateRelayer PoliciesRequest;
 }
 ```
 使用defender-relay-client包：
 ```
 await client.update('201832e2-c612-4283-97c5-31849242c1fe', { name: 'My Updated Name' });
 ```
-向/relayers端点发出PUT请求：
+向/Relayer s端点发出PUT请求：
 ```
 curl \
   -X PUT \
@@ -243,11 +243,11 @@ curl \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{...}' \
-    "https://defender-api.openzeppelin.com/relayer/relayers"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s"
 ```
 
 > NOTE
-如果直接进行请求（而不是使用defender-relay-client），任何策略更新都需要通过以下端点直接进行请求，请求体类型为UpdateRelayerPoliciesRequest。
+如果直接进行请求（而不是使用defender-relay-client），任何策略更新都需要通过以下端点直接进行请求，请求体类型为UpdateRelayer PoliciesRequest。
 
 ```
 curl \
@@ -257,11 +257,11 @@ curl \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
   -d '{...}' \
-    "https://defender-api.openzeppelin.com/relayer/relayers/{relayerId}"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s/{Relayer Id}"
 ```
 
-### 删除Relayer键
-要删除与 Relayer关联的密钥，可以在客户端上调用deleteKey方法，该方法返回一个指示删除状态的消息：
+### 删除Relayer 键
+要删除与 Relayer 关联的密钥，可以在客户端上调用deleteKey方法，该方法返回一个指示删除状态的消息：
 ```
 await client.deleteKey('58b3d255-e357-4b0d-aa16-e86f745e63b9', 'j3bru93-k32l-3p1s-pp56-u43f675e92p1');
 ```
@@ -269,7 +269,7 @@ await client.deleteKey('58b3d255-e357-4b0d-aa16-e86f745e63b9', 'j3bru93-k32l-3p1
 > NOTE
 deleteKey的第二个参数是keyId，而不是apiKey。区分两者的一种方法是keyId包含连字符。可以通过上面描述的列表操作获取它，也可以在创建密钥的响应中获取它。
 
-通过向/relayers/${relayerId}/keys/${keyId}端点发出DELETE请求：
+通过向/Relayer s/${Relayer Id}/keys/${keyId}端点发出DELETE请求：
 ```
 curl \
   -X DELETE \
@@ -277,7 +277,7 @@ curl \
   -H 'Content-Type: application/json' \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
-    "https://defender-api.openzeppelin.com/relayer/relayers/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys/j3bru93-k32l-3p1s-pp56-u43f675e92p1"
+    "https://defender-api.openzeppelin.com/Relayer /Relayer s/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys/j3bru93-k32l-3p1s-pp56-u43f675e92p1"
 ```
 一个响应示例
 ```
@@ -285,14 +285,14 @@ curl \
   message: 'j3bru93-k32l-3p1s-pp56-u43f675e92p1 deleted'
 }
 ```
-删除Relayer（不仅仅是密钥）仅可通过Defender控制台进行。
+删除Relayer （不仅仅是密钥）仅可通过Defender控制台进行。
 
-## Relayer签名模块参考资料
-Relayer签名模块公开了以下端点：
+## Relayer 签名模块参考资料
+Relayer 签名模块公开了以下端点：
 
 * txs：将交易发送到以太坊区块链并查询其状态
-* sign：使用Relayer私钥对任意数据进行签名
-* relayer：从Relayer获取信息
+* sign：使用Relayer 私钥对任意数据进行签名
+* Relayer ：从Relayer 获取信息
 * jsonrpc：对以太坊网络进行json-rpc调用
 
 ### 交易端点
@@ -328,7 +328,7 @@ interface SendEIP1559TransactionRequest extends SendBaseTransactionRequest {
   maxPriorityFeePerGas: BigUInt;
 }
 
-type RelayerTransactionPayload =
+type Relayer TransactionPayload =
   | SendBaseTransactionRequest
   | SendSpeedTransactionRequest
   | SendLegacyTransactionRequest
@@ -355,7 +355,7 @@ type Hex = string;
 type Speed = 'safeLow' | 'average' | 'fast' | 'fastest';
 type Status = 'pending' | 'sent' | 'submitted' | 'inmempool' | 'mined' | 'confirmed' | 'failed';
 
-interface RelayerTransactionBase {
+interface Relayer TransactionBase {
   transactionId: string;
   hash: string;
   to: Address;
@@ -374,16 +374,16 @@ interface RelayerTransactionBase {
   isPrivate?: boolean;
 }
 
-interface RelayerLegacyTransaction extends RelayerTransactionBase {
+interface Relayer LegacyTransaction extends Relayer TransactionBase {
   gasPrice: number;
 }
 
-interface RelayerEIP1559Transaction extends RelayerTransactionBase {
+interface Relayer EIP1559Transaction extends Relayer TransactionBase {
   maxPriorityFeePerGas: number;
   maxFeePerGas: number;
 }
 
-export type TransactionResponse = RelayerLegacyTransaction | RelayerEIP1559Transaction;
+export type TransactionResponse = Relayer LegacyTransaction | Relayer EIP1559Transaction;
 ```
 注意额外的transactionId字段，它是一个Defender内部的标识符，用于查询和替换。
 
@@ -486,7 +486,7 @@ curl \
 ```
 
 #### 列出交易记录
-要检索最近从您的Relayer发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（已挖掘、待处理或失败）作为查询参数。
+要检索最近从您的Relayer 发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（已挖掘、待处理或失败）作为查询参数。
 
 请求示例：
 ```
@@ -600,9 +600,9 @@ interface SignedMessagePayload {
 }
 ```
 
-### Relayer Endpoint（Relayer端点）
+### Relayer  Endpoint（Relayer 端点）
 
-要使用Relay API检索 Relayer的数据，请向/relayer端点发出GET请求。
+要使用Relay API检索 Relayer 的数据，请向/Relayer 端点发出GET请求。
 
 请求示例：
 ```
@@ -612,12 +612,12 @@ curl \
   -H 'Content-Type: application/json' \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
-    "https://api.defender.openzeppelin.com/relayer"
+    "https://api.defender.openzeppelin.com/Relayer "
 ```
 您将收到以下格式的回复:
 ```
-interface RelayerModel {
-  relayerId: string;
+interface Relayer Model {
+  Relayer Id: string;
   name: string;
   address: string;
   network: string;
@@ -629,7 +629,7 @@ interface RelayerModel {
 一个响应示例
 ```
 {
-   "relayerId":"d5484fb1-df83-4659-9903-16d57d41f188",
+   "Relayer Id":"d5484fb1-df83-4659-9903-16d57d41f188",
    "name":"Rinkeby",
    "address":"0x71764d6450c2b710fc3e4ee5b7a038d1e7e4fc29",
    "network":"rinkeby",
@@ -640,7 +640,7 @@ interface RelayerModel {
 ```
 
 ### JSON RPC 端点
-要向您的Relayer网络发出JSON RPC调用，请向/relayer/jsonrpc端点发出POST请求，并提供方法名称和参数。请注意，不支持事件过滤方法和WebSocket订阅。
+要向您的Relayer 网络发出JSON RPC调用，请向/Relayer /jsonrpc端点发出POST请求，并提供方法名称和参数。请注意，不支持事件过滤方法和WebSocket订阅。
 
 请求的示例：
 ```
@@ -653,7 +653,7 @@ curl \
   -H "X-Api-Key: $KEY" \
   -H "Authorization: Bearer $TOKEN" \
   -d "$DATA" \
-    "https://api.defender.openzeppelin.com/relayer/jsonrpc"
+    "https://api.defender.openzeppelin.com/Relayer /jsonrpc"
 ```
 一个响应示例
 ```

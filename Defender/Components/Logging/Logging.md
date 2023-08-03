@@ -10,9 +10,9 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 
 * 检测基础架构中的**潜在攻击**，例如登录失败的尝试
 
-* 跟踪**relayer活动**以了解从您的账户发送的交易
+* 跟踪**Relayer 活动**以了解从您的账户发送的交易
 
-* 保留对Autotasks、Sentinels和Relayers的所有更改的**审计记录**
+* 保留对Autotasks、Sentinels和Relayer s的所有更改的**审计记录**
 
 ## 日志条目
 每个日志条目都将分配给autotask、sentinel、relay、admin或account之一，并标记为从trace到error的严重性级别。日志条目是跟踪操作的主体和客体，并将事件分类为以下之一：

@@ -1,5 +1,5 @@
 # Registering an Upkeep on Chainlink Keepers
-本文将指导您使用Defender Admin在Chainlink Keepers上注册您的合约作为**Upkeep**，并利用Relayers、Autotasks和Sentinels进行[监控和操作](https://andrecronje.medium.com/scaling-keep3r-with-chainlink-2832bbc76506)，这是[Keep3r Network](https://keep3r.network/)的一次改进。
+本文将指导您使用Defender Admin在Chainlink Keepers上注册您的合约作为**Upkeep**，并利用Relayer s、Autotasks和Sentinels进行[监控和操作](https://andrecronje.medium.com/scaling-keep3r-with-chainlink-2832bbc76506)，这是[Keep3r Network](https://keep3r.network/)的一次改进。
 
 ## 什么是Chainlink Keepers？
 Chainlink Keepers旨在提供智能合约选项，以信任最小化（去中心化）的方式外包常规维护任务（收获、清算、重新基准等）。该网络旨在为保持者生态系统提供激励和治理协议。
@@ -120,20 +120,20 @@ interface KeeperCompatibleInterface {
 
 ###资金短缺
 
-当您的LINK余额不足时，您可以将*Sentinels*与*Autotasks*和*Relayers*结合使用，以补充您的维护费用。
+当您的LINK余额不足时，您可以将*Sentinels*与*Autotasks*和*Relayer s*结合使用，以补充您的维护费用。
 
 > NOTE
 作为自动资金的替代方案，您也可以让Autotask发送通知，以便您手动添加资金。
 
-要这样做，首先创建一个Relayer，我们将用它来补充您的Upkeep。您在Defender中创建的每个Relayer都有一个唯一的地址，并且只能由您的团队使用。请确保您在Kovan或Mainnet网络中创建您的Relayer，具体取决于您在哪个网络上运行您的Upkeep。
+要这样做，首先创建一个Relayer ，我们将用它来补充您的Upkeep。您在Defender中创建的每个Relayer 都有一个唯一的地址，并且只能由您的团队使用。请确保您在Kovan或Mainnet网络中创建您的Relayer ，具体取决于您在哪个网络上运行您的Upkeep。
 ![guide-chainlink-11.png](img/guide-chainlink-11.png)
 
-创建完成后，将一些LINK和ETH转移到Relayer的地址，以便它可以为您的Upkeep工作充值，并支付它发送的交易的燃气费用。在Kovan上，您可以从[此水龙头](https://kovan.chain.link/)获取测试LINK。
+创建完成后，将一些LINK和ETH转移到Relayer 的地址，以便它可以为您的Upkeep工作充值，并支付它发送的交易的燃气费用。在Kovan上，您可以从[此水龙头](https://kovan.chain.link/)获取测试LINK。
 
-下一步是创建一个Autotask，该Autotask可以查询您的Upkeep余额，并在其低于阈值时添加LINK资金。将此Autotask设置为在连接到您先前创建的Relayer的Webhook上运行，并使用[defender-autotask-examples存储库](https://github.com/OpenZeppelin/defender-autotask-examples/)中的[low-funds代码](https://github.com/OpenZeppelin/defender-autotask-examples/blob/master/chainlink/src/low-funds.js)。
+下一步是创建一个Autotask，该Autotask可以查询您的Upkeep余额，并在其低于阈值时添加LINK资金。将此Autotask设置为在连接到您先前创建的Relayer 的Webhook上运行，并使用[defender-autotask-examples存储库](https://github.com/OpenZeppelin/defender-autotask-examples/)中的[low-funds代码](https://github.com/OpenZeppelin/defender-autotask-examples/blob/master/chainlink/src/low-funds.js)。
 ![guide-chainlink-12.png](img/guide-chainlink-12.png)
 
-每当这个Autotask运行时，如果它检测到余额低于您配置的令牌数量，它将使用您的Relayer发送更多的LINK来资助您的Upkeep。
+每当这个Autotask运行时，如果它检测到余额低于您配置的令牌数量，它将使用您的Relayer 发送更多的LINK来资助您的Upkeep。
 
 最后一步是触发这个Autotask。您可以将其设置为定时运行，而不是Webhook模式，也可以在执行作业后触发它。如果您选择后者，您将需要创建一个Sentinel来监视[Chainlink Keeper Registry](https://kovan.etherscan.io/address/0x109A81F1E0A35D4c1D0cae8aCc6597cd54b47Bc6)（Kovan上的0x42dD7716721ba279dA2f1F06F97025d739BD79a8），并按照前面的场景过滤您的作业上的所有UpkeepPerformed事件。
 ![guide-chainlink-13.png](img/guide-chainlink-13.png)

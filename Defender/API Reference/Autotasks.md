@@ -15,7 +15,7 @@ autotasks端点用于通过POST请求创建新的Autotask。端点接受以下�
 interface CreateAutotaskRequest {
   name: string;
   encodedZippedCode: string;
-  relayerId?: string;
+  Relayer Id?: string;
   trigger: {
     type: 'schedule' | 'webhook';
     frequencyMinutes?: number;
@@ -54,7 +54,7 @@ await client.list();
       name: 'Example 1',
       paused: false,
       trigger: [Object],
-      relayerId: 'f75701bb-d0bd-49d2-bec9-3420a7b645f6'
+      Relayer Id: 'f75701bb-d0bd-49d2-bec9-3420a7b645f6'
     },
     {
       autotaskId: '143f7d62-22c1-427e-82e7-20036925c4b3',
@@ -93,7 +93,7 @@ interface UpdateAutotaskRequest {
   autotaskId: string;
   name: string;
   encodedZippedCode?: string;
-  relayerId?: string;
+  Relayer Id?: string;
   trigger: {
     type: 'schedule' | 'webhook';
     frequencyMinutes?: number;
