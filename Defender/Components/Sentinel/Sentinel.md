@@ -332,7 +332,7 @@ FORTA-1, NETHFORTA-1
 我们根据新的 [Forta API](https://docs.forta.network/en/latest/api/) 更新了 Forta 警报架构。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了 Bot 名称，agent → bot。旧属性现已弃用，但我们将继续发送两者以保持向后兼容性。
 
 > NOTE
-Forta 已更改 “代理” 的术语为 “检测机器人”。我们将继续暂时将它们称为 “代理”。 sentinel.agents 将是您的机器人 ID 列表。
+Forta 已更改 “Agent” 的术语为 “Detection Bot”。我们将继续暂时将它们称为 “agents”。 sentinel.agents 将是您的机器人 ID 列表。
 ```
 {
   "events": [
@@ -428,7 +428,7 @@ exports.handler = async function(payload) {
 ### Slack配置
 请参阅[Slack Webhook文档](https://api.slack.com/messaging/webhooks)以配置Slack Webhook。配置完Slack后，在Defender中输入Webhook URL。
 
-* **Alias**是此Slack配置的名称。例如，您可以将其命名为通道名称。
+* **Alias**是此Slack配置的名称。例如，您可以根据频道的名称来命名它。
 
 * **Webhook URL**是用于通知的Slack管理控制台中的URL。
 
@@ -447,7 +447,7 @@ exports.handler = async function(payload) {
 ### Datadog配置
 Datadog配置允许Defender将自定义指标转发到您的Datadog帐户。有关自定义指标的更多信息，请参见[Datadog指标文档](https://docs.datadoghq.com/developers/metrics/)。
 
-我们发送的指标是一个COUNT指标，表示触发Sentinel的交易数量。如果Sentinel没有触发，则不发送零，因此应预期缺少数据。对于每个指标，我们发送两个标签：网络（Rinkeby、Mainnet等）和Sentinel（Sentinel的名称）。
+我们发送的指标是一个COUNT指标，表示触发Sentinel的交易数量。如果Sentinel没有触发，则不发送零，因此可以预期没有数据。对于每个指标，我们发送两个标签：网络（Rinkeby、Mainnet等）和Sentinel（Sentinel的名称）。
 
 > NOTE
 新的自定义指标可能需要几分钟才能在Datadog控制台中显示。
@@ -465,27 +465,27 @@ Datadog配置允许Defender将自定义指标转发到您的Datadog帐户。有�
 
 * **路由密钥**服务或全局规则集上集成的集成密钥（32个字符）
 
-* **事件动作**：事件的动作类型（触发、确认或解决）
+* **事件动作**：事件的操作类型（触发、确认或解决）
 
-* **去重键** 用于关联触发器和解决方案的去重键（最多255个字符）
+* **去重密钥** 用于关联触发器和解决方案的去重键（最多255个字符）
 
-* **严重性**事件描述的状态相对于受影响的系统的感知严重性（关键、错误、警告或信息）
+* **严重程度**事件描述的状态相对于受影响的系统的感知严重性（关键、错误、警告或信息）
 
-* **组件源计算机**的组件负责事件
+* **组件** 事件源机器负责的组件
 
-* **组逻辑**服务组件的逻辑分组
+* **组**服务组件的逻辑分组
 
 * **类**事件的类/类型
 
-* **自定义**详细信息键值对映射，提供有关事件和受影响系统的其他详细信息
+* **自定义详细信息**键值对映射，提供有关事件和受影响系统的其他详细信息
 
-### 电报配置
+### Telegram配置
 请参阅[Telegram机器人文档](https://core.telegram.org/bots#6-botfather)，使用BotFather配置Telegram Bot
 
 > NOTE
 Telegram机器人必须添加到您的频道并具有发布消息的权限。
 
-要查找通道的聊天ID，请执行以下curl（使用您的机器人令牌值），并提取聊天的id值。如果您没有收到任何条目的响应，请先发送测试消息到您的聊天中。
+要查找频道的聊天ID，请执行以下curl（使用您的机器人令牌值），并提取聊天的id值。如果您没有收到任何条目的响应，请先发送测试消息到您的聊天中。
 ```
 curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 {
@@ -525,13 +525,13 @@ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 
 * **Webhook URL**是Sentinel将发送匹配事件的URL。
 
-为了避免在高匹配数下用许多并发请求淹没接收Webhook，Sentinel发送一个包含事件的JSON对象，其中包含一个包含所有匹配事件的数组。
+为了避免在高匹配数下用许多并发请求压倒接收Webhook，Sentinel发送一个包含事件的JSON对象，其中包含一个包含所有匹配事件的数组。
 ```
 {
   events: [...] // See Event Schema for details on the contents of this array
 }
 ```
-事件模式与*“事件模式”*中所述的完全相同。您还可以使用测试通知功能向您的Webhook发送测试通知。
+事件模式与 _Event Schema_中所述的完全相同。您还可以使用测试通知功能向您的Webhook发送测试通知。
 
 ### Opsgenie配置
 请查看[Opsgenie集成文档](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/)，以配置可创建警报的Opsgenie API集成。
@@ -540,26 +540,26 @@ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 
 * **实例位置** Opsgenie实例服务器所在的位置
 
-* **响应者** 将警报路由到的团队、用户、升级和计划，以发送通知。每个项目都必须具有类型字段，其中可能的值为团队、用户、升级和计划。如果API密钥属于团队集成，则此字段将被重写为所有者团队。每个响应者的id或name都应提供。您可以参考下面的示例值（50个团队、用户、升级或计划）
+* **响应者** 将警报路由到的团队、用户、升级和计划，以发送通知。每个项目都必须具有type字段，其中可能的值为团队、用户、升级和计划。如果API密钥属于团队集成，则此字段将被覆盖为所有者团队。每个响应者的id或name都应提供。您可以参考下面的示例值（50个团队、用户、升级或计划）
 
-* **可见** 团队和用户，警报将对其可见，而不发送任何通知。每个项目都必须具有类型字段，其中可能的值为团队和用户。除了类型字段外，团队应给出id或名称，用户应给出id或用户名。请注意：警报将默认对指定在responder字段中的团队可见，因此无需在visibleTo字段中重新指定它们。您可以参考下面的示例值（总共50个团队或用户）
+* **可见** 团队和用户，警报将对其可见，而不发送任何通知。每个项目都必须具有type字段，其中可能的值为团队和用户。除了type字段外，团队应给出id或name，用户应给出id或username。请注意：警报将默认对指定在responder字段中的团队可见，因此无需在visibleTo字段中重新指定它们。您可以参考下面的示例值（总共50个团队或用户）
 
-* **Alias** 警报的客户定义标识符，也是警报去重的关键元素（最多512个字符）
+* **Alias** 警报的客户定义标识符，也是警报[去重的关键元素](https://support.atlassian.com/opsgenie/docs/what-is-alert-de-duplication/)（最多512个字符）
 
-* **优先级** 警报的优先级级别。可能的值为P1、P2、P3、P4和P5。默认值为P3
+* **Priority** 警报的优先级级别。可能的值为P1、P2、P3、P4和P5。默认值为P3
 
-* **实体** 警报的实体字段通常用于指定警报所涉及的域（最多512个字符）
+* **Entity** 警报的实体字段通常用于指定警报所涉及的域（最多512个字符）
 
-* **操作** 可用于警报的自定义操作（10个x 50个字符）
+* **Actions** 可用于警报的自定义操作（10个x 50个字符）
 
-* **注释** 创建警报时添加的附加注释（最多25000个字符）
+* **Note** 创建警报时添加的附加注释（最多25000个字符）
 
-* **细节** 键值对映射，用作警报的自定义属性（最多8000个字符）
+* **Details** 键值对映射，用作警报的自定义属性（最多8000个字符）
 
-* **标签** 警报的标签（20个x 50个字符）
+* **Tags** 警报的标签（20个x 50个字符）
 
 ### Autotask
-如果选择自动任务，则自动任务将接收一个包含触发事件的详细信息的正文属性，可以是触发交易的交易详细信息或触发警报的Forta警报详细信息。自动任务可以执行自定义逻辑并根据需要访问外部API。
+如果选择自动任务，则自动任务将接收一个包含触发事件的详细信息的body属性，可以是触发交易的交易详细信息或触发警报的Forta警报详细信息。自动任务可以执行自定义逻辑并根据需要访问外部API。
 
 >IMPORTANT
 自动任务执行受配额限制。配额用尽后，自动任务将不再执行。如果您需要提高自动任务执行配额，请发送电子邮件至defender@openzeppelin.com，并描述您的用例。
@@ -624,10 +624,11 @@ exports.handler = async function(params) {
 #### Forta Sentinel
 
 > NOTE
-我们已经根据新的Forta API更新了Forta Alert模式。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了Bot名称，agent → bot。旧属性现已过时，但我们将继续发送两者以保持向后兼容性。
+我们根据新的Forta API更新了Forta Alert模式。进行了以下更改：alert_id → alertId，scanner_count → scanNodeCount，type → findingType，tx_hash → transactionHash，chain_Id → chainId，删除了Bot名称，agent → bot。旧属性现在已被弃用，但我们将继续发送两者以保持向后兼容性。
 
 > NOTE
-Forta已更改“代理”的术语为“检测机器人”。我们将继续称之为“代理”。sentinel.agents将是您的Bot ID列表。
+Forta已将“Agent”的术语更改为“Detection Bot”。我们暂时将继续称之为“agents”。sentinel.agents将是您的Bot ID列表。
+
 ```
 {
   "alert": {                            // Forta Alert
@@ -671,11 +672,12 @@ Forta已更改“代理”的术语为“检测机器人”。我们将继续称
 ```
 
 ## 定制通知消息
-您可以选择使用通知渠道选择器下方的复选框修改消息主题（仅限纯文本）和正文内容和格式。
+您可以选择性地使用通知渠道选择器下方的复选框来修改消息主题（仅限纯文本）和正文内容以及格式。
 
 ### 例如
 
 #### 模板
+
 ```
 **Sentinel Name**
 
@@ -738,14 +740,14 @@ name：test
 
 * 加粗（**此文本加粗**）
 
-*斜体（*此文本*和_此文本_为斜体）
+* 斜体（*此文本*和_此文本_为斜体）
 
-*链接（这是一个[链接](http://example.com)）
+* 链接（这是一个[链接](http://example.com)）
 
-对于其他Markdown语法，部分支持，但渲染行为因平台而异。电子邮件支持完整的HTML并具有最丰富的功能集，但其他消息平台存在局限性，包括对标准Markdown功能（如标题、块引用和表格）的支持。支持的功能的组合（例如粗体和斜体文本）也有不同的支持。如果您的Markdown包含任何具有混合平台支持的语法，则在编辑器下方会出现警告消息。
+对于其他Markdown语法，如标题、块引用和表格，不同的消息平台支持程度不同。电子邮件支持完整的HTML并具有最丰富的功能集，但其他消息平台存在局限性，同时支持的功能组合（例如粗体和斜体的文本）也有不同的支持程度。如果您的Markdown包含任何具有混合平台支持的语法，编辑器下方将显示警告消息。
 
 ### 动态内容
-自定义通知模板使用内联模板呈现动态内容。任何用双花括号括起来的字符串都将根据*事件模式*解析。可以使用点表示法访问深度嵌套的项（包括数组中的项）。
+自定义通知模板使用内联模板呈现动态内容。任何用双花括号括起来的字符串都将根据 _Event Schema_解析。可以使用点表示法访问深度嵌套的项（包括数组中的项）。
 
 除了标准事件模式外，还注入了以下参数以供在自定义通知消息中使用：
 
