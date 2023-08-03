@@ -8,14 +8,14 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 
 * 通过**监视应用程序**中的登录和活动跟踪团队成员的用户操作
 
-* 从**登录尝试失败**中检测对基础设施的潜在攻击
+* 检测基础架构中的**潜在攻击**，例如登录失败的尝试
 
-* 跟踪**继电器活动**以了解从您的账户发送的交易
+* 跟踪**relayer活动**以了解从您的账户发送的交易
 
-* 保留对Autotasks、Sentinels和Relayers的所有更改的**审计跟踪**
+* 保留对Autotasks、Sentinels和Relayers的所有更改的**审计记录**
 
-日志条目
-每个日志条目都将分配给autotask、sentinel、relay、admin或account之一，并标记为从跟踪到错误的严重性级别。日志条目跟踪操作的主体和客体，并将事件分类为以下之一：
+## 日志条目
+每个日志条目都将分配给autotask、sentinel、relay、admin或account之一，并标记为从trace到error的严重性级别。日志条目是跟踪操作的主体和客体，并将事件分类为以下之一：
 
 * 添加
 * 存档
@@ -38,14 +38,14 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 * 已注销
 
 ## 日志转发
-生成的日志可以转发到Datadog和Splunk，或支持API密钥身份验证的任何其他服务。您可以使用此功能将所有日志聚合到单个地方。
+生成的日志可以转发到Datadog和Splunk，或任何支持API密钥身份验证的其他服务。您可以使用此功能将所有日志聚合到一个地方，跨您的基础架构。
 
 ## 设置日志转发目的地
-要设置日志转发目的地，请在Defender的右上角打开用户菜单或*单击此处*。
+要设置日志转发目的地，请在Defender的右上角打开用户菜单或[单击此处](https://defender.openzeppelin.com/#/logs/forwarding)。
 ![logging-1.png](img/logging-1.png)
 
 您可以通过点击“添加转发目的地”按钮来访问日志目的地配置页面。
-![logging-1.png](img/logging-2.png)
+![logging-2.png](img/logging-2.png)
 
 表单字段：
 
@@ -67,14 +67,15 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 
 > NOTE
 由于Splunk的内部机制，日志转发不适用于Splunk试用帐户。
+
 示例：
 
-* URL：
+* **URL**：
 https：//username.splunkcloud.com/services/collector/raw
 
-* API头名称：授权
+* **API头名称**：授权
 
-* API密钥：Splunk xxxxxxxxxxxxxxxxxxxxxxxxxxx
+* **API密钥**：Splunk xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 > NOTE
 URL值是动态的，因为URL包括帐户用户名。
@@ -87,11 +88,11 @@ API密钥应包含Splunk前缀。
 
 示例：
 
-* URL：https：//http-intake.logs.datadoghq.com/api/v2/logs
+* **URL**：https：//http-intake.logs.datadoghq.com/api/v2/logs
 
-* API头名称：DD-API-KEY
+* **API头名称**：DD-API-KEY
 
-* API密钥：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+* **API密钥**：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 > NOTE
 Datadog在世界各地使用不同的站点。例如，如果您依赖于欧盟服务器，则URL字段值应为https://http-intake.logs.datadoghq.eu/api/v2/logs
