@@ -239,3 +239,4 @@ await client.createSecrets({ deletes: ['foo'], secrets: { baz: 'test' } });
 
 await client.createSecrets({ deletes: ['baz'], secrets: { } });
 ```
+
