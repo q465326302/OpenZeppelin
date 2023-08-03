@@ -133,13 +133,13 @@ exports.handler = async function (event) {
 选择下一步。
 ![guide-factory-4.png](img/guide-factory-4.png)
 
-现在是选择触发哨兵的条件的时候了。可以监视函数调用或事件发射。
+现在是选择触发Sentinels的条件的时候了。可以监视函数调用或事件发射。
 
 选择克隆创建事件名称，并将字段留空以捕获所有发射的克隆创建事件。选择下一步。
 
 在执行自动任务下，选择在上一步中创建的自动任务名称。
 
-与任何帐户操作一样，触发此哨兵将记录在Defender日志中。如果您愿意，可以选择在触发此哨兵时接收通知的方式。只需从“创建新通知”中选择您的选择。
+与任何帐户操作一样，触发此Sentinels将记录在Defender日志中。如果您愿意，可以选择在触发此Sentinels时接收通知的方式。只需从“创建新通知”中选择您的选择。
 
 选择创建。
 ![guide-factory-5.png](img/guide-factory-5.png)
@@ -159,12 +159,12 @@ exports.handler = async function (event) {
 您需要克隆合约的地址，以进行下一步操作。从仪表板上的列表中复制其地址。
 ![guide-factory-9.png](img/guide-factory-9.png)
 
-## 创建监视克隆合约的哨兵
-现在你有了一个克隆合约作为所有未来克隆合约的模板，是时候创建一个哨兵了。
+## 创建监视克隆合约的Sentinels
+现在你有了一个克隆合约作为所有未来克隆合约的模板，是时候创建一个Sentinels了。
 
-从左侧面板中选择哨兵→创建哨兵。
+从左侧面板中选择Sentinels→创建Sentinels。
 
-为哨兵命名，选择适当的网络，并粘贴克隆合约的合约地址。
+为Sentinels命名，选择适当的网络，并粘贴克隆合约的合约地址。
 
 已验证合约的ABI将自动导入。否则，粘贴合约的ABI并将块验证留在1，除非需要更加彻底的验证。
 
@@ -174,13 +174,13 @@ exports.handler = async function (event) {
 
 选择下一步，然后选择所需的通知方法。
 
-最后，选择创建哨兵。
+最后，选择创建Sentinels。
 
-在当前状态下，哨兵监视单个克隆合约的值变化。但是，合约哨兵可以监视多个地址，前提是它们遵守相同的ABI。
+在当前状态下，Sentinels监视单个克隆合约的值变化。但是，合约Sentinels可以监视多个地址，前提是它们遵守相同的ABI。
 
-在下一步中，您将向现有Autotask添加另一个组件，该组件利用哨兵API将其他合约地址推送到由此哨兵监视的合约数组中。
+在下一步中，您将向现有Autotask添加另一个组件，该组件利用SentinelsAPI将其他合约地址推送到由此Sentinels监视的合约数组中。
 
-## 将哨兵代码添加到Autotask中
+## 将Sentinels代码添加到Autotask中
 将[以下代码](https://github.com/offgridauthor/defender-admin-autoadd/blob/main/autotasks/index.js)添加到先前创建的Autotask中：
 ```
 const { SentinelClient } = require('defender-sentinel-client')

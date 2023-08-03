@@ -7,7 +7,7 @@
 
 ## 安装依赖项
 > NOTE
-尽管本指南使用defender-client包创建 Relayer、哨兵和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
+尽管本指南使用defender-client包创建 Relayer、Sentinels和自动任务，但完全相同的功能也可以通过Defender Web界面使用。
 
 您需要安装相关的Defender NPM包。请注意，Forta机器人的创建还需要安装[Docker](https://www.docker.com/get-started)。
 ```

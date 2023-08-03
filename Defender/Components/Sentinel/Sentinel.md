@@ -1,34 +1,36 @@
 # Sentinel
-Defender Sentinel服务提供3种类型的Sentinels，分别是Contract Sentinels、Forta Sentinels和Forta Local Mode Sentinels。Contract Sentinels允许您通过定义事件、函数、交易参数上的条件来监控合约的交易。Forta Sentinels允许您通过定义Forta Bots、合约地址、警报ID和严重程度的条件来监控Forta警报。如果Sentinel根据您定义的条件匹配交易或Forta警报，它将通过电子邮件、slack、telegram、discord、*Autotasks*等通知您。
+Defender Sentinel服务提供3种类型的Sentinels，分别是Contract Sentinels、Forta Sentinels和Forta Local Mode Sentinels。Contract Sentinels允许您通过定义事件、函数、交易参数上的条件来监控合约的交易。Forta Sentinels允许您通过定义Forta Bots、合约地址、警报ID和严重程度的条件来监控Forta警报。如果Sentinel根据您定义的条件匹配交易或Forta警报，它将通过电子邮件、slack、telegram、discord、[Autotasks](../Autotasks/Autotasks.md)等通知您。
 
 ## 用例
-当您需要了解或响应涉及您的智能合约、其他需要监视的智能合约或Forta Bots的交易和Forta Alerts时，请使用Sentinel。您的Sentinel将监视每个交易和Forta Alert，并将您关心的内容发送到您选择的通知方式。
+当您需要了解或响应涉及您的智能合约、您需要监控的其他智能合约或Forta Bots的交易和Forta Alerts时，请使用Sentinel。您的Sentinel将监视每个交易和Forta Alert，并将您关心的内容发送到您选择的通知方式。
 
 * **监视敏感功能**，如转移所有权、暂停或升级
 
 * **警报**可能危险的合约交易
 
-* 当**关键事件**发生时**执行逻辑**进行**响应**
+* 当**关键事件**发生时**执行逻辑响应**
 
 * 通过Slack、Telegram、Discord、电子邮件或自定义Autotask集成与现有工具集成
 
-### 何时使用合约而不是Forta Sentinel
-合约Sentinels特别适用于监测单个合约的交易。通过合约条件，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、价值等。
+* **了解**何时发生了意外的交易或警报数量增加的情况
+  
+### 何时使用合约Sentinel vs Forta Sentinel对比
+合约Sentinels特别适用于监测单个合约的交易。通过合约条件，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、value等筛选交易。
 
-FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合约，通过连接到Forta机器人开发者定义的事件和条件。Forta机器人比合约Sentinels更具灵活性，可以定义更多的交易条件。
+FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合约，通过连接到Forta Bot开发人员定义的事件和条件。Forta机器人比合约Sentinels更具灵活性，可以定义更多的交易条件。
 
 ## 合约Sentinels中有什么？
 合约Sentinels会监视与您选择的地址相关的交易，通过您指定的任何条件过滤这些交易，然后在这些交易发生时通知您。
 
 >IMPORTANT
-目前，Sentinels 在除 Fantom 之外的所有网络上都得到支持。此外，Sentinels 只能监视 Mainnet、Ropsten 和 Kovan 上的内部函数调用。如果内部调用发出事件，请考虑监视该事件，因为从内部调用发出的事件在所有支持的网络上都可以检测到。
+目前，Sentinels 在除 Fantom 之外的所有网络上都得到支持。此外，Sentinels只能在Mainnet、Ropsten和Kovan上监视内部函数调用。如果内部调用发出事件，请考虑监视该事件，因为从内部调用发出的事件可以在所有支持的网络上检测到。
 
 ### 指定地址
-* **地址**：选择智能合约或外部拥有的账户进行监控。每个Sentinels只能有一个ABI，如果选择多个智能合约，则它们必须遵守相同的ABI/接口。
+* **Addresses**：选择智能合约或外部拥有的账户进行监控。每个Sentinels只能有一个ABI，如果选择多个智能合约，则它们必须遵守相同的ABI/接口。
 
 * **ABI**：指定合约的ABI。如果源代码已经验证，Defender将自动加载ABI。
 
-* **确认块**：如果您希望在交易被接受的一定程度上获得通知，请选择较高的确认块级别，但如果您希望尽快收到通知并且对重新组织容忍，请选择较低的确认块级别。在接受安全和最终化块标签的链中，您也可以选择它们作为确认块级别。
+* **Confirmation Blocks**：如果您希望在交易被接受的一定程度上获得通知，请选择较高的确认块级别，但如果您希望尽快收到通知并且对重新组织容忍，请选择较低的确认块级别。在接受安全和最终化块标签的链上，您也可以选择它们作为确认块级别。
 
 ## 匹配规则
 为了触发通知，交易必须满足以下所有条件：
@@ -45,7 +47,7 @@ FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合
     * 交易必须直接调用任何选定的函数（合约调用目前不被检测到），并匹配函数条件（如果有）。
   
 ### 事件和函数
-选择您希望监视的任何事件和函数调用。选择事件和函数作为OR子句，即如果交易匹配所选的任何事件或函数，则会触发通知。
+选择您希望监视的任何事件和函数调用。选择事件和函数相当于使用OR逻辑，即如果交易与所选事件或函数中的任何一个匹配，将触发通知。
 
 > NOTE
 配置事件和函数检测需要ABI。
@@ -54,7 +56,7 @@ FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合
 如果未指定任何事件或函数，则Sentinel将监视所有发送到或从您监视的地址的交易。
 
 >IMPORTANT
-Sentinel无缝支持所有网络上由智能合约发出的事件的通知，无论它们是直接触发还是通过第三方合约的内部调用触发。然而，跟踪和提供针对合约内部函数调用的通知能力目前仅限于以太坊主网。
+Sentinel无缝支持所有网络上由智能合约发出的事件的通知，无论是是直接触发还是通过第三方合约的内部调用触发。然而，目前仅限于以太坊主网才能跟踪和提供针对合约内部函数调用的特定通知能力。
 
 ### Hedera支持
 Hedera主网和测试网都在Defender Sentinels中得到支持。在配置Sentinel时，存在一些独特的考虑因素：
@@ -65,11 +67,11 @@ Hedera主网和测试网都在Defender Sentinels中得到支持。在配置Senti
 
 * 对于ERC20代币转账，只有通过智能合约调用的转账可以使用Sentinels进行监视，而不能使用[Hedera Token Service（HTS）](https://hedera.com/token-service)进行监视。
 
-* 仅可以监视Hedera内部交易（合约调用合约）的事件条件。其他条件不会触发Sentinels。
+* 只能监视Hedera内部交易（合约调用合约）的事件条件。其他条件不会触发Sentinels。
 
 ## 什么是Forta Sentinel？
 
-Forta Sentinel包含一个监视来自特定Forta Bot或影响特定地址的Forta Alerts的功能，可以通过您指定的任何条件过滤这些警报，然后在这些警报发生时通知您。
+Forta Sentinel是一个监视Forta Bot发送的Forta Alerts或影响特定地址的警报的工具。它可以根据您指定的条件对这些警报进行过滤，并在发生警报时通知您。
 
 ### Forta本地模式Sentinels
 Forta提供了在本地运行扫描节点的能力，这对于仅运行特定的检测机器人并在内部处理警报而不发布到网络上非常有用。您可以通过创建一个新的Forta本地模式Sentinel并指定您的扫描节点地址来监视在本地模式下运行的扫描器节点。创建后，您的新Sentinel将具有一个Webhook URI，您可以将其添加到扫描器节点配置文件中，以将警报转发给Defender。您可以在[Forta文档](https://docs.forta.network/en/latest/scanner-local-mode)中找到有关本地模式扫描器节点的更多信息。
@@ -77,13 +79,13 @@ Forta提供了在本地运行扫描节点的能力，这对于仅运行特定的
 ### 指定Forta检测机器人和地址
 
 > NOTE
-Forta本地模式Sentinels没有指定Bot ID的选项，因为在本地模式下运行的扫描节点不支持Bot ID。
+Forta Local Mode Sentinels无法指定Bot IDs，因为在本地模式下运行的扫描节点不支持Bot IDs。
 
-FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器。可以指定多个Bot ID和地址进行过滤。
+Forta Sentinel可以根据Bot IDs或Addresses进行过滤，并要求至少设置其中一个过滤器。可以指定多个Bot IDs和Addresses进行过滤。
 
 * **Bot ID**：指定要过滤的Bot ID。这些可以用逗号分隔以指定多个Bot ID。
 
-* **地址**：选择智能合约或外部拥有的帐户进行过滤。
+* **Address**：选择要过滤的智能合约或外部拥有的账户。
 
 ### Forta匹配规则
 
@@ -104,7 +106,7 @@ FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器
 如果未指定严重性或警报ID，则Sentinel将监视与您指定的Bot ID和/或地址匹配的所有警报。
 
 ## 合约条件是什么?
-条件作为过滤器，允许您进一步缩小交易范围。这些条件被输入为表达式，提供了很大的灵活性。条件非常像Javascript表达式。为了适应校验和和非校验和地址的比较，比较是不区分大小写的。
+条件充当过滤器，允许您进一步缩小交易范围。这些条件以表达式的形式输入，提供了很大的灵活性。条件非常类似于JavaScript表达式。为了适应校验和与非校验和地址的比较，比较是不区分大小写的。
 
 > NOTE
 如果您想要接收涉及您选择的事件/函数的所有交易，则不要指定任何条件。
@@ -143,43 +145,48 @@ FortaSentinels过滤Bot ID或地址，并要求至少设置其中一个过滤器
 
 * **nonce**是特定交易的nonce
 
-* **status**是一个派生值，可以与 **“成功”** 或 **“失败”**进行比较。
+* **status**是一个派生值，可以与 **'success'** 或 **'success'**进行比较。
 
 ### 示例条件
 被撤销的交易
 ```
 status == "failed"
 ```
+
 排除来自0xd5180d374b6d1961ba24d0a4dbf26d696fda4cad的交易。
 ```
 from != "0xd5180d374b6d1961ba24d0a4dbf26d696fda4cad"
 ```
+
 具有gasPrice高于50 gwei和gasUsed高于20000的交易
 ```
 gasPrice > 50000000000 and gasUsed > 20000
 ```
 
 ### 事件和功能条件
-事件和函数条件进一步缩小了触发通知的交易集。这些条件可以通过名称（如果参数有名称）或索引（例如$0、$1等）引用签名中的参数。可用的变量在您指定这些函数时在用户界面中指示。
+事件和函数条件进一步缩小了触发通知的交易集合。这些条件可以通过名称（如果参数有名称）或索引（例如$0、$1等）引用签名中的参数。在您指定这些函数时，用户界面会显示可用的变量。
 
 #### 示例条件
-发出值在1到100以太币之间（以十六进制表示）的Transfer（...）事件的交易
+发出值在1到100 ETH之间（以十六进制表示）的Transfer（...）事件的交易
 ```
-// Event Signature: Transfer(address to, address from, uint256 value)
+// 事件签名：Transfer（地址to，地址from，uint256 value）
 value > 0xde0b6b3a7640000 and value < 0x56bc75e2d63100000
 ```
+
 发出包含第一个元素等于5的数组的 ValsEvent(…​) 事件的交易
 ```
-// Event Signature: ValsEvent(uint256[3] vals)
+// 事件签名：ValsEvent（uint256 [3] vals）
 vals[0] == 5
 ```
+
 调用一个未命名字符串为“hello”的greet（…）函数的事务
 ```
-// Function Signature: greet(address, string)
+// 函数签名：greet（地址，字符串）
 $1 == "hello"
 ```
+
 ### Autotask条件
-如果指定了自动任务条件，则会使用给定块找到的匹配列表来调用它。这使得Sentinels可以使用其他数据源和自定义逻辑来评估一个交易是否匹配。
+如果指定了自动任务条件，那么它将被调用，并且会传入一个给定块的匹配列表。这使得Sentinels可以使用其他数据源和自定义逻辑来评估一个交易是否匹配。
 
 > NOTE
 只有符合其他条件（事件、函数、交易）的交易才会调用自动任务条件。
@@ -221,6 +228,7 @@ $1 == "hello"
   ]
 }
 ```
+
 ### 响应模式（Response Schema）
 Autotask必须返回一个包含所有匹配项的结构。返回一个空对象表示没有匹配发生。此对象的类型为SentinelConditionResponse。
 
@@ -242,6 +250,7 @@ Autotask必须返回一个包含所有匹配项的结构。返回一个空对象
   ]
 }
 ```
+
 Autotask条件示例
 ```
 exports.handler = async function(payload) {
@@ -298,7 +307,7 @@ Forta 警报可能具有以下 5 种严重性值之一，表示不同的影响�
 
 * **低** - 次要的疏忽，对用户/资金影响微不足道
 
-* **信息** - 值得描述的其他行为
+* **信息** - 值得通报的其他行为
 
 ### 警报 ID 条件
 警报 ID 条件允许您过滤警报，并仅收到特定类型的发现的通知。可以指定一个或多个警报 ID。
