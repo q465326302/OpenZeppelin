@@ -4,14 +4,14 @@ Relay API分为两个模块：
 
 1. Relay Client
     * 在帐户中执行创建、读取和更新操作，跨所有 Relayer 
-    * 使用使用Team API Key/Secret生成的令牌进行身份验证（在创建Team API Key时可用）
+    * 使用Team API Key/Secret生成的令牌进行身份验证（在创建Team API Key时可用）
 
 2. Relay Signer
 
     * 使用特定 Relayer 执行发送、签名和其他操作
-    * 使用使用Relayer  API Key/Secret生成的令牌进行身份验证（在创建 Relayer 时可用）
+    * 使用Relayer  API Key/Secret生成的令牌进行身份验证（在创建 Relayer 时可用）
 
-有关身份验证的更多信息，请参阅*身份验证*部分。
+有关身份验证的更多信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
 您可以使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包简化与Relay API的交互。
@@ -48,8 +48,8 @@ curl \
 ```
 [
     {
-      Relayer Id: '201832e2-c612-4283-97c5-31849242c1fe',
-      name: 'MyRelayer ',
+      relayerId: '201832e2-c612-4283-97c5-31849242c1fe',
+      name: 'MyRelayer',
       address: '0x623e258760220127d4856fa24ff126a230560749',
       network: 'rinkeby',
       createdAt: '2022-04-05T16:57:37.154Z',
@@ -63,11 +63,12 @@ curl \
 
 ### 列出 Relayer 密钥
 
-要列出与现有 Relayer 关联的密钥，您可以在客户端上调用listKeys函数，并使用Relayer Id返回一个Relayer Key对象数组：
+要列出与现有 Relayer 关联的密钥，您可以在客户端上调用listKeys函数，并提供一个relayerId参数，该函数将返回一个RelayerKey对象数组：
 ```
 await client.listKeys('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
-/Relayer s/${Relayer Id}/keys端点用于通过GET请求检索 Relayer 密钥列表。
+
+使用/relayers/${relayerId}/keys端点可以通过GET请求检索中继器密钥列表。
 ```
 curl \
   -X GET \
@@ -77,6 +78,7 @@ curl \
   -H "Authorization: Bearer $TOKEN" \
     "https://defender-api.openzeppelin.com/Relayer /Relayer s/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys"
 ```
+
 一个响应示例
 ```
 [
@@ -92,15 +94,15 @@ curl \
 ### 创建 Relayer 
 要创建新的 Relayer ，您需要按照接口CreateRelayer Request中直接描述的参数提供参数。
 ```
-interface CreateRelayer Request {
+interface CreateRelayerRequest {
   name: string;
-  useAddressFromRelayer Id?: string;
+  useAddressFromRelayerId?: string;
   network: Network;
   minBalance: string;
-  policies?: UpdateRelayer PoliciesRequest;
+  policies?: UpdateRelayerPoliciesRequest;
 }
 
-interface UpdateRelayer PoliciesRequest {
+interface UpdateRelayerPoliciesRequest {
   gasPriceCap?: string;
   whitelistReceivers?: string[];
   EIP1559Pricing?: boolean;
@@ -138,15 +140,19 @@ type Network =
   | 'harmony-test-s0'
   | 'aurora'
   | 'auroratest'
+  | 'hedera',
+  | 'hederatest',
   | 'zksync'
   | 'zksync-goerli'
+  | 'base'
   | 'base-goerli'
   | 'linea-goerli';
 ```
+
 使用defender-relay-client包：
 ```
 const requestParameters = {
-  name: 'MyNewRelayer ',
+  name: 'MyNewRelayer',
   network: 'rinkeby',
   minBalance: BigInt(1e17).toString(),
   policies: {
@@ -156,17 +162,19 @@ const requestParameters = {
 
 await client.create(requestParameters);
 ```
+
 您还可以通过在useAddressFromRelayer Id参数中引用现有的Relayer Id来将现有的Relayer 克隆到不同的网络中：
 ```
 const requestParameters = {
-  name: 'MyClonedRelayer ',
-  useAddressFromRelayer Id: '201832e2-c612-4283-97c5-31849242c1fe',
+  name: 'MyClonedRelayer',
+  useAddressFromRelayerId: '201832e2-c612-4283-97c5-31849242c1fe',
   network: 'mainnet',
   minBalance: BigInt(1e17).toString()
 };
 
 await client.create(requestParameters);
 ```
+
 向/Relayer s端点发出POST请求：
 ```
 curl \
@@ -191,13 +199,14 @@ curl \
 EIP1559Pricing 标志仅适用于 EIP1559 网络上的 Relayer 。
 
 > NOTE
-仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，发送私有交易时可能需要考虑相同的密钥问题（例如，[ uncle bandit risk](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
+仅通过使用 [Flashbots Protect RPC](https://docs.flashbots.net/flashbots-protect/rpc/quick-start) 在 goerli 和 mainnet 上启用[私有交易](https://docs.flashbots.net/flashbots-protect/rpc/quick-start#key-considerations)。因此，通过Defender发送私有交易时可能需要考虑相同的关键因素（例如，[ uncle bandit risk](https://docs.flashbots.net/flashbots-protect/rpc/uncle-bandits)）。
 
 ## 创建 Relayer 密钥
-通过 API 创建的 Relayer 默认不会有任何关联的 Relayer 密钥。要创建一个，可以在客户端上调用 createKey 方法，该方法返回一个 Relayer Key（仅在创建时可用的 secretKey）：
+通过 API 创建的 Relayer 默认不会有任何关联的 Relayer 密钥。要创建一个密钥，可以在客户端上调用 createKey 方法，该方法返回一个 Relayer Key（仅在创建时可用的 secretKey）：
 ```
 await client.createKey('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
+
 向/Relayer s/${Relayer Id}/keys端点发出POST请求：
 ```
 curl \
@@ -208,6 +217,7 @@ curl \
   -H "Authorization: Bearer $TOKEN" \
     "https://defender-api.openzeppelin.com/Relayer /Relayer s/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys"
 ```
+
 一个响应示例
 ```
 [
@@ -230,10 +240,12 @@ interface UpdateRelayer Request {
   policies?: UpdateRelayer PoliciesRequest;
 }
 ```
+
 使用defender-relay-client包：
 ```
 await client.update('201832e2-c612-4283-97c5-31849242c1fe', { name: 'My Updated Name' });
 ```
+
 向/Relayer s端点发出PUT请求：
 ```
 curl \
@@ -279,13 +291,14 @@ curl \
   -H "Authorization: Bearer $TOKEN" \
     "https://defender-api.openzeppelin.com/Relayer /Relayer s/58b3d255-e357-4b0d-aa16-e86f745e63b9/keys/j3bru93-k32l-3p1s-pp56-u43f675e92p1"
 ```
+
 一个响应示例
 ```
 {
   message: 'j3bru93-k32l-3p1s-pp56-u43f675e92p1 deleted'
 }
 ```
-删除Relayer （不仅仅是密钥）仅可通过Defender控制台进行。
+只能通过Defender控制台删除Relayer（而不仅仅是密钥）。
 
 ## Relayer 签名模块参考资料
 Relayer 签名模块公开了以下端点：
@@ -334,6 +347,7 @@ type Relayer TransactionPayload =
   | SendLegacyTransactionRequest
   | SendEIP1559TransactionRequest;
 ```
+
 一个请求的例子
 ```
 DATA='{ "to": "0x179810822f56b0e79469189741a3fa5f2f9a7631", "value": "1", "speed": "fast", "gasLimit": "21000" }'
@@ -347,6 +361,7 @@ curl \
   -d "$DATA" \
     "https://api.defender.openzeppelin.com/txs"
 ```
+
 您将收到以下格式的回复
 ```
 type Address = string;
@@ -385,7 +400,7 @@ interface Relayer EIP1559Transaction extends Relayer TransactionBase {
 
 export type TransactionResponse = Relayer LegacyTransaction | Relayer EIP1559Transaction;
 ```
-注意额外的transactionId字段，它是一个Defender内部的标识符，用于查询和替换。
+注意额外的transactionId字段，它是交易的内部Defender标识符，用于查询和替换。
 
 #### 交易状态
 每个交易响应都将分配一个状态，具体取决于后端最后一次看到它的时间。每次Defender监控交易时，状态可能会更新。
@@ -393,42 +408,42 @@ export type TransactionResponse = Relayer LegacyTransaction | Relayer EIP1559Tra
 可用的状态及其对应的描述如下：
 
 > WARNING
-状态挂起，已发送和已提交可能在未来合并。避免依赖它们，因为向后兼容性不能保证。
+状态 pending、sent 和 submitted 有可能在将来合并。不要依赖它们，因为向后兼容性不能得到保证。
 ```
 type Status =
   /**
-   * Temporary pre-sent status.
-   * The transaction has been received but not yet signed.
+   * 临时待发送状态。
+   * 交易已接收但尚未签名。
    */
   | 'pending'
   /**
-   * Sent to queue.
-   * The transaction is already signed, enqueued and waiting to be broadcasted to the network.
+   * 发送到队列。
+   * 交易已签名，已入队等待广播到网络。
    */
   | 'sent'
   /**
-   * Transaction broadcasted.
-   * The transaction has been broadcasted to the network providers.
+   * 交易已广播。
+   * 交易已广播到网络提供商。
    */
   | 'submitted'
   /**
-   * Seen on mempool.
-   * It's confirmed that the transaction is in the mempool of at least one of the nodes of the network.
+   * 在内存池中可见。
+   * 确认交易至少在网络中的一个节点的内存池中
    */
   | 'inmempool'
   /**
-   * Transaction mined.
-   * A mined block has included the transaction.
+   * 交易已被挖掘。
+   * 挖掘的区块已包含该交易。
    */
   | 'mined'
   /**
-   * Enough confirmations passed.
-   * The transaction has being kept in a mined block after N new mined blocks, where N depends on the chain.
+   * 经过足够的确认。
+   * 交易已在挖掘的区块中保留了N个新挖掘的区块后，其中N取决于链。
    */
   | 'confirmed'
   /**
-   * Terminal failure.
-   * The transaction couldn't get processed for unexpected reasons.
+   * 终端失败。
+   * 由于意外原因，交易无法处理。
    */
   | 'failed';
 ```
@@ -447,7 +462,7 @@ curl \
   -d "$DATA" \
     "https://api.defender.openzeppelin.com/txs/$IDorNONCE"
 ```
-请求负载和响应与发送交易的相同。
+请求有效载荷和响应与发送交易的相同。
 
 #### 查询交易
 要检索交易状态和数据，请使用 Defender transactionId 而不是交易哈希值向 txs 端点发出 GET 请求。
@@ -462,6 +477,7 @@ curl \
   -H "Authorization: Bearer $TOKEN" \
     "https://api.defender.openzeppelin.com/txs/$ID"
 ```
+
 一个响应示例
 ```
 {
@@ -486,7 +502,7 @@ curl \
 ```
 
 #### 列出交易记录
-要检索最近从您的Relayer 发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（已挖掘、待处理或失败）作为查询参数。
+要检索最近从您的Relayer 发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（mined、pending或failed）作为查询参数。
 
 请求示例：
 ```
@@ -498,6 +514,7 @@ curl \
   -H "Authorization: Bearer $TOKEN" \
     "https://api.defender.openzeppelin.com/txs?status=pending&limit=5"
 ```
+
 一个响应示例
 ```
 [{
@@ -522,12 +539,13 @@ curl \
 ```
 
 ### 签名终端
-要根据[EIP-191标准](https://eips.ethereum.org/EIPS/eip-191)（以\x19Ethereum Signed Message：\n为前缀）使用您的Relay私钥签署任意消息，请向/sign发出POST请求，其中包含要签署的十六进制字符串的有效载荷。有效载荷格式如下：
+要根据[EIP-191标准](https://eips.ethereum.org/EIPS/eip-191)（以\x19Ethereum Signed Message：\n为前缀）使用您的Relay私钥对任意消息进行签名，可以通过向/sign发送一个包含要签名的十六进制字符串的负载的POST请求来实现。有效载荷格式如下：
 ```
 interface SignMessagePayload {
   message: Hex;
 }
 ```
+
 一个响应示例
 ```
 DATA='{ "message": "0x0123456789abcdef" }'
@@ -541,6 +559,7 @@ curl \
   -d "$DATA" \
     "https://api.defender.openzeppelin.com/sign"
 ```
+
 您将收到以下格式的回复：
 ```
 interface SignedMessagePayload {
@@ -550,6 +569,7 @@ interface SignedMessagePayload {
   v: number;
 }
 ```
+
 一个响应示例
 ```
 {
@@ -561,13 +581,14 @@ interface SignedMessagePayload {
 ```
 
 ### 签名数据终端
-要按照[EIP-712规范](https://eips.ethereum.org/EIPS/eip-712)使用Relay私钥签署输入的数据，需要向/sign发出POST请求，请求载荷包含域分隔符和哈希结构（message）的哈希值。它们都应该是32字节长，因为它们本身是哈希值。请求载荷格式如下：
+要按照[EIP-712规范](https://eips.ethereum.org/EIPS/eip-712)使用Relay私钥签署输入的数据，可以向/sign发出POST请求，载荷中包含domainSeparator和hashStruct(message)。它们都应该是32字节长，因为它们本身是哈希值。请求载荷格式如下：
 ```
 interface SignTypedDataPayload {
   domainSeparator: Hex;
   hashStructMessage: Hex;
 }
 ```
+
 一个响应示例
 ```
 DATA='{ "domainSeparator": "0x0123456789abcdef...", "hashStructMessage": "0x0123456789abcdef..." }'
@@ -581,7 +602,8 @@ curl \
   -d "$DATA" \
     "https://api.defender.openzeppelin.com/sign-typed-data"
 ```
-您将收到以下格式的回复:
+
+您将收到以下格式的响应:
 ```
 interface SignedMessagePayload {
   sig: Hex;
@@ -590,6 +612,7 @@ interface SignedMessagePayload {
   v: number;
 }
 ```
+
 一个响应示例
 ```
 {
@@ -614,6 +637,7 @@ curl \
   -H "Authorization: Bearer $TOKEN" \
     "https://api.defender.openzeppelin.com/Relayer "
 ```
+
 您将收到以下格式的回复:
 ```
 interface Relayer Model {
@@ -626,6 +650,7 @@ interface Relayer Model {
   pendingTxCost: string;
 }
 ```
+
 一个响应示例
 ```
 {
@@ -655,6 +680,7 @@ curl \
   -d "$DATA" \
     "https://api.defender.openzeppelin.com/Relayer /jsonrpc"
 ```
+
 一个响应示例
 ```
 {
