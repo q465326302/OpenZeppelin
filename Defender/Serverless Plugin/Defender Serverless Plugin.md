@@ -2,10 +2,11 @@
 Defender Serverless是一个用于在Defender上自动化资源管理的Serverless Framework插件。
 
 > WARNING
-该插件仍在开发中，可能存在错误。请谨慎使用。
+该插件仍在开发中，可能存在bug。请谨慎使用。
 
 ## 先决条件
-Serverless Framework：https://www.serverless.com/framework/docs/getting-started/
+需要安装Serverless Framework：
+https://www.serverless.com/framework/docs/getting-started/
 
 ## 安装
 您可以直接使用我们预配置的模板初始化Serverless项目：
@@ -33,9 +34,9 @@ yarn add defender-serverless
 ![serverless-plugin-1.png](img/serverless-plugin-1.png)
 
 > NOTE
-如果您之前已经使用defender-serverless部署到同一个账户，并且随后通过Defender用户界面创建了新的资源，则导出功能将根据最新部署堆栈的名称自动为新资源分配stackResourceId。如果您以前没有使用defender-serverless部署过，则将使用默认堆栈名称my-stack。
+如果您之前已经使用defender-serverless部署到同一个账户，并且通过Defender用户界面创建了新的资源，则导出功能将根据最新部署堆栈的名称自动为新资源分配stackResourceId。如果您以前没有使用defender-serverless部署过，则默认使用my-stack作为堆栈名称。
 
-该插件允许您从serverless.yml中声明性地定义Autotasks、Sentinels、Notifications、Relayer s、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer 、一个Policy和一个单一的Relayer  API密钥：
+该插件允许您从serverless.yml中以声明方式定义Autotasks、Sentinels、Notifications、Relayer s、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer 、一个Policy和一个单一的Relayer  API密钥：
 ```
 service: defender-serverless-template
 configValidationMode: error
@@ -82,19 +83,20 @@ resources:
 plugins:
   - defender-serverless
 ```
-这需要在YAML文件的defender属性下设置密钥和 secrets 。我们建议使用环境变量或安全（gitignored）配置文件来检索这些值。相应地修改serverless.yml。
 
-确保Defender团队API密钥具有所有适当的API功能。
+这需要在YAML文件的defender属性下设置密钥和 secrets 。我们建议使用环境变量或安全的（gitignored）配置文件来获取这些值。相应地修改serverless.yml。
 
-stackName（例如mystack）与资源键（例如Relayer -1）结合使用，以唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.Relayer -1），允许您在同一Defender团队中管理多个部署。
+确保Defender团队API密钥已设置所有适当的API功能。
+
+stackName（例如mystack）与资源键（例如Relayer -1）结合使用，唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.Relayer -1），允许您在同一Defender团队中管理多个部署。
 
 ### SSOT模式
-在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着，除了 Relayer 之外，在您当前模板文件中未定义的所有Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
+在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着在部署时，除了 Relayer 之外，所有未在当前模板文件中定义的Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
 
-任何从serverless.yml文件中删除的资源都不会自动删除，以防止意外的资源删除。为了预期这种行为，必须启用SSOT模式。
+为了防止意外删除资源，从serverless.yml文件中删除的任何资源都不会自动删除。为了预期此行为，必须启用SSOT模式。
 
 ###  secrets （Autotask）
-Autotask secrets 可以全局定义和每个堆栈定义。在全局下定义的 secrets 不会受到stackName更改的影响，并且在重新部署到新的stack下时将保留。在堆栈下定义的 secrets 将在重新部署到新的stackName下时被删除（在启用*SSOT模式*的情况下）。要引用在堆栈下定义的 secrets ，请使用以下格式：<stackname> _ <secretkey>，例如mystack_test。
+Autotask secrets 可以全局定义和每个堆栈定义。在全局下定义的 secrets 不会受到stackName更改的影响，并且在在新堆栈下重新部署时将保留。在堆栈下定义的 secrets 将在重新部署到新的stackName下时被删除（在启用SSOT模式的情况下）。要引用在堆栈下定义的 secrets ，请使用以下格式：<stackname> _ <secretkey>，例如mystack_test。
 ```
 secrets:
   # optional - global secrets are not affected by stackName changes
@@ -130,7 +132,7 @@ secrets:
 
 部署接受一个可选的--stage标志，默认为从上面的模板安装时的dev。
 
-此外，serverless.yml文件可能包含一个ssot属性。有关更多信息，请参见*SSOT模式*部分。
+此外，serverless.yml文件可能包含一个ssot属性。有关更多信息，请参见_SSOT模式_部分。
 
 此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的 Relayer 密钥，则将这些密钥存储为JSON对象在.defender / Relayer -keys文件夹中。
 
@@ -146,7 +148,7 @@ secrets:
 您可以使用sls remove删除在serverless.yml文件中定义的所有Defender资源。
 
 > NOTE
-为了避免潜在的资金损失，只能直接从Defender UI中删除 Relayer 。
+为了避免潜在的资金损失，Relayers只能通过Defender UI直接删除。
 
 ### 日志
 
@@ -159,7 +161,7 @@ secrets:
 > NOTE
 每个命令都有一个标准输出到JSON对象。
 
-更多信息可以在我们的*文档页面*上找到。
+更多信息可以在我们的_文档页面_上找到。
 
 ## 注意事项
 
@@ -169,6 +171,6 @@ secrets:
 
 * API密钥权限不足
 
-* serverless.yml文件的验证错误（请参见*类型和模式验证*）
+* serverless.yml文件的验证错误（请参见_类型和模式验证_）
 
 通常，修复错误并重试部署应足够，因为任何现有资源都将落在部署的更新条款中。但是，如果不确定，您可以随时调用sls remove来删除整个堆栈，并重试。
