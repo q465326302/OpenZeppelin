@@ -170,7 +170,7 @@ await client.updateCodeFromFolder("671d1f80-99e3-4829-aa15-f01e3298e428", './cod
 您可以在捆绑包中包含多个文件，只要捆绑包在压缩和base64编码后不超过5mb，并在zip文件的根目录下包含一个index.js作为入口点。
 
 ## Autotask Runs Endpoints
-可以使用autotasks/{id}/runs/manual端点手动触发autotask运行：
+使用autotasks/{id}/runs/manual端点可以手动触发autotask运行：
 ```
 curl \
   -X POST \
@@ -187,7 +187,7 @@ curl \
 await client.runAutotask("671d1f80-99e3-4829-aa15-f01e3298e428");
 ```
 
-自动任务运行数据可以用以下方式列出：
+可以使用以下命令列出Autotask运行数据：
 ```
 curl \
   -X GET \
@@ -198,11 +198,12 @@ curl \
     "https://defender-api.openzeppelin.com/autotask/autotasks/${AUTOTASKID}/runs"
 ```
 
+或者通过以下方法进行操作：
 ```
 await client.listAutotaskRuns("671d1f80-99e3-4829-aa15-f01e3298e428");
 ```
 
-可以使用从上面的列表请求中获取的AUTOTASK_RUN_ID来获取特定运行的日志:
+可以使用AUTOTASK_RUN_ID（从上面的列表请求中获取）获取特定运行的日志:
 ```
 curl \
   -X GET \
@@ -214,7 +215,7 @@ curl \
 ```
 
 ```
-// 这个方法的参数是自动任务运行ID，而不是自动任务ID。
+// 这个方法的参数是autotask运行ID，而不是autotask ID。
 await client.getAutotaskRun("ae729f92-11e2-0012-bb16-c98c3298e112");
 ```
 
