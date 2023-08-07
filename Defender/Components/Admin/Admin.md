@@ -190,7 +190,7 @@ https://youtu.be/59p98wGqdVo
 3. 在指定的延迟期结束后执行操作。值得注意的是，在TimelockController合约中执行此操作的EOA需要是执行者。
 
 > NOTE
-目前Defender不支持定时锁定的升级提案。这项能力正在开发中，我们计划很快发布它。
+目前Defender不支持timelock定的升级提案。这项能力正在开发中，我们计划很快发布它。
 
 https://youtu.be/z6EP6JTj7ME
 

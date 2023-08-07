@@ -1038,7 +1038,7 @@ EIP712DomainChanged()
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash)
 内部#
-重写的execute函数通过定时锁定运行已排队的提案。
+重写的execute函数通过timelock定运行已排队的提案。
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 内部#
@@ -1046,14 +1046,14 @@ EIP712DomainChanged()
 
 #### _executor() → address
 内部#
-通过这个地址，governor执行行动。在这种情况下，是指定时锁定。
+通过这个地址，governor执行行动。在这种情况下，是指timelock定。
 
 #### updateTimelock(contract TimelockController newTimelock)
 外部#
-公共端点用于更新底层的定时锁实例。仅限于定时锁本身，因此更新必须通过治理提案进行提议、计划和执行。
+公共端点用于更新底层的timelock实例。仅限于timelock本身，因此更新必须通过治理提案进行提议、计划和执行。
 
 > CAUTION
-不建议在存在其他排队的治理提案时更改定时锁。
+不建议在存在其他排队的治理提案时更改timelock。
 
 #### TimelockChange(address oldTimelock, address newTimelock)
 事件#
@@ -1172,7 +1172,7 @@ EIP712DomainChanged()
 
 #### _execute(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
 内部#
-重写的execute函数通过定时锁定来运行已排队的提案。
+重写的execute函数通过timelock定来运行已排队的提案。
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 内部#
@@ -1188,14 +1188,14 @@ EIP712DomainChanged()
 
 #### updateTimelock(contract ICompoundTimelock newTimelock)
 外部#
-公共端点用于更新底层的定时锁实例。该端点仅限定时锁本身使用，因此更新必须通过治理提案进行提议、计划和执行。
+公共端点用于更新底层的timelock实例。该端点仅限timelock本身使用，因此更新必须通过治理提案进行提议、计划和执行。
 
-出于安全原因，在设置新的定时锁之前，必须将定时锁移交给另一个管理员。两个操作（移交定时锁）和进行更新可以合并为一个提案。
+出于安全原因，在设置新的timelock之前，必须将timelock移交给另一个管理员。两个操作（移交timelock）和进行更新可以合并为一个提案。
 
-请注意，如果定时锁管理员在之前的操作中已被移交，我们将拒绝通过定时锁进行的更新，如果定时锁的管理员已经接受并且操作是在治理范围之外执行的。
+请注意，如果timelock管理员在之前的操作中已被移交，我们将拒绝通过timelock进行的更新，如果timelock的管理员已经接受并且操作是在治理范围之外执行的。
 
 > CAUTION
-不建议在存在其他排队中的治理提案时更改定时锁。
+不建议在存在其他排队中的治理提案时更改timelock。
 
 #### TimelockChange(address oldTimelock, address newTimelock)
 ```
@@ -1840,7 +1840,7 @@ EIP-6372规定的时钟的机器可读描述。
 ```
 import "@openzeppelin/contracts/governance/TimelockController.sol";
 ```
-合同模块充当一个定时锁定的控制器。当设置为可拥有智能合约的所有者时，它会对所有仅所有者维护操作进行时间锁定。这样，在应用潜在危险的维护操作之前，用户可以有时间退出受控合约。
+合同模块充当一个timelock定的控制器。当设置为可拥有智能合约的所有者时，它会对所有仅所有者维护操作进行时间锁定。这样，在应用潜在危险的维护操作之前，用户可以有时间退出受控合约。
 
 默认情况下，该合同是自我管理的，这意味着管理任务必须通过时间锁定流程进行。建议人（执行人）角色负责提出（执行）操作。一个常见的用例是将该*TimelockController*定位为智能合约的所有者，由多重签名或DAO作为唯一的建议人。
 
@@ -2039,10 +2039,10 @@ RoleRevoked(role, account, sender)
 当未来操作的最小延迟被修改时发出。
 
 ## 术语
-* **Operation**：一个交易（或一组交易），是定时锁的主题。它必须由提议者安排并由执行者执行。定时锁强制在提议和执行之间有最小延迟（参见*操作生命周期*）。如果操作包含多个交易（批处理模式），它们将以原子方式执行。操作通过其内容的哈希值进行标识。
+* **Operation**：一个交易（或一组交易），是timelock的主题。它必须由提议者安排并由执行者执行。timelock强制在提议和执行之间有最小延迟（参见*操作生命周期*）。如果操作包含多个交易（批处理模式），它们将以原子方式执行。操作通过其内容的哈希值进行标识。
 
 * **操作状态**：
-    * **Unset**：不是定时锁机制的一部分的操作。
+    * **Unset**：不是timelock机制的一部分的操作。
     * **Pending**：已安排但计时器尚未到期的操作。
     * **Ready**：已安排且计时器已到期的操作。
     * **Done**：已执行的操作。
@@ -2052,13 +2052,13 @@ RoleRevoked(role, account, sender)
 * **角色**：
     * **Admin**：负责授予提议者和执行者角色的地址（智能合约或EOA）。
     * **提议者**：负责安排（和取消）操作的地址（智能合约或EOA）。
-    * **执行者**：负责在定时锁过期后执行操作的地址（智能合约或EOA）。可以将此角色授予零地址，以允许任何人执行操作。
+    * **执行者**：负责在timelock过期后执行操作的地址（智能合约或EOA）。可以将此角色授予零地址，以允许任何人执行操作。
 
 ### 操作结构
 由*TimelockController*执行的操作可以包含一个或多个后续调用。根据是否需要原子执行多个调用，可以使用简单操作或批处理操作。
 
 两种操作都包含：
-* **目标**：定时锁应该操作的智能合约的地址。
+* **目标**：timelock应该操作的智能合约的地址。
 * **价值**：以wei为单位，应该与交易一起发送的价值。大多数情况下，这将为0。在执行交易时可以在结束前存入以太币或传递。
 * **数据**：包含调用的编码函数选择器和参数。可以使用多种工具生成。例如，使用web3js可以如下编码授予账户ROLE角色的维护操作：
 
