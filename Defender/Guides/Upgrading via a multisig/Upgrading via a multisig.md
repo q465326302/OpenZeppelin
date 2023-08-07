@@ -1,7 +1,7 @@
 # Upgrading a contract via a multisig
-本指南将指导您使用多重签名钱包保护的生产中的智能合约升级过程，使用*Defender Admin*作为界面，Hardhat脚本在后台运行。具体来说，我们将：
+本指南将引导您通过使用[Defender Admin](../../Components/Admin/Admin.md)作为接口和Hardhat脚本作为背后的工具，升级一个由多签钱包保护的生产中的智能合约的过程。具体来说，我们将：
 
-* 使用Hardhat的Upgrades Plugin编写和部署可升级的合约
+* 使用Hardhat的Upgrades Plugin插件编写和部署可升级的合约
 * 将升级权限转移给多重签名钱包以增加安全性
 * 使用Hardhat验证、部署和提出新实现
 * 通过Defender Admin在多重签名钱包中执行升级
@@ -14,7 +14,7 @@
 这允许我们更改合约代码，同时保留状态、余额和地址。
 
 ## 升级过程
-升级管理员帐户（*ProxyAdmin*合约的所有者）是具有*升级*可升级合约的能力的帐户。默认所有者是用于部署合约的外部拥有的帐户。虽然这可能对于本地或测试网部署足够好，但在生产中，您需要更好地保护您的合约。获取您的升级管理员帐户的攻击者可以更改您项目中的任何可升级合约！
+升级管理员帐户（[ProxyAdmin](../../../Upgrades%20Plugins/Frequently%20Asked%20Questions.md)合约的所有者）是具有[升级](../../../Learn/Upgrading%20smart%20contracts/Upgrading%20smart%20contracts-truffle.md)可升级合约能力的帐户。默认所有者是用于部署合约的外部拥有的帐户。虽然这对于本地或测试网部署足够好，但在生产中，您需要更好地保护您的合约。获取您的升级管理员帐户的攻击者可以更改您项目中的任何可升级合约！
 
 建议在部署后将**ProxyAdmin的所有权转移给一个多重签名**，要求多个所有者批准升级提案。
 
@@ -30,7 +30,7 @@
 
 5. **提出升级**。这将检查新实现的升级安全性，部署合约并创建提案。
 
-6. **升级合约**。需要多重签名的所有者批准并最终执行升级。
+6. **升级合约**。需要多重签名的所有者批准后最终执行升级。
 
 ## 先决条件
 要开始，您需要以下内容：
@@ -39,19 +39,19 @@
 
 2. 用于支付交易燃气的ETH。交易需要燃气执行，因此请确保有一些ETH可用。对于本指南，我们将使用Rinkeby ETH。
 
-3. 多重签名。一个多重签名合约来控制我们的可升级合约。在本指南中，我们将使用[Gnosis Safe](https://safe.gnosis.io/)，但您也可以使用任何支持的多重签名，如传统的[Gnosis MultiSigWallet](https://github.com/gnosis/MultiSigWallet)。在Rinkeby网络上创建一个[Gnosis Safe多重签名](https://help.gnosis-safe.io/en/articles/3876461-create-a-safe-multisig)，M > N/2且M > 1。这应该至少是2个3。
+3. 多重签名。一个多重签名合约来控制我们的可升级合约。在本指南中，我们将使用[Gnosis Safe](https://safe.gnosis.io/)，但您也可以使用任何支持的多重签名，如传统的[Gnosis MultiSigWallet](https://github.com/gnosis/MultiSigWallet)。在Rinkeby网络上创建一个[Gnosis Safe多重签名](https://help.gnosis-safe.io/en/articles/3876461-create-a-safe-multisig)，M > N/2且M > 1。这应该至少是2到3个。
 
-4. Hardhat项目。安装了*Hardhat Upgrades*插件、Hardhat Defender、ethers.js和dotenv的Hardhat项目。
+4. Hardhat项目。安装了[Hardhat Upgrades](../../../Upgrades%20Plugins/Using%20with%20Hardhat/Using%20with%20Hardhat.md)插件、Hardhat Defender、ethers.js和dotenv的[Hardhat项目](../../../Learn/Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)。
 
 ```
 npm install --save-dev @openzeppelin/hardhat-upgrades @openzeppelin/hardhat-defender @nomiclabs/hardhat-ethers ethers dotenv
 ```
 
 ## 创建可升级合约
-创建可升级合约的第一步是创建一个可升级的合约。在本指南中，我们将使用来自*OpenZeppelin Learn指南*的Box.sol合约。在项目根目录下创建一个contracts目录，然后在contracts目录中创建Box.sol，其中包含以下Solidity代码。
+创建可升级合约的第一步是创建一个可升级的合约。在本指南中，我们将使用来自[OpenZeppelin Learn指南](../../../Learn/Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)的Box.sol合约。在项目根目录下创建一个contracts目录，然后在contracts目录中创建Box.sol，其中包含以下Solidity代码。
 
 > NOTE
-可升级合约使用*初始化函数而不是构造函数*来初始化状态。为了保持简单，我们将使用公共存储函数来初始化我们的状态，该函数可以从任何帐户调用多次，而不是受保护的单次使用初始化函数。
+可升级合约使用[初始化函数而不是构造函数](../../../Learn/Upgrading%20smart%20contracts/Upgrading%20smart%20contracts-hardhat.md)来初始化状态。为了保持简单，我们将使用公共存储函数来初始化我们的状态，该函数可以从任何帐户多次调用，而不是受保护的单次使用初始化函数。
 ```
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
@@ -77,7 +77,7 @@ contract Box {
 ```
 
 ## 部署可升级合约
-为了部署我们的合约，我们将使用一个脚本。*Hardhat Upgrades*插件提供了一个deployProxy函数来部署我们的可升级合约。这会部署我们的实现合约、*ProxyAdmin*（我们项目的代理管理员）和代理，同时调用任何初始化。
+为了部署我们的合约，我们将使用一个脚本。[Hardhat Upgrades插件](../../../Upgrades%20Plugins/Using%20with%20Hardhat/Using%20with%20Hardhat.md)提供了一个deployProxy函数来部署我们的可升级合约。这将部署我们的实现合约、[ProxyAdmin](../../../Upgrades%20Plugins/Frequently%20Asked%20Questions.md)（我们项目的代理管理员）和代理，同时调用任何初始化函数。
 
 在项目根目录中创建一个scripts目录，然后在scripts目录中创建以下deploy.js脚本。
 
@@ -98,9 +98,9 @@ main()
     process.exit(1);
   });
 ```
-通常我们会先进行测试，然后部署到本地测试网络并手动进行交互。为了本指南的目的，我们将直接跳到部署到公共测试网络。
+通常我们会先进行测试，然后部署到本地测试网络并手动进行交互。为了验证本指南的目的，我们将直接跳到部公共测试网络。
 
-在本指南中，我们将部署到 Rinkeby，因为 Gnosis Safe 支持 Rinkeby 测试网络。如果您需要配置帮助，请参阅*连接到公共测试网络*和 *Hardhat：部署到实时网络*。
+在本指南中，我们将部署到 Rinkeby，因为 Gnosis Safe 支持 Rinkeby 测试网络。如果您需要配置帮助，请参阅[连接到公共测试网络](../../../Learn/Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-hardhat.md)和 [Hardhat：部署到实时网络](https://hardhat.org/tutorial/deploying-to-a-live-network.html)。
 
 我们可以创建一个 .env 文件来存储我们的助记词和提供程序 API 密钥。您应该将 .env 添加到您的 .gitignore 中。
 
@@ -112,7 +112,7 @@ DEFENDER_TEAM_API_SECRET_KEY="Enter your Defender Team API Secret"
 ```
 
 > WARNING
-任何 secrets 信息，如助记词或API密钥都不应该提交到版本控制中。
+任何 secrets 信息，如助记词或API密钥都不应该上传到网络中。
 
 我们将使用以下hardhat.config.js来部署到Rinkeby。
 
@@ -142,7 +142,7 @@ module.exports = {
 };
 ```
 
-运行我们的deploy.js并部署到Rinkeby网络。我们的实现合约、ProxyAdmin和代理将被部署。
+运行我们的deploy.js脚本并部署到Rinkeby网络。我们的实现合约、ProxyAdmin和代理将被部署。
 
 > NOTE
 我们需要跟踪我们的代理地址，稍后我们会用到它。
@@ -161,9 +161,9 @@ Box deployed to: 0x5C1e1732274630Ac9E9cCaF05dB09da64bE190B5
 我们的代理管理员（可以执行升级）是一个ProxyAdmin合约。只有ProxyAdmin的所有者才能升级我们的代理。
 
 > WARNING
-确保仅将*ProxyAdmin*的所有权转移给我们控制的地址。
+确保仅将[ProxyAdmin](../../../Upgrades%20Plugins/Frequently%20Asked%20Questions.md)的所有权转移给我们控制的地址。
 
-在scripts目录中创建transfer-ownership.js，并使用以下JavaScript更改gnosisSafe的值为您的Gnosis Safe地址。
+在scripts目录中创建transfer-ownership.js文件，并使用以下JavaScript代码更改gnosisSafe的值为您的Gnosis Safe地址。
 
 ```
 // scripts/transfer-ownership.js
@@ -171,7 +171,7 @@ async function main () {
   const gnosisSafe = '0xFb2C6465654024c03DC564d237713F620d1E9491';
 
   console.log('Transferring ownership of ProxyAdmin...');
-  // The owner of the ProxyAdmin can upgrade our contracts
+  // ProxyAdmin的所有者可以升级我们的合约
   await upgrades.admin.transferProxyAdminOwnership(gnosisSafe);
   console.log('Transferred ownership of ProxyAdmin to:', gnosisSafe);
 }
@@ -194,9 +194,9 @@ Transferred ownership of ProxyAdmin to: 0xFb2C6465654024c03DC564d237713F620d1E94
 一段时间后，我们决定向我们的合约添加功能。在本指南中，我们将向我们的Box合约添加一个增量函数。
 
 > NOTE
-我们不能对我们的合约进行任意更改，有关哪些修改是有效的的详细信息，请参见*升级*。
+我们不能对我们的合约进行任意更改，有关哪些修改是有效的的详细信息，请参见[升级](../../../Learn/Upgrading%20smart%20contracts/Upgrading%20smart%20contracts-hardhat.md)。
 
-在您的合约目录中创建新的实现，BoxV2.sol，其中包含以下Solidity代码。
+在contracts目录中创建新的实现BoxV2.sol，其中包含以下Solidity代码。
 ```
 // contracts/BoxV2.sol
 // SPDX-License-Identifier: MIT
@@ -205,13 +205,14 @@ pragma solidity ^0.7.0;
 import "./Box.sol";
 
 contract BoxV2 is Box {
-    // Increments the stored value by 1
+    // 将存储的值增加1
     function increment() public {
         store(retrieve() + 1);
     }
 }
 ```
-为了测试我们的升级，我们应该为新实现合约创建单元测试，同时创建更高级别的测试以通过代理测试交互，并检查状态是否在升级中保持不变。可以参考*OpenZeppelin Upgrades: Step by Step Tutorial for Hardhat*的示例测试。
+
+为了测试我们的升级，我们应该为新实现合约创建单元测试，同时创建更高级别的测试以通过代理测试交互，并检查状态是否在升级中保持不变。可以参考[OpenZeppelin Upgrades: Step by Step Tutorial for Hardhat](https://forum.openzeppelin.com/t/openzeppelin-upgrades-step-by-step-tutorial-for-hardhat/3580)的示例测试。
 
 ## 创建Defender Team API密钥
 为了通过API创建Defender管理提案，我们需要一个团队API密钥。
@@ -221,10 +222,10 @@ contract BoxV2 is Box {
 我们可以将API密钥和 secrets 密钥复制并存储在项目的.env文件中。
 
 > NOTE
-我们无法再从Defender中检索我们的 secrets 密钥。相反，我们需要创建一个新的团队API密钥。
+我们无法再从Defender中检索我们的 secrets 密钥。我们需要创建一个新的团队API密钥。
 
 ## 提出升级建议后
-一旦我们将升级的控制权（ProxyAdmin的所有权）转移到了我们的多重签名账户，我们就不能简单地升级合约了。相反，我们需要首先提出一个升级建议，供多重签名账户的所有者审查，一旦审查通过，批准并执行升级合约的建议。
+一旦我们将升级的控制权（ProxyAdmin的所有权）转移到了我们的多重签名账户，我们就不能简单地升级合约了。我们需要首先提出一个升级建议，供多重签名账户的所有者审查，一旦审查通过，批准并执行升级合约的建议。
 
 要提出升级建议，我们使用[Hardhat的Defender插件](https://www.npmjs.com/package/@openzeppelin/hardhat-defender)。
 
@@ -232,6 +233,7 @@ contract BoxV2 is Box {
 ```
 require("@openzeppelin/hardhat-defender");
 ```
+
 我们还需要将我们的 Defender Team API 密钥添加到 hardhat.config.js 中导出的配置中：
 ```
 module.exports = {
@@ -241,6 +243,7 @@ module.exports = {
   }
 }
 ```
+
 我们的 hardhat.config.js 应该如下所示：
 ```
 // hardhat.config.js
@@ -269,12 +272,14 @@ module.exports = {
   solidity: '0.7.3',
 };
 ```
-一旦我们设置好配置，我们可以提出升级建议。这将验证实施是否具备升级安全性，部署我们的新实现合约并提出升级建议。
+
+一旦我们设置好配置，我们可以提出升级建议。这将验证实现是否具备升级安全性，部署我们的新实现合约并提出升级建议。
 
 在scripts目录中创建propose-upgrade.js，包含以下代码。
 
 > NOTE
 我们需要更新脚本以指定我们的代理地址。
+
 ```
 // scripts/propose-upgrade.js
 const { defender } = require("hardhat");
@@ -295,6 +300,7 @@ main()
     process.exit(1);
   })
 ```
+
 我们可以在Rinkeby网络上运行脚本来提出升级。
 ```
 npx hardhat run --network rinkeby scripts/propose-upgrade.js
@@ -305,13 +311,13 @@ Upgrade proposal created at: https://defender.openzeppelin.com/#/admin/contracts
 ```
 
 ## 升级合约
-一旦我们提出了升级建议，多重签名的所有者可以使用Defender Admin进行审查和批准。使用propose-upgrade.js中的链接，我们团队的每个成员都可以在Defender中审查该建议。多重签名的所需所有者可以批准该建议，然后最终执行以升级我们的合约。
+一旦我们提出了升级提案，多重签名的所有者可以使用Defender Admin进行审查和批准。使用propose-upgrade.js中的链接，我们团队的每个成员都可以在Defender中审查该提案。多重签名的所需所有者可以批准该提案，然后最终执行升级我们的合约。
 ![guide-upgrades-2.png](img/guide-upgrades-2.png)
 
 我们可以在Defender管理员的提案列表中看到已执行的升级提案，我们的合约已经升级。
 ![guide-upgrades-3.png](img/guide-upgrades-3.png)
 
-##总结
+## 总结
 
 让我们回顾一下我们刚刚完成的步骤：
 
@@ -320,7 +326,7 @@ Upgrade proposal created at: https://defender.openzeppelin.com/#/admin/contracts
 * 验证、部署和提出了一个新的实现
 * 通过Defender Admin在多重签名中执行了升级提案
 
-使用多重签名来控制升级权限可以更好地保护我们的可升级合约。此外，使用Defender Admin来更好地管理升级过程。
+使用多重签名来控制升级权限可以更好地保护我们的可升级合约。同时，使用Defender Admin来更好地管理升级过程。
 
 ## 问题
 
