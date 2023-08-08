@@ -343,7 +343,7 @@ autotaskTrigger: '1abfee11-a5bc-51e5-1180-0675a5b24c61',
 
 通过POST请求使用subscribers端点可以创建新的sentinel。如果您希望直接调用API，则需要构建CreateBlockSubscriberRequest对象。
 
->CANTION
+> CANTION
 Defender目前仅支持Sentinels的有限子集（仅支持单个addressRule），我们强烈建议通过JS客户端进行操作，以避免不兼容性。
 
 ```
