@@ -69,9 +69,9 @@ contract MinerRewardMinter {
 要了解有关角色和权限系统的更多信息，请参阅我们的*访问控制指南*。
 
 ## 自动化奖励
-到目前为止，我们的供应机制是手动触发的，但是ERC20还允许我们通过*_beforeTokenTransfer*钩子（参见*使用钩子*）扩展代币的核心功能。
+到目前为止，我们的供应机制是手动触发的，但是ERC20还允许我们通过*_beforeTokenTransfer* hooks （参见*使用 hooks *）扩展代币的核心功能。
 
-在前几节中添加到供应机制中，我们可以使用此钩子来为包含在区块链中的每次代币转移铸造一个矿工奖励。
+在前几节中添加到供应机制中，我们可以使用此 hooks 来为包含在区块链中的每次代币转移铸造一个矿工奖励。
 ```
 contract ERC20WithAutoMinerReward is ERC20 {
     constructor() public ERC20("Reward", "RWD") {}

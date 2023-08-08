@@ -8,7 +8,7 @@ Chainlink Keepers旨在以去中心化的方式提供智能合约的定期维护
 
 * Upkeep：这些是需要外部实体服务其维护任务的智能合约。
 * Keepers：执行发布的维护任务的外部参与者。
-* Registry：为上述参与者提供发现机制，并提供钩子以保持网络的健康。
+* Registry：为上述参与者提供发现机制，并提供 hooks 以保持网络的健康。
 
 ## 先决条件
 您需要LINK代币以支付Upkeep合约的执行。对于Kovan，您可以在此[水龙头](https://kovan.chain.link/)中获取它们。对于Mainnet，您可以在Uniswap上购买它们。您还需要ETH来支付任何需要发送的交易。

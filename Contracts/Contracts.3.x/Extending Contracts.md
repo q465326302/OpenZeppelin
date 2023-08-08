@@ -88,11 +88,11 @@ contract ERC20WithSafeTransfer is ERC20 {
     ...
 }
 ```
-以这种方式使用钩子可以使代码更清晰、更安全，而不需要依赖于父级的内部细节的深入理解。
+以这种方式使用 hooks 可以使代码更清晰、更安全，而不需要依赖于父级的内部细节的深入理解。
 
 > NOTE
-钩子是OpenZeppelin Contracts v3.0.0的一个新功能，我们渴望了解您打算如何使用它们！
-到目前为止，唯一可用的钩子是_beforeTransferHook，在*ERC20*、*ERC721*、*ERC777*和*ERC1155*中都有。如果您对新的钩子有想法，请告诉我们！
+ hooks 是OpenZeppelin Contracts v3.0.0的一个新功能，我们渴望了解您打算如何使用它们！
+到目前为止，唯一可用的 hooks 是_beforeTransferHook，在*ERC20*、*ERC721*、*ERC777*和*ERC1155*中都有。如果您对新的 hooks 有想法，请告诉我们！
 
 ## Hooks的规则
 在编写使用hooks的代码时，有一些准则可以防止出现问题。它们非常简单，但请确保遵循以下规则：

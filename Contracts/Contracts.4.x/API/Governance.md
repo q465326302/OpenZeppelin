@@ -432,11 +432,11 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### _beforeExecute(uint256, address[] targets, uint256[], bytes[] calldatas, bytes32)
 内部#
-在执行触发之前的钩子。
+在执行触发之前的 hooks 。
 
 #### _afterExecute(uint256, address[], uint256[], bytes[], bytes32)
 内部#
-在执行被触发后的钩子。
+在执行被触发后的 hooks 。
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 内部#

@@ -60,7 +60,7 @@ _beforeFallback()
 
 #### _beforeFallback()
 外部#
-在回退到实现之前调用的钩子。可以作为手动回退调用的一部分，也可以作为Solidity回退或接收函数的一部分。
+在回退到实现之前调用的 hooks 。可以作为手动回退调用的一部分，也可以作为Solidity回退或接收函数的一部分。
 
 如果被重写，则应调用super._beforeFallback()。
 

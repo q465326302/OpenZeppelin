@@ -312,7 +312,7 @@ Approval(owner, spender, value)
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
 内部#
-在任何代币转移之前调用的钩子。这包括铸造和销毁。
+在任何代币转移之前调用的 hooks 。这包括铸造和销毁。
 
 调用条件：
 * 当 from 和 to 都不为零时，将从 from 的代币转移给 to。
@@ -323,7 +323,7 @@ Approval(owner, spender, value)
 
 * from 和 to 永远不会同时为零。
 
-要了解更多关于钩子的信息，请查看“*使用钩子*”页面。
+要了解更多关于 hooks 的信息，请查看“*使用 hooks *”页面。
 
 ## Extensions
 

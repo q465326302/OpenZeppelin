@@ -61,14 +61,14 @@ contract ModifiedAccessControl is AccessControl {
 > NOTE
 [AccessControlDefaultAdminRules](./API/Access.md)中实现并扩展了相同的规则，该扩展还为DEFAULT_ADMIN_ROLE添加了强制安全措施。
 
-## 使用钩子
+## 使用 hooks 
 有时，为了扩展父合约，您需要重写多个相关函数，这会导致代码重复和错误的可能性增加。
 
-例如，考虑以[IERC721Receiver](./Tokens/ERC721.md)的方式实现安全的[ERC20](./API/ERC%2020.md)转账。您可能认为重写[transfer和transferFrom](./API/ERC%2020.md)就足够了，但是[_transfer和_mint](./API/ERC%2020.md)呢？为了避免你处理这些细节，我们引入了**hooks(钩子)**。
+例如，考虑以[IERC721Receiver](./Tokens/ERC721.md)的方式实现安全的[ERC20](./API/ERC%2020.md)转账。您可能认为重写[transfer和transferFrom](./API/ERC%2020.md)就足够了，但是[_transfer和_mint](./API/ERC%2020.md)呢？为了避免你处理这些细节，我们引入了**hooks( hooks )**。
 
-钩子只是在某些操作发生之前或之后调用的函数。它们提供了一个集中的点来挂钩和扩展原始行为。
+ hooks 只是在某些操作发生之前或之后调用的函数。它们提供了一个集中的点来挂钩和扩展原始行为。
 
-以下是使用**_beforeTokenTransfer**钩子实现ERC20中的IERC721Receiver模式的示例：
+以下是使用**_beforeTokenTransfer** hooks 实现ERC20中的IERC721Receiver模式的示例：
 ```
 pragma solidity ^0.8.0;
 
@@ -91,14 +91,14 @@ contract ERC20WithSafeTransfer is ERC20 {
 }
 ```
 
-使用钩子的这种方式可以使代码更简洁、更安全，而无需依赖于父合约的内部实现。
+使用 hooks 的这种方式可以使代码更简洁、更安全，而无需依赖于父合约的内部实现。
 
-### 钩子的规则
-在编写使用钩子的代码时，应遵循一些指导方针以防止出现问题。它们非常简单，但确保您遵循它们：
+###  hooks 的规则
+在编写使用 hooks 的代码时，应遵循一些指导方针以防止出现问题。它们非常简单，但确保您遵循它们：
 
-1. 每当重写父级的钩子时，请重新应用virtual属性到钩子上。这将允许子合约向钩子添加更多功能。
+1. 每当重写父级的 hooks 时，请重新应用virtual属性到 hooks 上。这将允许子合约向 hooks 添加更多功能。
 
-2. 在你的重写中**始终**使用super调用父合约的hook。这将确保调用继承树中的所有钩子：像[ERC20Pausable](./API/ERC%2020.md)这样的合约依赖于这种行为。
+2. 在你的重写中**始终**使用super调用父合约的hook。这将确保调用继承树中的所有 hooks ：像[ERC20Pausable](./API/ERC%2020.md)这样的合约依赖于这种行为。
 
 ```
 contract MyToken is ERC20 {
@@ -110,7 +110,7 @@ contract MyToken is ERC20 {
     }
 }
 ```
-就是这样！享受使用钩子的简化代码吧！
+就是这样！享受使用 hooks 的简化代码吧！
 
 ## 安全性
 OpenZeppelin Contracts 的维护者主要关注库中发布的代码的正确性和安全性，以及与库中的官方扩展的基本合约组合。

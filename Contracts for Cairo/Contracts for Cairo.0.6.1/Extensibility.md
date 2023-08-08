@@ -136,10 +136,10 @@ from openzeppelin.token.erc20.presets.ERC20 import (
 
 * 所谓的“only owner”之类的保护函数以assert_为前缀（例如Ownable.assert_only_owner）。
 
-## 模拟钩子
-与Solidity版本的[OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)不同，该库不实现*钩子*。主要原因是Cairo不支持重写函数。
+## 模拟 hooks 
+与Solidity版本的[OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)不同，该库不实现* hooks *。主要原因是Cairo不支持重写函数。
 
-以下是Solidity中钩子的示例。
+以下是Solidity中 hooks 的示例。
 ```
 abstract contract ERC20Pausable is ERC20, Pausable {
     function _beforeTokenTransfer(address from, address to, uint256 amount) internal virtual override {

@@ -314,13 +314,13 @@ Approval(owner, spender, value)
 
 #### _afterTokenTransfer(address from, address to, uint256 amount)
 内部#
-在任何代币转移之后调用的钩子。这包括铸造和销毁。
+在任何代币转移之后调用的 hooks 。这包括铸造和销毁。
 调用条件：
 * 当 from 和 to 都不为零时，将 from 的代币数量转移到 to。
 * 当 from 为零时，为 to 铸造了 amount 个代币。
 * 当 to 为零时，从 from 销毁了 amount 个代币。
 * from 和 to 永远不会同时为零。
-要了解更多关于钩子的信息，请前往使用*挂钩*。
+要了解更多关于 hooks 的信息，请前往使用*挂钩*。
 
 ## 扩展程序
 
@@ -618,7 +618,7 @@ _afterTokenTransfer(from, to, amount)
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
 内部#
-在任何代币转移之前调用的钩子。这包括铸造和销毁。
+在任何代币转移之前调用的 hooks 。这包括铸造和销毁。
 
 调用条件：
 * 当 from 和 to 都不为零时，from 的代币数量将转移到 to。
@@ -626,7 +626,7 @@ _afterTokenTransfer(from, to, amount)
 * 当 to 为零时，将销毁 from 的代币数量。
 * from 和 to 永远不会同时为零。
 
-要了解更多有关钩子的信息，请前往使用*钩子*。
+要了解更多有关 hooks 的信息，请前往使用* hooks *。
 
 #### Snapshot(uint256 id)
 事件#
