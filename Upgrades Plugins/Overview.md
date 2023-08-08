@@ -116,6 +116,6 @@ it('works before and after upgrading', async function () {
 
 代理管理员合约还定义了一个所有者地址，该地址具有操作它的权限。默认情况下，此地址是部署期间使用的外部拥有的账户。您可以通过在插件中调用admin.transferProxyAdminOwnership函数来更改代理管理员的所有者。请注意，更改代理管理员所有者实际上将升级项目中的任何代理的权力转移到新的所有者，因此请谨慎使用。有关管理员功能的更多详细信息，请参考每个插件的文档。
 
-UUPS和beacon代理不使用管理员地址。UUPS代理依赖于覆盖*_authorizeUpgrade*函数来包含对升级机制的访问限制，而beacon代理只能由其对应的beacon的所有者进行升级。
+UUPS和beacon代理不使用管理员地址。UUPS代理依赖于重写*_authorizeUpgrade*函数来包含对升级机制的访问限制，而beacon代理只能由其对应的beacon的所有者进行升级。
 
 一旦您将升级代理或beacon的权限转移给另一个地址，您仍然可以使用本地设置来验证和部署实现合约。插件包含一个prepareUpgrade函数，该函数将验证新的实现是否可以升级并且与之前的版本兼容，并使用您的本地以太坊账户部署它。然后，您可以从管理员或所有者地址执行升级本身。您还可以使用proposeUpgrade函数在*Defender Admin*中自动设置升级。

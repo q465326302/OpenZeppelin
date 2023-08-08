@@ -38,7 +38,7 @@ NRE对象提供的功能。
 
 * abi
 
-如果需要，可以覆盖abi。
+如果需要，可以重写abi。
 
 ##### 返回值
 * output
@@ -206,7 +206,7 @@ NRE对象提供的功能。
 
 * overriding_path
 
-用于工件和abi解析的路径覆盖。
+用于工件和abi解析的路径重写。
 
 * nile_account
 
@@ -257,11 +257,11 @@ NRE对象提供的功能。
 
 * overriding_path
 
-用于构件和ABI解析的路径覆盖。
+用于构件和ABI解析的路径重写。
 
 * abi
 
-合约ABI的覆盖（用于部署注册）。
+合约ABI的重写（用于部署注册）。
 
 ##### 返回值
 * transaction

@@ -17,7 +17,7 @@ const { expectRevert } = require('@openzeppelin/test-helpers');
 
 在Truffle环境中，web3提供者将从Truffle的全局web3实例中获取。否则，默认值为http://localhost:8545/。
 
-您可以通过provider键覆盖此行为并配置自己的提供者：
+您可以通过provider键重写此行为并配置自己的提供者：
 ```
 require('@openzeppelin/test-helpers/configure')({
   provider: 'http://localhost:8080',

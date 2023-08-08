@@ -75,7 +75,7 @@
 
 * --overriding_path
 
-覆盖构件发现的目录路径。
+重写构件发现的目录路径。
 
 * --simulate和--estimate_fee
 
@@ -131,7 +131,7 @@
 
 * --abi
 
-覆盖要注册的构件abi。对于代理很有用。
+重写要注册的构件abi。对于代理很有用。
 
 * --deployer_address
 
@@ -215,7 +215,7 @@
 
 * --contracts_file
 
-覆盖部署文件以查询合约工件。
+重写部署文件以查询合约工件。
 
 默认为<NETWORK>.deployments.txt。
 

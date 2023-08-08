@@ -55,7 +55,7 @@ contract GLDToken is ERC20 {
 您可能希望使用18个小数位的值，就像以太和大多数正在使用的ERC20代币合约一样，除非您有非常特殊的原因。在铸造代币或将其转移时，您实际上将发送数字num GLD *（10 **小数位）。
 
 > NOTE
-默认情况下，ERC20使用18个小数位的值。要使用不同的值，您需要在合约中覆盖decimals（）函数。
+默认情况下，ERC20使用18个小数位的值。要使用不同的值，您需要在合约中重写decimals（）函数。
 ```
 function decimals() public view virtual override returns (uint8) {
   return 16;

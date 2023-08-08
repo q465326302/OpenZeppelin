@@ -16,7 +16,7 @@
 
 * [nile-coverage](https://github.com/ericnordelo/nile-coverage)
 
-为Cairo智能合约添加覆盖率报告（来自pytest测试套件）。
+为Cairo智能合约添加重写率报告（来自pytest测试套件）。
 
 * [nile-verifier-plugin](https://github.com/martriay/nile-verifier-plugin)
 

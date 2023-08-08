@@ -37,7 +37,7 @@ OpenZeppelin中最初提供的代理遵循了[透明代理模式](https://blog.o
 
 虽然这两种代理都共享相同的升级接口，但在UUPS代理中，升级由实现处理，并且最终可以被移除。而透明代理则在代理本身中包含了升级和管理员逻辑。这意味着*TransparentUpgradeableProxy*的部署成本比UUPS代理更高。
 
-UUPS代理是使用*ERC1967Proxy*实现的。请注意，该代理本身不可升级。实现的角色是在合约的逻辑之外，包含所有必要的代码来更新存储在代理存储空间的特定槽位中的实现地址。这就是*UUPSUpgradeable*合约的作用。继承它（并使用相关的访问控制机制覆盖 *_authorizeUpgrade* 函数）将使您的合约成为符合UUPS的实现。
+UUPS代理是使用*ERC1967Proxy*实现的。请注意，该代理本身不可升级。实现的角色是在合约的逻辑之外，包含所有必要的代码来更新存储在代理存储空间的特定槽位中的实现地址。这就是*UUPSUpgradeable*合约的作用。继承它（并使用相关的访问控制机制重写 *_authorizeUpgrade* 函数）将使您的合约成为符合UUPS的实现。
 
 请注意，由于两种代理都使用相同的存储槽位来存储实现地址，使用符合UUPS的实现与*TransparentUpgradeableProxy*结合使用可能会允许非管理员执行升级操作。
 
@@ -55,7 +55,7 @@ UUPS代理是使用*ERC1967Proxy*实现的。请注意，该代理本身不可�
 ```
 import "@openzeppelin/contracts/proxy/Proxy.sol";
 ```
-这个抽象合约提供了一个回退函数，它使用EVM指令delegatecall将所有调用委托给另一个合约。我们将第二个合约称为代理后面的实现，需要通过覆盖虚拟函数*_implementation*来指定它。
+这个抽象合约提供了一个回退函数，它使用EVM指令delegatecall将所有调用委托给另一个合约。我们将第二个合约称为代理后面的实现，需要通过重写虚拟函数*_implementation*来指定它。
 
 此外，可以通过*_fallback*函数手动触发对实现的委托，或者通过*_delegate*函数委托给另一个合约。
 
@@ -77,7 +77,7 @@ _beforeFallback()
 
 #### _implementation() → address
 内部#
-这是一个应该被覆盖的虚函数，它应该返回fallback函数和*_fallback*函数委托的地址。
+这是一个应该被重写的虚函数，它应该返回fallback函数和*_fallback*函数委托的地址。
 
 #### _fallback()
 内部#
@@ -628,7 +628,7 @@ import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
 
 安全机制确保升级不会意外关闭升级能力，尽管如果升级保留了升级能力但移除了安全机制（例如通过替换UUPSUpgradeable为自定义的升级实现），则此风险将重新出现。
 
-必须覆盖*_authorizeUpgrade*函数以包括对升级机制的访问限制。
+必须重写*_authorizeUpgrade*函数以包括对升级机制的访问限制。
 
 *自v4.1版本起可用。*
 

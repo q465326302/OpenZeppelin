@@ -14,7 +14,7 @@ import“@openzeppelin/contracts/token/common/ERC2981.sol”;
 
 版税信息可以通过*_setDefaultRoyalty*为所有代币ID全局指定，也可以通过*_setTokenRoyalty*为特定代币ID单独指定。后者优先于前者。
 
-版税被指定为销售价格的一部分。 *_feeDenominator*是可覆盖的，但默认为10000，这意味着默认情况下以基点指定费用。
+版税被指定为销售价格的一部分。 *_feeDenominator*是可重写的，但默认为10000，这意味着默认情况下以基点指定费用。
 
 >IMPORTANT
 ERC-2981仅指定了一种信号版税信息的方式，不强制执行其支付。请参见EIP中的*Rationale*。市场预计将与销售一起自愿支付版税，但请注意，此标准尚未得到广泛支持。
@@ -40,7 +40,7 @@ _resetTokenRoyalty(tokenId)
 
 #### _feeDenominator() → uint96
 内部#
-*_setTokenRoyalty*和*_setDefaultRoyalty*中设置的费用的分母，用于将其解释为销售价格的分数。默认为10000，因此费用以基点表示，但可以通过覆盖进行自定义。
+*_setTokenRoyalty*和*_setDefaultRoyalty*中设置的费用的分母，用于将其解释为销售价格的分数。默认为10000，因此费用以基点表示，但可以通过重写进行自定义。
 
 #### _setDefaultRoyalty(address receiver, uint96 feeNumerator)
 内部#
@@ -55,7 +55,7 @@ _resetTokenRoyalty(tokenId)
 
 #### _setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)
 内部#
-设置特定令牌ID的版税信息，覆盖全局默认设置。
+设置特定令牌ID的版税信息，重写全局默认设置。
 要求：
 * 接收者不能为零地址。
 * 费用分子不能大于费用分母。

@@ -127,7 +127,7 @@ exports.handler = async function(event) {
 }
 ```
 
-secrets被加密并存储在安全保险库中，只有在您的自动任务运行时才能解密注入。一旦写入，secrets只能从用户界面中删除或覆盖，但不能读取。
+secrets被加密并存储在安全保险库中，只有在您的自动任务运行时才能解密注入。一旦写入，secrets只能从用户界面中删除或重写，但不能读取。
 
 > WARNING
 自动任务可能会记录一个secrets的值，意外地泄露出来。

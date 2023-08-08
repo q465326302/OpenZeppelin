@@ -52,7 +52,7 @@ Relayer 的API密钥与其私钥无关。私钥始终保存在安全的密钥保
 目前，这些是不同的可选策略：
 
 #### 燃料价格上限
-为Relayer 发送的每个交易指定最大燃料价格。当启用此策略时，Defender将覆盖任何超出指定上限的交易的gasPrice或maxFeePerGas。请注意，交易的燃料价格是基于燃料价格预言机在Relayer 实际发送交易以进行挖掘时指定的，因此此策略可用作燃料价格激增的保护。
+为Relayer 发送的每个交易指定最大燃料价格。当启用此策略时，Defender将重写任何超出指定上限的交易的gasPrice或maxFeePerGas。请注意，交易的燃料价格是基于燃料价格预言机在Relayer 实际发送交易以进行挖掘时指定的，因此此策略可用作燃料价格激增的保护。
 
 > NOTE
 除了此处可以指定的最大燃料价格策略外，Defender还实现了向发送到Polygon网络的交易指定最低燃料价格策略为30 Gwei。[您可以在此处阅读有关Polygon决定建立最低燃料价格的更多信息。](https://forum.polygon.technology/t/recommended-min-gas-price-setting/7604)
@@ -90,7 +90,7 @@ const tx = await Relayer .sendTransaction({
 在初始化Relayer 客户端时，您不需要输入私钥，因为私钥被安全保存在Defender保险库中。
 
 >IMPORTANT
-目前，zkSync除了使用eth_estimateGas端点之外，没有一种精确计算gasLimit的方法。因此，Defender无法进行任何gasLimit，并用RPC估计覆盖用户输入。
+目前，zkSync除了使用eth_estimateGas端点之外，没有一种精确计算gasLimit的方法。因此，Defender无法进行任何gasLimit，并用RPC估计重写用户输入。
 
 ### 使用ethers.js
 Relayer 客户端通过自定义签名者与ethers.js集成。这使您可以轻松地切换到Defender Relayer 以进行发送交易，而无需大量更改您的代码库。
@@ -150,7 +150,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 如果您注意到我们已经支持但尚未启用支持的EIP1559兼容网络，请不要犹豫在我们的社区论坛或defender@openzeppelin.com上请求支持。
 
 ### 私人交易
-私人交易支持允许 Relayer 发送交易，而不会出现在公共mempool中，而是通过使用特殊的eth_sendRawTransaction提供程序通过私人mempoolRelayer ，这将取决于网络和当前支持（例如Flashbots网络覆盖）。
+私人交易支持允许 Relayer 发送交易，而不会出现在公共mempool中，而是通过使用特殊的eth_sendRawTransaction提供程序通过私人mempoolRelayer ，这将取决于网络和当前支持（例如Flashbots网络重写）。
 
  Relayer 可以通过以下任何方式发送私人交易：
 

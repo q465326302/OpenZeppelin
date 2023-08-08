@@ -101,7 +101,7 @@ msg.sender的替代品。返回交易的实际发送者：对于常规交易是m
 外部#
 请参考IRelayRecipient.preRelayedCall函数。
 
-不应直接覆盖此函数，而应使用_preRelayedCall。
+不应直接重写此函数，而应使用_preRelayedCall。
 
 * 要求：
 
@@ -117,7 +117,7 @@ msg.sender的替代品。返回交易的实际发送者：对于常规交易是m
 外部#
 请参阅IRelayRecipient.postRelayedCall。
 
-该函数不应直接被覆盖，而应使用_postRelayedCall。
+该函数不应直接被重写，而应使用_postRelayedCall。
 
 * 要求：
 

@@ -232,7 +232,7 @@ const simulation = await client.simulateProposal(
 );
 ```
 
-在创建提案请求中，您还可以选择将simulate标志设置为true（前提是这不是批量提案），在同一请求中模拟提案。您可以通过设置overrideSimulationOpts属性来覆盖模拟参数，该属性是一个SimulationRequest对象。
+在创建提案请求中，您还可以选择将simulate标志设置为true（前提是这不是批量提案），在同一请求中模拟提案。您可以通过设置overrideSimulationOpts属性来重写模拟参数，该属性是一个SimulationRequest对象。
 ```
 const proposalWithSimulation = await client.createProposal({
   contract: {

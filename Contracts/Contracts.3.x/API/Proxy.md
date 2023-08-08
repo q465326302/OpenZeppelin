@@ -15,7 +15,7 @@ Upgradeability 是在 *UpgradeableProxy *合约中实现的，尽管它只提供
 ## 核心
 
 ### 代理
-这个抽象合约提供了一个回退函数，该函数使用EVM指令delegatecall将所有调用委托给另一个合约。我们将第二个合约称为代理背后的实现，并且必须通过覆盖虚拟的*_implementation*函数来指定它。
+这个抽象合约提供了一个回退函数，该函数使用EVM指令delegatecall将所有调用委托给另一个合约。我们将第二个合约称为代理背后的实现，并且必须通过重写虚拟的*_implementation*函数来指定它。
 
 此外，可以通过*_fallback*函数手动触发对实现的委托，或者通过*_delegate*函数委托给其他合约。
 
@@ -42,7 +42,7 @@ _beforeFallback()
 
 #### _implementation() → address
 内部#
-这是一个虚函数，应该被覆盖，以便返回后备函数和*_fallback*应该委派的地址。
+这是一个虚函数，应该被重写，以便返回后备函数和*_fallback*应该委派的地址。
 
 #### _fallback()
 内部#
@@ -62,7 +62,7 @@ _beforeFallback()
 外部#
 在回退到实现之前调用的钩子。可以作为手动回退调用的一部分，也可以作为Solidity回退或接收函数的一部分。
 
-如果被覆盖，则应调用super._beforeFallback()。
+如果被重写，则应调用super._beforeFallback()。
 
 ### UpgradeableProxy
 该合约实现了一个可升级的代理。它之所以可升级，是因为调用被委托给一个可以更改的实现地址。该地址存储在存储器中，位置由[EIP1967](https://eips.ethereum.org/EIPS/eip-1967)指定，以避免与代理后面的实现的存储布局冲突。

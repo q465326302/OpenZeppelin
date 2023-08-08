@@ -53,7 +53,7 @@
 
 * overriding_path
 
-覆盖合约和ABI的路径。
+重写合约和ABI的路径。
 
 * abi
 
@@ -94,7 +94,7 @@
 
 * abi
 
-如果需要，可以覆盖abi。
+如果需要，可以重写abi。
 
 #### 返回值
 * output

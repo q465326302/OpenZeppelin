@@ -339,7 +339,7 @@ EIP712DomainChanged()
 修饰符#
 限制一个函数，只能通过治理提案执行。例如，*GovernorSettings*中的治理参数设置器使用此修饰符进行保护。
 
-治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过覆盖*_executor*函数来实现。执行者只能在治理程序的*执行*函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
+治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过重写*_executor*函数来实现。执行者只能在治理程序的*执行*函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
 
 #### constructor(string name_)
 内部#
@@ -412,7 +412,7 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 内部#
 默认情况下，castVote方法使用的附加编码参数（不包括它们）。
 
-注意：应该由特定的实现来覆盖以使用适当的值，附加参数的含义在该实现的上下文中。
+注意：应该由特定的实现来重写以使用适当的值，附加参数的含义在该实现的上下文中。
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
 公开#
@@ -428,7 +428,7 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
 内部#
-内部执行机制。可以被覆盖以实现不同的执行机制。
+内部执行机制。可以被重写以实现不同的执行机制。
 
 #### _beforeExecute(uint256, address[] targets, uint256[], bytes[] calldatas, bytes32)
 内部#
@@ -792,7 +792,7 @@ EIP712DomainChanged()
 内部#
 将法定人数初始化为代币总供应量的一部分。
 
-该分数被指定为分子/分母。默认情况下，分母为100，因此法定人数被指定为百分比：分子为10对应于法定人数为总供应量的10％。可以通过覆盖*quorumDenominator*来自定义分母。
+该分数被指定为分子/分母。默认情况下，分母为100，因此法定人数被指定为百分比：分子为10对应于法定人数为总供应量的10％。可以通过重写*quorumDenominator*来自定义分母。
 
 #### quorumNumerator() → uint256
 公开#
@@ -804,7 +804,7 @@ EIP712DomainChanged()
 
 #### quorumDenominator() → uint256
 公开#
-返回法定人数的分母。默认为100，但可以被覆盖。
+返回法定人数的分母。默认为100，但可以被重写。
 
 #### quorum(uint256 timepoint) → uint256
 公开#
@@ -1042,7 +1042,7 @@ EIP712DomainChanged()
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 内部#
-*Governor._cancel*函数的覆盖版本，用于取消已经排队的时间锁提案。
+*Governor._cancel*函数的重写版本，用于取消已经排队的时间锁提案。
 
 #### _executor() → address
 内部#
@@ -1176,7 +1176,7 @@ EIP712DomainChanged()
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 内部#
-覆盖版本的 *Governor._cancel* 函数，用于取消已经排队的时间锁定提案。
+重写版本的 *Governor._cancel* 函数，用于取消已经排队的时间锁定提案。
 
 #### _executor() → address
 内部#
@@ -1761,7 +1761,7 @@ EIP712DomainChanged()
 
 #### clock() → uint48
 公开#
-用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票），在这种情况下，*CLOCK_MODE*也应该被覆盖以匹配。
+用于标记检查点的时钟。可以被重写以实现基于时间戳的检查点（和投票），在这种情况下，*CLOCK_MODE*也应该被重写以匹配。
 
 #### CLOCK_MODE() → string
 公开#

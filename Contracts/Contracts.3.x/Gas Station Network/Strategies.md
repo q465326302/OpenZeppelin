@@ -59,7 +59,7 @@ contract MyContract is GSNRecipientSignature {
 我们编写了一份详细指南，介绍了如何设置与GSNRecipientSignature配合工作的签名服务器，[快来看看吧](https://forum.openzeppelin.com/t/advanced-gsn-gsnrecipientsignature-sol/1414)！
 
 ## GSNRecipientERC20Fee
-*GSNRecipientERC20Fee*略微复杂一些（但不用担心，我们已经为您编写好了！）。与GSNRecipientSignature不同，GSNRecipientERC20Fee不需要任何离链服务。您将向用户提供特殊用途的ERC20代币，而不是对每个Relayer 调用进行离链批准。这些代币用于支付用户Relayer 调用的费用，只要用户拥有足够的代币支付，他们的Relayer 调用就会自动获得批准，并且接收合约将覆盖他们的交易费用！
+*GSNRecipientERC20Fee*略微复杂一些（但不用担心，我们已经为您编写好了！）。与GSNRecipientSignature不同，GSNRecipientERC20Fee不需要任何离链服务。您将向用户提供特殊用途的ERC20代币，而不是对每个Relayer 调用进行离链批准。这些代币用于支付用户Relayer 调用的费用，只要用户拥有足够的代币支付，他们的Relayer 调用就会自动获得批准，并且接收合约将重写他们的交易费用！
 
 每个接收合约都有自己的特殊用途代币。代币与以太坊之间的兑换比率为1:1，因为这些代币用于支付您的合约在使用GSN时的燃气费用。
 

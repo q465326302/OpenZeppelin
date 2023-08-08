@@ -16,7 +16,7 @@ OpenZeppelin的Governor系统考虑了与基于Compound的GovernorAlpha和Govern
 跟踪投票和投票委托的ERC20扩展就是这样一个例子。较短的版本是更通用的版本，因为它可以支持大于2^96的令牌供应，而“Comp”变体在这方面受到限制，但正好符合GovernorAlpha和Bravo使用的COMP令牌的接口。两个合约变体共享相同的事件，因此仅查看事件时它们是完全兼容的。
 
 ### Governor和GovernorCompatibilityBravo
-默认情况下，OpenZeppelin Governor合约与Compound的GovernorAlpha或Bravo不兼容。即使事件完全兼容，提案生命周期函数（创建、执行等）具有不同的签名，旨在优化存储使用。GovernorAlpha和Bravo的其他函数也不可用。可以选择继承GovernorCompatibilityBravo模块以获得更高级别的兼容性，该模块覆盖提案生命周期函数，例如提出和执行。
+默认情况下，OpenZeppelin Governor合约与Compound的GovernorAlpha或Bravo不兼容。即使事件完全兼容，提案生命周期函数（创建、执行等）具有不同的签名，旨在优化存储使用。GovernorAlpha和Bravo的其他函数也不可用。可以选择继承GovernorCompatibilityBravo模块以获得更高级别的兼容性，该模块重写提案生命周期函数，例如提出和执行。
 
 请注意，即使使用此模块，`proposalId`的计算方式仍将有所不同。Governor使用提案参数的哈希，目的是通过事件索引将其数据保持在链外，而原始的Bravo实现使用顺序`proposalId`。由于这个和其他差异，GovernorBravo的几个函数不包括在兼容性模块中。
 
@@ -102,7 +102,7 @@ contract MyTokenWrapped is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
 目前在OpenZeppelin Contracts中唯一可用的投票权力来源是*ERC721Votes*。不提供此功能的ERC721代币可以使用*ERC721Votes*和*ERC721Wrapper*的组合将其包装成投票代币。
 
 > NOTE
-代币用于存储投票余额的内部时钟将决定附加到其上的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以覆盖IERC6372时钟，改用时间戳而不是块号。
+代币用于存储投票余额的内部时钟将决定附加到其上的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以重写IERC6372时钟，改用时间戳而不是块号。
 
 ### Governor
 首先，我们将构建一个没有时间锁定的Governor。Governor合约提供了核心逻辑，但我们仍需要选择：1）如何确定投票权力，2）需要多少票才能达成法定人数，3）人们在投票时有哪些选项以及如何计算这些选票，以及4）应使用哪种类型的代币进行投票。每个方面都可以通过编写自己的模块来自定义，或者更轻松地从OpenZeppelin Contracts中选择一个模块。
@@ -311,7 +311,7 @@ await governor.execute(
 因此，设计基于时间戳的投票系统始于代币。
 
 ### 代币
-自v4.9以来，所有投票合约（包括*ERC20Votes*和*ERC721Votes*）都依赖于*IERC6372*进行时钟管理。要从使用块号操作转换为使用时间戳操作，只需要覆盖clock()和CLOCK_MODE()函数即可。
+自v4.9以来，所有投票合约（包括*ERC20Votes*和*ERC721Votes*）都依赖于*IERC6372*进行时钟管理。要从使用块号操作转换为使用时间戳操作，只需要重写clock()和CLOCK_MODE()函数即可。
 
 ```
 // SPDX-License-Identifier: MIT
@@ -351,7 +351,7 @@ contract MyTokenTimestampBased is ERC20, ERC20Permit, ERC20Votes {
 }
 ```
 ###Governor
-Governor会自动检测代币使用的时钟模式，并相应地进行适应。在Governor合约中无需覆盖任何内容。然而，时钟模式确实会影响某些值的解释。因此，需要相应地设置votingDelay()和votingPeriod()。
+Governor会自动检测代币使用的时钟模式，并相应地进行适应。在Governor合约中无需重写任何内容。然而，时钟模式确实会影响某些值的解释。因此，需要相应地设置votingDelay()和votingPeriod()。
 
 ```
 // SPDX-License-Identifier: MIT

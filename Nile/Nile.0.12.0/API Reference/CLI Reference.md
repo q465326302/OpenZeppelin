@@ -145,7 +145,7 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 
 * --overriding_path
 
-覆盖构件发现的目录路径。
+重写构件发现的目录路径。
 
 * --token
 
@@ -195,7 +195,7 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 
 * --abi
 
-覆盖要注册的构件abi。对于代理很有用。
+重写要注册的构件abi。对于代理很有用。
 
 * --deployer_address
 
@@ -319,7 +319,7 @@ Watch the status of the account deployment transaction. See the status command f
 
 * --contracts_file
 
-覆盖部署文件以查询合约的构件。
+重写部署文件以查询合约的构件。
 
 默认为<NETWORK>.deployments.txt。
 

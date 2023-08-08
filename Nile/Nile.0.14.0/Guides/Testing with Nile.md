@@ -65,15 +65,15 @@ addopts = -n auto
 
 3. 完成！现在每次使用pytest运行测试时，它们将并行运行，大大加快了进程。
 
-## 覆盖率报告
-默认情况下，Nile不支持覆盖率报告，但是您可以使用[nile-coverage](https://github.com/ericnordelo/nile-coverage)插件轻松集成此功能。
+## 重写率报告
+默认情况下，Nile不支持重写率报告，但是您可以使用[nile-coverage](https://github.com/ericnordelo/nile-coverage)插件轻松集成此功能。
 
 1. 在您的项目中安装nile-coverage插件。
 ```
 python -m pip install nile-coverage
 ```
 
-2. 使用覆盖率命令（来自插件）生成覆盖率报告。
+2. 使用重写率命令（来自插件）生成重写率报告。
 ```
 nile coverage
 

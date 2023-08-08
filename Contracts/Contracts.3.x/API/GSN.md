@@ -95,7 +95,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 公开#
 请查看IRelayRecipient.preRelayedCall。
 
-不应直接覆盖此函数，请使用_preRelayedCall代替。
+不应直接重写此函数，请使用_preRelayedCall代替。
 
 * 要求：
     * 调用者必须是RelayHub合约。
@@ -116,7 +116,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 公开#
 请参阅IRelayRecipient.postRelayedCall。
 
-此函数不应直接被覆盖，而应使用_postRelayedCall。
+此函数不应直接被重写，而应使用_postRelayedCall。
 
 * 要求：
     * 调用者必须是RelayHub合约。

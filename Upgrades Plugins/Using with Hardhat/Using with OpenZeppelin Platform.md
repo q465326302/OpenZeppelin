@@ -61,7 +61,7 @@ async function main() {
 main();
 ```
 
-* 使用usePlatformDeploy常见选项。设置此选项将针对特定函数覆盖上述设置。例如：
+* 使用usePlatformDeploy常见选项。设置此选项将针对特定函数重写上述设置。例如：
 
 ```
 // scripts/create-box.js

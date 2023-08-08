@@ -5,7 +5,7 @@
 ## 核心
 
 ### 众筹销售
-Crowdsale（众筹销售）是一个用于管理代币众筹的基本合约，允许投资者使用以太币购买代币。该合约以其最基本的形式实现了这种功能，并可以扩展以提供额外的功能和/或自定义行为。外部接口表示购买代币的基本接口，并符合众筹的基本架构。它不打算被修改/覆盖。内部接口符合可扩展和可修改的众筹表面。通过重写方法来添加功能。在适当的地方考虑使用 'super' 来连接行为。
+Crowdsale（众筹销售）是一个用于管理代币众筹的基本合约，允许投资者使用以太币购买代币。该合约以其最基本的形式实现了这种功能，并可以扩展以提供额外的功能和/或自定义行为。外部接口表示购买代币的基本接口，并符合众筹的基本架构。它不打算被修改/重写。内部接口符合可扩展和可修改的众筹表面。通过重写方法来添加功能。在适当的地方考虑使用 'super' 来连接行为。
 
 **MODIFIERS**
 REENTRANCYGUARD
@@ -54,7 +54,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### fallback()
 外部#
-回退函数**不要覆盖**。请注意，其他合约在转移资金时会附带2300个基本燃气补贴，这不足以调用buyTokens。考虑直接调用buyTokens来购买代币。
+回退函数**不要重写**。请注意，其他合约在转移资金时会附带2300个基本燃气补贴，这不足以调用buyTokens。考虑直接调用buyTokens来购买代币。
 
 #### token() → contract IERC20
 公开#
@@ -70,7 +70,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### buyTokens(address beneficiary)
 公开#
-低级代币购买请勿**覆盖此函数**。此函数具有非重入保护，因此不应由另一个非重入函数调用。
+低级代币购买请勿**重写此函数**。此函数具有非重入保护，因此不应由另一个非重入函数调用。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
 内部#
@@ -90,11 +90,11 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _updatePurchasingState(address beneficiary, uint256 weiAmount)
 内部#
-对于需要内部状态来检查有效性的扩展进行覆盖（例如当前用户的贡献等）。
+对于需要内部状态来检查有效性的扩展进行重写（例如当前用户的贡献等）。
 
 #### _getTokenAmount(uint256 weiAmount) → uint256
 内部#
-覆盖以扩展将以太币转换为代币的方式。
+重写以扩展将以太币转换为代币的方式。
 
 #### _forwardFunds()
 内部#
@@ -167,7 +167,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
 内部#
-通过从钱包中转移代币来覆盖父级行为。
+通过从钱包中转移代币来重写父级行为。
 
 ### MintedCrowdsale
 扩展Crowdsale合约，其中每次购买都会铸造代币。代币所有权应转移到MintedCrowdsale以进行铸币。
@@ -217,7 +217,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
 内部#
-通过购买时铸造代币来覆盖交付。
+通过购买时铸造代币来重写交付。
 
 ## Validation
 
@@ -731,7 +731,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _finalization()
 内部#
-可以被覆盖以添加最终化逻辑。覆盖的函数应该调用super._finalization()来确保完整地执行最终化链。
+可以被重写以添加最终化逻辑。重写的函数应该调用super._finalization()来确保完整地执行最终化链。
 
 #### CrowdsaleFinalized()
 事件#
@@ -812,7 +812,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _processPurchase(address beneficiary, uint256 tokenAmount)
 内部#
-通过存储到期余额并将代币交付给保险库，覆盖了父级的功能。这样可以确保代币在提取时可用（如果稍后调用_deliverTokens可能不会这样）。
+通过存储到期余额并将代币交付给保险库，重写了父级的功能。这样可以确保代币在提取时可用（如果稍后调用_deliverTokens可能不会这样）。
 
 ### RefundableCrowdsale
 扩展FinalizableCrowdsale合约，添加了一个筹款目标，并且如果目标未达到，用户可以获得退款的可能性。
@@ -916,7 +916,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _forwardFunds()
 内部#
-覆盖众筹资金转发，将资金发送到托管账户。
+重写众筹资金转发，将资金发送到托管账户。
 
 ### RefundablePostDeliveryCrowdsale
 RefundableCrowdsale合约的扩展，只有在众筹结束并达到目标后才交付代币，防止向代币持有人发放退款。
