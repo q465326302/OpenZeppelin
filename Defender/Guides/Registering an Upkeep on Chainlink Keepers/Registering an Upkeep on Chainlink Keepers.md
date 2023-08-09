@@ -76,7 +76,7 @@ interface KeeperCompatibleInterface {
 一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合约页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时，您的合同页面的外观。
 ![guide-chainlink-5.png](img/guide-chainlink-5.png)
 
-当您的注册被批准后，Defender将向您显示您的Upkeep余额以及网络保管人的最新执行情况。请注意，为了使您的合约得到网络的服务，您还需要用LINK令牌为其提供资金。您也可以通过在Defender上点击“Deposit LINK”来完成这个过程。
+当您的注册被批准后，Defender将向您显示您的Upkeep余额以及网络保管人的最新执行情况。请注意，为了使您的合约得到网络的服务，您还需要用LINK代币为其提供资金。您也可以通过在Defender上点击“Deposit LINK”来完成这个过程。
 ![guide-chainlink-6.png](img/guide-chainlink-6.png)
 
 ## 监控您的Upkeep
@@ -112,7 +112,7 @@ interface KeeperCompatibleInterface {
 下一步是创建一个Autotask，该Autotask可以查询您的Upkeep余额，并在其低于阈值时添加LINK资金。将此Autotask设置为在连接到您先前创建的Relayer 的Webhook上运行，并使用[defender-autotask-examples存储库](https://github.com/OpenZeppelin/defender-autotask-examples/)中的[low-funds代码](https://github.com/OpenZeppelin/defender-autotask-examples/blob/master/chainlink/src/low-funds.js)。
 ![guide-chainlink-12.png](img/guide-chainlink-12.png)
 
-每当这个Autotask运行时，如果它检测到余额低于您配置的令牌数量，它将使用您的Relayer 发送更多的LINK来为您的Upkeep提供资金。
+每当这个Autotask运行时，如果它检测到余额低于您配置的代币数量，它将使用您的Relayer 发送更多的LINK来为您的Upkeep提供资金。
 
 最后一步是触发这个Autotask。您可以将其设置为定期运行，而不是Webhook模式，也可以在执行作业后触发它。如果您选择后者，您将需要创建一个Sentinel来监视[Chainlink Keeper Registry](https://kovan.etherscan.io/address/0x109A81F1E0A35D4c1D0cae8aCc6597cd54b47Bc6)（Kovan上的0x42dD7716721ba279dA2f1F06F97025d739BD79a8）如前一个场景中所述，并通过所有UpkeepPerformed事件筛选。
 ![guide-chainlink-13.png](img/guide-chainlink-13.png)

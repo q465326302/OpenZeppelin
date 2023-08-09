@@ -90,7 +90,7 @@
 
 ## ERC1155
 
-### 一个具有对应的totalSupply和余额的注册表的所有令牌
+### 一个具有对应的totalSupply和余额的注册表的所有代币
 ```
 {
   erc1155Contract(id: "<registry-address-in-lowercase>") {

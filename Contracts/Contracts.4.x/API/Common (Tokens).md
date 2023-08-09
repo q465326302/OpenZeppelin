@@ -55,11 +55,11 @@ _resetTokenRoyalty(tokenId)
 
 #### _setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)
 内部#
-设置特定令牌ID的版税信息，重写全局默认设置。
+设置特定代币ID的版税信息，重写全局默认设置。
 要求：
 * 接收者不能为零地址。
 * 费用分子不能大于费用分母。
 
 #### _resetTokenRoyalty(uint256 tokenId)
 内部#
-将令牌ID的版税信息重置为全局默认值。
+将代币ID的版税信息重置为全局默认值。

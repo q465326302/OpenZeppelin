@@ -13,7 +13,7 @@
 OpenZeppelin的Governor系统考虑了与基于Compound的GovernorAlpha和GovernorBravo的现有系统的兼容性。因此，您会发现许多模块都有两个变体之一，其中一个是为与这些系统兼容而构建的。
 
 ### ERC20Votes和ERC20VotesComp
-跟踪投票和投票委托的ERC20扩展就是这样一个例子。较短的版本是更通用的版本，因为它可以支持大于2^96的令牌供应，而“Comp”变体在这方面受到限制，但正好符合GovernorAlpha和Bravo使用的COMP令牌的接口。两个合约变体共享相同的事件，因此仅查看事件时它们是完全兼容的。
+跟踪投票和投票委托的ERC20扩展就是这样一个例子。较短的版本是更通用的版本，因为它可以支持大于2^96的代币供应，而“Comp”变体在这方面受到限制，但正好符合GovernorAlpha和Bravo使用的COMP代币的接口。两个合约变体共享相同的事件，因此仅查看事件时它们是完全兼容的。
 
 ### Governor和GovernorCompatibilityBravo
 默认情况下，OpenZeppelin Governor合约与Compound的GovernorAlpha或Bravo不兼容。即使事件完全兼容，提案生命周期函数（创建、执行等）具有不同的签名，旨在优化存储使用。GovernorAlpha和Bravo的其他函数也不可用。可以选择继承GovernorCompatibilityBravo模块以获得更高级别的兼容性，该模块重写提案生命周期函数，例如提出和执行。

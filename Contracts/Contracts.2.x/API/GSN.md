@@ -264,7 +264,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### _mint(address account, uint256 amount)
 内部#
-内部函数，用于铸造燃气支付令牌。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
+内部函数，用于铸造燃气支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
 外部#
@@ -272,7 +272,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### _preRelayedCall(bytes context) → bytes32
 内部#
-对用户进行预充值。将从用户的燃料支付令牌余额中扣除最大可能的费用（取决于燃料限制、燃料价格和费用）。请注意，这是对实际费用的过估计，这是必要的，因为我们无法预测执行实际上需要多少燃料。剩余费用将在*_postRelayedCall*中返还给用户。
+对用户进行预充值。将从用户的燃料支付代币余额中扣除最大可能的费用（取决于燃料限制、燃料价格和费用）。请注意，这是对实际费用的过估计，这是必要的，因为我们无法预测执行实际上需要多少燃料。剩余费用将在*_postRelayedCall*中返还给用户。
 
 #### _postRelayedCall(bytes context, bool, uint256 actualCharge, bytes32)
 内部#

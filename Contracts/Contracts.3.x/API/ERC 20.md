@@ -62,7 +62,7 @@ Approval(owner, spender, value)
 
 #### totalSupply() → uint256
 外部#
-返回存在的令牌数量。
+返回存在的代币数量。
 
 #### balanceOf(address account) → uint256
 外部#
@@ -95,7 +95,7 @@ Approval(owner, spender, value)
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
 外部#
-使用津贴机制，将数量令牌从发送者移动到接收者。然后从调用者的津贴中扣除该数量。
+使用津贴机制，将数量代币从发送者移动到接收者。然后从调用者的津贴中扣除该数量。
 
 返回一个布尔值，指示操作是否成功。
 
@@ -114,7 +114,7 @@ Approval(owner, spender, value)
 #### ERC20
 *IERC20*接口的实现。
 
-该实现对于令牌的创建方式是不可知的。这意味着在派生合约中需要使用*_mint*添加供应机制。对于通用机制，请参见*ERC20PresetMinterPauser*。
+该实现对于代币的创建方式是不可知的。这意味着在派生合约中需要使用*_mint*添加供应机制。对于通用机制，请参见*ERC20PresetMinterPauser*。
 
 > TIP
 有关详细信息，请参阅我们的指南：如何实现供应机制。
@@ -178,11 +178,11 @@ Approval(owner, spender, value)
 
 #### name() → string
 公开#
-返回令牌的名称。
+返回代币的名称。
 
 #### symbol() → string
 公开#
-返回令牌的符号，通常是名称的缩写版本。
+返回代币的符号，通常是名称的缩写版本。
 
 #### decimals() → uint8
 公开#
@@ -257,9 +257,9 @@ Approval(owner, spender, value)
 
 #### _transfer(address sender, address recipient, uint256 amount)
 内部#
-将令牌数量从发送方移动到接收方。
+将代币数量从发送方移动到接收方。
 
-这个内部函数等同于*transfer*，并且可以用于实现自动令牌费用、削减机制等。
+这个内部函数等同于*transfer*，并且可以用于实现自动代币费用、削减机制等。
 
 发出一个*transfer*事件。
 
@@ -608,7 +608,7 @@ Approval(owner, spender, value)
 
 #### cap() → uint256
 公开#
-返回令牌总供应量的上限。
+返回代币总供应量的上限。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
 内部#

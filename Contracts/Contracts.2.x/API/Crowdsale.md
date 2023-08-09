@@ -82,7 +82,7 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
 内部#
-令牌的来源。重写此方法以修改众筹最终获取和发送其令牌的方式。
+代币的来源。重写此方法以修改众筹最终获取和发送其代币的方式。
 
 #### _processPurchase(address beneficiary, uint256 tokenAmount)
 内部#

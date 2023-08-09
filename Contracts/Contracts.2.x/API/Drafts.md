@@ -33,11 +33,11 @@ migrateAll(account)
 
 #### legacyToken() → contract IERC20
 公开#
-返回正在迁移的传统令牌。
+返回正在迁移的传统代币。
 
 #### newToken() → contract IERC20
 公开#
-返回我们正在迁移的新令牌。
+返回我们正在迁移的新代币。
 
 #### beginMigration(contract ERC20Mintable newToken_)
 公开#

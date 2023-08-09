@@ -78,7 +78,7 @@ import "@openzeppelin/contracts/interfaces/IERC1363.sol";
 ```
 ERC1363兼容合约的接口，如EIP所定义的。
 
-定义了一个支持在转账或transferFrom之后执行接收者代码，或在approve之后执行spender代码的ERC20令牌接口。
+定义了一个支持在转账或transferFrom之后执行接收者代码，或在approve之后执行spender代码的ERC20代币接口。
 
 **FUNCTIONS**
 transferAndCall(to, amount)
@@ -115,11 +115,11 @@ Approval(owner, spender, value)
 
 #### transferFromAndCall(address from, address to, uint256 amount) → bool
 外部#
-将令牌从一个地址转移到另一个地址，然后在接收者上调用onTransferReceived函数。
+将代币从一个地址转移到另一个地址，然后在接收者上调用onTransferReceived函数。
 
 #### transferFromAndCall(address from, address to, uint256 amount, bytes data) → bool
 外部#
-将令牌从一个地址转移到另一个地址，然后在接收者上调用onTransferReceived函数。
+将代币从一个地址转移到另一个地址，然后在接收者上调用onTransferReceived函数。
 
 #### approveAndCall(address spender, uint256 amount) → bool
 外部#
@@ -292,9 +292,9 @@ Approval(owner, spender, value)
 
 #### asset() → address assetTokenAddress
 外部#
-返回用于Vault的账户、存款和提款的底层令牌的地址。
+返回用于Vault的账户、存款和提款的底层代币的地址。
 
-* 必须是一个ERC-20令牌合约。
+* 必须是一个ERC-20代币合约。
 * 不得回滚。
 
 #### totalAssets() → uint256 totalManagedAssets

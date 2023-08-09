@@ -4,12 +4,12 @@ Relay API分为两个模块：
 
 1. Relay Client
     * 在帐户中执行创建、读取和更新操作，跨所有 Relayer 
-    * 使用Team API Key/Secret生成的令牌进行身份验证（在创建Team API Key时可用）
+    * 使用Team API Key/Secret生成的代币进行身份验证（在创建Team API Key时可用）
 
 2. Relay Signer
 
     * 使用特定 Relayer 执行发送、签名和其他操作
-    * 使用Relayer  API Key/Secret生成的令牌进行身份验证（在创建 Relayer 时可用）
+    * 使用Relayer  API Key/Secret生成的代币进行身份验证（在创建 Relayer 时可用）
 
 有关身份验证的更多信息，请参阅[身份验证](./Authentication.md)部分。
 

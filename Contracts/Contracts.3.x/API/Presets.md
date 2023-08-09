@@ -132,7 +132,7 @@ RoleRevoked(role, account, sender)
 
 #### pause()
 公开#
-暂停所有令牌转移。
+暂停所有代币转移。
 
 参见*ERC20Pausable*和*Pausable._pause*。
 
@@ -295,7 +295,7 @@ Token的URI将根据baseURI和它们的token ID自动生成。请参阅*ERC721.t
 
 #### mint(address to)
 公开#
-为to创建一个新的令牌。其令牌ID将自动分配（并可在发出的*IERC721.Transfer*事件中获得），令牌URI将根据在构造函数中传递的基本URI自动生成。
+为to创建一个新的代币。其代币ID将自动分配（并可在发出的*IERC721.Transfer*事件中获得），代币URI将根据在构造函数中传递的基本URI自动生成。
 
 请参阅*ERC721._mint*。
 
@@ -304,7 +304,7 @@ Token的URI将根据baseURI和它们的token ID自动生成。请参阅*ERC721.t
 
 #### pause()
 公开#
-暂停所有令牌转移。
+暂停所有代币转移。
 
 请参阅*ERC721Pausable*和*Pausable._pause*。
 
@@ -430,7 +430,7 @@ RoleRevoked(role, account, sender)
 
 #### mint(address to, uint256 id, uint256 amount, bytes data)
 公开#
-为特定的令牌类型创建指定数量的新令牌。
+为特定的代币类型创建指定数量的新代币。
 
 请参考*ERC1155._mint*。
 

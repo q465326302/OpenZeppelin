@@ -61,7 +61,7 @@
 
 * mainnet_token
 
-主网部署的令牌。
+主网部署的代币。
 
 * watch_mode
 

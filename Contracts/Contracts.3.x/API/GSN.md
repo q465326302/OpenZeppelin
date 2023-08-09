@@ -253,11 +253,11 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### constructor(string name, string symbol)
 公开#
-构造函数的参数是燃料支付令牌的详细信息：名称和符号。小数位数被硬编码为18。
+构造函数的参数是燃料支付代币的详细信息：名称和符号。小数位数被硬编码为18。
 
 #### token() → contract __unstable__ERC20Owned
 公开#
-返回燃气支付令牌。
+返回燃气支付代币。
 
 #### _mint(address account, uint256 amount)
 内部#
@@ -265,7 +265,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
 公开#
-确保只有拥有足够的Gas支付令牌余额的用户才能通过GSNRelayer 交易。
+确保只有拥有足够的Gas支付代币余额的用户才能通过GSNRelayer 交易。
 
 #### _preRelayedCall(bytes context) → bytes32
 内部#

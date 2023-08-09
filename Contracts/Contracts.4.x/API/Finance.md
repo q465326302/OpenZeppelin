@@ -75,7 +75,7 @@ payees中的所有地址必须是非零的。两个数组必须具有相同的�
 
 #### released(contract IERC20 token, address account) → uint256
 公开#
-获取已经释放给收款人的代币令牌数量。令牌应该是一个IERC20合约的地址。
+获取已经释放给收款人的代币代币数量。代币应该是一个IERC20合约的地址。
 
 #### payee(uint256 index) → address
 公开#
@@ -95,7 +95,7 @@ payees中的所有地址必须是非零的。两个数组必须具有相同的�
 
 #### release(contract IERC20 token, address account)
 公开#
-触发将他们应得的令牌数量转账到其账户，根据其在总份额中的百分比和之前的提取情况。令牌必须是一个IERC20合约的地址。
+触发将他们应得的代币数量转账到其账户，根据其在总份额中的百分比和之前的提取情况。代币必须是一个IERC20合约的地址。
 
 #### PayeeAdded(address account, uint256 shares)
 事件#

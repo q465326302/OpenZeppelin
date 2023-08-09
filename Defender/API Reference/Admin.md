@@ -1,7 +1,7 @@
 # Admin API Reference
 Admin API允许您以编程方式创建新的Admin提案。
 
-请求需要使用从Team API Key协商的令牌进行身份验证。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
+请求需要使用从Team API Key协商的代币进行身份验证。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
 我们建议您使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包来简化与Admin API的交互。

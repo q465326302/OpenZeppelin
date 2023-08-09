@@ -1,7 +1,7 @@
 # Autotask API Reference
 Autotask API允许您以编程方式列出、创建、检索、更新、删除Autotasks，以及将新代码上传到任何Autotask中。
 
-请求需要使用从Team API Key与相应能力协商的令牌进行身份验证。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
+请求需要使用从Team API Key与相应能力协商的代币进行身份验证。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
 我们建议您使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包来简化与Autotask API的交互。

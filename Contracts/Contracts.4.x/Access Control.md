@@ -78,7 +78,7 @@ contract MyToken is ERC20, AccessControl {
 
 尽管清晰明确，但这并不是我们无法通过Ownable实现的任何内容。实际上，AccessControl在需要精细权限控制的场景中表现出色，这可以通过定义多个角色来实现。
 
-让我们通过定义“burner”角色来增强我们的ERC20令牌示例，该角色允许帐户销毁代币，并使用onlyRole修饰符：
+让我们通过定义“burner”角色来增强我们的ERC20代币示例，该角色允许帐户销毁代币，并使用onlyRole修饰符：
 ```
 // contracts/MyToken.sol
 // SPDX-License-Identifier: MIT

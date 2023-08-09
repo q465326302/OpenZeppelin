@@ -52,7 +52,7 @@ Approval(owner, spender, value)
 
 #### totalSupply() → uint256
 外部#
-返回存在的令牌数量。
+返回存在的代币数量。
 
 #### balanceOf(address account) → uint256
 外部#
@@ -121,15 +121,15 @@ Approval(owner, spender, value)
 
 #### name() → string
 外部#
-返回令牌的名称。
+返回代币的名称。
 
 #### symbol() → string
 外部#
-返回令牌的符号。
+返回代币的符号。
 
 #### decimals() → uint8 
 外部#
-返回令牌的小数位数。
+返回代币的小数位数。
 
 ### ERC20
 ```
@@ -184,7 +184,7 @@ Approval(owner, spender, value)
 
 #### name() → string
 公开#
-返回令牌的名称。
+返回代币的名称。
 
 #### symbol() → string
 公开#
@@ -377,7 +377,7 @@ Approval(owner, spender, value)
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 ```
-将ERC20扩展，以添加令牌供应量上限。
+将ERC20扩展，以添加代币供应量上限。
 
 **FUNCTIONS**
 constructor(cap_)
@@ -425,8 +425,8 @@ Approval(owner, spender, value)
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 ```
-具有可暂停令牌转移、铸造和销毁的ERC20令牌。
-适用于防止交易直到评估期结束或在出现大规模漏洞时有一个紧急开关以冻结所有令牌转移的情况等场景。
+具有可暂停代币转移、铸造和销毁的ERC20代币。
+适用于防止交易直到评估期结束或在出现大规模漏洞时有一个紧急开关以冻结所有代币转移的情况等场景。
 >IMPORTANT
 此合约不包括公共暂停和取消暂停函数。除了继承此合约外，您还必须定义这两个函数，并使用适当的访问控制（例如使用*AccessControl*或*Ownable*）调用*Pausable._pause*和*Pausable._unpause*内部函数。否则，合约将无法暂停。
 
@@ -637,14 +637,14 @@ _afterTokenTransfer(from, to, amount)
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 ```
 
-ERC20的扩展，支持类似Compound的投票和委托。这个版本比Compound的更通用，支持令牌供应量高达2^224-1, 而COMP仅限于2^96-1。
+ERC20的扩展，支持类似Compound的投票和委托。这个版本比Compound的更通用，支持代币供应量高达2^224-1, 而COMP仅限于2^96-1。
 
 > NOTE
 如果需要完全兼容COMP，则使用此模块的*ERC20VotesComp*变体。
 
 此扩展会保留每个帐户的投票权历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供签名以与*delegateBySig*一起使用来委托。可以通过公共访问器*getVotes*和*getPastVotes*查询投票权。
 
-默认情况下，令牌余额不考虑投票权。这使转账更便宜。缺点是需要用户委托给自己以激活检查点并跟踪其投票权。
+默认情况下，代币余额不考虑投票权。这使转账更便宜。缺点是需要用户委托给自己以激活检查点并跟踪其投票权。
 
 *自v4.2以来可用。*
 
@@ -1371,7 +1371,7 @@ safePermit(token, owner, spender, value, deadline, v, r, s)
 
 #### safePermit(contract IERC20Permit token, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
 内部#
-使用 ERC-2612 签名来设置令牌所有者对支出者的批准。在无效签名的情况下回滚。
+使用 ERC-2612 签名来设置代币所有者对支出者的批准。在无效签名的情况下回滚。
 
 ### TokenTimelock
 ```
@@ -1393,7 +1393,7 @@ release()
 
 #### token() → contract IERC20
 公开#
-返回当前持有的令牌。
+返回当前持有的代币。
 
 #### beneficiary() → address
 公开#
@@ -1401,7 +1401,7 @@ release()
 
 #### releaseTime() → uint256
 公开#
-返回令牌释放时间，以自 Unix 纪元以来的秒数表示（即 Unix 时间戳）。
+返回代币释放时间，以自 Unix 纪元以来的秒数表示（即 Unix 时间戳）。
 
 #### release()
 公开#

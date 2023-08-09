@@ -485,7 +485,7 @@ Datadog配置允许Defender将自定义指标转发到您的Datadog帐户。有�
 > NOTE
 Telegram机器人必须添加到您的频道并具有发布消息的权限。
 
-要查找频道的聊天ID，请执行以下curl（使用您的机器人令牌值），并提取聊天的id值。如果您没有收到任何条目的响应，请先发送测试消息到您的聊天中。
+要查找频道的聊天ID，请执行以下curl（使用您的机器人代币值），并提取聊天的id值。如果您没有收到任何条目的响应，请先发送测试消息到您的聊天中。
 ```
 curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 {
@@ -516,7 +516,7 @@ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 
 * **Chat ID**是Telegram聊天的ID。
 
-* **Bot Token**是您在创建Telegram Bot时从BotFather获得的令牌。
+* **Bot Token**是您在创建Telegram Bot时从BotFather获得的代币。
 
 ### 自定义Webhook配置
 要配置自定义的Webhook通知渠道，您只需要提供Webhook端点URL和用于显示目的的别名。

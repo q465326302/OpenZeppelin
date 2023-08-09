@@ -114,7 +114,7 @@ func constructor(
 }
 ```
 
-要创建令牌，您需要像这样部署它:
+要创建代币，您需要像这样部署它:
 ```
 erc20 = await starknet.deploy(
     "openzeppelin/token/erc20/presets/ERC20.cairo",
@@ -215,7 +215,7 @@ func approve(spender: felt, amount: Uint256) -> (success: felt) {
 ```
 
 #### name
-返回令牌的名称。
+返回代币的名称。
 
 参数：无。
 
@@ -225,7 +225,7 @@ name: felt
 ```
 
 #### symbol
-返回令牌的symbol代码。
+返回代币的symbol代码。
 
 参数：无。
 
@@ -235,7 +235,7 @@ symbol: felt
 ```
 
 #### decimals
-返回令牌使用的小数位数 - 例如，8表示将令牌数量除以100000000以获得其用户表示。
+返回代币使用的小数位数 - 例如，8表示将代币数量除以100000000以获得其用户表示。
 
 参数：无。
 
@@ -245,11 +245,11 @@ decimals: felt
 ```
 
 #### totalSupply
-返回存在的令牌数量。
+返回存在的代币数量。
 
 参数：无。
 
-返回值：令牌数量。
+返回值：代币数量。
 ```
 totalSupply: Uint256
 ```
@@ -282,7 +282,7 @@ remaining: Uint256
 ```
 
 #### transfer
-将数量令牌从调用者的账户转移到接收者的账户。它返回一个表示是否成功的布尔值1。
+将数量代币从调用者的账户转移到接收者的账户。它返回一个表示是否成功的布尔值1。
 
 发出一个*Transfer*事件。
 
@@ -293,7 +293,7 @@ amount: Uint256
 ```
 
 #### transferFrom
-使用津贴机制将数量令牌从发送者移动到接收者。然后从调用者的津贴中扣除数量。返回1表示成功。
+使用津贴机制将数量代币从发送者移动到接收者。然后从调用者的津贴中扣除数量。返回1表示成功。
 
 发出一个*Transfer*事件。
 
@@ -309,7 +309,7 @@ success: felt
 ```
 
 #### approve
-设置spender的津贴为caller的令牌数量。它返回一个布尔值1，表示是否成功。
+设置spender的津贴为caller的代币数量。它返回一个布尔值1，表示是否成功。
 
 发出一个*Approval*事件。
 

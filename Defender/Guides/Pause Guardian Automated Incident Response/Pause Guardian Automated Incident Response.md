@@ -102,7 +102,7 @@ async function handler(event) {
 ## 创建Sentinel以触发Autotask
 Sentinel可以监视各种合约条件，并在触发时发送通知或触发Autotask。
 
-运行$ npm run sentinel创建一个Sentinel，如果检测到高交易量的令牌转移，则触发Autotask：
+运行$ npm run sentinel创建一个Sentinel，如果检测到高交易量的代币转移，则触发Autotask：
 ```
     eventConditions: [
       {

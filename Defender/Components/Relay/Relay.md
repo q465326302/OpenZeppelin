@@ -366,7 +366,7 @@ Defender Relayer s是通用的Relayer s，您可以使用它们将任何交易�
 您可以通过在Relayer 页面上点击“提取资金”来从Relayer 中提取资金。
 ![relay-4.png](img/Relay-4.png)
 
-在提取资金屏幕上，您可以选择以ETH发送资金或从内置的ERC20令牌列表中选择。
+在提取资金屏幕上，您可以选择以ETH发送资金或从内置的ERC20代币列表中选择。
 ![relay-5.png](img/Relay-5.png)
 
 ## Under the hood

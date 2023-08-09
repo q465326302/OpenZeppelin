@@ -913,7 +913,7 @@ EIP712DomainChanged()
 
 #### clock() → uint48
 公开#
-如果令牌没有实施EIP-6372，则根据EIP-6372中指定的方式设置时钟。如果令牌没有实施EIP-6372，则回退到区块号。
+如果代币没有实施EIP-6372，则根据EIP-6372中指定的方式设置时钟。如果代币没有实施EIP-6372，则回退到区块号。
 
 #### CLOCK_MODE() → string
 公开#
@@ -1469,7 +1469,7 @@ import "@openzeppelin/contracts/governance/compatibility/GovernorCompatibilityBr
 ```
 GovernorBravo是一种*Governor*的兼容性层，它在Governor之上实现GovernorBravo的兼容性。
 
-该兼容性层包括一个投票系统，并通过继承要求添加一个兼容*IGovernorTimelock*的模块。它不包括令牌绑定，也不包括任何变量升级模式。
+该兼容性层包括一个投票系统，并通过继承要求添加一个兼容*IGovernorTimelock*的模块。它不包括代币绑定，也不包括任何变量升级模式。
 
 在使用此模块时，您可能需要启用Solidity优化器，以避免达到合约大小限制。
 

@@ -1,8 +1,8 @@
 # ERC 20
-这组接口、合约和工具都与[ERC20令牌标准](https://eips.ethereum.org/EIPS/eip-20)相关。
+这组接口、合约和工具都与[ERC20代币标准](https://eips.ethereum.org/EIPS/eip-20)相关。
 
 > TIP
-要了解ERC20令牌的概述并了解如何创建令牌合约，请阅读我们的*ERC20指南*。
+要了解ERC20代币的概述并了解如何创建代币合约，请阅读我们的*ERC20指南*。
 
 
 有几个核心合约实现了EIP中指定的行为：
@@ -15,11 +15,11 @@
 
 此外，还有多个自定义扩展，包括：
 
-* 指定可以创建令牌供应的地址（*ERC20Mintable*），可选的最大上限（*ERC20Capped*）
+* 指定可以创建代币供应的地址（*ERC20Mintable*），可选的最大上限（*ERC20Capped*）
 
-* 销毁自己的令牌（*ERC20Burnable*）
+* 销毁自己的代币（*ERC20Burnable*）
 
-* 指定可以暂停所有用户的令牌操作的地址（*ERC20Pausable*）。
+* 指定可以暂停所有用户的代币操作的地址（*ERC20Pausable*）。
 
 最后，还有一些与ERC20合约进行各种交互的实用工具。
 
@@ -77,7 +77,7 @@ Approval(owner, spender, value)
 
 #### approve(address spender, uint256 amount) → bool
 外部#
-将金额设置为调用者令牌上支出者的津贴。
+将金额设置为调用者代币上支出者的津贴。
 
 返回一个布尔值，指示操作是否成功。
 
@@ -88,7 +88,7 @@ Approval(owner, spender, value)
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
 外部#
-使用授权机制将数量令牌从发送者移动到接收者。然后从调用者的授权中扣除数量。
+使用授权机制将数量代币从发送者移动到接收者。然后从调用者的授权中扣除数量。
 
 返回一个布尔值，指示操作是否成功。
 
@@ -194,7 +194,7 @@ Approval(owner, spender, value)
 
 发出一个*Approval*事件，表示更新的授权额度。这不是EIP所要求的。请参阅*ERC20*开头的注释；
 
-要求：- 发送者和接收者不能是零地址。- 发送者必须至少拥有amount数量的余额。- 调用者必须至少拥有发送者的令牌的amount数量的授权额度。
+要求：- 发送者和接收者不能是零地址。- 发送者必须至少拥有amount数量的余额。- 调用者必须至少拥有发送者的代币的amount数量的授权额度。
 
 #### increaseAllowance(address spender, uint256 addedValue) → bool
 公开#
@@ -221,9 +221,9 @@ Approval(owner, spender, value)
 
 #### _transfer(address sender, address recipient, uint256 amount)
 内部#
-将令牌数量从发送者转移到接收者。
+将代币数量从发送者转移到接收者。
 
-这是一个内部函数，相当于*转账*，可以用于实现自动令牌费用、减持机制等。
+这是一个内部函数，相当于*转账*，可以用于实现自动代币费用、减持机制等。
 
 触发一个*转账*事件。
 
@@ -313,11 +313,11 @@ Approval(owner, spender, value)
 
 #### name() → string
 公开#
-返回令牌的名称。
+返回代币的名称。
 
 #### symbol() → string
 公开#
-返回令牌的符号，通常是名称的缩写版本。
+返回代币的符号，通常是名称的缩写版本。
 
 #### decimals() → uint8
 公开#
@@ -639,7 +639,7 @@ Approval(owner, spender, value)
 
 #### cap() → uint256
 公开#
-返回令牌总供应量的上限。
+返回代币总供应量的上限。
 
 #### _mint(address account, uint256 value)
 内部#
@@ -681,9 +681,9 @@ safeDecreaseAllowance(token, spender, value)
 内部#
 
 ### TokenTimelock
-一个令牌持有者合约，允许受益人在给定的释放时间后提取令牌。
+一个代币持有者合约，允许受益人在给定的释放时间后提取代币。
 
-适用于简单的解锁计划，例如“顾问在1年后获得所有令牌”。
+适用于简单的解锁计划，例如“顾问在1年后获得所有代币”。
 
 对于更完整的解锁计划，请参阅*TokenVesting*。
 

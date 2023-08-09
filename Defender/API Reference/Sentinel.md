@@ -1,7 +1,7 @@
 # Sentinel API Referencev
 Sentinel API允许您以编程方式创建和管理Sentinels。
 
-请求需要使用从Team API Key协商的令牌进行身份验证，该令牌具有相应的功能。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
+请求需要使用从Team API Key协商的代币进行身份验证，该代币具有相应的功能。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
 我们建议您使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包简化与Sentinel API的交互。
