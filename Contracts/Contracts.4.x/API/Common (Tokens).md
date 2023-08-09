@@ -16,7 +16,7 @@ import“@openzeppelin/contracts/token/common/ERC2981.sol”;
 
 版税被指定为销售价格的一部分。 *_feeDenominator*是可重写的，但默认为10000，这意味着默认情况下以基点指定费用。
 
->IMPORTANT
+> IMPORTANT
 ERC-2981仅指定了一种信号版税信息的方式，不强制执行其支付。请参见EIP中的*Rationale*。市场预计将与销售一起自愿支付版税，但请注意，此标准尚未得到广泛支持。
 
 *自v4.5起可用。*

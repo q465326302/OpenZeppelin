@@ -1,34 +1,34 @@
 # How to set up on-chain governance
-在本指南中，我们将学习OpenZeppelin的Governor合约如何工作，如何设置它，并使用Ethers.js和Tally提供的工具创建提案、投票并执行它们。
+在本指南中，我们将学习OpenZeppelin的Governor合约的工作原理，如何设置它，并使用Ethers.js和Tally提供的工具创建提案、投票并执行提案。
 
 > NOTE
-在*Governance API*中找到详细的合约文档。
+在[Governance API](../API/Governance.md)中找到详细的合约文档。
 
 ## 介绍
-分散式协议在公开发布后不断发展。通常，初始团队在最初的阶段保留对这种演变的控制权，但最终将其委托给利益相关者社区。这个社区做出决策的过程称为链上治理，它已成为分散式协议的核心组件，推动各种决策，例如参数调整、智能合约升级、与其他协议的集成、财务管理、赠款等。
+去中心化协议在公开发布后不断发展。通常，初始团队在最初的阶段保留对这种发展的控制权，但最终将其委托给利益相关者社区。这个社区做出决策的过程称为链上治理，它已成为去中心化协议的核心组件，推动各种决策，例如参数调整、智能合约升级、与其他协议的集成、财务管理、赠款等。
 
-这个治理协议通常在一个特殊用途的合约中实现，称为“Governor”。Compound设计的GovernorAlpha和GovernorBravo合约迄今为止非常成功和受欢迎，但缺点是具有不同要求的项目必须分叉代码，以定制它们的需求，这可能会带来引入安全问题的高风险。对于OpenZeppelin Contracts，我们着手建立了一套模块化的Governor合约系统，因此不需要分叉，并且可以通过使用Solidity继承编写小模块来适应不同的要求。您会在OpenZeppelin Contracts中找到最常见的要求，但编写其他要求很简单，我们在未来的发布版本中将根据社区的要求添加新功能。此外，OpenZeppelin Governor的设计要求最小化存储的使用，并导致更高的燃气效率运行。
+这个治理协议通常在一个特殊用途的合约中实现，称为“Governor”。Compound设计的GovernorAlpha和GovernorBravo合约迄今为止非常成功和受欢迎，但缺点是具有不同要求的项目必须分叉代码，以定制它们的需求，这可能会带来引入高风险的安全问题。对于OpenZeppelin Contracts，我们着手建立了一套模块化的Governor合约系统，以避免分叉，并且可以通过使用Solidity继承编写小模块来适应不同的需求。您会在OpenZeppelin Contracts中找到最常见的要求，但编写其他要求很简单，并且我们将根据社区的要求在未来的版本中添加新功能。此外，OpenZeppelin Governor的设计要求最小化存储的使用，并且在操作上更加高效。
 
 ## 兼容性
-OpenZeppelin的Governor系统考虑了与基于Compound的GovernorAlpha和GovernorBravo的现有系统的兼容性。因此，您会发现许多模块都有两个变体之一，其中一个是为与这些系统兼容而构建的。
+OpenZeppelin的Governor系统在设计时考虑了与基于Compound的GovernorAlpha和GovernorBravo的现有系统的兼容性。因此，您会发现许多模块都有两个变体之一，其中一个是为与这些系统兼容而构建的。
 
 ### ERC20Votes和ERC20VotesComp
 跟踪投票和投票委托的ERC20扩展就是这样一个例子。较短的版本是更通用的版本，因为它可以支持大于2^96的代币供应，而“Comp”变体在这方面受到限制，但正好符合GovernorAlpha和Bravo使用的COMP代币的接口。两个合约变体共享相同的事件，因此仅查看事件时它们是完全兼容的。
 
 ### Governor和GovernorCompatibilityBravo
-默认情况下，OpenZeppelin Governor合约与Compound的GovernorAlpha或Bravo不兼容。即使事件完全兼容，提案生命周期函数（创建、执行等）具有不同的签名，旨在优化存储使用。GovernorAlpha和Bravo的其他函数也不可用。可以选择继承GovernorCompatibilityBravo模块以获得更高级别的兼容性，该模块重写提案生命周期函数，例如提出和执行。
+默认情况下，OpenZeppelin Governor合约与Compound的GovernorAlpha或Bravo不兼容。即使事件完全兼容，提案生命周期函数（创建、执行等）具有不同的签名，这些签名旨在优化存储使用。GovernorAlpha和Bravo的其他函数也不可用。可以选择继承GovernorCompatibilityBravo模块以获得更高级别的兼容性，该模块包括诸如重写提案和执行等提案生命周期函数。
 
-请注意，即使使用此模块，`proposalId`的计算方式仍将有所不同。Governor使用提案参数的哈希，目的是通过事件索引将其数据保持在链外，而原始的Bravo实现使用顺序`proposalId`。由于这个和其他差异，GovernorBravo的几个函数不包括在兼容性模块中。
+请注意，即使使用此模块，`proposalId`的计算方式仍将有所不同。Governor使用提案参数的哈希，目的是通过事件索引将其数据保持在链下，而原始的Bravo实现使用顺序`proposalId`。由于这个和其他差异，GovernorBravo的几个函数不包括在兼容性模块中。
 
 ### GovernorTimelockControl和GovernorTimelockCompound
 在使用Governor合约的timelock时，您可以使用OpenZeppelin的TimelockController或Compound的Timelock。根据timelock的选择，您应选择相应的Governor模块：GovernorTimelockControl或GovernorTimelockCompound。这允许您将现有的GovernorAlpha实例迁移到基于OpenZeppelin的Governor，而无需更改使用的timelock。
 
 ### 计数
-Tally是一个完整的用户拥有的链上治理应用程序。它包括投票仪表板、提案创建向导、实时研究和分析以及教育内容。
+Tally是一个完整的用户使用的链上治理应用程序。它包括投票仪表板、提案创建向导、实时研究和分析以及教学内容。
 
-对于所有这些选项，Governor将与Tally兼容：用户将能够创建提案、可视化投票权力和倡导者、浏览提案并投票。特别是对于提案创建，项目还可以使用Defender Admin作为替代接口。
+对于所有这些选项，Governor将与Tally兼容：用户将能够创建提案、可视化投票权力和支持者、浏览提案并投票。特别是对于提案创建，项目还可以使用Defender Admin作为替代接口。
 
-在本指南的其余部分，我们将专注于部署基本的OpenZeppelin Governor功能，而不考虑与GovernorAlpha或Bravo的兼容性。
+在本指南的其余部分，我们将重点介绍部署基本的OpenZeppelin Governor功能，而不考虑与GovernorAlpha或Bravo的兼容性。
 
 ## 设置
 
@@ -62,7 +62,7 @@ contract MyToken is ERC20, ERC20Permit, ERC20Votes {
 }
 ```
 
-如果您的项目已经有一个活跃的代币，但不包括ERC20Votes且不可升级，您可以使用ERC20Wrapper将其包装成一个治理代币。这将允许代币持有人通过1对1包装他们的代币来参与治理。
+如果您的项目已经有一个活跃的代币，但不包括ERC20Votes且不可升级，您可以使用ERC20Wrapper将其包装成一个治理代币。这将允许代币持有人通过1对1的方式参与治理。
 
 ```
 // SPDX-License-Identifier: MIT
@@ -99,29 +99,29 @@ contract MyTokenWrapped is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
 ```
 
 > NOTE
-目前在OpenZeppelin Contracts中唯一可用的投票权力来源是*ERC721Votes*。不提供此功能的ERC721代币可以使用*ERC721Votes*和*ERC721Wrapper*的组合将其包装成投票代币。
+目前在OpenZeppelin Contracts中唯一可用的投票权力来源是[ERC721Votes](../API/ERC721.md)。不提供此功能的ERC721代币可以使用[ERC721Votes](../API/ERC721.md)和[ERC721Wrapper](../API/Governance.md)的组合将其包装成投票代币。
 
 > NOTE
-代币用于存储投票余额的内部时钟将决定附加到其上的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以重写IERC6372时钟，改用时间戳而不是块号。
+代币用于存储投票余额的内部时钟将决定与其关联的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以重写IERC6372时钟，改用时间戳而不是区块号。
 
 ### Governor
-首先，我们将构建一个没有时间锁定的Governor。Governor合约提供了核心逻辑，但我们仍需要选择：1）如何确定投票权力，2）需要多少票才能达成法定人数，3）人们在投票时有哪些选项以及如何计算这些选票，以及4）应使用哪种类型的代币进行投票。每个方面都可以通过编写自己的模块来自定义，或者更轻松地从OpenZeppelin Contracts中选择一个模块。
+首先，我们将构建一个没有时间锁定的Governor。Governor合约提供了核心逻辑，但我们仍需要选择：1）如何确定投票权力，2）需要多少票才能达成法定人数，3）人们在投票时有哪些选项以及如何计算这些选票，以及4）应使用哪种类型的代币进行投票。您可以通过编写自己的模块来自定义这些方面，或者更轻松地从OpenZeppelin Contracts中选择一个模块。
 
-对于1），我们将使用GovernorVotes模块，它钩入IVotes实例，根据在提案变为活动状态时持有的代币余额确定账户的投票权。该模块需要代币的地址作为构造函数参数。该模块还发现代币使用的时钟模式（ERC6372），并将其应用于Governor。
+对于1），我们将使用GovernorVotes模块，该模块连接到一个IVotes实例，根据账户在提案激活时持有的代币余额来确定其投票权力。该模块需要代币的地址作为构造函数参数。该模块还发现代币使用的时钟模式（ERC6372），并将其应用于Governor。
 
 对于2），我们将使用GovernorVotesQuorumFraction，它与ERC20Votes一起工作，将法定人数定义为在提案的投票权力被检索时总供应量的一定比例。这需要一个构造函数参数来设置百分比。现在大多数Governors使用4％，因此我们将使用参数4来初始化该模块（这表示百分比，结果为4％）。
 
-对于3），我们将使用GovernorCountingSimple，这是一个提供3个选项给选民的模块：赞成、反对和弃权，只有赞成和弃权的票数会计入法定人数。
+对于3），我们将使用GovernorCountingSimple，这是一个模块，为选民提供了3个选项：赞成、反对和弃权，只有赞成和弃权的票数会计入法定人数。
 
-除了这些模块，Governor本身还有一些必须设置的参数。
+除了这些模块，Governor本身还有一些参数需要设置。
 
 votingDelay：在提案创建后多长时间应该固定投票权力。较长的投票延迟时间可以给用户留出时间，以便必要时解除质押代币。
 
-votingPeriod：提案保持开放以接受投票的时间有多长。
+votingPeriod：提案保持开放接受投票的时间有多长。
 
-这些参数在代币时钟定义的单位中指定。假设代币使用块号，并假设块时间约为12秒，则我们将设置votingDelay = 1天= 7200个块，votingPeriod = 1周= 50400个块。
+这些参数在代币时钟定义的单位中指定。假设代币使用区块号，并假设块时间约为12秒，则我们将设置votingDelay = 1天= 7200个区块，votingPeriod = 1周= 50400个区块。
 
-我们还可以选择设置提案门槛。这将限制提案创建仅限于拥有足够投票权的账户。
+我们还可以选择设置提案门槛。这将限制只有具有足够投票权的账户才能创建提案。
 
 ```
 // SPDX-License-Identifier: MIT
@@ -218,7 +218,7 @@ contract MyGovernor is
 
 在治理决策中添加时间锁是一个好的实践。这使得用户在执行决策之前，如果不同意该决策，可以退出系统。我们将使用OpenZeppelin的TimelockController与GovernorTimelockControl模块结合使用。
 
->IMPORTANT
+> IMPORTANT
 在使用时间锁时，应该是时间锁执行提案，因此时间锁应该持有任何资金、所有权和访问控制角色。在版本4.5之前，当使用时间锁时，在Governor合约中无法恢复资金！在版本4.3之前，当使用Compound Timelock时，时间锁中的ETH不容易被访问。
 
 TimelockController使用了AccessControl设置，我们需要了解它以设置角色。

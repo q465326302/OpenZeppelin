@@ -73,7 +73,7 @@ Approval(owner, spender, value)
 外部#
 将金额设置为调用者代币的支出。
 返回一个布尔值，指示操作是否成功。
->IMPORTANT
+> IMPORTANT
 请注意，使用此方法更改津贴存在的风险，因为某些人可能会通过不幸的交易顺序同时使用旧的和新的津贴。解决这种竞争条件的一种可能的方法是先将支出者的津贴减少到0，然后再设置所需的值：https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
 发出一个*Approval*事件。
@@ -427,7 +427,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 ```
 具有可暂停代币转移、铸造和销毁的ERC20代币。
 适用于防止交易直到评估期结束或在出现大规模漏洞时有一个紧急开关以冻结所有代币转移的情况等场景。
->IMPORTANT
+> IMPORTANT
 此合约不包括公共暂停和取消暂停函数。除了继承此合约外，您还必须定义这两个函数，并使用适当的访问控制（例如使用*AccessControl*或*Ownable*）调用*Pausable._pause*和*Pausable._unpause*内部函数。否则，合约将无法暂停。
 
 **FUNCTIONS**

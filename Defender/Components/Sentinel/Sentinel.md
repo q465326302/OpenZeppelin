@@ -22,7 +22,7 @@ FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合
 ## 合约Sentinels中有什么？
 合约Sentinels会监视与您选择的地址相关的交易，通过您指定的任何条件过滤这些交易，然后在这些交易发生时通知您。
 
->IMPORTANT
+> IMPORTANT
 目前，Sentinels 在除 Fantom 之外的所有网络上都得到支持。此外，Sentinels只能在Mainnet、Ropsten和Kovan上监视内部函数调用。如果内部调用发出事件，请考虑监视该事件，因为从内部调用发出的事件可以在所有支持的网络上检测到。
 
 ### 指定地址
@@ -55,7 +55,7 @@ FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合
 > NOTE
 如果未指定任何事件或函数，则Sentinel将监视所有发送到或从您监视的地址的交易。
 
->IMPORTANT
+> IMPORTANT
 Sentinel无缝支持所有网络上由智能合约发出的事件的通知，无论是是直接触发还是通过第三方合约的内部调用触发。然而，目前仅限于以太坊主网才能跟踪和提供针对合约内部函数调用的特定通知能力。
 
 ### Hedera支持
@@ -122,7 +122,7 @@ Forta Sentinel可以根据Bot IDs或Addresses进行过滤，并要求至少设�
 * 包括基本数学运算符：+、-、*、/、^
 
 ## 交易条件
->IMPORTANT
+> IMPORTANT
 如果指定了交易条件，则必须满足该条件才能触发通知。
 
 交易条件可以引用以下属性：
@@ -232,7 +232,7 @@ $1 == "hello"
 ### 响应模式（Response Schema）
 Autotask必须返回一个包含所有匹配项的结构。返回一个空对象表示没有匹配发生。此对象的类型为SentinelConditionResponse。
 
->IMPORTANT
+> IMPORTANT
 错误将被视为不匹配。所有执行可以在Autotask的运行页面中找到。
 
 ```
@@ -561,7 +561,7 @@ curl https://api.telegram.org/bot$BOT_TOKEN/getUpdates
 ### Autotask
 如果选择自动任务，则自动任务将接收一个包含触发事件的详细信息的body属性，可以是触发交易的交易详细信息或触发警报的Forta警报详细信息。自动任务可以执行自定义逻辑并根据需要访问外部API。
 
->IMPORTANT
+> IMPORTANT
 自动任务执行受配额限制。配额用尽后，自动任务将不再执行。如果您需要提高自动任务执行配额，请发送电子邮件至defender@openzeppelin.com，并描述您的用例。
 
 ## Autotask事件
