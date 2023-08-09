@@ -5,7 +5,7 @@ OpenZeppelin Contracts提供了许多与ERC20相关的合约。在[API参考](..
 
 ## 构建ERC20代币合约
 
-使用Contracts，我们可以轻松创建自己的ERC20代币合约，用于跟踪一个假想游戏中的内部货币Gold（GLD）。
+使用Contracts，我们可以轻松创建自己的ERC20代币合约，用于跟踪一个假想项目中的内部货币Gold（GLD）。
 
 以下是我们的GLD代币的样子。
 ```

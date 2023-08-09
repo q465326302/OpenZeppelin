@@ -19,7 +19,7 @@
 
 * Consensys的[最佳实践](https://consensys.github.io/smart-contract-best-practices/)非常广泛，包括可供学习的[已证实模式](https://consensys.github.io/smart-contract-best-practices/development-recommendations/)和应避免的[已知陷阱](https://consensys.github.io/smart-contract-best-practices/attacks/)。
 
-* 基于Web的[Ethernaut](https://ethernaut.openzeppelin.com/)游戏将让您在逐步提高难度的级别中寻找智能合约中微妙的漏洞。
+* 基于Web的[Ethernaut](https://ethernaut.openzeppelin.com/)项目将让您在逐步提高难度的级别中寻找智能合约中微妙的漏洞。
 
 有了这些基础知识，让我们开始吧！
 
