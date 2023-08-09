@@ -7,6 +7,7 @@ OpenZeppelin提供了*CrossChainEnabled*抽象合约，其中包括专用的内�
 
 ## 起点，我们的ERC20合约
 让我们从一个小的ERC20合约开始，我们使用[OpenZeppelin Contracts Wizard](https://wizard.openzeppelin.com/)引导并扩展了一个具有铸造能力的所有者。请注意，出于演示目的，我们没有使用内置的Ownable合约。
+
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
