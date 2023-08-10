@@ -4,9 +4,9 @@ OpenZeppelin Contracts提供了许多实用工具，您可以在项目中使用�
 ## Cryptography
 
 ### 在链上检查签名
-[ECDSA](./API/Utils.md)提供了用于复原和管理以太坊账户ECDSA签名的函数。这些签名通常是通过[web3.eth.sign](https://web3js.readthedocs.io/en/v1.7.3/web3-eth.html#sign)生成的，是一个65字节的数组（在Solidity中是bytes类型），排列方式如下：[[v(1)],[r(32)],[s(32)]]。
+[ECDSA](./API/Utils.md#ecdsa)提供了用于复原和管理以太坊账户ECDSA签名的函数。这些签名通常是通过[web3.eth.sign](https://web3js.readthedocs.io/en/v1.7.3/web3-eth.html#sign)生成的，是一个65字节的数组（在Solidity中是bytes类型），排列方式如下：[[v(1)],[r(32)],[s(32)]]。
 
-数据签名者可以通过[ECDSA.recover](./API/Utils.md)复原，并将其地址与签名进行比较以验证签名。大多数钱包会对要签名的数据进行哈希处理，并添加前缀'\x19Ethereum Signed Message:\n'，因此在尝试复原以太坊签名消息哈希的签名者时，您需要使用[toEthSignedMessageHash](./API/Utils.md)。
+数据签名者可以通过[ECDSA.recover](./API/Utils.md#recoverbytes32-hash-bytes-signature-→-address)复原，并将其地址与签名进行比较以验证签名。大多数钱包会对要签名的数据进行哈希处理，并添加前缀'\x19Ethereum Signed Message:\n'，因此在尝试复原以太坊签名消息哈希的签名者时，您需要使用[toEthSignedMessageHash](./API/Utils.md#toethsignedmessagehashbytes32-hash-→-bytes32-message)。
 ```
 using ECDSA for bytes32;
 
@@ -18,7 +18,7 @@ function _verify(bytes32 data, bytes memory signature, address account) internal
 ```
 
 > WARNING
-正确验证签名不容易：确保您完全阅读并理解 [ECDSA](./API/Utils.md) 的文档。
+正确验证签名不容易：确保您完全阅读并理解 [ECDSA](./API/Utils.md#ecdsa) 的文档。
 
 ### 验证 Merkle 证明
 [MerkleProof](./API/Utils.md#merkleproof) 提供了：
@@ -63,10 +63,10 @@ contract MyContract {
 }
 ```
 
-## 数学
+## Math
 OpenZeppelin Contracts提供的最受欢迎的与数学相关的库是[SafeMath](./API/Utils.md#safemath)，它提供了数学函数，保护您的合约免受溢出和下溢的影响。
 
-使用SafeMath for uint256; 包含具有函数调用：
+使用SafeMath for uint256;将合约包含进来，然后调用函数：
 
 * myNumber.add(otherNumber)
 * myNumber.sub(otherNumber)
@@ -75,27 +75,27 @@ OpenZeppelin Contracts提供的最受欢迎的与数学相关的库是[SafeMath]
 * myNumber.mod(otherNumber)
 很容易！
 
-## 支付
+## Payment
 
-想要在多个人之间分配一些付款吗？也许您有一个应用程序，可以将艺术品购买的30％发送给原始创建者，并将70％的利润发送给当前所有者。您可以使用*PaymentSplitter*构建它！
+想要将一些代币支付分配给多个人吗？也许您有一个应用程序，可以将艺术品收益的30％发送给原始创建者，再将70％的收益发送给当前所有者。您可以使用[PaymentSplitter](./API/Finance.md#paymentsplitter)构建它！
 
-在Solidity中，盲目向帐户发送资金存在一些安全问题，因为它允许它们执行任意代码。您可以在[以太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。解决重入和停顿问题的一种方法是，而不是立即向需要资金的帐户发送以太币，您可以使用*PullPayment*，它提供了一个*_asyncTransfer*函数，用于向某个东西发送资金并请求他们稍后将其*withdrawPayments()*。
+在Solidity中，盲目向帐户发送资金会存在一些安全问题。您可以在[以太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。修复重入和停滞问题的一种方法是，不立即将以太币发送到需要的账户，而是使用[PullPayment](./API/Security.md#pullpayment)，提供一个[_asyncTransfer](./API/Security.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送给某个地址，并请求稍后通过[withdrawPayments()](./API/Security.md#withdrawpaymentsaddress-payable-payee)来提取。
 
-如果您想托管一些资金，请查看*Escrow*和*ConditionalEscrow*，以管理一些托管以太币的释放。
+如果您想托管一些资金，请查看[Escrow](./API/Utils.md#escrow)和[ConditionalEscrow](./API/Utils.md#conditionalescrow)，用于管理托管的以太币。
 
-## 收集品
+## Collections
 
-如果您需要比Solidity的本地数组和映射更强大的收集支持，请查看*EnumerableSet*和*EnumerableMap*。它们类似于映射，因为它们以恒定的时间存储和删除元素，并且不允许重复条目，但是它们还支持枚举，这意味着您可以轻松地查询所有存储的条目，无论在链上还是链下。
+如果您需要比Solidity的原生数组和映射更强大的集合支持，请查看[EnumerableSet](./API/Utils.md#enumerableset)和[EnumerableMap](./API/Utils.md#enumerablemap)。它们类似于映射，它们以规定的时间存储和删除元素，且不允许重复条目，但还支持枚举，这意味着您可以轻松地在链上和链下查询所有存储的条目。
 
-## 杂项
-想要检查地址是否是合约吗？使用*Address*和*Address.isContract()*。
+## Misc
+想要检查地址是否是合约吗？使用[Address](./API/Utils.md#address)和[Address.isContract()](./API/Utils.md#iscontractaddress-account-→-bool)。
 
-想要跟踪一些数字，每次需要另一个数字时增加1吗？请查看*Counters*。这对于许多事情都很有用，例如创建递增标识符，如*ERC721指南*所示。
+想要跟踪递增的数字吗？请查看[Counters](./API/Utils.md#counters)。这经常用得上，例如创建递增标识符，如[ERC721指南](./Tokens/ERC721.md)所示。
 
 ### Base64
-*Base64* util允许您将bytes32数据转换为其Base64字符串表示形式。
+[Base64](./API/Utils.md#base64)工具允许您将bytes32数据转换为其Base64字符串表示形式。
 
-这对于构建适用于*ERC721*或*ERC1155*的URL安全的tokenURI特别有用。此库提供了一种聪明的方式，以提供符合URL[安全数据URI](https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URIs/)标准的字符串，以便在链上数据结构中使用。
+这对于构建URL安全的[ERC721](./API/ERC721.md#ierc721enumerable)或[ERC1155](./API/ERC1155.md#uriuint256-id-→-string)的tokenURI特别有用。该库提供了一种巧妙的方式，提供符合[安全数据的URI](https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URIs/)字符串，在链上数据结构中使用。
 
 以下是使用ERC721通过Base64数据URI发送JSON元数据的示例：
 ```
@@ -137,7 +137,7 @@ contract My721Token is ERC721 {
 ```
 
 ### Multicall
-Multicall抽象合约带有一个multicall函数，它将多个调用捆绑在单个外部调用中。使用它，外部账户可以执行由多个函数调用组成的原子操作。这不仅对EOA在单个交易中进行多个调用很有用，而且还是在后续调用失败时回滚先前调用的一种方式。
+Multicall抽象合约有一个multicall函数，它将多个调用捆绑在单个外部调用中。使用它，外部账户可以执行由多个函数调用组成的原子操作。这不仅在EOA在单个交易中进行多个调用很有用，而且还是后续调用失败时回滚之前调用的一种方式。
 
 考虑这个虚拟合约：
 ```
@@ -157,7 +157,8 @@ contract Box is Multicall {
     }
 }
 ```
-这是如何使用Truffle调用multicall函数，允许在单个交易中调用foo和bar：
+
+这是使用Truffle调用multicall函数，允许在单个交易中调用foo和bar：
 ```
 // scripts/foobar.js
 
