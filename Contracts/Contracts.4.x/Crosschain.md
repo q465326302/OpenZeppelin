@@ -71,11 +71,11 @@ contract MyToken is Initializable, ERC20Upgradeable, UUPSUpgradeable {
 这个改变将有效地限制铸造和升级操作只能由远程链上的所有者执行。
 
 ## 针对特定链的专门化
-一旦我们的抽象跨链版本的代币准备就绪，我们就可以轻松地为我们想要的链或更准确地说是为我们想要依赖的桥梁系统专门化它。
+一旦我们的抽象跨链版本的代币准备就绪，我们就可以轻松地为我们想要的链或更准确地说是为我们想要依赖的桥接系统专门化它。
 
 这是使用CrossChainEnabled实现之一来完成的。
 
-例如，如果我们的代币在xDai上，我们的治理合约在主网上，我们可以在xDai上使用可用的[AMB](https://docs.tokenbridge.net/amb-bridge/about-amb-bridge)桥梁，地址为[0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59](https://blockscout.com/xdai/mainnet/address/0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59)。
+例如，如果我们的代币在xDai上，我们的治理合约在主网上，我们可以在xDai上使用可用的[AMB](https://docs.tokenbridge.net/amb-bridge/about-amb-bridge)桥接，地址为[0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59](https://blockscout.com/xdai/mainnet/address/0x75Df5AF045d91108662D8080fD1FEFAd6aA0bb59)。
 
 ```
 [...]
@@ -88,7 +88,7 @@ contract MyTokenXDAI is
 {}
 ```
 
-如果代币在以太坊主网上，而我们的治理合约在Optimism上，我们将使用在主网上可用的[Optimism CrossDomainMessenger](https://community.optimism.io/docs/protocol/protocol-2.0/#l1crossdomainmessenger)，地址为[0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1](https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)。
+如果代币在以太坊主网上，而我们的治理合约在Optimism上，我们将在主网上使用可用的[Optimism CrossDomainMessenger](https://community.optimism.io/docs/protocol/protocol-2.0/#l1crossdomainmessenger)，地址为[0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1](https://etherscan.io/address/0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1)。
 
 ```
 [...]
@@ -105,17 +105,17 @@ contract MyTokenOptimism is
 
 在设计具有跨链支持的合约时，了解可能的回退和正在进行的安全假设非常重要。
 
-在本指南中，我们特别关注限制对特定调用者的访问。通常使用msg.sender或_msgSender()来实现（如上所示）。然而，在进行跨链操作时，这并不是那么简单。即使不考虑可能存在的桥梁问题，重要的是要记住，在考虑多链空间时，同一地址可以对应于非常不同的实体。EOA钱包只有在钱包的私钥签署交易时才能执行操作。据我们所知，这在所有EVM链中都是这样的，因此来自这样的钱包的跨链消息与同一钱包的非跨链消息可能是等效的。然而，对于智能合约来说，情况则非常不同。
+在本指南中，我们特别关注限制对特定调用者的访问。通常使用msg.sender或_msgSender()来实现（如上所示）。然而，在进行跨链操作时，情况并不仅仅是这样。即使不考虑可能存在的桥接问题，重要的是要记住，在考虑多链空间时，同一地址能对应于完全不同的实体。EOA钱包只能在钱包的私钥签署交易时执行操作。据我们所知，这在所有EVM链中都是这样的，因此来自此类钱包的跨链消息和非跨链消息等效。然而，对于智能合约来说，情况完全不同。
 
-由于智能合约地址的计算方式以及不同链上的智能合约独立运行，你可以在不同链上的相同地址上拥有两个非常不同的合约。你可以想象两个使用不同签名者的多重签名钱包在不同链上使用相同的地址。你也可以看到一个非常基本的智能钱包在一个链上与另一个链上的一个完整的管理者在相同的地址上运行。因此，你应该小心，每当你授予特定地址许可权时，你要控制该地址可以从哪个链执行操作。
+由于智能合约地址的计算方式和不同链上的智能合约独立运行，你可以在不同链上的相同地址上拥有两个完全不同的合约。你可以两个使用不同签署者的多重签名钱包在不同链上使用相同的地址。也可以在一个链上与治理者相同的地址上使用一个非常基本的智能钱包。因此，你应该小心，每当你授予特定地址许可权时，你要控制该特定地址可以在哪个链执行操作。
 
 ## 进一步控制访问
 
-在前面的例子中，我们既有onlyOwner()修饰符，也有onlyCrossChainSender(owner)机制。我们没有使用*Ownable*模式，因为它包含的所有权转移机制并不是为所有者是跨链实体而设计的。与*Ownable*不同，*AccessControl*更有效地捕捉细微差别，并且可以有效地用于构建跨链感知的合约。
+在前面的例子中，我们既有onlyOwner()修饰符，也有onlyCrossChainSender(owner)机制。我们没有使用[Ownable](./Access%20Control.md)模式，因为其中包含的所有权转移机制不适用于所有者是跨链实体的情况。与[Ownable](./Access%20Control.md)不同，[AccessControl](./Access%20Control.md)在捕捉细微差别方面更有效，并且可以很好的用于构建跨链感知的合约。
 
-使用*AccessControlCrossChain*包括*AccessControl*核心和*CrossChainEnabled*抽象。它还包括一些绑定，使角色管理与跨链操作兼容。
+使用[AccessControlCrossChain](./API/Access.md)包括[AccessControl](./API/Access.md)核心和[CrossChainEnabled](./API/Crosschain.md)抽象。它还包括一些绑定，使角色管理和跨链操作兼容。
 
-在铸造函数的情况下，当调用源自同一链时，调用者必须具有MINTER_ROLE。如果调用者在远程链上，则调用者不应具有MINTER_ROLE，而应该具有“别名”版本（MINTER_ROLE ^ CROSSCHAIN_ALIAS）。这通过严格将来自不同链的本地帐户与远程帐户分开来，缓解了上一节中描述的危险。有关更多详细信息，请参见*AccessControlCrossChain*文档。
+在铸造函数的情况下，当调用源来自同一链时，调用者必须具有MINTER_ROLE。如果调用者不在同一链上，则调用者不应具有MINTER_ROLE，而应该具有“别名”版本（MINTER_ROLE ^ CROSSCHAIN_ALIAS）。通过严格区分来自不同链的本地账户和远程账户来减轻了之前描述的危险。有关更多详细信息，请参见[AccessControlCrossChain](./API/Access.md)文档。
 ```
  import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
  import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";

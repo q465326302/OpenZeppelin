@@ -202,7 +202,7 @@ crossChainSender(bridge)
 
 #### crossChainSender(address bridge) → address
 内部#
-返回通过桥梁触发当前跨链消息的发送者地址。
+返回通过桥接触发当前跨链消息的发送者地址。
 
 > NOTE
 在尝试恢复发送者之前，应该检查*isCrossChain*，因为如果当前函数调用不是跨链消息的结果，它将回滚并出现NotCrossChainCall。
