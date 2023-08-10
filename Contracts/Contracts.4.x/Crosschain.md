@@ -1,11 +1,11 @@
 # Adding cross-chain support to contracts
 如果您的合约用于多链操作使用，您需要特定的工具来识别和处理这些跨链操作。
 
-OpenZeppelin提供了[CrossChainEnabled](./API/Crosschain.md)抽象合约，其中包括专用的内部函数。
+OpenZeppelin提供了[CrossChainEnabled](./API/Crosschain.md#crosschainenabledamb)抽象合约，其中包括专用的内部函数。
 
 在本指南中，我们将通过一个示例用例来介绍如何构建一个可升级和可铸造的ERC20代币，由外部链上的治理合约控制。
 
-## 起点，我们的ERC20合约
+## Starting point, our ERC20 contract
 让我们从一个小的ERC20合约开始，我们使用[OpenZeppelin Contracts Wizard](https://wizard.openzeppelin.com/)引导并通过具有铸造能力的管理者来扩展。请注意，出于演示目的，我们没有使用内置的Ownable合约。
 
 ```
@@ -45,7 +45,7 @@ contract MyToken is Initializable, ERC20Upgradeable, UUPSUpgradeable {
 
 这个代币可以由合约的所有者进行铸造和升级。
 
-## 准备我们的合约进行跨链操作。
+## Preparing our contract for cross-chain operations.
 现在，让我们想象一下，这个合约将在一个链上运行，但我们希望铸造和升级是由另一个链上的[治理合约](./API/Governance.md)执行的。
 
 例如，我们可以在xDai上拥有我们的代币，而我们的治理合约在主网上，或者我们可以在主网上拥有我们的代币，而我们的治理合约在Optimism上。
@@ -70,7 +70,7 @@ contract MyToken is Initializable, ERC20Upgradeable, UUPSUpgradeable {
 
 这个改变将有效地限制铸造和升级操作只能由远程链上的所有者执行。
 
-## 针对特定链的专门化
+## Specializing for a specific chain
 一旦我们的抽象跨链版本的代币准备就绪，我们就可以轻松地为我们想要的链或更准确地说是为我们想要依赖的桥接系统专门化它。
 
 这是使用CrossChainEnabled实现之一来完成的。
@@ -101,7 +101,7 @@ contract MyTokenOptimism is
 {}
 ```
 
-## 混合跨域地址是很危险的
+## Mixing cross domain addresses is dangerous
 
 在设计具有跨链支持的合约时，了解可能的回退和正在进行的安全假设非常重要。
 
@@ -109,9 +109,9 @@ contract MyTokenOptimism is
 
 由于智能合约地址的计算方式和不同链上的智能合约独立运行，你可以在不同链上的相同地址上拥有两个完全不同的合约。你可以两个使用不同签署者的多重签名钱包在不同链上使用相同的地址。也可以在一个链上与治理者相同的地址上使用一个非常基本的智能钱包。因此，你应该小心，每当你授予特定地址许可权时，你要控制该特定地址可以在哪个链执行操作。
 
-## 进一步控制访问
+## Going further with access control
 
-在前面的例子中，我们既有onlyOwner()修饰符，也有onlyCrossChainSender(owner)机制。我们没有使用[Ownable](./Access%20Control.md)模式，因为其中包含的所有权转移机制不适用于所有者是跨链实体的情况。与[Ownable](./Access%20Control.md)不同，[AccessControl](./Access%20Control.md)在捕捉细微差别方面更有效，并且可以很好的用于构建跨链感知的合约。
+在前面的例子中，我们既有onlyOwner()修饰符，也有onlyCrossChainSender(owner)机制。我们没有使用[Ownable](./AccessControl.md#所有权和ownable)模式，因为其中包含的所有权转移机制不适用于所有者是跨链实体的情况。与[Ownable](./Access%20Control.md)不同，[AccessControl](./Access%20Control.md)在捕捉细微差别方面更有效，并且可以很好的用于构建跨链感知的合约。
 
 使用[AccessControlCrossChain](./API/Access.md)包括[AccessControl](./API/Access.md)核心和[CrossChainEnabled](./API/Crosschain.md)抽象。它还包括一些绑定，使角色管理和跨链操作兼容。
 
