@@ -1,12 +1,12 @@
 # Utilities
-OpenZeppelin Contracts提供了许多有用的工具，您可以在项目中使用。以下是一些比较流行的工具。
+OpenZeppelin Contracts提供了许多实用工具，您可以在项目中使用。以下是一些比较流行的工具。
 
-## 加密学
+## Cryptography
 
 ### 在链上检查签名
-*ECDSA*提供了用于恢复和管理以太坊账户ECDSA签名的函数。这些签名通常是通过[web3.eth.sign](https://web3js.readthedocs.io/en/v1.7.3/web3-eth.html#sign)生成的，是一个65字节的数组（在Solidity中是bytes类型），排列方式如下：[[v(1)],[r(32)],[s(32)]]。
+[ECDSA](./API/Utils.md)提供了用于复原和管理以太坊账户ECDSA签名的函数。这些签名通常是通过[web3.eth.sign](https://web3js.readthedocs.io/en/v1.7.3/web3-eth.html#sign)生成的，是一个65字节的数组（在Solidity中是bytes类型），排列方式如下：[[v(1)],[r(32)],[s(32)]]。
 
-数据签名者可以通过*ECDSA.recover*恢复，并将其地址与签名进行比较以验证签名。大多数钱包将哈希数据进行签名，并添加前缀'\x19Ethereum Signed Message:\n'，因此在尝试恢复以太坊签名消息哈希的签名者时，您需要使用*toEthSignedMessageHash*。
+数据签名者可以通过[ECDSA.recover](./API/Utils.md)复原，并将其地址与签名进行比较以验证签名。大多数钱包会对要签名的数据进行哈希处理，并添加前缀'\x19Ethereum Signed Message:\n'，因此在尝试复原以太坊签名消息哈希的签名者时，您需要使用[toEthSignedMessageHash](./API/Utils.md)。
 ```
 using ECDSA for bytes32;
 
@@ -18,29 +18,29 @@ function _verify(bytes32 data, bytes memory signature, address account) internal
 ```
 
 > WARNING
-获取签名验证正确并不容易：确保您完全阅读并理解 *ECDSA* 的文档。
+正确验证签名不容易：确保您完全阅读并理解 [ECDSA](./API/Utils.md) 的文档。
 
 ### 验证 Merkle 证明
-*MerkleProof* 提供了：
+[MerkleProof](./API/Utils.md#merkleproof) 提供了：
 
-* *verify* - 可以证明某个值是 [Merkle 树](https://en.wikipedia.org/wiki/Merkle_tree)的一部分。
+* [verify](./API/Utils.md#verifybytes32-proof-bytes32-root-bytes32-leaf-→-bool) - 可以证明某个值是 [Merkle 树](https://en.wikipedia.org/wiki/Merkle_tree)的一部分。
 
-* *multiProofVerify* - 可以证明多个值是 Merkle 树的一部分。
+* [multiProofVerify](./API/Utils.md) - 可以证明多个值是 Merkle 树的一部分。
 
-## 内省
-在 Solidity 中，了解一个合约是否支持您想要使用的接口通常是有帮助的。ERC165 是一种标准，可以帮助进行运行时接口检测。合约提供了帮助程序，用于实现您的合约中的 ERC165 并查询其他合约：
+## Introspection
+在 Solidity 中，经常需要知道一个合约是否支持您想要使用的接口。ERC165是一个帮助进行运行时接口检测的标准。合约提供了用于在您的合约中实现ERC165和查询其他合约的帮助函数：
 
-* *IERC165* - 这是定义 *supportsInterface* 的 ERC165 接口。在实现 ERC165 时，您将符合此接口。
+* [IERC165](./API/Utils.md#ierc165) - 这是定义 [supportsInterface](./API/Utils.md#supportsinterfacebytes4-interfaceid-→-bool) 的 ERC165 接口。在实现 ERC165 时，您将符合此接口。
 
-* *ERC165* - 如果您想使用合约存储中的查找表支持接口检测，请继承此合约。您可以使用 *_registerInterface(bytes4)* 注册接口：请查看作为 ERC721 实现的示例用法。
+* [ERC165](./API/Utils.md#erc165) - 如果您想使用合约存储中的查找表支持接口检测，请继承此合约。您可以使用 [_registerInterface(bytes4)](./API/Utils.md#_registerinterfacebytes4-interfaceid) 注册接口：请查看作为 ERC721 实现的示例用法。
 
-* ERC165Checker - ERC165Checker 简化了检查合约是否支持您关心的接口的过程。
+* [ERC165Checker](./API/Utils.md#erc16checker) - ERC165Checker 简化了检查合约是否支持您所需接口的过程。
 
 * 包括使用 ERC165Checker for address;
 
-* myAddress._supportsInterface(bytes4)
+* [myAddress._supportsInterface(bytes4)](./API/Utils.md)
 
-* myAddress._supportsAllInterfaces(bytes4[])
+* [myAddress._supportsAllInterfaces(bytes4[])](./API/Utils.md)
 ```
 contract MyContract {
     using ERC165Checker for address;
@@ -64,7 +64,7 @@ contract MyContract {
 ```
 
 ## 数学
-OpenZeppelin Contracts是最受欢迎的与数学相关的库，它提供了*SafeMath*，它提供了数学函数，保护您的合约免受溢出和下溢的影响。
+OpenZeppelin Contracts提供的最受欢迎的与数学相关的库是[SafeMath](./API/Utils.md#safemath)，它提供了数学函数，保护您的合约免受溢出和下溢的影响。
 
 使用SafeMath for uint256; 包含具有函数调用：
 

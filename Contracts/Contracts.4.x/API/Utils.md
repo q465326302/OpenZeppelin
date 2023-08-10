@@ -1642,7 +1642,7 @@ OwnershipTransferred(previousOwner, newOwner)
 
 请注意，在所有情况下，账户仅声明其接口，但不需要实际实现它们。因此，该机制既可以用于防止错误，又可以用于允许复杂的交互（参见ERC777），但不能依赖它来提供安全性。
 
-#### IERC165
+### IERC165
 ```
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 ```
