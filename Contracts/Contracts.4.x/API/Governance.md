@@ -347,7 +347,7 @@ EIP712DomainChanged()
 
 #### receive()
 外部#
-接收ETH的函数，将由治理者处理（如果执行者是第三方合约，则禁用）
+接收ETH的函数，将由治理合约处理（如果执行者是第三方合约，则禁用）
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
@@ -367,7 +367,7 @@ EIP712DomainChanged()
 
 提案ID是通过对ABI编码的targets数组、values数组、calldatas数组和descriptionHash（bytes32，它本身是描述字符串的keccak256哈希）进行哈希计算得到的。这个提案ID可以从*ProposalCreated*事件的提案数据中生成。甚至可以在提案提交之前提前计算出来。
 
-请注意，chainId和governor地址不是提案ID计算的一部分。因此，如果在多个网络上的多个治理者提交相同的提案（具有相同的操作和相同的描述），则它们将具有相同的ID。这也意味着为了在同一个治理者上执行相同的操作两次，提案人必须更改描述以避免提案ID冲突。
+请注意，chainId和governor地址不是提案ID计算的一部分。因此，如果在多个网络上的多个治理合约提交相同的提案（具有相同的操作和相同的描述），则它们将具有相同的ID。这也意味着为了在同一个治理合约上执行相同的操作两次，提案人必须更改描述以避免提案ID冲突。
 
 #### state(uint256 proposalId) → enum IGovernor.ProposalState
 公开#
@@ -933,7 +933,7 @@ import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.so
 使用这个模型意味着提案将由*TimelockController*操作，而不是由*Governor*操作。因此，资产和权限必须附加到*TimelockController*上。发送到*Governor*的任何资产将无法访问。
 
 > WARNING
-在TimelockController中设置额外的提议者，除了治理者之外，是非常危险的，因为它赋予了他们一些必须信任或者知道他们不会使用的权力：1）只有*onlyGovernance*功能（如*Relayer *）可以通过Timelock进行操作，2）他们可以阻止已批准的治理提案，从而有效地执行拒绝服务攻击。这个风险将在未来的版本中得到缓解。
+在TimelockController中设置额外的提议者，除了治理合约之外，是非常危险的，因为它赋予了他们一些必须信任或者知道他们不会使用的权力：1）只有*onlyGovernance*功能（如*Relayer *）可以通过Timelock进行操作，2）他们可以阻止已批准的治理提案，从而有效地执行拒绝服务攻击。这个风险将在未来的版本中得到缓解。
 *从v4.3版本开始提供。*
 
 **FUNCTIONS**
