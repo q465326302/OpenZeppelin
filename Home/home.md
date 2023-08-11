@@ -25,25 +25,25 @@ OpenZeppelin的安全审计受到建立去中心化系统的领先组织信任�
 ## 学习
 为您的开发之旅的每个步骤提供全面的指南。
 
-### [设置一个Node项目](../Learn/Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)
+### [设置一个Node项目](../Learn/Setting-up-a-Node-project/Connecting-to-public-test-networks.md)
 安装Node，npm以及用于web3开发的基本库。
 
-### [开发智能合约](../Learn/Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)
+### [开发智能合约](../Learn/Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md)
 使用OpenZeppelin Contracts库中的构建块编写和编译您的第一个Solidity合约。
 
-### [部署和交互](../Learn/Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)
+### [部署和交互](../Learn/Deploying-and-interacting/Connecting-to-public-test-networks-truffle.md)
 将您的合约部署到本地区块链上，并使用控制台发送您的第一笔交易。
 
-### [编写自动化测试](../Learn/Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-truffle.md)
+### [编写自动化测试](../Learn/Writing-automated-tests/Connecting-to-public-test-networks-truffle.md)
 使用OpenZeppelin Test Helpers中的断言对合约进行单元测试，并且使用OpenZeppelin Test Environment进行测试。
 
-### [连接到公共测试网络](../Learn/Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-truffle.md)
+### [连接到公共测试网络](../Learn/Connecting-to-public-test-networks/Connecting-to-public-test-networks-truffle.md)
 通过将您的应用，部署到公共以太坊测试网络设置一个临时环境。
 
-### [升级智能合约](../Learn/Upgrading%20smart%20contracts/Upgrading%20smart%20contracts-truffle.md)
+### [升级智能合约](../Learn/Upgrading-smart-contracts/Connecting-to-public-test-networks-truffle.md)
 使用OpenZeppelin Upgrades插件更改已部署的合约代码，以添加新功能或修复错误。
 
-### [为主网做准备](../Learn/Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)
+### [为主网做准备](../Learn/Preparing-for-mainnet/Connecting-to-public-test-networks.md)
 在将您的项目投入主网之前，您需要注意的所有要点。
 
 请查看[OpenZeppelin论坛](https://forum.openzeppelin.com/c/general/guides-and-tutorials/23)以获取更多社区贡献的指南！

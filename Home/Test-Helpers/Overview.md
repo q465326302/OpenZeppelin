@@ -1,15 +1,15 @@
 # Test Helpers
 用于以太坊智能合约测试的断言库。确保您的合约的作用符合预期！
 
-* 检查事务是否以正确的原因回滚
+* 检查[事务回滚](./API-Reference.md#expectrevert)的原因以及是否以正确
 
-* 验证事件是否以正确的值进行了发送
+* 验证[事件](./API-Reference.md#expectevent)是否以正确的值进行了发送
 
-* 优雅地跟踪余额变化
+* 优雅地跟踪[余额变化](./API-Reference.md#balance)
 
-* 处理非常大的数字
+* 处理[非常大的数字](./API-Reference.md#bn)
 
-* 模拟时间的流逝
+* 模拟[时间的流逝](./API-Reference.md#time)
 
 ## 概述
 
@@ -40,14 +40,14 @@ const ERC20 = artifacts.require('ERC20');
 
 describe('ERC20', function ([sender, receiver]) {
   beforeEach(async function () {
-    // The bundled BN library is the same one web3 uses under the hood
+    // 捆绑的BN库是web3在内部使用的相同库。the hood
     this.value = new BN(1);
 
     this.erc20 = await ERC20.new();
   });
 
   it('reverts when transferring tokens to the zero address', async function () {
-    // Conditions that trigger a require statement can be precisely tested
+    // 可以精确测试触发 require 语句的条件。
     await expectRevert(
       this.erc20.transfer(constants.ZERO_ADDRESS, this.value, { from: sender }),
       'ERC20: transfer to the zero address',
@@ -59,7 +59,7 @@ describe('ERC20', function ([sender, receiver]) {
       receiver, this.value, { from: sender }
     );
 
-    // Event assertions can verify that the arguments are the expected ones
+    // 事件断言可以验证参数是否是预期的参数。
     expectEvent(receipt, 'Transfer', {
       from: sender,
       to: receiver,
@@ -70,7 +70,7 @@ describe('ERC20', function ([sender, receiver]) {
   it('updates balances on successful transfers', async function () {
     this.erc20.transfer(receiver, this.value, { from: sender });
 
-    // BN assertions are automatically available via chai-bn (if using Chai)
+    // 如果使用Chai，BN断言可以通过chai-bn自动使用。
     expect(await this.erc20.balanceOf(receiver))
       .to.be.bignumber.equal(this.value);
   });
@@ -80,4 +80,4 @@ describe('ERC20', function ([sender, receiver]) {
 了解更多
 * 前往[配置](./Configuration.md)以获取高级设置。
 
-* 要获取详细的使用信息，请查看[API参考](./API%20Reference.md)。
+* 要获取详细的使用信息，请查看[API参考](./API-Reference.md)。
