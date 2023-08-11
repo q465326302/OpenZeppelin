@@ -29,7 +29,7 @@
 有了这些基础知识，让我们开始吧！
 
 ## 设置项目
-创建项目后的第一步是[安装开发工具](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#安装node)。
+创建项目后的第一步是[安装开发工具](../Setting-up-a-Node-project/Setting-up-a-Node-project.md#安装node)。
 
 以太坊最流行的开发框架是[Hardhat](https://hardhat.org/)，并且我们使用[ethers.js](https://docs.ethers.io/)介绍其最常见用法。其次最流行的是[Truffle](https://www.trufflesuite.com/truffle)，它使用[web3.js](https://web3js.readthedocs.io/)。每个工具都有其优点，熟练掌握所有工具是很有用的。
 
@@ -38,7 +38,7 @@
 > NOTE
 Truffle和Hardhat都提供了说明。使用此切换选择您的首选项！
 
-为了开始使用Hardhat，我们将在[项目目录](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)中安装它。
+为了开始使用Hardhat，我们将在[项目目录](../Setting-up-a-Node-project/Setting-up-a-Node-project.md#创建项目)中安装它。
 ```
 npm install --save-dev hardhat
 ```
@@ -110,7 +110,7 @@ contract Box {
 编译可以通过运行一个单独的编译命令来实现：
 
 > NOTE
-如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#使用-npx)。
+如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting-up-a-Node-project/Setting-up-a-Node-project.md#使用-npx)。
 ```
 npx hardhat compile
 Solidity 0.8.4 is not fully supported yet. You can still use Hardhat, but some features, like stack traces, might not work correctly.
@@ -120,6 +120,7 @@ Learn more at https://hardhat.org/reference/solidity-support"
 Compiling 1 file with 0.8.4
 Compilation finished successfully
 ```
+
 内置的[编译](https://hardhat.org/guides/compile-contracts.html#compiling-your-contracts)任务将自动查找所有合约文件夹中的合约，并使用 [hardhat.config.js](https://hardhat.org/config/#solidity-configuration) 中的配置使用 Solidity 编译器编译它们。
 
 你会注意到一个artifacts目录被创建了：它保存了编译后的合约（字节码和元数据），这些文件是.json格式的。将这个目录添加到.gitignore是一个好主意。
@@ -148,6 +149,7 @@ contract Auth {
     }
 }
 ```
+
 要使用来自Box的此合约，我们使用一个导入语句，通过其相对路径引用Auth：
 ```
 // contracts/Box.sol
@@ -180,6 +182,7 @@ contract Box {
     }
 }
 ```
+
 将关注点分离到多个合约中是保持每个合约简单的好方法，通常是一种良好的实践。
 
 然而，这并不是将代码分割成模块的唯一方法。您还可以使用继承来封装和重用 Solidity 中的代码，接下来我们将看到。
@@ -229,13 +232,14 @@ contract Box is Ownable {
     }
 }
 ```
+
 [OpenZeppelin合约文档](../../Contracts/Contracts.4.x/Overview.md)是学习开发安全智能合约系统的绝佳资源。它包括指南和详细的API参考：例如，可以参考访问[控制指南](../../Contracts/Contracts.4.x/Access-Control.md)了解在上面的代码示例中使用的Ownable合约。
 
 ## 下一步
 编写和编译Solidity合约只是在以太坊网络上运行您的去中心化应用程序的旅程中的第一步。一旦您熟悉了这个设置，您将想要转向更高级的任务：
 
-* [部署和交互](../Deploying-and-interacting/Connecting-to-public-test-networks-hardat.md)
+* [部署和交互](../Deploying-and-interacting/Deploying-and-interacting-hardat.md)
 
-* [编写自动化测试](../Writing-automated-tests/Connecting-to-public-test-networks-hardhat.md)
+* [编写自动化测试](../Writing-automated-tests/Writing-automated-tests-hardhat.md)
 
 * [连接到公共测试网络](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)

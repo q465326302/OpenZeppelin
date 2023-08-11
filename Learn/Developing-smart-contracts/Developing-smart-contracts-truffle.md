@@ -37,10 +37,11 @@
 > NOTE
 Truffle和Hardhat都提供了说明。使用此切换选择您的首选项！
 
-为了开始使用Truffle，我们将在[项目目录](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#创建项目)中安装它。
+为了开始使用Truffle，我们将在[项目目录](../Setting-up-a-Node-project/Setting-up-a-Node-project.md#安装node)中安装它。
 ```
 npm install --save-dev truffle
 ```
+
 安装完成后，我们可以初始化Truffle。这将在我们的项目目录中创建一个空的Truffle项目。
 ```
 npx truffle init
@@ -52,8 +53,6 @@ Starting init...
 
 Init successful, sweet!
 ```
-
-
 
 ## 第一份合约
 我们将我们的 Solidity 源文件 (.sol) 存储在一个名为 contracts 的目录中。这相当于你可能熟悉的其他语言中的 src 目录。
@@ -116,7 +115,7 @@ contract Box {
 编译可以通过运行一个单独的编译命令来实现：
 
 > NOTE
-如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#使用-npx)。
+如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting-up-a-Node-project/Setting-up-a-Node-project.md#使用-npx)。
 ```
 npx truffle compile
 
@@ -130,6 +129,7 @@ Compiling your contracts...
 > Compiled successfully using:
    - solc: 0.8.4+commit.c7e474f2.Emscripten.clang
 ```
+
 内置的[编译](https://www.trufflesuite.com/docs/truffle/reference/truffle-commands#compile)命令将自动查找contracts目录中的所有合约，并使用[truffle-config.js](https://www.trufflesuite.com/docs/truffle/reference/configuration#compiler-configuration)中的配置使用Solidity编译器将它们编译。
 
 您会注意到创建了一个build/contracts目录：它保存了编译后的工件（字节码和元数据），这些是.json文件。将此目录添加到您的.gitignore是一个好主意。
@@ -191,6 +191,7 @@ contract Box {
     }
 }
 ```
+
 将关注点分离到多个合约中是保持每个合约简单的好方法，通常是一种良好的实践。
 
 然而，这并不是将代码分割成模块的唯一方法。您还可以使用继承来封装和重用 Solidity 中的代码，接下来我们将看到。
@@ -210,10 +211,11 @@ contract Box {
 ```
 npm install @openzeppelin/contracts
 ```
+
 > NOTE
 你应该始终使用这些已发布的版本库：将库源代码复制粘贴到你的项目中是一种危险的做法，这样很容易在你的合约中引入安全漏洞。
 
-要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的_Auth_合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。
+要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的[Auth](#第一份合约)合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。
 ```
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
@@ -239,13 +241,14 @@ contract Box is Ownable {
     }
 }
 ```
+
 [OpenZeppelin合约文档](../../Contracts/Contracts.4.x/Overview.mdd)是学习开发安全智能合约系统的绝佳资源。它包括指南和详细的API参考：例如，可以参考访问[控制指南](../../Contracts/Contracts.4.x/Access-Control.md)了解在上面的代码示例中使用的Ownable合约。
 
 ## 下一步
 编写和编译Solidity合约只是在以太坊网络上运行您的去中心化应用程序的旅程中的第一步。一旦您熟悉了这个设置，您将想要转向更高级的任务：
 
-* [部署和交互](../Deploying-and-interacting/Connecting-to-public-test-networks-truffle.md)
+* [部署和交互](../Deploying-and-interacting/Deploying-and-interacting-truffle.md)
 
-* [编写自动化测试](../Writing-automated-tests/Connecting-to-public-test-networks-truffle.md)
+* [编写自动化测试](../Writing-automated-tests/Writing-automated-tests-truffle.md)
 
 * [连接到公共测试网络](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-truffle.md)

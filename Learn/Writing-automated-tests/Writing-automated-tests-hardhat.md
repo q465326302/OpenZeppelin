@@ -1,17 +1,19 @@
-# 编写智能合约的自动化测试
+# Writing automated smart contract tests
 在区块链环境中，一个错误可能会让你失去所有资金，或者更糟糕的是，让你的用户失去资金！本指南将帮助你编写自动化测试，验证你的应用程序的行为与你预期的完全一致，从而开发出健壮的应用程序。
 
 我们将涵盖以下主题：
-* 建立测试环境
+- [Writing automated smart contract tests](#writing-automated-smart-contract-tests)
+  - [关于测试](#关于测试)
+  - [设置测试环境](#设置测试环境)
+  - [编写单元测试](#编写单元测试)
+  - [执行复杂的断言](#执行复杂的断言)
+  - [下一步](#下一步)
 
-* 编写单元测试
-
-* 执行复杂断言
 > NOTE
 Truffle和Hardhat都提供了说明。 使用此切换选择您的首选项！
 
 ## 关于测试
-在测试技术方面，有各种各样的技术，从[简单的手动验证](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)到复杂的端到端设置，它们各自都有用处。
+在测试技术方面，有各种各样的技术，从[简单的手动验证](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#从控制台交互)到复杂的端到端设置，它们各自都有用处。
 
 然而，实践证明，在智能合约开发中，[合约单元测试](https://en.wikipedia.org/wiki/Unit_testing)非常值得。这些测试易于编写和快速运行，让您有信心添加功能并修复代码中的错误。
 
@@ -27,7 +29,8 @@ Truffle和Hardhat都提供了说明。 使用此切换选择您的首选项！
 ```
 npm install --save-dev chai
 ```
-我们将把测试文件保存在一个名为test的目录中。测试最好按照contracts[目录](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)的结构进行组织：对于其中的每个.sol文件，创建一个相应的测试文件。
+
+我们将把测试文件保存在一个名为test的目录中。测试最好按照contracts[目录](../)的结构进行组织：对于其中的每个.sol文件，创建一个相应的测试文件。
 
 现在是编写我们的第一组测试的时候了！这些测试将测试之前介绍过的Box[合约的属性](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)：一个简单的合约，允许您检索先前所有者存储的值。
 
