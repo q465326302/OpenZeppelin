@@ -13,7 +13,7 @@ OpenZeppelin提供了完整的安全产品套件，用于构建、管理和检�
 ## [Defender](../Defender/Overview.md)
 Defender是一个安全的平台，用于自动化以太坊操作。
 
-## [Test Helpers](./Test%20Helpers/Overview.md)
+## [Test Helpers](./Test-Helpers/Overview.md)
 一个JavaScript库，用于测试智能合约的常见断言。
 
 ## [Solidity Docgen](https://github.com/OpenZeppelin/solidity-docgen)
