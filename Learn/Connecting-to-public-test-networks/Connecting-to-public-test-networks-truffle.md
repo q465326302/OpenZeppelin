@@ -1,16 +1,21 @@
 # 连接到公共测试网络
 
-在[编写合约](../Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)、[本地测试](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)并进行[充分测试](../Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-truffle.md)后，就可以进入持久的公共测试环境，让您和测试用户开始与您的应用程序交互。
+在[编写合约](../Developing-smart-contracts/Developing-smart-contracts-truffle.md)、[本地测试](../Deploying-and-interacting/Deploying-and-interacting-truffle.md)并进行[充分测试](../Writing-automated-tests/Writing-automated-tests-truffle.md)后，就可以进入持久的公共测试环境，让您和测试用户开始与您的应用程序交互。
 
 我们将使用**公共测试网络**（也称为测试网络）进行测试，这些网络类似于主要的以太坊网络，但以太币没有价值且可以免费获取，因此非常适合免费测试您的合约。
 
-在本指南中，我们将使用我们喜爱的[Box合约](../Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)，并将其部署到测试网络上，同时学习以下内容：
+在本指南中，我们将使用我们喜爱的[Box合约](../Developing-smart-contracts/Developing-smart-contracts-truffle.md#使用openzeppelin-contracts)，并将其部署到测试网络上，同时学习以下内容：
 
-* 可用的测试网络
+- [连接到公共测试网络](#连接到公共测试网络)
+  - [可用的测试网络](#可用的测试网络)
+  - [将项目连接到公共网络](#将项目连接到公共网络)
+    - [访问测试网络节点](#访问测试网络节点)
+    - [创建新账户](#创建新账户)
+    - [配置网络](#配置网络)
+    - [为测试网账户提供资金支持](#为测试网账户提供资金支持)
+  - [在测试网络上工作](#在测试网络上工作)
+  - [下一步](#下一步)
 
-* 如何为测试网络设置项目
-
-* 如何部署和与测试网络合约实例进行交互
 
 请记住，将项目部署到公共测试网络是开发以太坊项目的必要步骤。它们提供了一个安全的测试环境，可以紧密模拟主网络 - 您不希望在一个会让您和用户损失资金的网络中测试您的项目！
 
@@ -31,13 +36,13 @@
 
 ## 将项目连接到公共网络
 要将我们的项目连接到公共测试网络，我们需要：
-1. 获取测试网络节点
+1. [获取测试网络节点](#访问测试网络节点)
 
-2. 创建一个新账户
+2. [创建一个新账户](#创建新账户)
 
-3. 更新我们的配置文件
+3. [更新我们的配置文件](#配置网络)
 
-4. *我们的测试账户提供资金
+4. [我们的测试账户提供资金](#为测试网账户提供资金支持)
 
 ### 访问测试网络节点
 
@@ -64,9 +69,9 @@ drama film snack motion ...
 由于我们使用公共节点，因此我们需要在本地签署所有交易。我们将使用我们的助记词和Alchemy端点来配置网络。
 
 > NOTE
-这部分假定您已经设置好了一个项目。如果您还没有这样做，请转到[设置Solidity项目的指南](../Developing%20smart%20contracts/Developing%20smart%20contracts-truffle.md)。
+这部分假定您已经设置好了一个项目。如果您还没有这样做，请转到[设置Solidity项目的指南](../Developing-smart-contracts/Developing-smart-contracts-truffle.md)。
 
-让我们从安装@truffle/hdwallet-provider开始：
+让我们从安装[@truffle/hdwallet-provider](https://github.com/trufflesuite/truffle/tree/master/packages/hdwallet-provider)开始：
 ```
 npm install --save-dev @truffle/hdwallet-provider
 ```
@@ -134,7 +139,7 @@ truffle(goerli)> accounts
 有了资金支持的账户，让我们将合约部署到测试网上！
 
 ## 在测试网络上工作
-通过配置项目以在公共测试网络上运行，我们现在终于可以[部署我们的Box合约](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)了。这里的命令与您在[本地开发网络](../Deploying%20and%20interacting/Deploying%20and%20interacting-truffle.md)上的命令完全相同，但是由于会挖掘新块，所以需要等待几秒钟才能运行。
+通过配置项目以在公共测试网络上运行，我们现在终于可以[部署我们的Box合约](../Deploying-and-interacting/Deploying-and-interacting-truffle.md#部署智能合约)了。这里的命令与您在[本地开发网络](../Deploying-and-interacting/Deploying-and-interacting-truffle.md#建立本地区块链)上的命令完全相同，但是由于会挖掘新块，所以需要等待几秒钟才能运行。
 ```
 npx truffle migrate --network goerli
 ...
@@ -148,6 +153,7 @@ npx truffle migrate --network goerli
    > contract address:    0xA4D767f2Fba05242502ECEcb2Ae97232F7611353
 ...
 ```
+
 就是这样！您的Box合约实例将永久存储在测试网络中，并且对任何人都可以公开访问。
 
 您可以在区块浏览器（如[Etherscan](https://etherscan.io/)）上查看您的合约。请记住，在您部署合约的测试网络上访问浏览器，例如在goerli上访问[goerli.etherscan.io](https://goerli.etherscan.io/)。
@@ -171,4 +177,4 @@ truffle(goerli)> (await box.retrieve()).toString()
 请记住，每笔交易都会产生一定的gas，因此您最终需要用更多的资金来充值您的账户。
 
 ## 下一步
-在公共测试网络上彻底测试您的应用程序之后，您已经准备好进行开发旅程的最后一步：[在生产环境中部署您的应用程序](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)。
+在公共测试网络上彻底测试您的应用程序之后，您已经准备好进行开发旅程的最后一步：[在生产环境中部署您的应用程序](../Preparing-for-mainnet/Preparing-for-mainnet.md)。
