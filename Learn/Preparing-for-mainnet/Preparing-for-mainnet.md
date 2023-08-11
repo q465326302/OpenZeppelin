@@ -1,14 +1,16 @@
-# 准备主网
-在[测试网络上运行项目](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-truffle.md)一段时间后，您会希望将其部署到主要的以太坊网络（也称为主网）。然而，计划去主网的工作应该比您计划的发布日期早得多。
+# Preparing for mainnet
+在[测试网络上运行项目](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-truffle.md)一段时间后，您会希望将其部署到主要的以太坊网络（也称为主网）。然而，计划去主网的工作应该比您计划的发布日期早得多。
 
 在本指南中，我们将介绍将项目推向生产环境时需要考虑的以太坊特定因素，例如：
-* 审计与安全
-  
-* 验证源代码
+- [Preparing for mainnet](#preparing-for-mainnet)
+  - [审计和安全](#审计和安全)
+  - [验证您的源代码](#验证您的源代码)
+  - [密钥管理](#密钥管理)
+    - [管理员账户](#管理员账户)
+    - [升级管理员](#升级管理员)
+  - [项目治理](#项目治理)
+  - [下一步](#下一步)
 
-* 安全管理密钥
-
-* 处理项目治理
 
 请记住，尽管在测试网和主网中管理合约在技术上是相同的，但在主网上存在重要的区别，因为您的项目现在为您的用户管理真实价值。
 
@@ -28,37 +30,8 @@
 
 您可以在[Etherscan](https://etherscan.io/verifyContract)网站上手动验证您的合约。
 
-您还可以使用Hardhat Etherscan插件。
-
-要做到这一点，请安装插件。
-```
-npm install --save-dev @nomiclabs/hardhat-etherscan
-```
-更新您的Hardhat配置:
-```
-// hardhat.config.js
-const { etherscanApiKey, projectId, mnemonic } = require('./secrets.json');
-require("@nomiclabs/hardhat-etherscan");
-...
-module.exports = {
-  networks: {
-    mainnet: { ... }
-  },
-  etherscan: {
-    apiKey: etherscanApiKey
-  }
-};
-```
-最后运行验证任务，传递合约的地址、部署它的网络以及部署时使用的构造参数（如果有的话）：
-```
-npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS "Constructor argument 1"
-```
-
-> NOTE
-你需要一个[Etherscan API密钥](https://etherscan.io/apis)来使用他们的服务。
-
 > TIP
-当你部署一个可升级的合约时，用户与之交互的合约将只是一个代理，实际的逻辑将在实现合约中。Etherscan确实支持正确显示OpenZeppelin代理及其实现，但其他浏览器可能不支持。
+当您部署可升级的合约时，用户与之交互的合约将只是一个代理，实际逻辑将在实现合约中。Etherscan确实支持正确显示OpenZeppelin代理及其实现，但其他浏览器可能不支持。
 
 ## 密钥管理
 在主网上工作时，您需要特别注意保护私钥的安全。您用于部署和与合约交互的账户将持有真正的以太币，其具有真正的价值，是黑客的诱人目标。请采取一切预防措施保护您的密钥，并在必要时考虑使用[硬件钱包](https://docs.ethhub.io/using-ethereum/wallets/hardware/)。
@@ -69,12 +42,12 @@ npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS "Constructor argu
 此外，您可能会为某些账户定义特殊权限，并且您应该特别注意保护它们的安全。
 
 ### 管理员账户
-管理员账户是系统中拥有特殊权限的账户。例如，管理员可能有*暂停*合约的能力。如果这样的账户落入恶意用户手中，他们可能会在您的系统中造成混乱。
+管理员账户是系统中拥有特殊权限的账户。例如，管理员可能有_暂停_合约的能力。如果这样的账户落入恶意用户手中，他们可能会在您的系统中造成混乱。
 
 保护管理员账户的一个好选择是使用特殊合约，如多重签名合约，而不是普通的外部拥有账户。多重签名是一种合约，只要预定义数量的信任成员同意，就可以执行任何操作。[Gnosis Safe](https://safe.gnosis.io/multisig)是一个好的多重签名合约。
 
 ### 升级管理员
-[OpenZeppelin Upgrades Plugins](https://docs.openzeppelin.com/upgrades-plugins/1.x/)项目中的特殊管理员帐户是具有[升级](../Upgrading%20smart%20contracts/Upgrading%20smart%20contracts-truffle.md)其他合约权限的帐户。默认情况下，这是用于部署合约的外部拥有的帐户：虽然这对于本地或测试网部署足够好，但在主网中，您需要更好地保护您的合约。获取您的升级管理员帐户的攻击者可以更改系统中的任何合约！
+[OpenZeppelin Upgrades Plugins](../../Upgrades-Plugins/Overview.md/)项目中的特殊管理员帐户是具有[升级](../Upgrading-smart-contracts/Upgrading-smart-contracts-truffle.md)其他合约权限的帐户。默认情况下，这是用于部署合约的外部拥有的帐户：虽然这对于本地或测试网部署足够好，但在主网中，您需要更好地保护您的合约。获取您的升级管理员帐户的攻击者可以更改系统中的任何合约！
 
 考虑到这一点，最好在部署后**更改ProxyAdmin的所有权**-例如，更改为多签名。要执行此操作，可以使用admin.transferProxyAdminOwnership将ProxyAdmin合约的所有权转移。
 
