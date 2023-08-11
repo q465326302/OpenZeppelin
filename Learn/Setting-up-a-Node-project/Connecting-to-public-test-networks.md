@@ -1,4 +1,4 @@
-# 搭建Node项目
+# Setting up a Node project
 新的软件行业往往从每个项目共享相同的技术栈开始。以太坊生态系统也不例外，语言选择是[JavaScript](https://en.wikipedia.org/wiki/JavaScript)。包括OpenZeppelin软件在内的所有最常用的以太坊库都是用JavaScript或其变体编写的。
 
 传统上，JavaScript代码在网页浏览器上作为网站的一部分运行，但也可以使用[Node](https://nodejs.org/)作为独立进程执行。

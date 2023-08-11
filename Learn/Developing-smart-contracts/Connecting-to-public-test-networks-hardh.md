@@ -1,13 +1,18 @@
 # 开发智能合约
 欢迎来到智能合约开发的激动人心的世界！本指南将让您开始编写Solidity合约，以下是内容：
 
-* 设置Solidity项目
- 
-* 编译Solidity源代码
+- [开发智能合约](#开发智能合约)
+  - [关于Solidity](#关于solidity)
+  - [设置项目](#设置项目)
+  - [第一份合约](#第一份合约)
+  - [Solidity的编译](#solidity的编译)
+  - [添加更多合约](#添加更多合约)
+  - [使用OpenZeppelin Contracts](#使用openzeppelin-contracts)
+    - [关于继承](#关于继承)
+    - [导入OpenZeppelin Contracts](#导入openzeppelin-contracts)
+  - [下一步](#下一步)
 
-* 添加更多合约
 
-* 使用OpenZeppelin合约
   
 ## 关于Solidity
 
@@ -24,7 +29,7 @@
 有了这些基础知识，让我们开始吧！
 
 ## 设置项目
-创建项目后的第一步是[安装开发工具](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)。
+创建项目后的第一步是[安装开发工具](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#安装node)。
 
 以太坊最流行的开发框架是[Hardhat](https://hardhat.org/)，并且我们使用[ethers.js](https://docs.ethers.io/)介绍其最常见用法。其次最流行的是[Truffle](https://www.trufflesuite.com/truffle)，它使用[web3.js](https://web3js.readthedocs.io/)。每个工具都有其优点，熟练掌握所有工具是很有用的。
 
@@ -105,7 +110,7 @@ contract Box {
 编译可以通过运行一个单独的编译命令来实现：
 
 > NOTE
-如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting%20up%20a%20Node%20project/Setting%20up%20a%20Node%20project.md)。
+如果您不熟悉npx命令，请查看我们的[Node项目设置指南](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#使用-npx)。
 ```
 npx hardhat compile
 Solidity 0.8.4 is not fully supported yet. You can still use Hardhat, but some features, like stack traces, might not work correctly.
@@ -198,7 +203,7 @@ npm install @openzeppelin/contracts
 > NOTE
 你应该始终使用这些已发布的版本库：将库源代码复制粘贴到你的项目中是一种危险的做法，这样很容易在你的合约中引入安全漏洞。
 
-要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的_Auth_合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。
+要使用OpenZeppelin Contracts之一，请在其路径前缀中加上@openzeppelin/contracts进行导入。例如，为了替换我们自己的[Auth](#添加更多合约)合约，我们将导入@openzeppelin/contracts/access/Ownable.sol以向Box添加访问控制。
 ```
 // contracts/Box.sol
 // SPDX-License-Identifier: MIT
@@ -224,13 +229,13 @@ contract Box is Ownable {
     }
 }
 ```
-[OpenZeppelin合约文档](../../Contracts/Contracts.4.x/Overview.md)是学习开发安全智能合约系统的绝佳资源。它包括指南和详细的API参考：例如，可以参考访问[控制指南](../../Contracts/Contracts.4.x/Access%20Control.md)了解在上面的代码示例中使用的Ownable合约。
+[OpenZeppelin合约文档](../../Contracts/Contracts.4.x/Overview.md)是学习开发安全智能合约系统的绝佳资源。它包括指南和详细的API参考：例如，可以参考访问[控制指南](../../Contracts/Contracts.4.x/Access-Control.md)了解在上面的代码示例中使用的Ownable合约。
 
 ## 下一步
 编写和编译Solidity合约只是在以太坊网络上运行您的去中心化应用程序的旅程中的第一步。一旦您熟悉了这个设置，您将想要转向更高级的任务：
 
-* [部署和交互](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)
+* [部署和交互](../Deploying-and-interacting/Connecting-to-public-test-networks-hardat.md)
 
-* [编写自动化测试](../Writing%20automated%20tests/Writing%20automated%20smart%20contract%20tests-hardhat.md)
+* [编写自动化测试](../Writing-automated-tests/Connecting-to-public-test-networks-hardhat.md)
 
-* [连接到公共测试网络](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-hardhat.md)
+* [连接到公共测试网络](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)

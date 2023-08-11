@@ -13,7 +13,7 @@ const { expectRevert } = require('@openzeppelin/test-helpers');
 配置必须在所有测试文件中应用，在导入助手之前。
 
 ### provider
-用于通过web3提供者（如[ balance](./API%20Reference.md)和[time](./API%20Reference.md)）连接到测试环境的助手。
+用于通过web3提供者（如[ balance](./API-Reference.md#balance)和[time](./API-Reference.md#time)）连接到测试环境的助手。
 
 在Truffle环境中，web3提供者将从Truffle的全局web3实例中获取。否则，默认值为http://localhost:8545/。
 
