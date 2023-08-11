@@ -1,13 +1,17 @@
 # Developing smart contracts
 欢迎来到智能合约开发的激动人心的世界！本指南将让您开始编写Solidity合约，以下是内容：
 
-* [设置Solidity项目](#设置项目)
- 
-* [编译Solidity源代码](#solidity的编译)
+- [Developing smart contracts](#developing-smart-contracts)
+  - [关于Solidity](#关于solidity)
+  - [设置项目](#设置项目)
+  - [第一份合约](#第一份合约)
+  - [Solidity的编译](#solidity的编译)
+  - [添加更多合约](#添加更多合约)
+  - [使用OpenZeppelin Contracts](#使用openzeppelin-contracts)
+    - [关于继承](#关于继承)
+    - [导入OpenZeppelin Contracts](#导入openzeppelin-contracts)
+  - [下一步](#下一步)
 
-* [添加更多合约](#添加更多合约)
-
-* [使用OpenZeppelin合约](#使用openzeppelin-contracts)
   
 ## 关于Solidity
 

@@ -3,13 +3,18 @@
 
 本指南将涵盖您需要了解的所有内容，包括：
 
-* 设置本地区块链
-
-* 部署智能合约
-
-* 从控制台交互
-
-* 编程交互
+- [部署和交互智能合约](#部署和交互智能合约)
+  - [建立本地区块链](#建立本地区块链)
+  - [部署智能合约](#部署智能合约)
+  - [从控制台交互](#从控制台交互)
+    - [发送交易](#发送交易)
+    - [查询状态](#查询状态)
+  - [以编程方式交互](#以编程方式交互)
+    - [设置](#设置)
+    - [获取合约实例](#获取合约实例)
+    - [呼叫合约](#呼叫合约)
+    - [发送交易](#发送交易-1)
+  - [下一步](#下一步)
 
 > Note
 Truffle和Hardhat都提供了说明。您可以使用此切换选择您偏好的工具！
@@ -22,7 +27,7 @@ Truffle和Hardhat都提供了说明。您可以使用此切换选择您偏好的
 在开发过程中，使用本地区块链是一个更好的选择。它在你的计算机上运行，不需要互联网访问，为你提供所需的所有以太币，并立即挖掘区块。这些原因也使本地区块链非常适合*自动化测试*。
 
 > TIP
-如果您想学习如何在公共区块链上部署和使用合约，比如以太坊测试网，可以前往我们的*连接公共测试网络指南*。
+如果您想学习如何在公共区块链上部署和使用合约，比如以太坊测试网，可以前往我们的[连接公共测试网络指南](../Connecting-to-public-test-networks/)。
 
 最受欢迎的本地区块链是 Ganache。要在您的项目中安装它，请运行：
 ```
@@ -43,11 +48,11 @@ Truffle有一个图形化版本的ganache-cli，也称为[Ganache](https://www.t
 你也可以在开发模式下运行一个真正的[以太坊节点](https://geth.ethereum.org/getting-started/dev-mode)。这些设置比较复杂，并且不如测试和开发灵活，但更能代表真实网络。
 
 ## 部署智能合约
-在*“开发智能合约”指南*中，我们设置了开发环境。
+在[“开发智能合约”指南](../Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md)中，我们设置了开发环境。
 
-如果您还没有设置，请*创建*并*设置*项目，然后*创建*并*编译*我们的Box智能合约。
+如果您还没有设置，请[创建](../Setting-up-a-Node-project/Connecting-to-public-test-networks.md#创建项目)并[设置](../Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md#设置项目)项目，然后[创建](../Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md#第一份合约)并[编译](../Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md#)我们的Box智能合约。
 
-完成项目设置后，我们现在准备部署合约。我们将部署来自*“开发智能合约”指南*的Box。请确保您在contracts/Box.sol中有*Box*的副本。
+完成项目设置后，我们现在准备部署合约。我们将部署来自[“开发智能合约”指南](../Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md#第一份合约)的Box。请确保您在contracts/Box.sol中有[Box](../Developing-smart-contracts/Connecting-to-public-test-networks-truffle.md#第一份合约)的副本。
 
 Truffle使用[迁移](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations)来部署合约。迁移由JavaScript文件和一个特殊的迁移合约组成，用于跟踪链上的迁移。
 
@@ -60,6 +65,7 @@ module.exports = async function (deployer) {
   await deployer.deploy(Box);
 };
 ```
+
 在部署之前，我们需要配置与 ganache 的连接。我们需要添加一个开发网络，用于本地主机和端口 8545，这是我们本地区块链正在使用的端口。
 ```
 // truffle-config.js
