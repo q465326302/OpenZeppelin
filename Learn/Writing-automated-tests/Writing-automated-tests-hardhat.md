@@ -30,9 +30,9 @@ Truffle和Hardhat都提供了说明。 使用此切换选择您的首选项！
 npm install --save-dev chai
 ```
 
-我们将把测试文件保存在一个名为test的目录中。测试最好按照contracts[目录](../)的结构进行组织：对于其中的每个.sol文件，创建一个相应的测试文件。
+我们将把测试文件保存在一个名为test的目录中。测试最好按照contracts[目录](../Developing-smart-contracts/Developing-smart-contracts-hardh.md#第一份合约)的结构进行组织：对于其中的每个.sol文件，创建一个相应的测试文件。
 
-现在是编写我们的第一组测试的时候了！这些测试将测试之前介绍过的Box[合约的属性](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)：一个简单的合约，允许您检索先前所有者存储的值。
+现在是编写我们的第一组测试的时候了！这些测试将测试之前介绍过的Box[合约的属性](../Developing-smart-contracts/Developing-smart-contracts-hardh.md#第一份合约)：一个简单的合约，允许您检索先前所有者存储的值。
 
 在您的项目根目录中创建一个测试目录。我们将把测试保存为test/Box.test.js。每个测试.js文件通常包含单个合约的测试，并以其命名。
 ```
@@ -79,6 +79,7 @@ npx hardhat test
 
   1 passing (578ms)
 ```
+
 此时，建议设置一个持续集成服务，如[CircleCI](https://circleci.com/)，以便在每次将代码提交到GitHub时自动运行测试。
 
 ## 执行复杂的断言
@@ -99,6 +100,7 @@ OpenZeppelin Test Helpers 是基于 web3.js 的，因此 Hardhat 用户应该使
 ```
 npm install --save-dev @openzeppelin/test-helpers
 ```
+
 我们可以使用OpenZeppelin Test Helpers来更新我们的测试，以支持非常大的数字，检查事件是否被触发以及检查事务是否回滚。
 ```
 // test/Box.test.js
@@ -143,7 +145,8 @@ contract('Box', function ([ owner, other ]) {
   });
 });
 ```
-这些测试将测试之前指南中的Ownable Box[合约的属性](../Developing%20smart%20contracts/Developing%20smart%20contracts-hardh.md)：一个简单的合约，让您检索所有者先前存储的值。
+
+这些测试将测试之前指南中的Ownable Box[合约的属性](../Developing-smart-contracts/Developing-smart-contracts-hardh.md#导入openzeppelin-contracts)：一个简单的合约，让您检索所有者先前存储的值。
 
 再次运行测试以查看Test Helpers的作用：
 ```
@@ -157,12 +160,13 @@ npx truffle test
 
   3 passing (753ms)
 ```
+
 测试助手将让你编写强大的断言，而无需担心底层的以太坊库的低级细节。要了解更多关于它们的用途，可以前往它们的[API参考文档](https://docs.openzeppelin.com/test-helpers/0.5/api)。
 
 ## 下一步
 一旦您已经彻底测试了您的合约并且相信它们的正确性，您将想要部署它们到一个真实的网络并开始与它们交互。以下指南将帮助您了解这些主题：
-* [连接公共测试网络](../Connecting%20to%20public%20test%20networks/Connecting%20to%20public%20test%20networks-hardhat.md)
+* [连接公共测试网络](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)
 
-* [部署和交互](../Deploying%20and%20interacting/Deploying%20and%20interacting-hardat.md)
+* [部署和交互](../Deploying-and-interacting/Deploying-and-interacting-hardat.md)
 
-* [准备主网](../Preparing%20for%20mainnet/Preparing%20for%20mainnet.md)
+* [准备主网](../Preparing-for-mainnet/Preparing-for-mainnet.md)
