@@ -13,7 +13,7 @@ Defender Admin服务充当一个接口，通过安全的多签合约或时间锁
 * 在紧急情况下暂停合约
 
 ## 合约和提案
-要开始在Defender Admin中管理您的合约，第一步是注册它。这是一个一次性的过程，您需要指定网络和地址，并为您的合约分配一个名称。如果合约已经通过etherscan或sourcify进行了验证，合约的ABI将自动获取，否则您需要手动输入它。
+要开始在Defender Admin中管理您的合约，第一步是注册它。这是一个一次性的过程，您需要指定网络和地址，并为您的合约分配一个名称。如果合约已经通过[etherscan](https://etherscan.io/)或[sourcify](https://github.com/ethereum/sourcify)进行了验证，合约的ABI将自动获取，否则您需要手动输入它。
 ![admin-1.png](img/admin-1.png)
 
 > NOTE
@@ -32,7 +32,7 @@ Defender Admin会自动尝试检测您的合约的一些特征。今天，它将
 https://youtu.be/XJ3UUNYlbxg
 
 ## API访问
-您可以通过[Defender Admin API](../../API%20Reference/Admin.md)以编程方式向您的Admin仪表板添加合约，并通过该API创建新的提案。请查看[defender-admin-client npm](https://www.npmjs.com/package/defender-admin-client)包以获取更多信息。
+您可以通过[Defender Admin API](../../API-Reference/Admin.md)以编程方式向您的Admin仪表板添加合约，并通过该API创建新的提案。请查看[defender-admin-client npm](https://www.npmjs.com/package/defender-admin-client)包以获取更多信息。
 
 ## 提案类型
 Defender Admin目前支持三种提案类型：升级、暂停和自定义操作。未来将会添加更多的提案类型。
@@ -41,7 +41,7 @@ Defender Admin目前支持三种提案类型：升级、暂停和自定义操作
 升级操作只能在支持 EIP1967 或传统zOS可升级代理的合约上执行，这些代理公开了 upgradeTo(address) 函数。Defender Admin 将直接处理由多重签名钱包直接拥有的代理，或者由ProxyAdmin管理的代理，而 ProxyAdmin 又由钱包拥有。升级操作只需要选择新的实现地址，Defender Admin 就会处理其余的事情。
 
 > WARNING
-Defender Admin目前不会验证实现的存储布局兼容性。因此，我们强烈建议使用openzeppelin-upgrades库来[部署目标实现](../../../Upgrades%20Plugins/Overview.md)。可以使用[Truffle](../../../Upgrades%20Plugins/API%20Reference/Truffle%20Upgrades.md)中的prepareUpgrade函数或[Hardhat](../../../Upgrades%20Plugins/API%20Reference/Hardhat%20Upgrades.md)中的defender.proposeUpgrade函数来完成此操作。
+Defender Admin目前不会验证实现的存储布局兼容性。因此，我们强烈建议使用openzeppelin-upgrades库来[部署目标实现](../../../Upgrades-Plugins/Overview.md#管理所有权)。可以使用[Truffle](../../../Upgrades-Plugins/API-Reference/Truffle-Upgrades.md#准备升级)中的prepareUpgrade函数或[Hardhat](../../../Upgrades-Plugins/API-Reference/Hardhat-Upgrades.md#defenderproposeupgrade)中的defender.proposeUpgrade函数来完成此操作。
 
 ### 暂停/恢复
 可以在ABI公开了pause()函数的合约上执行暂停操作。如果ABI还公开了unpause()函数，Defender Admin还可以让您执行取消暂停操作。暂停和取消暂停操作仅需要您指定应通过哪个Admin账户执行。
@@ -50,7 +50,7 @@ Defender Admin目前不会验证实现的存储布局兼容性。因此，我们
 ![admin-3.png](img/admin-3.png)
 
 ### 访问控制管理
-访问控制操作是指符合[OpenZeppelin访问控制](../../../Contracts/Contracts.4.x/Access%20Control.md)的grantRole和revokeRole接口的调用，通过其ABI实现。
+访问控制操作是指符合[OpenZeppelin访问控制](../../../Contracts/Contracts.4.x/Access-Control.md)的grantRole和revokeRole接口的调用，通过其ABI实现。
 
 Defender提供了创建此类提案的功能，当ABI包含grantRole和revokeRole函数时，您可以使用合约已经索引的角色来填充它们（通过从[TheGraph](https://thegraph.com/)消耗的事件，如果合约的网络受支持，则通过getLogs JSON-RPC调用索引）。
 
@@ -159,12 +159,12 @@ solidity: {
 ```
 
 ### 将合约所有权转移给TimelockController
-为了利用时间锁执行函数，需要将其分配访问权限到相应的智能合约，可以通过角色或所有权来实现。可以通过调用transferOwnership或相关[角色分配](../../../Contracts/Contracts.3.x/Access%20Control.md)函数来完成。
+为了利用时间锁执行函数，需要将其分配访问权限到相应的智能合约，可以通过角色或所有权来实现。可以通过调用transferOwnership或相关[角色分配](../../../Contracts/Contracts.3.x/Access-Control.md#授予和撤销角色)函数来完成。
 
 https://youtu.be/cXDp2n5al7U
 
 ### 创建时间锁定提案
-Defender Admin支持通过OpenZeppelin Contracts库提供的[TimelockController合约进行时间锁定的管理提案](../../../Contracts/Contracts.4.x/Access%20Control.md)。
+Defender Admin支持通过OpenZeppelin Contracts库提供的[TimelockController合约进行时间锁定的管理提案](../../../Contracts/Contracts.4.x/Access-Control.md#using-timelockcontroller)。
 
 https://youtu.be/59p98wGqdVo
 

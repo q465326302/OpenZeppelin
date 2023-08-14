@@ -7,16 +7,16 @@ Defender是免费的！只需前往[defender.openzeppelin.com](https://hubs.li/H
 # 组件
 通过自动化以太坊操作，以更低的风险为用户提供高质量的产品。点击每个组件的卡片了解更多信息。
 
-## Admin
+## [Admin](./Components/Admin/Admin.md)
 自动化和保护所有智能合约管理操作。
 
-## Relay
+## [Relay](./Components/Relay/Relay.md)
 构建具有私密和安全的交易基础设施。
 
-## Sentinel
+## [Sentinel](./Components/Sentinel/Sentinel.md)
 监控智能合约并发送通知。
 
-## Autotask
+## [Autotask](./Components/Autotasks/Autotasks.md)
 创建自动化脚本以调用智能合约。
 
 # 可用网络

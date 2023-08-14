@@ -106,6 +106,7 @@ const erc20 = new ethers.Contract(ERC20_ADDRESS, ERC20_ABI, signer);
 const tx = await erc20.transfer(beneficiary, 1e18.toString());
 const mined = await tx.wait();
 ```
+
 在上面的示例中，我们还使用了 DefenderRelayProvider 来进行对网络的调用。Defender signer可以与任何提供者一起使用，例如ethers.getDefaultProvider()，但您也可以依赖Defender作为网络提供者。
 
 您可以在[此处](https://www.npmjs.com/package/defender-relay-client#user-content-ethersjs)阅读有关 ethers 集成的更多信息。
@@ -124,6 +125,7 @@ const [from] = await web3.eth.getAccounts();
 const erc20 = new web3.eth.Contract(ERC20_ABI, ERC20_ADDRESS, { from });
 const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 ```
+
 以上示例中，转账交易由Defender  Relayer 签名和广播，任何其他的JSON RPC调用都通过Defender私有端点路由。
 
 您可以在[此处](https://www.npmjs.com/package/defender-relay-client#user-content-web3js)阅读有关web3集成的更多信息。
@@ -233,6 +235,7 @@ tx = await Relayer .replaceTransactionByNonce(42, replacement);
 // 或者通过transactionId替换交易
 tx = await Relayer .replaceTransactionById('5fcb8a6d-8d3e-403a-b33d-ade27ce0f85a', replacement);
 ```
+
 您还可以通过在使用以太网或web3.js适配器发送交易时设置nonce来替换挂起的交易。
 ```
 // 使用ethers
@@ -284,6 +287,7 @@ const signTypedDataResponse = await Relayer .signTypedData({
 ```
 const address = await signer.getAddress();
 ```
+
 如果您需要更多关于Relayer 的信息，请查看客户端的getRelayer 方法。它返回以下数据：
 ```
 const info = await Relayer .getRelayer ();
@@ -305,6 +309,7 @@ Defender还提供了一种简单的方法来向网络发出任意的JSON RPC调�
 ```
 const balance = await Relayer .call('eth_getBalance', ['0x6b175474e89094c44da98b954eedeac495271d0f', 'latest']);
 ```
+
 如果您正在使用ethers.js，则可以通过自定义的DefenderRelayProvider[提供](https://docs.ethers.io/v5/api/providers/provider/)程序对象来支持此功能：
 ```
 const provider = new DefenderRelayProvider(credentials);
@@ -392,7 +397,7 @@ Relayer 可以原子地分配nonce，从而使它们能够处理许多并发交�
 当向Rollup链（如Arbitrum或Optimism）发送交易时，Relayer 目前依赖于链的序列化器/聚合器。这意味着，如果序列化器崩溃或审查交易，则Relayer 将无法绕过它并直接提交到第1层。
 
 ## Hedera支持
-目前，在Hedera网络上，Defender Relay仅支持测试网。一旦Hedera JSON RPC Relay服务退出测试版，Defender将提供Hedera主网支持。
+目前，在Hedera网络上，Defender Relay仅支持测试网。一旦[Hedera JSON RPC Relay](https://docs.hedera.com/hedera/core-concepts/smart-contracts/json-rpc-relay)服务退出测试版，Defender将提供Hedera主网支持。
 
 ## 即将呈现...
 我们正在开发新功能。敬请期待，如果您有任何需求，请告诉我们！

@@ -53,6 +53,7 @@ exports.handler = async function(event) {
   // Use Relayer  for sending txs or querying the network...
 }
 ```
+
 这使您可以在不设置任何API密钥或密码的情况下，从您的自动任务中使用Relayer 发送交易。此外，您还可以使用Relayer  JSON RPC端点查询任何以太坊网络，而无需为外部网络提供程序配置API密钥。
 
 如果您想[使用ethers.js](https://www.npmjs.com/package/defender-relay-client#ethersjs)通过您的Relayer 进行查询或发送交易，请更改上述内容为：
@@ -155,6 +156,7 @@ exports.handler =  async function(event) {
   await store.del('myKey');
 }
 ```
+
 键值存储允许您获取、放置和删除键值对。键和值必须是字符串。键限制为1 KB，值限制为300 KB。您可以存储最多1000、3000或10000个键值对，具体取决于您是否使用免费、个人或付费计划。
 
 请注意，数据存储是所有自动任务共享的。为了隔离每个自动任务管理的记录，请考虑为每个自动任务唯一的命名空间添加前缀。
@@ -183,6 +185,7 @@ exports.handler = async function(credentials, context) {
   }
 }
 ```
+
 对于电子邮件通知，支持基本的HTML标记。以下是生成HTML消息的示例：
 ```
 function generateHtmlMessage(autotaskName, txHash) {
@@ -215,6 +218,7 @@ exports.handler = async function(event, context) {
   }
 }
 ```
+
 要发送度量通知，请使用notificationClient.sendMetric()方法，如下例所示：
 ```
 exports.handler = async function(credentials, context) {
@@ -231,6 +235,7 @@ exports.handler = async function(credentials, context) {
   }
 }
 ```
+
 可以在Autotask创建/更新代码屏幕的代码编辑器下找到可用的通知渠道列表，通过点击链接来查看可以使用哪些通知渠道。
 ![aototasks-2.png](img/autotasks-2.png)
 
@@ -308,6 +313,7 @@ if (require.main === module) {
 
 所有的defender-client包都是用TypeScript编写的，并且包含它们的类型声明。你还可以使用[defender-autotask-utils](https://www.npmjs.com/package/defender-autotask-utils)包来定义事件负载的类型。
 ```
+
 import { AutotaskEvent, SentinelTriggerEvent } from 'defender-autotask-utils';
 
 // Example for an Autotask being triggered by a Sentinel
