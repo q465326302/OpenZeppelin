@@ -7,7 +7,7 @@ Autotask API允许您以编程方式列出、创建、检索、更新、删除Au
 我们建议您使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包来简化与Autotask API的交互。
 
 > NOTE
-不建议在浏览器环境中使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包，因为敏感密钥将公开暴露。
+不建议在浏览器环境中使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包，因为密钥将公开暴露。
 
 ## 创建端点
 通过POST请求使用autotasks端点来创建新的Autotask。该端点接受以下接口：

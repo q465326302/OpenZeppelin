@@ -7,7 +7,7 @@ Admin API允许您以编程方式创建新的Admin提案。
 我们建议您使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包来简化与Admin API的交互。
 
 > NOTE
-不建议在浏览器环境中使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包，因为敏感密钥将被公开显示。
+不建议在浏览器环境中使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包，因为密钥将被公开显示。
 
 ## 提案端点
 通过POST请求使用/proposals端点创建新的Admin操作提案。通过此方式创建的任何操作最初都没有批准。如果提案的接收方合约不存在，将使用提供的参数创建它。
@@ -331,6 +331,7 @@ curl \
   -d "$DATA" \
     "https://defender-api.openzeppelin.com/admin/verifications"
 ```
+
 您还可以向 `/verifications/${contractNetwork}/${contractAddress}` 发出 GET 请求，以获取与 contractAddress 在Defender中关联的最新验证信息。对于上面的示例，请求的URL将是：
 ```
 curl \

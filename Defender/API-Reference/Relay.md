@@ -17,7 +17,7 @@ Relay API分为两个模块：
 您可以使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包简化与Relay API的交互。
 
 > NOTE
-不建议在浏览器环境中使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包，因为敏感密钥将被公开暴露。
+不建议在浏览器环境中使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包，因为密钥将被公开暴露。
 
 ## Relay客户端模块参考
 

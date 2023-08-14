@@ -7,7 +7,7 @@ Sentinel API允许您以编程方式创建和管理Sentinels。
 我们建议您使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包简化与Sentinel API的交互。
 
 > NOTE
-不建议在浏览器环境中使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包，因为敏感密钥将公开暴露。
+不建议在浏览器环境中使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包，因为密钥将公开暴露。
 ```
 const { SentinelClient } = require('defender-sentinel-client');
 const creds = { apiKey: ADMIN_API_KEY, apiSecret: ADMIN_API_SECRET };

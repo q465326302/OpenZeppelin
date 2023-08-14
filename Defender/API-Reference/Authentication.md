@@ -5,6 +5,7 @@ JWT代币将在60分钟后过期。如果您的代码需要长于60分钟的会�
 
 > NOTE
 如果您使用defender-client npm包，所有身份验证和续订都会自动处理，只需提供API密钥和密钥即可。
+
 ## 进行身份验证的请求
 
 一旦获得JWT代币，即可向Defender API发出请求。请求需要API密钥，JWT代币（可选）有效载荷和API URL。将$KEY，$TOKEN设置为之前获取的API密钥和JWT代币的值。$END_POINT可以是txs或sign。

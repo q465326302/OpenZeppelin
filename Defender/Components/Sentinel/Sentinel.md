@@ -4,7 +4,7 @@ Defender Sentinel服务提供3种类型的Sentinels，分别是Contract Sentinel
 ## 用例
 当您需要了解或响应涉及您的智能合约、您需要监控的其他智能合约或Forta Bots的交易和Forta Alerts时，请使用Sentinel。您的Sentinel将监视每个交易和Forta Alert，并将您关心的内容发送到您选择的通知方式。
 
-* **监视敏感功能**，如转移所有权、暂停或升级
+* **监视关键功能**，如转移所有权、暂停或升级
 
 * **警报**可能危险的合约交易
 
@@ -15,7 +15,7 @@ Defender Sentinel服务提供3种类型的Sentinels，分别是Contract Sentinel
 * **了解**何时发生了意外的交易或警报数量增加的情况
   
 ### 何时使用合约Sentinel vs Forta Sentinel对比
-合约Sentinels特别适用于监测单个合约的交易。通过合约条件，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、value等筛选交易。
+合约Sentinels特别适用于监测单个合约的交易。通过[合约条件](#合约条件是什么)，您可以按照各种交易属性进行过滤，例如事件、函数、参数、gasPrice、value等筛选交易。
 
 FortaSentinels适用于使用更复杂的条件来监测一个或多个智能合约，通过连接到Forta Bot开发人员定义的事件和条件。Forta机器人比合约Sentinels更具灵活性，可以定义更多的交易条件。
 

@@ -121,7 +121,7 @@ exports.handler = async function(event) {
 需要超过25秒才能完成的自动任务将返回一个“待定”状态的响应。然而，自动任务将继续在后台运行，并最终完成。
 
 ### secrets
-Autotask的secrets是大小写敏感的键值对字符串，可以从任何Autotask中使用event.secrets对象访问。您可以定义尽可能多的secrets，供您的Autotasks使用。secrets在所有Autotasks之间共享，而不是针对单个Autotask。
+Autotask的secrets是大小写关键的键值对字符串，可以从任何Autotask中使用event.secrets对象访问。您可以定义尽可能多的secrets，供您的Autotasks使用。secrets在所有Autotasks之间共享，而不是针对单个Autotask。
 ```
 exports.handler = async function(event) {
   const { mySecret, anApiKey } = event.secrets;

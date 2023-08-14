@@ -463,7 +463,7 @@ RoleRevoked(role, account, sender)
 ```
 import "@openzeppelin/contracts/access/AccessControlDefaultAdminRules.sol";
 ```
-*AccessControl*的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个敏感角色，具有对其他可能拥有特权权限的角色的特殊权限。
+*AccessControl*的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个关键角色，具有对其他可能拥有特权权限的角色的特殊权限。
 
 如果没有为特定角色分配管理员角色，则DEFAULT_ADMIN_ROLE的持有者将能够授予和撤销管理员角色。
 
