@@ -1,7 +1,7 @@
 # ERC20
-ERC20是一种标准化的代币合约，用于[跟踪可互换的代币](../Tokens.md)。每个代币都与其他代币完全相等；没有任何代币具有特殊的权利或行为。这使得ERC20代币适用于**像货币交换、投票权、质押**等方面。
+ERC20是一种标准化的代币合约，用于[跟踪可互换的代币](../Tokens.md#不同类型的代币)。每个代币都与其他代币完全相等；没有任何代币具有特殊的权利或行为。这使得ERC20代币适用于**像货币交换、投票权、质押**等方面。
 
-OpenZeppelin Contracts提供了许多与ERC20相关的合约。在[API参考](../../API/ERC%2020.md)中，您将找到有关它们属性和用法的详细信息。
+OpenZeppelin Contracts提供了许多与ERC20相关的合约。在[API参考](../../API/ERC20.md)中，您将找到有关它们属性和用法的详细信息。
 
 ## 构建ERC20代币合约
 
@@ -22,10 +22,10 @@ contract GLDToken is ERC20 {
 }
 ```
 
-我们的合约通常通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用，这里我们重用ERC20作为基本标准实现和[名称、符号和小数点](../../API/ERC%2020.md)可选扩展。此外，我们创建了一个初始供应量的代币，该代币将分配给部署合约的地址。
+我们的合约通常通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用，这里我们重用ERC20作为基本标准实现和[名称](../../API/ERC20.md#name-→-string)、[符号](../../API/ERC20.md#symbol-→-string)和[小数点](../../API/ERC20.md#decimals-→-uint8)可选扩展。此外，我们创建了一个初始供应量的代币，该代币将分配给部署合约的地址。
 
 > TIP
-有关ERC20供应机制的更完整讨论，请参见[创建ERC20供应量](./Creating%20Supply/Creating%20Supply.md)。
+有关ERC20供应机制的更完整讨论，请参见[创建ERC20供应量](./Creating%20Supply/Creating-Supply.md)。
 
 就是这样！一旦部署，我们将能够查询部署者的余额：
 ```
@@ -33,7 +33,7 @@ contract GLDToken is ERC20 {
 1000000000000000000000
 ```
 
-我们也可以将这些[代币](../../API/ERC%2020.md)转移到其他账户。
+我们也可以将这些[代币](../../API/ERC20.md#transferaddress-to-uint256-amount-→-bool)转移到其他账户。
 ```
 > GLDToken.transfer(otherAddress, 300000000000000000000)
 > GLDToken.balanceOf(otherAddress)
@@ -46,7 +46,7 @@ contract GLDToken is ERC20 {
 
 通常，您可能希望将代币分成任意数量：例如，如果您拥有5个GLD，您可能希望将1.5个GLD发送给朋友，并将3.5个GLD保留给自己。不幸的是，Solidity和EVM不支持此行为：只能使用整数（整数）数字，这是一个问题。您可以发送1或2个代币，但不能发送1.5个代币。
 
-为了解决这个问题，[ERC20](../../API/ERC%2020.md)提供了一个[小数位字段](../../API/ERC%2020.md)，用于指定代币具有多少小数位。要能够转移1.5个GLD，小数位必须至少为1，因为该数字具有一个小数位。
+为了解决这个问题，[ERC20](../../API/ERC20.md#erc20)提供了一个[小数位字段](../../API/ERC20.md#decimals-→-uint8)，用于指定代币具有多少小数位。要能够转移1.5个GLD，小数位必须至少为1，因为该数字具有一个小数位。
 
 如何实现呢？这实际上非常简单：代币合约可以使用更大的整数值，以便50的余额表示5个GLD，转移15将对应于发送1.5个GLD，依此类推。
 
@@ -68,7 +68,7 @@ transfer(recipient, 5 * (10 ** 18));
 ```
 
 ## 预设的ERC20合约
-已经有一个预设的ERC20合约可用，即[ERC20PresetMinterPauser](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.7/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol)。它预设了允许代币铸造（创建）、停止所有代币转移（暂停）以及允许持有人销毁（销毁）其代币的功能。该合约使用[访问控制](../../Access%20Control.md)来控制对铸造和暂停功能的访问。部署合约的账户将被授予铸造者和暂停者角色，以及默认的管理员角色。
+已经有一个预设的ERC20合约可用，即[ERC20PresetMinterPauser](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v4.7/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol)。它预设了允许代币铸造（创建）、停止所有代币转移（暂停）以及允许持有人销毁（销毁）其代币的功能。该合约使用[访问控制](../../Access-Control.md)来控制对铸造和暂停功能的访问。部署合约的账户将被授予铸造者和暂停者角色，以及默认的管理员角色。
 
 这个合约已经准备好部署，无需编写任何Solidity代码。它可以用于快速原型设计和测试，也适用于生产环境。
 

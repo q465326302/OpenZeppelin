@@ -1,7 +1,7 @@
 # Creating ERC20 Supply
 在本指南中，您将学习如何创建具有自定义供应机制的ERC20代币。我们将展示两种使用OpenZeppelin Contracts的惯用方法，您将能够将其应用于智能合约开发实践中。
 
-建立在以太坊上的代币实现的标准接口称为ERC20，Contracts包括一个广泛使用的实现：名为ERC20合约的合约。这个合约与标准本身一样简单和基本。实际上，如果您尝试部署一个原样的[ERC20](../../../API/ERC%2020.md)实例，它将完全无用...它将没有供应！没有供应的代币有什么用呢？
+建立在以太坊上的代币实现的标准接口称为ERC20，Contracts包括一个广泛使用的实现：名为ERC20合约的合约。这个合约与标准本身一样简单和基本。实际上，如果您尝试部署一个原样的[ERC20](../../../API/ERC20.md)实例，它将完全无用...它将没有供应！没有供应的代币有什么用呢？
 
 供应的创建方式未在ERC20文档中定义。每个代币都可以使用自己的机制，不论分散还是集中，简单还是复杂等等。
 
@@ -16,7 +16,7 @@ contract ERC20FixedSupply is ERC20 {
 }
 ```
 
-从Contracts v2开始，不推荐也不能使用这种模式。变量totalSupply和balances现在是ERC20的私有实现细节，您无法直接写入它们。相反，有一个内部的[_mint](../../../API/ERC%2020.md)函数会执行这个操作：
+从Contracts v2开始，不推荐也不能使用这种模式。变量totalSupply和balances现在是ERC20的私有实现细节，您无法直接写入它们。相反，有一个内部的[_mint](../../../API/ERC20.md#_mintaddress-account-uint256-amount)函数会执行这个操作：
 ```
 contract ERC20FixedSupply is ERC20 {
     constructor() ERC20("Fixed", "FIX") {
@@ -28,7 +28,7 @@ contract ERC20FixedSupply is ERC20 {
 像这样封装状态可以使扩展合约更安全。例如，在第一个示例中，我们必须手动将totalSupply与修改后的balances同步，这很容易忘记。实际上，我们忽略了另一个同样容易被忽视的事情：标准所要求的Transfer事件，一些客户端依赖于此。第二个示例没有这个错误，因为内部的_mint函数会处理它。
 
 ## 奖励矿工
-内部的*_mint*函数是允许我们编写实现供应机制的ERC20扩展的关键构建块。
+内部的[_mint](../../../API/ERC20.md#_mintaddress-account-uint256-amount)函数是允许我们编写实现供应机制的ERC20扩展的关键构建块。
 
 我们将实现的机制是给生产以太坊区块的矿工一个代币奖励。在Solidity中，我们可以通过全局变量block.coinbase访问当前区块矿工的地址。每当有人在我们的代币上调用mintMinerReward()函数时,我们将向此地址铸造代币奖励。这个机制听起来可能有些愚蠢，但你永远不知道这可能会产生什么样的情况，值得进行分析和实验！
 ```contract ERC20WithMinerReward is ERC20 {
@@ -65,11 +65,11 @@ contract MinerRewardMinter {
 当使用ERC20PresetMinterPauser实例初始化此合约并授予该合约的铸造者角色时，将实现与前一节完全相同的行为。使用ERC20PresetMinterPauser有趣之处在于，我们可以通过将角色分配给多个合约轻松结合成多个供应机制，而且我们可以动态地实现这一点。
 
 > TIP
-要了解有关角色和权限系统的更多信息，请转到我们的[访问控制指南](../../../Access%20Control.md)。
+要了解有关角色和权限系统的更多信息，请转到我们的[访问控制指南](../../../Access-Control.md)。
 
 ## 自动化奖励
 
-到目前为止，我们的供应机制是手动触发的，但ERC20允许我们通过[_beforeTokenTransfer](../../../API/ERC%2020.md) hooks （请参见[使用 hooks](../../../Extending%20Contracts.md) ）扩展代币的核心功能。
+到目前为止，我们的供应机制是手动触发的，但ERC20允许我们通过[_beforeTokenTransfer](../../../API/ERC20.md#_beforetokentransferaddress-from-address-to-uint256-amount) hooks （请参见[使用 hooks](../../../Extending-Contracts.md#使用-hooks) ）扩展代币的核心功能。
 
 在上一节的供应机制中添加，我们可以使用此 hooks 为包含在区块链中的每个代币转移铸造矿工奖励。
 ```

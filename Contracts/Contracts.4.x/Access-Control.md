@@ -22,13 +22,13 @@ contract MyContract is Ownable {
     }
 }
 ```
-默认情况下，Ownable合约的[所有者](./API/Access.md)是部署它的账户，这是您所需要的。
+默认情况下，Ownable合约的[所有者](./API/Access.md#owner-→-address)是部署它的账户，这是您所需要的。
 
 Ownable还允许您：
 
-* 将[所有权从所有者账户](./API/Access.md)转移到新账户，以及
+* 将[所有权从所有者账户](./API/Access.md#transferownershipaddress-newowner)转移到新账户，以及
 
-* [放弃所有权](./API/Access.md)，让所有者放弃这种管理特权，这是初始阶段集中管理结束后的常见模式。
+* [放弃所有权](./API/Access.md#renounceownership)，让所有者放弃这种管理特权，这是初始阶段集中管理结束后的常见模式。
 
 > WARNING
 移除所有者将意味着只有所有者才能调用的管理任务将无法被调用！
@@ -45,9 +45,9 @@ Ownable还允许您：
 大多数软件使用基于角色的访问控制系统：有些用户是普通用户，有些可能是监管人员或经理，还有一些人具有管理特权。
 
 ### Using AccessControl
-OpenZeppelin Contracts提供了[AccessControl](./API/Access.md)，用于实现基于角色的访问控制。它的使用很简单：对于每个要定义的角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色。
+OpenZeppelin Contracts提供了[AccessControl](./API/Access.md#accesscontrol)，用于实现基于角色的访问控制。它的使用很简单：对于每个要定义的角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色。
 
-以下是在[ERC20代币](./Tokens/ERC20/ERC20.md)中使用AccessControl定义“铸造者”角色的简单示例，允许具有该角色的账户创建新的代币：
+以下是在[ERC20代币](./Tokens/ERC20/ERC20.md#erc20)中使用AccessControl定义“铸造者”角色的简单示例，允许具有该角色的账户创建新的代币：
 ```
 // contracts/MyToken.sol
 // SPDX-License-Identifier: MIT
@@ -74,7 +74,7 @@ contract MyToken is ERC20, AccessControl {
 ```
 
 > NOTE
-确保在使用[AccessControl](./API/Access.md)之前和复制本指南中的示例代码之前,充分理解它的工作原理，。
+确保在使用[AccessControl](./API/Access.md#accesscontrol)之前和复制本指南中的示例代码之前,充分理解它的工作原理，。
 
 尽管清晰明确，但这并不是我们无法通过Ownable实现的任何内容。实际上，AccessControl在需要精细权限控制的场景中表现出色，这可以通过定义多个角色来实现。
 
@@ -117,7 +117,7 @@ contract MyToken is ERC20, AccessControl {
 
 这种机制可以用于创建类似组织结构图的复杂权限结构，但它也为管理简单应用程序提供了一种简便的方法。AccessControl包括一个特殊的角色，称为DEFAULT_ADMIN_ROLE，它作为所有角色的**默认管理员角色**。具有此角色的账户将能够管理任何其他角色，除非使用_setRoleAdmin选择新的管理员角色。
 
-由于默认情况下它是所有角色的管理员，实际上它还是它自己的管理员，因此该角色存在重大风险。为了减轻这种风险，我们提供了*AccessControlDefaultAdminRules*，这是AccessControl的推荐扩展，增加了一些强制性安全措施，用于此角色：管理员受限于单个账户，具有两步转移过程，并在转移步骤之间有延迟。
+由于默认情况下它是所有角色的管理员，实际上它还是它自己的管理员，因此该角色存在重大风险。为了减轻这种风险，我们提供了[AccessControlDefaultAdminRules](./API/Access.md#accesscontroldefaultadminrules)，这是AccessControl的推荐扩展，增加了一些强制性安全措施，用于此角色：管理员受限于单个账户，具有两步转移过程，并在转移步骤之间有延迟。
 
 让我们看一下ERC20代币示例，这次利用默认管理员角色：
 ```
@@ -152,7 +152,7 @@ contract MyToken is ERC20, AccessControl {
 动态角色分配通常是一种理想的属性，例如在信任参与者的情况下可能会随时间变化。它也可以用于支持[KYC](https://en.wikipedia.org/wiki/Know_your_customer)等用例，其中角色持有者的列表可能不是预先知道的，或者可能包含在单个事务中的成本过高。
 
 ### Querying Privileged Accounts
-因为帐户可能会动态地[授予和撤销角色](./Access%20Control.md)，所以并不能总是能够确定哪些帐户持有特定的角色。这很重要，因为它允许证明关于系统的某些属性，例如管理帐户是多重签名或DAO，或者某个角色已从所有用户中删除，从而有效地禁用任何相关功能。
+因为帐户可能会动态地[授予和撤销角色](#granting-and-revoking-roles)，所以并不能总是能够确定哪些帐户持有特定的角色。这很重要，因为它允许证明关于系统的某些属性，例如管理帐户是多重签名或DAO，或者某个角色已从所有用户中删除，从而有效地禁用任何相关功能。
 
 在底层，AccessControl使用EnumerableSet，Solidity的映射类型的更强大的变体，它允许键枚举。getRoleMemberCount可以用于检索具有特定角色的帐户数量，然后可以调用getRoleMember来获取这些帐户的地址。
 ```
@@ -165,18 +165,18 @@ for (let i = 0; i < minterCount; ++i) {
 ```
 
 ## Delayed operation
-访问控制对于防止未经授权的访问关键功能至关重要。这些功能可能用于铸造代币、冻结转账或执行完全更改智能合约逻辑的升级。虽然 [Ownable 和 AccessControl](./API/Access.md) 可以防止未经授权的访问，但它们无法解决管理员恶意攻击其自己的系统以损害其用户的问题。
+访问控制对于防止未经授权的访问关键功能至关重要。这些功能可能用于铸造代币、冻结转账或执行完全更改智能合约逻辑的升级。虽然[Ownable](./API/Access.md#ownable) 和 [AccessControl](./API/Access.md#accesscontrol) 可以防止未经授权的访问，但它们无法解决管理员恶意攻击其自己的系统以损害其用户的问题。
 
-这就是 [TimelockController](./API/Governance.md) 要解决的问题。
+这就是 [TimelockController](./API/Governance.md#timelockcontroller) 要解决的问题。
 
-[TimelockController](./API/Governance.md) 是一个由提议者和执行者管理的代理。当将其设置为智能合约的所有者/管理员/控制器时，它确保提议者下达的任何维护操作都要受到延迟。这种延迟可以通过给用户时间来审查维护操作并根据自己的最佳利益退出系统来保护智能合约的用户。
+[TimelockController](./API/Governance.md#timelockcontroller) 是一个由提议者和执行者管理的代理。当将其设置为智能合约的所有者/管理员/控制器时，它确保提议者下达的任何维护操作都要受到延迟。这种延迟可以通过给用户时间来审查维护操作并根据自己的最佳利益退出系统来保护智能合约的用户。
 
 ### Using TimelockController
-默认情况下，部署 [TimelockController](./API/Governance.md) 的地址获得 timelock 的管理特权。该角色授予分配提议者、执行者和其他管理员的权利。
+默认情况下，部署 [TimelockController](./API/Governance.md#timelockcontroller) 的地址获得 timelock 的管理特权。该角色授予分配提议者、执行者和其他管理员的权利。
 
-配置 [TimelockController](./API/Governance.md) 的第一步是分配至少一个提议者和一个执行者。这些可以在构造函数中分配，也可以由具有管理员角色的任何人稍后分配。这些角色不是互斥的，这意味着一个账户可以拥有这两个角色。
+配置 [TimelockController](./API/Governance.md#timelockcontroller) 的第一步是分配至少一个提议者和一个执行者。这些可以在构造函数中分配，也可以由具有管理员角色的任何人稍后分配。这些角色不是互斥的，这意味着一个账户可以拥有这两个角色。
 
-角色使用 [AccessControl](./API/Access.md) 接口进行管理，每个角色的 bytes32 值可通过 ADMIN_ROLE、PROPOSER_ROLE 和 EXECUTOR_ROLE 常量访问。
+角色使用 [AccessControl](./API/Access.md#accesscontrol) 接口进行管理，每个角色的 bytes32 值可通过 ADMIN_ROLE、PROPOSER_ROLE 和 EXECUTOR_ROLE 常量访问。
 
 在 AccessControl 上构建了一个附加功能：将 executor 角色授予 address(0) 可以让任何人在timelock过期后执行提案。尽管这个功能很有用，但应该谨慎使用。
 
@@ -194,6 +194,6 @@ for (let i = 0; i < minterCount; ++i) {
 
 
 ### Minimum delay
-由 [TimelockController](./API/Governance.md) 执行的操作不受固定延迟的限制，而是受到最小延迟的限制。一些重大更新可能需要更长的延迟。例如，如果几天的延迟让用户审计铸造操作，那么在安排智能合约升级时使用几周甚至几个月的延迟是有意义的。
+由 [TimelockController](./API/Governance.md#timelockcontroller) 执行的操作不受固定延迟的限制，而是受到最小延迟的限制。一些重大更新可能需要更长的延迟。例如，如果几天的延迟让用户审计铸造操作，那么在安排智能合约升级时使用几周甚至几个月的延迟是有意义的。
 
-最小延迟（可通过 [getMinDelay](./API/Governance.md) 方法访问）可以通过调用[updateDelay](./API/Governance.md) 函数进行更新。请注意，只有 timelock 本身可以访问此函数，这意味着该维护操作必须通过 timelock 本身进行。
+最小延迟（可通过 [getMinDelay](./API/Governance.md#getmindelay-→-uint256) 方法访问）可以通过调用[updateDelay](./API/Governance.md#updatedelayuint256-newdelay) 函数进行更新。请注意，只有 timelock 本身可以访问此函数，这意味着该维护操作必须通过 timelock 本身进行。
