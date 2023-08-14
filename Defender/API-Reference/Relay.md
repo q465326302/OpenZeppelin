@@ -298,6 +298,7 @@ curl \
   message: 'j3bru93-k32l-3p1s-pp56-u43f675e92p1 deleted'
 }
 ```
+
 只能通过Defender控制台删除Relayer（而不仅仅是密钥）。
 
 ## Relayer 签名模块参考资料

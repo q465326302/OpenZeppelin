@@ -96,7 +96,7 @@ stackName（例如mystack）与资源键（例如Relayer -1）结合使用，唯
 为了防止意外删除资源，从serverless.yml文件中删除的任何资源都不会自动删除。为了预期此行为，必须启用SSOT模式。
 
 ###  secrets （Autotask）
-Autotask secrets 可以全局定义和每个堆栈定义。在全局下定义的 secrets 不会受到stackName更改的影响，并且在在新堆栈下重新部署时将保留。在堆栈下定义的 secrets 将在重新部署到新的stackName下时被删除（在启用SSOT模式的情况下）。要引用在堆栈下定义的 secrets ，请使用以下格式：<stackname> _ <secretkey>，例如mystack_test。
+Autotask secrets 可以全局定义和每个堆栈定义。在全局下定义的 secrets 不会受到stackName更改的影响，并且在在新堆栈下重新部署时将保留。在堆栈下定义的 secrets 将在重新部署到新的stackName下时被删除（在启用[SSOT模式](#ssot模式)的情况下）。要引用在堆栈下定义的 secrets ，请使用以下格式：<stackname> _ <secretkey>，例如mystack_test。
 ```
 secrets:
   # optional - global secrets are not affected by stackName changes
@@ -108,17 +108,17 @@ secrets:
     test: ${self:custom.config.secrets.test}
 ```
 
-类型和模式验证
+### 类型和模式验证
 
 我们基于JSON模式提供自动生成的文档：
 
-* Defender属性
+* [Defender属性](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs/defender.md)
 
-* Provider属性
+* [Provider Property](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs/provider.md)
 
-* Function（Autotask）属性
+* [Function（Autotask）属性](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs/function.md)
 
-* Resources Property
+* [Resources Property](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs/resources-resources.md)
 
 更多关于类型的信息可以在[此处](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/index.ts)找到。具体来说，可以查看以Y开头的类型（例如YRelayer ）。有关模式，可以查看[docs-schema文件夹](https://github.com/OpenZeppelin/defender-serverless/blob/main/src/types/docs-schemas)中的文档。
 
@@ -171,6 +171,6 @@ secrets:
 
 * API密钥权限不足
 
-* serverless.yml文件的验证错误（请参见_类型和模式验证_）
+* serverless.yml文件的验证错误（请参见[类型和模式验证](#类型和模式验证)）
 
 通常，修复错误并重试部署应足够，因为任何现有资源都将落在部署的更新条款中。但是，如果不确定，您可以随时调用sls remove来删除整个堆栈，并重试。
