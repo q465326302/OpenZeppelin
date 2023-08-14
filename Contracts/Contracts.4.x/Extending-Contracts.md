@@ -10,7 +10,7 @@ OpenZeppelin合约有一些库：大多数位于[Utils](../Contracts.4.x/Utiliti
 ## 重写
 继承通常用于将父级合约的功能添加到您自己的合约中，但这不是它的全部作用。您还可以使用重写来更改父级的某些部分行为。
 
-例如，想象一下，您想改变[AccessControl](./API/Access.md)，使[revokeRole](./API/Access.md)不能再被调用。这可以使用重写来实现：
+例如，想象一下，您想改变[AccessControl](./API/Access.md)，使[revokeRole](./API/Access.md#revokerolebytes32-role-address-account)不能再被调用。这可以使用重写来实现：
 ```
 // contracts/ModifiedAccessControl.sol
 // SPDX-License-Identifier: MIT
@@ -36,7 +36,7 @@ super关键字将允许您调用在父合约中定义的函数，即使它们被
 > TIP
 有关如何使用重写的更多信息，请转到[官方Solidity文档](https://solidity.readthedocs.io/en/latest/contracts.html#index-17)。
 
-这是[AccessControl](./API/Access.md)的修改版本，其中[revokeRole](./API/Access.md)无法用于撤销DEFAULT_ADMIN_ROLE：
+这是[AccessControl](./API/Access.md)的修改版本，其中[revokeRole](./API/Access.md#revokerolebytes32-role-address-account)无法用于撤销DEFAULT_ADMIN_ROLE：
 ```
 // contracts/ModifiedAccessControl.sol
 // SPDX-License-Identifier: MIT
@@ -64,11 +64,11 @@ contract ModifiedAccessControl is AccessControl {
 ## 使用 hooks 
 有时，为了扩展父合约，您需要重写多个相关函数，这会导致代码重复和错误的可能性增加。
 
-例如，考虑以[IERC721Receiver](./Tokens/ERC721.md)的方式实现安全的[ERC20](./API/ERC%2020.md)转账。您可能认为重写[transfer和transferFrom](./API/ERC%2020.md)就足够了，但是[_transfer和_mint](./API/ERC%2020.md)呢？为了避免你处理这些细节，我们引入了**hooks( hooks )**。
+例如，考虑以[IERC721Receiver](./Tokens/ERC721.md#预设erc721合约)的方式实现安全的[ERC20](./API/ERC20.md#erc20)转账。您可能认为重写[transfer](./API/ERC20.md#transferaddress-to-uint256-amount-→-bool)和[transferFrom](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)就足够了，但是[_transfer](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)和[_mint](./API/ERC20.md#_mintaddress-account-uint256-amount)呢？为了避免你处理这些细节，我们引入了**hooks( hooks )**。
 
- hooks 只是在某些操作发生之前或之后调用的函数。它们提供了一个集中的点来挂钩和扩展原始行为。
+hooks 只是在某些操作发生之前或之后调用的函数。它们提供了一个集中的点来挂钩和扩展原始行为。
 
-以下是使用**_beforeTokenTransfer** hooks 实现ERC20中的IERC721Receiver模式的示例：
+以下是使用[_beforeTokenTransfer](./API/ERC20.md#_burnaddress-account-uint256-amount) hooks 实现ERC20中的IERC721Receiver模式的示例：
 ```
 pragma solidity ^0.8.0;
 
@@ -98,7 +98,7 @@ contract ERC20WithSafeTransfer is ERC20 {
 
 1. 每当重写父级的 hooks 时，请重新应用virtual属性到 hooks 上。这将允许子合约向 hooks 添加更多功能。
 
-2. 在你的重写中**始终**使用super调用父合约的hook。这将确保调用继承树中的所有 hooks ：像[ERC20Pausable](./API/ERC%2020.md)这样的合约依赖于这种行为。
+2. 在你的重写中**始终**使用super调用父合约的hook。这将确保调用继承树中的所有 hooks ：像[ERC20Pausable](./API/ERC20.md#erc20pausable)这样的合约依赖于这种行为。
 
 ```
 contract MyToken is ERC20 {
