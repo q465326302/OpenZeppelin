@@ -205,6 +205,7 @@ const subscribedAddresses = sentinel.addressRules[0].addresses
 subscribedAddresses.push(newCloneAddress)
 await sentinelClient.update(subscriberId, { addresses: subscribedAddresses })
 ```
+
 点击保存更改。
 
 现在当Autotask运行时，它不仅会将合约添加到管理员仪表板中，还会将新创建的克隆合约添加到Contract Sentinel监视的地址数组中。

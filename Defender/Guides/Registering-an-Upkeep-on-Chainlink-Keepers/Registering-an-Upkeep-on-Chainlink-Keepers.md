@@ -51,7 +51,8 @@ interface KeeperCompatibleInterface {
   ) external;
 }
 ```
-完成这些方法后，您可以使用您喜欢的工具链编译和部署您的合约。
+
+完成这些方法后，您可以使用您喜欢的[工具链编译](https://hardhat.org/guides/deploying.html)和部署您的合约。
 
 ## 在Etherscan上验证您的合约代码
 为了被Chainlink Keepers网络接受，您的Upkeep合约源代码需要在Etherscan上进行验证。您可以使用您喜欢的[工具链](https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html)来完成这个过程。

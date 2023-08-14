@@ -24,7 +24,7 @@ $ npm install
 * API_SECRET：Defender 团队 API 密钥
 
 ## 部署 ERC20 合约
-OpenZeppelin [Contracts Wizard](https://wizard.openzeppelin.com/) 提供了一个易于创建智能合约的 API。生成一个[可暂停](../../../Contracts/Contracts.3.x/API/Utils.md)、可铸造、可暂停和实现[基于角色的访问控制](../../../Contracts/Contracts.3.x/Access%20Control.md)的ERC20合约，预铸100万个代币。预提供的脚本自动化了这个过程：
+OpenZeppelin [Contracts Wizard](https://wizard.openzeppelin.com/) 提供了一个易于创建智能合约的 API。生成一个[可暂停](../../../Contracts/Contracts.3.x/API/Utils.md#pausable)、可铸造、可暂停和实现[基于角色的访问控制](../../../Contracts/Contracts.3.x/Access-Control.md#基于角色的访问控制)的ERC20合约，预铸100万个代币。预提供的脚本自动化了这个过程：
 ```
 import { erc20 } from '@openzeppelin/wizard'
 

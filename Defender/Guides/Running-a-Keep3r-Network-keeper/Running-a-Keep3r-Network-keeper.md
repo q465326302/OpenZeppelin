@@ -55,11 +55,11 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 完成将您的 Relayer 绑定的交易后，您的 Relayer 将进入一个**为期3天的等待期**，在此期间无法手动激活为Keeper。您可以随时访问您的 Relayer 页面，以查看剩余时间。
 ![guide-keep3r-4.png](img/guide-keep3r-4.png)
 
-等待期结束后，您可以手动激活您的 Relayer 。
+等待期结束后，您可以[手动激活](#激活你的-relayer)您的 Relayer 。
 ![guide-keep3r-5.png](img/guide-keep3r-5.png)
 
 > NOTE
-你可以随时选择再次绑定到Keep3r网络。这将允许你绑定额外的KP3R代币，但会将等待期重置为3天，然后你需要手动激活成为Keeper。
+你可以随时选择再次绑定到Keep3r网络。这将允许你绑定额外的KP3R代币，但会将等待期重置为3天，然后你需要[手动激活](#激活你的-relayer)成为Keeper。
 
 ## 激活你的 Relayer 
 

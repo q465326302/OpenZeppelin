@@ -1,9 +1,9 @@
 # How to Relay Gasless Meta-Transactions
-[无燃气元交易](../../../Contracts/Contracts.4.x/API/Meta%20Transactions.md)为用户提供了更无缝的体验，使他们在与区块链互动时不必花费太多的钱。这种方法允许用户免费签署交易，并由第三方安全执行，而第三方支付燃气费用以执行交易。
+[无需gas元交易](../../../Contracts/Contracts.4.x/API/Meta%20Transactions.md)为用户提供了更无缝的体验，使他们在与区块链互动时不必花费太多的钱。这种方法允许用户免费签署交易，并由第三方安全执行，而第三方支付燃气费用以执行交易。
 
 使用OpenZeppelin Defender可以轻松安全地实现无需燃气的元交易中继。Defender [Relay](../../Components/Relay/Relay.md)允许您轻松发送交易，并处理私钥存储、交易签名、nonce管理、燃气估算以及必要时的自动重新提交。
 
-此[演示应用程序](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)使用[MinimalForwarder](../../../Contracts/Contracts.4.x/API/Meta%20Transactions.md)和[ERC2771Context](../../../Contracts/Contracts.4.x/API/Meta%20Transactions.md)实现元交易，以将msg.sender与 Relayer 的地址分离。用户需要做的就是使用他们想要发出交易的账户签署消息。签名是使用用户的私钥与目标合约和所需交易的数据形成的。这种签名在链外进行，不需要燃气费用。将签名传递给Relayer ，以便它可以为用户执行交易（并支付燃气费用）。
+此[演示应用程序](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)使用[MinimalForwarder](../../../Contracts/Contracts.4.x/API/Meta-Transactions.md#minimalforwarder)和[ERC2771Context](../../../Contracts/Contracts.4.x/API/Meta-Transactions.md#erc2771context)实现元交易，以将msg.sender与 Relayer 的地址分离。用户需要做的就是使用他们想要发出交易的账户签署消息。签名是使用用户的私钥与目标合约和所需交易的数据形成的。这种签名在链外进行，不需要燃气费用。将签名传递给Relayer ，以便它可以为用户执行交易（并支付燃气费用）。
 
 ## 演示应用程序概述
 您可以在此处查看[实时演示dapp](https://defender-metatx-workshop-demo.openzeppelin.com/)。如果用户有可用的资金支付交易，则直接接受注册，否则将数据作为元交易发送。
@@ -266,4 +266,4 @@ $ yarn start
 ## 资源
 [演示存储库-元交易名称注册表](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)
 
-[文档-元交易](https://docs.openzeppelin.com/contracts/4.x/api/metatx)
+[文档-元交易](../../../Contracts/Contracts.4.x/API/Meta-Transactions.md)
