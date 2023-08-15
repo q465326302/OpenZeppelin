@@ -1,9 +1,9 @@
 # Access Control
 这个目录提供了限制谁可以访问合约功能或何时访问的方法。
 
-* *AccessControl* 提供了一个基于角色的访问控制机制。可以创建多个层次的角色，并将每个角色分配给多个帐户。
+* [AccessControl](../Access-Control.md) 提供了一个基于角色的访问控制机制。可以创建多个层次的角色，并将每个角色分配给多个帐户。
 
-* *Ownable* 是一个更简单的机制，具有单个所有者“角色”，可以分配给单个帐户。这种较简单的机制对于快速测试很有用，但具有生产方面的问题的项目可能会超出它的范围。
+* [Ownable](#ownable) 是一个更简单的机制，具有单个所有者“角色”，可以分配给单个帐户。这种较简单的机制对于快速测试很有用，但具有生产方面的问题的项目可能会超出它的范围。
 
 ## 授权
 
@@ -12,23 +12,23 @@
 import "@openzeppelin/contracts/access/Ownable.sol";
 合约模块提供了一个基本的访问控制机制，其中有一个帐户（所有者）可以被授予对特定功能的独占访问权。
 
-默认情况下，所有者帐户将是部署合约的帐户。这可以在之后通过 *transferOwnership* 更改。
+默认情况下，所有者帐户将是部署合约的帐户。这可以在之后通过 [transferOwnership](#transferownershipaddress-newowner) 更改。
 
 这个模块通过继承使用。它将提供修饰符 onlyOwner，可以应用于您的函数，以限制它们的使用仅限于所有者。
 
 **MODIFIERS**
-onlyOwner()
+[onlyOwner()](#onlyowner)
 
 **FUNCTIONS**
-constructor()
-owner()
-_checkOwner()
-renounceOwnership()
-transferOwnership(newOwner)
-_transferOwnership(newOwner)
+[constructor()](#constructor)
+[owner()](#owner-→-address)
+[_checkOwner()](#_checkowner)
+[renounceOwnership()](#renounceownership)
+[transferOwnership(newOwner)](#transferownershipaddress-newowner)
+[_transferOwnership(newOwner)](#_transferownershipaddress-newowner)
 
 **EVENTS**
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### onlyOwner()
 修饰符#
@@ -69,22 +69,22 @@ import "@openzeppelin/contracts/access/Ownable2Step.sol";
 ```
 该合约模块提供了访问控制机制，其中有一个账户（所有者）可以被授予对特定函数的独占访问权限。
 
-默认情况下，所有者账户将是部署合约的账户。这可以通过*transferOwnership*和*acceptOwnership*进行更改。
+默认情况下，所有者账户将是部署合约的账户。这可以通过[transferOwnership](#transferownershipaddress-newowner-1)和[acceptOwnership](#acceptownership)进行更改。
 
 该模块通过继承使用。它将使父级（Ownable）的所有函数可用。
 **FUNCTIONS**
-pendingOwner()
-transferOwnership(newOwner)
-_transferOwnership(newOwner)
-acceptOwnership()
+[pendingOwner()](#pendingowner-→-address)
+[transferOwnership(newOwner)](#transferownershipaddress-newowner-1)
+[_transferOwnership(newOwner)](#_transferownershipaddress-newowner-1)
+[acceptOwnership()](#acceptownership)
 
 OWNABLE
-owner()
-_checkOwner()
-renounceOwnership()
+[owner()](#owner-→-address)
+[_checkOwner()](#_checkowner)
+[renounceOwnership()](#renounceownership)
 
 **EVENTS**
-OwnershipTransferStarted(previousOwner, newOwner)
+[OwnershipTransferStarted(previousOwner, newOwner)](#ownershiptransferstartedaddress-indexed-previousowner-address-indexed-newowner)
 
 OWNABLE
 OwnershipTransferred(previousOwner, newOwner)
@@ -115,16 +115,16 @@ import "@openzeppelin/contracts/access/IAccessControl.sol";
 AccessControl的外部接口声明支持ERC165检测。
 
 **FUNCTIONS**
-hasRole(role, account)
-getRoleAdmin(role)
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
+[grantRole(role, account)](#grantrolebytes32-role-address-account)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
 
 **EVENTS**
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### hasRole(bytes32 role, address account) → bool
 外部#
@@ -169,7 +169,7 @@ RoleRevoked(role, account, sender)
 当账户被授予角色时发出。
 发送者是发起合约调用的账户，是管理员角色持有者，除非使用*AccessControl._setupRole*。
 
-#### RoleRevoked（bytes32索引角色，地址索引帐户，地址索引发送方）
+#### RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
 事件#
 当账户被撤销角色时发出。
 发送者是发起合约调用的账户：- 如果使用revokeRole，则是管理员角色持有人- 如果使用renounceRole，则是角色持有人（即账户）。
@@ -178,63 +178,67 @@ RoleRevoked(role, account, sender)
 ```
 import "@openzeppelin/contracts/access/AccessControl.sol";
 ```
-合约模块，允许儿童实现基于角色的访问控制机制。这是一个轻量级版本，不允许通过访问合约事件日志以外的方式枚举角色成员。一些应用程序可能会从链上可枚举性中受益，对于这些情况，请参阅*AccessControlEnumerable*。
+
+合约模块，允许儿童实现基于角色的访问控制机制。这是一个轻量级版本，不允许通过访问合约事件日志以外的方式枚举角色成员。一些应用程序可能会从链上可枚举性中受益，对于这些情况，请参阅[AccessControlEnumerable](#accesscontrolenumerable)。
 
 角色由它们的bytes32标识符引用。这些应该在外部API中公开，并且是唯一的。实现这一点的最好方法是使用公共常量哈希摘要：
 ```
 bytes32 public constant MY_ROLE = keccak256("MY_ROLE");
 ```
 
-角色可以用来表示一组权限。为了限制对函数调用的访问，使用hasRole：
+角色可以用来表示一组权限。为了限制对函数调用的访问，使用[hasRole](#hasrolebytes32-role-address-account-→-bool)：
 ```
 function foo() public {
     require(hasRole(MY_ROLE, msg.sender));
     ...
 }
 ```
-角色可以通过*grantRole*和*revokeRole*函数动态地授予和撤销。每个角色都有一个关联的管理员角色，只有拥有角色管理员角色的帐户才能调用*grantRole*和*revokeRole*。
 
-默认情况下，所有角色的管理员角色都是DEFAULT_ADMIN_ROLE，这意味着只有拥有此角色的帐户才能授予或撤销其他角色。可以使用*_setRoleAdmin*创建更复杂的角色关系。
+角色可以通过[grantRole](#grantrolebytes32-role-address-account-1)和[revokeRole](#revokerolebytes32-role-address-account-1)函数动态地授予和撤销。每个角色都有一个关联的管理员角色，只有拥有角色管理员角色的帐户才能调用[grantRole](#grantrolebytes32-role-address-account-1)和[revokeRole](#revokerolebytes32-role-address-account-1)。
+
+默认情况下，所有角色的管理员角色都是DEFAULT_ADMIN_ROLE，这意味着只有拥有此角色的帐户才能授予或撤销其他角色。可以使用[_setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)创建更复杂的角色关系。
 
 
 > WARNING
-DEFAULT_ADMIN_ROLE也是其自己的管理员：它有权限授予和撤销此角色。应该采取额外的预防措施来保护已被授予该角色的帐户。我们建议使用*AccessControlDefaultAdminRules*为该角色执行额外的安全措施。
+DEFAULT_ADMIN_ROLE也是其自己的管理员：它有权限授予和撤销此角色。应该采取额外的预防措施来保护已被授予该角色的帐户。我们建议使用[AccessControlDefaultAdminRules](#accesscontroldefaultadminrules)为该角色执行额外的安全措施。
 
 **MODIFIERS**
-onlyRole(role)
+[onlyRole(role)](#onlyrolebytes32-role)
 
 **FUNCTIONS**
-supportsInterface(interfaceId)
-hasRole(role, account)
-_checkRole(role)
-_checkRole(role, account)
-getRoleAdmin(role)
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
-_setupRole(role, account)
-_setRoleAdmin(role, adminRole)
-_grantRole(role, account)
-_revokeRole(role, account)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
+[_checkRole(role)](#_checkrolebytes32-role)
+[_checkRole(role, account)](#_checkrolebytes32-role)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
+[grantRole(role, account)](#grantrolebytes32-role-address-account)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
+[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
+[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
+[_grantRole(role, account)](#_grantrolebytes32-role-address-account)
+[_revokeRole(role, account)](#_revokerolebytes32-role-address-account)
 
 **EVENTS**
 IACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### onlyRole(bytes32 role)
 修饰词#
 检查账户是否具有特定角色的修饰符。如果没有，将返回包含所需角色的标准化消息。
 回滚原因的格式由以下正则表达式给出：
+
 ```
 /^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/
 ```
+
 *自v4.1版本以来可用。*
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
-请查看*IERC165.supportsInterface*。
+请查看[IERC165.supportsInterface](../API/Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### hasRole(bytes32 role, address account) → bool
 公开#
@@ -242,8 +246,8 @@ RoleRevoked(role, account, sender)
 
 #### _checkRole(bytes32 role)
 内部#
-如果 _msgSender() 没有角色，则使用标准消息进行回退。重写此函数会更改 *onlyRol*e 修饰符的行为。
-回退消息的格式在 *_checkRole* 中描述。
+如果 _msgSender() 没有角色，则使用标准消息进行回退。重写此函数会更改 [onlyRole](#onlyrolebytes32-role) 修饰符的行为。
+回退消息的格式在 [_checkRole](#_checkrolebytes32-role-address-account) 中描述。
 *自 v4.6 起可用。*
 
 #### _checkRole(bytes32 role, address account)
@@ -256,76 +260,71 @@ RoleRevoked(role, account, sender)
 
 #### getRoleAdmin(bytes32 role) → bytes32
 公开#
-返回控制角色的管理员角色。请参阅*grantRole*和*revokeRole*。
-要更改角色的管理员，请使用*_setRoleAdmin*。
+返回控制角色的管理员角色。请参阅[grantRole](#grantrolebytes32-role-address-account-1)和[revokeRole](#revokerolebytes32-role-address-account-1)。
+要更改角色的管理员，请使用[_setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole-1)。
 
 #### grantRole(bytes32 role, address account)
 公开#
 授予账户角色。
-如果账户尚未被授予角色，则发出RoleGranted事件。
+如果账户尚未被授予角色，则发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 要求：
 * 调用者必须具有角色的管理员角色。
-可能会发出*RoleGranted*事件。
+可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### revokeRole(bytes32 role, address account)
 公开#
 从帐户中撤销角色。
-如果该帐户已被授予角色，则会发出一个RoleRevoked事件。
+如果该帐户已被授予角色，则会发出一个[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 要求：
 * 调用者必须具有该角色的管理员角色。
-可能会发出一个*RoleRevoked*事件。
+可能会发出一个[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### renounceRole(bytes32 role, address account)
 公开#
 从调用账户中撤销角色。
-角色通常通过*grantRole*和*revokeRole*进行管理：此函数的目的是为了提供一种机制，以便在账户被攻击时失去其特权（例如当信任的设备丢失时）。
-如果调用账户已被撤销角色，则发出*RoleRevoked*事件。
+角色通常通过[grantRole](#grantrolebytes32-role-address-account-1)和[revokeRole](#revokerolebytes32-role-address-account-1)进行管理：此函数的目的是为了提供一种机制，以便在账户被攻击时失去其特权（例如当信任的设备丢失时）。
+如果调用账户已被撤销角色，则发出[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 要求：
 * 调用者必须是账户。
-可能会发出*RoleRevoked*事件。
-
-#### _setupRole(bytes32 role, address account)
-内部#
-如果帐户缺少角色，请使用标准消息进行还原。
-还原原因的格式由以下正则表达式给出：
-```
-/^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/
-```
+可能会发出[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### _setupRole(bytes32 role, address account)
 内部#
 授予账户角色。
-如果账户尚未被授予角色，则会发出RoleGranted事件。请注意，与grantRole不同，此函数不对调用账户进行任何检查。
-可能会发出RoleGranted事件。
+如果账户尚未被授予角色，则会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。请注意，与[grantRole](#grantrolebytes32-role-address-account-1)不同，此函数不对调用账户进行任何检查。
+可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
+
 > WARNING
 只应该在设置系统的初始角色时从构造函数中调用此函数。
-在任何其他方式中使用此函数实际上是绕过AccessControl强制实施的管理系统。
+在任何其他方式中使用此函数实际上是绕过[AccessControl](#accesscontrol)强制实施的管理系统。
+
 > NOTE
-此函数已过时，建议使用_grantRole。
+此函数已过时，建议使用[_grantRole](#_grantrolebytes32-role-address-account)。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
 内部#
 将adminRole设置为角色的管理员角色。
 
-触发一个*RoleAdminChanged*事件。
+触发一个[RoleAdminChanged](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)事件。
 
 #### _grantRole(bytes32 role, address account)
 内部#
 授予账户角色。
 内部功能没有访问限制。
-可能会发出*RoleGranted*事件。
+可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### _revokeRole(bytes32 role, address account)
 内部#
 从帐户中撤销角色。
 内部函数，没有访问限制。
-可能会发出*RoleRevoked*事件。
+可能会发出[RoleRevoked](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 ### AccessControlCrossChain
 ```
 import "@openzeppelin/contracts/access/AccessControlCrossChain.sol";
 ```
-*AccessControl*的扩展，支持跨链访问管理。对于每个角色，该扩展实现了一个等效的“别名”角色，用于限制来自其他链的调用。
+
+[AccessControl](#accesscontrol)的扩展，支持跨链访问管理。对于每个角色，该扩展实现了一个等效的“别名”角色，用于限制来自其他链的调用。
 
 例如，如果一个函数myFunction受到onlyRole(SOME_ROLE)的保护，如果一个地址x具有角色SOME_ROLE，它将能够直接调用myFunction。然而，来自另一条链上相同地址的钱包或合约将无法调用此函数。为了这样做，它需要拥有角色_crossChainRoleAlias(SOME_ROLE)。
 
@@ -334,16 +333,16 @@ import "@openzeppelin/contracts/access/AccessControlCrossChain.sol";
 *自v4.6以来可用。*
 
 **FUNCTIONS**
-_checkRole(role)
-_crossChainRoleAlias(role)
+[_checkRole(role)](#_checkrolebytes32-role-1)
+[_crossChainRoleAlias(role)](#_crosschainrolealiasbytes32-role-→-bytes32)
 
 CROSSCHAINENABLED
-_isCrossChain()
-_crossChainSender()
+[_isCrossChain()](./Crosschain.md#_iscrosschain-→-bool)
+[_crossChainSender()](./Crosschain.md#_crosschainsender-→-address)
 
 ACCESSCONTROL
-supportsInterface(interfaceId)
-hasRole(role, account)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
 _checkRole(role, account)
 getRoleAdmin(role)
 grantRole(role, account)

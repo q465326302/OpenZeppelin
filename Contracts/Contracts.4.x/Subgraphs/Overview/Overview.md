@@ -23,7 +23,7 @@ OpenZeppelin Subgraphs提供模式描述，包括相应的索引逻辑和用于�
 
 **注意**：为了使索引逻辑工作，您需要为每个使用的模块命名一个数据源，名称与模块名称相同。
 
-@amxx/graphprotocol-utils提供了工具来*自动生成清单*。
+@amxx/graphprotocol-utils提供了工具来[自动生成清单](../Automatic-Generation/Automatic-Generation.md)。
 
 ### 组装模式
 根据您使用的模块，您的模式将必须包括相应的实体。组装模式可能很困难，因为graphql模式不本地支持导入和合并操作。我们为每个模块提供了预编译的模式，可以在generated/<module-name>.schema.graphql中找到。我们还提供了一个包含所有模块的所有实体的模式，可以在generated/all.schema.graphql中找到。

@@ -39,7 +39,7 @@ npx graph-compiler \
 * generated/sample.subgraph.yaml 包含子图清单。
 
 ## 部署您的子图
-为了将您的子图部署到托管服务或任何其他图节点，您必须首先创建它。此操作在此处有文档记录。完成此操作后，您可以使用 graph-cli 工具编译和部署生成的子图：
+为了将您的子图部署到托管服务或任何其他图节点，您必须首先创建它。此操作在[此处](https://thegraph.com/docs/developer/deploy-subgraph-hosted)有文档记录。完成此操作后，您可以使用 graph-cli 工具编译和部署生成的子图：
 ```
 npx graph-cli codegen generated/sample.subgraph.yaml
 npx graph-cli build generated/sample.subgraph.yaml
