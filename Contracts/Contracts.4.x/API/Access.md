@@ -627,92 +627,92 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 
 #### beginDefaultAdminTransfer(address newAdmin)
 公开#
-通过设置一个待确认的*pendingDefaultAdmin*，以当前时间戳加上*defaultAdminDelay*为限，启动*defaultAdmin*转移。
+通过设置一个待确认的[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)，以当前时间戳加上[defaultAdminDelay](#defaultadmindelay-→-uint48)为限，启动[defaultAdmin](#defaultadmin-→-address)转移。
 
 要求：
-* 只能由当前*defaultAdmin*调用。
+* 只能由当前[defaultAdmin](#defaultadmin-→-address)调用。
 
 触发DefaultAdminRoleChangeStarted事件。
 
 #### _beginDefaultAdminTransfer(address newAdmin)
 内部#
-查看 *beginDefaultAdminTransfer*。
+查看 [beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)。
 
 内部函数，没有访问限制。
 
 #### cancelDefaultAdminTransfer()
 公开#
-取消先前使用*beginDefaultAdminTransfer*启动的*默认管理员*转移。
+取消先前使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)启动的[ defaultAdmin](#defaultadmin-→-address)转移。
 
-尚未接受的*pendingDefaultAdmin*也可以使用此函数取消。
+尚未接受的[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)也可以使用此函数取消。
 
 要求：
-* 只能由当前*defaultAdmin*调用。
+* 只能由当前[defaultAdmin](#defaultadmin-→-address)调用。
 
 可能会发出DefaultAdminTransferCanceled事件。
 
 #### _cancelDefaultAdminTransfer()
 内部#
-查看*cancelDefaultAdminTransfer*。
+查看[cancelDefaultAdminTransfer](#canceldefaultadmintransfer)。
 
 这是一个没有访问限制的内部函数。
 
 #### acceptDefaultAdminTransfer()
 公开#
-完成之前使用*beginDefaultAdminTransfer*开始的*默认管理员*转移。
+完成之前使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)开始的[defaultAdmin](#defaultadmin-→-address)转移。
 
 调用该函数后：
 * DEFAULT_ADMIN_ROLE应授予调用者。
 * DEFAULT_ADMIN_ROLE应从以前的持有者中撤销。
-* *pendingDefaultAdmin*应重置为零值。
+* [pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)应重置为零值。
 
 要求：
-* 只能由*pendingDefaultAdmin*的newAdmin调用。
-* *pendingDefaultAdmin*的acceptSchedule应已通过。
+* 只能由[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)的newAdmin调用。
+* [pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)的acceptSchedule应已通过。
 
 #### _acceptDefaultAdminTransfer()
 内部#
-查看*acceptDefaultAdminTransfer*。
+查看[acceptDefaultAdminTransfer](#acceptdefaultadmintransfer)。
 这是一个没有访问限制的内部函数。
 
 #### changeDefaultAdminDelay(uint48 newDelay)
 公开#
-通过设置一个*pendingDefaultAdminDelay*来启动一个*defaultAdminDelay*更新，该延迟计划在当前时间戳加上*defaultAdminDelay*后生效。
+通过设置一个[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)来启动一个[defaultAdminDelay](#defaultadmindelay-→-uint48)更新，该延迟计划在当前时间戳加上[defaultAdminDelay](#defaultadmindelay-→-uint48)后生效。
 
-该函数保证在调用此方法时和*pendingDefaultAdminDelay*生效计划之间的任何对*beginDefaultAdminTransfer*的调用都将使用在调用之前设置的当前*defaultAdminDelay*。
+该函数保证在调用此方法时和[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)生效计划之间的任何对[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)的调用都将使用在调用之前设置的当前[defaultAdminDelay](#defaultadmindelay-→-uint48)。
 
-*pendingDefaultAdminDelay*的生效计划设计为等待计划并使用新延迟调用*beginDefaultAdminTransfer*将至少需要与另一个*defaultAdmin*完整转移（包括接受）相同的时间。
+[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)的生效计划设计为等待计划并使用新延迟调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)将至少需要与另一个[defaultAdmin](#defaultadmin-→-address)完整转移（包括接受）相同的时间。
 
 该计划适用于两种情况：
-* 当延迟更改为较大值时，计划是block.timestamp + newDelay，上限为*defaultAdminDelayIncreaseWait*。
+* 当延迟更改为较大值时，计划是block.timestamp + newDelay，上限为[defaultAdminDelayIncreaseWait](#defaultadmindelayincreasewait-→-uint48)。
 * 当延迟更改为较短的时间时，计划是block.timestamp +（当前延迟 - 新延迟）。
 
-如果一个未生效的*pendingDefaultAdminDelay*将被取消，以支持新的计划更改。
+如果一个未生效的[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)将被取消，以支持新的计划更改。
 要求：
-* 只能由当前的*defaultAdmin*调用。
+* 只能由当前的[defaultAdmin](#defaultadmin-→-address)调用。
 
 发出DefaultAdminDelayChangeScheduled事件，可能还会发出DefaultAdminDelayChangeCanceled事件。
 
 #### _changeDefaultAdminDelay(uint48 newDelay)
 内部#
-查看*changeDefaultAdminDelay*。
+查看[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
 内部函数，没有访问限制。
 
 #### rollbackDefaultAdminDelay()
 公开#
-取消预定的*defaultAdminDelay*更改。
+取消预定的[defaultAdminDelay](#defaultadmindelay-→-uint48)更改。
 要求：
-* 只能由当前的*defaultAdmin*调用。
+* 只能由当前的[defaultAdmin](#defaultadmin-→-address)调用。
 
 可能会发出DefaultAdminDelayChangeCanceled事件。
 
 #### _rollbackDefaultAdminDelay()
 内部#
-查看*rollbackDefaultAdminDelay*。
+查看[rollbackDefaultAdminDelay](#rollbackdefaultadmindelay)。
 这是一个没有访问限制的内部函数。
 
 #### _delayChangeWait(uint48 newDelay) → uint48
 内部#
-返回在newDelay成为新的*defaultAdminDelay*之后需要等待的秒数。
+返回在newDelay成为新的[defaultAdminDelay](#defaultadmindelay-→-uint48)之后需要等待的秒数。
 返回的值保证了如果延迟被减少，它将在遵守先前设置的延迟的等待后生效。
-请参阅*defaultAdminDelayIncreaseWait*。
+请参阅[defaultAdminDelayIncreaseWait](#defaultadmindelayincreasewait-→-uint48)。
