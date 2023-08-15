@@ -343,25 +343,25 @@ CROSSCHAINENABLED
 ACCESSCONTROL
 [supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
 [hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
-_checkRole(role, account)
-getRoleAdmin(role)
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
-_setupRole(role, account)
-_setRoleAdmin(role, adminRole)
-_grantRole(role, account)
-_revokeRole(role, account)
+[_checkRole(role, account)](#_checkrolebytes32-role)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
+[grantRole(role, account)](#grantrolebytes32-role-address-account-1)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account-1)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account-1)
+[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
+[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
+[_grantRole(role, account)](#_grantrolebytes32-role-address-account)
+[_revokeRole(role, account)](#_revokerolebytes32-role-address-account)
 
 **EVENTS**
 IACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### _checkRole(bytes32 role)
 内部#
-请查看*AccessControl._checkRole*。
+请查看[AccessControl._checkRole](#_checkrolebytes32-role-address-account)。
 
 #### _crossChainRoleAlias(bytes32 role) → bytes32
 内部#
@@ -374,95 +374,97 @@ import "@openzeppelin/contracts/access/IAccessControlEnumerable.sol";
 AccessControlEnumerable的外部接口声明为支持ERC165检测。
 
 **FUNCTIONS**
-getRoleMember(role, index)
-getRoleMemberCount(role)
+[getRoleMember(role, index)](#getrolememberbytes32-role-uint256-index-→-address)
+[getRoleMemberCount(role)](#getrolemembercountbytes32-role-→-uint256)
 
 IACCESSCONTROL
-hasRole(role, account)
-getRoleAdmin(role)
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
+[grantRole(role, account)](#grantrolebytes32-role-address-account)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
 
 EVENTS
 IACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### getRoleMember(bytes32 role, uint256 index) → address
 外部#
-返回具有角色的帐户之一。索引必须是0和*getRoleMemberCount*之间的值，不包括这两个值。
+返回具有角色的帐户之一。索引必须是0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
 
 角色承载者没有特定的排序方式，其排序可能随时更改。
 
 > WARNING
-使用*getRoleMember*和*getRoleMemberCount*时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
+使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
 外部#
-返回具有角色的帐户数量。可与*getRoleMember*一起使用，枚举角色的所有承担者。
+返回具有角色的帐户数量。可与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有承担者。
 
 ### AccessControlEnumerable
 ```
 import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
 ```
-*AccessControl*的扩展，允许枚举每个角色的成员。
+
+[AccessControl](#accesscontrol)的扩展，允许枚举每个角色的成员。
 
 **FUNCTIONS**
-supportsInterface(interfaceId)
-getRoleMember(role, index)
-getRoleMemberCount(role)
-_grantRole(role, account)
-_revokeRole(role, account)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
+[getRoleMember(role, index)](#getrolememberbytes32-role-uint256-index-→-address)
+[getRoleMemberCount(role)](#getrolemembercountbytes32-role-→-uint256)
+[_grantRole(role, account)](#_grantrolebytes32-role-address-account-1)
+[_revokeRole(role, account)](#_revokerolebytes32-role-address-account-1)
 
 ACCESSCONTROL
-hasRole(role, account)
-_checkRole(role)
-_checkRole(role, account)
-getRoleAdmin(role)
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
-_setupRole(role, account)
-_setRoleAdmin(role, adminRole)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
+[_checkRole(role)](#_checkrolebytes32-role)
+[_checkRole(role, account)](#_checkrolebytes32-role-address-account)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
+[grantRole(role, account)](#grantrolebytes32-role-address-account-1)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account-1)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account-1)
+[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
+[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
 
 **EVENTS**
 IACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
-请参见*IERC165.supportsInterface*。
+请参见[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### getRoleMember(bytes32 role, uint256 index) → address
 公开#
-返回具有该角色的帐户之一。索引必须是介于0和getRoleMemberCount之间的值，不包括这两个值。
+返回具有该角色的帐户之一。索引必须是介于0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
 
 角色持有人没有特定的排序方式，并且它们的顺序可能随时更改。
 
 > WARNING
-在使用*getRoleMember*和*getRoleMemberCount*时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
+在使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
 公开#
-返回拥有某个角色的账户数量。可以与getRoleMember一起使用，枚举角色的所有持有者。
+返回拥有某个角色的账户数量。可以与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有持有者。
 
 #### _grantRole(bytes32 role, address account)
 内部#
-重载_grantRole以跟踪可枚举成员资格
+重载[_grantRole](#_grantrolebytes32-role-address-account-1)以跟踪可枚举成员资格
 
 #### _revokeRole(bytes32 role, address account)
 内部#
-重载 _revokeRole 以跟踪可枚举的成员资格
+重载 [_revokeRole](#_revokerolebytes32-role-address-account-1) 以跟踪可枚举的成员资格
 
 ### AccessControlDefaultAdminRules
 ```
 import "@openzeppelin/contracts/access/AccessControlDefaultAdminRules.sol";
 ```
-*AccessControl*的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个关键角色，具有对其他可能拥有特权权限的角色的特殊权限。
+
+AccessControl的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个关键角色，具有对其他可能拥有特权权限的角色的特殊权限。
 
 如果没有为特定角色分配管理员角色，则DEFAULT_ADMIN_ROLE的持有者将能够授予和撤销管理员角色。
 
