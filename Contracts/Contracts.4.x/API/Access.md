@@ -464,15 +464,15 @@ IACCESSCONTROL
 import "@openzeppelin/contracts/access/AccessControlDefaultAdminRules.sol";
 ```
 
-AccessControl的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个关键角色，具有对其他可能拥有特权权限的角色的特殊权限。
+[AccessControl](#accesscontrol)的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个关键角色，具有对其他可能拥有特权权限的角色的特殊权限。
 
 如果没有为特定角色分配管理员角色，则DEFAULT_ADMIN_ROLE的持有者将能够授予和撤销管理员角色。
 
-该合约在AccessControl的基础上实现了以下风险缓解措施：
+该合约在[AccessControl](#accesscontrol)的基础上实现了以下风险缓解措施：
 * 自部署以来，只有一个帐户持有DEFAULT_ADMIN_ROLE，直到可能被放弃。
 * 强制执行将DEFAULT_ADMIN_ROLE转移到另一个帐户的2步过程。
 * 强制执行可配置的两个步骤之间的延迟，在接受转移之前可以取消。
-* 延迟可以通过调度进行更改，请参见changeDefaultAdminDelay。
+* 延迟可以通过调度进行更改，请参见[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
 * 不可能使用另一个角色来管理DEFAULT_ADMIN_ROLE。
 
 示例用法：
@@ -484,41 +484,42 @@ contract MyToken is AccessControlDefaultAdminRules {
    ) {}
 }
 ```
+
 *自v4.9版本起可用。*
 
 **FUNCTIONS**
-constructor(initialDelay, initialDefaultAdmin)
-supportsInterface(interfaceId)
-owner()
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
-_grantRole(role, account)
-_revokeRole(role, account)
-_setRoleAdmin(role, adminRole)
-defaultAdmin()
-pendingDefaultAdmin()
-defaultAdminDelay()
-pendingDefaultAdminDelay()
-defaultAdminDelayIncreaseWait()
-beginDefaultAdminTransfer(newAdmin)
-_beginDefaultAdminTransfer(newAdmin)
-cancelDefaultAdminTransfer()
-_cancelDefaultAdminTransfer()
-acceptDefaultAdminTransfer()
-_acceptDefaultAdminTransfer()
-changeDefaultAdminDelay(newDelay)
-_changeDefaultAdminDelay(newDelay)
-rollbackDefaultAdminDelay()
-_rollbackDefaultAdminDelay()
-_delayChangeWait(newDelay)
+[constructor(initialDelay, initialDefaultAdmin)](#constructoruint48-initialdelay-address-initialdefaultadmin)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-e28692-bool-2)
+[owner()](#owner-e28692-address-1)
+[grantRole(role, account)](#grantrolebytes32-role-address-account-2)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account-2)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account-2)
+[_grantRole(role, account)](#_grantrolebytes32-role-address-account-2)
+[_revokeRole(role, account)](#_revokerolebytes32-role-address-account-2)
+[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole-1)
+[defaultAdmin()](#defaultadmin-→-address)
+[pendingDefaultAdmin()](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)
+[defaultAdminDelay()](#defaultadmindelay-→-uint48)
+[pendingDefaultAdminDelay()](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)
+[defaultAdminDelayIncreaseWait()](#defaultadmindelayincreasewait-→-uint48)
+[beginDefaultAdminTransfer(newAdmin)](#begindefaultadmintransferaddress-newadmin)
+[_beginDefaultAdminTransfer(newAdmin)](#_begindefaultadmintransferaddress-newadmin)
+[cancelDefaultAdminTransfer()](#canceldefaultadmintransfer)
+[_cancelDefaultAdminTransfer()](#_canceldefaultadmintransfer)
+[acceptDefaultAdminTransfer()](#acceptdefaultadmintransfer)
+[_acceptDefaultAdminTransfer()](#_acceptdefaultadmintransfer)
+[changeDefaultAdminDelay(newDelay)](#changedefaultadmindelayuint48-newdelay)
+[_changeDefaultAdminDelay(newDelay)](#_changedefaultadmindelayuint48-newdelay)
+[rollbackDefaultAdminDelay()](#rollbackdefaultadmindelay)
+[_rollbackDefaultAdminDelay()](#_rollbackdefaultadmindelay)
+[_delayChangeWait(newDelay)](#_delaychangewaituint48-newdelay-→-uint48)
 
 ACCESSCONTROL
-hasRole(role, account)
-_checkRole(role)
-_checkRole(role, account)
-getRoleAdmin(role)
-_setupRole(role, account)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-e28692-bool-1)
+[_checkRole(role)](#_checkrolebytes32-role)
+[_checkRole(role, account)](#_checkrolebytes32-role-address-account)
+[getRoleAdmin(role)](#getroleadminbytes32-role-e28692-bytes32-1)
+[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
 
 **EVENTS**
 IACCESSCONTROLDEFAULTADMINRULES
@@ -528,57 +529,57 @@ DefaultAdminDelayChangeScheduled(newDelay, effectSchedule)
 DefaultAdminDelayChangeCanceled()
 
 IACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### constructor(uint48 initialDelay, address initialDefaultAdmin)
 内部#
-设置默认管理员延迟和默认管理员地址的初始值。
+设置默认[管理员延迟](#defaultadmindelay-→-uint48)和默认管理员地址的[初始值](#defaultadmin-→-address)。
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
-请参见*IERC165.supportsInterface*。
+请参见[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### owner() → address
 公开#
-请参见*IERC5313.owner* .
+请参见[IERC5313.owner](./Interfaces.md#owner-→-address) .
 
 #### grantRole(bytes32 role, address account)
 公开#
-查看*AccessControl.grantRole*。针对DEFAULT_ADMIN_ROLE进行还原。
+查看[AccessControl.grantRole](#grantrolebytes32-role-address-account-1)。针对DEFAULT_ADMIN_ROLE进行还原。
 
 #### revokeRole(bytes32 role, address account)
 公开#
-请参阅*AccessControl.revokeRole*。默认情况下撤销DEFAULT_ADMIN_ROLE角色。
+请参阅[AccessControl.revokeRole](#revokerolebytes32-role-address-account-1)。默认情况下撤销DEFAULT_ADMIN_ROLE角色。
 
 #### renounceRole(bytes32 role, address account)
 公开#
-请参阅*AccessControl.renounceRole*。
+请参阅[AccessControl.renounceRole](#renouncerolebytes32-role-address-account-1)。
 
-对于DEFAULT_ADMIN_ROLE，它只允许通过首先调用*beginDefaultAdminTransfer*到address（0）来进行两步操作，因此在调用此函数时需要确认*pendingDefaultAdmin*计划也已经通过。
+对于DEFAULT_ADMIN_ROLE，它只允许通过首先调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin) 到address（0）来进行两步操作，因此在调用此函数时需要确认[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)计划也已经通过。
 
 执行后，将无法调用onlyRole(DEFAULT_ADMIN_ROLE)函数。
 
 > NOTE
-放弃DEFAULT_ADMIN_ROLE将使合约失去*默认管理员*，从而禁用仅适用于其的任何功能，并且无法重新分配非受管理角色。
+放弃DEFAULT_ADMIN_ROLE将使合约失去 [defaultAdmin](#defaultadmin-→-address)，从而禁用仅适用于其的任何功能，并且无法重新分配非受管理角色。
 
 #### _grantRole(bytes32 role, address account)
 内部#
-请参见*AccessControl._grantRole*。
+请参见[AccessControl._grantRole](#_grantrolebytes32-role-address-account-1)。
 
-对于DEFAULT_ADMIN_ROLE，只有在没有*默认管理员*或者该角色已被先前放弃的情况下才允许授予。
+对于DEFAULT_ADMIN_ROLE，只有在没有[defaultAdmin](#defaultadmin-→-address)或者该角色已被先前放弃的情况下才允许授予。
 
 > NOTE
 通过另一种机制公开此函数可能会使DEFAULT_ADMIN_ROLE再次可分配。请确保在您的实现中保证这是预期的行为。
 
 #### _revokeRole(bytes32 role, address account)
 内部#
-请查看*AccessControl._revokeRole*函数。
+请查看[AccessControl._revokeRole](#_revokerolebytes32-role-address-account-1)函数。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
 内部#
-参见 *AccessControl._setRoleAdmin*。对于DEFAULT_ADMIN_ROLE进行还原。
+参见 [AccessControl._setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)。对于DEFAULT_ADMIN_ROLE进行还原。
 
 #### defaultAdmin() → address
 公开#
@@ -588,38 +589,38 @@ RoleRevoked(role, account, sender)
 公开#
 返回一个新管理员和接受日程的元组。
 
-日程表过期后，新管理员将能够通过调用 *acceptDefaultAdminTransfer* 接受 *defaultAdmin* 角色，完成角色转移。
+日程表过期后，新管理员将能够通过调用 [acceptDefaultAdminTransfer](#acceptdefaultadmintransfer) 接受 [defaultAdmin](#defaultadmin-→-address) 角色，完成角色转移。
 
 acceptSchedule 中只有零值表示没有待处理的管理员转移。
 
 > NOTE
-一个零地址的newAdmin意味着默认管理员正在放弃。
+一个零地址的newAdmin意味着 [defaultAdmin](#defaultadmin-→-address)正在放弃。
 
 #### defaultAdminDelay() → uint48
 公开#
-返回启动*默认管理员*转移的接受所需的延迟时间。
+返回启动[defaultAdmin](#defaultadmin-→-address) 转移的接受所需的延迟时间。
 
-在调用*beginDefaultAdminTransfer*设置接受计划时，此延迟将添加到当前时间戳。
+在调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)设置接受计划时，此延迟将添加到当前时间戳。
 
 > NOTE
-如果已经安排了延迟更改，则该函数将在安排过程中立即生效，返回新的延迟。请参见changeDefaultAdminDelay。
+如果已经安排了延迟更改，则该函数将在安排过程中立即生效，返回新的延迟。请参见[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
 
 #### pendingDefaultAdminDelay() → uint48 newDelay, uint48 schedule
 公开#
 返回一个新延迟和一个效果计划的元组。
 
-计划过期后，对于每个使用*beginDefaultAdminTransfer*开始的新*defaultAdmin*转移，新延迟将立即生效。
+计划过期后，对于每个使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)开始的新[defaultAdmin](#defaultadmin-→-address)转移，新延迟将立即生效。
 
 仅在effectSchedule中为零表示没有挂起的延迟更改。
 
 > NOTE
-一个仅为newDelay的零值意味着在效果计划之后，下一个*defaultAdminDelay*将为零。
+一个仅为newDelay的零值意味着在效果计划之后，下一个[defaultAdminDelay](#defaultadmindelay-→-uint48)将为零。
 
 #### defaultAdminDelayIncreaseWait() → uint48
 公开#
-将*默认管理员延迟*增加的最长时间（使用*changeDefaultAdminDelay*计划）生效的秒数。默认为5天。
+将默认[defaultAdminDelay](#defaultadmindelay-→-uint48) 增加的最长时间（使用[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)计划）生效的秒数。默认为5天。
 
-当计划增加*默认管理员延迟*时，它会在新的延迟时间过去后生效，目的是为了给予足够的时间来撤销任何意外更改（例如使用毫秒而不是秒），以避免合约被锁定。但是，为了避免过度计划，此函数将被限制等待时间，并且可以被重写以进行自定义的*默认管理员延迟*增加计划。
+当计划增加[默认管理员延迟](#defaultadmindelay-→-uint48)时，它会在新的延迟时间过去后生效，目的是为了给予足够的时间来撤销任何意外更改（例如使用毫秒而不是秒），以避免合约被锁定。但是，为了避免过度计划，此函数将被限制等待时间，并且可以被重写以进行自定义的[默认管理员延迟](#defaultadmindelay-→-uint48)增加计划。
 
 > IMPORTANT
 在重写此值时，请确保添加合理的时间，否则存在设置新延迟的风险，该延迟几乎立即生效，而在输入错误的情况下无法进行人为干预（例如，设置毫秒而不是秒）。
