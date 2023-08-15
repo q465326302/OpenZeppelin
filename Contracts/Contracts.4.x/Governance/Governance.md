@@ -24,7 +24,7 @@ OpenZeppelin的Governor系统在设计时考虑了与基于Compound的GovernorAl
 在使用Governor合约的timelock时，您可以使用OpenZeppelin的TimelockController或Compound的Timelock。根据timelock的选择，您应选择相应的Governor模块：GovernorTimelockControl或GovernorTimelockCompound。这允许您将现有的GovernorAlpha实例迁移到基于OpenZeppelin的Governor，而无需更改使用的timelock。
 
 ### 计数
-Tally是一个完整的用户使用的链上治理应用程序。它包括投票仪表板、提案创建向导、实时研究和分析以及教学内容。
+[Tally](https://www.tally.xyz/)是一个完整的用户使用的链上治理应用程序。它包括投票仪表板、提案创建向导、实时研究和分析以及教学内容。
 
 对于所有这些选项，Governor将与Tally兼容：用户将能够创建提案、可视化投票权力和支持者、浏览提案并投票。特别是对于提案创建，项目还可以使用Defender Admin作为替代接口。
 
@@ -99,10 +99,10 @@ contract MyTokenWrapped is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
 ```
 
 > NOTE
-目前在OpenZeppelin Contracts中唯一可用的投票权力来源是[ERC721Votes](../API/ERC721.md)。不提供此功能的ERC721代币可以使用[ERC721Votes](../API/ERC721.md)和[ERC721Wrapper](../API/Governance.md)的组合将其包装成投票代币。
+目前在OpenZeppelin Contracts中唯一可用的投票权力来源是[ERC721Votes](../API/ERC721.md#erc721votes)。不提供此功能的ERC721代币可以使用[ERC721Votes](../API/ERC721.md#erc721votes)和[ERC721Wrapper](../API/Governance.md)的组合将其包装成投票代币。
 
 > NOTE
-代币用于存储投票余额的内部时钟将决定与其关联的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以重写IERC6372时钟，改用时间戳而不是区块号。
+代币用于存储投票余额的内部时钟将决定与其关联的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以重写[IERC6372](../API/Interfaces.md#ierc6372)时钟，改用时间戳而不是区块号。
 
 ### Governor
 首先，我们将构建一个没有时间锁定的Governor。Governor合约提供了核心逻辑，但我们仍需要选择：1）如何确定投票权力，2）需要多少票才能达成法定人数，3）人们在投票时有哪些选项以及如何计算这些选票，以及4）应使用哪种类型的代币进行投票。您可以通过编写自己的模块来自定义这些方面，或者更轻松地从OpenZeppelin Contracts中选择一个模块。
@@ -314,7 +314,7 @@ await governor.execute(
 因此，设计基于时间戳的投票系统始于代币。
 
 ### 代币
-自v4.9以来，所有投票合约（包括[ERC20Votes和ERC721Votes](../API/ERC%2020.md)）都依赖于[IERC6372](../API/Interfaces.md)进行时钟管理。要从使用块号操作转换为使用时间戳操作，只需要重写clock()和CLOCK_MODE()函数即可。
+自v4.9以来，所有投票合约（包括[ERC20Votes](../API/ERC20.md#erc20votes)和[ERC721Votes](../API/ERC721.md#erc721votes)）都依赖于[IERC6372](../API/Interfaces.md#ierc6372)进行时钟管理。要从使用块号操作转换为使用时间戳操作，只需要重写clock()和CLOCK_MODE()函数即可。
 
 ```
 // SPDX-License-Identifier: MIT

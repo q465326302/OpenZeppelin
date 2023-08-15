@@ -50,7 +50,7 @@ contract MyToken is Initializable, ERC20Upgradeable, UUPSUpgradeable {
 
 例如，我们可以在xDai上拥有我们的代币，而我们的治理合约在主网上，或者我们可以在主网上拥有我们的代币，而我们的治理合约在Optimism上。
 
-为了实现这一点，我们将首先向我们的合约添加[CrossChainEnabled](./API/Crosschain.md)。您会注意到，这合约现在是抽象的。这是因为CrossChainEnabled是一个抽象合约：它不与任何特定的链相绑定，并且以抽象的方式处理跨链交互。这就是使我们能够轻松地将代码重用于不同链的原因。我们以后可以通过继承特定链的实现来进行专门化。
+为了实现这一点，我们将首先向我们的合约添加[CrossChainEnabled](./API/Crosschain.md#cross-chain-awareness)。您会注意到，这合约现在是抽象的。这是因为CrossChainEnabled是一个抽象合约：它不与任何特定的链相绑定，并且以抽象的方式处理跨链交互。这就是使我们能够轻松地将代码重用于不同链的原因。我们以后可以通过继承特定链的实现来进行专门化。
 ```
  import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 +import "@openzeppelin/contracts-upgradeable/crosschain/CrossChainEnabled.sol";
@@ -111,11 +111,11 @@ contract MyTokenOptimism is
 
 ## Going further with access control
 
-在前面的例子中，我们既有onlyOwner()修饰符，也有onlyCrossChainSender(owner)机制。我们没有使用[Ownable](./AccessControl.md#所有权和ownable)模式，因为其中包含的所有权转移机制不适用于所有者是跨链实体的情况。与[Ownable](./Access%20Control.md)不同，[AccessControl](./Access%20Control.md)在捕捉细微差别方面更有效，并且可以很好的用于构建跨链感知的合约。
+在前面的例子中，我们既有onlyOwner()修饰符，也有onlyCrossChainSender(owner)机制。我们没有使用[Ownable](./Access-Control.md#ownership-and-ownable)模式，因为其中包含的所有权转移机制不适用于所有者是跨链实体的情况。与[Ownable](./Access-Control.md#ownership-and-ownable)不同，[AccessControl](./Access-Control.md#role-based-access-control)在捕捉细微差别方面更有效，并且可以很好的用于构建跨链感知的合约。
 
-使用[AccessControlCrossChain](./API/Access.md)包括[AccessControl](./API/Access.md)核心和[CrossChainEnabled](./API/Crosschain.md)抽象。它还包括一些绑定，使角色管理和跨链操作兼容。
+使用[AccessControlCrossChain](./API/Access.md#accesscontrolcrosschain)包括[AccessControl](./API/Access.md#accesscontrol)核心和[CrossChainEnabled](./API/Crosschain.md#crosschainenabled的特殊化)抽象。它还包括一些绑定，使角色管理和跨链操作兼容。
 
-在铸造函数的情况下，当调用源来自同一链时，调用者必须具有MINTER_ROLE。如果调用者不在同一链上，则调用者不应具有MINTER_ROLE，而应该具有“别名”版本（MINTER_ROLE ^ CROSSCHAIN_ALIAS）。通过严格区分来自不同链的本地账户和远程账户来减轻了之前描述的危险。有关更多详细信息，请参见[AccessControlCrossChain](./API/Access.md)文档。
+在铸造函数的情况下，当调用源来自同一链时，调用者必须具有MINTER_ROLE。如果调用者不在同一链上，则调用者不应具有MINTER_ROLE，而应该具有“别名”版本（MINTER_ROLE ^ CROSSCHAIN_ALIAS）。通过严格区分来自不同链的本地账户和远程账户来减轻了之前描述的危险。有关更多详细信息，请参见[AccessControlCrossChain](./API/Access.md#accesscontrolcrosschain)文档。
 ```
  import "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
  import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
