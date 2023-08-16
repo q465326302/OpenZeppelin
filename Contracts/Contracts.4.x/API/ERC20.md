@@ -487,66 +487,66 @@ IERC20
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 ```
 
-实现了ERC20 Permit扩展，允许通过签名进行批准，该扩展在*EIP-2612*中定义。
-添加了*permit*方法，可以通过提供由账户签名的消息来改变账户的ERC20允许额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有人账户不需要发送交易，因此根本不需要持有以太币。
+实现了ERC20 Permit扩展，允许通过签名进行批准，该扩展在[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义。
+添加了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)方法，可以通过提供由账户签名的消息来改变账户的ERC20允许额度（参见[IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)，代币持有人账户不需要发送交易，因此根本不需要持有以太币。
 *自v3.4版本以来可用。*
 
 **FUNCTIONS**
-constructor(name)
-permit(owner, spender, value, deadline, v, r, s)
-nonces(owner)
-DOMAIN_SEPARATOR()
-_useNonce(owner)
+[constructor(name)](#constructorstring-name)
+[permit(owner, spender, value, deadline, v, r, s)](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)
+[nonces(owner)](#noncesaddress-owner-→-uint256)
+[DOMAIN_SEPARATOR()](#domain_separator-→-bytes32)
+[_useNonce(owner)](#_usenonceaddress-owner-→-uint256-current)
 
 EIP712
-_domainSeparatorV4()
-_hashTypedDataV4(structHash)
-eip712Domain()
+[_domainSeparatorV4()](./Utils.md#_domainseparatorv4-→-bytes32)
+[_hashTypedDataV4(structHash)](./Utils.md#_hashtypeddatav4bytes32-structhash-→-bytes32)
+[eip712Domain()](./Utils.md#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1))
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 
 IERC5267
-EIP712DomainChanged()
+[EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(string name)
 内部#
-使用name参数初始化*EIP712*域分隔符，并将version设置为“1”。最好使用与ERC20代币名称相同的名称。
+使用name参数初始化[EIP712](./Utils.md#eip712)域分隔符，并将version设置为“1”。最好使用与ERC20代币名称相同的名称。
 
 #### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
 公开#
-请参阅 *IERC20Permit.permit*.
+请参阅 [IERC20Permit.permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s).
 
 #### nonces(address owner) → uint256
 公开#
-请参阅 *IERC20Permit.nonces*.
+请参阅 [IERC20Permit.nonces](#noncesaddress-owner-→-uint256).
 
 #### DOMAIN_SEPARATOR() → bytes32
 外部#
-请参阅 *IERC20Permit.DOMAIN_SEPARATOR*.
+请参阅 [IERC20Permit.DOMAIN_SEPARATOR](#domain_separator-→-bytes32).
 
 #### _useNonce(address owner) → uint256 current
 内部#
@@ -557,16 +557,17 @@ Approval(owner, spender, value)
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
 ```
+
 这份合约扩展了一个带有快照机制的ERC20代币。当创建快照时，记录当前时间的余额和总供应量以便以后访问。
 
 这可以用于安全地创建基于代币余额的机制，例如无信任股息或加权投票。在天真的实现中，可以通过从不同的账户重复使用同一余额来执行“双重花费”攻击。通过使用快照来计算股息或投票权，这些攻击不再适用。它也可以用于创建高效的ERC20分叉机制。
 
-快照是通过内部的 *_snapshot* 函数创建的，该函数将触发*Snapshot*事件并返回快照ID。要获取快照时的总供应量，请使用快照ID调用 *totalSupplyAt* 函数。要获取快照时某个账户的余额，请使用快照ID和账户地址调用 *balanceOfAt* 函数。
+快照是通过内部的 [_snapshot](#_snapshot-→-uint256) 函数创建的，该函数将触发[Snapshot](#snapshotuint256-id)事件并返回快照ID。要获取快照时的总供应量，请使用快照ID调用 [totalSupplyAt](#totalsupplyatuint256-snapshotid-→-uint256) 函数。要获取快照时某个账户的余额，请使用快照ID和账户地址调用 [balanceOfAt](#balanceofataddress-account-uint256-snapshotid-→-uint256) 函数。
 
 > NOTE
-可以通过重写 *_getCurrentSnapshotId* 方法来自定义快照策略。例如，让它返回 block.number 将在每个新块的开头触发快照的创建。在重写此函数时，要小心其结果的单调性。非单调的快照ID会破坏合约。
+可以通过重写 [_getCurrentSnapshotId](#_getcurrentsnapshotid-→-uint256) 方法来自定义快照策略。例如，让它返回 block.number 将在每个新块的开头触发快照的创建。在重写此函数时，要小心其结果的单调性。非单调的快照ID会破坏合约。
 
-使用此方法为每个块实现快照将产生显著的燃气成本。对于燃气效率更高的替代方案，请考虑使用 *ERC20Votes*。
+使用此方法为每个块实现快照将产生显著的燃气成本。对于燃气效率更高的替代方案，请考虑使用 [ERC20Votes](#erc20votes)。
 
 #### 燃气成本
 快照是高效的。快照创建是 O(1)。从快照中检索余额或总供应量的成本是 O(log n)，其中 n 是已创建的快照数量，尽管对于特定账户的 n 通常会更小，因为连续快照中相同的余额将存储为一个条目。
@@ -574,39 +575,39 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
 由于额外的快照记账，普通 ERC20 转账存在常数开销。对于特定账户的第一次转账，这种开销是显著的。随后的转账将具有正常的成本，直到下一次快照，以此类推。
 
 **FUNCTIONS**
-_snapshot()
-_getCurrentSnapshotId()
-balanceOfAt(account, snapshotId)
-totalSupplyAt(snapshotId)
-_beforeTokenTransfer(from, to, amount)
+[_snapshot()](#_snapshot-→-uint256)
+[_getCurrentSnapshotId()](#_getcurrentsnapshotid-→-uint256)
+[balanceOfAt(account, snapshotId)](#balanceofataddress-account-uint256-snapshotid-→-uint256)
+[totalSupplyAt(snapshotId)](#totalsupplyatuint256-snapshotid-→-uint256)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount-2)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1))
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 #### _snapshot() → uint256
 内部#
 创建一个新的快照并返回其快照ID。
-触发一个包含相同ID的*Snapshot* 事件。
-*_snapshot*是内部的，你必须决定如何将其外部公开。它的使用可能会受到一组帐户的限制，例如使用*AccessControl*，或者它可能向公众开放。
+触发一个包含相同ID的[Snapshot](#snapshotuint256-id) 事件。
+[_snapshot](#_snapshot-→-uint256)是内部的，你必须决定如何将其外部公开。它的使用可能会受到一组帐户的限制，例如使用[AccessControl](./Access.md#accesscontrol)，或者它可能向公众开放。
 
 > WARNING
-虽然需要一种开放的调用*_snapshot*的方式来实现某些信任最小化机制，例如分叉，但您必须考虑它可能被攻击者以两种方式使用。
+虽然需要一种开放的调用[_snapshot](#_snapshot-→-uint256)的方式来实现某些信任最小化机制，例如分叉，但您必须考虑它可能被攻击者以两种方式使用。
 
 首先，它可以用于增加从快照检索值的成本，尽管它将呈对数增长，因此从长远来看，这种攻击将变得无效。其次，它可以用于针对特定帐户，并增加ERC20转移对它们的成本，以Gas Costs部分中指定的方式。
 
@@ -634,11 +635,11 @@ _afterTokenTransfer(from, to, amount)
 * 当 to 为零时，将销毁 from 的代币数量。
 * from 和 to 永远不会同时为零。
 
-要了解更多有关 hooks 的信息，请前往使用* hooks *。
+要了解更多有关 hooks 的信息，请前往 [Using Hooks](../Extending-Contracts.md#使用-hooks) 。
 
 #### Snapshot(uint256 id)
 事件#
-当由id标识的快照创建时，由_snapshot发出。
+当由id标识的快照创建时，由[_snapshot](#_snapshot-→-uint256)发出。
 
 #### ERC20Votes
 ```
@@ -648,70 +649,70 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 ERC20的扩展，支持类似Compound的投票和委托。这个版本比Compound的更通用，支持代币供应量高达2^224-1, 而COMP仅限于2^96-1。
 
 > NOTE
-如果需要完全兼容COMP，则使用此模块的*ERC20VotesComp*变体。
+如果需要完全兼容COMP，则使用此模块的[ERC20VotesComp](#erc20votescomp)变体。
 
-此扩展会保留每个帐户的投票权历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供签名以与*delegateBySig*一起使用来委托。可以通过公共访问器*getVotes*和*getPastVotes*查询投票权。
+此扩展会保留每个帐户的投票权历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供签名以与[delegateBySig](#delegatebysigaddress-delegatee-uint256-nonce-uint256-expiry-uint8-v-bytes32-r-bytes32-s)一起使用来委托。可以通过公共访问器[getVotes](#getvotesaddress-account-→-uint256)和[getPastVotes](#getpastvotesaddress-account-uint256-timepoint-→-uint256)查询投票权。
 
 默认情况下，代币余额不考虑投票权。这使转账更便宜。缺点是需要用户委托给自己以激活检查点并跟踪其投票权。
 
 *自v4.2以来可用。*
 
 **FUNCTIONS**
-clock()
-CLOCK_MODE()
-checkpoints(account, pos)
-numCheckpoints(account)
-delegates(account)
-getVotes(account)
-getPastVotes(account, timepoint)
-getPastTotalSupply(timepoint)
-delegate(delegatee)
-delegateBySig(delegatee, nonce, expiry, v, r, s)
-_maxSupply()
-_mint(account, amount)
-_burn(account, amount)
-_afterTokenTransfer(from, to, amount)
-_delegate(delegator, delegatee)
+[clock()](#clock-→-uint48)
+[CLOCK_MODE()](#clock_mode-→-string)
+[checkpoints(account, pos)](#checkpointsaddress-account-uint32-pos-→-struct-erc20votescheckpoint)
+[numCheckpoints(account)](#numcheckpointsaddress-account-→-uint32)
+[delegates(account)](#delegatesaddress-account-→-address)
+[getVotes(account)](#getvotesaddress-account-→-uint256)
+[getPastVotes(account, timepoint)](#getvotesaddress-account-→-uint256)
+[getPastTotalSupply(timepoint)](#getpasttotalsupplyuint256-timepoint-→-uint256)
+[delegate(delegatee)](#delegateaddress-delegatee)
+[delegateBySig(delegatee, nonce, expiry, v, r, s)](#delegatebysigaddress-delegatee-uint256-nonce-uint256-expiry-uint8-v-bytes32-r-bytes32-s)
+[_maxSupply()](#_maxsupply-→-uint224)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount-2)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount-1)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount-1)
+[_delegate(delegator, delegatee)](#_delegateaddress-delegator-address-delegatee)
 
 ERC20PERMIT
-permit(owner, spender, value, deadline, v, r, s)
-nonces(owner)
-DOMAIN_SEPARATOR()
-_useNonce(owner)
+[permit(owner, spender, value, deadline, v, r, s)](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)
+[nonces(owner)](#noncesaddress-owner-→-uint256)
+[DOMAIN_SEPARATOR()](#domain_separator-→-bytes32)
+[_useNonce(owner)](#_usenonceaddress-owner-→-uint256-current)
 
 EIP712
-_domainSeparatorV4()
-_hashTypedDataV4(structHash)
-eip712Domain()
+[_domainSeparatorV4()](./Utils.md#_domainseparatorv4-→-bytes32)
+[_hashTypedDataV4(structHash)](./Utils.md#_hashtypeddatav4bytes32-structhash-→-bytes32)
+[eip712Domain()](./Utils.md#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1))
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 IVOTES
-DelegateChanged(delegator, fromDelegate, toDelegate)
-DelegateVotesChanged(delegate, previousBalance, newBalance)
+[DelegateChanged(delegator, fromDelegate, toDelegate)](./Governance.md)
+[DelegateVotesChanged(delegate, previousBalance, newBalance)](./Governance.md)
 
 IERC5267
-EIP712DomainChanged()
+[EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### clock() → uint48
 公开#
@@ -774,22 +775,23 @@ Approval(owner, spender, value)
 #### _afterTokenTransfer(address from, address to, uint256 amount)
 内部#
 当代币转移时移动投票权。
-发出一个*IVotes.DelegateVotesChanged*事件。
+发出一个[IVotes.DelegateVotesChanged](./Governance.md)事件。
 
 #### _delegate(address delegator, address delegatee)
 内部#
 将委托从委托者更改为委托受托人。
 
-发出事件 *IVotes.DelegateChanged* 和 *IVotes.DelegateVotesChanged*。
+发出事件 [IVotes.DelegateChanged](./Governance.md) 和 [IVotes.DelegateVotesChanged](./Governance.md)。
 
 ### ERC20VotesComp
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol";
 ```
+
 ERC20的扩展，支持Compound的投票和委托。该版本完全符合Compound的接口，但缺点是只支持供应量高达（2^96-1）。
 
 > NOTE
-如果您需要与COMP完全兼容（例如为了在Governor Alpha或Bravo中使用您的代币），并且您确定2^96的供应上限足够您使用，请使用此合约。否则，请使用此模块的*ERC20Votes*变体。
+如果您需要与COMP完全兼容（例如为了在Governor Alpha或Bravo中使用您的代币），并且您确定2^96的供应上限足够您使用，请使用此合约。否则，请使用此模块的[ERC20Votes]变体。
 
 此扩展保留每个帐户投票权的历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供用于*delegateBySig*的签名来委托。可以通过公共访问器*getCurrentVotes*和*getPriorVotes*查询投票权。
 
