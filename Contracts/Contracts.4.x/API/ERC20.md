@@ -199,7 +199,7 @@ IERC20
 代币通常选择18的值，模仿以太和Wei之间的关系。除非被重写，否则该函数返回默认值18。
 
 > NOTE
-这些信息仅用于显示目的，它不会影响合约的任何算术，包括[IERC20.balanceOf](#balanceofaddress-account-e28692-uint256)和[IERC20.transfer](#transferaddress-to-uint256-amount-→-bool。
+这些信息仅用于显示目的，它不会影响合约的任何算术，包括[IERC20.balanceOf](#balanceofaddress-account-e28692-uint256)和[IERC20.transfer](#transferaddress-to-uint256-amount-→-bool)。
 
 #### totalSupply() → uint256
 公开#
@@ -331,86 +331,88 @@ IERC20
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 ```
-*ERC20*的扩展，允许代币持有者销毁他们自己的代币和他们允许的代币，以一种可以通过事件分析在链外识别的方式。
+
+[ERC20](#erc20)的扩展，允许代币持有者销毁他们自己的代币和他们允许的代币，以一种可以通过事件分析在链外识别的方式。
 
 **FUNCTIONS**
-burn(amount)
-burnFrom(account, amount)
+[burn(amount)](#burnuint256-amount)
+[burnFrom(account, amount)](#burnfromaddress-account-uint256-amount)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1))
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### burn(uint256 amount)
 公开#
 销毁调用者的代币数量。
-参见 *ERC20._burn*。
+参见 [ERC20._burn](#_burnaddress-account-uint256-amount-1)。
 
 #### burnFrom(address account, uint256 amount)
 公开#
 销毁账户中指定数量的代币，从调用者的授权中扣除。
-请参阅*ERC20._burn*和*ERC20.allowance*。
+请参阅[ERC20._burn](#_burnaddress-account-uint256-amount-1)和[ERC20.allowance](#allowanceaddress-owner-address-spender-e28692-uint256-1)。
 
 要求：
 * 调用者必须具有至少等于销毁数量的账户代币授权。
 
-#### ERC20Capped
+### ERC20Capped
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
 ```
-将ERC20扩展，以添加代币供应量上限。
+
+将[ERC20](#erc20)扩展，以添加代币供应量上限。
 
 **FUNCTIONS**
-constructor(cap_)
-cap()
-_mint(account, amount)
+[constructor(cap_)](#constructoruint256-cap_)
+[cap()](#cap-→-uint256)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount-1)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(uint256 cap_)
 内部#
@@ -422,59 +424,61 @@ Approval(owner, spender, value)
 
 #### _mint(address account, uint256 amount)
 内部#
-请参阅ERC20._mint。
+请参阅[ERC20._mint](#_mintaddress-account-uint256-amount)。
 
 ### ERC20Pausable
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 ```
+
 具有可暂停代币转移、铸造和销毁的ERC20代币。
 适用于防止交易直到评估期结束或在出现大规模漏洞时有一个紧急开关以冻结所有代币转移的情况等场景。
+
 > IMPORTANT
-此合约不包括公共暂停和取消暂停函数。除了继承此合约外，您还必须定义这两个函数，并使用适当的访问控制（例如使用*AccessControl*或*Ownable*）调用*Pausable._pause*和*Pausable._unpause*内部函数。否则，合约将无法暂停。
+此合约不包括公共暂停和取消暂停函数。除了继承此合约外，您还必须定义这两个函数，并使用适当的访问控制（例如使用[AccessControl](./Access.md#accesscontrol)或[Ownable](./Access.md#ownable)）调用[Pausable._pause](./Security.md#_pause)和[Pausable._unpause](./Security.md#_unpause)内部函数。否则，合约将无法暂停。
 
 **FUNCTIONS**
-_beforeTokenTransfer(from, to, amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount-1)
 
 PAUSABLE
-paused()
-_requireNotPaused()
-_requirePaused()
-_pause()
-_unpause()
+[paused()](./Security.md#paused-→-bool)
+[_requireNotPaused()](./Security.md#_requirenotpaused)
+[_requirePaused()](./Security.md#_requirepaused)
+[_pause()](./Security.md#_pause)
+[_unpause()](./Security.md#_unpause)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1))
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 
 PAUSABLE
-Paused(account)
-Unpaused(account)
+[Paused(account)](./Security.md#pausedaddress-account)
+[Unpaused(account)](./Security.md#unpausedaddress-account)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
 内部#
-请参阅 *ERC20._beforeTokenTransfer*.
+请参阅 [ERC20._beforeTokenTransfer](#_beforetokentransferaddress-from-address-to-uint256-amount).
 要求：
 * 合约不能暂停。
 
@@ -482,6 +486,7 @@ Approval(owner, spender, value)
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 ```
+
 实现了ERC20 Permit扩展，允许通过签名进行批准，该扩展在*EIP-2612*中定义。
 添加了*permit*方法，可以通过提供由账户签名的消息来改变账户的ERC20允许额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有人账户不需要发送交易，因此根本不需要持有以太币。
 *自v3.4版本以来可用。*
