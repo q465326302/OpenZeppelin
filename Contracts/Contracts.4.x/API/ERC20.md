@@ -163,7 +163,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 [transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
 [allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
 [approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
-[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1))
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
 [increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
 [decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
 [_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
@@ -791,83 +791,83 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20VotesComp.sol";
 ERC20的扩展，支持Compound的投票和委托。该版本完全符合Compound的接口，但缺点是只支持供应量高达（2^96-1）。
 
 > NOTE
-如果您需要与COMP完全兼容（例如为了在Governor Alpha或Bravo中使用您的代币），并且您确定2^96的供应上限足够您使用，请使用此合约。否则，请使用此模块的[ERC20Votes]变体。
+如果您需要与COMP完全兼容（例如为了在Governor Alpha或Bravo中使用您的代币），并且您确定2^96的供应上限足够您使用，请使用此合约。否则，请使用此模块的[ERC20Votes](#erc20votes)变体。
 
-此扩展保留每个帐户投票权的历史记录（检查点）。投票权可以通过直接调用*委托*函数或提供用于*delegateBySig*的签名来委托。可以通过公共访问器*getCurrentVotes*和*getPriorVotes*查询投票权。
+此扩展保留每个帐户投票权的历史记录（检查点）。投票权可以通过直接调用 [delegate](#delegateaddress-delegatee)函数或提供用于[delegateBySig](#delegatebysigaddress-delegatee-uint256-nonce-uint256-expiry-uint8-v-bytes32-r-bytes32-s)的签名来委托。可以通过公共访问器[getCurrentVotes](#getcurrentvotesaddress-account-→-uint96)和[getPriorVotes](#getpriorvotesaddress-account-uint256-blocknumber-→-uint96)查询投票权。
 
 默认情况下，代币余额不考虑投票权。这使得转账更便宜。缺点是需要用户委托给自己，以激活检查点并跟踪其投票权。
 
 *自v4.2以来可用。*
 
 **FUNCTIONS**
-getCurrentVotes(account)
-getPriorVotes(account, blockNumber)
-_maxSupply()
+[getCurrentVotes(account)](#getcurrentvotesaddress-account-→-uint96)
+[getPriorVotes(account, blockNumber)](#getpriorvotesaddress-account-uint256-blocknumber-→-uint96)
+[_maxSupply()](#_maxsupply-e28692-uint224-1)
 
 ERC20VOTES
-clock()
-CLOCK_MODE()
-checkpoints(account, pos)
-numCheckpoints(account)
-delegates(account)
-getVotes(account)
-getPastVotes(account, timepoint)
-getPastTotalSupply(timepoint)
-delegate(delegatee)
-delegateBySig(delegatee, nonce, expiry, v, r, s)
-_mint(account, amount)
-_burn(account, amount)
-_afterTokenTransfer(from, to, amount)
-_delegate(delegator, delegatee)
+[clock()](#clock-→-uint48)
+[CLOCK_MODE()](#clock_mode-→-string)
+[checkpoints(account, pos)](#checkpointsaddress-account-uint32-pos-→-struct-erc20votescheckpoint)
+[numCheckpoints(account)](#numcheckpointsaddress-account-→-uint32)
+[delegates(account)](#delegatesaddress-account-→-address)
+[getVotes(account)](#getvotesaddress-account-→-uint256)
+[getPastVotes(account, timepoint)](#getvotesaddress-account-→-uint256)
+[getPastTotalSupply(timepoint)](#getpasttotalsupplyuint256-timepoint-→-uint256)
+[delegate(delegatee)](#delegateaddress-delegatee)
+[delegateBySig(delegatee, nonce, expiry, v, r, s)](#delegatebysigaddress-delegatee-uint256-nonce-uint256-expiry-uint8-v-bytes32-r-bytes32-s)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount-2)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount-1)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount-1)
+[_delegate(delegator, delegatee)](#_delegateaddress-delegator-address-delegatee)
 
 ERC20PERMIT
-permit(owner, spender, value, deadline, v, r, s)
-nonces(owner)
-DOMAIN_SEPARATOR()
-_useNonce(owner)
+[permit(owner, spender, value, deadline, v, r, s)](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)
+[nonces(owner)](#noncesaddress-owner-→-uint256)
+[DOMAIN_SEPARATOR()](#domain_separator-→-bytes32)
+[_useNonce(owner)](#_usenonceaddress-owner-→-uint256-current)
 
 EIP712
-_domainSeparatorV4()
-_hashTypedDataV4(structHash)
-eip712Domain()
+[_domainSeparatorV4()](./Utils.md#_domainseparatorv4-→-bytes32)
+[_hashTypedDataV4(structHash)](./Utils.md#_hashtypeddatav4bytes32-structhash-→-bytes32)
+[eip712Domain()](./Utils.md#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 
 IVOTES
-DelegateChanged(delegator, fromDelegate, toDelegate)
-DelegateVotesChanged(delegate, previousBalance, newBalance)
+[DelegateChanged(delegator, fromDelegate, toDelegate)](./Governance.md)
+[DelegateVotesChanged(delegate, previousBalance, newBalance)](./Governance.md)
 
 IERC5267
-EIP712DomainChanged()
+[EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### getCurrentVotes(address account) → uint96
 外部#
-*getVotes*信息的Comp版本访问器，返回类型为uint96。
+[getVotes](#getvotesaddress-account-→-uint256)信息的Comp版本访问器，返回类型为uint96。
 
 #### getPriorVotes(address account, uint256 blockNumber) → uint96
 外部#
-*getPastVotes*记录的访问器的Comp版本，返回类型为uint96。
+[getPastVotes](#getpastvotesaddress-account-uint256-timepoint-→-uint256)记录的访问器的Comp版本，返回类型为uint96。
 
 #### _maxSupply() → uint224
 内部#
@@ -880,48 +880,48 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol";
 
 ERC20代币合约的扩展，以支持代币包装。
 
-用户可以存入和取出“基础代币”，并获得相应数量的“包装代币”。这在与其他模块结合使用时非常有用。例如，将此包装机制与*ERC20Votes*结合使用，可以将现有的“基本”ERC20包装成治理代币。
+用户可以存入和取出“基础代币”，并获得相应数量的“包装代币”。这在与其他模块结合使用时非常有用。例如，将此包装机制与[ERC20Votes](#erc20votes)结合使用，可以将现有的“基本”ERC20包装成治理代币。
 
 *自v4.2以来可用。*
 
 **FUNCTIONS**
-constructor(underlyingToken)
-decimals()
-underlying()
-depositFor(account, amount)
-withdrawTo(account, amount)
-_recover(account)
+[constructor(underlyingToken)](#constructorcontract-ierc20-underlyingtoken)
+[decimals()](#decimals-e28692-uint8-2)
+[underlying()](#underlying-→-contract-ierc20)
+[depositFor(account, amount)](#depositforaddress-account-uint256-amount-→-bool)
+[withdrawTo(account, amount)](#withdrawtoaddress-account-uint256-amount-→-bool)
+[_recover(account)](#_recoveraddress-account-→-uint256)
 
 ERC20
-name()
-symbol()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 **EVENTS**
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(contract IERC20 underlyingToken)
 内部#
 
 #### decimals() → uint8
 公开#
-请查看 *ERC20.decimals*.
+请查看 [ERC20.decimals](#decimals-→-uint8).
 
 #### underlying() → contract IERC20
 公开#
@@ -943,44 +943,46 @@ Mint包装代币以重写可能因错误而转移的任何基础代币。如果�
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
 ```
+
 实现 ERC3156 闪电贷扩展，如 [ERC-3156](https://eips.ethereum.org/EIPS/eip-3156) 中所定义。
 
-添加 *flashLoan* 方法，为代币级别提供闪电贷支持。默认情况下没有费用，但可以通过重写 *flashFee* 进行更改。
+添加 [flashLoan](#flashloancontract-ierc3156flashborrower-receiver-address-token-uint256-amount-bytes-data-→-bool) 方法，为代币级别提供闪电贷支持。默认情况下没有费用，但可以通过重写 [flashFee](#flashfeeaddress-token-uint256-amount-→-uint256) 进行更改。
 
 *自 v4.1 版本起可用。*
 
 **FUNCTIONS**
-maxFlashLoan(token)
-flashFee(token, amount)
-_flashFee(token, amount)
-_flashFeeReceiver()
-flashLoan(receiver, token, amount, data)
+[maxFlashLoan(token)](#maxflashloanaddress-token-→-uint256)
+[flashFee(token, amount)](#flashfeeaddress-token-uint256-amount-→-uint256)
+[_flashFee(token, amount)](#_flashfeeaddress-token-uint256-amount-→-uint256)
+[_flashFeeReceiver()](#_flashfeereceiver-→-address)
+[flashLoan(receiver, token, amount, data)](#flashloancontract-ierc3156flashborrower-receiver-address-token-uint256-amount-bytes-data-→-bool)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
+
 
 **EVENTS**
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### maxFlashLoan(address token) → uint256
 公开#
@@ -988,7 +990,7 @@ Approval(owner, spender, value)
 
 #### flashFee(address token, uint256 amount) → uint256
 公开#
-返回执行闪电贷款时应用的费用。该函数调用 *_flashFee* 函数，该函数返回执行闪电贷款时应用的费用。
+返回执行闪电贷款时应用的费用。该函数调用 [_flashFee](#_flashfeeaddress-token-uint256-amount-→-uint256) 函数，该函数返回执行闪电贷款时应用的费用。
 
 #### _flashFee(address token, uint256 amount) → uint256
 内部#
@@ -1000,12 +1002,13 @@ Approval(owner, spender, value)
 
 #### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool
 公开#
-执行闪电贷款。新的代币被铸造并发送给接收方，接收方需要实现*IERC3156FlashBorrower*接口。在闪电贷款结束时，接收方应当拥有amount + fee代币并将其批准回到代币合约本身，以便它们可以被销毁。
+执行闪电贷款。新的代币被铸造并发送给接收方，接收方需要实现[IERC3156FlashBorrower](./Interfaces.md#ierc3156flashborrower)接口。在闪电贷款结束时，接收方应当拥有amount + fee代币并将其批准回到代币合约本身，以便它们可以被销毁。
 
 ### ERC4626
 ```
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 ```
+
 实施 ERC4626“代币化保险库标准”，如 [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) 中定义的。
 
 该扩展允许通过标准化的*存款*、*铸造*、*赎回*和*销毁*流程，以“资产”为代价铸造和销毁“股份”（使用 ERC20 继承表示）。此合约扩展了 ERC20 标准。与它一起包含的任何其他扩展都会影响由此合约表示的“股份”代币，而不是独立合约的“资产”代币。
