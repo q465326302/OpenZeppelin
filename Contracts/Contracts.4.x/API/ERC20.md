@@ -1011,71 +1011,72 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
 
 实施 ERC4626“代币化保险库标准”，如 [EIP-4626](https://eips.ethereum.org/EIPS/eip-4626) 中定义的。
 
-该扩展允许通过标准化的*存款*、*铸造*、*赎回*和*销毁*流程，以“资产”为代价铸造和销毁“股份”（使用 ERC20 继承表示）。此合约扩展了 ERC20 标准。与它一起包含的任何其他扩展都会影响由此合约表示的“股份”代币，而不是独立合约的“资产”代币。
+该扩展允许通过标准化的 [deposit](#deposituint256-assets-address-receiver-→-uint256)、 [mint](#mintuint256-shares-address-receiver-→-uint256)、[redeem](#redeemuint256-shares-address-receiver-address-owner-→-uint256)和 [burn](#burnuint256-amount)流程，以“资产”为代价铸造和销毁“股份”（使用 ERC20 继承表示）。此合约扩展了 ERC20 标准。与它一起包含的任何其他扩展都会影响由此合约表示的“股份”代币，而不是独立合约的“资产”代币。
 
 > CAUTION
 在空的（或几乎空的）ERC-4626保险库中，存款有高风险通过“捐款”到保险库中被抢走，从而使股份的价格膨胀。这通常称为“捐赠”或通货膨胀攻击，本质上是滑点问题。保险库部署者可以通过进行一笔非微不足道的资产存款来防止这种攻击，从而使价格操纵变得不可行。提款也可能受到滑点的影响。用户也可以通过验证所接收的金额与预期金额相符来保护自己免受这种攻击以及意外滑点的影响，使用执行这些检查的包装器，例如 [ERC4626Router](https://github.com/fei-protocol/ERC4626#erc4626router-and-base)。
 
-自 v4.9 以来，该实现使用虚拟资产和股份来缓解这种风险。_decimalsOffset() 对应于基础资产的小数位数和保险库小数位数之间的小数表示之间的偏移量。此偏移量还确定了保险库中虚拟股份与虚拟资产之间的比率，这本身确定了初始汇率。虽然不能完全防止攻击，但分析表明，默认偏移量（0）使其不赚钱，因为虚拟股份捕获的价值（来自攻击者的捐赠）与攻击者的预期收益相匹配。使用较大的偏移量，攻击变得比盈利昂贵几个数量级。有关底层数学的更多详细信息，请参见*此处*。
+自 v4.9 以来，该实现使用虚拟资产和股份来缓解这种风险。_decimalsOffset() 对应于基础资产的小数位数和保险库小数位数之间的小数表示之间的偏移量。此偏移量还确定了保险库中虚拟股份与虚拟资产之间的比率，这本身确定了初始汇率。虽然不能完全防止攻击，但分析表明，默认偏移量（0）使其不赚钱，因为虚拟股份捕获的价值（来自攻击者的捐赠）与攻击者的预期收益相匹配。使用较大的偏移量，攻击变得比盈利昂贵几个数量级。有关底层数学的更多详细信息，请参见[此处](https://docs.openzeppelin.com/contracts/4.x/api/token/erc20#erc4626.adoc#inflation-attack)。
 
 这种方法的缺点是虚拟股份确实捕获了（非常小的）部分累积到保险库的价值。此外，如果保险库遭受损失，用户试图退出保险库，虚拟股份和资产将导致第一个用户退出时经历减少的损失，而最后的用户将经历更大的损失。愿意恢复到 v4.9 之前行为的开发人员只需重写 _convertToShares 和 _convertToAssets 函数即可。
 
-要了解更多信息，请查看我们的 *ERC-4626 指南*。
+要了解更多信息，请查看我们的 [ERC-4626 指南](../Tokens/ERC4626/ERC4626.md)。
 
 *自 v4.7 以来可用。*
 
 **FUNCTIONS**
-constructor(asset_)
-decimals()
-asset()
-totalAssets()
-convertToShares(assets)
-convertToAssets(shares)
-maxDeposit()
-maxMint()
-maxWithdraw(owner)
-maxRedeem(owner)
-previewDeposit(assets)
-previewMint(shares)
-previewWithdraw(assets)
-previewRedeem(shares)
-deposit(assets, receiver)
-mint(shares, receiver)
-withdraw(assets, receiver, owner)
-redeem(shares, receiver, owner)
-_convertToShares(assets, rounding)
-_convertToAssets(shares, rounding)
-_deposit(caller, receiver, assets, shares)
-_withdraw(caller, receiver, owner, assets, shares)
-_decimalsOffset()
+[constructor(asset_)](#constructorcontract-ierc20-asset_)
+[decimals()](#decimals-e28692-uint8-3)
+[asset()](#asset-→-address)
+[totalAssets()](#totalassets-→-uint256)
+[convertToShares(assets)](#converttosharesuint256-assets-→-uint256)
+[convertToAssets(shares)](#converttosharesuint256-assets-→-uint256)
+[maxDeposit()](#maxdepositaddress-→-uint256)
+[maxMint()](#maxmintaddress-→-uint256)
+[maxWithdraw(owner)](#maxwithdrawaddress-owner-→-uint256)
+[maxRedeem(owner)](#maxredeemaddress-owner-→-uint256)
+[previewDeposit(assets)](#previewdeposituint256-assets-→-uint256)
+[previewMint(shares)](#previewmintuint256-shares-→-uint256)
+[previewWithdraw(assets)](#previewredeemuint256-shares-→-uint256)
+[previewRedeem(shares)](#previewredeemuint256-shares-→-uint256)
+[deposit(assets, receiver)](#deposituint256-assets-address-receiver-→-uint256)
+[mint(shares, receiver)](#mintuint256-shares-address-receiver-→-uint256)
+[withdraw(assets, receiver, owner)](#withdrawuint256-assets-address-receiver-address-owner-→-uint256)
+[redeem(shares, receiver, owner)](#redeemuint256-shares-address-receiver-address-owner-→-uint256)
+[_convertToShares(assets, rounding)](#_converttosharesuint256-assets-enum-mathrounding-rounding-→-uint256)
+[_convertToAssets(shares, rounding)](#_converttoassetsuint256-shares-enum-mathrounding-rounding-→-uint256)
+[_deposit(caller, receiver, assets, shares)](#_depositaddress-caller-address-receiver-uint256-assets-uint256-shares)
+[_withdraw(caller, receiver, owner, assets, shares)](#_withdrawaddress-caller-address-receiver-address-owner-uint256-assets-uint256-shares)
+[_decimalsOffset()](#_decimalsoffset-→-uint8)
 
 ERC20
-name()
-symbol()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_beforeTokenTransfer(from, to, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
+
 
 **EVENTS**
 IERC4626
-Deposit(sender, owner, assets, shares)
-Withdraw(sender, receiver, owner, assets, shares)
+[Deposit(sender, owner, assets, shares)](./Interfaces.md#depositaddress-indexed-sender-address-indexed-owner-uint256-assets-uint256-shares)
+[Withdraw(sender, receiver, owner, assets, shares)](./Interfaces.md#withdrawaddress-indexed-sender-address-indexed-receiver-address-indexed-owner-uint256-assets-uint256-shares)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(contract IERC20 asset_)
 内部#
@@ -1085,72 +1086,72 @@ Approval(owner, spender, value)
 公开#
 十进制数是通过将十进制偏移量加到基础资产的小数位上计算出来的。在构建保险库合约期间，这个“原始”值被缓存。如果读取操作失败（例如，资产尚未创建），则默认值为18，表示基础资产的小数位数。
 
-请参阅*IERC20Metadata.decimals*。
+请参阅[IERC20Metadata.decimals](#decimals-→-uint8)。
 
 #### asset() → address
 公开#
-请参阅*IERC4626.asset*.
+请参阅[IERC4626.asset](./Interfaces.md#totalassets-→-uint256-totalmanagedassets).
 
 #### totalAssets() → uint256
 公开#
-请参阅*IERC4626.totalAssets*.
+请参阅[IERC4626.totalAssets](./Interfaces.md#totalassets-→-uint256-totalmanagedassets).
 
 #### convertToShares(uint256 assets) → uint256
 公开#
-请参阅*IERC4626.convertToShares*.
+请参阅[IERC4626.convertToShares](./Interfaces.md#converttosharesuint256-assets-→-uint256-shares).
 
 #### convertToAssets(uint256 shares) → uint256
 公开#
-请参阅*IERC4626.convertToAssets*.
+请参阅[IERC4626.convertToAssets](./Interfaces.md#converttoassetsuint256-shares-→-uint256-assets).
 
 #### maxDeposit(address) → uint256
 公开#
-请参阅 *IERC4626.maxDeposit*.
+请参阅 [IERC4626.maxDeposit](./Interfaces.md#maxdepositaddress-receiver-→-uint256-maxassets).
 
 ##### maxMint(address) → uint256
 公开#
-请参阅 *IERC4626.maxMint*.
+请参阅 [IERC4626.maxMint](./Interfaces.md#maxmintaddress-receiver-→-uint256-maxshares).
 
 #### maxWithdraw(address owner) → uint256
 公开#
-请参阅 *IERC4626.maxWithdraw*.
+请参阅 [IERC4626.maxWithdraw](./Interfaces.md#maxwithdrawaddress-owner-→-uint256-maxassets).
 
 #### maxRedeem(address owner) → uint256
 公开#
-请参阅 *IERC4626.maxRedeem*.
+请参阅 [IERC4626.maxRedeem](./Interfaces.md#maxredeemaddress-owner-→-uint256-maxshares).
 
 #### previewDeposit(uint256 assets) → uint256
 公开#
-请参阅 *IERC4626.previewDeposit*.
+请参阅 [IERC4626.previewDeposit](./Interfaces.md#previewdeposituint256-assets-→-uint256-shares).
 
 #### previewMint(uint256 shares) → uint256
 公开#
-请参阅 *IERC4626.previewMint*.
+请参阅 [IERC4626.previewMint](./Interfaces.md#previewmintuint256-shares-→-uint256-assets).
 
 ####  previewWithdraw(uint256 assets) → uint256
 公开#
-请参阅 *IERC4626.previewWithdraw*.
+请参阅 [IERC4626.previewWithdraw](./Interfaces.md#previewwithdrawuint256-assets-→-uint256-shares).
 
 #### previewRedeem(uint256 shares) → uint256
 公开#
-请参阅 *IERC4626.previewRedeem*.
+请参阅 [IERC4626.previewRedeem](./Interfaces.md#previewredeemuint256-shares-→-uint256-assets).
 
 #### deposit(uint256 assets, address receiver) → uint256
 公开#
-请参阅 *IERC4626.deposit*.
+请参阅 [IERC4626.deposit](./Interfaces.md#deposituint256-assets-address-receiver-→-uint256-shares).
 
 #### mint(uint256 shares, address receiver) → uint256
 公开#
-请参阅 *IERC4626.mint*.
-与*deposit*相反，即使保险库处于份额价格为零的状态，也允许进行铸造。在这种情况下，股份将被铸造而无需存入任何资产。
+请参阅 [IERC4626.mint](./Interfaces.md#mintuint256-shares-address-receiver-→-uint256-assets).
+与[deposit](#deposituint256-assets-address-receiver-→-uint256)相反，即使保险库处于份额价格为零的状态，也允许进行铸造。在这种情况下，股份将被铸造而无需存入任何资产。
 
 #### withdraw(uint256 assets, address receiver, address owner) → uint256
 公开#
-请参阅 *IERC4626.withdraw*.
+请参阅 [IERC4626.withdraw](./Interfaces.md#withdrawuint256-assets-address-receiver-address-owner-→-uint256-shares).
 
 #### redeem(uint256 shares, address receiver, address owner) → uint256
 公开#
-请参阅*IERC4626.redeem*.
+请参阅 [IERC4626.redeem](./Interfaces.md#redeemuint256-shares-address-receiver-address-owner-→-uint256-assets).
 
 #### _convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256
 内部#
@@ -1178,7 +1179,8 @@ Approval(owner, spender, value)
 ```
 import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol";
 ```
-*ERC20*代币，包括：
+
+[ERC20](#erc20)代币，包括：
 * 持有者可以烧毁（销毁）他们的代币的能力
 * 允许代币铸造（创建）的铸造者角色
 * 允许停止所有代币转移的暂停者角色
@@ -1190,73 +1192,73 @@ import "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetMinterPauser.sol"
 弃用，有利于[合约向导](https://wizard.openzeppelin.com/)。
 
 **FUNCTIONS**
-constructor(name, symbol)
-mint(to, amount)
-pause()
-unpause()
-_beforeTokenTransfer(from, to, amount)
+[constructor(name, symbol)](#constructorstring-name-string-symbol)
+[mint(to, amount)](#mintaddress-to-uint256-amount)
+[pause()](#pause)
+[unpause()](#unpause)
+[_beforeTokenTransfer(from, to, amount)](#_beforetokentransferaddress-from-address-to-uint256-amount-3)
 
 PAUSABLE
-paused()
-_requireNotPaused()
-_requirePaused()
-_pause()
-_unpause()
+[paused()](./Security.md#paused-→-bool)
+[_requireNotPaused()](./Security.md#_requirenotpaused)
+[_requirePaused()](./Security.md#_requirepaused)
+[_pause()](./Security.md#_pause)
+[_unpause()](./Security.md#_unpause)
 
 ERC20BURNABLE
-burn(amount)
-burnFrom(account, amount)
+[burn(amount)](#burnuint256-amount)
+[burnFrom(account, amount)](#burnfromaddress-account-uint256-amount)
 
 ERC20
-name()
-symbol()
-decimals()
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
-increaseAllowance(spender, addedValue)
-decreaseAllowance(spender, subtractedValue)
-_transfer(from, to, amount)
-_mint(account, amount)
-_burn(account, amount)
-_approve(owner, spender, amount)
-_spendAllowance(owner, spender, amount)
-_afterTokenTransfer(from, to, amount)
+[name()](#name-e28692-string-1)
+[symbol()](#symbol-e28692-string-1)
+[decimals()](#decimals-e28692-uint8-1)
+[totalSupply()](#totalsupply-e28692-uint256-1)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
+[transfer(to, amount)](#transferaddress-to-uint256-amount-e28692-bool-1)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
+[transferFrom(from, to, amount)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)
+[_transfer(from, to, amount)](#_transferaddress-from-address-to-uint256-amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+[_spendAllowance(owner, spender, amount)](#_spendallowanceaddress-owner-address-spender-uint256-amount)
+[_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 ACCESSCONTROLENUMERABLE
-supportsInterface(interfaceId)
-getRoleMember(role, index)
-getRoleMemberCount(role)
-_grantRole(role, account)
-_revokeRole(role, account)
+[supportsInterface(interfaceId)](./Access.md#supportsinterfacebytes4-interfaceid-e28692-bool-1)
+[getRoleMember(role, index)](./Access.md#getrolememberbytes32-role-uint256-index-e28692-address-1)
+[getRoleMemberCount(role)](./Access.md#getrolemembercountbytes32-role-e28692-uint256-1)
+[_grantRole(role, account)](./Access.md#_grantrolebytes32-role-address-account-1)
+[_revokeRole(role, account)](./Access.md#_revokerolebytes32-role-address-account-1)
 
 ACCESSCONTROL
-hasRole(role, account)
-_checkRole(role)
-_checkRole(role, account)
-getRoleAdmin(role)
-grantRole(role, account)
-revokeRole(role, account)
-renounceRole(role, account)
-_setupRole(role, account)
-_setRoleAdmin(role, adminRole)
+[hasRole(role, account)](./Access.md#hasrolebytes32-role-address-account-e28692-bool-1)
+[_checkRole(role)](./Access.md#_checkrolebytes32-role)
+[_checkRole(role, account)](./Access.md#_checkrolebytes32-role-address-account)
+[getRoleAdmin(role)](./Access.md#getroleadminbytes32-role-e28692-bytes32-1)
+[grantRole(role, account)](./Access.md#grantrolebytes32-role-address-account-1)
+[revokeRole(role, account)](./Access.md#revokerolebytes32-role-address-account-1)
+[renounceRole(role, account)](./Access.md#renouncerolebytes32-role-address-account-1)
+[_setupRole(role, account)](./Access.md#_setuprolebytes32-role-address-account)
+[_setRoleAdmin(role, adminRole)](./Access.md#_setroleadminbytes32-role-bytes32-adminrole)
 
 **EVENTS**
 PAUSABLE
-Paused(account)
-Unpaused(account)
+[Paused(account)](./Security.md#pausedaddress-account)
+[Unpaused(account)](./Security.md#unpausedaddress-account)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](#transferfromaddress-from-address-to-uint256-amount-e28692-bool-1)
+[Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 IACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
-RoleGranted(role, account, sender)
-RoleRevoked(role, account, sender)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](./Access.md#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
+[RoleGranted(role, account, sender)](./Access.md#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+[RoleRevoked(role, account, sender)](./Access.md#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### constructor(string name, string symbol)
 公开#
