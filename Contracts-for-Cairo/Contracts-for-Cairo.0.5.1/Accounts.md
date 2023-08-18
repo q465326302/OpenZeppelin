@@ -518,9 +518,9 @@ response: felt*
 [以太坊账户](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/account/presets/EthAccount.cairo)预设支持以太坊地址，使用secp256k1密钥验证交易。
 
 ## 带ERC165的账户自省
-某些合约，如ERC721，需要一种区分账户合约和非账户合约的方法。为了将合约声明为账户，它应该按照[#100](https://github.com/OpenZeppelin/cairo-contracts/discussions/100)中提议的方式实现[ERC165](https://eips.ethereum.org/EIPS/eip-165)。为了符合ERC165规范，我们的想法是计算IAccount的EVM选择器（而不是StarkNet选择器）的异或值。IAccount的结果魔法值是0x50b70dcb。
+某些合约，如ERC721，需要一种区分账户合约和非账户合约的方法。为了将合约声明为账户，它应该按照[#100](https://github.com/OpenZeppelin/cairo-contracts/discussions/100)中提议的方式实现[ERC165](https://eips.ethereum.org/EIPS/eip-165)。为了符合ERC165规范，我们的想法是计算IAccount的EVM选择器（而不是StarkNet选择器）的异或值。IAccount的结果magic value是0x50b70dcb。
 
-我们在StarkNet上的ERC165集成受到了OpenZeppelin的Solidity实现*ERC165Storage*的启发，该实现存储了实现合约支持的接口。对于账户合约，使用IAccount的魔法值查询账户地址的supportsInterface应该返回TRUE。
+我们在StarkNet上的ERC165集成受到了OpenZeppelin的Solidity实现*ERC165Storage*的启发，该实现存储了实现合约支持的接口。对于账户合约，使用IAccount的magic value查询账户地址的supportsInterface应该返回TRUE。
 
 > NOTE
 对于账户合约，ERC165支持是静态的，不需要账户合约进行注册。
