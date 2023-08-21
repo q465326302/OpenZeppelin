@@ -57,40 +57,40 @@ import "@openzeppelin/contracts/governance/IGovernor.sol";
 *从v4.3版本开始可用。*
 
 **FUNCTIONS**
-[name()]
-[version()]
-[clock()]
-[CLOCK_MODE()]
-[COUNTING_MODE()]
-[hashProposal(targets, values, calldatas, descriptionHash)]
-[state(proposalId)]
-[proposalSnapshot(proposalId)]
-[proposalDeadline(proposalId)]
-[proposalProposer(proposalId)]
-[votingDelay()]
-[votingPeriod()]
-[quorum(timepoint)]
-[getVotes(account, timepoint)]
-[getVotesWithParams(account, timepoint, params)]
-[hasVoted(proposalId, account)]
-[propose(targets, values, calldatas, description)]
-[execute(targets, values, calldatas, descriptionHash)]
-[cancel(targets, values, calldatas, descriptionHash)]
-[castVote(proposalId, support)]
-[castVoteWithReason(proposalId, support, reason)]
-[castVoteWithReasonAndParams(proposalId, support, reason, params)]
-[castVoteBySig(proposalId, support, v, r, s)]
-[castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)]
+[name()](#name-→-string)
+[version()](#version-→-string)
+[clock()](#clock-→-uint48)
+[CLOCK_MODE()](#clock_mode-→-string)
+[COUNTING_MODE()](#counting_mode-→-string)
+[hashProposal(targets, values, calldatas, descriptionHash)](#hashproposaladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[state(proposalId)](#stateuint256-proposalid-→-enum-igovernorproposalstate)
+[proposalSnapshot(proposalId)](#proposalsnapshotuint256-proposalid-→-uint256)
+[proposalDeadline(proposalId)](#proposaldeadlineuint256-proposalid-→-uint256)
+[proposalProposer(proposalId)](#proposalproposeruint256-proposalid-→-address)
+[votingDelay()](#votingdelay-→-uint256)
+[votingPeriod()](#votingperiod-→-uint256)
+[quorum(timepoint)](#quorumuint256-timepoint-→-uint256)
+[getVotes(account, timepoint)](#getvotesaddress-account-uint256-timepoint-→-uint256)
+[getVotesWithParams(account, timepoint, params)](#getvoteswithparamsaddress-account-uint256-timepoint-bytes-params-→-uint256)
+[hasVoted(proposalId, account)](#hasvoteduint256-proposalid-address-account-→-bool)
+[propose(targets, values, calldatas, description)](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256-proposalid)
+[execute(targets, values, calldatas, descriptionHash)](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid)
+[cancel(targets, values, calldatas, descriptionHash)](#canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid)
+[castVote(proposalId, support)](#castvoteuint256-proposalid-uint8-support-→-uint256-balance)
+[castVoteWithReason(proposalId, support, reason)](#castvotewithreasonuint256-proposalid-uint8-support-string-reason-→-uint256-balance)
+[castVoteWithReasonAndParams(proposalId, support, reason, params)](#castvotewithreasonandparamsuint256-proposalid-uint8-support-string-reason-bytes-params-→-uint256-balance)
+[castVoteBySig(proposalId, support, v, r, s)](#castvotebysiguint256-proposalid-uint8-support-uint8-v-bytes32-r-bytes32-s-→-uint256-balance)
+[castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)](#castvotewithreasonandparamsbysiguint256-proposalid-uint8-support-string-reason-bytes-params-uint8-v-bytes32-r-bytes32-s-→-uint256-balance)
 
 IERC165
-supportsInterface(interfaceId)
+[supportsInterface(interfaceId)](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)
 
 **EVENTS**
-ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
-ProposalCanceled(proposalId)
-ProposalExecuted(proposalId)
-VoteCast(voter, proposalId, support, weight, reason)
-VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+[ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)
+[ProposalCanceled(proposalId)](#proposalcanceleduint256-proposalid)
+[ProposalExecuted(proposalId)](#proposalexecuteduint256-proposalid)
+[VoteCast(voter, proposalId, support, weight, reason)](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)
+[VoteCastWithParams(voter, proposalId, support, weight, reason, params)](#votecastwithparamsaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason-bytes-params)
 
 #### name() → string
 公开#
@@ -102,15 +102,15 @@ governor实例的版本（用于构建ERC712域分隔符）。默认值为“1�
 
 #### clock() → uint48
 公开#
-请参阅 *IERC6372*
+请参阅 [IERC6372](./Interfaces.md#ierc6372)
 
 #### CLOCK_MODE() → string
 公开#
-请参阅 *EIP-6372.*
+请参阅 EIP-6372.
 
 #### COUNTING_MODE() → string
 公开#
-这是一个描述*castVote*可能的支持值以及这些投票如何计算的字符串，用于UI显示正确的投票选项和解释结果。该字符串是一个URL编码的键值对序列，每个键值对描述一个方面，例如support=bravo&quorum=for,abstain。
+这是一个描述[castVote](#castvoteuint256-proposalid-uint8-support-→-uint256-balance)可能的支持值以及这些投票如何计算的字符串，用于UI显示正确的投票选项和解释结果。该字符串是一个URL编码的键值对序列，每个键值对描述一个方面，例如support=bravo&quorum=for,abstain。
 
 有两个标准键：support和quorum。
 
@@ -156,20 +156,21 @@ governor实例的版本（用于构建ERC712域分隔符）。默认值为“1�
 公开#
 投票开始和投票结束之间的延迟。此持续时间的单位取决于此合约使用的时钟（参见EIP-6372）。
 
-votingDelay可以延迟投票的开始。在设置投票持续时间与投票延迟相比时，必须考虑到这一点。
+> NOTE
+[votingDelay](#votingdelay-→-uint256)可以延迟投票的开始。在设置投票持续时间与投票延迟相比时，必须考虑到这一点。
 
 #### quorum(uint256 timepoint) → uint256
 公开#
 成功提案所需的最低投票数。
 
 > NOTE
-时间点参数对应于用于计算投票的快照。这允许根据此时间点的总供应量等值来调整法定人数（请参阅*ERC20Votes*）。
+时间点参数对应于用于计算投票的快照。这允许根据此时间点的总供应量等值来调整法定人数（请参阅[ERC20Votes](./ERC20.md#erc20votes)）。
 
 #### getVotes(address account, uint256 timepoint) → uint256
 公开#
 特定时间点上帐户的投票权力。
 
-注意：这可以通过多种方式实现，例如通过从一个（或多个）ERC20Votes代币中读取委托余额来实现。
+注意：这可以通过多种方式实现，例如通过从一个（或多个）[ERC20Votes](./ERC20.md#erc20votes)代币中读取委托余额来实现。
 
 #### getVotesWithParams(address account, uint256 timepoint, bytes params) → uint256
 公开#
@@ -182,16 +183,16 @@ votingDelay可以延迟投票的开始。在设置投票持续时间与投票延
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256 proposalId
 公开#
 
-创建一个新提案。投票在*IGovernor.votingDelay*指定的延迟后开始，并持续*IGovernor.votingPeriod*指定的持续时间。
+创建一个新提案。投票在[IGovernor.votingDelay](#votingdelay-→-uint256)指定的延迟后开始，并持续[IGovernor.votingPeriod](#votingperiod-→-uint256)指定的持续时间。
 
-发出一个*ProposalCreated*事件。
+发出一个[ProposalCreated](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)事件。
 
 #### execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256 proposalId
 公开#
 
 成功执行提案。这需要达到法定人数，投票成功，并达到截止日期。
 
-发布*ProposalExecuted*事件。
+发布[ProposalExecuted](#proposalexecuteduint256-proposalid)事件。
 
 注意：某些模块可以修改执行要求，例如添加额外的时间锁。
 
@@ -199,35 +200,35 @@ votingDelay可以延迟投票的开始。在设置投票持续时间与投票延
 公开#
 取消提案。提案可以被提出者取消，但只能在待定状态下取消，即在投票开始之前。
 
-发出一个*ProposalCanceled*事件。
+发出一个[ProposalCanceled](#proposalcanceleduint256-proposalid)事件。
 
 #### castVote(uint256 proposalId, uint8 support) → uint256 balance
 公开#
 投票
 
-发出一个*VoteCast*事件。
+发出一个[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### castVoteWithReason(uint256 proposalId, uint8 support, string reason) → uint256 balance
 公开#
 投票并附上理由。
 
-触发VoteCast事件。
+触发[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) → uint256 balance
 公开#
-根据参数的长度，发出*VoteCast*或*VoteCastWithParams*事件。
+根据参数的长度，发出[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)或[VoteCastWithParams](#votecastwithparamsaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason-bytes-params)事件。
 
 #### castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) → uint256 balance
 公开#
 使用用户的密码签名进行投票。
 
-发出一个*VoteCast*事件。
+发出一个[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) → uint256 balance
 公开#
 使用用户的加密签名进行投票，并附加编码参数进行投票。
 
-根据params的长度发出*VoteCast*或*VoteCastWithParams*事件。
+根据params的长度发出[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)或[VoteCastWithParams](#votecastwithparamsaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason-bytes-params)事件。
 
 #### ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)
 事件#
@@ -257,60 +258,61 @@ votingDelay可以延迟投票的开始。在设置投票持续时间与投票延
 ```
 import "@openzeppelin/contracts/governance/Governor.sol";
 ```
+
 这个治理系统的核心是被设计成可以通过各种模块进行扩展的。
 
 该合约是抽象的，并需要在各个模块中实现几个函数：
 
-* 计数模块必须实现*quorum*、*_quorumReached*、*_voteSucceeded*和*_countVote*函数。
+* 计数模块必须实现[quorum](#quorumuint256-timepoint-→-uint256)、[_quorumReached](#_quorumreacheduint256-proposalid-→-bool)、[_voteSucceeded](#_votesucceededuint256-proposalid-→-bool)和[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)函数。
 
-* 投票模块必须实现*_getVotes*函数。
+* 投票模块必须实现[_getVotes](#_getvotesaddress-account-uint256-timepoint-bytes-params-→-uint256)函数。
 
-* 此外，还必须实现*votingPeriod*函数。
+* 此外，还必须实现[votingPeriod](#votingperiod-→-uint256)函数。
 
 *该功能从v4.3版本开始提供。*
 
 **MODIFIERS**
-onlyGovernance()
+[onlyGovernance()](#onlygovernance)
 
 **FUNCTIONS**
-constructor(name_)
-receive()
-supportsInterface(interfaceId)
-name()
-version()
-hashProposal(targets, values, calldatas, descriptionHash)
-state(proposalId)
-proposalThreshold()
-proposalSnapshot(proposalId)
-proposalDeadline(proposalId)
-proposalProposer(proposalId)
-_quorumReached(proposalId)
-_voteSucceeded(proposalId)
-_getVotes(account, timepoint, params)
-_countVote(proposalId, account, support, weight, params)
-_defaultParams()
-propose(targets, values, calldatas, description)
-execute(targets, values, calldatas, descriptionHash)
-cancel(targets, values, calldatas, descriptionHash)
-_execute(, targets, values, calldatas, )
-_beforeExecute(, targets, , calldatas, )
-_afterExecute(, , , , )
-_cancel(targets, values, calldatas, descriptionHash)
-getVotes(account, timepoint)
-getVotesWithParams(account, timepoint, params)
-castVote(proposalId, support)
-castVoteWithReason(proposalId, support, reason)
-castVoteWithReasonAndParams(proposalId, support, reason, params)
-castVoteBySig(proposalId, support, v, r, s)
-castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)
-_castVote(proposalId, account, support, reason)
-_castVote(proposalId, account, support, reason, params)
-relay(target, value, data)
-_executor()
-onERC721Received(, , , )
-onERC1155Received(, , , , )
-onERC1155BatchReceived(, , , , )
-_isValidDescriptionForProposer(proposer, description)
+[constructor(name_)](#constructorstring-name_)
+[receive()](#receive)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
+[name()](#name-e28692-string-1)
+[version()](#version-e28692-string-1)
+[hashProposal(targets, values, calldatas, descriptionHash)](#hashproposaladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-e28692-uint256-1)
+[state(proposalId)](#stateuint256-proposalid-e28692-enum-igovernorproposalstate-1)
+[proposalThreshold()](#proposalthreshold-→-uint256)
+[proposalSnapshot(proposalId)](#proposalsnapshotuint256-proposalid-e28692-uint256-1)
+[proposalDeadline(proposalId)](#proposaldeadlineuint256-proposalid-e28692-uint256-1)
+[proposalProposer(proposalId)](#proposalproposeruint256-proposalid-e28692-address-1)
+[_quorumReached(proposalId)](#_quorumreacheduint256-proposalid-→-bool)
+[_voteSucceeded(proposalId)]
+[_getVotes(account, timepoint, params)]
+[_countVote(proposalId, account, support, weight, params)]
+[_defaultParams()]
+[propose(targets, values, calldatas, description)]
+[execute(targets, values, calldatas, descriptionHash)]
+[cancel(targets, values, calldatas, descriptionHash)]
+[_execute(, targets, values, calldatas, )]
+[_beforeExecute(, targets, , calldatas, )]
+[_afterExecute(, , , , )]
+[_cancel(targets, values, calldatas, descriptionHash)]
+[getVotes(account, timepoint)]
+[getVotesWithParams(account, timepoint, params)]
+[castVote(proposalId, support)]
+[castVoteWithReason(proposalId, support, reason)]
+[castVoteWithReasonAndParams(proposalId, support, reason, params)]
+[castVoteBySig(proposalId, support, v, r, s)]
+[castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)]
+[_castVote(proposalId, account, support, reason)]
+[_castVote(proposalId, account, support, reason, params)]
+[relay(target, value, data)]
+[_executor()]
+[onERC721Received(, , , )]
+[onERC1155Received(, , , , )]
+[onERC1155BatchReceived(, , , , )]
+[_isValidDescriptionForProposer(proposer, description)]
 
 IGOVERNOR
 clock()
