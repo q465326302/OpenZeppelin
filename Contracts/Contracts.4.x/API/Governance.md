@@ -485,7 +485,7 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
 内部#
-内部投票投票机制：检查投票是否挂起，是否尚未投票，使用(#getvotesaddress-account-uint256-timepoint-→-uint256)检索投票权重，并调用[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)内部函数。
+内部投票投票机制：检查投票是否挂起，是否尚未投票，使用[IGovernor.getVotes](#getvotesaddress-account-uint256-timepoint-→-uint256)检索投票权重，并调用[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)内部函数。
 
 发出(#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
@@ -499,15 +499,15 @@ governor执行行动的地址。将通过执行通过另一个合同（如时间
 
 #### onERC721Received(address, address, uint256, bytes) → bytes4
 公开#
-请参阅  *IERC721Receiver.onERC721Received*.
+请参阅  [IERC721Receiver.onERC721Received](./ERC721.md#onerc721receivedaddress-operator-address-from-uint256-tokenid-bytes-data-→-bytes4).
 
 ####  onERC1155Received(address, address, uint256, uint256, bytes) → bytes4
 公开#
-请参阅 IERC1155Receiver.onERC1155Received.
+请参阅 [IERC1155Receiver.onERC1155Received](./ERC1155.md#onerc1155receivedaddress-operator-address-from-uint256-id-uint256-value-bytes-data-→-bytes4).
 
 #### onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) → bytes4
 公开#
-请参阅 IERC1155Receiver.onERC1155BatchReceived.
+请参阅 [IERC1155Receiver.onERC1155BatchReceived](./ERC1155.md#onerc1155batchreceivedaddress-operator-address-from-uint256-ids-uint256-values-bytes-data-→-bytes4).
 
 #### _isValidDescriptionForProposer(address proposer, string description) → bool
 内部#
@@ -525,83 +525,84 @@ governor执行行动的地址。将通过执行通过另一个合同（如时间
 ```
 import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 ```
+
 对于简单的3个选项，投票计数的延伸，可以使用Governor扩展。
 *自V4.3版本启用。*
 
 FUNCTIONS
-COUNTING_MODE()
-hasVoted(proposalId, account)
-proposalVotes(proposalId)
-_quorumReached(proposalId)
-_voteSucceeded(proposalId)
-_countVote(proposalId, account, support, weight, )
+[COUNTING_MODE()](#counting_mode-e28692-string-1)
+[hasVoted(proposalId, account)](#hasvoteduint256-proposalid-address-account-e28692-bool-1)
+[proposalVotes(proposalId)](#proposalvotesuint256-proposalid-→-uint256-againstvotes-uint256-forvotes-uint256-abstainvotes)
+[_quorumReached(proposalId)](#_quorumreacheduint256-proposalid-e28692-bool-1)
+[_voteSucceeded(proposalId)](#_votesucceededuint256-proposalid-e28692-bool-1)
+[_countVote(proposalId, account, support, weight, )](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes)
 
 GOVERNOR
-receive()
-supportsInterface(interfaceId)
-name()
-version()
-hashProposal(targets, values, calldatas, descriptionHash)
-state(proposalId)
-proposalThreshold()
-proposalSnapshot(proposalId)
-proposalDeadline(proposalId)
-proposalProposer(proposalId)
-_getVotes(account, timepoint, params)
-_defaultParams()
-propose(targets, values, calldatas, description)
-execute(targets, values, calldatas, descriptionHash)
-cancel(targets, values, calldatas, descriptionHash)
-_execute(, targets, values, calldatas, )
-_beforeExecute(, targets, , calldatas, )
-_afterExecute(, , , , )
-_cancel(targets, values, calldatas, descriptionHash)
-getVotes(account, timepoint)
-getVotesWithParams(account, timepoint, params)
-castVote(proposalId, support)
-castVoteWithReason(proposalId, support, reason)
-castVoteWithReasonAndParams(proposalId, support, reason, params)
-castVoteBySig(proposalId, support, v, r, s)
-castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)
-_castVote(proposalId, account, support, reason)
-_castVote(proposalId, account, support, reason, params)
-relay(target, value, data)
-_executor()
-onERC721Received(, , , )
-onERC1155Received(, , , , )
-onERC1155BatchReceived(, , , , )
-_isValidDescriptionForProposer(proposer, description)
+[receive()](#receive)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
+[name()](#name-e28692-string-1)
+[version()](#version-e28692-string-1)
+[hashProposal(targets, values, calldatas, descriptionHash)](#hashproposaladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-e28692-uint256-1)
+[state(proposalId)](#stateuint256-proposalid-e28692-enum-igovernorproposalstate-1)
+[proposalThreshold()](#proposalthreshold-→-uint256)
+[proposalSnapshot(proposalId)](#proposalsnapshotuint256-proposalid-e28692-uint256-1)
+[proposalDeadline(proposalId)](#proposaldeadlineuint256-proposalid-e28692-uint256-1)
+[proposalProposer(proposalId)](#proposalproposeruint256-proposalid-e28692-address-1)
+[_getVotes(account, timepoint, params)](#_getvotesaddress-account-uint256-timepoint-bytes-params-→-uint256)
+[_defaultParams()](#_defaultparams-→-bytes)
+[propose(targets, values, calldatas, description)](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256)
+[execute(targets, values, calldatas, descriptionHash)](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[cancel(targets, values, calldatas, descriptionHash)](#canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[_execute(, targets, values, calldatas, )](#_executeuint256-address-targets-uint256-values-bytes-calldatas-bytes32)
+[_beforeExecute(, targets, , calldatas, )](#_beforeexecuteuint256-address-targets-uint256-bytes-calldatas-bytes32)
+[_afterExecute(, , , , )](#_afterexecuteuint256-address-uint256-bytes-bytes32)
+[_cancel(targets, values, calldatas, descriptionHash)](#_canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[getVotes(account, timepoint)](#getvotesaddress-account-uint256-timepoint-e28692-uint256-1)
+[getVotesWithParams(account, timepoint, params)](#getvoteswithparamsaddress-account-uint256-timepoint-bytes-params-e28692-uint256-1)
+[castVote(proposalId, support)](#castvoteuint256-proposalid-uint8-support-→-uint256)
+[castVoteWithReason(proposalId, support, reason)](#castvotewithreasonuint256-proposalid-uint8-support-string-reason-→-uint256)
+[castVoteWithReasonAndParams(proposalId, support, reason, params)](#castvotewithreasonandparamsuint256-proposalid-uint8-support-string-reason-bytes-params-→-uint256)
+[castVoteBySig(proposalId, support, v, r, s)](#castvotebysiguint256-proposalid-uint8-support-uint8-v-bytes32-r-bytes32-s-→-uint256)
+[castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)](#castvotewithreasonandparamsbysiguint256-proposalid-uint8-support-string-reason-bytes-params-uint8-v-bytes32-r-bytes32-s-→-uint256)
+[_castVote(proposalId, account, support, reason)](#_castvoteuint256-proposalid-address-account-uint8-support-string-reason-→-uint256)
+[_castVote(proposalId, account, support, reason, params)](#_castvoteuint256-proposalid-address-account-uint8-support-string-reason-bytes-params-→-uint256)
+[relay(target, value, data)](#relayaddress-target-uint256-value-bytes-data)
+[_executor()](#_executor-→-address)
+[onERC721Received(, , , )](#onerc721receivedaddress-address-uint256-bytes-→-bytes4)
+[onERC1155Received(, , , , )](#onerc1155receivedaddress-address-uint256-uint256-bytes-→-bytes4)
+[onERC1155BatchReceived(, , , , )](#onerc1155batchreceivedaddress-address-uint256-uint256-bytes-→-bytes4)
+[_isValidDescriptionForProposer(proposer, description)](#_isvaliddescriptionforproposeraddress-proposer-string-description-→-bool)
 
 IGOVERNOR
-clock()
-CLOCK_MODE()
-votingDelay()
-votingPeriod()
-quorum(timepoint)
+[clock()](#clock-→-uint48)
+[CLOCK_MODE()](#clock_mode-→-string)
+[votingDelay()](#votingdelay-→-uint256)
+[votingPeriod()](#votingperiod-→-uint256)
+[quorum(timepoint)](#quorumuint256-timepoint-→-uint256)
 
 EIP712
-_domainSeparatorV4()
-_hashTypedDataV4(structHash)
-eip712Domain()
+[_domainSeparatorV4()](./Utils.md#_domainseparatorv4-→-bytes32)
+[_hashTypedDataV4(structHash)](./Utils.md#_hashtypeddatav4bytes32-structhash-→-bytes32)
+[eip712Domain()](./Utils.md#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 **EVENTS**
 IGOVERNOR
-ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
-ProposalCanceled(proposalId)
-ProposalExecuted(proposalId)
-VoteCast(voter, proposalId, support, weight, reason)
-VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+[ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)
+[ProposalCanceled(proposalId)](#proposalcanceleduint256-proposalid)
+[ProposalExecuted(proposalId)](#proposalexecuteduint256-proposalid)
+[VoteCast(voter, proposalId, support, weight, reason)](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)
+[VoteCastWithParams(voter, proposalId, support, weight, reason, params)](#_getvotesaddress-account-uint256-timepoint-bytes-→-uint256)
 
 IERC5267
-EIP712DomainChanged()
+[EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### COUNTING_MODE() → string
 公开#
-请参阅 *IGovernor.COUNTING_MODE*.
+请参阅 [IGovernor.COUNTING_MODE](#counting_mode-→-string).
 
 #### hasVoted(uint256 proposalId, address account) → bool
 公开#
-请参阅 *IGovernor.hasVoted*.
+请参阅 [IGovernor.hasVoted](#hasvoteduint256-proposalid-address-account-→-bool).
 
 #### proposalVotes(uint256 proposalId) → uint256 againstVotes, uint256 forVotes, uint256 abstainVotes
 公开#
@@ -609,94 +610,98 @@ EIP712DomainChanged()
 
 #### _quorumReached(uint256 proposalId) → bool
 内部#
-请参阅 *Governor._quorumReached*.
+请参阅 [Governor._quorumReached](#_quorumreacheduint256-proposalid-→-bool).
 
 #### _voteSucceeded(uint256 proposalId) → bool
 内部#
-请参阅 *Governor._voteSucceeded*.
+请参阅 [Governor._voteSucceeded](#_votesucceededuint256-proposalid-→-bool).
 在这个模块中，forVotes必须严格超过againstVotes。
 
 #### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes)
 内部#
-请参阅 *Governor._countVote*
+请参阅 [Governor._countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)
 在这个模块中，支持遵循了从Governor Bravo中的VoteType枚举。
 
 #### GovernorVotes
 ```
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 ```
-从*ERC20Votes*代币或v4.5之后的*ERC721Votes*代币中提取投票权重的*Governor*扩展。
+
+从[ERC20Votes](./ERC20.md#erc20votes)代币或v4.5之后的[ERC721Votes](./ERC721.md#erc721votes)代币中提取投票权重的[Governor](#governor)扩展。
 
 *从v4.3版本开始可用。*
 
 FUNCTIONS
-constructor(tokenAddress)
-clock()
-CLOCK_MODE()
-_getVotes(account, timepoint, )
+[constructor(tokenAddress)](#constructorcontract-ivotes-tokenaddress)
+[clock()](#clock-e28692-uint48-1)
+[CLOCK_MODE()](#clock_mode-e28692-string-1)
+[_getVotes(account, timepoint, )](#_getvotesaddress-account-uint256-timepoint-bytes-→-uint256)
 
 GOVERNOR
-receive()
-supportsInterface(interfaceId)
-name()
-version()
-hashProposal(targets, values, calldatas, descriptionHash)
-state(proposalId)
-proposalThreshold()
-proposalSnapshot(proposalId)
-proposalDeadline(proposalId)
-proposalProposer(proposalId)
-_quorumReached(proposalId)
-_voteSucceeded(proposalId)
-_countVote(proposalId, account, support, weight, params)
-_defaultParams()
-propose(targets, values, calldatas, description)
-execute(targets, values, calldatas, descriptionHash)
-cancel(targets, values, calldatas, descriptionHash)
-_execute(, targets, values, calldatas, )
-_beforeExecute(, targets, , calldatas, )
-_afterExecute(, , , , )
-_cancel(targets, values, calldatas, descriptionHash)
-getVotes(account, timepoint)
-getVotesWithParams(account, timepoint, params)
-castVote(proposalId, support)
-castVoteWithReason(proposalId, support, reason)
-castVoteWithReasonAndParams(proposalId, support, reason, params)
-castVoteBySig(proposalId, support, v, r, s)
-castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)
-_castVote(proposalId, account, support, reason)
-_castVote(proposalId, account, support, reason, params)
-relay(target, value, data)
-_executor()
-onERC721Received(, , , )
-onERC1155Received(, , , , )
-onERC1155BatchReceived(, , , , )
-_isValidDescriptionForProposer(proposer, description)
+[receive()](#receive)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
+[name()](#name-e28692-string-1)
+[version()](#version-e28692-string-1)
+[hashProposal(targets, values, calldatas, descriptionHash)](#hashproposaladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-e28692-uint256-1)
+[state(proposalId)](#stateuint256-proposalid-e28692-enum-igovernorproposalstate-1)
+[proposalThreshold()](#proposalthreshold-→-uint256)
+[proposalSnapshot(proposalId)](#proposalsnapshotuint256-proposalid-e28692-uint256-1)
+[proposalDeadline(proposalId)](#proposaldeadlineuint256-proposalid-e28692-uint256-1)
+[proposalProposer(proposalId)](#proposalproposeruint256-proposalid-e28692-address-1)
+[_quorumReached(proposalId)](#_quorumreacheduint256-proposalid-→-bool)
+[_voteSucceeded(proposalId)](#_votesucceededuint256-proposalid-→-bool)
+[_countVote(proposalId, account, support, weight, params)](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)
+[_defaultParams()](#_defaultparams-→-bytes)
+[propose(targets, values, calldatas, description)](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256)
+[execute(targets, values, calldatas, descriptionHash)](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[cancel(targets, values, calldatas, descriptionHash)](#canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[_execute(, targets, values, calldatas, )](#_executeuint256-address-targets-uint256-values-bytes-calldatas-bytes32)
+[_beforeExecute(, targets, , calldatas, )](#_beforeexecuteuint256-address-targets-uint256-bytes-calldatas-bytes32)
+[_afterExecute(, , , , )](#_afterexecuteuint256-address-uint256-bytes-bytes32)
+[_cancel(targets, values, calldatas, descriptionHash)](#_canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)
+[getVotes(account, timepoint)](#getvotesaddress-account-uint256-timepoint-e28692-uint256-1)
+[getVotesWithParams(account, timepoint, params)](#getvoteswithparamsaddress-account-uint256-timepoint-bytes-params-e28692-uint256-1)
+[castVote(proposalId, support)](#castvoteuint256-proposalid-uint8-support-→-uint256)
+[castVoteWithReason(proposalId, support, reason)](#castvotewithreasonuint256-proposalid-uint8-support-string-reason-→-uint256)
+[castVoteWithReasonAndParams(proposalId, support, reason, params)](#castvotewithreasonandparamsuint256-proposalid-uint8-support-string-reason-bytes-params-→-uint256)
+[castVoteBySig(proposalId, support, v, r, s)](#castvotebysiguint256-proposalid-uint8-support-uint8-v-bytes32-r-bytes32-s-→-uint256)
+[castVoteWithReasonAndParamsBySig(proposalId, support, reason, params, v, r, s)](#castvotewithreasonandparamsbysiguint256-proposalid-uint8-support-string-reason-bytes-params-uint8-v-bytes32-r-bytes32-s-→-uint256)
+[_castVote(proposalId, account, support, reason)](#_castvoteuint256-proposalid-address-account-uint8-support-string-reason-→-uint256)
+[_castVote(proposalId, account, support, reason, params)](#_castvoteuint256-proposalid-address-account-uint8-support-string-reason-bytes-params-→-uint256)
+[relay(target, value, data)](#relayaddress-target-uint256-value-bytes-data)
+[_executor()](#_executor-→-address)
+[onERC721Received(, , , )](#onerc721receivedaddress-address-uint256-bytes-→-bytes4)
+[onERC1155Received(, , , , )](#onerc1155receivedaddress-address-uint256-uint256-bytes-→-bytes4)
+[onERC1155BatchReceived(, , , , )](#onerc1155batchreceivedaddress-address-uint256-uint256-bytes-→-bytes4)
+[_isValidDescriptionForProposer(proposer, description)](#_isvaliddescriptionforproposeraddress-proposer-string-description-→-bool)
 
 IGOVERNOR
-COUNTING_MODE()
-votingDelay()
-votingPeriod()
-quorum(timepoint)
-hasVoted(proposalId, account)
+[COUNTING_MODE()](#counting_mode-→-string)
+[votingDelay()](#votingdelay-→-uint256)
+[votingPeriod()](#votingperiod-→-uint256)
+[quorum(timepoint)](#quorumuint256-timepoint-→-uint256)
+[hasVoted(proposalId, account)](#hasvoteduint256-proposalid-address-account-→-bool)
 
 EIP712
-_domainSeparatorV4()
-_hashTypedDataV4(structHash)
-eip712Domain()
+[_domainSeparatorV4()](./Utils.md#_domainseparatorv4-→-bytes32)
+[_hashTypedDataV4(structHash)](./Utils.md#_hashtypeddatav4bytes32-structhash-→-bytes32)
+[eip712Domain()](./Utils.md#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 **EVENTS**
 IGOVERNOR
-ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
-ProposalCanceled(proposalId)
-ProposalExecuted(proposalId)
-VoteCast(voter, proposalId, support, weight, reason)
-VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+[ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)
+[ProposalCanceled(proposalId)](#proposalcanceleduint256-proposalid)
+[ProposalExecuted(proposalId)](#proposalexecuteduint256-proposalid)
+[VoteCast(voter, proposalId, support, weight, reason)](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)
+[VoteCastWithParams(voter, proposalId, support, weight, reason, params)](#_getvotesaddress-account-uint256-timepoint-bytes-→-uint256)
 
 IERC5267
-EIP712DomainChanged()
+[EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(contract IVotes tokenAddress)
+内部#
+
+#### clock() → uint48
 公开#
 如果代币没有实施EIP-6372协议，那么Clock（按照EIP-6372规定）将被设置为与代币的时钟匹配，否则将回退到区块号。
 
