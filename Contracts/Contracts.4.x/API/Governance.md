@@ -341,13 +341,13 @@ IERC5267
 
 #### onlyGovernance()
 修饰符#
-限制一个函数，只能通过治理提案执行。例如，*GovernorSettings*中的治理参数设置器使用此修饰符进行保护。
+限制一个函数，只能通过治理提案执行。例如，[GovernorSettings](#governorsettings)中的治理参数设置器使用此修饰符进行保护。
 
-治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过重写*_executor*函数来实现。执行者只能在治理程序的*执行*函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
+治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过重写[_executor](#_executor-→-address)函数来实现。执行者只能在治理程序的[execute](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
 
 #### constructor(string name_)
 内部#
-设置*name*和*version*的值
+设置[name](#name-e28692-string-1)和[version](#version-e28692-string-1)的值
 
 #### receive()
 外部#
@@ -355,27 +355,27 @@ IERC5267
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
-请参见 *IERC165.supportsInterface*。
+请参见 [IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### name() → string
 公开#
-请参见 *IGovernor.name*.
+请参见 [IGovernor.name](#name-→-string).
 
 #### version() → string
 公开#
-请参见 *IGovernor.version*.
+请参见 [IGovernor.version](#version-→-string).
 
 #### hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 公开#
-请参考 *IGovernor.hashProposal*。
+请参考 [IGovernor.hashProposal](#hashproposaladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)。
 
-提案ID是通过对ABI编码的targets数组、values数组、calldatas数组和descriptionHash（bytes32，它本身是描述字符串的keccak256哈希）进行哈希计算得到的。这个提案ID可以从*ProposalCreated*事件的提案数据中生成。甚至可以在提案提交之前提前计算出来。
+提案ID是通过对ABI编码的targets数组、values数组、calldatas数组和descriptionHash（bytes32，它本身是描述字符串的keccak256哈希）进行哈希计算得到的。这个提案ID可以从[ProposalCreated](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)事件的提案数据中生成。甚至可以在提案提交之前提前计算出来。
 
 请注意，chainId和governor地址不是提案ID计算的一部分。因此，如果在多个网络上的多个治理合约提交相同的提案（具有相同的操作和相同的描述），则它们将具有相同的ID。这也意味着为了在同一个治理合约上执行相同的操作两次，提案人必须更改描述以避免提案ID冲突。
 
 #### state(uint256 proposalId) → enum IGovernor.ProposalState
 公开#
-请参考 *IGovernor.state*.
+请参考 [IGovernor.state](#stateuint256-proposalid-→-enum-igovernorproposalstate).
 
 #### proposalThreshold() → uint256
 公开#
@@ -383,11 +383,11 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### proposalSnapshot(uint256 proposalId) → uint256
 公开#
-请参阅*IGovernor.proposalSnapshot*。
+请参阅[IGovernor.proposalSnapshot](#proposalsnapshotuint256-proposalid-→-uint256)。
 
 #### proposalDeadline(uint256 proposalId) → uint256
 公开#
-请参阅 *IGovernor.proposalDeadline*.
+请参阅 [IGovernor.proposalDeadline](#proposaldeadlineuint256-proposalid-→-uint256).
 
 #### proposalProposer(uint256 proposalId) → address
 公开#
@@ -420,15 +420,15 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
 公开#
-查看 *IGovernor.propose* 函数。该函数包含 opt-in 前置交易保护，其描述在 *_isValidDescriptionForProposer* 中说明。
+查看 [IGovernor.propose](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256-proposalid) 函数。该函数包含 opt-in 前置交易保护，其描述在 [_isValidDescriptionForProposer](#_isvaliddescriptionforproposeraddress-proposer-string-description-→-bool) 中说明。
 
 #### execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 公开#
-请参阅 *IGovernor.execute*.
+请参阅 [IGovernor.execute](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid).
 
 #### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
 公开#
-请参阅 *IGovernor.cancel*.
+请参阅 [IGovernor.cancel](#canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid).
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
 内部#
@@ -446,48 +446,48 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 内部#
 内部取消机制：锁定提案计时器，防止其重新提交。将其标记为已取消，以便与已执行的提案区分。
 
-发出*IGovernor.ProposalCanceled*事件。
+发出[IGovernor.ProposalCanceled](#proposalcanceleduint256-proposalid)事件。
 
 #### getVotes(address account, uint256 timepoint) → uint256
 公开#
-请参阅 *IGovernor.getVotes*.
+请参阅 [IGovernor.getVotes](#getvotesaddress-account-uint256-timepoint-→-uint256).
 
 #### getVotesWithParams(address account, uint256 timepoint, bytes params) → uint256
 公开#
-请参阅 *IGovernor.getVotesWithParams*.
+请参阅 [IGovernor.getVotesWithParams](#getvoteswithparamsaddress-account-uint256-timepoint-bytes-params-→-uint256).
 
 #### castVote(uint256 proposalId, uint8 support) → uint256
 公开#
-请参阅 *IGovernor.castVote*.
+请参阅 [IGovernor.castVote](#castvoteuint256-proposalid-uint8-support-→-uint256-balance).
 
 #### castVoteWithReason(uint256 proposalId, uint8 support, string reason) → uint256
 公开#
-请参阅 *IGovernor.castVoteWithReason*.
+请参阅 [IGovernor.castVoteWithReason](#castvotewithreasonuint256-proposalid-uint8-support-string-reason-→-uint256-balance).
 
 #### castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) → uint256
 公开#
-请参阅 *IGovernor.castVoteWithReasonAndParams*.
+请参阅 [IGovernor.castVoteWithReasonAndParams](#castvotewithreasonandparamsuint256-proposalid-uint8-support-string-reason-bytes-params-→-uint256-balance).
 
 #### castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) → uint256
 公开#
-请参阅 *IGovernor.castVoteBySig*.
+请参阅 [IGovernor.castVoteBySig](#castvotebysiguint256-proposalid-uint8-support-uint8-v-bytes32-r-bytes32-s-→-uint256-balance).
 
 #### castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) → uint256
 公开#
-请参阅 *IGovernor.castVoteWithReasonAndParamsBySig*.
+请参阅 [IGovernor.castVoteWithReasonAndParamsBySig](#castvotewithreasonandparamsbysiguint256-proposalid-uint8-support-string-reason-bytes-params-uint8-v-bytes32-r-bytes32-s-→-uint256-balance).
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason) → uint256
 内部#
 
-内部投票机制：检查投票是否待定，尚未投票，使用*IGovernor.getVotes*检索投票权重，并调用*_countVote*内部函数。使用_defaultParams()。
+内部投票机制：检查投票是否待定，尚未投票，使用[IGovernor.getVotes](#getvotesaddress-account-uint256-timepoint-→-uint256)检索投票权重，并调用[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)内部函数。使用_defaultParams()。
 
-触发*IGovernor.VoteCast*事件。
+触发[IGovernor.VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
 内部#
-内部投票投票机制：检查投票是否挂起，是否尚未投票，使用*IGovernor.getVotes*检索投票权重，并调用*_countVote*内部函数。
+内部投票投票机制：检查投票是否挂起，是否尚未投票，使用(#getvotesaddress-account-uint256-timepoint-→-uint256)检索投票权重，并调用[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)内部函数。
 
-发出*IGovernor.VoteCast*事件。
+发出(#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### relay(address target, uint256 value, bytes data)
 外部#
