@@ -1646,6 +1646,7 @@ OwnershipTransferred(previousOwner, newOwner)
 ```
 import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 ```
+
 ERC165标准的接口，如在[EIP](https://eips.ethereum.org/EIPS/eip-165)中定义。
 
 实现者可以声明对合约接口的支持，然后其他人可以查询（使用*ERC165Checker*）。
