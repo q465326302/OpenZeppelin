@@ -301,22 +301,22 @@ import "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol";
 这是一个辅助合约，用于将其分配为[TransparentUpgradeableProxy](#transparentupgradeableproxy)的管理员。有关为什么要使用它的解释，请参阅[TransparentUpgradeableProxy](#transparentupgradeableproxy)的文档。
 
 **FUNCTIONS**
-[getProxyImplementation(proxy)](#)
-[getProxyAdmin(proxy)]
-[changeProxyAdmin(proxy, newAdmin)]
-[upgrade(proxy, implementation)]
-[upgradeAndCall(proxy, implementation, data)]
+[getProxyImplementation(proxy)](#getproxyimplementationcontract-itransparentupgradeableproxy-proxy-→-address)
+[getProxyAdmin(proxy)](#getproxyadmincontract-itransparentupgradeableproxy-proxy-→-address)
+[changeProxyAdmin(proxy, newAdmin)](#changeproxyadmincontract-itransparentupgradeableproxy-proxy-address-newadmin)
+[upgrade(proxy, implementation)](#upgradecontract-itransparentupgradeableproxy-proxy-address-implementation)
+[upgradeAndCall(proxy, implementation, data)](#upgradeandcallcontract-itransparentupgradeableproxy-proxy-address-implementation-bytes-data)
 
 OWNABLE
-owner()
-_checkOwner()
-renounceOwnership()
-transferOwnership(newOwner)
-_transferOwnership(newOwner)
+[owner()](./Access.md#owner-→-address)
+[_checkOwner()](./Access.md#_checkowner)
+[renounceOwnership()](./Access.md#renounceownership)
+[transferOwnership(newOwner)](./Access.md#transferownershipaddress-newowner)
+[_transferOwnership(newOwner)](./Access.md#_transferownershipaddress-newowner)
 
 **EVENTS**
 OWNABLE
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### getProxyImplementation(contract ITransparentUpgradeableProxy proxy) → address
 公开#
@@ -354,40 +354,41 @@ OwnershipTransferred(previousOwner, newOwner)
 ```
 import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
 ```
-此合约实现了一个代理，它从*UpgradeableBeacon*获取每个调用的实现地址。
+
+此合约实现了一个代理，它从[UpgradeableBeacon](#upgradeablebeacon)获取每个调用的实现地址。
 
 beacon地址存储在存储槽uint256(keccak256('eip1967.proxy.beacon')) - 1中，以避免与代理后面的实现的存储布局冲突。
 
 *自v3.4起可用。*
 
 *FUNCTIONS*
-constructor(beacon, data)
-_beacon()
-_implementation()
-_setBeacon(beacon, data)
+[constructor(beacon, data)](#constructoraddress-beacon-bytes-data)
+[_beacon()](#_beacon-→-address)
+[_implementation()](#_implementation-→-address)
+[_setBeacon(beacon, data)](#_setbeaconaddress-beacon-bytes-data)
 
 ERC1967UPGRADE
-_getImplementation()
-_upgradeTo(newImplementation)
-_upgradeToAndCall(newImplementation, data, forceCall)
-_upgradeToAndCallUUPS(newImplementation, data, forceCall)
-_getAdmin()
-_changeAdmin(newAdmin)
-_getBeacon()
-_upgradeBeaconToAndCall(newBeacon, data, forceCall)
+[_getImplementation()](#_getimplementation-→-address)
+[_upgradeTo(newImplementation)](#_upgradetoaddress-newimplementation)
+[_upgradeToAndCall(newImplementation, data, forceCall)](#_upgradetoandcalladdress-newimplementation-bytes-data-bool-forcecall)
+[_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#_upgradetoandcalluupsaddress-newimplementation-bytes-data-bool-forcecall)
+[_getAdmin()](#_getadmin-→-address)
+[_changeAdmin(newAdmin)](#_changeadminaddress-newadmin)
+[_getBeacon()](#_getbeacon-→-address)
+[_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#_upgradebeacontoandcalladdress-newbeacon-bytes-data-bool-forcecall)
 
 PROXY
-_delegate(implementation)
-_fallback()
-fallback()
-receive()
-_beforeFallback()
+[_delegate(implementation)](#_delegateaddress-implementation)
+[_fallback()](#_fallback)
+[fallback()](#_fallback)
+[receive()](#receive)
+[_beforeFallback()](#_beforefallback)
 
 **EVENTS**
 IERC1967
-Upgraded(implementation)
-AdminChanged(previousAdmin, newAdmin)
-BeaconUpgraded(beacon)
+[Upgraded(implementation)](./Interfaces.md)
+[AdminChanged(previousAdmin, newAdmin)](./Interfaces.md)
+[BeaconUpgraded(beacon)](./Interfaces.md)
 
 #### constructor(address beacon, bytes data)
 公开#
@@ -397,7 +398,7 @@ BeaconUpgraded(beacon)
 
 要求：
 
-信标必须是一个具有*IBeacon接口*的合约。
+信标必须是一个具有[IBeacon](#ibeacon)接口的合约。
 
 #### _beacon() → address
 内部#
@@ -409,7 +410,7 @@ BeaconUpgraded(beacon)
 
 #### _setBeacon(address beacon, bytes data)
 内部#
-将代理更改为使用一个新的信标。已弃用：请参见*_upgradeBeaconToAndCall*。
+将代理更改为使用一个新的信标。已弃用：请参见[_upgradeBeaconToAndCall](#_upgradebeacontoandcalladdress-newbeacon-bytes-data-bool-forcecall)。
 
 如果数据不为空，则将其用作委托调用中使用的数据，该委托调用将发送到信标返回的实现。
 要求：
@@ -420,41 +421,43 @@ BeaconUpgraded(beacon)
 ```
 import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
 ```
-这是*BeaconProxy*对其beacon所期望的接口。
+
+这是[BeaconProxy](#implementation-→-address)对其beacon所期望的接口。
 
 **FUNCTIONS**
-implementation()
+[implementation()](#implementation-→-address)
 
 #### implementation() → address
 外部#
 必须返回一个可用作委托调用目标的地址。
 
-*BeaconProxy*将检查该地址是否为一个合约。
+[BeaconProxy](#beaconproxy)将检查该地址是否为一个合约。
 
 #### UpgradeableBeacon
 ```
 import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
 ```
-该合同与一个或多个*BeaconProxy*实例一起使用，以确定它们的实现合同，即它们将委托所有函数调用的位置。
+
+该合同与一个或多个[BeaconProxy](#beaconproxy)实例一起使用，以确定它们的实现合同，即它们将委托所有函数调用的位置。
 所有者可以更改beacon指向的实现，从而升级使用该beacon的代理。
 
 **FUNCTIONS**
-constructor(implementation_)
-implementation()
-upgradeTo(newImplementation)
+[constructor(implementation_)](#constructoraddress-implementation_)
+[implementation()](#implementation-→-address)
+[upgradeTo(newImplementation)](#upgradetoaddress-newimplementation)
 
 OWNABLE
-owner()
-_checkOwner()
-renounceOwnership()
-transferOwnership(newOwner)
-_transferOwnership(newOwner)
+[owner()](./Access.md#owner-→-address)
+[_checkOwner()](./Access.md#_checkowner)
+[renounceOwnership()](./Access.md#renounceownership)
+[transferOwnership(newOwner)](./Access.md#transferownershipaddress-newowner)
+[_transferOwnership(newOwner)](./Access.md#_transferownershipaddress-newowner)
 
 **EVENTS**
-Upgraded(implementation)
+[Upgraded(implementation)](#upgradedaddress-indexed-implementation)
 
 OWNABLE
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### constructor(address implementation_)
 公开#
@@ -467,7 +470,7 @@ OwnershipTransferred(previousOwner, newOwner)
 #### upgradeTo(address newImplementation)
 公开#
 对信标进行升级以实现新的实现。
-发出一个*升级*事件。
+发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 要求：
 * msg.sender必须是合约的所有者。
 * newImplementation必须是一个合约。
@@ -482,6 +485,7 @@ OwnershipTransferred(previousOwner, newOwner)
 ```
 import "@openzeppelin/contracts/proxy/Clones.sol";
 ```
+
 [EIP 1167](https://eips.ethereum.org/EIPS/eip-1167)是部署最小代理合约（也称为“克隆”）的标准。
 
     为了以一种不可变的方式简单且廉价地复制合约功能，该标准规定了一个最小的字节码实现，将所有调用委托给一个已知的固定地址。
@@ -491,10 +495,10 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 *自版本3.4以来可用。*
 
 **FUNCTIONS**
-clone(implementation)
-cloneDeterministic(implementation, salt)
-predictDeterministicAddress(implementation, salt, deployer)
-predictDeterministicAddress(implementation, salt)
+[clone(implementation)](#cloneaddress-implementation-→-address-instance)
+[cloneDeterministic(implementation, salt)](#clonedeterministicaddress-implementation-bytes32-salt-→-address-instance)
+[predictDeterministicAddress(implementation, salt, deployer)](#predictdeterministicaddressaddress-implementation-bytes32-salt-address-deployer-→-address-predicted)
+[predictDeterministicAddress(implementation, salt)](#predictdeterministicaddressaddress-implementation-bytes32-salt-→-address-predicted)
 
 #### clone(address implementation) → address instance
 内部#
@@ -510,11 +514,11 @@ predictDeterministicAddress(implementation, salt)
 
 #### predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted
 内部#
-计算使用*Clones.cloneDeterministic*部署的克隆体的地址。
+计算使用[Clones.cloneDeterministic](#clonedeterministicaddress-implementation-bytes32-salt-→-address-instance)部署的克隆体的地址。
 
 #### predictDeterministicAddress(address implementation, bytes32 salt) → address predicted
 内部#
-使用*Clones.cloneDeterministic*部署的克隆体的地址计算。
+使用[Clones.cloneDeterministic](#clonedeterministicaddress-implementation-bytes32-salt-→-address-instance)部署的克隆体的地址计算。
 
 ## 实用程序
 
@@ -522,7 +526,8 @@ predictDeterministicAddress(implementation, salt)
 ```
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 ```
-这是一个基本合约，用于帮助编写可升级合约或任何将部署在代理后面的合约。由于代理合约不使用构造函数，所以通常将构造逻辑移动到一个外部的初始化函数中，通常称为initialize函数。因此，需要保护这个初始化函数，使其只能被调用一次。这个合约提供的初始化修饰符将具有这种效果。
+
+这是一个基本合约，用于帮助编写可升级合约或任何将部署在代理后面的合约。由于代理合约不使用构造函数，所以通常将构造逻辑移动到一个外部的初始化函数中，通常称为[initialize](#initializer)函数。因此，需要保护这个初始化函数，使其只能被调用一次。这个合约提供的初始化修饰符将具有这种效果。
 
 初始化函数使用一个版本号。一旦使用了一个版本号，它就被消耗掉，不能再重复使用。这个机制防止了每个“步骤”的重新执行，但允许在升级中创建新的初始化步骤，以便初始化新添加的模块。
 
@@ -542,43 +547,32 @@ contract MyTokenV2 is MyToken, ERC20PermitUpgradeable {
 ```
 
 > TIP
-为了避免将代理留在未初始化的状态，应尽早通过将编码的函数调用作为_data参数提供给*ERC1967Proxy.constructor*来调用初始化函数。
+为了避免将代理留在未初始化的状态，应尽早通过将编码的函数调用作为_data参数提供给[ERC1967Proxy.constructor](#constructoraddress-_logic-bytes-_data)来调用初始化函数。
 
 > CAUTION
 在使用继承时，需要手动注意不要两次调用父级初始化函数，或者确保所有的初始化函数都是幂等的。与Solidity自动验证构造函数不同，这一点不会自动验证。
 
-
-Avoid leaving a contract uninitialized.
-
-An uninitialized contract can be taken over by an attacker. This applies to both a proxy and its implementation contract, which may impact the proxy. To prevent the implementation contract from being used, you should invoke the _disableInitializers function in the constructor to automatically lock it when it is deployed:
-
-/// @custom:oz-upgrades-unsafe-allow constructor
-constructor() {
-    _disableInitializers();
-}
-
-
 > CAUTION
 避免留下未初始化的合约。
 
-未初始化的合约可能会被攻击者接管。这适用于代理合约及其实现合约，可能会对代理产生影响。为了防止实现合约被使用，你应该在构造函数中调用*_disableInitializers*函数，在部署时自动锁定它：
+未初始化的合约可能会被攻击者接管。这适用于代理合约及其实现合约，可能会对代理产生影响。为了防止实现合约被使用，你应该在构造函数中调用[_disableInitializers](#_disableinitializers)函数，在部署时自动锁定它：
 /// @custom:oz-upgrades-unsafe-allow constructor
 constructor() {
     _disableInitializers();
 }
 
 **MODIFIERS**
-initializer()
-reinitializer(version)
-onlyInitializing()
+[initializer()](#initializer)
+[reinitializer(version)](#reinitializeruint8-version)
+[onlyInitializing()](#onlyinitializing)
 
 **FUNCTIONS**
-_disableInitializers()
-_getInitializedVersion()
-_isInitializing()
+[_disableInitializers()](#_disableinitializers)
+[_getInitializedVersion()](#_getinitializedversion-→-uint8)
+[_isInitializing()](#_isinitializing-→-bool)
 
 **EVENTS**
-Initialized(version)
+[Initialized(version)](#initializeduint8-version)
 
 #### initializer()
 修饰符#
@@ -586,7 +580,7 @@ Initialized(version)
 
 与reinitializer(1)类似，但是标记为initializer的函数可以嵌套在构造函数的上下文中。
 
-触发一个*Initialized*事件。
+触发一个[Initialized(version)](#initializeduint8-version)事件。
 
 #### reinitializer(uint8 version)
 修饰符#
@@ -601,25 +595,25 @@ Initialized(version)
 > WARNING
 将版本设置为255将阻止任何未来的重新初始化。
 
-发出一个*Initialized*事件。
+发出一个[Initialized(version)](#initializeduint8-version)事件。
 
 #### onlyInitializing()
 修饰符#
-修改以保护初始化函数，使其只能被具有*initializer*和*reinitializer*修饰符的函数直接或间接调用。
+修改以保护初始化函数，使其只能被具有[initializer()](#initializer)和[reinitializer(version)](#reinitializeruint8-version)修饰符的函数直接或间接调用。
 
 #### _disableInitializers()
 内部# 
 锁定合约，阻止任何未来的重新初始化。这不能是初始化函数的一部分。在合约的构造函数中调用此函数将阻止该合约被初始化或重新初始化为任何版本。建议将此函数用于锁定通过代理调用的实现合约。
 
-在第一次成功执行时，会发出一个*Initialized*事件。
+在第一次成功执行时，会发出一个[Initialized(version)](#initializeduint8-version)事件。
 
 #### _getInitializedVersion() → uint8
 内部# 
-返回已初始化的最高版本。请参阅*reinitializer*.
+返回已初始化的最高版本。请参阅[reinitializer](#reinitializeruint8-version).
 
 #### _isInitializing() → bool
 内部# 
-如果合同当前正在初始化，则返回true。请参阅*onlyInitializing*.
+如果合同当前正在初始化，则返回true。请参阅[onlyInitializing()](#onlyinitializing).
 
 #### Initialized(uint8 version)
 事件#
@@ -629,40 +623,41 @@ Initialized(version)
 ```
 import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
 ```
-为UUPS代理设计的可升级性机制。这里包含的函数可以在将该合约设置为代理背后的实现时，执行*ERC1967Proxy*的升级。
+
+为UUPS代理设计的可升级性机制。这里包含的函数可以在将该合约设置为代理背后的实现时，执行[ERC1967Proxy](#erc1967proxy)的升级。
 
 安全机制确保升级不会意外关闭升级能力，尽管如果升级保留了升级能力但移除了安全机制（例如通过替换UUPSUpgradeable为自定义的升级实现），则此风险将重新出现。
 
-必须重写*_authorizeUpgrade*函数以包括对升级机制的访问限制。
+必须重写[_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation)函数以包括对升级机制的访问限制。
 
 *自v4.1版本起可用。*
 
 **MODIFIERS**
-onlyProxy()
-notDelegated()
+[onlyProxy()](#onlyproxy)
+[notDelegated()](#notdelegated)
 
 **FUNCTIONS**
-proxiableUUID()
-upgradeTo(newImplementation)
-upgradeToAndCall(newImplementation, data)
-_authorizeUpgrade(newImplementation)
+[proxiableUUID()](#proxiableuuid-→-bytes32)
+[upgradeTo(newImplementation)](#upgradetoaddress-newimplementation-1)
+[upgradeToAndCall(newImplementation, data)](#upgradetoandcalladdress-newimplementation-bytes-data)
+[_authorizeUpgrade(newImplementation)](#_authorizeupgradeaddress-newimplementation)
 
 ERC1967UPGRADE
-_getImplementation()
-_upgradeTo(newImplementation)
-_upgradeToAndCall(newImplementation, data, forceCall)
-_upgradeToAndCallUUPS(newImplementation, data, forceCall)
-_getAdmin()
-_changeAdmin(newAdmin)
-_getBeacon()
-_upgradeBeaconToAndCall(newBeacon, data, forceCall)
+[_getImplementation()](#_getimplementation-→-address)
+[_upgradeTo(newImplementation)](#_upgradetoaddress-newimplementation)
+[_upgradeToAndCall(newImplementation, data, forceCall)](#_upgradetoandcalladdress-newimplementation-bytes-data-bool-forcecall)
+[_upgradeToAndCallUUPS(newImplementation, data, forceCall)](#_upgradetoandcalluupsaddress-newimplementation-bytes-data-bool-forcecall)
+[_getAdmin()](#_getadmin-→-address)
+[_changeAdmin(newAdmin)](#_changeadminaddress-newadmin)
+[_getBeacon()](#_getbeacon-→-address)
+[_upgradeBeaconToAndCall(newBeacon, data, forceCall)](#_upgradebeacontoandcalladdress-newbeacon-bytes-data-bool-forcecall)
 
 **EVENTS**
 
 IERC1967
-Upgraded(implementation)
-AdminChanged(previousAdmin, newAdmin)
-BeaconUpgraded(beacon)
+[Upgraded(implementation)](./Interfaces.md)
+[AdminChanged(previousAdmin, newAdmin)](./Interfaces.md)
+[BeaconUpgraded(beacon)](./Interfaces.md)
 
 #### onlyProxy()
 修饰符#
@@ -674,7 +669,7 @@ BeaconUpgraded(beacon)
 
 #### proxiableUUID() → bytes32
 外部#
-实现ERC1822 *proxiableUUI*D函数。该函数返回实现使用的存储槽。在执行升级时，它用于验证实现的兼容性。
+实现ERC1822 [proxiableUUID](#proxiableuuid-→-bytes32)函数。该函数返回实现使用的存储槽。在执行升级时，它用于验证实现的兼容性。
 
 > IMPORTANT
 指向proxiable合约的代理本身不应被视为可代理的，因为这会导致代理升级到自身并耗尽所有的gas。因此，如果通过代理调用此函数，它是关键的，该函数会触发revert。这是通过notDelegated修饰符来保证的。
@@ -683,22 +678,22 @@ BeaconUpgraded(beacon)
 公开#
 升级代理的实现到newImplementation。
 
-调用*_authorizeUpgrade*。
-发出一个*Upgraded*事件。
+调用[_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation)。
+发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 
 #### upgradeToAndCall(address newImplementation, bytes data)
 公开#
 将代理的实现升级为newImplementation，并随后执行data中编码的函数调用。
 
-调用*_authorizeUpgrade*函数。
+调用[_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation)函数。
 
-发出一个*Upgraded*事件。
+发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 
 #### _authorizeUpgrade(address newImplementation)
 内部#
-当msg.sender没有权限升级合约时，应该回滚的函数。由*upgradeTo*和*upgradeToAndCall*调用。
+当msg.sender没有权限升级合约时，应该回滚的函数。由[upgradeTo](#upgradetoaddress-newimplementation-1)和[upgradeToAndCall](#upgradetoandcalladdress-newimplementation-bytes-data)调用。
 
-通常，这个函数会使用一个*访问控制*修饰符，比如*Ownable.onlyOwner*。
+通常，这个函数会使用一个[access control](./Access.md)修饰符，比如[Ownable.onlyOwner](./Access.md#ownable)。
 
 ```
 function _authorizeUpgrade(address) internal override onlyOwner {}
