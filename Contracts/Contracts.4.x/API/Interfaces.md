@@ -135,10 +135,11 @@ IERC20
 ```
 import "@openzeppelin/contracts/interfaces/IERC1363Receiver.sol";
 ```
-任何希望支持 *IERC1363.transferAndCall* 或 *IERC1363.transferFromAndCall* 的合约的接口，来自 {ERC1363} 代币合约。
+
+任何希望支持 [IERC1363.transferAndCall](#transferandcalladdress-to-uint256-amount-bytes-data-→-bool) 或 [IERC1363.transferFromAndCall](#transferfromandcalladdress-from-address-to-uint256-amount-bytes-data-→-bool) 的合约的接口，来自 {ERC1363} 代币合约。
 
 **FUNCTIONS**
-onTransferReceived(operator, from, amount, data)
+[onTransferReceived(operator, from, amount, data)](#ontransferreceivedaddress-operator-address-from-uint256-amount-bytes-data-→-bytes4)
 
 #### onTransferReceived(address operator, address from, uint256 amount, bytes data) → bytes4
 外部#
@@ -149,10 +150,10 @@ onTransferReceived(operator, from, amount, data)
 import "@openzeppelin/contracts/interfaces/IERC1363Spender.sol";
 ```
 
-任何合约希望支持来自{ERC1363}代币合约的*IERC1363.approveAndCall*的接口。
+任何合约希望支持来自{ERC1363}代币合约的[IERC1363.approveAndCall](#approveandcalladdress-spender-uint256-amount-bytes-data-→-bool)的接口。
 
 **FUNCTIONS**
-onApprovalReceived(owner, amount, data)
+[onApprovalReceived(owner, amount, data)](#onapprovalreceivedaddress-owner-uint256-amount-bytes-data-→-bytes4)
 
 #### onApprovalReceived(address owner, uint256 amount, bytes data) → bytes4
 外部#
@@ -162,10 +163,11 @@ onApprovalReceived(owner, amount, data)
 ```
 import "@openzeppelin/contracts/interfaces/draft-IERC1822.sol";
 ```
+
 ERC1822: 通用可升级代理标准（UUPS）记录了一种通过简化代理实现完全由当前实现控制的升级能力的方法。
 
 **FUNCTIONS**
-proxiableUUID()
+[proxiableUUID()](#proxiableuuid-→-bytes32)
 
 #### proxiableUUID() → bytes32
 外部#
@@ -178,17 +180,19 @@ proxiableUUID()
 ```
 import "@openzeppelin/contracts/interfaces/IERC2612.sol";
 ```
+
 **FUNCTIONS**
 
 IERC20PERMIT
-permit(owner, spender, value, deadline, v, r, s)
-nonces(owner)
-DOMAIN_SEPARATOR()
+[permit(owner, spender, value, deadline, v, r, s)](./ERC20.md#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)
+[nonces(owner)](./ERC20.md#noncesaddress-owner-→-uint256)
+[DOMAIN_SEPARATOR()](./ERC20.md#domain_separator-→-bytes32)
 
 ### IERC2981
 ```
 import "@openzeppelin/contracts/interfaces/IERC2981.sol";
 ```
+
 NFT版税标准的接口。
 
 这是一种标准化的方式，用于检索非同质化代币（NFT）的版税支付信息，以实现在所有NFT市场和生态系统参与者之间普遍支持版税支付。
@@ -196,10 +200,10 @@ NFT版税标准的接口。
 *自版本4.5起可用。*
 
 **FUNCTIONS**
-royaltyInfo(tokenId, salePrice)
+[royaltyInfo(tokenId, salePrice)](#royaltyinfouint256-tokenid-uint256-saleprice-→-address-receiver-uint256-royaltyamount)
 
 IERC165
-supportsInterface(interfaceId)
+[supportsInterface(interfaceId)](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)
 
 ### royaltyInfo(uint256 tokenId, uint256 salePrice) → address receiver, uint256 royaltyAmount
 外部#
@@ -210,14 +214,14 @@ supportsInterface(interfaceId)
 import "@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol";
 ```
 
-*ERC-3156*定义的ERC3156 FlashLender的接口。
+[ERC-3156](https://eips.ethereum.org/EIPS/eip-3156)定义的ERC3156 FlashLender的接口。
 
 *从v4.1版本开始可用。*
 
 **FUNCTIONS**
-maxFlashLoan(token)
-flashFee(token, amount)
-flashLoan(receiver, token, amount, data)
+[maxFlashLoan(token)](#maxflashloanaddress-token-→-uint256)
+[flashFee(token, amount)](#flashfeeaddress-token-uint256-amount-→-uint256)
+[flashLoan(receiver, token, amount, data)](#flashloancontract-ierc3156flashborrower-receiver-address-token-uint256-amount-bytes-data-→-bool)
 
 #### maxFlashLoan(address token) → uint256
 外部#
@@ -241,7 +245,7 @@ import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
 *从v4.1版本开始可用。*
 
 **FUNCTIONS**
-onFlashLoan(initiator, token, amount, fee, data)
+[onFlashLoan(initiator, token, amount, fee, data)](#onflashloanaddress-initiator-address-token-uint256-amount-uint256-fee-bytes-data-→-bytes32)
 
 #### onFlashLoan(address initiator, address token, uint256 amount, uint256 fee, bytes data) → bytes32
 外部#
@@ -251,46 +255,49 @@ onFlashLoan(initiator, token, amount, fee, data)
 ```
 import "@openzeppelin/contracts/interfaces/IERC4626.sol";
 ```
+ERC4626 "代币化保险库标准"的接口，如[ERC-4626](https://eips.ethereum.org/EIPS/eip-4626)中定义。
+
+*自v4.7版本起可用。*
 
 **FUNCTIONS**
-asset()
-totalAssets()
-convertToShares(assets)
-convertToAssets(shares)
-maxDeposit(receiver)
-previewDeposit(assets)
-deposit(assets, receiver)
-maxMint(receiver)
-previewMint(shares)
-mint(shares, receiver)
-maxWithdraw(owner)
-previewWithdraw(assets)
-withdraw(assets, receiver, owner)
-maxRedeem(owner)
-previewRedeem(shares)
-redeem(shares, receiver, owner)
+[asset()](#asset-→-address-assettokenaddress)
+[totalAssets()](#totalassets-→-uint256-totalmanagedassets)
+[convertToShares(assets)](#converttosharesuint256-assets-→-uint256-shares)
+[convertToAssets(shares)](#converttoassetsuint256-shares-→-uint256-assets)
+[maxDeposit(receiver)](#maxdepositaddress-receiver-→-uint256-maxassets)
+[previewDeposit(assets)](#previewdeposituint256-assets-→-uint256-shares)
+[deposit(assets, receiver)](#deposituint256-assets-address-receiver-→-uint256-shares)
+[maxMint(receiver)](#maxmintaddress-receiver-→-uint256-maxshares)
+[previewMint(shares)](#previewmintuint256-shares-→-uint256-assets)
+[mint(shares, receiver)](#mintuint256-shares-address-receiver-→-uint256-assets)
+[maxWithdraw(owner)](#maxwithdrawaddress-owner-→-uint256-maxassets)
+[previewWithdraw(assets)](#previewwithdrawuint256-assets-→-uint256-shares)
+[withdraw(assets, receiver, owner)](#withdrawuint256-assets-address-receiver-address-owner-→-uint256-shares)
+[maxRedeem(owner)](#maxredeemaddress-owner-→-uint256-maxshares)
+[previewRedeem(shares)](#previewredeemuint256-shares-→-uint256-assets)
+[redeem(shares, receiver, owner)](#redeemuint256-shares-address-receiver-address-owner-→-uint256-assets)
 
 IERC20METADATA
 
-name()
-symbol()
-decimals()
+[name()](./ERC20.md#name-→-string)
+[symbol()](./ERC20.md#symbol-→-string)
+[decimals()](./ERC20.md#decimals-→-uint8)
 
 IERC20
-totalSupply()
-balanceOf(account)
-transfer(to, amount)
-allowance(owner, spender)
-approve(spender, amount)
-transferFrom(from, to, amount)
+[totalSupply()](./ERC20.md#totalsupply-→-uint256)
+[balanceOf(account)](./ERC20.md#balanceofaddress-account-→-uint256)
+[transfer(to, amount)](./ERC20.md#transferaddress-to-uint256-amount-→-bool)
+[allowance(owner, spender)](./ERC20.md#allowanceaddress-owner-address-spender-→-uint256)
+[approve(spender, amount)](./ERC20.md#approveaddress-spender-uint256-amount-→-bool)
+[transferFrom(from, to, amount)](./ERC20.md#transferfromaddress-from-address-to-uint256-amount-→-bool)
 
 **EVENTS**
-Deposit(sender, owner, assets, shares)
-Withdraw(sender, receiver, owner, assets, shares)
+[Deposit(sender, owner, assets, shares)](#depositaddress-indexed-sender-address-indexed-owner-uint256-assets-uint256-shares)
+[Withdraw(sender, receiver, owner, assets, shares)](#withdrawaddress-indexed-sender-address-indexed-receiver-address-indexed-owner-uint256-assets-uint256-shares)
 
 IERC20
-Transfer(from, to, value)
-Approval(owner, spender, value)
+[Transfer(from, to, value)](./ERC20.md#transferaddress-indexed-from-address-indexed-to-uint256-value)
+[Approval(owner, spender, value)](./ERC20.md#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)
 
 #### asset() → address assetTokenAddress
 外部#
@@ -469,13 +476,14 @@ convertToAssets和previewRedeem之间的任何不利差异应被视为份额价�
 ```
 import "@openzeppelin/contracts/interfaces/IERC5313.sol";
 ```
-光合约所有权标准的界面。
 
-一个标准化的最小界面，用于识别控制合约的账户。
+为轻合约所有权标准的接口。
+
+需要一个标准化的最小接口来识别控制合约的账户。
 *从v4.9版本开始可用。*
 
 **FUNCTIONS**
-owner()
+[owner()](#owner-→-address)
 
 #### owner() → address
 外部#
@@ -487,10 +495,10 @@ import "@openzeppelin/contracts/interfaces/IERC5267.sol";
 ```
 
 **FUNCTIONS**
-eip712Domain()
+[eip712Domain()](#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 **EVENTS**
-EIP712DomainChanged()
+[EIP712DomainChanged()](#eip712domainchanged)
 
 #### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
 外部#
@@ -508,22 +516,22 @@ import "@openzeppelin/contracts/interfaces/IERC5805.sol";
 **FUNCTIONS**
 
 IVOTES
-getVotes(account)
-getPastVotes(account, timepoint)
-getPastTotalSupply(timepoint)
-delegates(account)
-delegate(delegatee)
-delegateBySig(delegatee, nonce, expiry, v, r, s)
+[getVotes(account)](./Governance.md)
+[getPastVotes(account, timepoint)](./Governance.md)
+[getPastTotalSupply(timepoint)](./Governance.md)
+[delegates(account)](./Governance.md)
+[delegate(delegatee)](./Governance.md)
+[delegateBySig(delegatee, nonce, expiry, v, r, s)](./Governance.md)
 
 IERC6372
-clock()
-CLOCK_MODE()
+[clock()](#clock-→-uint48)
+[CLOCK_MODE()](#clock_mode-→-string)
 
 **EVENTS**
 
 IVOTES
-DelegateChanged(delegator, fromDelegate, toDelegate)
-DelegateVotesChanged(delegate, previousBalance, newBalance)
+[DelegateChanged(delegator, fromDelegate, toDelegate)](./Governance.md)
+[DelegateVotesChanged(delegate, previousBalance, newBalance)](./Governance.md)
 
 ### IERC6372
 ```
@@ -531,9 +539,9 @@ import "@openzeppelin/contracts/interfaces/IERC6372.sol";
 ```
 
 **FUNCTIONS**
-clock()
+[clock()](#clock-→-uint48)
 
-CLOCK_MODE()
+[CLOCK_MODE()](#clock_mode-→-string)
 
 #### clock() → uint48
 外部#
