@@ -104,13 +104,14 @@ Solidity语言中缺少的标准数学工具。
 ```
 import "@openzeppelin/contracts/utils/math/SignedMath.sol";
 ```
+
 Solidity语言中缺少标准的有符号数学工具。
 
 **FUNCTIONS**
-max(a, b)
-min(a, b)
-average(a, b)
-abs(n)
+[max(a, b)](#maxint256-a-int256-b-→-int256)
+[min(a, b)](#minint256-a-int256-b-→-int256)
+[average(a, b)](#averageint256-a-int256-b-→-int256)
+[abs(n)](#absint256-n-→-uint256)
 
 #### max(int256 a, int256 b) → int256
 内部#
@@ -132,142 +133,143 @@ abs(n)
 ```
 import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 ```
+
 在Solidity中，对uintXX/intXX进行包装，添加了溢出检查。
 
 在Solidity中，从uint256/int256进行向下转换不会在溢出时回滚。这很容易导致意外的利用或错误，因为开发人员通常假设溢出会引发错误。SafeCast通过在此类操作溢出时回滚事务来恢复这种直觉。
 
 使用这个库而不是未检查的操作可以消除整个类别的错误，因此建议始终使用它。
 
-可以与*SafeMath*和*SignedSafeMath*结合使用，通过在uint256和int256上执行所有数学运算，然后进行向下转换，将其扩展到较小的类型。
+可以与[SafeMath](#safemath)和[SignedSafeMath](#signedsafemath)结合使用，通过在uint256和int256上执行所有数学运算，然后进行向下转换，将其扩展到较小的类型。
 
 **FUNCTIONS**
-toUint248(value)
+[toUint248(value)](#touint248uint256-value-→-uint248)
 
-toUint240(value)
+[toUint240(value)](#touint240uint256-value-→-uint240)
 
-toUint232(value)
+[toUint232(value)](#touint232uint256-value-→-uint232)
 
-toUint224(value)
+[toUint224(value)](#touint224uint256-value-→-uint224)
 
-toUint216(value)
+[toUint216(value)](#touint216uint256-value-→-uint216)
 
-toUint208(value)
+[toUint208(value)](#touint208uint256-value-→-uint208)
 
-toUint200(value)
+[toUint200(value)](#touint200uint256-value-→-uint200)
 
-toUint192(value)
+[toUint192(value)](#touint192uint256-value-→-uint192)
 
-toUint184(value)
+[toUint184(value)](#touint184uint256-value-→-uint184)
 
-toUint176(value)
+[toUint176(value)](#touint176uint256-value-→-uint176)
 
-toUint168(value)
+[toUint168(value)](#touint168uint256-value-→-uint168)
 
-toUint160(value)
+[toUint160(value)](#touint160uint256-value-→-uint160)
 
-toUint152(value)
+[toUint152(value)](#touint152uint256-value-→-uint152)
 
-toUint144(value)
+[toUint144(value)](#touint144uint256-value-→-uint144)
 
-toUint136(value)
+[toUint136(value)](#touint136uint256-value-→-uint136)
 
-toUint128(value)
+[toUint128(value)](#touint128uint256-value-→-uint128)
 
-toUint120(value)
+[toUint120(value)](#touint120uint256-value-→-uint120)
 
-toUint112(value)
+[toUint112(value)](#touint112uint256-value-→-uint112)
 
-toUint104(value)
+[toUint104(value)](#touint104uint256-value-→-uint104)
 
-toUint96(value)
+[toUint96(value)](#touint96uint256-value-→-uint96)
 
-toUint88(value)
+[toUint88(value)](#touint88uint256-value-→-uint88)
 
-toUint80(value)
+[toUint80(value)](#touint80uint256-value-→-uint80)
 
-toUint72(value)
+[toUint72(value)](#touint72uint256-value-→-uint72)
 
-toUint64(value)
+[toUint64(value)](#touint64uint256-value-→-uint64)
 
-toUint56(value)
+[toUint56(value)](#touint56uint256-value-→-uint56)
 
-toUint48(value)
+[toUint48(value)](#touint48uint256-value-→-uint48)
 
-toUint40(value)
+[toUint40(value)](#touint40uint256-value-→-uint40)
 
-toUint32(value)
+[toUint32(value)](#touint32uint256-value-→-uint32)
 
-toUint24(value)
+[toUint24(value)](#touint24uint256-value-→-uint24)
 
-toUint16(value)
+[toUint16(value)](#touint16uint256-value-→-uint16)
 
-toUint8(value)
+[toUint8(value)](#touint8uint256-value-→-uint8)
 
-toUint256(value)
+[toUint256(value)](#touint256int256-value-→-uint256)
 
-toInt248(value)
+[toInt248(value)](#toint248int256-value-→-int248-downcasted)
 
-toInt240(value)
+[toInt240(value)](#toint240int256-value-→-int240-downcasted)
 
-toInt232(value)
+[toInt232(value)](#toint232int256-value-→-int232-downcasted)
 
-toInt224(value)
+[toInt224(value)](#toint224int256-value-→-int224-downcasted)
 
-toInt216(value)
+[toInt216(value)](#toint216int256-value-→-int216-downcasted)
 
-toInt208(value)
+[toInt208(value)](#toint208int256-value-→-int208-downcasted)
 
-toInt200(value)
+[toInt200(value)](#toint200int256-value-→-int200-downcasted)
 
-toInt192(value)
+[toInt192(value)](#toint192int256-value-→-int192-downcasted)
 
-toInt184(value)
+[toInt184(value)](#toint184int256-value-→-int184-downcasted)
 
-toInt176(value)
+[toInt176(value)](#toint176int256-value-→-int176-downcasted)
 
-toInt168(value)
+[toInt168(value)](#toint168int256-value-→-int168-downcasted)
 
-toInt160(value)
+[toInt160(value)](#toint160int256-value-→-int160-downcasted)
 
-toInt152(value)
+[toInt152(value)](#toint152int256-value-→-int152-downcasted)
 
-toInt144(value)
+[toInt144(value)](#toint144int256-value-→-int144-downcasted)
 
-toInt136(value)
+[toInt136(value)](#toint136int256-value-→-int136-downcasted)
 
-toInt128(value)
+[toInt128(value)](#toint128int256-value-→-int128-downcasted)
 
-toInt120(value)
+[toInt120(value)](#toint120int256-value-→-int120-downcasted)
 
-toInt112(value)
+[toInt112(value)](#toint112int256-value-→-int112-downcasted)
 
-toInt104(value)
+[toInt104(value)](#toint104int256-value-→-int104-downcasted)
 
-toInt96(value)
+[toInt96(value)](#toint96int256-value-→-int96-downcasted)
 
-toInt88(value)
+[toInt88(value)](#toint88int256-value-→-int88-downcasted)
 
-toInt80(value)
+[toInt80(value)](#toint80int256-value-→-int80-downcasted)
 
-toInt72(value)
+[toInt72(value)](#toint72int256-value-→-int72-downcasted)
 
-toInt64(value)
+[toInt64(value)](#toint64int256-value-→-int64-downcasted)
 
-toInt56(value)
+[toInt56(value)](#toint56int256-value-→-int56-downcasted)
 
-toInt48(value)
+[toInt48(value)](#toint48int256-value-→-int48-downcasted)
 
-toInt40(value)
+[toInt40(value)](#toint40int256-value-→-int40-downcasted)
 
-toInt32(value)
+[toInt32(value)](#toint32int256-value-→-int32-downcasted)
 
-toInt24(value)
+[toInt24(value)](#toint24int256-value-→-int24-downcasted)
 
-toInt16(value)
+[toInt16(value)](#toint16int256-value-→-int16-downcasted)
 
-toInt8(value)
+[toInt8(value)](#toint8int256-value-→-int8-downcasted)
 
-toInt256(value)
+[toInt256(value)](#toint256uint256-value-→-int256)
 
 #### toUint248(uint256 value) → uint248
 内部#
@@ -519,6 +521,18 @@ toInt256(value)
 * 输入必须适应64位
 
 *从v2.5开始可用。*
+
+#### toUint64(uint256 value) → uint64
+内部#
+将uint256向下转换为uint64，当输入大于最大的uint64时返回溢出。
+
+这是Solidity的uint64运算符的对应部分。
+
+要求：
+
+* 输入必须适应64位
+
+*自v2.5版本起可用。*
 
 #### toUint56(uint256 value) → uint56
 内部#
@@ -978,31 +992,31 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 从Solidity 0.8开始，通常不再需要SafeMath，因为编译器现在内置了溢出检查。
 
 **FUNCTIONS**
-tryAdd(a, b)
+[tryAdd(a, b)](#tryadduint256-a-uint256-b-→-bool-uint256)
 
-trySub(a, b)
+[trySub(a, b)](#trysubuint256-a-uint256-b-→-bool-uint256)
 
-tryMul(a, b)
+[tryMul(a, b)](#trymuluint256-a-uint256-b-→-bool-uint256)
 
-tryDiv(a, b)
+[tryDiv(a, b)](#trydivuint256-a-uint256-b-→-bool-uint256)
 
-tryMod(a, b)
+[tryMod(a, b)](#trymoduint256-a-uint256-b-→-bool-uint256)
 
-add(a, b)
+[add(a, b)](#adduint256-a-uint256-b-→-uint256)
 
-sub(a, b)
+[sub(a, b)](#subuint256-a-uint256-b-→-uint256)
 
-mul(a, b)
+[mul(a, b)](#muluint256-a-uint256-b-→-uint256)
 
-div(a, b)
+[div(a, b)](#divuint256-a-uint256-b-→-uint256)
 
-mod(a, b)
+[mod(a, b)](#moduint256-a-uint256-b-→-uint256)
 
-sub(a, b, errorMessage)
+[sub(a, b, errorMessage)](#subuint256-a-uint256-b-→-uint256)
 
-div(a, b, errorMessage)
+[div(a, b, errorMessage)](#divuint256-a-uint256-b-→-uint256)
 
-mod(a, b, errorMessage)
+[mod(a, b, errorMessage)](#moduint256-a-uint256-b-→-uint256)
 
 #### tryAdd(uint256 a, uint256 b) → bool, uint256
 内部#
