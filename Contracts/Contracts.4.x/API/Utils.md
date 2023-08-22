@@ -1,19 +1,19 @@
 # Utilities
 杂项合约和库包含了实用函数，可以提高安全性、处理新的数据类型或安全地使用底层基元。
 
-*Address*、*Arrays*、*Base64*和*Strings*库提供了与这些原生数据类型相关的更多操作，而*SafeCast*则提供了安全地在不同的有符号和无符号数值类型之间转换的方法。*Multicall*提供了一种将多个调用合并为单个外部调用的函数。
+[Address](#address)、[Arrays](#arrays)、[Base64](#base64)和[Strings](#strings)库提供了与这些原生数据类型相关的更多操作，而[SafeCast](#safecast)则提供了安全地在不同的有符号和无符号数值类型之间转换的方法。[Multicall](#multicall)提供了一种将多个调用合并为单个外部调用的函数。
 
 对于新的数据类型：
 
-* *Counters*：一种简单的方式来获取只能递增、递减或重置的计数器。非常适用于ID生成、计算合约活动等。
-* *EnumerableMap*：类似于Solidity的*mapping*类型，但具有键值枚举功能：这将让您知道一个映射有多少条目，并可以对它们进行迭代（这在mapping中是不可能的）。
-* *EnumerableSet*：类似于*EnumerableMap*，但用于[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))。可用于存储特权账户、发行的ID等。
+* [Counters](#counters)：一种简单的方式来获取只能递增、递减或重置的计数器。非常适用于ID生成、计算合约活动等。
+* [EnumerableMap](#enumerablemap)：类似于Solidity的[mapping](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)类型，但具有键值枚举功能：这将让您知道一个映射有多少条目，并可以对它们进行迭代（这在mapping中是不可能的）。
+* [EnumerableSet](./Utils.md#enumerableset)：类似于[EnumerableMap](#enumerablemap)，但用于[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))。可用于存储特权账户、发行的ID等。
 
 > NOTE
-由于Solidity不支持泛型类型，*EnumerableMap*和*EnumerableSet*专门针对有限数量的键值类型进行了特化。
-从v3.0开始，*EnumerableMap*支持uint256 → address（UintToAddressMap），*EnumerableSet*支持address和uint256（AddressSet和UintSet）。
+由于Solidity不支持泛型类型，[EnumerableMap](#enumerablemap)和[EnumerableSet](#enumerableset)专门针对有限数量的键值类型进行了特化。
+从v3.0开始，[EnumerableMap](#enumerablemap)支持uint256 → address（UintToAddressMap），[EnumerableSet](#enumerableset)支持address和uint256（AddressSet和UintSet）。
 
-最后，*Create2*包含了所有必要的实用工具，可以安全地使用[CREATE2 EVM操作码](https://blog.openzeppelin.com/getting-the-most-out-of-create2/)，而无需处理底层汇编。
+最后，[Create2](#create2)包含了所有必要的实用工具，可以安全地使用[CREATE2 EVM操作码](https://blog.openzeppelin.com/getting-the-most-out-of-create2/)，而无需处理底层汇编。
 
 ## Math
 
@@ -21,23 +21,24 @@
 ```
 import "@openzeppelin/contracts/utils/math/Math.sol";
 ```
+
 Solidity语言中缺少的标准数学工具。
 
 **FUNCTIONS**
-max(a, b)
-min(a, b)
-average(a, b)
-ceilDiv(a, b)
-mulDiv(x, y, denominator)
-mulDiv(x, y, denominator, rounding)
-sqrt(a)
-sqrt(a, rounding)
-log2(value)
-log2(value, rounding)
-log10(value)
-log10(value, rounding)
-log256(value)
-log256(value, rounding)
+[max(a, b)](#maxuint256-a-uint256-b-→-uint256)
+[min(a, b)](#minuint256-a-uint256-b-→-uint256)
+[average(a, b)](#averageuint256-a-uint256-b-→-uint256)
+[ceilDiv(a, b)](#ceildivuint256-a-uint256-b-→-uint256)
+[mulDiv(x, y, denominator)](#muldivuint256-x-uint256-y-uint256-denominator-enum-mathrounding-rounding-→-uint256)
+[mulDiv(x, y, denominator, rounding)](#muldivuint256-x-uint256-y-uint256-denominator-→-uint256-result)
+[sqrt(a)](#sqrtuint256-a-→-uint256)
+[sqrt(a, rounding)](#sqrtuint256-a-enum-mathrounding-rounding-→-uint256)
+[log2(value)](#log2uint256-value-→-uint256)
+[log2(value, rounding)](#log2uint256-value-enum-mathrounding-rounding-→-uint256)
+[log10(value)](#log10uint256-value-→-uint256)
+[log10(value, rounding)](#log10uint256-value-enum-mathrounding-rounding-→-uint256)
+[log256(value)](#log256uint256-value-→-uint256)
+[log256(value, rounding)](#log256uint256-value-enum-mathrounding-rounding-→-uint256)
 
 #### max(uint256 a, uint256 b) → uint256
 内部#
@@ -1896,7 +1897,7 @@ _registerInterfaceForAddress(interfaceHash, account)
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
 内部#
-将合同声明为愿意成为帐户的interfaceHash实现者。
+将合约声明为愿意成为帐户的interfaceHash实现者。
 
 请参考*IERC1820Registry.setInterfaceImplementer*和*IERC1820Registry.interfaceHash*。
 

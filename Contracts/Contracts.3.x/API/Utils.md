@@ -1,16 +1,16 @@
 # Utilities
-杂项合同和库包含了一些实用函数，可以用来提高安全性、处理新的数据类型或安全地使用低级别的基元。
+杂项合约和库包含了一些实用函数，可以用来提高安全性、处理新的数据类型或安全地使用低级别的基元。
 
 安全工具包括：
 
-* *Pausable*：提供了一种简单的方式来暂停合同中的活动（通常是为了应对外部威胁）。
+* *Pausable*：提供了一种简单的方式来暂停合约中的活动（通常是为了应对外部威胁）。
 
 * *ReentrancyGuard*：保护您免受[重入调用](https://blog.openzeppelin.com/reentrancy-after-istanbul/)的影响。
 
 *Address*、*Arrays*和*Strings*库提供了与这些原生数据类型相关的更多操作，而*SafeCast*则提供了安全地在不同的有符号和无符号数值类型之间进行转换的方法。
 
 对于新的数据类型：
-* *Counters*：提供了一个只能递增或递减的计数器。非常适用于ID生成、计算合同活动等。
+* *Counters*：提供了一个只能递增或递减的计数器。非常适用于ID生成、计算合约活动等。
 
 * *EnumerableMap*：类似于Solidity的[映射类型](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)，但具有键值枚举功能：这将让您知道映射中有多少条目，并对它们进行迭代（这在映射中是不可能的）。
 
@@ -25,9 +25,9 @@
 ## Contracts
 
 ### Pausable
-合同模块，允许子合同实现由授权账户触发的紧急停止机制。
+合约模块，允许子合约实现由授权账户触发的紧急停止机制。
 
-通过继承使用此模块。它将提供whenNotPaused和whenPaused修饰符，可以应用于您合同的函数。请注意，仅通过包含此模块，不会使函数可暂停，只有在放置修饰符之后才能暂停。
+通过继承使用此模块。它将提供whenNotPaused和whenPaused修饰符，可以应用于您合约的函数。请注意，仅通过包含此模块，不会使函数可暂停，只有在放置修饰符之后才能暂停。
 
 **MODIFIERS**
 whenNotPaused()
@@ -60,7 +60,7 @@ Unpaused(account)
 只有当合约被暂停时才能调用的修饰符。
 
 要求：
-* 合同必须暂停。
+* 合约必须暂停。
 
 #### constructor()
 内部#
@@ -68,21 +68,21 @@ Unpaused(account)
 
 #### paused() → bool
 公开#
-如果合同暂停，则返回true，否则返回false。
+如果合约暂停，则返回true，否则返回false。
 
 #### _pause()
 内部#
 触发停止状态。
 
 要求：
-* 合同不能被暂停。
+* 合约不能被暂停。
 
 #### _unpause()
 内部#
 返回正常状态。
 
 要求：
-* 合同必须暂停。
+* 合约必须暂停。
 
 #### Paused(address account)
 事件#
@@ -191,7 +191,7 @@ Solidity中transfer的替代方法：将amount wei发送给recipient，转发所
 与functionCall相同，但还将wei值转移到目标。
 
 要求：
-* 调用合同的ETH余额必须至少为value。
+* 调用合约的ETH余额必须至少为value。
 * 被调用的Solidity函数必须可支付。
 
 *自v3.1起可用。*

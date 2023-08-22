@@ -1,5 +1,5 @@
 # Security
-这些合同旨在涵盖常见的安全实践。
+这些合约旨在涵盖常见的安全实践。
 * [PullPayment](#pullpayment)：这是一种可以用来避免重入攻击的模式。
 * [ReentrancyGuard](#reentrancyguard)：这是一个修饰符，可以在某些函数中防止重入。
 * [Pausable](#pausable)：这是一种常见的紧急响应机制，可以在进行修复期间暂停功能。
@@ -14,14 +14,14 @@
 import "@openzeppelin/contracts/security/PullPayment.sol";
 ```
 
-这是一个简单的[拉取支付策略](https://consensys.github.io/smart-contract-best-practices/development-recommendations/general/external-calls/#favor-pull-over-push-for-external-calls)的实现，支付合同不直接与接收方账户交互，接收方必须自行提取支付。
+这是一个简单的[拉取支付策略](https://consensys.github.io/smart-contract-best-practices/development-recommendations/general/external-calls/#favor-pull-over-push-for-external-calls)的实现，支付合约不直接与接收方账户交互，接收方必须自行提取支付。
 
 从安全角度来看，拉取支付通常被认为是最佳实践。它防止接收方阻塞执行，并消除了重入的担忧。
 
 > TIP
 如果您想了解更多关于重入和其他保护措施的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
 
-使用时，继承PullPayment合同，并使用[_asyncTransfer](#_asynctransferaddress-dest-uint256-amount)代替Solidity的transfer函数。支付方可以使用[payments](#paymentsaddress-dest-→-uint256)查询其应付款项，并使用[withdrawPayments](#withdrawpaymentsaddress-payable-payee)提取款项。
+使用时，继承PullPayment合约，并使用[_asyncTransfer](#_asynctransferaddress-dest-uint256-amount)代替Solidity的transfer函数。支付方可以使用[payments](#paymentsaddress-dest-→-uint256)查询其应付款项，并使用[withdrawPayments](#withdrawpaymentsaddress-payable-payee)提取款项。
 
 **FUNCTIONS**
 [constructor()](#constructor)
@@ -116,19 +116,19 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 
 #### whenPaused()
 修饰符#
-仅当合同暂停时才能调用的修饰符。
+仅当合约暂停时才能调用的修饰符。
 
 要求：
 
-合同必须暂停。
+合约必须暂停。
 
 #### constructor()
 内部#
-在未暂停状态下初始化合同。
+在未暂停状态下初始化合约。
 
 #### paused() → bool
 公开#
-如果合同已暂停，则返回true，否则返回false。
+如果合约已暂停，则返回true，否则返回false。
 
 #### _requireNotPaused()
 内部#
@@ -143,14 +143,14 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 触发停止状态。
 
 要求：
-* 合同不能暂停。
+* 合约不能暂停。
 
 #### _unpause()
 内部#
 回到正常状态。
 
 要求：
-* 合同必须暂停。
+* 合约必须暂停。
 
 #### Paused(address account)
 事件#

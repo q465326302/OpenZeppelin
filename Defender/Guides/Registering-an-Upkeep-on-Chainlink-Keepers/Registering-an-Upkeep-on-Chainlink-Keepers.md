@@ -74,7 +74,7 @@ interface KeeperCompatibleInterface {
 在撰写本文的时候，注册流程要求您为您的合约提供至少5个LINK的初始资金，因此请确保您用于请求注册的帐户至少拥有该金额的LINK。您可以选择将这个初始资金变得更大，以节省未来的充值燃气费用。
 ![guide-chainlink-4.png](img/guide-chainlink-4.png)
 
-一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合约页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时，您的合同页面的外观。
+一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合约页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时，您的合约页面的外观。
 ![guide-chainlink-5.png](img/guide-chainlink-5.png)
 
 当您的注册被批准后，Defender将向您显示您的Upkeep余额以及网络保管人的最新执行情况。请注意，为了使您的合约得到网络的服务，您还需要用LINK代币为其提供资金。您也可以通过在Defender上点击“Deposit LINK”来完成这个过程。
@@ -84,7 +84,7 @@ interface KeeperCompatibleInterface {
 您可以利用Defender [Sentinel](../../Components/Sentinel/Sentinel.md)和[Autotasks](../../Components/Autotasks/Autotasks.md)监控网络中的Upkeep。例如，您可以监控执行失败、低资金或未执行任务等情况。
 
 ### 执行失败
-您可以设置[Sentinels](../../Components/Sentinel/Sentinel.md)，在一段时间内您的合同有一个或多个执行失败时通知您，以便您调查失败原因并根据需要调整您的Upkeep代码。
+您可以设置[Sentinels](../../Components/Sentinel/Sentinel.md)，在一段时间内您的合约有一个或多个执行失败时通知您，以便您调查失败原因并根据需要调整您的Upkeep代码。
 
 要做到这一点，首先创建一个新的Sentinel来[监视Chainlink Keeper Registry](https://kovan.etherscan.io/address/0xAaaD7966EBE0663b8C9C6f683FB9c3e66E03467F)（Kovan上的0x109A81F1E0A35D4c1D0cae8aCc6597cd54b47Bc6）。
 ![guide-chainlink-7.png](img/guide-chainlink-7.png)

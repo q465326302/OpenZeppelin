@@ -345,12 +345,12 @@ nile状态的别名 --debug。
 从devnet节点查询预部署的账户。
 
 ### nile get-nonce <ADDRESS>
-检索合同（通常是账户）的nonce。
+检索合约（通常是账户）的nonce。
 
 #### 参数
 * ADDRESS
 
-指定要查询的合同的地址。
+指定要查询的合约的地址。
 
 #### 选项
 * --network

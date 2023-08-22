@@ -226,7 +226,7 @@ AdminChanged(previousAdmin, newAdmin)
 ## Beacon
 
 ### BeaconProxy
-此合同实现了一个代理，每次调用从*UpgradeableBeacon*获取实现地址。
+此合约实现了一个代理，每次调用从*UpgradeableBeacon*获取实现地址。
 
 beacon地址存储在存储槽uint256(keccak256('eip1967.proxy.beacon')) - 1中，以便不与代理后面的实现的存储布局冲突。
 
@@ -294,7 +294,7 @@ implementation()
 *BeaconProxy*将检查该地址是否为合约。
 
 ### UpgradeableBeacon
-该合同与一个或多个*BeaconProxy*实例一起使用，以确定它们的实现合同，该合同将委托所有函数调用。
+该合约与一个或多个*BeaconProxy*实例一起使用，以确定它们的实现合约，该合约将委托所有函数调用。
 
 所有者可以更改beacon指向的实现，从而升级使用该beacon的代理。
 

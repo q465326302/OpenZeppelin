@@ -253,12 +253,12 @@ nile status --debug 的别名是 nile 状态 --调试。
 ### get-nonce
 
 #### nile get-nonce <ADDRESS>
-检索合同（通常是账户）的nonce。
+检索合约（通常是账户）的nonce。
 
 ##### 参数
 * ADDRESS
 
-指定要查询的合同的地址。
+指定要查询的合约的地址。
 
 ##### 选项
 * --network

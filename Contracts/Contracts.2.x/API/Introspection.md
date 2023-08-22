@@ -52,7 +52,7 @@ _registerInterface(interfaceId)
 
 #### _registerInterface(bytes4 interfaceId)
 内部#
-将合同注册为接口Id定义的接口的实现者。对于实际的ERC165接口的支持是自动的，不需要注册其接口Id。
+将合约注册为接口Id定义的接口的实现者。对于实际的ERC165接口的支持是自动的，不需要注册其接口Id。
 
 请参阅*IERC165.supportsInterface*。
 

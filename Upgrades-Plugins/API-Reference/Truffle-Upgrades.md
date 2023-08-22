@@ -294,11 +294,11 @@ async function validateImplementation(
 ): Promise<void>
 ```
 
-验证实施合同的实施合同，而无需部署它。
+验证实施合约的实施合约，而无需部署它。
 
 **参数：**
 
-* Contract - 实施合同的Truffle合同类。
+* Contract - 实施合约的Truffle合约类。
 
 * opts - 一个带有选项的对象：
 
@@ -379,7 +379,7 @@ const { validateUpgrade } = require('@openzeppelin/truffle-upgrades');
 const BoxV2 = artifacts.require('BoxV2');
 await validateUpgrade(PROXY_ADDRESS, BoxV2);
 ```
-验证两个合同实现之间的升级：
+验证两个合约实现之间的升级：
 ```
 const { validateUpgrade } = require('@openzeppelin/truffle-upgrades');
 

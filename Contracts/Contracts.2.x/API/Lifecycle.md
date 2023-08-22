@@ -56,15 +56,15 @@ PauserRemoved(account)
 
 #### whenPaused()
 修饰符#
-当合同暂停时才能调用的修饰符。
+当合约暂停时才能调用的修饰符。
 
 #### constructor()
 内部#
-在未暂停状态下初始化合同。将Pauser角色分配给部署者。
+在未暂停状态下初始化合约。将Pauser角色分配给部署者。
 
 #### paused() → bool
 公开#
-如果合同暂停，则返回true，否则返回false。
+如果合约暂停，则返回true，否则返回false。
 
 #### pause()
 公开#

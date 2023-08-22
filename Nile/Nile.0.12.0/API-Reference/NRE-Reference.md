@@ -21,12 +21,12 @@
 获取余额
 
 ### compile(contracts, cairo_path=None) → None
-编译合同列表。
+编译合约列表。
 
 #### 参数
 * contracts
 
-要编译的合同列表。
+要编译的合约列表。
 
 * cairo_path
 
@@ -124,12 +124,12 @@
 #### 参数
 * hash_or_alias
 
-合同标识符。
+合约标识符。
 
 #### 返回值
 * class_hash
 
-声明的合同类哈希。
+声明的合约类哈希。
 
 ### get_or_deploy_account(signer, watch_mode=None) → account
 获取或部署一个账户合约。

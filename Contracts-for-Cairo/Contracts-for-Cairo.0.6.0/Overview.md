@@ -35,7 +35,7 @@ pip install openzeppelin-cairo-contracts
 直接通过GitHub安装可能包含不完整或破坏性的实现。虽然我们努力不引入此类更改，但我们仍强烈建议通过[官方发布](https://github.com/OpenZeppelin/cairo-contracts/releases/)进行安装。
 
 ### 使用基本预设
-预设是可以立即部署的即用合同。它们还可以作为使用库模块的示例。了解更多关于*预设的信息*。
+预设是可以立即部署的即用合约。它们还可以作为使用库模块的示例。了解更多关于*预设的信息*。
 ```
 // contracts/MyToken.cairo
 
@@ -67,7 +67,7 @@ nile deploy MyToken <name> <symbol> <decimals> <initial_supply> <recipient> --al
 <initial_supply> 预计是两个整数，即 1 0。有关更多信息，请参阅 *uint256*。
 
 ### 
-使用库模块编写自定义合同
+使用库模块编写自定义合约
 *阅读更多关于库的信息。*
 ```
 %lang starknet

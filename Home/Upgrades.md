@@ -16,13 +16,13 @@ OpenZeppelin提供工具来部署和保护可升级的智能合约。
 ### [升级插件](../Upgrades-Plugins/Overview.md)
 这些插件适用于Hardhat和Truffle，可以抽象出升级的复杂性，并在运行自动化安全检查时确保成功的升级。
 
-### [编写可升级的合同](../Upgrades-Plugins/Writing-Upgradeable-Contracts.md)
+### [编写可升级的合约](../Upgrades-Plugins/Writing-Upgradeable-Contracts.md)
 在使用OpenZeppelin Upgrades处理可升级合约时，编写Solidity代码时需要注意一些小细节。
 
-### [OpenZeppelin可升级合同](../Contracts/Contracts.4.x/Using-with-Upgrades.md)
+### [OpenZeppelin可升级合约](../Contracts/Contracts.4.x/Using-with-Upgrades.md)
 这是一个流行的OpenZeppelin Contracts库的变体，其中包含了所有升级合约所需的必要修改。
 
-### [代理合同](../Contracts/Contracts.4.x/API/)
+### [代理合约](../Contracts/Contracts.4.x/API/)
 所有可用的代理合约和相关工具的完整列表，以及与低级使用相关的文档，而不需要升级插件。
 
 ### [智能合约升级的现状](https://blog.openzeppelin.com/the-state-of-smart-contract-upgrades/)

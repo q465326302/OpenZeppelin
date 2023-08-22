@@ -1,10 +1,10 @@
 # Gas Station Network (GSN)
-这套合同提供了通过[Gas Station Network（GSN）](https://gsn.openzeppelin.com/)调用合同所需的所有工具。
+这套合约提供了通过[Gas Station Network（GSN）](https://gsn.openzeppelin.com/)调用合约所需的所有工具。
 
 > TIP
-如果您对GSN还不熟悉，请查看我们关于*该系统的概述*和*创建GSN兼容合同的基本指南*。
+如果您对GSN还不熟悉，请查看我们关于*该系统的概述*和*创建GSN兼容合约的基本指南*。
 
-接收方必须继承的核心合同是*GSNRecipient*：它包括所有必要的接口，以及一些帮助方法，使与GSN的交互更容易。
+接收方必须继承的核心合约是*GSNRecipient*：它包括所有必要的接口，以及一些帮助方法，使与GSN的交互更容易。
 
 使编写*GSN策略*变得简单的实用程序可在*GSNRecipient*中使用，或者您可以直接使用我们预先制作的策略之一：
 
@@ -12,16 +12,16 @@
 
 * *GSNRecipientSignature* 接受已由可信第三方（例如后端中的私钥）签名的所有Relayer 调用
 
-您还可以查看构成GSN协议的两个合同接口：*IRelayRecipient*和*IRelayHub*，但您不需要直接使用它们。
+您还可以查看构成GSN协议的两个合约接口：*IRelayRecipient*和*IRelayHub*，但您不需要直接使用它们。
 
 ## 接收方
 
 ### GSNRecipient
 
-基本GSN接收方合同：包括*IRelayRecipient*接口，并在继承树中的所有合同上启用GSN支持。
+基本GSN接收方合约：包括*IRelayRecipient*接口，并在继承树中的所有合约上启用GSN支持。
 
 > TIP
-此合同是抽象的。未实现*IRelayRecipient.acceptRelayedCall*、*_preRelayedCall*和*_postRelayedCall*函数，必须由派生合同提供。有关如何使用预构建的*GSNRecipientSignature*和*GSNRecipientERC20Fee*的更多信息，请参阅*GSN策略*，或者如何编写您自己的策略。
+此合约是抽象的。未实现*IRelayRecipient.acceptRelayedCall*、*_preRelayedCall*和*_postRelayedCall*函数，必须由派生合约提供。有关如何使用预构建的*GSNRecipientSignature*和*GSNRecipientERC20Fee*的更多信息，请参阅*GSN策略*，或者如何编写您自己的策略。
 
 **FUNCTIONS**
 getHubAddr()
@@ -278,7 +278,7 @@ RelayHubChanged(oldRelayHub, newRelayHub)
 ## 协议
 
 ### IRelayRecipient
-一个合同的基本接口，将通过*IRelayHub*从GSN调用。
+一个合约的基本接口，将通过*IRelayHub*从GSN调用。
 
 > TIP
 您不需要自己编写实现！请继承自*GSNRecipient*。
@@ -420,7 +420,7 @@ Penalized(relay, sender, amount)
 
 #### balanceOf(address target) → uint256
 外部# 
-返回一个账户的存款。这些存款可以是合同的资金，也可以是Relayer 所有者的收入。
+返回一个账户的存款。这些存款可以是合约的资金，也可以是Relayer 所有者的收入。
 
 #### withdraw(uint256 amount, address payable dest)
 外部# 

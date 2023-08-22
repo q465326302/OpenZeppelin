@@ -7,12 +7,12 @@ NRE对象提供的功能。
 ### compile
 
 #### compile(contracts, cairo_path=None) → None
-编译合同列表。
+编译合约列表。
 
 ##### 参数
 * contracts
 
-要编译的合同列表。
+要编译的合约列表。
 
 * cairo_path
 
@@ -53,16 +53,16 @@ NRE对象提供的功能。
 ##### 参数
 * address_or_alias
 
-合同标识符。
+合约标识符。
 
 ##### 返回值
 * address
 
-已注册的合同地址。
+已注册的合约地址。
 
 * abi
 
-已注册的合同abi。
+已注册的合约abi。
 
 ### get_declaration
 

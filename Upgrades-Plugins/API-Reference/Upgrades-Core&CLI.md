@@ -123,7 +123,7 @@ npx @openzeppelin/upgrades-core validate [<BUILD_INFO_DIR>] [<OPTIONS>]
 ```
 import { validateUpgradeSafety } from '@openzeppelin/upgrades-core';
 ```
-然后调用该函数来验证您的合同，并获取一个包含验证结果的项目报告。
+然后调用该函数来验证您的合约，并获取一个包含验证结果的项目报告。
 
 validateUpgradeSafety
 

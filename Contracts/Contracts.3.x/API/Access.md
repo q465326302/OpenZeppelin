@@ -44,14 +44,14 @@ OwnershipTransferred(previousOwner, newOwner)
 
 #### renounceOwnership()
 公开#
-没有所有者的合同将被废弃。将无法再调用只能由所有者调用的函数。只能由当前所有者调用。
+没有所有者的合约将被废弃。将无法再调用只能由所有者调用的函数。只能由当前所有者调用。
 
 > NOTE
-放弃所有权将使合同失去所有者，从而删除只有所有者才能使用的功能。
+放弃所有权将使合约失去所有者，从而删除只有所有者才能使用的功能。
 
 #### transferOwnership(address newOwner)
 公开#
-将合同的所有权转移到一个新账户（newOwner）。只能由当前所有者调用。
+将合约的所有权转移到一个新账户（newOwner）。只能由当前所有者调用。
 
 #### OwnershipTransferred(address previousOwner, address newOwner)
 事件#
@@ -281,11 +281,11 @@ RoleRevoked(role, account, sender)
 
 #### constructor(uint256 minDelay, address[] proposers, address[] executors)
 公开#
-使用给定的minDelay初始化合同。
+使用给定的minDelay初始化合约。
 
 #### receive()
 外部#
-合同可能在维护过程中接收/持有ETH。
+合约可能在维护过程中接收/持有ETH。
 
 #### isOperation(bytes32 id) → bool pending
 公开#
@@ -472,4 +472,4 @@ const data = timelock.contract.methods.grantRole(ROLE, ACCOUNT).encodeABI()
 此角色由**EXECUTOR_ROLE**值标识：0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63
 
 > WARNING
-没有至少一个提议者和一个执行者的活动合同是被锁定的。在部署者放弃其管理权利，转交给时间锁合约本身之前，请确保这些角色由可靠的实体填充。有关角色管理的更多信息，请参阅*AccessControl*文档。
+没有至少一个提议者和一个执行者的活动合约是被锁定的。在部署者放弃其管理权利，转交给时间锁合约本身之前，请确保这些角色由可靠的实体填充。有关角色管理的更多信息，请参阅*AccessControl*文档。

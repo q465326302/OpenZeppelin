@@ -174,10 +174,10 @@ constructor() {
 }
 ```
 
-## 从合同代码中创建新实例
-当从合同代码中创建合同的新实例时，这些创建是由Solidity直接处理的，而不是由OpenZeppelin Upgrades处理，**这意味着这些合同将无法升级**。
+## 从合约代码中创建新实例
+当从合约代码中创建合约的新实例时，这些创建是由Solidity直接处理的，而不是由OpenZeppelin Upgrades处理，**这意味着这些合约将无法升级**。
 
-例如，在下面的示例中，即使MyContract被部署为可升级的，创建的token合同却不是可升级的：
+例如，在下面的示例中，即使MyContract被部署为可升级的，创建的token合约却不是可升级的：
 ```
 // contracts/MyContract.sol
 // SPDX-License-Identifier: MIT
@@ -291,7 +291,7 @@ contract MyContract {
 }
 ```
 
-如果从合同末尾删除一个变量，请注意存储将不会被清除。随后的更新添加一个新变量时，该变量将读取被删除变量的残留值。
+如果从合约末尾删除一个变量，请注意存储将不会被清除。随后的更新添加一个新变量时，该变量将读取被删除变量的残留值。
 ```
 contract MyContract {
     uint256 private x;
@@ -400,4 +400,4 @@ contract Base {
 }
 ```
 
-为了确定新合同版本中的适当存储间隙大小，您可以尝试使用upgradeProxy进行升级，或者只需使用validateUpgrade运行验证（请参阅*Hardhat*或*Truffle*的文档）。如果存储间隙没有被正确地减少，您将看到一个错误信息，指示存储间隙的预期大小。
+为了确定新合约版本中的适当存储间隙大小，您可以尝试使用upgradeProxy进行升级，或者只需使用validateUpgrade运行验证（请参阅*Hardhat*或*Truffle*的文档）。如果存储间隙没有被正确地减少，您将看到一个错误信息，指示存储间隙的预期大小。

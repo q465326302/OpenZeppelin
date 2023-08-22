@@ -99,7 +99,7 @@ exports.handler = async function (event) {
       "type": "function"
     }
   ]`
-  // 添加新的box克隆合同到管理员
+  // 添加新的box克隆合约到管理员
   await adminClient.addContract({
     network: 'rinkeby',
     address: newCloneAddress,

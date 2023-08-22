@@ -191,7 +191,7 @@ Approval(owner, spender, value)
 通常，代币选择18个小数位，模仿以太币和Wei之间的关系。这是*ERC20*使用的值，除非调用了*_setupDecimals*。
 
 > NOTE
-此信息仅用于显示目的：它绝不会影响合同的任何算术操作，包括*IERC20.balanceOf*和*IERC20.Transfer*。
+此信息仅用于显示目的：它绝不会影响合约的任何算术操作，包括*IERC20.balanceOf*和*IERC20.Transfer*。
 
 #### totalSupply() → uint256
 公开#

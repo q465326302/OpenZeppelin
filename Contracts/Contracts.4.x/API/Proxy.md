@@ -438,7 +438,7 @@ import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
 import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
 ```
 
-该合同与一个或多个[BeaconProxy](#beaconproxy)实例一起使用，以确定它们的实现合同，即它们将委托所有函数调用的位置。
+该合约与一个或多个[BeaconProxy](#beaconproxy)实例一起使用，以确定它们的实现合约，即它们将委托所有函数调用的位置。
 所有者可以更改beacon指向的实现，从而升级使用该beacon的代理。
 
 **FUNCTIONS**
@@ -584,13 +584,13 @@ constructor() {
 
 #### reinitializer(uint8 version)
 修饰符#
-一个修饰符，定义了一个受保护的重新初始化函数，最多只能调用一次，并且只有在合同在之前没有被初始化为更高版本的情况下才能调用。在其作用域内，只能使用Initializing函数来初始化父合同。
+一个修饰符，定义了一个受保护的重新初始化函数，最多只能调用一次，并且只有在合约在之前没有被初始化为更高版本的情况下才能调用。在其作用域内，只能使用Initializing函数来初始化父合约。
 
 重新初始化器可以在原始初始化步骤之后使用。这对于配置通过升级添加的需要初始化的模块是必要的。
 
 当版本为1时，这个修饰符类似于initializer，只是被标记为reinitializer的函数不能嵌套。如果在另一个上下文中调用其中一个，执行将会回滚。
 
-请注意，版本可以以大于1的增量跳跃；这意味着如果在合同中存在多个reinitializer，以正确的顺序执行它们是开发人员或操作员的责任。
+请注意，版本可以以大于1的增量跳跃；这意味着如果在合约中存在多个reinitializer，以正确的顺序执行它们是开发人员或操作员的责任。
 
 > WARNING
 将版本设置为255将阻止任何未来的重新初始化。
@@ -613,11 +613,11 @@ constructor() {
 
 #### _isInitializing() → bool
 内部# 
-如果合同当前正在初始化，则返回true。请参阅[onlyInitializing()](#onlyinitializing).
+如果合约当前正在初始化，则返回true。请参阅[onlyInitializing()](#onlyinitializing).
 
 #### Initialized(uint8 version)
 事件#
-当合同已初始化或重新初始化时触发。
+当合约已初始化或重新初始化时触发。
 
 ### UUPSUpgradeable
 ```

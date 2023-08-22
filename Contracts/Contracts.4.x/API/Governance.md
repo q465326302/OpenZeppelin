@@ -495,7 +495,7 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 
 #### _executor() → address
 内部#
-governor执行行动的地址。将通过执行通过另一个合同（如时间锁）的模块来进行重载。
+governor执行行动的地址。将通过执行通过另一个合约（如时间锁）的模块来进行重载。
 
 #### onERC721Received(address, address, uint256, bytes) → bytes4
 公开#
@@ -1843,7 +1843,7 @@ EIP-6372规定的时钟的机器可读描述。
 
 #### DOMAIN_SEPARATOR() → bytes32
 外部#
-返回合同[的EIP712](./Utils.md#eip712)域分隔符。
+返回合约[的EIP712](./Utils.md#eip712)域分隔符。
 
 #### _getVotingUnits(address) → uint256
 内部#
@@ -1857,9 +1857,9 @@ EIP-6372规定的时钟的机器可读描述。
 import "@openzeppelin/contracts/governance/TimelockController.sol";
 ```
 
-合同模块充当一个timelock定的控制器。当设置为可拥有智能合约的所有者时，它会对所有仅所有者维护操作进行时间锁定。这样，在应用潜在危险的维护操作之前，用户可以有时间退出受控合约。
+合约模块充当一个timelock定的控制器。当设置为可拥有智能合约的所有者时，它会对所有仅所有者维护操作进行时间锁定。这样，在应用潜在危险的维护操作之前，用户可以有时间退出受控合约。
 
-默认情况下，该合同是自我管理的，这意味着管理任务必须通过时间锁定流程进行。建议人（执行人）角色负责提出（执行）操作。一个常见的用例是将该[TimelockController](#timelockcontroller)定位为智能合约的所有者，由多重签名或DAO作为唯一的建议人。
+默认情况下，该合约是自我管理的，这意味着管理任务必须通过时间锁定流程进行。建议人（执行人）角色负责提出（执行）操作。一个常见的用例是将该[TimelockController](#timelockcontroller)定位为智能合约的所有者，由多重签名或DAO作为唯一的建议人。
 
 *自v3.3起可用。*
 
@@ -1931,7 +1931,7 @@ IACCESSCONTROL
 
 #### receive()
 外部#
-合同可能会在维护过程中收到/持有ETH。
+合约可能会在维护过程中收到/持有ETH。
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#

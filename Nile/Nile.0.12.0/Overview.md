@@ -133,7 +133,7 @@ nile deploy ACCOUNT_1 contract --alias my_contract
 nile call my_contract get_balance
 ```
 
-#### 写给合同
+#### 写给合约
 使用Nile发送来执行交易。
 ```
 nile send ACCOUNT_1 my_contract increase_balance 2

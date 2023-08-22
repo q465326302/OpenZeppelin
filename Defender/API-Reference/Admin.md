@@ -288,7 +288,7 @@ const simulation = await client.getProposalSimulation(
 ```
 
 ## 合约终端点
-/contracts端点可用于管理导入到Defender管理面板中的合约。通过向端点发出PUT请求，您可以根据其网络和地址创建或更新合同：
+/contracts端点可用于管理导入到Defender管理面板中的合约。通过向端点发出PUT请求，您可以根据其网络和地址创建或更新合约：
 ```
 DATA='{
   "address": "0x179810822f56b0e79469189741a3fa5f2f9a7631",

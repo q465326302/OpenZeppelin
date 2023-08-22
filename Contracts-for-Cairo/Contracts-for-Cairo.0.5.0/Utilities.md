@@ -192,11 +192,11 @@ assert_event_emitted(
 记忆化函数可以实现更快速和计算成本更低的计算，这在测试智能合约时非常有益。
 
 ### get_contract_class
-一个帮助方法，根据合同的名称返回合同类。要捕获合同类，只需将合同的名称作为参数添加，如下所示。
+一个帮助方法，根据合约的名称返回合约类。要捕获合约类，只需将合约的名称作为参数添加，如下所示。
 ```
 contract_class = get_contract_class('ContractName')
 ```
-如果存在多个具有相同名称的合同，则必须使用is_path标志将合同的路径传递给它，而不是使用名称。要传递合同的路径。
+如果存在多个具有相同名称的合约，则必须使用is_path标志将合约的路径传递给它，而不是使用名称。要传递合约的路径。
 ```
 contract_class = get_contract_class('path/to/Contract.cairo', is_path=True)
 ```

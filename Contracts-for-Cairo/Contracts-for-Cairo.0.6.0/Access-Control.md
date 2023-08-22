@@ -102,7 +102,7 @@ owner: felt
 ```
 
 #### transfer_ownership
-将合同的所有权转移到一个新账户（new_owner）。只能由当前所有者调用。
+将合约的所有权转移到一个新账户（new_owner）。只能由当前所有者调用。
 
 触发一个OwnershipTransferred事件。
 
@@ -113,7 +113,7 @@ new_owner: felt
 返回：无。
 
 #### renounce_ownership
-离开合同没有所有者。将不再能够使用assert_only_owner调用函数。只能由当前所有者调用。
+离开合约没有所有者。将不再能够使用assert_only_owner调用函数。只能由当前所有者调用。
 
 发出一个*OwnershipTransferred*事件。
 
@@ -122,7 +122,7 @@ new_owner: felt
 返回：无。
 
 #### _transfer_ownership
-将合同的所有权转移到一个新的账户（new_owner）。*内部函数*，没有访问限制。
+将合约的所有权转移到一个新的账户（new_owner）。*内部函数*，没有访问限制。
 
 触发一个*OwnershipTransferred*事件。
 
