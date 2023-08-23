@@ -1574,51 +1574,51 @@ import "@openzeppelin/contracts/utils/escrow/RefundEscrow.sol";
 托管款项的托管账户，款项由多方存入并用于受益人。预期用途：参见[Escrow](#escrow)。同样适用于此处的使用指南。拥有者账户（即，实例化此合约的合约）可以存款、关闭存款期，并允许受益人提款或向存款人退款。所有与退款托管账户的互动将通过拥有者合约进行。
 
 **FUNCTIONS**
-[constructor(beneficiary_)]
+[constructor(beneficiary_)](#constructoraddress-payable-beneficiary_)
 
-[state()]
+[state()](#state-→-enum-refundescrowstate)
 
-[beneficiary()]
+[beneficiary()](#beneficiary-→-address-payable)
 
-[deposit(refundee)]
+[deposit(refundee)](#depositaddress-refundee)
 
-close()
+[close()](#close)
 
-enableRefunds()
+[enableRefunds()](#enablerefunds)
 
-beneficiaryWithdraw()
+[beneficiaryWithdraw()](#beneficiarywithdraw)
 
-withdrawalAllowed()
+[withdrawalAllowed()](#withdrawalallowedaddress-→-bool)
 
 CONDITIONALESCROW
-withdraw(payee)
+[withdraw(payee)](#withdrawaddress-payable-payee)
 
 ESCROW
-depositsOf(payee)
+[depositsOf(payee)](#depositsofaddress-payee-→-uint256)
 
 OWNABLE
-owner()
+[owner()](./Access.md#owner-→-address)
 
-_checkOwner()
+[_checkOwner()](./Access.md#_checkowner)
 
-renounceOwnership()
+[renounceOwnership()](./Access.md#renounceownership)
 
-transferOwnership(newOwner)
+[transferOwnership(newOwner)](./Access.md#transferownershipaddress-newowner)
 
-_transferOwnership(newOwner)
+[_transferOwnership(newOwner)](./Access.md#_transferownershipaddress-newowner)
 
-*EVENTS*
-RefundsClosed()
+**EVENTS**
+[RefundsClosed()](#refundsclosed)
 
-RefundsEnabled()
+[RefundsEnabled()](#refundsenabled)
 
 ESCROW
-Deposited(payee, weiAmount)
+[Deposited(payee, weiAmount)](#depositedaddress-indexed-payee-uint256-weiamount)
 
-Withdrawn(payee, weiAmount)
+[Withdrawn(payee, weiAmount)](#withdrawnaddress-indexed-payee-uint256-weiamount)
 
 OWNABLE
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### constructor(address payable beneficiary_)
 公开#
@@ -1675,9 +1675,9 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
 
 ERC165标准的接口，如在[EIP](https://eips.ethereum.org/EIPS/eip-165)中定义。
 
-实现者可以声明对合约接口的支持，然后其他人可以查询（使用*ERC165Checker*）。
+实现者可以声明对合约接口的支持，然后其他人可以查询（使用[ERC165Checker](#erc16checker)）。
 
-有关实现的详细信息，请参见*ERC165*。
+有关实现的详细信息，请参见[ERC165](#erc165)。
 
 **FUNCTIONS**
 supportsInterface(interfaceId)
@@ -1692,45 +1692,48 @@ supportsInterface(interfaceId)
 ```
 import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 ```
-实现*IERC165*接口。
 
-想要实现ERC165的合约应该继承自这个合约，并重写*supportsInterface*函数来检查额外的接口ID是否被支持。例如：
+实现[IERC165](#erc165)接口。
+
+想要实现ERC165的合约应该继承自这个合约，并重写[supportsInterface](#supportsinterfacebytes4-interfaceid-e28692-bool-1)函数来检查额外的接口ID是否被支持。例如：
 ```
 function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
     return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
 }
 ```
-相反，*ERC165Storage*提供了一种更易于使用但更昂贵的实现方式。
+
+相反，[ERC165Storage](#erc165storage)提供了一种更易于使用但更昂贵的实现方式。
 
 **FUNCTIONS**
-supportsInterface(interfaceId)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-e28692-bool-1)
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
-请查阅 *IERC165.supportsInterface*.
+请查阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool).
 
 ### ERC165Storage
 ```
 import "@openzeppelin/contracts/utils/introspection/ERC165Storage.sol";
 ```
-基于存储的* IERC165* 接口实现。
 
-合约可以继承此合约，并调用 *_registerInterface* 来声明它们支持的接口。
+基于存储的 [IERC165](#ierc165) 接口实现。
+
+合约可以继承此合约，并调用 [_registerInterface](#_registerinterfacebytes4-interfaceid) 来声明它们支持的接口。
 
 **FUNCTIONS**
-supportsInterface(interfaceId)
+[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-e28692-bool-2)
 
-_registerInterface(interfaceId)
+[_registerInterface(interfaceId)](#_registerinterfacebytes4-interfaceid)
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
-请查阅 *IERC165.supportsInterface*.
+请查阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool).
 
 #### _registerInterface(bytes4 interfaceId)
 内部#
 将合约注册为接口标识符（interfaceId）所定义的接口的实现者。对于实际的ERC165接口的支持是自动的，不需要注册其接口标识符。
 
-参见*IERC165.supportsInterface*。
+参见[IERC165.supportsInterface](#_registerinterfacebytes4-interfaceid)。
 
 要求：
 
@@ -1740,50 +1743,51 @@ interfaceId不能是ERC165的无效接口（0xffffffff）。
 ```
 import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 ```
-用于查询通过*IERC165*声明的接口支持的库。
+
+用于查询通过[IERC165](#ierc165)声明的接口支持的库。
 
 请注意，这些函数返回查询的实际结果：如果不支持某个接口，它们不会回滚。在这些情况下，由调用者决定要采取什么操作。
 
 **FUNCTIONS**
-supportsERC165(account)
+[supportsERC165(account)](#supportserc165address-account-→-bool)
 
-supportsInterface(account, interfaceId)
+[supportsInterface(account, interfaceId)](#supportsinterfaceaddress-account-bytes4-interfaceid-→-bool)
 
-getSupportedInterfaces(account, interfaceIds)
+[getSupportedInterfaces(account, interfaceIds)](#getsupportedinterfacesaddress-account-bytes4-interfaceids-→-bool)
 
-supportsAllInterfaces(account, interfaceIds)
+[supportsAllInterfaces(account, interfaceIds)](#supportsallinterfacesaddress-account-bytes4-interfaceids-→-bool)
 
-supportsERC165InterfaceUnchecked(account, interfaceId)
+[supportsERC165InterfaceUnchecked(account, interfaceId)](#supportserc165interfaceuncheckedaddress-account-bytes4-interfaceid-→-bool)
 
 #### supportsERC165(address account) → bool
 内部#
-如果账户支持*IERC165*接口，则返回true。
+如果账户支持[IERC165](#ierc165)接口，则返回true。
 
 #### supportsInterface(address account, bytes4 interfaceId) → bool
 内部#
-如果账户支持由interfaceId定义的接口，则返回true。对于*IERC165*本身的支持会自动查询。
+如果账户支持由interfaceId定义的接口，则返回true。对于[IERC165]本身的支持会自动查询。
 
-参见*IERC165.supportsInterface*。
+参见[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
 内部#
 返回一个布尔数组，其中每个值对应于传入的接口和它们是否被支持。这使您可以批量检查合约的接口，其中您的期望是某些接口可能不被支持。
 
-请参阅*IERC165.supportsInterface*。
+请参阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 *自v3.4起可用。*
 
 #### supportsAllInterfaces(address account, bytes4[] interfaceIds) → bool
 内部#
-如果帐户支持interfaceIds中定义的所有接口，则返回true。自动查询对*IERC16*5本身的支持。
+如果帐户支持interfaceIds中定义的所有接口，则返回true。自动查询对[IERC165](#ierc165)本身的支持。
 
-通过批量查询可以节省燃气费，跳过重复的*IERC165*支持检查。
+通过批量查询可以节省燃气费，跳过重复的[IERC165](#ierc165)支持检查。
 
-参见*IERC165.supportsInterface*。
+参见[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) → bool
 内部#
-假设账户包含支持ERC165的合约，否则此方法的行为是未定义的。可以使用*supportsERC165*来检查此前提条件。
+假设账户包含支持ERC165的合约，否则此方法的行为是未定义的。可以使用[supportsERC165](#supportserc165address-account-→-bool)来检查此前提条件。
 
 某些预编译合约可能错误地表示支持给定的接口，因此在使用此函数时应谨慎。
 
@@ -1793,35 +1797,36 @@ supportsERC165InterfaceUnchecked(account, interfaceId)
 ```
 import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 ```
+
 全球ERC1820注册表的接口，根据[EIP](https://eips.ethereum.org/EIPS/eip-1820)的定义。账户可以在该注册表中注册接口的实现者，并查询支持。
 
 实现者可以由多个账户共享，并且每个账户还可以实现多个接口。合约可以为自己实现接口，但外部拥有的账户（EOA）必须委托给合约。
 
-还可以通过注册表查询*IERC165*接口。
+还可以通过注册表查询[IERC165](#ierc165)接口。
 
 有关详细说明和源代码分析，请参阅EIP文本。
 
 **FUNCTIONS**
-setManager(account, newManager)
+[setManager(account, newManager)](#setmanageraddress-account-address-newmanager)
 
-getManager(account)
+[getManager(account)](#getmanageraddress-account-→-address)
 
-setInterfaceImplementer(account, _interfaceHash, implementer)
+[setInterfaceImplementer(account, _interfaceHash, implementer)](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)
 
-getInterfaceImplementer(account, _interfaceHash)
+[getInterfaceImplementer(account, _interfaceHash)](#getinterfaceimplementeraddress-account-bytes32-_interfacehash-→-address)
 
-interfaceHash(interfaceName)
+[interfaceHash(interfaceName)](#interfacehashstring-interfacename-→-bytes32)
 
-updateERC165Cache(account, interfaceId)
+[updateERC165Cache(account, interfaceId)](#updateerc165cacheaddress-account-bytes4-interfaceid)
 
-implementsERC165Interface(account, interfaceId)
+[implementsERC165Interface(account, interfaceId)](#implementserc165interfaceaddress-account-bytes4-interfaceid-→-bool)
 
-implementsERC165InterfaceNoCache(account, interfaceId)
+[implementsERC165InterfaceNoCache(account, interfaceId)](#implementserc165interfacenocacheaddress-account-bytes4-interfaceid-→-bool)
 
 **EVENTS**
-InterfaceImplementerSet(account, interfaceHash, implementer)
+[InterfaceImplementerSet(account, interfaceHash, implementer)](#interfaceimplementersetaddress-indexed-account-bytes32-indexed-interfacehash-address-indexed-implementer)
 
-ManagerChanged(account, newManager)
+[ManagerChanged(account, newManager)](#managerchangedaddress-indexed-account-address-indexed-newmanager)
 
 ### setManager(address account, address newManager)
 外部#
@@ -1829,7 +1834,7 @@ ManagerChanged(account, newManager)
 
 默认情况下，每个账户都是其自己的管理者。将0x0的值传递给newManager将重置管理者为初始状态。
 
-发出*ManagerChanged*事件。
+发出[ManagerChanged](#managerchangedaddress-indexed-account-address-indexed-newmanager)事件。
 
 要求：
 * 调用者必须是account的当前管理者。
@@ -1838,7 +1843,7 @@ ManagerChanged(account, newManager)
 外部#
 返回账户的经理。
 
-参见*setManager*。
+参见[setManager](#setmanageraddress-account-address-newmanager)。
 
 #### setInterfaceImplementer(address account, bytes32 _interfaceHash, address implementer)
 外部#
@@ -1846,22 +1851,22 @@ ManagerChanged(account, newManager)
 
 账户是调用者地址的别名。零地址也可以用于实现者中以移除旧的地址。
 
-查看 *interfaceHash*以了解如何创建它们。
+查看 [interfaceHash](#interfacehashstring-interfacename-→-bytes32)以了解如何创建它们。
 
-触发 *InterfaceImplementerSet* 事件。
+触发 [InterfaceImplementerSet](#interfaceimplementersetaddress-indexed-account-bytes32-indexed-interfacehash-address-indexed-implementer) 事件。
 
 要求：
 * 调用者必须是账户的当前管理者。
 
-* 接口哈希不能是一个*IERC165*接口id（即它不能以28个零结尾）。
+* 接口哈希不能是一个[IERC165](#ierc165)接口id（即它不能以28个零结尾）。
 
-* 实现者必须实现IERC1820Implementer接口并在查询支持时返回true，除非实现者是调用者。参见*IERC1820Implementer.canImplementInterfaceForAddress*。
+* 实现者必须实现[IERC1820Implementer](#ierc1820implementer)接口并在查询支持时返回true，除非实现者是调用者。参见[IERC1820Implementer.canImplementInterfaceForAddress](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32)。
 
 #### getInterfaceImplementer(address account, bytes32 _interfaceHash) → address
 外部#
 返回接口哈希在账户上的实现者。如果没有注册这样的实现者，则返回零地址。
 
-如果接口哈希是一个*IERC165*接口id（即以28个零结尾），将查询账户是否支持它。
+如果接口哈希是一个[IERC165](#ierc165)接口id（即以28个零结尾），将查询账户是否支持它。
 
 账户为零地址是调用者地址的别名。
 
@@ -1888,7 +1893,8 @@ ManagerChanged(account, newManager)
 ```
 import "@openzeppelin/contracts/utils/introspection/IERC1820Implementer.sol";
 ```
-ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-implementation-erc1820implementerinterface)中所定义。用于将合约注册为*IERC1820Registry*中的实现者。
+
+ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-implementation-erc1820implementerinterface)中所定义。用于将合约注册为[IERC1820Registry](#中的实现者。
 
 **FUNCTIONS**
 canImplementInterfaceForAddress(interfaceHash, account)
