@@ -1098,7 +1098,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 返回两个无符号整数的减法结果，在溢出时使用自定义消息进行回退（当结果为负数时）。
 
 > CAUTION
-该函数已弃用，因为它不必要地需要为错误消息分配内存。对于自定义的回退原因，请使用*trySub*。
+该函数已弃用，因为它不必要地需要为错误消息分配内存。对于自定义的回退原因，请使用[trySub](#trysubuint256-a-uint256-b-→-bool-uint256)。
 Solidity的-运算符的对应物。
 
 要求：
@@ -1118,7 +1118,7 @@ Solidity的-运算符的对应物。
 返回两个无符号整数相除的余数（无符号整数取模），在除以零时返回自定义消息。
 
 > CAUTION
-该函数已被弃用，因为它不必要地为错误消息分配内存。对于自定义的还原原因，请使用*tryMod*。
+该函数已被弃用，因为它不必要地为错误消息分配内存。对于自定义的还原原因，请使用[tryMod](#trymoduint256-a-uint256-b-→-bool-uint256)。
 与Solidity的%运算符相对应。此函数使用revert操作码（保留剩余的gas），而Solidity使用无效操作码来还原（消耗所有剩余的gas）。
 
 要求：
@@ -1128,19 +1128,20 @@ Solidity的-运算符的对应物。
 ```
 import "@openzeppelin/contracts/utils/math/SignedSafeMath.sol";
 ```
+
 Solidity的算术操作封装。
 
 > NOTE
 从Solidity 0.8开始，不再需要SignedSafeMath。编译器现在具有内置的溢出检查功能。
 
 **FUNCTIONS**
-mul(a, b)
+[mul(a, b)](#mulint256-a-int256-b-→-int256)
 
-div(a, b)
+[div(a, b)](#divint256-a-int256-b-→-int256)
 
-sub(a, b)
+[sub(a, b)](#subint256-a-int256-b-→-int256)
 
-add(a, b)
+[add(a, b)](#addint256-a-int256-b-→-int256)
 
 #### mul(int256 a, int256 b) → int256
 内部#
@@ -1184,30 +1185,31 @@ add(a, b)
 ```
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 ```
+
 椭圆曲线数字签名算法（ECDSA）操作。
 
 这些函数可用于验证消息是否由给定地址的私钥持有者签名。
 
 **FUNCTIONS**
-tryRecover(hash, signature)
+[tryRecover(hash, signature)](#tryrecoverbytes32-hash-bytes-signature-→-address-enum-ecdsarecovererror)
 
-recover(hash, signature)
+[recover(hash, signature)](#recoverbytes32-hash-bytes-signature-→-address)
 
-tryRecover(hash, r, vs)
+[tryRecover(hash, r, vs)](#tryrecoverbytes32-hash-bytes32-r-bytes32-vs-→-address-enum-ecdsarecovererror)
 
-recover(hash, r, vs)
+[recover(hash, r, vs)](#recoverbytes32-hash-bytes32-r-bytes32-vs-→-address)
 
-tryRecover(hash, v, r, s)
+[tryRecover(hash, v, r, s)](#tryrecoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address-enum-ecdsarecovererror)
 
-recover(hash, v, r, s)
+[recover(hash, v, r, s)](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)
 
-toEthSignedMessageHash(hash)
+[toEthSignedMessageHash(hash)](#toethsignedmessagehashbytes32-hash-→-bytes32-message)
 
-toEthSignedMessageHash(s)
+[toEthSignedMessageHash(s)](#toethsignedmessagehashbytes-s-→-bytes32)
 
-toTypedDataHash(domainSeparator, structHash)
+[toTypedDataHash(domainSeparator, structHash)](#totypeddatahashbytes32-domainseparator-bytes32-structhash-→-bytes32-data)
 
-toDataWithIntendedValidatorHash(validator, data)
+[toDataWithIntendedValidatorHash(validator, data)](#todatawithintendedvalidatorhashaddress-validator-bytes-data-→-bytes32)
 
 #### tryRecover(bytes32 hash, bytes signature) → address, enum ECDSA.RecoverError
 内部#
@@ -1216,7 +1218,7 @@ toDataWithIntendedValidatorHash(validator, data)
 ecrecover EVM 操作码允许生成可塑（非唯一）的签名：该函数通过要求 s 值位于低半序列中，并且 v 值为 27 或 28 来拒绝这些签名。
 
 > IMPORTANT
-为了确保验证的安全性，哈希必须是用于验证的哈希操作的结果：可以为非哈希数据制作恢复到任意地址的签名。确保此安全性的一种方法是接收原始消息的哈希（否则可能太长），然后对其调用 *toEthSignedMessageHash*。
+为了确保验证的安全性，哈希必须是用于验证的哈希操作的结果：可以为非哈希数据制作恢复到任意地址的签名。确保此安全性的一种方法是接收原始消息的哈希（否则可能太长），然后对其调用 [toEthSignedMessageHash](#toethsignedmessagehashbytes-s-→-bytes32)。
 签名生成的文档：- 使用 [Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign) - 使用 [ethers](https://docs.ethers.io/v5/api/signer/#Signer-signMessage)
 
 *自 v4.3 起可用。*
@@ -1228,11 +1230,11 @@ ecrecover EVM 操作码允许生成可塑（非唯一）的签名：该函数通
 ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s值在低半序中，并且v值为27或28来拒绝它们。
 
 > IMPORTANT
-为了确保验证安全，哈希必须是对原始消息进行哈希操作的结果：可以通过接收原始消息的哈希（否则可能过长），然后对其调用*toEthSignedMessageHash*来确保这一点。
+为了确保验证安全，哈希必须是对原始消息进行哈希操作的结果：可以通过接收原始消息的哈希（否则可能过长），然后对其调用[toEthSignedMessageHash](#toethsignedmessagehashbytes-s-→-bytes32)来确保这一点。
 
 #### tryRecover(bytes32 hash, bytes32 r, bytes32 vs) → address, enum ECDSA.RecoverError
 内部#
-*ECDSA.tryRecover*的重载函数，接收r和vs字段作为独立参数。
+[ECDSA.tryRecover](#tryrecoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address-enum-ecdsarecovererror)的重载函数，接收r和vs字段作为独立参数。
 
 参考[EIP-2098的短签名](https://eips.ethereum.org/EIPS/eip-2098)。
 
@@ -1240,13 +1242,13 @@ ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s
 
 #### recover(bytes32 hash, bytes32 r, bytes32 vs) → address
 内部#
-*ECDSA.recover*的重载版本，可以分别接收r和vs字段的短签名。
+[ECDSA.recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)的重载版本，可以分别接收r和vs字段的短签名。
 
 *自v4.2版本起可用。*
 
 #### tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) → address, enum ECDSA.RecoverError
 内部#
-*ECDSA.tryRecover*的重载版本，接收单独的v、r和s签名字段。
+[ECDSA.tryRecover](#tryrecoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address-enum-ecdsarecovererror)的重载版本，接收单独的v、r和s签名字段。
 
 *自v4.3版本开始提供。*
 
@@ -1258,38 +1260,39 @@ ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s
 内部#
 返回一个以哈希值创建的以太坊已签名消息。这个方法会产生与使[用eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应的哈希值，作为EIP-191的一部分。
 
-参见*recover*。
+参见[recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 #### toEthSignedMessageHash(bytes s) → bytes32
 内部#
 返回一个以s创建的以太坊签名消息。这将产生与使用[eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应，作为EIP-191的一部分。
 
-参见 *recove*r。
+参见 [recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 #### toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) → bytes32 data
 内部#
 返回一个以域分隔符（domainSeparator）和结构哈希（structHash）创建的以太坊签名类型数据。这个方法生成的哈希与使用[eth_signTypedData](https://eips.ethereum.org/EIPS/eip-712) JSON-RPC方法作为EIP-712的一部分进行签名的哈希相对应。
 
-参见*recover*。
+参见[recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 #### toDataWithIntendedValidatorHash(address validator, bytes data) → bytes32
 内部#
 根据EIP-191版本0，从验证器和数据创建一个带有预期验证者的以太坊签名数据。
 
-请参见*recover*。
+请参见[recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 ### SignatureChecker
 ```
 import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 ```
+
 签名验证助手，可用于无缝支持来自外部拥有账户（EOAs）的ECDSA签名和来自智能合约钱包（如Argent和Gnosis Safe）的ERC1271签名。
 
 *自v4.1版本开始提供。*
 
-*FUNCTIONS*
-isValidSignatureNow(signer, hash, signature)
+**FUNCTIONS**
+[isValidSignatureNow(signer, hash, signature)](#isvalidsignaturenowaddress-signer-bytes32-hash-bytes-signature-→-bool)
 
-isValidERC1271SignatureNow(signer, hash, signature)
+[isValidERC1271SignatureNow(signer, hash, signature)](#isvaliderc1271signaturenowaddress-signer-bytes32-hash-bytes-signature-→-bool)
 
 #### isValidSignatureNow(address signer, bytes32 hash, bytes signature) → bool
 内部#
@@ -1308,6 +1311,7 @@ isValidERC1271SignatureNow(signer, hash, signature)
 ```
 import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 ```
+
 这些函数处理Merkle树证明的验证。
 
 树和证明可以使用我们的[JavaScript库](https://github.com/OpenZeppelin/merkle-tree)生成。您可以在自述文件中找到快速入门指南。
@@ -1316,21 +1320,21 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 在进行哈希之前，应避免使用长度为64字节的叶值，或者使用除keccak256之外的哈希函数进行哈希。这是因为Merkle树中内部节点的排序对的拼接可能会被重新解释为叶值。OpenZeppelin的JavaScript库可以直接生成抵御此攻击的Merkle树。
 
 **FUNCTIONS**
-verify(proof, root, leaf)
+[verify(proof, root, leaf)](#verifybytes32-proof-bytes32-root-bytes32-leaf-→-bool)
 
-verifyCalldata(proof, root, leaf)
+[verifyCalldata(proof, root, leaf)](#verifycalldatabytes32-proof-bytes32-root-bytes32-leaf-→-bool)
 
-processProof(proof, leaf)
+[processProof(proof, leaf)](#processproofbytes32-proof-bytes32-leaf-→-bytes32)
 
-processProofCalldata(proof, leaf)
+[processProofCalldata(proof, leaf)](#processproofcalldatabytes32-proof-bytes32-leaf-→-bytes32)
 
-multiProofVerify(proof, proofFlags, root, leaves)
+[multiProofVerify(proof, proofFlags, root, leaves)](#multiproofverifybytes32-proof-bool-proofflags-bytes32-root-bytes32-leaves-→-bool)
 
-multiProofVerifyCalldata(proof, proofFlags, root, leaves)
+[multiProofVerifyCalldata(proof, proofFlags, root, leaves)](#multiproofverifycalldatabytes32-proof-bool-proofflags-bytes32-root-bytes32-leaves-→-bool)
 
-processMultiProof(proof, proofFlags, leaves)
+[processMultiProof(proof, proofFlags, leaves)](#processmultiproofbytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)
 
-processMultiProofCalldata(proof, proofFlags, leaves)
+[processMultiProofCalldata(proof, proofFlags, leaves)](#processmultiproofcalldatabytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)
 
 #### verify(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
 内部#
@@ -1338,7 +1342,7 @@ processMultiProofCalldata(proof, proofFlags, leaves)
 
 #### verifyCalldata(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
 内部#
-verify的Calldata版本
+[verify](#verifybytes32-proof-bytes32-root-bytes32-leaf-→-bool)的Calldata版本
 
 *从v4.7版本开始可用。*
 
@@ -1350,7 +1354,7 @@ verify的Calldata版本
 
 #### processProofCalldata(bytes32[] proof, bytes32 leaf) → bytes32
 内部#
-processProof的Calldata版本
+[processProof](#processproofbytes32-proof-bytes32-leaf-→-bytes32)的Calldata版本
 
 *自v4.7版本开始可用。*
 
@@ -1358,7 +1362,8 @@ processProof的Calldata版本
 内部#
 如果根据processMultiProof中的proof和proofFlags描述，可以同时*证明叶子节点是merkle树*的一部分，则返回true。
 
-并非所有的merkle树都支持多证明。详情请参见*processMultiProof*。
+> CAUTION
+并非所有的merkle树都支持多证明。详情请参见[processMultiProof](#processmultiproofbytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)。
 
 *自v4.7版本开始可用。*
 
@@ -1366,7 +1371,8 @@ processProof的Calldata版本
 内部#
 *multiProofVerify*的Calldata版本
 
-并非所有的Merkle树都支持多重验证。有关详细信息，请参阅*processMultiProof*。
+> CAUTION
+并非所有的Merkle树都支持多重验证。有关详细信息，请参阅[processMultiProof](#processmultiproofbytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)。
 **自v4.7起可用。**
 
 #### processMultiProof(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
@@ -1379,21 +1385,23 @@ processProof的Calldata版本
 *自v4.7起可用。*
 
 #### processMultiProofCalldata(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
-*processMultiProof*的calldata版本。
+[processMultiProof](#processmultiproofbytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)的calldata版本。
 
 > CAUTION
-并非所有的默克尔树都支持多重证明。有关详细信息，请参阅*processMultiProof*。
+并非所有的默克尔树都支持多重证明。有关详细信息，请参阅[processMultiProof](#processmultiproofbytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)。
+
 *自v4.7版本开始提供。*
 
 ### EIP712
 ```
 import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
 ```
+
 [EIP 712](https://eips.ethereum.org/EIPS/eip-712)是一种用于对类型化结构化数据进行哈希和签名的标准。
 
 EIP中指定的编码非常通用，Solidity中的这种通用实现是不可行的，因此该合约不实现编码本身。协议需要使用abi.encode和keccak256的组合来在其合约中实现所需的特定类型编码。
 
-该合约实现了作为编码方案的一部分使用的EIP 712域分隔符（*_domainSeparatorV4*），以及获取消息摘要后通过ECDSA进行签名的编码的最后一步（*_hashTypedDataV4*）。
+该合约实现了作为编码方案的一部分使用的EIP 712域分隔符（[_domainSeparatorV4](#_domainseparatorv4-→-bytes32)），以及获取消息摘要后通过ECDSA进行签名的编码的最后一步（[_hashTypedDataV4](#_hashtypeddatav4bytes32-structhash-→-bytes32)）。
 
 域分隔符的实现旨在尽可能高效，同时仍然正确地更新链ID，以防止在未来的链分叉上进行重放攻击。
 
