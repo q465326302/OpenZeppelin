@@ -1414,17 +1414,17 @@ EIP中指定的编码非常通用，Solidity中的这种通用实现是不可行
 *自v3.4版本起可用。*
 
 **FUNCTIONS**
-constructor(name, version)
+[constructor(name, version)](#constructorstring-name-string-version)
 
-_domainSeparatorV4()
+[_domainSeparatorV4()](#_domainseparatorv4-→-bytes32)
 
-_hashTypedDataV4(structHash)
+[_hashTypedDataV4(structHash)](#_hashtypeddatav4bytes32-structhash-→-bytes32)
 
-eip712Domain()
+[eip712Domain()](#eip712domain-→-bytes1-fields-string-name-string-version-uint256-chainid-address-verifyingcontract-bytes32-salt-uint256-extensions)
 
 **EVENTS**
 IERC5267
-EIP712DomainChanged()
+[EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(string name, string version)
 内部#
@@ -1435,7 +1435,7 @@ EIP712DomainChanged()
 * 版本：签名域的当前主要版本。
 
 > NOTE
-除非通过*智能合约升级*，否则这些参数不能更改。
+除非通过[智能合约升级](../../../Learn/Upgrading-smart-contracts/Upgrading-smart-contracts-hardhat.md)，否则这些参数不能更改。
 
 #### _domainSeparatorV4() → bytes32
 内部#
@@ -1445,7 +1445,7 @@ EIP712DomainChanged()
 内部#
 给定一个已经[哈希的结构体](https://eips.ethereum.org/EIPS/eip-712#definition-of-hashstruct)，这个函数返回完全编码的 EIP712 消息在该域中的哈希值。
 
-这个哈希值可以与 *ECDSA.recover* 一起使用，以获得消息的签名者。例如：
+这个哈希值可以与 [ECDSA.recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address) 一起使用，以获得消息的签名者。例如：
 ```
 bytes32 digest = _hashTypedDataV4(keccak256(abi.encode(
     keccak256("Mail(address to,string contents)"),
@@ -1467,37 +1467,38 @@ address signer = ECDSA.recover(digest, signature);
 ```
 import "@openzeppelin/contracts/utils/escrow/ConditionalEscrow.sol";
 ```
-基于抽象的托管只允许在满足条件时进行提款。预期用法：请参见*Escrow*。相同的用法指南适用于此处。
+
+基于抽象的托管只允许在满足条件时进行提款。预期用法：请参见[Escrow](#escrow)。相同的用法指南适用于此处。
 
 **FUNCTIONS**
-withdrawalAllowed(payee)
+[withdrawalAllowed(payee)](#withdrawalallowedaddress-payee-→-bool)
 
-withdraw(payee)
+[withdraw(payee)](#withdrawaddress-payable-payee)
 
 ESCROW
-depositsOf(payee)
+[depositsOf(payee)](#depositsofaddress-payee-→-uint256)
 
-deposit(payee)
+[deposit(payee)](#depositaddress-payee)
 
 OWNABLE
-owner()
+[owner()](./Access.md#owner-→-address)
 
-_checkOwner()
+[_checkOwner()](./Access.md#_checkowner)
 
-renounceOwnership()
+[renounceOwnership()](./Access.md#renounceownership())
 
-transferOwnership(newOwner)
+[transferOwnership(newOwner)](./Access.md#transferownershipaddress-newowner)
 
-_transferOwnership(newOwner)
+[_transferOwnership(newOwner)](./Access.md#_transferownershipaddress-newowner)
 
 **EVENTS**
 ESCROW
-Deposited(payee, weiAmount)
+[Deposited(payee, weiAmount)](#depositedaddress-indexed-payee-uint256-weiamount)
 
-Withdrawn(payee, weiAmount)
+[Withdrawn(payee, weiAmount)](#withdrawnaddress-indexed-payee-uint256-weiamount)
 
 OWNABLE
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### withdrawalAllowed(address payee) → bool
 公开#
@@ -1508,41 +1509,42 @@ OwnershipTransferred(previousOwner, newOwner)
 将累积余额提取给收款人，并将所有燃气转发给收款人。
 
 > WARNING
-将所有燃气转发给收款人会打开重入漏洞的大门。请确保您信任收款人，或者遵循检查-效果-交互模式或使用*ReentrancyGuard*。
+将所有燃气转发给收款人会打开重入漏洞的大门。请确保您信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
 
 ### Escrow
 ```
 import "@openzeppelin/contracts/utils/escrow/Escrow.sol";
 ```
+
 基本的托管合约，将款项保留给收款人，直到他们提取这些款项。
 
 预期使用方式：该合约（以及派生的托管合约）应该是一个独立的合约，只与实例化它的合约进行交互。这样，可以确保所有以太币都按照托管规则进行处理，而不需要在继承树中检查可支付的函数或转账。使用托管作为付款方式的合约应该是其所有者，并提供公共方法重定向到托管的存款和提款。
 
 **FUNCTIONS**
-depositsOf(payee)
+[depositsOf(payee)](#depositsofaddress-payee-→-uint256)
 
-deposit(payee)
+[deposit(payee)](#depositaddress-payee)
 
-withdraw(payee)
+[withdraw(payee)](#withdrawaddress-payable-payee)
 
 OWNABLE
-owner()
+[owner()](./Access.md#owner-→-address)
 
-_checkOwner()
+[_checkOwner()](./Access.md#_checkowner)
 
-renounceOwnership()
+[renounceOwnership()](./Access.md#renounceownership)
 
-transferOwnership(newOwner)
+[transferOwnership(newOwner)](./Access.md#transferownershipaddress-newowner)
 
-_transferOwnership(newOwner)
+[_transferOwnership(newOwner)](./Access.md#_transferownershipaddress-newowner)
 
 **EVENTS**
-Deposited(payee, weiAmount)
+[Deposited(payee, weiAmount)](#depositedaddress-indexed-payee-uint256-weiamount)
 
-Withdrawn(payee, weiAmount)
+[Withdrawn(payee, weiAmount)](#withdrawnaddress-indexed-payee-uint256-weiamount)
 
 OWNABLE
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### depositsOf(address payee) → uint256
 公开#
@@ -1556,7 +1558,7 @@ OwnershipTransferred(previousOwner, newOwner)
 提取累积余额给收款人，将所有的gas转发给收款人。
 
 > WARNING
-转发所有的gas会打开重入漏洞的可能性。请确保你信任收款人，或者遵循检查-效应-交互模式或使用*ReentrancyGuard*。
+转发所有的gas会打开重入漏洞的可能性。请确保你信任收款人，或者遵循检查-效应-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
 
 #### Deposited(address indexed payee, uint256 weiAmount)
 事件#
@@ -1568,16 +1570,17 @@ OwnershipTransferred(previousOwner, newOwner)
 ```
 import "@openzeppelin/contracts/utils/escrow/RefundEscrow.sol";
 ```
-托管款项的托管账户，款项由多方存入并用于受益人。预期用途：参见*Escrow*。同样适用于此处的使用指南。拥有者账户（即，实例化此合约的合约）可以存款、关闭存款期，并允许受益人提款或向存款人退款。所有与退款托管账户的互动将通过拥有者合约进行。
+
+托管款项的托管账户，款项由多方存入并用于受益人。预期用途：参见[Escrow](#escrow)。同样适用于此处的使用指南。拥有者账户（即，实例化此合约的合约）可以存款、关闭存款期，并允许受益人提款或向存款人退款。所有与退款托管账户的互动将通过拥有者合约进行。
 
 **FUNCTIONS**
-constructor(beneficiary_)
+[constructor(beneficiary_)]
 
-state()
+[state()]
 
-beneficiary()
+[beneficiary()]
 
-deposit(refundee)
+[deposit(refundee)]
 
 close()
 
