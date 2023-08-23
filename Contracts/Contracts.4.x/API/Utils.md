@@ -2122,7 +2122,7 @@ contract Example {
 请注意，对于数组中条目的顺序没有任何保证，并且当添加或删除更多条目时，它可能会发生变化。
 
 要求：
-* 索引必须严格小于*长度*。
+* 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool, bytes32
 内部#
@@ -2139,7 +2139,7 @@ contract Example {
 内部#
 与*get*相同，当key不在map中时，使用自定义错误消息。
 
-由于此函数需要不必要地为错误消息分配内存，因此此函数已弃用。对于自定义的回滚原因，请使用*tryGet*。
+由于此函数需要不必要地为错误消息分配内存，因此此函数已弃用。对于自定义的回滚原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.Bytes32ToBytes32Map map) → bytes32[]
 内部#
@@ -2173,7 +2173,7 @@ contract Example {
 返回映射中存储在位置索引处的元素。O(1)。请注意，对数组中值的排序没有任何保证，当添加或删除更多值时，它可能会发生变化。
 
 要求：
-* 索引必须严格小于*长度*。
+* 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.UintToUintMap map, uint256 key) → bool, uint256
 内部#
@@ -2188,9 +2188,9 @@ contract Example {
 
 #### get(struct EnumerableMap.UintToUintMap map, uint256 key, string errorMessage) → uint256
 内部#
-与*get*相同，当键不在映射中时显示自定义错误消息。
+与[get](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)相同，当键不在映射中时显示自定义错误消息。
 
-此函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。要使用自定义的还原原因，请使用*tryGet*。
+此函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。要使用自定义的还原原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.UintToUintMap map) → uint256[]
 内部#
@@ -2274,7 +2274,7 @@ contract Example {
 返回在映射中存储的位置索引处的元素。O(1)。请注意，数组内的值的排序没有任何保证，并且当添加或删除更多值时，它可能会改变。
 
 要求：
-* 索引必须严格小于*长度*。
+* 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.AddressToUintMap map, address key) → bool, uint256
 内部#
@@ -2289,10 +2289,10 @@ contract Example {
 
 #### get(struct EnumerableMap.AddressToUintMap map, address key, string errorMessage) → uint256get(struct EnumerableMap.AddressToUintMap map, address key, string errorMessage) → uint256
 内部#
-与*get*相同，当键不在映射中时使用自定义错误消息。
+与[get](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)相同，当键不在映射中时使用自定义错误消息。
 
 > CAUTION
-由于该函数不必要地需要为错误消息分配内存，所以此函数已被弃用。要使用自定义的还原原因，请使用*tryGet*。
+由于该函数不必要地需要为错误消息分配内存，所以此函数已被弃用。要使用自定义的还原原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.AddressToUintMap map) → address[]
 内部#
@@ -2326,7 +2326,7 @@ contract Example {
 在地图中返回存储在位置索引处的元素。O(1)。请注意，数组中的值的排序没有任何保证，并且当添加或删除更多值时，它可能会发生变化。
 
 要求：
-* 索引必须严格小于*长度*。
+* 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool, uint256
 内部#
@@ -2341,9 +2341,9 @@ contract Example {
 
 #### get(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, string errorMessage) → uint256
 内部#
-与*get*相同，当键不在映射中时，显示自定义错误消息。
+与[get](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)相同，当键不在映射中时，显示自定义错误消息。
 
-这个函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。如果需要自定义的还原原因，请使用*tryGet*。
+这个函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。如果需要自定义的还原原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.Bytes32ToUintMap map) → bytes32[]
 内部#
@@ -2356,6 +2356,7 @@ contract Example {
 ```
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 ```
+
 用于管理原始类型[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))的库。
 
 集合具有以下属性：
@@ -2379,41 +2380,41 @@ contract Example {
 为了清理一个EnumerableSet，您可以逐个删除所有元素，或者使用一个EnumerableSet数组创建一个全新的实例。
 
 **FUNCTIONS**
-add(set, value)
+[add(set, value)](#addstruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
 
-remove(set, value)
+[remove(set, value)](#removestruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
 
-contains(set, value)
+[contains(set, value)](#containsstruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
 
-length(set)
+[length(set)](#lengthstruct-enumerablesetbytes32set-set-→-uint256)
 
-at(set, index)
+[at(set, index)](#atstruct-enumerablesetbytes32set-set-uint256-index-→-bytes32)
 
-values(set)
+[values(set)](#valuesstruct-enumerablesetbytes32set-set-→-bytes32)
 
-add(set, value)
+[add(set, value)](#addstruct-enumerablesetaddressset-set-address-value-→-bool)
 
-remove(set, value)
+[remove(set, value)](#removestruct-enumerablesetaddressset-set-address-value-→-bool)
 
-contains(set, value)
+[contains(set, value)](#containsstruct-enumerablesetaddressset-set-address-value-→-bool)
 
-length(set)
+[length(set)](#lengthstruct-enumerablesetaddressset-set-→-uint256)
 
-at(set, index)
+[at(set, index)](#atstruct-enumerablesetaddressset-set-uint256-index-→-address)
 
-values(set)
+[values(set)](#valuesstruct-enumerablesetaddressset-set-→-address)
 
-add(set, value)
+[add(set, value)](#addstruct-enumerablesetuintset-set-uint256-value-→-bool)
 
-remove(set, value)
+[remove(set, value)](#removestruct-enumerablesetuintset-set-uint256-value-→-bool)
 
-contains(set, value)
+[contains(set, value)](#containsstruct-enumerablesetuintset-set-uint256-value-→-bool)
 
-length(set)
+[length(set)](#lengthstruct-enumerablesetuintset-set-→-uint256)
 
-at(set, index)
+[at(set, index)](#atstruct-enumerablesetuintset-set-uint256-index-→-uint256)
 
-values(set)
+[values(set)](#valuesstruct-enumerablesetuintset-set-→-uint256)
 
 #### add(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
 内部#
@@ -2442,7 +2443,7 @@ values(set)
 请注意，数组中的值的顺序没有任何保证，并且当添加或删除更多值时，它可能会发生改变。
 
 要求：
-* index必须严格小于length。
+* index必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### values(struct EnumerableSet.Bytes32Set set) → bytes32[]
 内部#
@@ -2478,7 +2479,7 @@ values(set)
 请注意，数组内的值的顺序没有任何保证，并且在添加或删除更多值时可能会发生变化。
 
 要求：
-* 索引必须严格小于*长度*。
+* 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### values(struct EnumerableSet.AddressSet set) → address[]
 内部#
@@ -2514,7 +2515,7 @@ values(set)
 请注意，数组内部的值的排序没有保证，并且当添加或删除更多值时可能会改变。
 
 要求：
-* 索引必须严格小于长度。
+* 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### values(struct EnumerableSet.UintSet set) → uint256[]
 内部#
@@ -2527,34 +2528,36 @@ values(set)
 ```
 import "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol";
 ```
-一个具有在序列的两端（称为前端和后端）高效地插入和删除项目（即推入和弹出）的能力的序列。它可以用于实现高效的LIFO和FIFO队列，除了其他访问模式。存储使用被优化，并且所有操作都是O(1)常数时间。这包括*清除*，因为现有队列内容保留在存储中。
+
+一个具有在序列的两端（称为前端和后端）高效地插入和删除项目（即推入和弹出）的能力的序列。它可以用于实现高效的LIFO和FIFO队列，除了其他访问模式。存储使用被优化，并且所有操作都是O(1)常数时间。这包括[clear](#clearstruct-doubleendedqueuebytes32deque-deque)，因为现有队列内容保留在存储中。
 
 该结构体被称为Bytes32Deque。其他类型可以转换为bytes32并从bytes32转换。这个数据结构只能在存储中使用，不能在内存中使用。
 ```
 DoubleEndedQueue.Bytes32Deque queue;
 ```
+
 **自v4.6版本开始可用。**
 
 **FUNCTIONS**
-pushBack(deque, value)
+[pushBack(deque, value)](#pushbackstruct-doubleendedqueuebytes32deque-deque-bytes32-value)
 
-popBack(deque)
+[popBack(deque)](#popbackstruct-doubleendedqueuebytes32deque-deque-→-bytes32-value)
 
-pushFront(deque, value)
+[pushFront(deque, value)](#pushfrontstruct-doubleendedqueuebytes32deque-deque-bytes32-value)
 
-popFront(deque)
+[popFront(deque)](#popfrontstruct-doubleendedqueuebytes32deque-deque-→-bytes32-value)
 
-front(deque)
+[front(deque)](#frontstruct-doubleendedqueuebytes32deque-deque-→-bytes32-value)
 
-back(deque)
+[back(deque)](#backstruct-doubleendedqueuebytes32deque-deque-→-bytes32-value)
 
-at(deque, index)
+[at(deque, index)](#atstruct-doubleendedqueuebytes32deque-deque-uint256-index-→-bytes32-value)
 
-clear(deque)
+[clear(deque)](#clearstruct-doubleendedqueuebytes32deque-deque)
 
-length(deque)
+[length(deque)](#lengthstruct-doubleendedqueuebytes32deque-deque-→-uint256)
 
-empty(deque)
+[empty(deque)](#emptystruct-doubleendedqueuebytes32deque-deque-→-bool)
 
 #### pushBack(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
 内部#
@@ -2613,54 +2616,55 @@ empty(deque)
 ```
 import "@openzeppelin/contracts/utils/Checkpoints.sol";
 ```
-这个库定义了History结构体，用于在不同时间点上对数值进行检查点，并在以后通过区块号查找过去的数值。以*Votes*为例。
 
-要创建一个检查点历史，请在您的合约中定义一个变量类型Checkpoints.History，并使用*push*函数为当前交易块存储一个新的检查点。
+这个库定义了History结构体，用于在不同时间点上对数值进行检查点，并在以后通过区块号查找过去的数值。以[Votes](./Governance.md#votes)为例。
+
+要创建一个检查点历史，请在您的合约中定义一个变量类型Checkpoints.History，并使用[push](#pushstruct-checkpointstrace160-self-uint96-key-uint160-value-→-uint160-uint160)函数为当前交易块存储一个新的检查点。
 
 *从版本4.5开始提供。*
 
 **FUNCTIONS**
-getAtBlock(self, blockNumber)
+[getAtBlock(self, blockNumber)](#getatblockstruct-checkpointshistory-self-uint256-blocknumber-→-uint256)
 
-getAtProbablyRecentBlock(self, blockNumber)
+[getAtProbablyRecentBlock(self, blockNumber)](#getatprobablyrecentblockstruct-checkpointshistory-self-uint256-blocknumber-→-uint256)
 
-push(self, value)
+[push(self, value)](#pushstruct-checkpointshistory-self-uint256-value-→-uint256-uint256)
 
-push(self, op, delta)
+[push(self, op, delta)](#pushstruct-checkpointshistory-self-function-uint256uint256-view-returns-uint256-op-uint256-delta-→-uint256-uint256)
 
-latest(self)
+[latest(self)](#lateststruct-checkpointshistory-self-→-uint224)
 
-latestCheckpoint(self)
+[latestCheckpoint(self)](#latestcheckpointstruct-checkpointshistory-self-→-bool-exists-uint32-_blocknumber-uint224-_value)
 
-length(self)
+[length(self)](#lengthstruct-checkpointshistory-self-→-uint256)
 
-push(self, key, value)
+[push(self, key, value)](#pushstruct-checkpointstrace224-self-uint32-key-uint224-value-→-uint224-uint224)
 
-lowerLookup(self, key)
+[lowerLookup(self, key)](#lowerlookupstruct-checkpointstrace224-self-uint32-key-→-uint224)
 
-upperLookup(self, key)
+[upperLookup(self, key)](#upperlookupstruct-checkpointstrace224-self-uint32-key-→-uint224)
 
-upperLookupRecent(self, key)
+[upperLookupRecent(self, key)](#upperlookuprecentstruct-checkpointstrace224-self-uint32-key-→-uint224)
 
-latest(self)
+[latest(self)](#lateststruct-checkpointstrace224-self-→-uint224)
 
-latestCheckpoint(self)
+[latestCheckpoint(self)](#latestcheckpointstruct-checkpointstrace224-self-→-bool-exists-uint32-_key-uint224-_value)
 
-length(self)
+[length(self)](#lengthstruct-checkpointstrace224-self-→-uint256)
 
-push(self, key, value)
+[push(self, key, value)](#pushstruct-checkpointstrace160-self-uint96-key-uint160-value-→-uint160-uint160)
 
-lowerLookup(self, key)
+[lowerLookup(self, key)](#lowerlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)
 
-upperLookup(self, key)
+[upperLookup(self, key)](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)
 
-upperLookupRecent(self, key)
+[upperLookupRecent(self, key)](#upperlookuprecentstruct-checkpointstrace160-self-uint96-key-→-uint160)
 
-latest(self)
+[latest(self)](#lateststruct-checkpointstrace160-self-→-uint160)
 
-latestCheckpoint(self)
+[latestCheckpoint(self)](#latestcheckpointstruct-checkpointstrace160-self-→-bool-exists-uint96-_key-uint160-_value)
 
-length(self)
+[length(self)](#lengthstruct-checkpointstrace160-self-→-uint256)
 
 #### getAtBlock(struct Checkpoints.History self, uint256 blockNumber) → uint256
 内部#
@@ -2668,7 +2672,7 @@ length(self)
 
 #### getAtProbablyRecentBlock(struct Checkpoints.History self, uint256 blockNumber) → uint256
 内部#
-返回给定区块号的值。如果该区块上没有可用的检查点，则返回其之前最近的检查点，否则返回零。类似于*upperLookup*，但针对可能是“最近”的检查点进行了优化，其中“最近”定义为最后sqrt(N)个检查点之一，其中N是检查点的数量。
+返回给定区块号的值。如果该区块上没有可用的检查点，则返回其之前最近的检查点，否则返回零。类似于[upperLookup](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)，但针对可能是“最近”的检查点进行了优化，其中“最近”定义为最后sqrt(N)个检查点之一，其中N是检查点的数量。
 
 #### push(struct Checkpoints.History self, uint256 value) → uint256, uint256
 内部#
@@ -2713,7 +2717,7 @@ length(self)
 返回最近的键值小于或等于搜索键的最后一个检查点中的值，如果没有，则返回零。
 
 > NOTE
-这是一种经过优化的upperLookup变体，用于查找“最近”的检查点（具有高键值的检查点）。
+这是一种经过优化的[upperLookup](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)变体，用于查找“最近”的检查点（具有高键值的检查点）。
 
 #### latest(struct Checkpoints.Trace224 self) → uint224
 内部#
@@ -2745,7 +2749,7 @@ length(self)
 返回最后一个（最近的）键小于或等于搜索键的检查点中的值，如果没有，则返回零。
 
 > NOTE
-这是*upperLookup*的一个变体，它被优化用于查找“最近的”检查点（具有较高键的检查点）。
+这是[upperLookup](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)的一个变体，它被优化用于查找“最近的”检查点（具有较高键的检查点）。
 
 #### latest(struct Checkpoints.Trace160 self) → uint160
 内部#
@@ -2765,20 +2769,21 @@ length(self)
 ```
 import "@openzeppelin/contracts/utils/Create2.sol";
 ```
+
 CREATE2 EVM指令的辅助工具旨在使使用更加简便和安全。CREATE2可以提前计算智能合约部署的地址，从而实现一种称为“反事实交互”的有趣的新机制。
 
 有关更多信息，请参阅[EIP](https://eips.ethereum.org/EIPS/eip-1014#motivation)。
 
 **FUNCTIONS**
-deploy(amount, salt, bytecode)
+[deploy(amount, salt, bytecode)](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address-addr)
 
-computeAddress(salt, bytecodeHash)
+[computeAddress(salt, bytecodeHash)](#computeaddressbytes32-salt-bytes32-bytecodehash-→-address)(#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)
 
-computeAddress(salt, bytecodeHash, deployer)
+[computeAddress(salt, bytecodeHash, deployer)](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)
 
 #### deploy(uint256 amount, bytes32 salt, bytes bytecode) → address addr
 内部#
-使用CREATE2部署合约。可以通过*computeAddress*提前知道合约将被部署的地址。
+使用CREATE2部署合约。可以通过[computeAddress](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)提前知道合约将被部署的地址。
 
 合约的字节码可以通过Solidity中的type(contractName).creationCode获得。
 
@@ -2790,11 +2795,11 @@ computeAddress(salt, bytecodeHash, deployer)
 
 #### computeAddress(bytes32 salt, bytes32 bytecodeHash) → address
 内部#
-如果通过*deploy*部署合约，将返回合约存储的地址。如果bytecodeHash或salt发生变化，将导致一个新的目标地址。
+如果通过[deploy](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address-addr)部署合约，将返回合约存储的地址。如果bytecodeHash或salt发生变化，将导致一个新的目标地址。
 
 #### computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) → address addr
 内部#
-如果通过位于deployer的合约部署，返回合约存储的地址。如果*deployer*是该合约的地址，则返回与*computeAddress*相同的值。
+如果通过位于[deploy](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address-addr)的合约部署，返回合约存储的地址。如果deployer是该合约的地址，则返回与[computeAddress](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)相同的值。
 
 ### Address
 ```
@@ -2803,29 +2808,29 @@ import "@openzeppelin/contracts/utils/Address.sol";
 与地址类型相关的函数集合
 
 **FUNCTIONS**
-isContract(account)
+[isContract(account)]
 
-sendValue(recipient, amount)
+[sendValue(recipient, amount)]
 
-functionCall(target, data)
+[functionCall(target, data)]
 
-functionCall(target, data, errorMessage)
+[functionCall(target, data, errorMessage)]
 
-functionCallWithValue(target, data, value)
+[functionCallWithValue(target, data, value)]
 
-functionCallWithValue(target, data, value, errorMessage)
+[functionCallWithValue(target, data, value, errorMessage)]
 
-functionStaticCall(target, data)
+[functionStaticCall(target, data)]
 
-functionStaticCall(target, data, errorMessage)
+[functionStaticCall(target, data, errorMessage)]
 
-functionDelegateCall(target, data)
+[functionDelegateCall(target, data)]
 
-functionDelegateCall(target, data, errorMessage)
+[functionDelegateCall(target, data, errorMessage)]
 
-verifyCallResultFromTarget(target, success, returndata, errorMessage)
+[verifyCallResultFromTarget(target, success, returndata, errorMessage)]
 
-verifyCallResult(success, returndata, errorMessage)
+[verifyCallResult(success, returndata, errorMessage)]
 
 #### isContract(address account) → bool
 内部#
