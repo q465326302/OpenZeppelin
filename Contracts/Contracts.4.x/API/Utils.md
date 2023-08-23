@@ -1894,43 +1894,44 @@ import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 import "@openzeppelin/contracts/utils/introspection/IERC1820Implementer.sol";
 ```
 
-ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-implementation-erc1820implementerinterface)中所定义。用于将合约注册为[IERC1820Registry](#中的实现者。
+ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-implementation-erc1820implementerinterface)中所定义。用于将合约注册为[IERC1820Registry](#ierc1820registry)中的实现者。
 
 **FUNCTIONS**
-canImplementInterfaceForAddress(interfaceHash, account)
+[canImplementInterfaceForAddress(interfaceHash, account)](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32)
 
 #### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
 外部#
 如果该合约为帐户实现了interfaceHash，则返回特殊值（ERC1820_ACCEPT_MAGIC）。
 
-请参阅*IERC1820Registry.setInterfaceImplementer*。
+请参阅[IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)。
 
 ### ERC1820Implementer
 ```
 import "@openzeppelin/contracts/utils/introspection/ERC1820Implementer.sol";
 ```
-*IERC1820Implementer*接口的实现。
 
-合约可以继承此接口，并调用*_registerInterfaceForAddress*来声明它们愿意成为实现者。
-然后，应调用*IERC1820Registry.setInterfaceImplementer*来完成注册。
+[IERC1820Implementer](#ierc1820implementer)接口的实现。
+
+合约可以继承此接口，并调用[_registerInterfaceForAddress](#_registerinterfaceforaddressbytes32-interfacehash-address-account)来声明它们愿意成为实现者。
+然后，应调用[IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)来完成注册。
 
 > CAUTION
 自v4.9起，此文件已被弃用，并将在下一个主要版本中删除。
 
 **FUNCTIONS**
-canImplementInterfaceForAddress(interfaceHash, account)
+[canImplementInterfaceForAddress(interfaceHash, account)](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-e28692-bytes32-1)
 
-_registerInterfaceForAddress(interfaceHash, account)
+[_registerInterfaceForAddress(interfaceHash, account)](#_registerinterfaceforaddressbytes32-interfacehash-address-account)
 
 #### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
 公开#
-请查阅 *IERC1820Implementer.canImplementInterfaceForAddress*.
+请查阅[IERC1820Implementer.canImplementInterfaceForAddress](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32).
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
 内部#
 将合约声明为愿意成为帐户的interfaceHash实现者。
 
-请参考*IERC1820Registry.setInterfaceImplementer*和*IERC1820Registry.interfaceHash*。
+请参考[IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)和[IERC1820Registry.interfaceHash](#interfacehashstring-interfacename-→-bytes32)。
 
 ## Data Structures
 
@@ -1938,16 +1939,17 @@ _registerInterfaceForAddress(interfaceHash, account)
 ```
 import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
 ```
+
 这是一个用于以紧凑高效的方式管理uint256到bool映射的库，前提是键是连续的。它在很大程度上受到了Uniswap的[ merkle-distributor](https://github.com/Uniswap/merkle-distributor/blob/master/contracts/MerkleDistributor.sol)的启发。
 
 **FUNCTIONS**
-get(bitmap, index)
+[get(bitmap, index)](#getstruct-bitmapsbitmap-bitmap-uint256-index-→-bool)
 
-setTo(bitmap, index, value)
+[setTo(bitmap, index, value)](#settostruct-bitmapsbitmap-bitmap-uint256-index-bool-value)
 
-set(bitmap, index)
+[set(bitmap, index)](#setstruct-bitmapsbitmap-bitmap-uint256-index)
 
-unset(bitmap, index)
+[unset(bitmap, index)](#unsetstruct-bitmapsbitmap-bitmap-uint256-index)
 
 #### get(struct BitMaps.BitMap bitmap, uint256 index) → bool
 内部#
@@ -1969,7 +1971,8 @@ unset(bitmap, index)
 ```
 import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 ```
-管理Solidity映射类型的[可枚举](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)变体的库。
+
+管理Solidity映射类型的[ mapping](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)变体的库。
 
 映射具有以下属性：
 * 添加、删除和检查条目的存在性的时间复杂度为常数时间(O(1))。
@@ -1984,6 +1987,7 @@ contract Example {
     EnumerableMap.UintToAddressMap private myMap;
 }
 ```
+
 支持以下地图类型：
 
 * uint256 → 地址 (UintToAddressMap) 自v3.0.0起
@@ -1996,100 +2000,100 @@ contract Example {
 
 * bytes32 → uint256 (Bytes32ToUintMap) 自v4.7.0起
 
- > WARNING
- 尝试从存储中删除这样的结构可能会导致数据损坏，使该结构无法使用。有关更多信息，请参阅[ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
+> WARNING
+尝试从存储中删除这样的结构可能会导致数据损坏，使该结构无法使用。有关更多信息，请参阅[ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
 要清理一个可枚举地图，您可以逐个删除所有元素，或者使用一个可枚举地图的数组创建一个新的实例。
 
 **FUNCTIONS**
-set(map, key, value)
+[set(map, key, value)](#setstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-bytes32-value-→-bool)
 
-remove(map, key)
+[remove(map, key)](#removestruct-enumerablemapbytes32tobytes32map-map-bytes32-key-→-bool)
 
-contains(map, key)
+[contains(map, key)](#containsstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-→-bool)
 
-length(map)
+[length(map)](#lengthstruct-enumerablemapbytes32tobytes32map-map-→-uint256)
 
-at(map, index)
+[at(map, index)](#atstruct-enumerablemapbytes32tobytes32map-map-uint256-index-→-bytes32-bytes32)
 
-tryGet(map, key)
+[tryGet(map, key)](#trygetstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-→-bool-bytes32)
 
-get(map, key)
+[get(map, key)](#getstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-→-bytes32)(#getstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-string-errormessage-→-bytes32)
 
-get(map, key, errorMessage)
+[get(map, key, errorMessage)](#getstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-string-errormessage-→-bytes32)
 
-keys(map)
+[keys(map)](#keysstruct-enumerablemapbytes32tobytes32map-map-→-bytes32)
 
-set(map, key, value)
+[set(map, key, value)](#setstruct-enumerablemapuinttouintmap-map-uint256-key-uint256-value-→-bool)
 
-remove(map, key)
+[remove(map, key)](#removestruct-enumerablemapuinttouintmap-map-uint256-key-→-bool)
 
-contains(map, key)
+[contains(map, key)](#containsstruct-enumerablemapuinttouintmap-map-uint256-key-→-bool)
 
-length(map)
+[length(map)](#lengthstruct-enumerablemapuinttouintmap-map-→-uint256)
 
-at(map, index)
+[at(map, index)](#atstruct-enumerablemapuinttouintmap-map-uint256-index-→-uint256-uint256)
 
-tryGet(map, key)
+[tryGet(map, key)](#trygetstruct-enumerablemapuinttouintmap-map-uint256-key-→-bool-uint256)
 
-get(map, key)
+[get(map, key)](#getstruct-enumerablemapuinttouintmap-map-uint256-key-→-uint256)(#getstruct-enumerablemapuinttouintmap-map-uint256-key-string-errormessage-→-uint256)
 
-get(map, key, errorMessage)
+[get(map, key, errorMessage)](#getstruct-enumerablemapuinttouintmap-map-uint256-key-string-errormessage-→-uint256)
 
-keys(map)
+[keys(map)](#keysstruct-enumerablemapuinttouintmap-map-→-uint256)
 
-set(map, key, value)
+[set(map, key, value)](#setstruct-enumerablemapuinttouintmap-map-uint256-key-uint256-value-→-bool)
 
-remove(map, key)
+[remove(map, key)](#removestruct-enumerablemapuinttouintmap-map-uint256-key-→-bool)
 
-contains(map, key)
+[contains(map, key)](#containsstruct-enumerablemapuinttouintmap-map-uint256-key-→-bool)
 
-length(map)
+[length(map)](#lengthstruct-enumerablemapuinttouintmap-map-→-uint256)
 
-at(map, index)
+[at(map, index)](#atstruct-enumerablemapuinttoaddressmap-map-uint256-index-→-uint256-address)
 
-tryGet(map, key)
+[tryGet(map, key)](#trygetstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-bool-address)
 
-get(map, key)
+[get(map, key)](#getstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-address)
 
-get(map, key, errorMessage)
+[get(map, key, errorMessage)](#getstruct-enumerablemapuinttoaddressmap-map-uint256-key-string-errormessage-→-address)
 
-keys(map)
+[keys(map)](#keysstruct-enumerablemapuinttoaddressmap-map-→-uint256)
 
-set(map, key, value)
+[set(map, key, value)](#setstruct-enumerablemapaddresstouintmap-map-address-key-uint256-value-→-bool)
 
-remove(map, key)
+[remove(map, key)](#removestruct-enumerablemapaddresstouintmap-map-address-key-→-bool)
 
-contains(map, key)
+[contains(map, key)](#containsstruct-enumerablemapaddresstouintmap-map-address-key-→-bool)
 
-length(map)
+[length(map)](#lengthstruct-enumerablemapaddresstouintmap-map-→-uint256)
 
-at(map, index)
+[at(map, index)](#atstruct-enumerablemapaddresstouintmap-map-uint256-index-→-address-uint256)
 
-tryGet(map, key)
+[tryGet(map, key)](#trygetstruct-enumerablemapaddresstouintmap-map-address-key-→-bool-uint256)
 
-get(map, key)
+[get(map, key)](#getstruct-enumerablemapaddresstouintmap-map-address-key-→-uint256)
 
-get(map, key, errorMessage)
+[get(map, key, errorMessage)](#getstruct-enumerablemapaddresstouintmap-map-address-key-→-uint256)
 
-keys(map)
+[keys(map)](#keysstruct-enumerablemapaddresstouintmap-map-→-address)
 
-set(map, key, value)
+[set(map, key, value)](#setstruct-enumerablemapbytes32touintmap-map-bytes32-key-uint256-value-→-bool)
 
-remove(map, key)
+[remove(map, key)](#removestruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool)
 
-contains(map, key)
+[contains(map, key)](#containsstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool)
 
-length(map)
+[length(map)](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)
 
-at(map, index)
+[at(map, index)](#atstruct-enumerablemapbytes32touintmap-map-uint256-index-→-bytes32-uint256)
 
-tryGet(map, key)
+[tryGet(map, key)](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)
 
-get(map, key)
+[get(map, key)](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-uint256)
 
-get(map, key, errorMessage)
+[get(map, key, errorMessage)](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)
 
-keys(map)
+[keys(map)](#keysstruct-enumerablemapbytes32touintmap-map-→-bytes32)
 
 #### set(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key, bytes32 value) → bool
 内部#
