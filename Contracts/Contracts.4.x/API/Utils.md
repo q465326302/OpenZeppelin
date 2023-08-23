@@ -2808,29 +2808,29 @@ import "@openzeppelin/contracts/utils/Address.sol";
 与地址类型相关的函数集合
 
 **FUNCTIONS**
-[isContract(account)]
+[isContract(account)](#iscontractaddress-account-→-bool)
 
-[sendValue(recipient, amount)]
+[sendValue(recipient, amount)](#sendvalueaddress-payable-recipient-uint256-amount)
 
-[functionCall(target, data)]
+[functionCall(target, data)](#functioncalladdress-target-bytes-data-→-bytes)
 
-[functionCall(target, data, errorMessage)]
+[functionCall(target, data, errorMessage)](#functioncalladdress-target-bytes-data-string-errormessage-→-bytes)
 
-[functionCallWithValue(target, data, value)]
+[functionCallWithValue(target, data, value)](#functioncallwithvalueaddress-target-bytes-data-uint256-value-→-bytes)(#functioncallwithvalueaddress-target-bytes-data-uint256-value-string-errormessage-→-bytes)
 
-[functionCallWithValue(target, data, value, errorMessage)]
+[functionCallWithValue(target, data, value, errorMessage)](#functioncallwithvalueaddress-target-bytes-data-uint256-value-string-errormessage-→-bytes)
 
-[functionStaticCall(target, data)]
+[functionStaticCall(target, data)](#functionstaticcalladdress-target-bytes-data-→-bytes)
 
-[functionStaticCall(target, data, errorMessage)]
+[functionStaticCall(target, data, errorMessage)](#functionstaticcalladdress-target-bytes-data-string-errormessage-→-bytes)
 
-[functionDelegateCall(target, data)]
+[functionDelegateCall(target, data)](#functiondelegatecalladdress-target-bytes-data-→-bytes)
 
-[functionDelegateCall(target, data, errorMessage)]
+[functionDelegateCall(target, data, errorMessage)](#functiondelegatecalladdress-target-bytes-data-string-errormessage-→-bytes)
 
-[verifyCallResultFromTarget(target, success, returndata, errorMessage)]
+[verifyCallResultFromTarget(target, success, returndata, errorMessage)](#verifycallresultfromtargetaddress-target-bool-success-bytes-returndata-string-errormessage-→-bytes)
 
-[verifyCallResult(success, returndata, errorMessage)]
+[verifyCallResult(success, returndata, errorMessage)](#verifycallresultbool-success-bytes-returndata-string-errormessage-→-bytes)
 
 #### isContract(address account) → bool
 内部#
@@ -2853,12 +2853,12 @@ isContract函数会返回false的地址包括但不限于以下类型：
 内部#
 Solidity的transfer方法的替代方案：将amount wei发送给recipient，并转发所有可用的gas，在发生错误时回滚。
 
-[EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能会导致合约超过transfer方法所施加的2300 gas限制，从而无法通过transfer方法接收资金。*sendValue*方法消除了这个限制。
+[EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能会导致合约超过transfer方法所施加的2300 gas限制，从而无法通过transfer方法接收资金。[sendValue](#sendvalueaddress-payable-recipient-uint256-amount)方法消除了这个限制。
 
 [了解更多](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/)。
 
 > IMPORTANT
-由于控制权转移到了recipient，必须注意不要创建可重入漏洞。考虑使用ReentrancyGuard或checks-effects-interactions模式。
+由于控制权转移到了recipient，必须注意不要创建可重入漏洞。考虑使用[ReentrancyGuard](./Security.md#reentrancyguard)或[checks-effects-interactions模式](https://solidity.readthedocs.io/en/v0.8.0/security-considerations.html#use-the-checks-effects-interactions-pattern)。
 
 #### functionCall(address target, bytes data) → bytes
 内部#
@@ -2876,13 +2876,13 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 
 #### functionCall(address target, bytes data, string errorMessage) → bytes
 内部#
-与**functionCall**相同，但在目标函数发生回滚时，使用errorMessage作为回退原因的回滚。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但在目标函数发生回滚时，使用errorMessage作为回退原因的回滚。
 
 *自v3.1起可用。*
 
 #### functionCallWithValue(address target, bytes data, uint256 value) → bytes
 内部#
-与*functionCall*相同，但还将wei的值转移到目标。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但还将wei的值转移到目标。
 
 要求：
 * 调用合约的ETH余额必须至少为value。
@@ -2892,30 +2892,30 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 
 #### functionCallWithValue(address target, bytes data, uint256 value, string errorMessage) → bytes
 内部#
-与*functionCallWithValue*相同，但当目标函数回退时，errorMessage作为回退原因的回退。
+与[functionCallWithValue](#functioncallwithvalueaddress-target-bytes-data-uint256-value-string-errormessage-→-bytes)相同，但当目标函数回退时，errorMessage作为回退原因的回退。
 
 *从v3.1版本开始可用。*
 
 #### functionStaticCall(address target, bytes data) → bytes
 内部#
-与*functionCall*相同，但执行静态调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行静态调用。
 
 *自v3.3起可用。*
 
 #### functionStaticCall(address target, bytes data, string errorMessage) → bytes
 内部#
-与*functionCall*相同，但执行静态调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行静态调用。
 
 *自v3.3起可用。*
 
 #### functionDelegateCall(address target, bytes data) → bytes
-与*functionCall*相同，但执行委托调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行委托调用。
 
 *从v3.4版本开始提供。*
 
 #### functionDelegateCall(address target, bytes data, string errorMessage) → bytes
 内部#
-与*functionCall*相同，但执行委托调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行委托调用。
 
 *自v3.4起可用。*
 
@@ -2935,16 +2935,17 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 ```
 import "@openzeppelin/contracts/utils/Arrays.sol";
 ```
+
 与数组类型相关的函数集合。
 
 **FUNCTIONS**
-findUpperBound(array, element)
+[findUpperBound(array, element)](#findupperbounduint256-array-uint256-element-→-uint256)
 
-unsafeAccess(arr, pos)
+[unsafeAccess(arr, pos)](#unsafeaccessaddress-arr-uint256-pos-→-struct-storageslotaddressslot)
 
-unsafeAccess(arr, pos)
+[unsafeAccess(arr, pos)](#unsafeaccessbytes32-arr-uint256-pos-→-struct-storageslotbytes32slot)
 
-unsafeAccess(arr, pos)
+[unsafeAccess(arr, pos)](#unsafeaccessuint256-arr-uint256-pos-→-struct-storageslotuint256slot)
 
 #### findUpperBound(uint256[] array, uint256 element) → uint256
 内部#
@@ -2977,12 +2978,13 @@ unsafeAccess(arr, pos)
 ```
 import "@openzeppelin/contracts/utils/Base64.sol";
 ```
+
 提供一组用于操作Base64字符串的函数。
 
 *自v4.5起可用。*
 
 **FUNCTIONS**
-encode(data)
+[encode(data)](#encodebytes-data-→-string)
 
 #### encode(bytes data) → string
 内部#
@@ -2992,18 +2994,19 @@ encode(data)
 ```
 import "@openzeppelin/contracts/utils/Counters.sol";
 ```
+
 提供的计数器只能递增、递减或重置。这可以用于跟踪映射中的元素数量、发行ERC721 ID或计算请求ID。
 
 使用Counters.Counter导入Counters。
 
 **FUNCTIONS**
-current(counter)
+[current(counter)](#currentstruct-counterscounter-counter-→-uint256)
 
-increment(counter)
+[increment(counter)](#incrementstruct-counterscounter-counter)
 
-decrement(counter)
+[decrement(counter)](#decrementstruct-counterscounter-counter)
 
-reset(counter)
+[reset(counter)](#resetstruct-counterscounter-counter)
 
 #### current(struct Counters.Counter counter) → uint256
 内部#
@@ -3021,20 +3024,21 @@ reset(counter)
 ```
 import "@openzeppelin/contracts/utils/Strings.sol";
 ```
+
 字符串运算
 
 **FUNCTIONS**
-toString(value)
+[toString(value)](#tostringuint256-value-→-string)
 
-toString(value)
+[toString(value)](#tostringint256-value-→-string)
 
-toHexString(value)
+[toHexString(value)](#tohexstringuint256-value-→-string)
 
-toHexString(value, length)
+[toHexString(value, length)](#tohexstringuint256-value-uint256-length-→-string)
 
-toHexString(addr)
+[toHexString(addr)](#tohexstringaddress-addr-→-string)
 
-equal(a, b)
+[equal(a, b)](#equalstring-a-string-b-→-bool)
 
 #### toString(uint256 value) → string
 内部#
@@ -3064,6 +3068,7 @@ equal(a, b)
 ```
 import "@openzeppelin/contracts/utils/ShortStrings.sol";
 ```
+
 该库提供了将短内存字符串转换为可用作不可变变量的ShortString类型的函数。
 
 如果任意长度的字符串足够短（最多31个字节），则可以使用该库对其进行优化，通过将其与长度（1个字节）打包在单个EVM字中（32个字节）。此外，对于其他情况，可以使用回退机制。
@@ -3087,17 +3092,17 @@ contract Named {
 ```
 
 **FUNCTIONS**
-toShortString(str)
+[toShortString(str)](#toshortstringstring-str-→-shortstring)
 
-toString(sstr)
+[toString(sstr)](#tostringshortstring-sstr-→-string)
 
-byteLength(sstr)
+[byteLength(sstr)](#bytelengthshortstring-sstr-→-uint256)
 
-toShortStringWithFallback(value, store)
+[toShortStringWithFallback(value, store)](#toshortstringwithfallbackstring-value-string-store-→-shortstring)
 
-toStringWithFallback(value, store)
+[toStringWithFallback(value, store)](#tostringwithfallbackshortstring-value-string-store-→-string)
 
-byteLengthWithFallback(value, store)
+[byteLengthWithFallback(value, store)](#bytelengthwithfallbackshortstring-value-string-store-→-uint256)
 
 #### toShortString(string str) → ShortString
 内部#
@@ -3132,6 +3137,7 @@ byteLengthWithFallback(value, store)
 ```
 import "@openzeppelin/contracts/utils/StorageSlot.sol";
 ```
+
 用于读取和写入特定存储槽的原始类型的库。
 
 在处理可升级合约时，通常使用存储槽来避免存储冲突。该库帮助读取和写入这些存储槽，而无需使用内联汇编。
@@ -3153,24 +3159,25 @@ contract ERC1967 {
     }
 }
 ```
+
 *自v4.1起，地址（address），布尔（bool），字节数组（bytes32），无符号整数（uint256）可用。自v4.9起，字符串（string），字节数组（bytes）可用。*
 
 **FUNCTIONS**
-getAddressSlot(slot)
+[getAddressSlot(slot)](#getaddressslotbytes32-slot-→-struct-storageslotaddressslot-r)
 
-getBooleanSlot(slot)
+[getBooleanSlot(slot)](#getbooleanslotbytes32-slot-→-struct-storageslotbooleanslot-r)
 
-getBytes32Slot(slot)
+[getBytes32Slot(slot)](#getbytes32slotbytes32-slot-→-struct-storageslotbytes32slot-r)
 
-getUint256Slot(slot)
+[getUint256Slot(slot)](#getuint256slotbytes32-slot-→-struct-storageslotuint256slot-r)
 
-getStringSlot(slot)
+[getStringSlot(slot)](#getstringslotbytes32-slot-→-struct-storageslotstringslot-r)
 
-getStringSlot(store)
+[getStringSlot(store)](#getstringslotstring-store-→-struct-storageslotstringslot-r)
 
-getBytesSlot(slot)
+[getBytesSlot(slot)](#getbytesslotbytes32-slot-→-struct-storageslotbytesslot-r)
 
-getBytesSlot(store)
+[getBytesSlot(store)](#getbytesslotbytes32-slot-→-struct-storageslotbytesslot-r)
 
 #### getAddressSlot(bytes32 slot) → struct StorageSlot.AddressSlot r
 内部#
@@ -3194,15 +3201,15 @@ getBytesSlot(store)
 
 #### getStringSlot(string store) → struct StorageSlot.StringSlot r
 内部#
-将字符串存储指针存储的字符串表示转换为StringSlot。
+返回字符串存储指针存储的StringSlot表示。
 
 #### getBytesSlot(bytes32 slot) → struct StorageSlot.BytesSlot r
 内部#
-返回一个位于slot位置的BytesSlot，其成员值为value。
+返回位于插槽的成员值的BytesSlot。
 
-#### 返回一个位于slot位置的BytesSlot，其成员值为value。
+#### getBytesSlot(bytes store) → struct StorageSlot.BytesSlot r
 内部#
-将字节存储指针存储的表示形式返回为BytesSlot。
+将字节存储指针存储的返回为BytesSlot表示形式。
 
 ### Multicall
 ```
@@ -3213,7 +3220,7 @@ import "@openzeppelin/contracts/utils/Multicall.sol";
 *自v4.1起可用。*
 
 **FUNCTIONS**
-multicall(data)
+[multicall(data)](#multicallbytes-data-→-bytes-results)
 
 #### multicall(bytes[] data) → bytes[] results
 外部# 
