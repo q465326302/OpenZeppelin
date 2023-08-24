@@ -110,6 +110,7 @@ contract MyToken is ERC20 {
     }
 }
 ```
+
 就是这样！享受使用 hooks 的简化代码吧！
 
 ## 安全性

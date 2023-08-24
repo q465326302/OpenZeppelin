@@ -10,7 +10,7 @@ OpenZeppelin合约中有一些库：大部分位于*Utils*目录中。
 ## 重写
 继承经常用于将父合约的功能添加到您自己的合约中，但这并不是它的全部作用。您还可以使用重写来更改父合约的某些部分的行为。
 
-例如，假设您想要更改*AccessControl*，使*revokeRole*无法被调用。可以使用重写来实现这一点：
+例如，假设您想要更改[AccessControl](./API/Access.md)，使[revokeRole](./API/Access.md#revokerolebytes32-role-address-account)无法被调用。可以使用重写来实现这一点：
 ```
 // contracts/ModifiedAccessControl.sol
 // SPDX-License-Identifier: MIT
@@ -25,6 +25,7 @@ contract ModifiedAccessControl is AccessControl {
     }
 }
 ```
+
 然后，旧的revokeRole被我们的override替换了，对它的任何调用都会立即回滚。我们无法从合约中删除该函数，但在所有调用上回滚足够了。
 
 ### 调用super
@@ -35,7 +36,7 @@ super关键字允许您调用在父合约中定义的函数，即使它们被重
 > TIP
 有关override的更多信息，请查阅官方[Solidity文档](https://solidity.readthedocs.io/en/latest/contracts.html#index-17)。
 
-这是*AccessControl*的修改版本，其中*revokeRole*不能用于撤销DEFAULT_ADMIN_ROLE的权限：
+这是*[AccessControl](./API/Access.md)的修改版本，其中[revokeRole](./API/Access.md#revokerolebytes32-role-address-account)不能用于撤销DEFAULT_ADMIN_ROLE的权限：
 ```
 // contracts/ModifiedAccessControl.sol
 // SPDX-License-Identifier: MIT
@@ -54,6 +55,7 @@ contract ModifiedAccessControl is AccessControl {
     }
 }
 ```
+
 最后的super.revokeRole语句将调用AccessControl的原始版本的revokeRole，即如果没有设置重写的情况下将运行的相同代码。
 
 > NOTE
@@ -62,11 +64,11 @@ contract ModifiedAccessControl is AccessControl {
 ## 使用Hooks
 有时，为了扩展父合约，您需要重写多个相关函数，这会导致代码重复和错误发生的可能性增加。
 
-例如，考虑以*IERC721Receiver*的方式实现安全的*ERC20*转账。您可能认为重写*transfer*和*transferFrom*就足够了，但是*_transfer*和*_mint*呢？为了防止您处理这些细节，我们引入了**Hooks**。
+例如，考虑以[IERC721Receiver](./Tokens/ERC721.md#预设erc721合约)的方式实现安全的[ERC20](./API/ERC20.md#erc20)转账。您可能认为重写[transfer](./API/ERC20.md#transferaddress-to-uint256-amount-→-bool)和[transferFrom](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)就足够了，但是[_transfer](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)和[_mint](./API/ERC20.md#_mintaddress-account-uint256-amount)呢？为了防止您处理这些细节，我们引入了**Hooks**。
 
 Hooks只是在某个操作之前或之后调用的函数。它们提供了一个集中的点来连接和扩展原始行为。
 
-以下是使用*_beforeTokenTransfer* hook在ERC20中实现IERC721Receiver模式的示例：
+以下是使用[_beforeTokenTransfer](./API/ERC20.md#_burnaddress-account-uint256-amount) hook在ERC20中实现IERC721Receiver模式的示例：
 ```
 pragma solidity ^0.6.0;
 
@@ -88,18 +90,19 @@ contract ERC20WithSafeTransfer is ERC20 {
     ...
 }
 ```
+
 以这种方式使用 hooks 可以使代码更清晰、更安全，而不需要依赖于父级的内部细节的深入理解。
 
 > NOTE
  hooks 是OpenZeppelin Contracts v3.0.0的一个新功能，我们渴望了解您打算如何使用它们！
-到目前为止，唯一可用的 hooks 是_beforeTransferHook，在*ERC20*、*ERC721*、*ERC777*和*ERC1155*中都有。如果您对新的 hooks 有想法，请告诉我们！
+到目前为止，唯一可用的 hooks 是_beforeTransferHook，在[ERC20](./API/ERC20.md#_beforetokentransferaddress-from-address-to-uint256-amount)、[ERC721](./API/ERC721.md#_beforetokentransferaddress-from-address-to-uint256-tokenid)、[ERC777](./API/ERC777.md#_beforetokentransferaddress-operator-address-from-address-to-uint256-amount)和[ERC1155](./API/ERC1155.md#_beforetokentransferaddress-operator-address-from-address-to-uint256-ids-uint256-amounts-bytes-data)中都有。如果您对新的 hooks 有想法，请告诉我们！
 
 ## Hooks的规则
 在编写使用hooks的代码时，有一些准则可以防止出现问题。它们非常简单，但请确保遵循以下规则：
 
-1. 每当重写父级的hook时，重新应用hook的虚拟属性。这将允许子合约向hook添加更多功能。
+1. 每当重写父级的 hooks 时，请重新应用virtual属性到 hooks 上。这将允许子合约向 hooks 添加更多功能。
 
-2. 在你的重写中总是使用super调用父级的hook。这将确保调用继承树中的所有hook：像*ERC20Pausable*这样的合约依赖于这种行为。
+2. 在你的重写中**始终**使用super调用父合约的hook。这将确保调用继承树中的所有 hooks ：像[ERC20Pausable](./API/ERC20.md#erc20pausable)这样的合约依赖于这种行为。
 ```
 contract MyToken is ERC20 {
     function _beforeTokenTransfer(address from, address to, uint256 amount)
@@ -110,5 +113,6 @@ contract MyToken is ERC20 {
     }
 }
 ```
+
 就是这样！享受使用hooks的更简单的代码吧！
 
