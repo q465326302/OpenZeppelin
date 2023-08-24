@@ -4,7 +4,7 @@
 下面我们将描述你作为OpenZeppelin Contracts用户应该期待何时发布新版本，以及这对你的影响。
 
 ## 发布计划
-OpenZeppelin Contracts遵循*语义化版本控制*。
+OpenZeppelin Contracts遵循[语义化版本控制方案](#版本控制方案)。
 
 ### 次要版本
 OpenZeppelin Contracts的目标是每1到2个月发布一个新的次要版本。
@@ -22,7 +22,7 @@ OpenZeppelin Contracts的目标是每1到2个月发布一个新的次要版本�
 简而言之，API的稳定性意味着如果你的项目今天可以工作，它将继续工作。新的合约和功能将在次要版本中添加，但只会以向后兼容的方式添加。
 
 ### 版本控制方案
-我们遵循语义化版本控制，这意味着在主要版本之间可能会出现API的破坏性变更（这种情况并不经常发生）。
+我们遵循[SemVer](https://semver.org/)，这意味着API在主要版本之间可能会发生破坏性变化（这种情况[不会经常发生](#主要版本)）。
 
 ### Solidity函数
 虽然函数的内部实现可能会发生变化，但它们的语义和签名将保持不变。它们的参数领域不会变得更加宽松（例如，如果不允许转移0值，那么它将继续不被允许），一般状态限制也不会被解除（例如，当Paused修饰符存在时）。
@@ -30,7 +30,7 @@ OpenZeppelin Contracts的目标是每1到2个月发布一个新的次要版本�
 如果向合约添加新的函数，将以向后兼容的方式进行：它们的使用不是强制性的，并且它们不会以可预见的方式扩展功能，从而可能破坏应用程序（例如，[可以添加一个内部方法来更轻松地检索已经可用的信息](https://github.com/OpenZeppelin/openzeppelin-contracts/issues/1512)）。
 
 ### internal
-这不仅适用于外部和公共函数，也适用于内部函数：许多合约是通过继承来使用的（例如，Pausable，PullPayment，不同的Roles合约），因此通过调用这些函数来使用它们。同样，由于所有OpenZeppelin Contracts状态变量都是私有的，因此只能通过这种方式访问它们（例如，要创建新的ERC20代币，而不是手动修改totalSupply和balances，应该调用_mint）。
+这不仅适用于外部和公共函数，也适用于内部函数：许多合约是通过继承来使用的（例如，Pausable，PullPayment，不同的Roles合约），因此通过调用这些函数来使用它们。同样，由于所有OpenZeppelin Contracts状态变量都是私有的，因此只能通过这种方式访问它们（例如，要[创建新的ERC20代币，而不是手动修改totalSupply和balances，应该调用_mint](https://github.com/OpenZeppelin/openzeppelin-contracts/issues/1512)）。
 
 私有函数在行为、使用和存在方面没有任何保证。
 
