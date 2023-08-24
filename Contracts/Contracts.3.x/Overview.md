@@ -1,11 +1,11 @@
 # Contracts
 **一个专注于安全智能合约开发的库。**基于社区审核的代码打造。
 
-* 实现了*ERC20*和*ERC721*等标准。
+* 实现了[ERC20](./Tokens/ERC20/ERC20.md)和[ERC721](./Tokens/ERC721.md)等标准。
 
-* 灵活的*基于角色的权限*控制方案。
+* 灵活的[基于角色的权限控制](./Access-Control.md)控制方案。
 
-* 可重用的*Solidity组件*，用于构建自定义合约和复杂的去中心化系统。
+* 可重用的[Solidity组件](./Utilities.md)，用于构建自定义合约和复杂的去中心化系统。
 
 * 与*Gas Station Network*实现了一流的集成，可以实现无燃气费用的系统！
 
@@ -17,7 +17,7 @@
 ```
 npm install @openzeppelin/contracts
 ```
-OpenZeppelin Contracts提供了*稳定的API*，这意味着当升级到较新的次要版本时，您的合约不会意外中断。
+OpenZeppelin Contracts提供了[稳定的API](./Releases&Stability.md#api稳定性)，这意味着当升级到较新的次要版本时，您的合约不会意外中断。
 
 ### 用法
 一旦安装完成，您可以通过导入它们来使用库中的合约：
@@ -35,21 +35,21 @@ contract MyNFT is ERC721 {
 ```
 
 > TIP
-如果您是智能合约开发的新手，请前往*“开发智能合约”*以了解如何创建新项目和编译您的合约。
+如果您是智能合约开发的新手，请前往[“开发智能合约”](../../Learn/Developing-smart-contracts/Developing-smart-contracts-hardh.md)以了解如何创建新项目和编译您的合约。
 
 为了保护您的系统安全，您应**始终**使用已安装的代码，不要从在线源代码中复制粘贴，也不要自行修改。该库的设计使得只有您使用的合约和函数被部署，因此您不需要担心它会不必要地增加燃气成本。
 
-## 学习更多
+## 了解更多
 
 侧边栏中的指南将教您不同的概念，以及如何使用OpenZeppelin Contracts提供的相关合约：
 
-* *访问控制*：决定谁可以执行系统上的每个操作。
+* [访问控制](./Access-Control.md)：决定谁可以执行系统上的每个操作。
 
-* *代币*：创建可交易的资产或收藏品，如众所周知的*ERC20*和*ERC721*标准。
+* [代币](./Tokens/Tokens.md)：创建可交易的资产或收藏品，如众所周知的[ERC20](./Tokens/ERC20/ERC20.md)和[ERC721](./Tokens/ERC721.md)标准。
 
-* *燃气站网络*：让您的用户与您的合约交互，而无需为燃气支付费用。
+* [Gas Station Network](./API/GSN.md)：让您的用户与您的合约交互，而无需为燃气支付费用。
 
-* *实用工具*：通用的有用工具，包括非溢出数学、签名验证和无信任支付系统。
+* [实用工具](../Contracts.4.x/Utilities.md)：通用的有用工具，包括非溢出数学、签名验证和无信任支付系统。
 
 *完整的API*也有详细的文档，并且在开发智能合约应用程序时可以作为很好的参考。您还可以在社区论坛中寻求帮助或关注[Contracts的开发](https://forum.openzeppelin.com/)。
 
