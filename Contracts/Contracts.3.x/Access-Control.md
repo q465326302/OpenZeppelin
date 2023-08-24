@@ -4,7 +4,7 @@
 所有权和Ownable
 最常见和基本的访问控制形式是所有权的概念：有一个账户是合约的所有者，可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
 
-OpenZeppelin提供了*Ownable*来实现合约的所有权。
+OpenZeppelin提供了[Ownable](./API/Access.md)来实现合约的所有权。
 ```
 // contracts/MyContract.sol
 // SPDX-License-Identifier: MIT
@@ -22,13 +22,13 @@ contract MyContract is Ownable {
     }
 }
 ```
-默认情况下，*Ownable*合约的所有者是部署它的账户，这通常是你想要的。
+默认情况下，Ownable合约的[所有者](./API/Access.md#owner-→-address)是部署它的账户，这是您所需要的。
 
 Ownable还可以让你：
 
-* 将*所有权*从所有者账户转移给新账户，以及
+* 将[所有权从所有者账户](./API/Access.md#transferownershipaddress-newowner)转移到新账户，以及
 
-* 放弃*所有权*，使所有者放弃这个管理特权，在初始阶段的集中管理结束后，这是一个常见的模式。
+* [放弃所有权](./API/Access.md#renounceownership)，让所有者放弃这种管理特权，这是初始阶段集中管理结束后的常见模式。
 
 > WARNING
 完全移除所有者意味着只有所有者才能调用的管理任务将无法调用！
@@ -45,9 +45,9 @@ Ownable还可以让你：
 大多数软件使用的是基于角色的访问控制系统：一些用户是普通用户，一些可能是主管或经理，还有一些可能具有管理员特权。
 
 ### 使用AccessControl
-OpenZeppelin Contracts提供了*AccessControl*来实现基于角色的访问控制。它的使用非常简单：对于您想要定义的每个角色，您将创建一个新的角色标识符，用于授予、撤销和检查一个账户是否具有该角色。
+OpenZeppelin Contracts提供了[AccessControl](./API/Access.md#accesscontrol)来实现基于角色的访问控制。它的使用非常简单：对于您想要定义的每个角色，您将创建一个新的角色标识符，用于授予、撤销和检查一个账户是否具有该角色。
 
-以下是在*ERC20代币*中使用AccessControl定义'minter'角色的简单示例，允许具有该角色的账户创建新的代币：
+以下是在[ERC20代币](./Tokens/ERC20/ERC20.md#erc20)中使用AccessControl定义'minter'角色的简单示例，允许具有该角色的账户创建新的代币：
 ```
 // contracts/MyToken.sol
 // SPDX-License-Identifier: MIT
@@ -73,7 +73,7 @@ contract MyToken is ERC20, AccessControl {
 }
 ```
 > NOTE
-在使用*AccessControl*之前，请确保充分理解其工作原理，或者复制粘贴本指南中的示例。
+在使用[AccessControl](./API/Access.md#accesscontrol)之前，请确保充分理解其工作原理，或者复制粘贴本指南中的示例。
 
 虽然清晰明确，但这并不是我们无法通过Ownable实现的任何功能。事实上，AccessControl在需要细粒度权限的场景中表现出色，可以通过定义多个角色来实现。
 
@@ -106,6 +106,7 @@ contract MyToken is ERC20, AccessControl {
     }
 }
 ```
+
 如此干净！通过以这种方式分割关注点，可以实现比简单的所有权访问控制方法更细粒度的权限级别。限制系统的每个组件能够执行的操作被称为[最小权限原则](https://en.wikipedia.org/wiki/Principle_of_least_privilege)，这是一种良好的安全实践。请注意，每个账户仍然可以拥有多个角色，如果需要的话。
 
 ### 授予和撤销角色
@@ -152,7 +153,7 @@ contract MyToken is ERC20, AccessControl {
 动态角色分配通常是一种理想的属性，例如在对参与者的信任可能随时间变化的系统中。它还可以用于支持诸如[KYC](https://en.wikipedia.org/wiki/Know_your_customer)之类的用例，其中角色承载人的列表可能事先不知道，或者在单个交易中包含这些列表可能过于昂贵。
 
 ### 查询特权账户
-由于账户可能动态地*授予和撤销*角色，因此不总是能够确定哪些账户拥有特定的角色。这一点很重要，因为它允许证明关于系统的某些属性，例如管理账户是多重签名或DAO，或者某个角色已从所有用户中移除，从而有效地禁用任何相关功能。
+由于账户可能动态地[授予和撤销角色](#granting-and-revoking-roles)，因此不总是能够确定哪些账户拥有特定的角色。这一点很重要，因为它允许证明关于系统的某些属性，例如管理账户是多重签名或DAO，或者某个角色已从所有用户中移除，从而有效地禁用任何相关功能。
 
 在底层，AccessControl使用了EnumerableSet，这是Solidity的映射类型的更强大的变体，它允许键的枚举。getRoleMemberCount可以用来检索具有特定角色的账户数量，然后可以调用getRoleMember来获取每个这些账户的地址。
 ```
@@ -165,18 +166,18 @@ for (let i = 0; i < minterCount; ++i) {
 ```
 
 ## 延迟操作
-访问控制对于防止未经授权访问关键功能至关重要。这些功能可能用于铸造代币、冻结转账或执行完全更改智能合约逻辑的升级。虽然*Ownable*和*AccessControl*可以防止未经授权的访问，但它们不能解决管理员恶意攻击自己系统以损害用户利益的问题。
+访问控制对于防止未经授权访问关键功能至关重要。这些功能可能用于铸造代币、冻结转账或执行完全更改智能合约逻辑的升级。虽然[Ownable](./API/Access.md#ownable)和 [AccessControl](./API/Access.md#accesscontrol)可以防止未经授权的访问，但它们不能解决管理员恶意攻击自己系统以损害用户利益的问题。
 
-这就是*TimelockControler*要解决的问题。
+这就是[TimelockController](./API/Governance.md#timelockcontroller)要解决的问题。
 
-*TimelockControler*是一个由提议者和执行者管理的代理。当将其设置为智能合约的所有者/管理员/控制器时，它确保提议者下达的维护操作受到延迟的限制。这种延迟保护了智能合约的用户，使他们有时间审查维护操作，并在认为有必要时退出系统。
+[TimelockController](./API/Governance.md#timelockcontroller)是一个由提议者和执行者管理的代理。当将其设置为智能合约的所有者/管理员/控制器时，它确保提议者下达的维护操作受到延迟的限制。这种延迟保护了智能合约的用户，使他们有时间审查维护操作，并在认为有必要时退出系统。
 
 ### 使用TimelockControler
-默认情况下，部署*TimelockControler*的地址获得了对timelock的管理权限。该角色赋予了分配提议者、执行者和其他管理员的权利。
+默认情况下，部署[TimelockController](./API/Governance.md#timelockcontroller)的地址获得了对timelock的管理权限。该角色赋予了分配提议者、执行者和其他管理员的权利。
 
-配置*TimelockControler*的第一步是分配至少一个提议者和一个执行者。这些角色可以在构造过程中或稍后由具有管理员角色的任何人分配。这些角色不是排他性的，也就是说一个账户可以同时拥有这两个角色。
+配置[TimelockController](./API/Governance.md#timelockcontroller)的第一步是分配至少一个提议者和一个执行者。这些角色可以在构造过程中或稍后由具有管理员角色的任何人分配。这些角色不是排他性的，也就是说一个账户可以同时拥有这两个角色。
 
-角色使用*AccessControl*接口进行管理，每个角色的bytes32值可通过ADMIN_ROLE、PROPOSER_ROLE和EXECUTOR_ROLE常量访问。
+角色使用[AccessControl](./API/Access.md#accesscontrol)接口进行管理，每个角色的bytes32值可通过ADMIN_ROLE、PROPOSER_ROLE和EXECUTOR_ROLE常量访问。
 
 在AccessControl之上还有一个附加功能：将提议者或执行者角色分配给address(0)可以向任何人开放访问权限。这个功能在测试和某些情况下对于执行者角色可能很有用，但是需要小心使用，因为它是危险的。
 
@@ -193,6 +194,6 @@ for (let i = 0; i < minterCount; ++i) {
 建议的配置是将这两个角色都授予一个安全的治理合约，如DAO或多签，同时还将执行者角色授予一些由负责协助维护操作的人持有的EOA。这些钱包不能接管timelock的控制，但它们可以帮助平滑工作流程。
 
 ### 最小延迟
-由*TimelockControler*执行的操作不受固定延迟的限制，而是受到最小延迟的限制。一些重大更新可能需要更长的延迟。例如，如果仅几天的延迟足以让用户审计铸币操作，那么在安排智能合约升级时使用几周甚至几个月的延迟是有意义的。
+由[TimelockController](./API/Governance.md#timelockcontroller) 执行的操作不受固定延迟的限制，而是受到最小延迟的限制。一些重大更新可能需要更长的延迟。例如，如果仅几天的延迟足以让用户审计铸币操作，那么在安排智能合约升级时使用几周甚至几个月的延迟是有意义的。
 
-最小延迟（通过*getMinDelay*方法可访问）可以通过调用*updateDelay*函数进行更新。请注意，只有timelock本身才能访问此函数，这意味着此维护操作必须通过timelock本身进行。
+最小延迟（通过[getMinDelay](./API/Governance.md#getmindelay-→-uint256)方法可访问）可以通过调用[updateDelay](./API/Governance.md#updatedelayuint256-newdelay)函数进行更新。请注意，只有timelock本身才能访问此函数，这意味着此维护操作必须通过timelock本身进行。

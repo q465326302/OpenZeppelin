@@ -22,6 +22,7 @@ contract MyContract is Ownable {
     }
 }
 ```
+
 默认情况下，Ownable合约的[所有者](./API/Access.md#owner-→-address)是部署它的账户，这是您所需要的。
 
 Ownable还允许您：
