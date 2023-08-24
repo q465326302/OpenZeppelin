@@ -3,12 +3,12 @@
 
 首先，我们将介绍什么是“GSN策略”，然后展示如何使用两种最常见的策略。最后，我们将介绍如何创建自定义策略。
 
-如果您还在学习Gas Station Network的基础知识，您应该首先阅读*GSN指南*。
+如果您还在学习Gas Station Network的基础知识，您应该首先阅读[GSN指南](./gsn.md)。
 
 ## 解释GSN策略
 **GSN策略**决定哪些Relayer 调用被批准，哪些被拒绝。策略是GSN中的一个关键概念。Dapp需要一个策略来防止恶意用户使用Dapp的资金进行Relayer 调用费用。
 
-正如我们在*GSN指南*中所看到的，为了使您的合约支持GSN，您的合约需要从*GSNRecipient*继承。
+正如我们在[GSN指南](./gsn.md)中所看到的，为了使您的合约支持GSN，您的合约需要从[GSNRecipient](../API/GSN.md#gsnrecipient)继承。
 
 GSN接收合约需要以下内容才能正常工作：
 
@@ -18,16 +18,16 @@ GSN接收合约需要以下内容才能正常工作：
 
 3. 它需要决定如何批准和拒绝Relayer 调用。
 
-可以通过[GSN Dapp工具](https://gsn.openzeppelin.com/recipients)或使用*OpenZeppelin GSN Helpers*以编程方式为GSN接收合约存入资金。
+可以通过[GSN Dapp工具](https://gsn.openzeppelin.com/recipients)或使用[OpenZeppelin GSN Helpers](https://docs.openzeppelin.com/gsn-helpers/0.2/api#javascript_interface)以编程方式为GSN接收合约存入资金。
 
-实际用户的msg.sender和msg.data可以通过*GSNRecipient*的*_msgSender()*和*_msgData()*方法安全地获取。
+实际用户的msg.sender和msg.data可以通过[GSNRecipient](../API/GSN.md#gsnrecipient)的[_msgSender()](../API/GSN.md#_msgsender-→-address-payable)和[_msgData()](../API/GSN.md#_msgdata-→-bytes)方法安全地获取。
 
 决定如何批准和拒绝Relayer 调用要复杂一些。您可能希望选择哪些用户可以通过GSN使用您的合约，并可能向他们收费，就像夜总会的门卫一样。我们将这些称为GSN策略。
 
-基本的*GSNRecipient*合约不包含策略，因此您必须使用预先构建的策略之一或编写自己的策略。我们将首先介绍如何使用已包含的策略：*GSNRecipientSignature*和*GSNRecipientERC20Fee*。
+基本的[GSNRecipient](../API/GSN.md#gsnrecipient)合约不包含策略，因此您必须使用预先构建的策略之一或编写自己的策略。我们将首先介绍如何使用已包含的策略：[GSNRecipientSignature](../API/GSN.md#gsnrecipientsignature)和[GSNRecipientERC20Fee](../API/GSN.md#gsnrecipienterc20fee)。
 
 ## GSNRecipientSignature
-如果用户能够证明您信任的帐户已经批准他们这样做，*GSNRecipientSignature*允许用户通过GSN将调用Relayer 到您的接收合约（并向您收费）。他们这样做的方式是通过签名。
+如果用户能够证明您信任的帐户已经批准他们这样做，[GSNRecipientSignature](../API/GSN.md#gsnrecipientsignature)允许用户通过GSN将调用Relayer 到您的接收合约（并向您收费）。他们这样做的方式是通过签名。
 
 Relayer 调用必须包含由作为受信任签名者添加到合约的同一帐户对Relayer 调用参数的签名。如果不是同一个帐户，GSNRecipientSignature将不接受Relayer 调用。
 
@@ -59,11 +59,11 @@ contract MyContract is GSNRecipientSignature {
 我们编写了一份详细指南，介绍了如何设置与GSNRecipientSignature配合工作的签名服务器，[快来看看吧](https://forum.openzeppelin.com/t/advanced-gsn-gsnrecipientsignature-sol/1414)！
 
 ## GSNRecipientERC20Fee
-*GSNRecipientERC20Fee*略微复杂一些（但不用担心，我们已经为您编写好了！）。与GSNRecipientSignature不同，GSNRecipientERC20Fee不需要任何离链服务。您将向用户提供特殊用途的ERC20代币，而不是对每个Relayer 调用进行离链批准。这些代币用于支付用户Relayer 调用的费用，只要用户拥有足够的代币支付，他们的Relayer 调用就会自动获得批准，并且接收合约将重写他们的交易费用！
+[GSNRecipientERC20Fee](../API/GSN.md#gsnrecipienterc20fee)略微复杂一些（但不用担心，我们已经为您编写好了！）。与GSNRecipientSignature不同，GSNRecipientERC20Fee不需要任何离链服务。您将向用户提供特殊用途的ERC20代币，而不是对每个Relayer 调用进行离链批准。这些代币用于支付用户Relayer 调用的费用，只要用户拥有足够的代币支付，他们的Relayer 调用就会自动获得批准，并且接收合约将重写他们的交易费用！
 
 每个接收合约都有自己的特殊用途代币。代币与以太坊之间的兑换比率为1:1，因为这些代币用于支付您的合约在使用GSN时的燃气费用。
 
-GSNRecipientERC20Fee具有内部的*_mint*函数。首先，您需要设置一种调用它的方式（例如，添加一个具有某种形式的*访问控制*的公共函数，例如*onlyMinter*）。然后，根据您的业务逻辑向用户发行代币。例如，您可以向新用户铸造一定数量的代币，当用户在离链上购买代币时铸造代币，根据用户的订阅情况赠送代币等。
+GSNRecipientERC20Fee具有内部的[_mint](../API/GSN.md#_mintaddress-account-uint256-amount)函数。首先，您需要设置一种调用它的方式（例如，添加一个具有某种形式的[访问控制](../Access-Control.md)的公共函数，例如[onlyMinter](../API/Access.md)）。然后，根据您的业务逻辑向用户发行代币。例如，您可以向新用户铸造一定数量的代币，当用户在离链上购买代币时铸造代币，根据用户的订阅情况赠送代币等。
 
 > NOTE
 **用户不需要调用approve**来使用他们的代币。它们是修改过的ERC20变体，允许接收合约检索它们。
@@ -84,7 +84,7 @@ acceptRelayedCall函数的实现检查用户的代币余额。如果用户没有
 始终使用_preRelayedCall和_postRelayedCall函数。内部使用_preRelayedCall和_postRelayedCall函数，而不是公共的preRelayedCall和postRelayedCall函数，因为非RelayHub合约无法调用公共函数。
 
 ### 如何使用GSNRecipientERC20Fee
-您的GSN接收合约需要继承GSNRecipientERC20Fee，并具有适当的*访问控制*（用于代币铸造），在GSNRecipientERC20Fee的构造函数中设置代币详细信息，并根据以下示例代码（使用*AccessControl*）创建一个适当受保护的公共铸币函数。
+您的GSN接收合约需要继承GSNRecipientERC20Fee，并具有适当的[访问控制](../Access-Control.md)（用于代币铸造），在GSNRecipientERC20Fee的构造函数中设置代币详细信息，并根据以下示例代码（使用[AccessControl](../API/Access.md)）创建一个适当受保护的公共铸币函数。
 ```
 // contracts/MyContract.sol
 // SPDX-License-Identifier: MIT
