@@ -303,9 +303,10 @@ Approval(owner, spender, value)
 
 * 支出者不能是零地址。
 
-#### _setupDecimals(uint8 decimals_)
+#### _setupdecimals(uint8 decimals)
+
 内部#
-将*小数点*设置为除默认值18以外的其他值。
+将小数点设置为除默认值18以外的其他值。
 
 > WARNING
 此函数只应在构造函数中调用。与代币合约交互的大多数应用程序不会期望*小数点*发生变化，并且如果发生变化可能会工作不正确。
