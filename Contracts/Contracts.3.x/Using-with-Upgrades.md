@@ -3,7 +3,7 @@
 
 该变体作为一个名为@openzeppelin/contracts-upgradeable的单独包可用，该包托管在[OpenZeppelin/openzeppelin-contracts-upgradeable存储库](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable)中。
 
-它遵循*编写可升级合约*的所有规则：构造函数被替换为初始化函数，状态变量在初始化函数中进行初始化，并且我们还会在不同次要版本之间检查存储不兼容性。
+它遵循[可升级合约的所有规则](../../Upgrades-Plugins/Writing-Upgradeable-Contracts.md)的所有规则：构造函数被替换为初始化函数，状态变量在初始化函数中进行初始化，并且我们还会在不同次要版本之间检查存储不兼容性。
 
 ## 概述
 ### 安装
@@ -30,9 +30,9 @@ npm install @openzeppelin/contracts-upgradeable
 ```
 
 > CAUTION
-使用多重继承需要特别注意。请参阅下面标题为"*多重继承*"的部分。
+使用多重继承需要特别注意。请参阅下面标题为[“多重继承”](#多重继承)的部分。
 
-一旦设置并编译了这个合约，你可以使用*Upgrades插件*部署它。以下代码片段展示了使用Hardhat的示例部署脚本。
+一旦设置并编译了这个合约，你可以使用[Upgrades插件](../../Upgrades-Plugins/Overview.md)部署它。以下代码片段展示了使用Hardhat的示例部署脚本。
 
 ```
 // scripts/deploy-my-collectible.js
@@ -62,4 +62,4 @@ main();
 
 您可能会注意到每个合约都包含一个名为__gap的状态变量。这是在可升级合约中放置的空的保留存储空间。它允许我们在将来自由地添加新的状态变量，而不会影响与现有部署的存储兼容性。
 
-简单地添加一个状态变量是不安全的，因为它会将下面继承链中的所有状态变量"向下移动"。这会使存储布局不兼容，如在*编写可升级合约*中所解释的那样。__gap数组的大小是根据合约使用的存储量总和计算的（在这种情况下为50个存储槽）。
+简单地添加一个状态变量是不安全的，因为它会将下面继承链中的所有状态变量"向下移动"。这会使存储布局不兼容，如在[编写可升级合约](../../Upgrades-Plugins/Writing-Upgradeable-Contracts.md#修改合约)中所解释的那样。__gap数组的大小是根据合约使用的存储量总和计算的（在这种情况下为50个存储槽）。
