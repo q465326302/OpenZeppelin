@@ -1,34 +1,34 @@
 # Access
 这个目录提供了限制谁可以访问合约功能以及何时可以访问的方法。
 
-* *AccessControl*提供了一种基于角色的访问控制机制。可以创建多个层级角色，并将每个角色分配给多个账户。
+* [AccessControl](../Access-Control.md)提供了一种基于角色的访问控制机制。可以创建多个层级角色，并将每个角色分配给多个账户。
 
-* *Ownable*是一种更简单的机制，只有一个所有者“角色”，可以分配给单个账户。这种更简单的机制对于快速测试可能很有用，但对于有生产问题的项目可能会不够用。
+* [Ownable](#ownable)是一种更简单的机制，只有一个所有者“角色”，可以分配给单个账户。这种更简单的机制对于快速测试可能很有用，但对于有生产问题的项目可能会不够用。
 
-* *TimelockController*与上述两种机制结合使用。通过将角色分配给TimelockController合约的实例，受该角色控制的功能的访问将被延迟一段时间。
+* [TimelockController](#timelockcontroller)与上述两种机制结合使用。通过将角色分配给TimelockController合约的实例，受该角色控制的功能的访问将被延迟一段时间。
 
 ## 授权
 ### Ownable
 这是一个合约模块，提供了基本的访问控制机制，其中有一个账户（所有者）可以被授予对特定功能的独占访问权限。
 
-默认情况下，所有者账户将是部署合约的账户。可以使用*transferOwnership*函数将其更改。
+默认情况下，所有者账户将是部署合约的账户。可以使用[transferOwnership](#transferownershipaddress-newowner)函数将其更改。
 
 通过继承使用此模块。它将提供修饰符onlyOwner，可以应用于您的函数，以限制它们只能被所有者使用。
 
 **MODIFIERS**
-onlyOwner()
+[onlyOwner()](#onlyowner)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor)
 
-owner()
+[owner()](#owner-→-address)
 
-renounceOwnership()
+[renounceOwnership()](#renounceownership)
 
-transferOwnership(newOwner)
+[transferOwnership(newOwner)](#transferownershipaddress-newowner)
 
 **EVENTS**
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### onlyOwner()
 修饰符#
@@ -64,7 +64,7 @@ OwnershipTransferred(previousOwner, newOwner)
 bytes32 public constant MY_ROLE = keccak256("MY_ROLE");
 ```
 
-角色可以用来表示一组权限。要限制对函数调用的访问，请使用*hasRole*。
+角色可以用来表示一组权限。要限制对函数调用的访问，请使用[hasRole](#hasrolebytes32-role-address-account-→-bool)。
 
 ```
 function foo() public {
@@ -72,38 +72,39 @@ function foo() public {
     ...
 }
 ```
-角色可以通过*grantRole*和*revokeRole*函数动态地授予和撤销。每个角色都有一个关联的管理角色，只有具有角色的管理角色的帐户才能调用*grantRole*和*revokeRole*。
 
-默认情况下，所有角色的管理角色是DEFAULT_ADMIN_ROLE，这意味着只有具有这个角色的帐户才能授予或撤销其他角色。可以通过使用*_setRoleAdmin*来创建更复杂的角色关系。
+角色可以通过[grantRole](#grantrolebytes32-role-address-account)和[revokeRole](#revokerolebytes32-role-address-account)函数动态地授予和撤销。每个角色都有一个关联的管理角色，只有具有角色的管理角色的帐户才能调用[grantRole](#grantrolebytes32-role-address-account)和[revokeRole](#revokerolebytes32-role-address-account)。
+
+默认情况下，所有角色的管理角色是DEFAULT_ADMIN_ROLE，这意味着只有具有这个角色的帐户才能授予或撤销其他角色。可以通过使用[_setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)来创建更复杂的角色关系。
 
 > WARNING
 DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此角色。应采取额外的预防措施来保护被授予此角色的帐户。
 
 **FUNCTIONS**
-hasRole(role, account)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
 
-getRoleMemberCount(role)
+[getRoleMemberCount(role)](#getrolemembercountbytes32-role-→-uint256)
 
-getRoleMember(role, index)
+[getRoleMember(role, index)](#getrolememberbytes32-role-uint256-index-→-address)
 
-getRoleAdmin(role)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
 
-grantRole(role, account)
+[grantRole(role, account)](#grantrolebytes32-role-address-account)
 
-revokeRole(role, account)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account)
 
-renounceRole(role, account)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
 
-_setupRole(role, account)
+[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
 
-_setRoleAdmin(role, adminRole)
+[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
 
 **EVENTS**
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)
 
-RoleGranted(role, account, sender)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-role-address-account-address-sender)
 
-RoleRevoked(role, account, sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-role-address-account-address-sender)
 
 #### hasRole(bytes32 role, address account) → bool
 公开#
@@ -111,28 +112,28 @@ RoleRevoked(role, account, sender)
 
 #### getRoleMemberCount(bytes32 role) → uint256
 公开#
-返回具有角色的账户数量。可以与*getRoleMember*一起使用，以枚举角色的所有承担者。
+返回具有角色的账户数量。可以与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，以枚举角色的所有承担者。
 
 #### getRoleMember(bytes32 role, uint256 index) → address
 公开#
-返回具有角色的帐户之一。索引必须是0和*getRoleMemberCount*之间的值，不包括这两个值。
+返回具有角色的帐户之一。索引必须是0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
 
 角色持有人不以任何特定方式排序，其排序可能在任何时刻发生变化。
 
 > WARNING
-在使用*getRoleMember*和*getRoleMemberCount*时，请确保在同一个区块上执行所有查询。有关更多信息，请参阅以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
+在使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一个区块上执行所有查询。有关更多信息，请参阅以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleAdmin(bytes32 role) → bytes32
 公开#
-返回控制角色的管理员角色。请参见*grantRole*和*revokeRole*。
+返回控制角色的管理员角色。请参见[grantRole](#grantrolebytes32-role-address-account)和[revokeRole](#revokerolebytes32-role-address-account)。
 
-要更改角色的管理员，请使用*_setRoleAdmin*。
+要更改角色的管理员，请使用[_setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)。
 
 #### grantRole(bytes32 role, address account)
 公开#
 授予账户角色。
 
-如果账户尚未被授予角色，则发出*RoleGranted*事件。
+如果账户尚未被授予角色，则发出[RoleGranted](#rolegrantedbytes32-role-address-account-address-sender)事件。
 
 要求：
 * 调用者必须具有该角色的管理员角色。
@@ -141,7 +142,7 @@ RoleRevoked(role, account, sender)
 公开#
 撤销账户的角色。
 
-如果账户已被授予角色，则发出一个*RoleRevoked*事件。
+如果账户已被授予角色，则发出一个[RoleRevoked](#rolerevokedbytes32-role-address-account-address-sender)事件。
 
 要求：
 * 调用者必须具有角色的管理员角色。
@@ -150,9 +151,9 @@ RoleRevoked(role, account, sender)
 公开#
 从调用账户中撤销角色。
 
-角色通常通过*grantRole*和*revokeRole*进行管理：该函数的目的是为账户提供一种机制，以防它们被损害而丧失特权（例如当一个受信任的设备丢失时）。
+角色通常通过[grantRole](#grantrolebytes32-role-address-account)和[revokeRole](#revokerolebytes32-role-address-account)进行管理：该函数的目的是为账户提供一种机制，以防它们被损害而丧失特权（例如当一个受信任的设备丢失时）。
 
-如果调用账户已被授予角色，则发出*RoleRevoked*事件。
+如果调用账户已被授予角色，则发出[RoleRevoked](#rolerevokedbytes32-role-address-account-address-sender)事件。
 
 要求：
 * 调用者必须是账户。
@@ -161,24 +162,24 @@ RoleRevoked(role, account, sender)
 内部#
 将角色授予账户。
 
-如果账户尚未被授予角色，则触发“*RoleGranted*”事件。请注意，与*grantRole*不同，此函数不会对调用账户进行任何检查。
+如果账户尚未被授予角色，则触发[RoleGranted](#rolegrantedbytes32-role-address-account-address-sender)事件。请注意，与[grantRole](#grantrolebytes32-role-address-account)不同，此函数不会对调用账户进行任何检查。
 
 > WARNING
 此函数只应在构造函数中设置系统的初始角色时调用。
 
-以其他方式使用此函数实际上是规避*AccessControl*强加的管理员系统。
+以其他方式使用此函数实际上是规避[AccessControl](#accesscontrol)强加的管理员系统。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
 内部#
 将adminRole设置为role的管理员角色。
 
-发出*RoleAdminChanged*事件。
+发出[RoleAdminChanged](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)事件。
 
 #### RoleAdminChanged(bytes32 role, bytes32 previousAdminRole, bytes32 newAdminRole) 
 事件#
 当将newAdminRole设置为角色的管理员角色时，取代previousAdminRole时，会发出此事件。
 
-尽管没有发出*RoleAdminChanged*信号，DEFAULT_ADMIN_ROLE仍然是所有角色的起始管理员。
+尽管没有发出[RoleAdminChanged](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)信号，DEFAULT_ADMIN_ROLE仍然是所有角色的起始管理员。
 
 *从v3.1版本开始可用。*
 
@@ -186,7 +187,7 @@ RoleRevoked(role, account, sender)
 事件#
 当账户被授予角色时发出。
 
-发送者是发起合约调用的账户，是管理员角色的持有者，除非使用 *_setupRole*。
+发送者是发起合约调用的账户，是管理员角色的持有者，除非使用 [_setupRole](#_setuprolebytes32-role-address-account)。
 
 #### RoleRevoked(bytes32 role, address account, address sender)
 事件#
@@ -200,80 +201,80 @@ RoleRevoked(role, account, sender)
 
 合约模块作为一个时间锁定控制器。当它被设置为一个可拥有的智能合约的所有者时，它会对所有只有所有者的维护操作进行时间锁定。这样，在应用可能危险的维护操作之前，使用受控合约的用户有时间退出。
 
-默认情况下，这个合约是自我管理的，意味着管理任务必须通过时间锁定的过程进行。提案者（执行者）角色负责提出（执行）操作。一个常见的用例是将这个*TimelockController*作为一个智能合约的所有者，将多签或DAO作为唯一的提案者。
+默认情况下，这个合约是自我管理的，意味着管理任务必须通过时间锁定的过程进行。提案者（执行者）角色负责提出（执行）操作。一个常见的用例是将这个[TimelockController](#timelockcontroller)作为一个智能合约的所有者，将多签或DAO作为唯一的提案者。
 
 *自v3.3起可用。*
 
 **MODIFIERS**
-onlyRole(role)
+[onlyRole(role)](#onlyrolebytes32-role)
 
 **FUNCTIONS**
-constructor(minDelay, proposers, executors)
+[constructor(minDelay, proposers, executors)](#constructoruint256-mindelay-address-proposers-address-executors)
 
-receive()
+[receive()](#receive)
 
-isOperation(id)
+[isOperation(id)](#isoperationbytes32-id-→-bool-pending)
 
-isOperationPending(id)
+[isOperationPending(id)](#isoperationpendingbytes32-id-→-bool-pending)
 
-isOperationReady(id)
+[isOperationReady(id)](#isoperationreadybytes32-id-→-bool-ready)
 
-isOperationDone(id)
+[isOperationDone(id)](#isoperationdonebytes32-id-→-bool-done)
 
-getTimestamp(id)
+[getTimestamp(id)](#gettimestampbytes32-id-→-uint256-timestamp)
 
-getMinDelay()
+[getMinDelay()](#getmindelay-→-uint256-duration)
 
-hashOperation(target, value, data, predecessor, salt)
+[hashOperation(target, value, data, predecessor, salt)](#hashoperationaddress-target-uint256-value-bytes-data-bytes32-predecessor-bytes32-salt-→-bytes32-hash)
 
-hashOperationBatch(targets, values, datas, predecessor, salt)
+[hashOperationBatch(targets, values, datas, predecessor, salt)](#hashoperationbatchaddress-targets-uint256-values-bytes-datas-bytes32-predecessor-bytes32-salt-→-bytes32-hash)
 
-schedule(target, value, data, predecessor, salt, delay)
+[schedule(target, value, data, predecessor, salt, delay)](#scheduleaddress-target-uint256-value-bytes-data-bytes32-predecessor-bytes32-salt-uint256-delay)
 
-scheduleBatch(targets, values, datas, predecessor, salt, delay)
+[scheduleBatch(targets, values, datas, predecessor, salt, delay)](#schedulebatchaddress-targets-uint256-values-bytes-datas-bytes32-predecessor-bytes32-salt-uint256-delay)
 
-cancel(id)
+[cancel(id)](#cancelbytes32-id)
 
-execute(target, value, data, predecessor, salt)
+[execute(target, value, data, predecessor, salt)](#executeaddress-target-uint256-value-bytes-data-bytes32-predecessor-bytes32-salt)
 
-executeBatch(targets, values, datas, predecessor, salt)
+[executeBatch(targets, values, datas, predecessor, salt)](#executebatchaddress-targets-uint256-values-bytes-datas-bytes32-predecessor-bytes32-salt)
 
-updateDelay(newDelay)
+[updateDelay(newDelay)](#updatedelayuint256-newdelay)
 
 ACCESSCONTROL
-hasRole(role, account)
+[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
 
-getRoleMemberCount(role)
+[getRoleMemberCount(role)](#getrolemembercountbytes32-role-→-uint256)
 
-getRoleMember(role, index)
+[getRoleMember(role, index)](#getrolememberbytes32-role-uint256-index-→-address)
 
-getRoleAdmin(role)
+[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
 
-grantRole(role, account)
+[grantRole(role, account)](#grantrolebytes32-role-address-account)
 
-revokeRole(role, account)
+[revokeRole(role, account)](#revokerolebytes32-role-address-account)
 
-renounceRole(role, account)
+[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
 
-_setupRole(role, account)
+[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
 
-_setRoleAdmin(role, adminRole)
+[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
 
 **EVENTS**
-CallScheduled(id, index, target, value, data, predecessor, delay)
+[CallScheduled(id, index, target, value, data, predecessor, delay)](#callscheduledbytes32-id-uint256-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)
 
-CallExecuted(id, index, target, value, data)
+[CallExecuted(id, index, target, value, data)](#callexecutedbytes32-id-uint256-index-address-target-uint256-value-bytes-data-被执行的调用id索引目标地址数值数据)
 
-Cancelled(id)
+[Cancelled(id)](#cancelbytes32-id)
 
-MinDelayChange(oldDuration, newDuration)
+[MinDelayChange(oldDuration, newDuration)](#mindelaychangeuint256-oldduration-uint256-newduration)
 
 ACCESSCONTROL
-RoleAdminChanged(role, previousAdminRole, newAdminRole)
+[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)
 
-RoleGranted(role, account, sender)
+[RoleGranted(role, account, sender)](#rolegrantedbytes32-role-address-account-address-sender)
 
-RoleRevoked(role, account, sender)
+[RoleRevoked(role, account, sender)](#rolerevokedbytes32-role-address-account-address-sender)
 
 #### onlyRole(bytes32 role)
 修饰符#
@@ -325,7 +326,7 @@ RoleRevoked(role, account, sender)
 公开#
 安排一个包含单个交易的操作。
 
-发出一个*CallScheduled*事件。
+发出一个[CallScheduled](#callscheduledbytes32-id-uint256-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)事件。
 
 要求：
 * 调用者必须具有“提议者”角色。
@@ -334,7 +335,7 @@ RoleRevoked(role, account, sender)
 公开#
 安排一个包含一批交易的操作。
 
-每个交易在批处理中发出一个*CallScheduled*事件。
+每个交易在批处理中发出一个[CallScheduled](#callscheduledbytes32-id-uint256-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)事件。
 
 要求：
 * 调用者必须具有'proposer'角色。
@@ -350,7 +351,7 @@ RoleRevoked(role, account, sender)
 公开#
 执行一个包含单个事务的（准备好的）操作。
 
-发出一个*CallExecuted*事件。
+发出一个[CallExecuted](#callexecutedbytes32-id-uint256-index-address-target-uint256-value-bytes-data)事件。
 
 要求：
 * 调用者必须具有“执行者”角色。
@@ -359,7 +360,7 @@ RoleRevoked(role, account, sender)
 公开#
 执行一个包含一批交易的准备操作。
 
-每个批次中的交易都会发出一个*CallExecuted*事件。
+每个批次中的交易都会发出一个[CallExecuted](#callexecutedbytes32-id-uint256-index-address-target-uint256-value-bytes-data)事件。
 
 要求：
 * 调用者必须具有'executor'角色。
@@ -368,7 +369,7 @@ RoleRevoked(role, account, sender)
 外部#
 更改未来操作的最小时间锁持续时间。
 
-触发*MinDelayChange*事件。
+触发[MinDelayChange](#mindelaychangeuint256-oldduration-uint256-newduration)事件。
 
 要求：
 * 调用者必须是时间锁本身。只有通过调度并稍后执行将时间锁作为目标，数据为ABI编码调用此函数的操作才能实现。
@@ -377,7 +378,7 @@ RoleRevoked(role, account, sender)
 事件#
 当一个调用被计划为操作ID的一部分时触发。
 
-#### CallExecuted(bytes32 id, uint256 index, address target, uint256 value, bytes data) 被执行的调用（id，索引，目标地址，数值，数据）
+#### CallExecuted(bytes32 id, uint256 index, address target, uint256 value, bytes data)
 事件#
 当作为操作id的一部分执行呼叫时发出的信号。
 
@@ -390,7 +391,7 @@ RoleRevoked(role, account, sender)
 当将来操作的最小延迟被修改时发出。
 
 ### Terminology
-* 操作：一笔交易（或一组交易），是时间锁的主题。它必须由提议者安排并由执行者执行。时间锁强制在提议和执行之间存在最小延迟（参见*操作生命周期*）。如果操作包含多个交易（批处理模式），它们将以原子方式执行。操作通过其内容的哈希来标识。
+* 操作：一笔交易（或一组交易），是时间锁的主题。它必须由提议者安排并由执行者执行。时间锁强制在提议和执行之间存在最小延迟（参见 [operation lifecycle]）。如果操作包含多个交易（批处理模式），它们将以原子方式执行。操作通过其内容的哈希来标识。
 
 * **操作状态：**
 
@@ -411,7 +412,7 @@ RoleRevoked(role, account, sender)
 * **执行者：**负责执行操作的地址（智能合约或EOA）。
 
 ### 操作结构
-由*TimelockControler*执行的操作可以包含一个或多个后续调用。根据您是否需要多个调用以原子方式执行，您可以使用简单或批处理操作。
+由[TimelockControler](#timelockcontroller)执行的操作可以包含一个或多个后续调用。根据您是否需要多个调用以原子方式执行，您可以使用简单或批处理操作。
 
 两种操作都包含：
 
@@ -436,21 +437,21 @@ const data = timelock.contract.methods.grantRole(ROLE, ACCOUNT).encodeABI()
 
 未设置 → 待定 → 待定 + 准备就绪 → 完成
 
-* 通过调用*schedule*（或*scheduleBatch*），提议者将操作从未设置状态移至待定状态。这将启动一个定时器，其持续时间必须超过最小延迟。定时器在通过*getTimestamp*方法可访问的时间戳到期。
+* 通过调用[schedule](#scheduleaddress-target-uint256-value-bytes-data-bytes32-predecessor-bytes32-salt-uint256-delay)（或[scheduleBatch](#schedulebatchaddress-targets-uint256-values-bytes-datas-bytes32-predecessor-bytes32-salt-uint256-delay)），提议者将操作从未设置状态移至待定状态。这将启动一个定时器，其持续时间必须超过最小延迟。定时器在通过*getTimestamp*方法可访问的时间戳到期。
 
 * 一旦定时器到期，操作自动进入准备就绪状态。此时，可以执行操作。
 
-* 通过调用*execute*（或*executeBatch*），执行者触发操作的底层交易并将其移至完成状态。如果操作有前任，则必须处于完成状态才能进行此过渡。
+* 通过调用[execute](#executeaddress-target-uint256-value-bytes-data-bytes32-predecessor-bytes32-salt)（或[executeBatch](#executebatchaddress-targets-uint256-values-bytes-datas-bytes32-predecessor-bytes32-salt)），执行者触发操作的底层交易并将其移至完成状态。如果操作有前任，则必须处于完成状态才能进行此过渡。
 
-*cancel*允许提议者取消任何待定操作。这将重置操作为未设置状态。因此，提议者可以重新安排已取消的操作。在这种情况下，操作重新安排时定时器重新启动。
+[cancel](#cancelbytes32-id)允许提议者取消任何待定操作。这将重置操作为未设置状态。因此，提议者可以重新安排已取消的操作。在这种情况下，操作重新安排时定时器重新启动。
 
 可以使用以下函数查询操作状态：
 
-* *isOperationPending（bytes32）*
+* [isOperationPending（bytes32](#isoperationpendingbytes32-id-→-bool-pending)
 
-* *isOperationReady（bytes32）*
+* [isOperationReady（bytes32](#isoperationreadybytes32-id-→-bool-ready)
 
-* *isOperationDone（bytes32）*
+* [isOperationDone（bytes32](#isoperationdonebytes32-id-→-bool-done)
 
 ## 角色
 ### 管理员
@@ -472,4 +473,4 @@ const data = timelock.contract.methods.grantRole(ROLE, ACCOUNT).encodeABI()
 此角色由**EXECUTOR_ROLE**值标识：0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63
 
 > WARNING
-没有至少一个提议者和一个执行者的活动合约是被锁定的。在部署者放弃其管理权利，转交给时间锁合约本身之前，请确保这些角色由可靠的实体填充。有关角色管理的更多信息，请参阅*AccessControl*文档。
+没有至少一个提议者和一个执行者的活动合约是被锁定的。在部署者放弃其管理权利，转交给时间锁合约本身之前，请确保这些角色由可靠的实体填充。有关角色管理的更多信息，请参阅[AccessControl](#accesscontrol)文档。
