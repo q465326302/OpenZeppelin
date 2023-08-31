@@ -3,24 +3,24 @@
 
 安全工具包括：
 
-* *Pausable*：提供了一种简单的方式来暂停合约中的活动（通常是为了应对外部威胁）。
+* [Pausable](#pausable)：提供了一种简单的方式来暂停合约中的活动（通常是为了应对外部威胁）。
 
-* *ReentrancyGuard*：保护您免受[重入调用](https://blog.openzeppelin.com/reentrancy-after-istanbul/)的影响。
+* [ReentrancyGuard](#reentrancyguard)：保护您免受[重入调用](https://blog.openzeppelin.com/reentrancy-after-istanbul/)的影响。
 
-*Address*、*Arrays*和*Strings*库提供了与这些原生数据类型相关的更多操作，而*SafeCast*则提供了安全地在不同的有符号和无符号数值类型之间进行转换的方法。
+[Address](#address)、[Arrays](#arrays)和[Strings](#strings)库提供了与这些原生数据类型相关的更多操作，而[SafeCast](#safecast)则提供了安全地在不同的有符号和无符号数值类型之间进行转换的方法。
 
 对于新的数据类型：
-* *Counters*：提供了一个只能递增或递减的计数器。非常适用于ID生成、计算合约活动等。
+* [Counters](#counters)：提供了一个只能递增或递减的计数器。非常适用于ID生成、计算合约活动等。
 
-* *EnumerableMap*：类似于Solidity的[映射类型](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)，但具有键值枚举功能：这将让您知道映射中有多少条目，并对它们进行迭代（这在映射中是不可能的）。
+* [EnumerableMap](#enumerablemap)：类似于Solidity的[映射类型](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)，但具有键值枚举功能：这将让您知道映射中有多少条目，并对它们进行迭代（这在映射中是不可能的）。
 
-* *EnumerableSet*：类似于*EnumerableMap*，但用于[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))。可以用来存储特权账户、发行的ID等。
+* [EnumerableSet](#enumerableset)：类似于[EnumerableMap](#enumerablemap)，但用于[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))。可以用来存储特权账户、发行的ID等。
 
 > NOTE
-由于Solidity不支持泛型类型，*EnumerableMap*和*EnumerableSet*被专门设计为适用于有限数量的键值类型。
-从v3.0开始，*EnumerableMap*支持uint256 → address（UintToAddressMap），而*EnumerableSet*支持address和uint256（AddressSet和UintSet）。
+由于Solidity不支持泛型类型，[EnumerableMap](#enumerablemap)和[EnumerableSet](#enumerableset)被专门设计为适用于有限数量的键值类型。
+从v3.0开始，[EnumerableMap](#enumerablemap)支持uint256 → address（UintToAddressMap），而[EnumerableSet](#enumerableset)支持address和uint256（AddressSet和UintSet）。
 
-最后，*Create2*包含了使用[CREATE2 EVM操作码](https://blog.openzeppelin.com/getting-the-most-out-of-create2/)所需的所有实用工具，而无需处理底层汇编。
+最后，[Create2](#create2)包含了使用[CREATE2 EVM操作码](https://blog.openzeppelin.com/getting-the-most-out-of-create2/)所需的所有实用工具，而无需处理底层汇编。
 
 ## Contracts
 
@@ -30,23 +30,23 @@
 通过继承使用此模块。它将提供whenNotPaused和whenPaused修饰符，可以应用于您合约的函数。请注意，仅通过包含此模块，不会使函数可暂停，只有在放置修饰符之后才能暂停。
 
 **MODIFIERS**
-whenNotPaused()
+[whenNotPaused()](#whennotpaused)
 
-whenPaused()
+[whenPaused()](#whenpaused)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor)
 
-paused()
+[paused()](#paused-→-bool)
 
-_pause()
+[_pause()](#_pause)
 
-_unpause()
+[_unpause()](#_unpause)
 
 **EVENTS**
-Paused(account)
+[Paused(account)](#paused-→-bool)
 
-Unpaused(account)
+[Unpaused(account)](#unpausedaddress-account)
 
 #### whenNotPaused()
 修饰符#
@@ -95,7 +95,7 @@ Unpaused(account)
 ### ReentrancyGuard
 防止对函数进行重入调用的合约模块。
 
-继承自ReentrancyGuard将使*nonReentrant*修饰符可用，可以应用于函数以确保没有嵌套（重入）调用它们。
+继承自ReentrancyGuard将使[nonReentrant](#nonreentrant)修饰符可用，可以应用于函数以确保没有嵌套（重入）调用它们。
 
 请注意，由于只有一个nonReentrant保护程序，标记为nonReentrant的函数可能不能互相调用。可以通过将这些函数设置为私有函数，然后为它们添加外部的nonReentrant入口来解决这个问题。
 
@@ -103,10 +103,10 @@ Unpaused(account)
 如果您想了解更多关于重入性及其替代保护方法的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
 
 **MODIFIERS**
-nonReentrant()
+[nonReentrant()](#nonreentrant)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor-1)
 
 #### nonReentrant()
 修饰符#
@@ -121,25 +121,25 @@ constructor()
 与地址类型相关的函数集合
 
 **FUNCTIONS**
-isContract(account)
+[isContract(account)](#iscontractaddress-account-→-bool)
 
-sendValue(recipient, amount)
+[sendValue(recipient, amount)](#sendvalueaddress-payable-recipient-uint256-amount)
 
-functionCall(target, data)
+[functionCall(target, data)](#functioncalladdress-target-bytes-data-→-bytes)
 
-functionCall(target, data, errorMessage)
+[functionCall(target, data, errorMessage)](#functioncalladdress-target-bytes-data-string-errormessage-→-bytes)
 
-functionCallWithValue(target, data, value)
+[functionCallWithValue(target, data, value)](#functioncallwithvalueaddress-target-bytes-data-uint256-value-→-bytes)
 
-functionCallWithValue(target, data, value, errorMessage)
+[functionCallWithValue(target, data, value, errorMessage)](#functioncallwithvalueaddress-target-bytes-data-uint256-value-string-errormessage-→-bytes)
 
-functionStaticCall(target, data)
+[functionStaticCall(target, data)](#functionstaticcalladdress-target-bytes-data-→-bytes)(#functionstaticcalladdress-target-bytes-data-string-errormessage-→-bytes)
 
-functionStaticCall(target, data, errorMessage)
+[functionStaticCall(target, data, errorMessage)](#functionstaticcalladdress-target-bytes-data-string-errormessage-→-bytes)
 
-functionDelegateCall(target, data)
+[functionDelegateCall(target, data)](#functiondelegatecalladdress-target-bytes-data-→-bytes)
 
-functionDelegateCall(target, data, errorMessage)
+[functionDelegateCall(target, data, errorMessage)](#functiondelegatecalladdress-target-bytes-data-string-errormessage-→-bytes)
 
 #### isContract(address account) → bool
 内部#
@@ -157,12 +157,12 @@ functionDelegateCall(target, data, errorMessage)
 内部#
 Solidity中transfer的替代方法：将amount wei发送给recipient，转发所有可用的gas，并在出错时回滚。
 
-[EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能会使合约超过transfer所施加的2300 gas限制，导致无法通过transfer接收资金。*sendValue*消除了这个限制。
+[EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能会使合约超过transfer所施加的2300 gas限制，导致无法通过transfer接收资金。[sendValue](#sendvalueaddress-payable-recipient-uint256-amount)消除了这个限制。
 
 [了解更多](https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/)。
 
 > IMPORTANT
-由于控制权转移到了recipient，必须注意不要创建重入漏洞。可以考虑使用*ReentrancyGuard*或[checks-effects-interactions模式](https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern)。
+由于控制权转移到了recipient，必须注意不要创建重入漏洞。可以考虑使用[ReentrancyGuard](#reentrancyguard)或[checks-effects-interactions模式](https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern)。
 
 #### functionCall(address target, bytes data) → bytes
 内部#
@@ -182,13 +182,13 @@ Solidity中transfer的替代方法：将amount wei发送给recipient，转发所
 
 #### functionCall(address target, bytes data, string errorMessage) → bytes
 内部#
-与*functionCall*相同，但在目标函数回退时使用errorMessage作为回退原因的回退。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但在目标函数回退时使用errorMessage作为回退原因的回退。
 
 *自v3.1起可用。*
 
 #### functionCallWithValue(address target, bytes data, uint256 value) → bytes
 内部#
-与functionCall相同，但还将wei值转移到目标。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但还将wei值转移到目标。
 
 要求：
 * 调用合约的ETH余额必须至少为value。
@@ -198,31 +198,31 @@ Solidity中transfer的替代方法：将amount wei发送给recipient，转发所
 
 #### functionCallWithValue(address target, bytes data, uint256 value, string errorMessage) → bytes
 内部#
-与*functionCallWithValue*相同，但在目标函数回退时使用errorMessage作为回退原因的回退。
+与[functionCallWithValue](#functioncallwithvalueaddress-target-bytes-data-uint256-value-→-bytes)相同，但在目标函数回退时使用errorMessage作为回退原因的回退。
 
 *从v3.1开始可用。*
 
 #### functionStaticCall(address target, bytes data) → bytes
 内部#
-与*functionCall*相同，但执行静态调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行静态调用。
 
 *自v3.3起可用。*
 
 #### functionStaticCall(address target, bytes data, string errorMessage) → bytes
 内部#
-与*functionCall*相同，但执行静态调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行静态调用。
 
 *自v3.3起可用。*
 
 #### functionDelegateCall(address target, bytes data) → bytes
 内部#
-与*functionCall*相同，但执行委托调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行委托调用。
 
 *自v3.4版本起可用。*
 
 #### functionDelegateCall(address target, bytes data, string errorMessage) → bytes
 内部#
-与*functionCall*相同，但执行委托调用。
+与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行委托调用。
 
 *自v3.4起可用。*
 
@@ -230,7 +230,7 @@ Solidity中transfer的替代方法：将amount wei发送给recipient，转发所
 与数组类型相关的函数集合。
 
 **FUNCTIONS**
-findUpperBound(array, element)
+[findUpperBound(array, element)](#findupperbounduint256-array-uint256-element-→-uint256)
 
 #### findUpperBound(uint256[] array, uint256 element) → uint256
 内部#
@@ -241,14 +241,14 @@ findUpperBound(array, element)
 ### Counters
 提供了一种只能递增或递减一个单位的计数器。这可以用于跟踪映射中的元素数量、发放ERC721 ID或计算请求ID。
 
-在使用Counters for Counters.Counter;时，可以省略*SafeMath*溢出检查，因为递增一个单位不可能导致256位整数溢出，从而节省了燃气。然而，这需要正确的使用方式，即不能直接访问底层的_value。
+在使用Counters for Counters.Counter;时，可以省略[SafeMath](./Math.md#safemath)溢出检查，因为递增一个单位不可能导致256位整数溢出，从而节省了燃气。然而，这需要正确的使用方式，即不能直接访问底层的_value。
 
 **FUNCTIONS**
-current(counter)
+[current(counter)](#currentstruct-counterscounter-counter-→-uint256)
 
-increment(counter)
+[increment(counter)](#incrementstruct-counterscounter-counter)
 
-decrement(counter)
+[decrement(counter)](#decrementstruct-counterscounter-counter)
 
 #### current(struct Counters.Counter counter) → uint256
 内部#
@@ -265,15 +265,15 @@ CREATE2 EVM操作码的帮助程序，使使用更加简便和安全。CREATE2�
 有关更多信息，请参阅[EIP](https://eips.ethereum.org/EIPS/eip-1014#motivation)。
 
 **FUNCTIONS**
-deploy(amount, salt, bytecode)
+[deploy(amount, salt, bytecode)](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address)
 
-computeAddress(salt, bytecodeHash)
+[computeAddress(salt, bytecodeHash)](#computeaddressbytes32-salt-bytes32-bytecodehash-→-address)(#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address)
 
-computeAddress(salt, bytecodeHash, deployer)
+[computeAddress(salt, bytecodeHash, deployer)](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address)
 
 #### deploy(uint256 amount, bytes32 salt, bytes bytecode) → address
 内部#
-使用CREATE2部署合约。合约将被部署到的地址可以通过*computeAddress*提前知道。
+使用CREATE2部署合约。合约将被部署到的地址可以通过[computeAddress](#computeaddressbytes32-salt-bytes32-bytecodehash-→-address)提前知道。
 
 合约的字节码可以通过Solidity的type(contractName).creationCode获取。
 
@@ -288,14 +288,14 @@ computeAddress(salt, bytecodeHash, deployer)
 
 #### computeAddress(bytes32 salt, bytes32 bytecodeHash) → address
 内部#
-如果通过部署操作*部署*合约，将返回合约存储的地址。如果bytecodeHash或salt发生变化，将导致生成一个新的目标地址。
+如果通过部署操作[deploy](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address)合约，将返回合约存储的地址。如果bytecodeHash或salt发生变化，将导致生成一个新的目标地址。
 
 #### computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) → address
 内部#
-如果通过位于deployer的合约*部署*合约，则返回合约将存储的地址。如果deployer是该合约的地址，则返回与*computeAddress*相同的值。
+如果通过位于deployer的合约[deploy](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address)合约，则返回合约将存储的地址。如果deployer是该合约的地址，则返回与[computeAddress](#computeaddressbytes32-salt-bytes32-bytecodehash-→-address)相同的值。
 
 ### EnumerableMap
-管理Solidity的可枚举映射类型的库。
+管理Solidity的可枚举 [mapping](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)的库。
 
 映射具有以下特性：
 * 添加、删除和检查条目的存在都在常量时间（O(1)）内完成。
@@ -313,21 +313,21 @@ contract Example {
 截至v3.0.0，只支持uint256 → address类型的映射（UintToAddressMap）。
 
 **FUNCTIONS**
-set(map, key, value)
+[set(map, key, value)](#setstruct-enumerablemapuinttoaddressmap-map-uint256-key-address-value-→-bool)
 
-remove(map, key)
+[remove(map, key)](#removestruct-enumerablemapuinttoaddressmap-map-uint256-key-→-bool)
 
-contains(map, key)
+[contains(map, key)](#containsstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-bool)
 
-length(map)
+[length(map)](#lengthstruct-enumerablemapuinttoaddressmap-map-→-uint256)
 
-at(map, index)
+[at(map, index)](#atstruct-enumerablemapuinttoaddressmap-map-uint256-index-→-uint256-address)
 
-tryGet(map, key)
+[tryGet(map, key)](#trygetstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-bool-address)
 
-get(map, key)
+[get(map, key)](#getstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-address)
 
-get(map, key, errorMessage)
+[get(map, key, errorMessage)](#getstruct-enumerablemapuinttoaddressmap-map-uint256-key-string-errormessage-→-address)
 
 #### set(struct EnumerableMap.UintToAddressMap map, uint256 key, address value) → bool
 内部#
@@ -371,13 +371,13 @@ get(map, key, errorMessage)
 
 #### get(struct EnumerableMap.UintToAddressMap map, uint256 key, string errorMessage) → address
 内部#
-与*get*相同，当键不在映射中时具有自定义错误消息。
+与[get](#getstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-address)相同，当键不在映射中时具有自定义错误消息。
 
 > CAUTION
-此函数已弃用，因为它不必要地需要为错误消息分配内存。要使用自定义的回滚原因，请使用*tryGet*。
+此函数已弃用，因为它不必要地需要为错误消息分配内存。要使用自定义的回滚原因，请使用[tryGet](#trygetstruct-enumerablemapuinttoaddressmap-map-uint256-key-→-bool-address)。
 
 ### EnumerableSet
-用于管理原始类型集的库。
+用于管理 [sets](https://en.wikipedia.org/wiki/Set_(abstract_data_type))集的库。
 
 集合具有以下属性：
 
@@ -398,35 +398,35 @@ contract Example {
 从v3.3.0版本开始，支持bytes32类型的集合（Bytes32Set）、address类型的集合（AddressSet）和uint256类型的集合（UintSet）。
 
 **FUNCTIONS**
-add(set, value)
+[add(set, value)](#addstruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
 
-remove(set, value)
+[remove(set, value)](#removestruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
 
-contains(set, value)
+[contains(set, value)](#containsstruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
 
-length(set)
+[length(set)](#lengthstruct-enumerablesetbytes32set-set-→-uint256)
 
-at(set, index)
+[at(set, index)](#atstruct-enumerablesetbytes32set-set-uint256-index-→-bytes32)
 
-add(set, value)
+[add(set, value)](#addstruct-enumerablesetaddressset-set-address-value-→-bool)
 
-remove(set, value)
+[remove(set, value)](#removestruct-enumerablesetaddressset-set-address-value-→-bool)
 
-contains(set, value)
+[contains(set, value)](#containsstruct-enumerablesetaddressset-set-address-value-→-bool)
 
-length(set)
+[length(set)](#lengthstruct-enumerablesetaddressset-set-→-uint256)
 
-at(set, index)
+[at(set, index)](#atstruct-enumerablesetaddressset-set-uint256-index-→-address)
 
-add(set, value)
+[add(set, value)](#addstruct-enumerablesetuintset-set-uint256-value-→-bool)
 
-remove(set, value)
+[remove(set, value)](#removestruct-enumerablesetuintset-set-uint256-value-→-bool)
 
-contains(set, value)
+[contains(set, value)](#containsstruct-enumerablesetuintset-set-uint256-value-→-bool)
 
-length(set)
+[length(set)](#lengthstruct-enumerablesetuintset-set-→-uint256)
 
-at(set, index)
+[at(set, index)](#atstruct-enumerablesetuintset-set-uint256-index-→-uint256)
 
 #### add(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
 内部#
@@ -455,7 +455,7 @@ at(set, index)
 请注意，数组内的值的顺序没有保证，并且当添加或删除更多值时，它可能会更改。
 
 要求：
-* 索引必须严格小于*length*。
+* 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### add(struct EnumerableSet.AddressSet set, address value) → bool
 内部#
@@ -484,7 +484,7 @@ at(set, index)
 请注意，数组内部值的排序没有保证，并且当添加或删除更多值时，它可能会发生变化。
 
 要求：
-* 索引必须严格小于* length*。
+* 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### add(struct EnumerableSet.UintSet set, uint256 value) → bool
 内部#
@@ -513,7 +513,7 @@ at(set, index)
 请注意，数组内部的值的排序没有保证，在添加或删除更多值时可能会发生变化。
 
 要求：
-* 索引必须严格小于*length*。
+* 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 ### SafeCast
 在Solidity中，对uintXX/intXX类型进行包装，添加了溢出检查。
@@ -522,32 +522,32 @@ at(set, index)
 
 与未经检查的操作相比，使用此库可以消除整个类别的错误，因此建议始终使用它。
 
-可以与*SafeMath*和*SignedSafeMath*结合使用，通过在uint256和int256上执行所有数学运算，然后进行向下转换，将其扩展到较小的类型。
+可以与[SafeMath](./Math.md#safemath)和[SignedSafeMath](./Math.md#signedsafemath)结合使用，通过在uint256和int256上执行所有数学运算，然后进行向下转换，将其扩展到较小的类型。
 
-*FUNCTIONS*
-toUint128(value)
+**FUNCTIONS**
+[toUint128(value)](#touint128uint256-value-→-uint128)
 
-toUint64(value)
+[toUint64(value)](#touint64uint256-value-→-uint64)
 
-toUint32(value)
+[toUint32(value)](#touint32uint256-value-→-uint32)
 
-toUint16(value)
+[toUint16(value)](#touint16uint256-value-→-uint16)
 
-toUint8(value)
+[toUint8(value)](#touint8uint256-value-→-uint8)
 
-toUint256(value)
+[toUint256(value)](#touint256int256-value-→-uint256)
 
-toInt128(value)
+[toInt128(value)](#toint128int256-value-→-int128)
 
-toInt64(value)
+[toInt64(value)](#toint64int256-value-→-int64)
 
-toInt32(value)
+[toInt32(value)](#toint32int256-value-→-int32)
 
-toInt16(value)
+[toInt16(value)](#toint16int256-value-→-int16)
 
-toInt8(value)
+[toInt8(value)](#toint8int256-value-→-int8)
 
-toInt256(value)
+[toInt256(value)](#toint256uint256-value-→-int256)
 
 #### toUint128(uint256 value) → uint128
 内部#
@@ -669,7 +669,7 @@ toInt256(value)
 字符串操作
 
 **FUNCTIONS**
-toString(value)
+[toString(value)](#tostringuint256-value-→-string)
 
 #### toString(uint256 value) → string
 内部#
