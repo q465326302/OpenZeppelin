@@ -11,31 +11,31 @@ Solidity中的算术操作在溢出时会进行包装。这很容易导致错误
 使用这个库而不是不经检查的操作可以消除一整类错误，因此建议始终使用它。
 
 **FUNCTIONS**
-tryAdd(a, b)
+[tryAdd(a, b)](#tryadduint256-a-uint256-b-→-bool-uint256)
 
-trySub(a, b)
+[trySub(a, b)](#trysubuint256-a-uint256-b-→-bool-uint256)
 
-tryMul(a, b)
+[tryMul(a, b)](#trymuluint256-a-uint256-b-→-bool-uint256)
 
-tryDiv(a, b)
+[tryDiv(a, b)](#trydivuint256-a-uint256-b-→-bool-uint256)
 
-tryMod(a, b)
+[tryMod(a, b)](#trymoduint256-a-uint256-b-→-bool-uint256)
 
-add(a, b)
+[add(a, b)](#adduint256-a-uint256-b-→-uint256)
 
-sub(a, b)
+[sub(a, b)](#subuint256-a-uint256-b-→-uint256)
 
-mul(a, b)
+[mul(a, b)](#muluint256-a-uint256-b-→-uint256)
 
-div(a, b)
+[div(a, b)](#divuint256-a-uint256-b-→-uint256)
 
-mod(a, b)
+[mod(a, b)](#moduint256-a-uint256-b-→-uint256)
 
-sub(a, b, errorMessage)
+[sub(a, b, errorMessage)](#subuint256-a-uint256-b-string-errormessage-→-uint256)
 
-div(a, b, errorMessage)
+[div(a, b, errorMessage)](#divuint256-a-uint256-b-string-errormessage-→-uint256)
 
-mod(a, b, errorMessage)
+[mod(a, b, errorMessage)](#moduint256-a-uint256-b-string-errormessage-→-uint256)
 
 #### tryAdd(uint256 a, uint256 b) → bool, uint256
 内部#
@@ -117,7 +117,7 @@ mod(a, b, errorMessage)
 返回两个无符号整数的减法结果，并在溢出时使用自定义消息进行回退（当结果为负数时）。
 
 > CAUTION
-该函数已被弃用，因为它不必要地需要为错误消息分配内存。对于自定义的回退原因，请使用*trySub*。
+该函数已被弃用，因为它不必要地需要为错误消息分配内存。对于自定义的回退原因，请使用[trySub](#trysubuint256-a-uint256-b-→-bool-uint256)。
 
 与Solidity的-运算符相对应。
 
@@ -129,7 +129,7 @@ mod(a, b, errorMessage)
 返回两个无符号整数的整数除法，如果除以零则返回自定义消息。结果向零舍入。
 
 > CAUTION
-该函数已弃用，因为它不必要地需要分配内存来存储错误消息。如果需要自定义回滚原因，请使用tryDiv。
+该函数已弃用，因为它不必要地需要分配内存来存储错误消息。如果需要自定义回滚原因，请使用[tryDiv](#trydivuint256-a-uint256-b-→-bool-uint256)。
 
 与Solidity的/运算符相对应。注意：该函数使用了一个回滚操作码（保留了剩余的gas），而Solidity使用了一个无效的操作码来回滚（消耗了所有剩余的gas）。
 
@@ -140,7 +140,7 @@ mod(a, b, errorMessage)
 内部#
 返回两个无符号整数相除的余数（无符号整数模数），在除以零时返回自定义消息。
 
-该函数已弃用，因为它不必要地需要为错误消息分配内存。对于自定义的还原原因，请使用*tryMod*。
+该函数已弃用，因为它不必要地需要为错误消息分配内存。对于自定义的还原原因，请使用[tryMod](#trymoduint256-a-uint256-b-→-bool-uint256)。
 
 与Solidity的%运算符相对应。此函数使用revert操作码（保持剩余的gas不变），而Solidity使用无效操作码来还原（消耗所有剩余的gas）。
 
@@ -151,13 +151,13 @@ mod(a, b, errorMessage)
 带有安全检查的有错误回滚功能的带符号数学运算。
 
 **FUNCTIONS**
-mul(a, b)
+[mul(a, b)](#mulint256-a-int256-b-→-int256)
 
-div(a, b)
+[div(a, b)](#divint256-a-int256-b-→-int256)
 
-sub(a, b)
+[sub(a, b)](#subint256-a-int256-b-→-int256)
 
-add(a, b)
+[add(a, b)](#addint256-a-int256-b-→-int256)
 
 #### mul(int256 a, int256 b) → int256
 内部#
@@ -196,15 +196,15 @@ add(a, b)
 要求：
 * 加法不能溢出。
 
-### 数学
+### Math
 Solidity语言中缺少标准数学工具。
 
 **FUNCTIONS**
-max(a, b)
+[max(a, b)](#maxuint256-a-uint256-b-→-uint256)
 
-min(a, b)
+[min(a, b)](#minuint256-a-uint256-b-→-uint256)
 
-average(a, b)
+[average(a, b)](#averageuint256-a-uint256-b-→-uint256)
 
 #### max(uint256 a, uint256 b) → uint256
 内部#
