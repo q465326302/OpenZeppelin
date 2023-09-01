@@ -74,6 +74,10 @@ _supportsAllInterfaces(account, interfaceIds)
 
 #### _supportsERC165(address account) → bool
 内部#
+如果账户支持IERC165接口，则返回真。
+
+#### _supportsInterface(address account, bytes4 interfaceId) → bool
+内部#
 如果帐户支持由interfaceId定义的接口，则返回true。对于*IERC165*本身的支持会自动查询。
 
 请参阅*IERC165.supportsInterface*。
