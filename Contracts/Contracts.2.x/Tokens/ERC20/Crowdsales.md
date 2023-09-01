@@ -29,7 +29,7 @@
 
 * 如果目标未达成，参与者是否可以退款？
 
-为了管理所有不同的众售组合和口味，*Contracts*提供了一个高度可配置的众售基础合约，可以与各种其他功能结合使用，构建定制的众售。
+为了管理所有不同的众售组合和口味，Contracts提供了一个高度可配置的 [Crowdsale](../../API/Crowdsale.md#crowdsales)基础合约，可以与各种其他功能结合使用，构建定制的众售。
 
 ## 众售汇率
 了解众售汇率非常重要，这里的错误是常见的错误来源。
@@ -74,9 +74,9 @@
 
 * （默认） - 众售合约拥有代币，并将代币从自己的所有权转移到购买它们的用户。
 
-* *MintedCrowdsale* - 众售在进行购买时铸造代币。
+* [MintedCrowdsale](../../API/Crowdsale.md#mintedcrowdsale) - 众售在进行购买时铸造代币。
 
-* *AllowanceCrowdsale* - 众售获得给予另一个已经拥有要在众售中出售的代币的钱包（如Multisig）的津贴。
+* [AllowanceCrowdsale](../../API/Crowdsale.md#allowancecrowdsale) - 众售获得给予另一个已经拥有要在众售中出售的代币的钱包（如Multisig）的津贴。
 
 ### 默认发行
 在默认情况下，您的众售必须拥有要出售的代币。您可以通过各种方法将代币发送给众售，但在Solidity中的代码如下：
@@ -94,7 +94,7 @@ new Crowdsale(
 ```
 
 ### Minted Crowdsale
-要使用*MintedCrowdsale*，您的代币还必须是一个*ERC20Mintable*代币，众筹活动有权从中进行铸币。这可以如下所示：
+要使用[MintedCrowdsale](../../API/Crowdsale.md#mintedcrowdsale)，您的代币还必须是一个[ERC20Mintable](../../API/ERC20.md#erc20mintable)代币，众筹活动有权从中进行铸币。这可以如下所示：
 ```
 contract MyToken is ERC20, ERC20Mintable {
     // ... see "Tokens" for more info
@@ -134,8 +134,9 @@ contract MyCrowdsaleDeployer {
     }
 }
 ```
+
 ### AllowanceCrowdsale
-使用*AllowanceCrowdsale*将代币从另一个钱包发送给众筹参与者。为了使其工作，源钱包必须通过ERC20的*approve*方法授予众筹合约一个授权额度。
+使用[AllowanceCrowdsale](../../API/Crowdsale.md#allowancecrowdsale)将代币从另一个钱包发送给众筹参与者。为了使其工作，源钱包必须通过ERC20的[approve](../../API/ERC20.md#approveaddress-spender-uint256-amount-e28692-bool-1)方法授予众筹合约一个授权额度。
 ```
 contract MyCrowdsale is Crowdsale, AllowanceCrowdsale {
     constructor(
@@ -152,6 +153,7 @@ contract MyCrowdsale is Crowdsale, AllowanceCrowdsale {
     }
 }
 ```
+
 在创建众筹销售后，不要忘记批准使用你的代币！
 ```
 IERC20(tokenAddress).approve(CROWDSALE_ADDRESS, SOME_TOKEN_AMOUNT);
@@ -160,13 +162,13 @@ IERC20(tokenAddress).approve(CROWDSALE_ADDRESS, SOME_TOKEN_AMOUNT);
 ## 验证
 您的众筹可能是以下几种验证要求的一部分：
 
-* *CappedCrowdsale* - 为您的众筹添加了一个上限，使超过该上限的购买无效。
+* [CappedCrowdsale](../../API/Crowdsale.md#cappedcrowdsale) - 为您的众筹添加了一个上限，使超过该上限的购买无效。
 
-* *IndividuallyCappedCrowdsale* - 限制个人的贡献额。
+* [IndividuallyCappedCrowdsale](../../API/Crowdsale.md#individuallycappedcrowdsale) - 限制个人的贡献额。
 
-* *WhitelistCrowdsale* - 只允许白名单参与者购买代币。这对于将您的KYC / AML白名单上链非常有用！
+* [WhitelistCrowdsale](../../API/Crowdsale.md#whitelistcrowdsale) - 只允许白名单参与者购买代币。这对于将您的KYC / AML白名单上链非常有用！
 
-* *TimedCrowdsale* - 为您的众筹添加了一个*开放时间*和*结束时间*。
+* [TimedCrowdsale](../../API/Crowdsale.md#timedcrowdsale) - 为您的众筹添加了一个[开放时间](../../API/Crowdsale.md#openingtime-→-uint256)和[结束时间](../../API/Crowdsale.md#closingtime-→-uint256)。
 
 只需根据您的需要随意混合和匹配这些众筹方式。
 ```
@@ -200,7 +202,7 @@ contract MyCrowdsale is Crowdsale, CappedCrowdsale, TimedCrowdsale {
 OpenZeppelin Contracts在这方面提供了便利！
 
 ### PostDeliveryCrowdsale
-正如其名称所示，*PostDeliveryCrowdsale*在众售结束后分发代币，让用户调用*withdrawTokens*来认领他们购买的代币。
+正如其名称所示，[PostDeliveryCrowdsale](../../API/Crowdsale.md#postdeliverycrowdsale)在众售结束后分发代币，让用户调用[withdrawTokens](../../API/Crowdsale.md)来认领他们购买的代币。
 
 ```
 contract MyCrowdsale is Crowdsale, TimedCrowdsale, PostDeliveryCrowdsale {
@@ -224,4 +226,4 @@ contract MyCrowdsale is Crowdsale, TimedCrowdsale, PostDeliveryCrowdsale {
 ```
 
 ### RefundableCrowdsale
-*RefundableCrowdsale*提供了如果达不到最低目标的用户可以退款的服务。如果目标未达到，用户可以*申请Refund*来取回他们的以太币。
+[RefundableCrowdsale](../../API/Crowdsale.md#refundablecrowdsale)提供了如果达不到最低目标的用户可以退款的服务。如果目标未达到，用户可以[claimRefund](../../API/Crowdsale.md#claimrefundaddress-payable-refundee)来取回他们的以太币。
