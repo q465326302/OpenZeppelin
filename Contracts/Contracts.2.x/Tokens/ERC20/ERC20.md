@@ -1,7 +1,7 @@
 # ERC20
-一个ERC20代币合约用于*跟踪可互换的代币*：任何一个代币与其他代币完全相等；没有任何代币具有特殊的权利或行为。这使得ERC20代币在**作为交换货币、投票权、质押等**方面非常有用。
+一个ERC20代币合约用于[跟踪可互换的代币](../Tokens.md#不同类型的代币)：任何一个代币与其他代币完全相等；没有任何代币具有特殊的权利或行为。这使得ERC20代币在**作为交换货币、投票权、质押等**方面非常有用。
 
-OpenZeppelin Contracts提供了许多与ERC20相关的合约。在*API参考*中，您将找到关于它们属性和用法的详细信息。
+OpenZeppelin Contracts提供了许多与ERC20相关的合约。在[API参考](../../API/ERC20.md)中，您将找到关于它们属性和用法的详细信息。
 
 ## 构建一个ERC20代币合约
 使用Contracts，我们可以轻松地创建自己的ERC20代币合约，用于跟踪Gold (GLD)，这是一个虚构项目中的内部货币。
@@ -19,10 +19,11 @@ contract GLDToken is ERC20, ERC20Detailed {
     }
 }
 ```
-我们的合约经常通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用，这里我们重用了*ERC20*来进行基本标准实现，并使用*ERC20Detailed*来获取*名称*、*符号*和*小数位*属性。此外，我们创建了一个初始的代币供应量，将分配给部署合约的地址。
+
+我们的合约经常通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用，这里我们重用了[ERC20](../../API/ERC20.md#erc20)来进行基本标准实现，并使用[ERC20Detailed](../../API/ERC20.md#erc20detailed)来获取[名称](../../API/ERC20.md#name-→-string)、[符号](../../API/ERC20.md#symbol-→-string)和[小数位](../../API/ERC20.md#decimals-→-uint8)属性。此外，我们创建了一个初始的代币供应量，将分配给部署合约的地址。
 
 > TIP
-有关 ERC20 供应机制的更完整讨论，请参阅*创建 ERC20 供应*。
+有关 ERC20 供应机制的更完整讨论，请参阅[创建 ERC20 供应](./Creating-Supply.md)。
 
 就是这样！一旦部署完成，我们就能查询部署者的余额。
 ```
@@ -42,7 +43,7 @@ contract GLDToken is ERC20, ERC20Detailed {
 ## 关于小数的说明
 通常，您可能希望将您的代币分成任意数量：例如，如果您拥有5个GLD，您可能希望向朋友发送1.5个GLD，并保留3.5个GLD给自己。不幸的是，Solidity和EVM不支持这种行为：只能使用整数（整数）数字，这是一个问题。您可以发送1或2个代币，但不能发送1.5个。
 
-为了解决这个问题，*ERC20Detailed*提供了一个*小数字段*，用于指定代币的小数位数。要能够传输1.5个GLD，小数位数必须至少为1，因为该数字有一个小数位。
+为了解决这个问题，[ERC20Detailed](../../API/ERC20.md#erc20detailed)提供了一个[小数字段](../../API/ERC20.md#decimals-→-uint8)，用于指定代币的小数位数。要能够传输1.5个GLD，小数位数必须至少为1，因为该数字有一个小数位。
 
 如何实现这一点？实际上非常简单：代币合约可以使用较大的整数值，以便50的余额表示5个GLD，15的转账表示发送了1.5个GLD，等等。
 
