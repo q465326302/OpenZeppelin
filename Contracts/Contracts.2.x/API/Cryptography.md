@@ -9,9 +9,9 @@
 这些函数可用于验证消息是否由给定地址的私钥持有者签名。
 
 **FUNCTIONS**
-recover(hash, signature)
+[recover(hash, signature)](#recoverbytes32-hash-bytes-signature-→-address)
 
-toEthSignedMessageHash(hash)
+[toEthSignedMessageHash(hash)](#toethsignedmessagehashbytes32-hash-→-bytes32)
 
 #### recover(bytes32 hash, bytes signature) → address
 内部#
@@ -23,19 +23,19 @@ ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s
 如果签名无效或无法检索签名者，此调用不会回滚。在这些情况下，将返回零地址。
 
 > IMPORTANT
-hash必须是用于确保验证安全性的哈希操作的结果：可以制作恢复到任意地址的签名，用于非哈希数据。确保这一点的安全方法是接收原始消息的哈希（可能太长），然后对其调用*toEthSignedMessageHash*。
+hash必须是用于确保验证安全性的哈希操作的结果：可以制作恢复到任意地址的签名，用于非哈希数据。确保这一点的安全方法是接收原始消息的哈希（可能太长），然后对其调用[toEthSignedMessageHash](#toethsignedmessagehashbytes32-hash-→-bytes32)。
 
 #### toEthSignedMessageHash(bytes32 hash) → bytes32
 内部#
 返回一个由哈希创建的以太坊签名消息。这个函数复制了[eth_sign](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign) JSON-RPC方法的行为。
 
-参见*recover*。
+参见[recover](#recoverbytes32-hash-bytes-signature-→-address)。
 
 ### MerkleProof
 这些函数处理Merkle树（哈希树）的验证。
 
 **FUNCTIONS**
-verify(proof, root, leaf)
+[verify(proof, root, leaf)](#verifyvar-typebytes32-proof-bytes32-root-bytes32-leaf-→-bool)
 
 #### verify([.var-type]#bytes32[# proof, bytes32 root, bytes32 leaf) → bool]
 内部#
