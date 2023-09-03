@@ -8,11 +8,11 @@
 用于管理分配给角色的地址的库。
 
 **FUNCTIONS**
-add(role, account)
+[add(role, account)](#addstruct-rolesrole-role-address-account)
 
-remove(role, account)
+[remove(role, account)](#removestruct-rolesrole-role-address-account)
 
-has(role, account)
+[has(role, account)](#hasstruct-rolesrole-role-address-account-→-bool)
 
 #### add(struct Roles.Role role, address account)
 内部#
@@ -31,30 +31,30 @@ has(role, account)
 ### CapperRole
 
 **MODIFIERS**
-onlyCapper()
+[onlyCapper()](#onlycapper)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor)
 
-isCapper(account)
+[isCapper(account)](#iscapperaddress-account-→-bool)
 
-addCapper(account)
+[addCapper(account)](#addcapperaddress-account)
 
-renounceCapper()
+[renounceCapper()](#renouncecapper)
 
-_addCapper(account)
+[_addCapper(account)](#_addcapperaddress-account)
 
-_removeCapper(account)
+[_removeCapper(account)](#_removecapperaddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-CapperAdded(account)
+[CapperAdded(account)](#capperaddedaddress-account)
 
-CapperRemoved(account)
+[CapperRemoved(account)](#capperremovedaddress-account)
 
 #### onlyCapper()
 修饰符#
@@ -86,30 +86,30 @@ CapperRemoved(account)
 ### MinterRole
 
 **MODIFIERS**
-onlyMinter()
+[onlyMinter()](#onlyminter)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor-1)
 
-isMinter(account)
+[isMinter(account)](#isminteraddress-account-→-bool)
 
-addMinter(account)
+[addMinter(account)](#addminteraddress-account)
 
-renounceMinter()
+[renounceMinter()](#renounceminter)
 
-_addMinter(account)
+[_addMinter(account)](#_addminteraddress-account)
 
-_removeMinter(account)
+[_removeMinter(account)](#_removeminteraddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-MinterAdded(account)
+[MinterAdded(account)](#minteraddedaddress-account)
 
-MinterRemoved(account)
+[MinterRemoved(account)](#minteraddedaddress-account)
 
 #### onlyMinter()
 修饰符#
@@ -141,30 +141,30 @@ MinterRemoved(account)
 ### PauserRole
 
 **MODIFIERS**
-onlyPauser()
+[onlyPauser()](#onlypauser)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor-2)
 
-isPauser(account)
+[isPauser(account)](#ispauseraddress-account-→-bool)
 
-addPauser(account)
+[addPauser(account)](#addpauseraddress-account)
 
-renouncePauser()
+[renouncePauser()](#renouncepauser)
 
-_addPauser(account)
+[_addPauser(account)](#_addpauseraddress-account)
 
-_removePauser(account)
+[_removePauser(account)](#_removepauseraddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-PauserAdded(account)
+[PauserAdded(account)](#pauseraddedaddress-account)
 
-PauserRemoved(account)
+[PauserRemoved(account)](#pauserremovedaddress-account)
 
 #### onlyPauser()
 修饰符#
@@ -196,30 +196,30 @@ PauserRemoved(account)
 ### SignerRole
 
 **MODIFIERS**
-onlySigner()
+[onlySigner()](#onlysigner)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor-3)
 
-isSigner(account)
+[isSigner(account)](#issigneraddress-account-→-bool)
 
-addSigner(account)
+[addSigner(account)](#addsigneraddress-account)
 
-renounceSigner()
+[renounceSigner()](#renouncesigner)
 
-_addSigner(account)
+[_addSigner(account)](#_addsigneraddress-account)
 
-_removeSigner(account)
+[_removeSigner(account)](#_removesigneraddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-SignerAdded(account)
+[SignerAdded(account)](#signeraddedaddress-account)
 
-SignerRemoved(account)
+[SignerRemoved(account)](#signerremovedaddress-account)
 
 #### onlySigner()
 修饰符#
@@ -252,30 +252,30 @@ SignerRemoved(account)
 WhitelistAdmins负责分配和删除白名单账户。
 
 **MODIFIERS**
-onlyWhitelistAdmin()
+[onlyWhitelistAdmin()](#onlywhitelistadmin)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor-4)
 
-isWhitelistAdmin(account)
+[isWhitelistAdmin(account)](#iswhitelistadminaddress-account-→-bool)
 
-addWhitelistAdmin(account)
+[addWhitelistAdmin(account)](#addwhitelistadminaddress-account)
 
-renounceWhitelistAdmin()
+[renounceWhitelistAdmin()](#renouncewhitelistadmin)
 
-_addWhitelistAdmin(account)
+[_addWhitelistAdmin(account)](#_addwhitelistadminaddress-account)
 
-_removeWhitelistAdmin(account)
+[_removeWhitelistAdmin(account)](#_removewhitelistadminaddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-WhitelistAdminAdded(account)
+[WhitelistAdminAdded(account)](#whitelistadminaddedaddress-account)
 
-WhitelistAdminRemoved(account)
+[WhitelistAdminRemoved(account)](#whitelistadminremovedaddress-account)
 
 #### onlyWhitelistAdmin()
 修饰符#
@@ -308,51 +308,51 @@ WhitelistAdminRemoved(account)
 白名单帐户已由白名单管理员批准，可以执行特定操作（例如参与众筹）。这个角色很特殊，只有白名单管理员才能添加它（也可以删除它），而不是白名单本身的帐户。
 
 **MODIFIERS**
-onlyWhitelisted()
+[onlyWhitelisted()](#onlywhitelisted)
 
 WHITELISTADMINROLE
-onlyWhitelistAdmin()
+[onlyWhitelistAdmin()](#onlywhitelistadmin)
 
 **FUNCTIONS**
-isWhitelisted(account)
+[isWhitelisted(account)](#iswhitelistedaddress-account-→-bool)
 
-addWhitelisted(account)
+[addWhitelisted(account)](#addwhitelistedaddress-account)
 
-removeWhitelisted(account)
+[removeWhitelisted(account)](#removewhitelistedaddress-account)
 
-renounceWhitelisted()
+[renounceWhitelisted()](#renouncewhitelisted)
 
-_addWhitelisted(account)
+[_addWhitelisted(account)](#_addwhitelistedaddress-account)
 
-_removeWhitelisted(account)
+[_removeWhitelisted(account)](#_removewhitelistedaddress-account)
 
 WHITELISTADMINROLE
-constructor()
+[constructor()](#constructor-4)
 
-isWhitelistAdmin(account)
+[isWhitelistAdmin(account)](#iswhitelistadminaddress-account-→-bool)
 
-addWhitelistAdmin(account)
+[addWhitelistAdmin(account)](#addwhitelistadminaddress-account)
 
-renounceWhitelistAdmin()
+[renounceWhitelistAdmin()](#renouncewhitelistadmin)
 
-_addWhitelistAdmin(account)
+[_addWhitelistAdmin(account)](#_addwhitelistadminaddress-account)
 
-_removeWhitelistAdmin(account)
+[_removeWhitelistAdmin(account)](#_removewhitelistadminaddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-WhitelistedAdded(account)
+[WhitelistedAdded(account)](#whitelistadminaddedaddress-account)
 
-WhitelistedRemoved(account)
+[WhitelistedRemoved(account)](#whitelistadminremovedaddress-account)
 
 WHITELISTADMINROLE
-WhitelistAdminAdded(account)
+[WhitelistAdminAdded(account)](#whitelistadminaddedaddress-account)
 
-WhitelistAdminRemoved(account)
+[WhitelistAdminRemoved(account)](#whitelistadminremovedaddress-account)
 
 #### onlyWhitelisted()
 修饰符#
