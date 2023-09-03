@@ -8,47 +8,47 @@
 通过继承使用该模块。它将提供 whenNotPaused 和 whenPaused 修饰符，可以应用于合约的函数。请注意，仅仅包括此模块并不能使函数可暂停，只有一旦修饰符被放置，函数才会变得可暂停。
 
 **MODIFIERS**
-whenNotPaused()
+[whenNotPaused()](#whennotpaused)
 
-whenPaused()
+[whenPaused()](#whenpaused)
 
 PAUSERROLE
-onlyPauser()
+[onlyPauser()](./Access.md#onlypauser)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor)
 
-paused()
+[paused()](#paused-→-bool)
 
-pause()
+[pause()](#pause)
 
-unpause()
+[unpause()](#unpause)
 
 PAUSERROLE
-isPauser(account)
+[isPauser(account)](./Access.md#ispauseraddress-account-→-bool)
 
-addPauser(account)
+[addPauser(account)](./Access.md#addpauseraddress-account)
 
-renouncePauser()
+[renouncePauser()](./Access.md#renouncepauser)
 
-_addPauser(account)
+[_addPauser(account)](./Access.md#_addpauseraddress-account)
 
-_removePauser(account)
+[_removePauser(account)](./Access.md#_removepauseraddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-Paused(account)
+[Paused(account)](#pausedaddress-account)
 
-Unpaused(account)
+[Unpaused(account)](#unpausedaddress-account)
 
 PAUSERROLE
-PauserAdded(account)
+[PauserAdded(account)](./Access.md#pauseraddedaddress-account)
 
-PauserRemoved(account)
+[PauserRemoved(account)](./Access.md#pauserremovedaddress-account)
 
 #### whenNotPaused()
 修饰符#
