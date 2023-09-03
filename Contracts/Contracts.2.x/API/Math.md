@@ -11,21 +11,21 @@ Solidity中的算术操作会在溢出时进行包装。这很容易导致错误
 使用这个库而不是未经检查的操作可以消除一整类错误，因此建议始终使用它。
 
 **FUNCTIONS**
-add(a, b)
+[add(a, b)](#adduint256-a-uint256-b-→-uint256)
 
-sub(a, b)
+[sub(a, b)](#subuint256-a-uint256-b-→-uint256)
 
-sub(a, b, errorMessage)
+[sub(a, b, errorMessage)](#subuint256-a-uint256-b-string-errormessage-→-uint256)
 
-mul(a, b)
+[mul(a, b)](#muluint256-a-uint256-b-→-uint256)
 
-div(a, b)
+[div(a, b)](#divuint256-a-uint256-b-→-uint256)
 
-div(a, b, errorMessage)
+[div(a, b, errorMessage)](#divuint256-a-uint256-b-string-errormessage-→-uint256)
 
-mod(a, b)
+[mod(a, b)](#moduint256-a-uint256-b-→-uint256)
 
-mod(a, b, errorMessage)
+[mod(a, b, errorMessage)](#moduint256-a-uint256-b-string-errormessage-→-uint256)
 
 #### add(uint256 a, uint256 b) → uint256
 内部#
@@ -101,11 +101,11 @@ mod(a, b, errorMessage)
 Solidity语言中缺少的标准数学工具。
 
 **FUNCTIONS**
-max(a, b)
+[max(a, b)](#maxuint256-a-uint256-b-→-uint256)
 
-min(a, b)
+[min(a, b)](#minuint256-a-uint256-b-→-uint256)
 
-average(a, b)
+[average(a, b)](#averageuint256-a-uint256-b-→-uint256)
 
 #### max(uint256 a, uint256 b) → uint256
 内部#
