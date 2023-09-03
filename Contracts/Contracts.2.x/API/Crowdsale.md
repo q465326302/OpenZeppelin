@@ -9,44 +9,44 @@ Crowdsale（众筹销售）是一个用于管理代币众筹的基本合约，�
 
 **MODIFIERS**
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-constructor(rate, wallet, token)
+[constructor(rate, wallet, token)](#constructoruint256-rate-address-payable-wallet-contract-ierc20-token)
 
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(uint256 rate, address payable wallet, contract IERC20 token)
 公开#
@@ -110,50 +110,49 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-constructor(tokenWallet)
+[constructor(tokenWallet)](#constructoraddress-tokenwallet)
 
-tokenWallet()
+[tokenWallet()](#tokenwallet-→-address)
 
-remainingTokens()
+[remainingTokens()](#remainingtokens-→-uint256)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(address tokenWallet)
 公开#
@@ -174,46 +173,42 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-_deliverTokens(beneficiary, tokenAmount)
+[constructor(rate, wallet, token)](#constructoruint256-rate-address-payable-wallet-contract-ierc20-token)
 
-CROWDSALE
-constructor(rate, wallet, token)
+[fallback()](#fallback)
 
-fallback()
+[token()](#token-→-contract-ierc20)
 
-token()
+[wallet()](#wallet-→-address-payable)
 
-wallet()
+[rate()](#rate-→-uint256)
 
-rate()
+[weiRaised()](#weiraised-→-uint256)
 
-weiRaised()
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-buyTokens(beneficiary)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_getTokenAmount(weiAmount)
-
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
 内部#
@@ -226,50 +221,49 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-constructor(cap)
+[constructor(cap)](#constructoruint256-cap)
 
-cap()
+[cap()](#cap-→-uint256)
 
-capReached()
+[capReached()](#capreached-→-bool)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-1)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(uint256 cap)
 公开#
@@ -291,71 +285,71 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 CAPPERROLE
-onlyCapper()
+[onlyCapper()](./Access.md#onlycapper)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-setCap(beneficiary, cap)
+[setCap(beneficiary, cap)](#setcapaddress-beneficiary-uint256-cap)
 
-getCap(beneficiary)
+[getCap(beneficiary)](#getcapaddress-beneficiary-→-uint256)
 
-getContribution(beneficiary)
+[getContribution(beneficiary)](#getcontributionaddress-beneficiary-→-uint256)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-2)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount-1)
 
 CAPPERROLE
-constructor()
+[constructor()](./Access.md#constructor)
 
-isCapper(account)
+[isCapper(account)](./Access.md#iscapperaddress-account-→-bool)
 
-addCapper(account)
+[addCapper(account)](./Access.md#addcapperaddress-account)
 
-renounceCapper()
+[renounceCapper()](./Access.md#renouncecapper)
 
-_addCapper(account)
+[_addCapper(account)](./Access.md#_addcapperaddress-account)
 
-_removeCapper(account)
+[_removeCapper(account)](./Access.md#_removecapperaddress-account)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 CAPPERROLE
-CapperAdded(account)
+[CapperAdded(account)](./Access.md#capperaddedaddress-account)
 
-CapperRemoved(account)
+[CapperRemoved(account)](./Access.md#capperremovedaddress-account)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### setCap(address beneficiary, uint256 cap)
 外部#
@@ -382,82 +376,82 @@ Crowdsale合约的扩展，其中购买可以由暂停者角色暂停和取消�
 
 **MODIFIERS**
 PAUSABLE
-whenNotPaused()
+[whenNotPaused()](./Lifecycle.md#whennotpaused)
 
-whenPaused()
+[whenPaused()](./Lifecycle.md#whenpaused)
 
 PAUSERROLE
-onlyPauser()
+[onlyPauser()](./Access.md#onlypauser)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-_preValidatePurchase(_beneficiary, _weiAmount)
+[_preValidatePurchase(_beneficiary, _weiAmount)](#_prevalidatepurchaseaddress-_beneficiary-uint256-_weiamount)
 
 PAUSABLE
-constructor()
+[constructor()](./Lifecycle.md#constructor)
 
-paused()
+[paused()](./Lifecycle.md#paused-→-bool)
 
-pause()
+[pause()](./Lifecycle.md#pause)
 
-unpause()
+[unpause()](./Lifecycle.md#unpause)
 
 PAUSERROLE
-isPauser(account)
+[isPauser(account)](./Access.md#ispauseraddress-account-→-bool)
 
-addPauser(account)
+[addPauser(account)](./Access.md#addpauseraddress-account)
 
-renouncePauser()
+[renouncePauser()](./Access.md#renouncepauser)
 
-_addPauser(account)
+[_addPauser(account)](./Access.md#_addpauseraddress-account)
 
-_removePauser(account)
+[_removePauser(account)](./Access.md#_removepauseraddress-account)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 PAUSABLE
-Paused(account)
+[Paused(account)](./Lifecycle.md#pausedaddress-account)
 
-Unpaused(account)
+[Unpaused(account)](./Lifecycle.md#unpausedaddress-account)
 
 PAUSERROLE
-PauserAdded(account)
+[PauserAdded(account)](./Access.md#pauseraddedaddress-account)
 
-PauserRemoved(account)
+[PauserRemoved(account)](./Access.md#pauserremovedaddress-account)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### _preValidatePurchase(address _beneficiary, uint256 _weiAmount)
 内部#
@@ -467,61 +461,61 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 众筹只接受在特定时间范围内的捐款。
 
 **MODIFIERS**
-onlyWhileOpen()
+[onlyWhileOpen()](#onlywhileopen)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-constructor(openingTime, closingTime)
+[constructor(openingTime, closingTime)](#constructoruint256-openingtime-uint256-closingtime)
 
-openingTime()
+[openingTime()](#openingtime-→-uint256)
 
-closingTime()
+[closingTime()](#closingtime-→-uint256)
 
-isOpen()
+[isOpen()](#isopen-→-bool)
 
-hasClosed()
+[hasClosed()](#hasclosed-→-bool)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-3)
 
-_extendTime(newClosingTime)
+[_extendTime(newClosingTime)](#_extendtimeuint256-newclosingtime)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-TimedCrowdsaleExtended(prevClosingTime, newClosingTime)
+[TimedCrowdsaleExtended(prevClosingTime, newClosingTime)](#timedcrowdsaleextendeduint256-prevclosingtime-uint256-newclosingtime)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### onlyWhileOpen()
 修饰符#
@@ -560,86 +554,86 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 WHITELISTEDROLE
-onlyWhitelisted()
+[onlyWhitelisted()](./Access.md#onlywhitelisted)
 
 WHITELISTADMINROLE
-onlyWhitelistAdmin()
+[onlyWhitelistAdmin()](./Access.md#onlywhitelistadmin)
 
 **FUNCTIONS**
-_preValidatePurchase(_beneficiary, _weiAmount)
+[_preValidatePurchase(_beneficiary, _weiAmount)](#_prevalidatepurchaseaddress-_beneficiary-uint256-_weiamount-1)
 
 CROWDSALE
-constructor(rate, wallet, token)
+[constructor(rate, wallet, token)](#constructoruint256-rate-address-payable-wallet-contract-ierc20-token)
 
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 WHITELISTEDROLE
-isWhitelisted(account)
+[isWhitelisted(account)](./Access.md#iswhitelistedaddress-account-→-bool)
 
-addWhitelisted(account)
+[addWhitelisted(account)](./Access.md#addwhitelistedaddress-account)
 
-removeWhitelisted(account)
+[removeWhitelisted(account)](./Access.md#removewhitelistedaddress-account)
 
-renounceWhitelisted()
+[renounceWhitelisted()](./Access.md#renouncewhitelisted)
 
-_addWhitelisted(account)
+[_addWhitelisted(account)](./Access.md#_addwhitelistedaddress-account)
 
-_removeWhitelisted(account)
+[_removeWhitelisted(account)](./Access.md#_removewhitelistedaddress-account)
 
 WHITELISTADMINROLE
-isWhitelistAdmin(account)
+[isWhitelistAdmin(account)](./Access.md#iswhitelistadminaddress-account-→-bool)
 
-addWhitelistAdmin(account)
+[addWhitelistAdmin(account)](./Access.md#addwhitelistedaddress-account)
 
-renounceWhitelistAdmin()
+[renounceWhitelistAdmin()](./Access.md#renouncewhitelistadmin)
 
-_addWhitelistAdmin(account)
+[_addWhitelistAdmin(account)](./Access.md#_addwhitelistadminaddress-account)
 
-_removeWhitelistAdmin(account)
+[_removeWhitelistAdmin(account)](./Access.md#_removewhitelistadminaddress-account)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 WHITELISTEDROLE
-WhitelistedAdded(account)
+[WhitelistedAdded(account)](./Access.md#whitelistadminaddedaddress-account)
 
-WhitelistedRemoved(account)
+[WhitelistedRemoved(account)](./Access.md#whitelistedaddedaddress-account)
 
 WHITELISTADMINROLE
-WhitelistAdminAdded(account)
+[WhitelistAdminAdded(account)](./Access.md#whitelistadminremovedaddress-account)
 
-WhitelistAdminRemoved(account)
+[WhitelistAdminRemoved(account)](./Access.md#whitelistedremovedaddress-account)
 
 #### _preValidatePurchase(address _beneficiary, uint256 _weiAmount)
 内部#
@@ -653,71 +647,72 @@ WhitelistAdminRemoved(account)
 
 **MODIFIERS**
 TIMEDCROWDSALE
-onlyWhileOpen()
+[onlyWhileOpen()](#onlywhileopen)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor)
 
-finalized()
+[finalized()](#finalized-→-bool)
 
-finalize()
+[finalize()](#finalize)
 
-_finalization()
+[_finalization()](#_finalization)
 
 TIMEDCROWDSALE
-openingTime()
+[openingTime()](#openingtime-→-uint256)
 
-closingTime()
+[closingTime()](#closingtime-→-uint256)
 
-isOpen()
+[isOpen()](#isopen-→-bool)
 
-hasClosed()
+[hasClosed()](#hasclosed-→-bool)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-3)
 
-_extendTime(newClosingTime)
+[_extendTime(newClosingTime)](#_extendtimeuint256-newclosingtime)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
+
 
 **EVENTS**
-CrowdsaleFinalized()
+[CrowdsaleFinalized()](#crowdsalefinalized)
 
 TIMEDCROWDSALE
-TimedCrowdsaleExtended(prevClosingTime, newClosingTime)
+[TimedCrowdsaleExtended(prevClosingTime, newClosingTime)](#timedcrowdsaleextendeduint256-prevclosingtime-uint256-newclosingtime)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor()
 内部#
@@ -741,67 +736,67 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 TIMEDCROWDSALE
-onlyWhileOpen()
+[onlyWhileOpen()](#onlywhileopen)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-withdrawTokens(beneficiary)
+[withdrawTokens(beneficiary)](#withdrawtokensaddress-beneficiary)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-→-uint256)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount-1)
 
 TIMEDCROWDSALE
-constructor(openingTime, closingTime)
+[constructor(openingTime, closingTime)](#constructoruint256-openingtime-uint256-closingtime)
 
-openingTime()
+[openingTime()](#openingtime-→-uint256)
 
-closingTime()
+[closingTime()](#closingtime-→-uint256)
 
-isOpen()
+[isOpen()](#isopen-→-bool)
 
-hasClosed()
+[hasClosed()](#hasclosed-→-bool)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-3)
 
-_extendTime(newClosingTime)
+[_extendTime(newClosingTime)](#_extendtimeuint256-newclosingtime)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 TIMEDCROWDSALE
-TimedCrowdsaleExtended(prevClosingTime, newClosingTime)
+[TimedCrowdsaleExtended(prevClosingTime, newClosingTime)](#timedcrowdsaleextendeduint256-prevclosingtime-uint256-newclosingtime)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### withdrawTokens(address beneficiary)
 公开#
@@ -821,79 +816,77 @@ TokensPurchased(purchaser, beneficiary, value, amount)
 
 **MODIFIERS**
 TIMEDCROWDSALE
-onlyWhileOpen()
+[onlyWhileOpen()](#onlywhileopen)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-constructor(goal)
+[constructor(goal)](#constructoruint256-goal)
 
-goal()
+[goal()](#goal-→-uint256)
 
-claimRefund(refundee)
+[claimRefund(refundee)](#claimrefundaddress-payable-refundee)
 
-goalReached()
+[goalReached()](#goalreached-→-bool)
 
-_finalization()
+[_finalization()](#_finalization-1)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds-1)
 
 FINALIZABLECROWDSALE
-finalized()
+[finalized()](#finalized-→-bool)
 
-finalize()
+[finalize()](#finalize)
 
 TIMEDCROWDSALE
-openingTime()
+[openingTime()](#openingtime-→-uint256)
 
-closingTime()
+[closingTime()](#closingtime-→-uint256)
 
-isOpen()
+[isOpen()](#isopen-→-bool)
 
-hasClosed()
+[hasClosed()](#hasclosed-→-bool)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-3)
 
-_extendTime(newClosingTime)
+[_extendTime(newClosingTime)](#_extendtimeuint256-newclosingtime)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_processPurchase(beneficiary, tokenAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
-
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 FINALIZABLECROWDSALE
-CrowdsaleFinalized()
+[CrowdsaleFinalized()](#crowdsalefinalized)
 
 TIMEDCROWDSALE
-TimedCrowdsaleExtended(prevClosingTime, newClosingTime)
+[TimedCrowdsaleExtended(prevClosingTime, newClosingTime)](#timedcrowdsaleextendeduint256-prevclosingtime-uint256-newclosingtime)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(uint256 goal)
 公开#
@@ -923,85 +916,85 @@ RefundableCrowdsale合约的扩展，只有在众筹结束并达到目标后才�
 
 **MODIFIERS**
 TIMEDCROWDSALE
-onlyWhileOpen()
+[onlyWhileOpen()](#onlywhileopen)
 
 REENTRANCYGUARD
-nonReentrant()
+[nonReentrant()](./Utils.md#nonreentrant)
 
 **FUNCTIONS**
-withdrawTokens(beneficiary)
+[withdrawTokens(beneficiary)](#withdrawtokensaddress-beneficiary-1)
 
 POSTDELIVERYCROWDSALE
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-→-uint256)
 
-_processPurchase(beneficiary, tokenAmount)
+[_processPurchase(beneficiary, tokenAmount)](#_processpurchaseaddress-beneficiary-uint256-tokenamount-1)
 
 REFUNDABLECROWDSALE
-constructor(goal)
+[constructor(goal)](#constructoruint256-goal)
 
-goal()
+[goal()](#goal-→-uint256)
 
-claimRefund(refundee)
+[claimRefund(refundee)](#claimrefundaddress-payable-refundee)
 
-goalReached()
+[goalReached()](#goalreached-→-bool)
 
-_finalization()
+[_finalization()](#_finalization-1)
 
-_forwardFunds()
+[_forwardFunds()](#_forwardfunds-1)
 
 FINALIZABLECROWDSALE
-finalized()
+[finalized()](#finalized-→-bool)
 
-finalize()
+[finalize()](#finalize)
 
 TIMEDCROWDSALE
-openingTime()
+[openingTime()](#openingtime-→-uint256)
 
-closingTime()
+[closingTime()](#closingtime-→-uint256)
 
-isOpen()
+[isOpen()](#isopen-→-bool)
 
-hasClosed()
+[hasClosed()](#hasclosed-→-bool)
 
-_preValidatePurchase(beneficiary, weiAmount)
+[_preValidatePurchase(beneficiary, weiAmount)](#_prevalidatepurchaseaddress-beneficiary-uint256-weiamount-3)
 
-_extendTime(newClosingTime)
+[_extendTime(newClosingTime)](#_extendtimeuint256-newclosingtime)
 
 CROWDSALE
-fallback()
+[fallback()](#fallback)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-wallet()
+[wallet()](#wallet-→-address-payable)
 
-rate()
+[rate()](#rate-→-uint256)
 
-weiRaised()
+[weiRaised()](#weiraised-→-uint256)
 
-buyTokens(beneficiary)
+[buyTokens(beneficiary)](#buytokensaddress-beneficiary)
 
-_postValidatePurchase(beneficiary, weiAmount)
+[_postValidatePurchase(beneficiary, weiAmount)](#_postvalidatepurchaseaddress-beneficiary-uint256-weiamount)
 
-_deliverTokens(beneficiary, tokenAmount)
+[_deliverTokens(beneficiary, tokenAmount)](#_delivertokensaddress-beneficiary-uint256-tokenamount)
 
-_updatePurchasingState(beneficiary, weiAmount)
+[_updatePurchasingState(beneficiary, weiAmount)](#_updatepurchasingstateaddress-beneficiary-uint256-weiamount)
 
-_getTokenAmount(weiAmount)
+[_getTokenAmount(weiAmount)](#_gettokenamountuint256-weiamount-→-uint256)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 FINALIZABLECROWDSALE
-CrowdsaleFinalized()
+[CrowdsaleFinalized()](#crowdsalefinalized)
 
 TIMEDCROWDSALE
-TimedCrowdsaleExtended(prevClosingTime, newClosingTime)
+[TimedCrowdsaleExtended(prevClosingTime, newClosingTime)](#timedcrowdsaleextendeduint256-prevclosingtime-uint256-newclosingtime)
 
 CROWDSALE
-TokensPurchased(purchaser, beneficiary, value, amount)
+[TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### withdrawTokens(address beneficiary)
 公开#
