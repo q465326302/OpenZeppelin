@@ -410,59 +410,59 @@ IERC20
 [ERC20](./ERC20.md)的扩展，允许代币持有者销毁自己拥有的代币以及其授权的代币，以一种可以通过链外事件分析识别的方式。
 
 **FUNCTIONS**
-burn(amount)
+[burn(amount)](#burnuint256-amount)
 
-burnFrom(account, amount)
+[burnFrom(account, amount)](#burnfromaddress-account-uint256-amount)
 
 ERC20
-totalSupply()
+[totalSupply()](#totalsupply-e28692-uint256-1)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
 
-transfer(recipient, amount)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-e28692-bool-1)
 
-allowance(owner, spender)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
 
-approve(spender, amount)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
-transferFrom(sender, recipient, amount)
+[transferFrom(sender, recipient, amount)](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)
 
-increaseAllowance(spender, addedValue)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-e28692-bool-1)
 
-decreaseAllowance(spender, subtractedValue)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-e28692-bool-1)
 
-_transfer(sender, recipient, amount)
+[_transfer(sender, recipient, amount)](#_transferaddress-sender-address-recipient-uint256-amount)
 
-_mint(account, amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
 
-_burn(account, amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
 
-_approve(owner, spender, amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
 
-_burnFrom(account, amount)
+[_burnFrom(account, amount)](#_burnfromaddress-account-uint256-amount)
 
 CONTEXT
-constructor()
+[constructor()](./GSN.md#constructoraddress-trustedsigner)
 
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 IERC20
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### burn(uint256 amount)
 公开#
 销毁来自调用者的代币数量。
 
-参见*ERC20._burn*。
+参见[ERC20._burn](#_burnaddress-account-uint256-amount)。
 
 #### burnFrom(address account, uint256 amount)
 公开#
-请查阅 *ERC20._burnFrom*.
+请查阅 [ERC20._burnFrom](#_burnfromaddress-account-uint256-amount).
 
 ### ERC20Pausable
 带有可暂停转账和授权功能的ERC20。
@@ -471,81 +471,83 @@ Approval(owner, spender, value)
 
 **MODIFIERS**
 PAUSABLE
-whenNotPaused()
+[whenNotPaused()](./Lifecycle.md#whennotpaused)
 
-whenPaused()
+[whenPaused()](./Lifecycle.md#whenpaused)
 
 PAUSERROLE
-onlyPauser()
+[onlyPauser()](./Access.md#onlypauser)
 
 **FUNCTIONS**
-transfer(to, value)
+[transfer(to, value)](#transferaddress-to-uint256-value-→-bool)
 
-transferFrom(from, to, value)
+[transferFrom(from, to, value)](#transferfromaddress-from-address-to-uint256-value-→-bool)
 
-approve(spender, value)
+[approve(spender, value)](#approveaddress-spender-uint256-value-→-bool)
 
-increaseAllowance(spender, addedValue)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-e28692-bool-1)
 
-decreaseAllowance(spender, subtractedValue)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-e28692-bool-1)
 
 PAUSABLE
-constructor()
+[constructor()](./Lifecycle.md#constructor)
 
-paused()
+[paused()](./Lifecycle.md#paused-→-bool)
 
-pause()
+[pause()](./Lifecycle.md#pause)
 
-unpause()
+[unpause()](./Lifecycle.md#unpause)
 
 PAUSERROLE
-isPauser(account)
+[isPauser(account)](./Access.md#ispauseraddress-account-→-bool)
 
-addPauser(account)
+[addPauser(account)](./Access.md#addpauseraddress-account)
 
-renouncePauser()
+[renouncePauser()](./Access.md#renouncepauser)
 
-_addPauser(account)
+[_addPauser(account)](./Access.md#_addpauseraddress-account)
 
-_removePauser(account)
+[_removePauser(account)](./Access.md#_removepauseraddress-account)
 
 ERC20
-totalSupply()
+[totalSupply()](#totalsupply-e28692-uint256-1)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
 
-allowance(owner, spender)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-e28692-bool-1)
 
-_transfer(sender, recipient, amount)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
 
-_mint(account, amount)
+[_transfer(sender, recipient, amount)](#_transferaddress-sender-address-recipient-uint256-amount)
 
-_burn(account, amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
 
-_approve(owner, spender, amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
 
-_burnFrom(account, amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
+
+[_burnFrom(account, amount)](#_burnfromaddress-account-uint256-amount)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 PAUSABLE
-Paused(account)
+[Paused(account)](./Lifecycle.md#paused-→-bool)
 
-Unpaused(account)
+[Unpaused(account)](./Lifecycle.md#unpausedaddress-account)
 
 PAUSERROLE
-PauserAdded(account)
+[PauserAdded(account)](./Access.md#pauseraddedaddress-account)
 
-PauserRemoved(account)
+[PauserRemoved(account)](./Access.md#pauserremovedaddress-account)
 
 IERC20
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### transfer(address to, uint256 value) → bool
 公开#
@@ -564,73 +566,74 @@ Approval(owner, spender, value)
 
 
 ### ERC20Capped
-*ERC20Mintable*的扩展，为代币的供应添加了上限。
+[ERC20Mintable](#erc20mintable)的扩展，为代币的供应添加了上限。
 
 **MODIFIERS**
 MINTERROLE
-onlyMinter()
+[onlyMinter()](./Access.md#onlyminter)
 
 **FUNCTIONS**
-constructor(cap)
+[constructor(cap)](#constructoruint256-cap)
 
-cap()
+[cap()](#cap-→-uint256)
 
-_mint(account, value)
+[_mint(account, value)](#_mintaddress-account-uint256-value)
 
 ERC20MINTABLE
-mint(account, amount)
+[mint(account, amount)](#mintaddress-account-uint256-amount-→-bool)
 
 MINTERROLE
-isMinter(account)
+[isPauser(account)](./Access.md#ispauseraddress-account-→-bool)
 
-addMinter(account)
+[addPauser(account)](./Access.md#addpauseraddress-account)
 
-renounceMinter()
+[renouncePauser()](./Access.md#renouncepauser)
 
-_addMinter(account)
+[_addPauser(account)](./Access.md#_addpauseraddress-account)
 
-_removeMinter(account)
+[_removePauser(account)](./Access.md#_removepauseraddress-account)
 
 ERC20
-totalSupply()
+[totalSupply()](#totalsupply-e28692-uint256-1)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
 
-transfer(recipient, amount)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-e28692-bool-1)
 
-allowance(owner, spender)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
 
-approve(spender, amount)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
-transferFrom(sender, recipient, amount)
+[transferFrom(sender, recipient, amount)](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)
 
-increaseAllowance(spender, addedValue)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-e28692-bool-1)
 
-decreaseAllowance(spender, subtractedValue)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-e28692-bool-1)
 
-_transfer(sender, recipient, amount)
+[_transfer(sender, recipient, amount)](#_transferaddress-sender-address-recipient-uint256-amount)
 
-_burn(account, amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
 
-_approve(owner, spender, amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
 
-_burnFrom(account, amount)
+[_burnFrom(account, amount)](#_burnfromaddress-account-uint256-amount)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
+
 
 **EVENTS**
 MINTERROLE
-MinterAdded(account)
+[MinterAdded(account)](./Access.md#minteraddedaddress-account)
 
-MinterRemoved(account)
+[MinterRemoved(account)](./Access.md#minterremovedaddress-account)
 
 IERC20
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(uint256 cap)
 公开#
@@ -642,7 +645,7 @@ Approval(owner, spender, value)
 
 #### _mint(address account, uint256 value)
 内部#
-请参阅*ERC20Mintable.mint*。
+请参阅[ERC20Mintable.mint](#mintaddress-account-uint256-amount-→-bool)。
 
 要求：
 
@@ -654,15 +657,15 @@ Approval(owner, spender, value)
 在ERC20操作周围包装器，当代币合约返回false时会抛出异常。也支持返回无值（而是在失败时回滚或抛出异常）的代币，假设非回滚调用是成功的。要使用这个库，您可以在您的合约中添加一个using SafeERC20 for ERC20;语句，这样您就可以调用安全操作，如token.safeTransfer(…​)等。
 
 **FUNCTIONS**
-safeTransfer(token, to, value)
+[safeTransfer(token, to, value)](#safetransfercontract-ierc20-token-address-to-uint256-value)
 
-safeTransferFrom(token, from, to, value)
+[safeTransferFrom(token, from, to, value)](#safetransferfromcontract-ierc20-token-address-from-address-to-uint256-value)
 
-safeApprove(token, spender, value)
+[safeApprove(token, spender, value)](#safeapprovecontract-ierc20-token-address-spender-uint256-value)
 
-safeIncreaseAllowance(token, spender, value)
+[safeIncreaseAllowance(token, spender, value)](#safeincreaseallowancecontract-ierc20-token-address-spender-uint256-value)
 
-safeDecreaseAllowance(token, spender, value)
+[safeDecreaseAllowance(token, spender, value)](#safedecreaseallowancecontract-ierc20-token-address-spender-uint256-value)
 
 #### safeTransfer(contract IERC20 token, address to, uint256 value)
 内部#
@@ -684,18 +687,18 @@ safeDecreaseAllowance(token, spender, value)
 
 适用于简单的解锁计划，例如“顾问在1年后获得所有代币”。
 
-对于更完整的解锁计划，请参阅*TokenVesting*。
+对于更完整的解锁计划，请参阅[TokenVesting](./Drafts.md#tokenvesting)。
 
 **FUNCTIONS**
-constructor(token, beneficiary, releaseTime)
+[constructor(token, beneficiary, releaseTime)](#constructorcontract-ierc20-token-address-beneficiary-uint256-releasetime)
 
-token()
+[token()](#token-→-contract-ierc20)
 
-beneficiary()
+[beneficiary()](#beneficiary-→-address)
 
-releaseTime()
+[releaseTime()](#releasetime-→-uint256)
 
-release()
+[release()](#release)
 
 #### constructor(contract IERC20 token, address beneficiary, uint256 releaseTime)
 公开#
