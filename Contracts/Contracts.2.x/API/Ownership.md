@@ -2,7 +2,7 @@
 简单授权和访问控制机制的合约模块。
 
 > TIP
-对于更复杂的需求，请参见访问。
+对于更复杂的需求，请参见 [Access](./Access.md)。
 
 ## Contracts
 
@@ -12,28 +12,28 @@
 该模块通过继承来使用。它将提供修饰符onlyOwner，可以应用于您的函数，以限制它们只能由所有者使用。
 
 **MODIFIERS**
-onlyOwner()
+[onlyOwner()](#onlyowner)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor)
 
-owner()
+[owner()](#owner-→-address)
 
-isOwner()
+[isOwner()](#isowner-→-bool)
 
-renounceOwnership()
+[renounceOwnership()](#renounceownership)
 
-transferOwnership(newOwner)
+[transferOwnership(newOwner)](#transferownershipaddress-newowner)
 
-_transferOwnership(newOwner)
+[_transferOwnership(newOwner)](#_transferownershipaddress-newowner)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-OwnershipTransferred(previousOwner, newOwner)
+[OwnershipTransferred(previousOwner, newOwner)](#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### onlyOwner()
 修饰符#
@@ -74,22 +74,22 @@ OwnershipTransferred(previousOwner, newOwner)
 一个次要合约只能由其主要账户（创建它的账户）使用。
 
 **MODIFIERS**
-onlyPrimary()
+[onlyPrimary()](#onlyprimary)
 
 **FUNCTIONS**
-constructor()
+[constructor()](#constructor-1)
 
-primary()
+[primary()](#primary-→-address)
 
-transferPrimary(recipient)
+[transferPrimary(recipient)](#transferprimaryaddress-recipient)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
-PrimaryTransferred(recipient)
+[PrimaryTransferred(recipient)](#primarytransferredaddress-recipient)
 
 #### onlyPrimary()
 修饰符#
