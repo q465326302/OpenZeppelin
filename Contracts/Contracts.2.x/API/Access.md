@@ -109,7 +109,7 @@ CONTEXT
 **EVENTS**
 [MinterAdded(account)](#minteraddedaddress-account)
 
-[MinterRemoved(account)](#minteraddedaddress-account)
+[MinterRemoved(account)](#minterremovedaddress-account)
 
 #### onlyMinter()
 修饰符#
@@ -135,7 +135,7 @@ CONTEXT
 #### MinterAdded(address account)
 事件#
 
-#### MinterAdded(address account)
+#### MinterRemoved(address account)
 事件#
 
 ### PauserRole
