@@ -2,30 +2,30 @@
 这组接口、合约和工具都与[ERC20代币标准](https://eips.ethereum.org/EIPS/eip-20)相关。
 
 > TIP
-要了解ERC20代币的概述并了解如何创建代币合约，请阅读我们的*ERC20指南*。
+要了解ERC20代币的概述并了解如何创建代币合约，请阅读我们的[ERC20指南](../Tokens/ERC20/ERC20.md)。
 
 
 有几个核心合约实现了EIP中指定的行为：
 
-* IERC20：所有ERC20实现都应符合的接口
+* [IERC20](#ierc20)：所有ERC20实现都应符合的接口
 
-* ERC20：ERC20接口的基本实现
+* [ERC20](#erc20)：ERC20接口的基本实现
 
-* ERC20Detailed：包括*名称*、*符号*和*小数点*的可选标准扩展到基本接口
+* [ERC20Detailed](#erc20detailed)：包括 [name](#name-→-string)、 [symbol](#symbol-→-string)和[decimals](#decimals-→-uint8)的可选标准扩展到基本接口
 
 此外，还有多个自定义扩展，包括：
 
-* 指定可以创建代币供应的地址（*ERC20Mintable*），可选的最大上限（*ERC20Capped*）
+* 指定可以创建代币供应的地址（[ERC20Mintable](#erc20mintable)），可选的最大上限（[ERC20Capped](#erc20capped)）
 
-* 销毁自己的代币（*ERC20Burnable*）
+* 销毁自己的代币（[ERC20Burnable](#erc20burnable)）
 
-* 指定可以暂停所有用户的代币操作的地址（*ERC20Pausable*）。
+* 指定可以暂停所有用户的代币操作的地址（[ERC20Pausable](#erc20pausable)）。
 
 最后，还有一些与ERC20合约进行各种交互的实用工具。
 
-* *SafeERC20*是一个包装器，可以消除处理布尔返回值的需要。
+* [SafeERC20](#safeerc20)是一个包装器，可以消除处理布尔返回值的需要。
 
-* *TokenTimelock*可以将代币保存给受益人，直到指定的时间。
+* [TokenTimelock](#tokentimelock)可以将代币保存给受益人，直到指定的时间。
 
 > NOTE
 此页面尚未完成。我们正在努力改进它以供下一个版本发布。敬请关注！
@@ -33,25 +33,25 @@
 ## 核心
 
 ### IERC20
-ERC20标准的接口，如在EIP中定义的。不包括可选函数；要访问它们，请参阅*ERC20Detailed*。
+ERC20标准的接口，如在EIP中定义的。不包括可选函数；要访问它们，请参阅[ERC20Detailed](#erc20detailed)。
 
 **FUNCTIONS**
-totalSupply()
+[totalSupply()](#totalsupply-→-uint256)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-→-uint256)
 
-transfer(recipient, amount)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-→-bool)
 
-allowance(owner, spender)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-→-uint256)
 
-approve(spender, amount)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-→-bool)
 
-transferFrom(sender, recipient, amount)
+[transferFrom(sender, recipient, amount)](#transferaddress-recipient-uint256-amount-→-bool)
 
 **EVENTS**
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### totalSupply() → uint256
 外部#
@@ -67,13 +67,13 @@ Approval(owner, spender, value)
 
 返回一个布尔值，表示操作是否成功。
 
-触发一个*Transfer*事件。
+触发一个[Transfer](#transferaddress-from-address-to-uint256-value)事件。
 
 #### allowance(address owner, address spender) → uint256
 外部#
-返回spender将被允许代表owner通过*transferFrom*花费的剩余代币数量。默认情况下，该值为零。
+返回spender将被允许代表owner通过[transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)花费的剩余代币数量。默认情况下，该值为零。
 
-当调用*approve*或*transferFrom*时，此值会发生变化。
+当调用[approve](#approveaddress-spender-uint256-amount-→-bool)或[transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)时，此值会发生变化。
 
 #### approve(address spender, uint256 amount) → bool
 外部#
@@ -84,7 +84,7 @@ Approval(owner, spender, value)
 > IMPORTANT
 请注意，使用此方法更改津贴存在风险，因为不幸的交易顺序可能导致某人同时使用旧的和新的津贴。缓解此竞争条件的一种可能解决方案是首先将支出者的津贴减少到0，然后再设置所需的值：https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
 
-发出一个*Approval*事件。
+发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件。
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
 外部#
@@ -92,7 +92,7 @@ Approval(owner, spender, value)
 
 返回一个布尔值，指示操作是否成功。
 
-触发一个*Transfer*事件。
+触发一个[Transfer](#transferaddress-from-address-to-uint256-value)事件。
 
 #### Transfer(address from, address to, uint256 value)
 事件#
@@ -102,73 +102,73 @@ Approval(owner, spender, value)
 
 #### Approval(address owner, address spender, uint256 value)
 事件#
-当通过调用*approve*设置所有者的支出者的津贴时发出。 value是新的津贴金额。
+当通过调用[approve](#approveaddress-spender-uint256-amount-→-bool)设置所有者的支出者的津贴时发出。 value是新的津贴金额。
 
 ### ERC20
-*IERC20接口*的实现。
+[IERC20](#ierc20)接口的实现。
 
-这个实现对于代币的创建方式是不可知的。这意味着在派生合约中必须使用*_mint*添加一个供应机制。对于通用机制，请参阅*ERC20Mintable*。
+这个实现对于代币的创建方式是不可知的。这意味着在派生合约中必须使用[_mint](#_mintaddress-account-uint256-amount)添加一个供应机制。对于通用机制，请参阅[ERC20Mintable](#erc20mintable)。
 
 > TIP
 有关详细的撰写，请参阅我们的 [供应机制实施指南](https://forum.zeppelin.solutions/t/how-to-implement-erc20-supply-mechanisms/226)。
 
 我们遵循了OpenZeppelin的一般准则：函数在失败时回滚，而不是返回false。尽管如此，这种行为是常规的，不会与ERC20应用程序的期望发生冲突。
 
-此外，在调用*transferFrom*时会发出一个*Approval*事件。这使得应用程序可以通过监听这些事件来重建所有账户的津贴。其他实现EIP的方式可能不会发出这些事件，因为规范中没有要求。
+此外，在调用[transferFrom](#transferaddress-recipient-uint256-amount-e28692-bool-1)时会发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件。这使得应用程序可以通过监听这些事件来重建所有账户的津贴。其他实现EIP的方式可能不会发出这些事件，因为规范中没有要求。
 
-最后，非标准的*decreaseAllowance*和*increaseAllowance*函数已被添加以减轻围绕设置津贴的众所周知的问题。请参阅*IERC20.approve*。
+最后，非标准的[decreaseAllowance](#decreaseallowanceaddress-spender-uint256-subtractedvalue-→-bool)和[increaseAllowance](#increaseallowanceaddress-spender-uint256-addedvalue-→-bool)函数已被添加以减轻围绕设置津贴的众所周知的问题。请参阅*IERC20.approve*。
 
 **FUNCTIONS**
-totalSupply()
+[totalSupply()](#totalsupply-e28692-uint256-1)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
 
-transfer(recipient, amount)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-e28692-bool-1)
 
-allowance(owner, spender)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
 
-approve(spender, amount)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
-transferFrom(sender, recipient, amount)
+[transferFrom(sender, recipient, amount)](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)
 
-increaseAllowance(spender, addedValue)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-e28692-bool-1)
 
-decreaseAllowance(spender, subtractedValue)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-e28692-bool-1)
 
-_transfer(sender, recipient, amount)
+[_transfer(sender, recipient, amount)](#_transferaddress-sender-address-recipient-uint256-amount)
 
-_mint(account, amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
 
-_burn(account, amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
 
-_approve(owner, spender, amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
 
-_burnFrom(account, amount)
+[_burnFrom(account, amount)](#_burnfromaddress-account-uint256-amount)
 
 CONTEXT
-constructor()
+[constructor()](./GSN.md#constructoraddress-trustedsigner)
 
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 IERC20
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### totalSupply() → uint256
 公开#
-请查阅  *IERC20.totalSupply*.
+请查阅  [IERC20.totalSupply](#totalsupply-→-uint256).
 
 #### balanceOf(address account) → uint256
 公开#
-请查阅 *IERC20.balanceOf*.
+请查阅 [IERC20.balanceOf](#balanceofaddress-account-→-uint256).
 
 #### transfer(address recipient, uint256 amount) → bool
 公开#
-请参阅IERC20.Transfer。
+请参阅[IERC20.Transfer](#transferaddress-recipient-uint256-amount-→-bool)。
 
 要求：
 
@@ -178,11 +178,11 @@ Approval(owner, spender, value)
 
 #### allowance(address owner, address spender) → uint256
 公开#
-请查阅  *IERC20.allowance*.
+请查阅 [IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256).
 
 #### approve(address spender, uint256 amount) → bool
 公开#
-请查阅 *IERC20.approve*。
+请查阅 [IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)。
 
 要求：
 
@@ -190,9 +190,9 @@ Approval(owner, spender, value)
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
 公开#
-参见*IERC20.transferFrom*。
+参见[IERC20.transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)。
 
-发出一个*Approval*事件，表示更新的授权额度。这不是EIP所要求的。请参阅*ERC20*开头的注释；
+发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件，表示更新的授权额度。这不是EIP所要求的。请参阅[ERC20](#erc20)开头的注释；
 
 要求：- 发送者和接收者不能是零地址。- 发送者必须至少拥有amount数量的余额。- 调用者必须至少拥有发送者的代币的amount数量的授权额度。
 
@@ -200,9 +200,9 @@ Approval(owner, spender, value)
 公开#
 原子性地增加调用者授予给spender的津贴。
 
-这是一个替代*approve*的方法，可以用作解决*IERC20.approve*中描述的问题的方法。
+这是一个替代[approve](#approveaddress-spender-uint256-amount-e28692-bool-1)的方法，可以用作解决[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题的方法。
 
-发出一个*Approval*事件，指示更新的津贴。
+发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件，指示更新的津贴。
 
 要求：
 * spender不能为零地址。
@@ -211,9 +211,9 @@ Approval(owner, spender, value)
 公开#
 以原子方式将调用者授予给spender的津贴减少。
 
-这是一种替代*approve*的方法，可用于解决*IERC20.approve*中描述的问题。
+这是一种替代[approve](#approveaddress-spender-uint256-amount-e28692-bool-1)的方法，可用于解决[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题。
 
-发出一个Approval事件，指示更新的津贴。
+发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件，指示更新的津贴。
 
 要求：
 * spender不能是零地址。
@@ -223,9 +223,9 @@ Approval(owner, spender, value)
 内部#
 将代币数量从发送者转移到接收者。
 
-这是一个内部函数，相当于*转账*，可以用于实现自动代币费用、减持机制等。
+这是一个内部函数，相当于[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)，可以用于实现自动代币费用、减持机制等。
 
-触发一个*转账*事件。
+触发一个[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)事件。
 
 要求：
 * 发送者不能是零地址。
@@ -238,7 +238,7 @@ Approval(owner, spender, value)
 内部#
 创建一定数量的代币并将其分配给账户，增加总供应量。
 
-发出一个*转账*事件，将from设置为零地址。
+发出一个[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)事件，将from设置为零地址。
 
 要求
 
@@ -248,7 +248,7 @@ Approval(owner, spender, value)
 内部#
 销毁账户中的一定数量代币，从而减少总供应量。
 
-发出一个*转账*事件，将to设置为零地址。
+发出一个[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)事件，将to设置为零地址。
 
 要求
 
@@ -262,7 +262,7 @@ Approval(owner, spender, value)
 
 这个内部函数等同于approve，并可以用于设置某些子系统的自动津贴等。
 
-发出一个*Approval*事件。
+发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件。
 
 要求：
 
@@ -274,38 +274,37 @@ Approval(owner, spender, value)
 内部#
 销毁账户中的代币数量。然后从调用者的可用额度中扣除相应的数量。
 
-请参考*_burn*和*_approve*。
+请参考[_burn](#_burnaddress-account-uint256-amount)和[_approve](#_approveaddress-owner-address-spender-uint256-amount)。
 
 ### ERC20Detailed
 来自ERC20标准的可选功能。
 
 **FUNCTIONS**
-constructor(name, symbol, decimals)
+[constructor(name, symbol, decimals)](#constructorstring-name-string-symbol-uint8-decimals)
 
-name()
+[name()](#name-→-string)
 
-symbol()
+[symbol()](#symbol-→-string)
 
-decimals()
+[decimals()](#decimals-→-uint8)
 
 IERC20
-totalSupply()
+[totalSupply()](#totalsupply-→-uint256)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-→-uint256)
 
-transfer(recipient, amount)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-→-bool)
 
-allowance(owner, spender)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-→-uint256)
 
-approve(spender, amount)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-→-bool)
 
-transferFrom(sender, recipient, amount)
+[transferFrom(sender, recipient, amount)](#transferaddress-recipient-uint256-amount-→-bool)
 
 **EVENTS**
-IERC20
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(string name, string symbol, uint8 decimals)
 公开#
@@ -326,89 +325,89 @@ Approval(owner, spender, value)
 代币通常选择18个小数位，模仿以太币和Wei之间的关系。
 
 > NOTE
-这些信息仅用于显示目的，不会影响合约的任何算术运算，包括IERC20.balanceOf和IERC20.Transfer。
+这些信息仅用于显示目的，不会影响合约的任何算术运算，包括[IERC20.balanceOf](#balanceofaddress-account-→-uint256)和[IERC20.Transfer](#transferaddress-recipient-uint256-amount-→-bool)。
 
 ## 扩展
 
 ### ERC20Mintable
-*ERC20*的扩展版本，添加了一组具有*MinterRole*的账户，这些账户有权根据自己的意愿铸造（创建）新的代币。
+[ERC20](#erc20)的扩展版本，添加了一组具有[MinterRole](#mintaddress-account-uint256-amount-→-bool)的账户，这些账户有权根据自己的意愿铸造（创建）新的代币。
 
 在构建时，合约的部署者是唯一的铸造者。
 
 **MODIFIERS**
 MINTERROLE
-onlyMinter()
+[onlyMinter()](./Access.md#onlyminter)
 
 **FUNCTIONS**
-mint(account, amount)
+[mint(account, amount)](#mintaddress-account-uint256-amount-→-bool)
 
 MINTERROLE
-constructor()
+[constructor()](./Access.md#constructor)
 
-isMinter(account)
+[isMinter(account)](./Access.md#isminteraddress-account-→-bool)
 
-addMinter(account)
+[addMinter(account)](./Access.md#addminteraddress-account)
 
-renounceMinter()
+[renounceMinter()](./Access.md#renounceminter)
 
-_addMinter(account)
+[_addMinter(account)](./Access.md#_addminteraddress-account)
 
-_removeMinter(account)
+[_removeMinter(account)](./Access.md#_removeminteraddress-account)
 
 ERC20
-totalSupply()
+[totalSupply()](#totalsupply-e28692-uint256-1)
 
-balanceOf(account)
+[balanceOf(account)](#balanceofaddress-account-e28692-uint256-1)
 
-transfer(recipient, amount)
+[transfer(recipient, amount)](#transferaddress-recipient-uint256-amount-e28692-bool-1)
 
-allowance(owner, spender)
+[allowance(owner, spender)](#allowanceaddress-owner-address-spender-e28692-uint256-1)
 
-approve(spender, amount)
+[approve(spender, amount)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
-transferFrom(sender, recipient, amount)
+[transferFrom(sender, recipient, amount)](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)
 
-increaseAllowance(spender, addedValue)
+[increaseAllowance(spender, addedValue)](#increaseallowanceaddress-spender-uint256-addedvalue-e28692-bool-1)
 
-decreaseAllowance(spender, subtractedValue)
+[decreaseAllowance(spender, subtractedValue)](#decreaseallowanceaddress-spender-uint256-subtractedvalue-e28692-bool-1)
 
-_transfer(sender, recipient, amount)
+[_transfer(sender, recipient, amount)](#_transferaddress-sender-address-recipient-uint256-amount)
 
-_mint(account, amount)
+[_mint(account, amount)](#_mintaddress-account-uint256-amount)
 
-_burn(account, amount)
+[_burn(account, amount)](#_burnaddress-account-uint256-amount)
 
-_approve(owner, spender, amount)
+[_approve(owner, spender, amount)](#_approveaddress-owner-address-spender-uint256-amount)
 
-_burnFrom(account, amount)
+[_burnFrom(account, amount)](#_burnfromaddress-account-uint256-amount)
 
 CONTEXT
-_msgSender()
+[_msgSender()](./GSN.md#_msgsender-→-address-payable)
 
-_msgData()
+[_msgData()](./GSN.md#_msgdata-→-bytes)
 
 **EVENTS**
 MINTERROLE
-MinterAdded(account)
+[MinterAdded(account)](./Access.md#minteraddedaddress-account)
 
-MinterRemoved(account)
+[MinterRemoved(account)](./Access.md#minterremovedaddress-account)
 
 IERC20
-Transfer(from, to, value)
+[Transfer(from, to, value)](#transferaddress-from-address-to-uint256-value)
 
-Approval(owner, spender, value)
+[Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### mint(address account, uint256 amount) → bool
 公开#
-请参考*ERC20._mint*。
+请参考[ERC20._mint](#_mintaddress-account-uint256-amount)。
 
 要求：
 
-* 调用者必须具有*MinterRole*身份。
+* 调用者必须具有[MinterRole](./Access.md#minterrole)身份。
 
 #### ERC20Burnable
 
-*ERC20*的扩展，允许代币持有者销毁自己拥有的代币以及其授权的代币，以一种可以通过链外事件分析识别的方式。
+[ERC20](./ERC20.md)的扩展，允许代币持有者销毁自己拥有的代币以及其授权的代币，以一种可以通过链外事件分析识别的方式。
 
 **FUNCTIONS**
 burn(amount)
