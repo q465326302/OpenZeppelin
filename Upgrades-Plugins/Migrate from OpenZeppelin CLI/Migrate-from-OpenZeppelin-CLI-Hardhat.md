@@ -20,25 +20,36 @@ CLI和插件之间的主要区别在于，前者曾经为你跟踪你的可升�
 除此之外，其他一切都保持不变，因为CLI和插件都使用相同的已知的Proxy和ProxyAdmin合约，只是提供了两种不同的接口来管理它们。这意味着迁移你的项目不会触及链上的任何东西，一切都是安全和本地的。
 
 ## Installation
-安装Truffle，并初始化你的项目。
-
-> WARNING
-当Truffle询问时，选择不覆盖合约或测试目录。不覆盖的话，你不会得到一个[初始的迁移](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations#initial-migration)。确保你创建了Migrations.sol和初始迁移。
+[安装Hardhat](https://hardhat.org/tutorial/creating-a-new-hardhat-project.html)并在初始化时选择Create an empty hardhat.config.js选项。
 
 ```
-$ npm install --save-dev truffle
-$ npx truffle init
+npm install --save-dev hardhat
+npx hardhat
+```
+然后安装Upgrades插件：
+
+```
+npm install --save-dev @openzeppelin/hardhat-upgrades
+npm install --save-dev @nomiclabs/hardhat-ethers ethers # peer dependencies
 ```
 
-然后安装升级插件:
+完成后，在Hardhat配置文件中注册插件，添加以下行：
+
 ```
-npm install --save-dev @openzeppelin/truffle-upgrades
+// hardhat.config.js
+require('@openzeppelin/hardhat-upgrades');
+
+module.exports = {
+  // ...
+};
 ```
 
-这是一个单向过程。请确保备份或版本控制您的.openzeppelin/文件夹。
-现在，让我们通过运行以下命令来迁移我们的项目：
+迁移CLI项目
+这是一个单向过程。确保保留您的.openzeppelin/文件夹的备份或版本控制副本。
+现在，让我们通过运行以下命令迁移我们的项目：
+
 ```
-$ npx migrate-oz-cli-project
+npx migrate-oz-cli-project
 ```
 
 ```
@@ -64,25 +75,25 @@ These were your project's compiler options:
 }
 ```
 
-这个脚本是与插件一起安装的，它的作用是删除CLI项目文件，并将您的旧网络文件（全部位于.openzeppelin目录下）转换为其升级插件的等价物。再次强调，链上的内容没有改变，只是本地文件。请注意，一旦您运行了这个，除非通过备份或版本控制恢复更改，否则您将无法再使用CLI来管理这个项目的合约。
+这个脚本是与插件一起安装的，它的作用是删除CLI项目文件，并将您的旧网络文件（所有这些文件都位于.openzeppelin目录下）转换为其Upgrades插件等效项。再次强调，链上没有任何改变，只有本地文件。请注意，一旦您运行了这个，除非通过备份或版本控制恢复更改，否则您将无法再使用CLI来管理这个项目的合约。
 
-迁移脚本还会将一个openzeppelin-cli-export.json文件导出到您的工作目录，其中包含CLI曾经为您管理的所有数据，现在您可以自由地按照您认为最好的方式使用。这包括您的编译器设置，这些设置也会在迁移结束时打印出来，以便于查看。让我们将它们添加到我们的新项目配置中：
+迁移脚本还会将一个openzeppelin-cli-export.json文件导出到您的工作目录，该文件包含CLI曾经为您管理的所有数据，现在您可以自由地使用它，无论您认为最好。这包括您的编译器设置，这些设置也会在迁移结束时打印出来，以方便使用。让我们将它们添加到我们的新项目配置中：
 
-将编译器设置复制到我们的Truffle配置文件的[compilers field](https://www.trufflesuite.com/docs/truffle/reference/configuration#compiler-configuration)中
+将编译器设置复制到Hardhat配置文件中的[solidity字段](https://hardhat.org/config/#available-config-options)
 
 ```
-// truffle-config.js
+// hardhat.config.js
+
+// ...
 
 module.exports = {
   // ...
-  compilers: {
-    solc: {
-      version: "0.6.12",
-      settings: {
-        optimizer: {
-          enabled: false,
-          runs: 200
-        }
+  solidity: {
+    version: "0.6.12",
+    settings: {
+      optimizer: {
+        enabled: false,
+        runs: 200
       }
     }
   }
@@ -90,12 +101,13 @@ module.exports = {
 ```
 
 > NOTE
-在truffle-config.js和hardhat.config.js文件中，solidity编译器配置格式是不同的
+truffle-config.js和hardhat.config.js文件中的solidity编译器配置格式是不同的
 
-就这样，您已经成功地迁移了您的CLI项目。现在让我们试试您的新设置，升级您迁移的合约中的一个。
+就这样，您已经成功迁移了您的CLI项目。现在让我们尝试使用您的新设置升级您迁移的合约中的一个。
 
 ## Upgrade to a new version
-假设我们在CLI项目中有一个Box合约，部署到Rinkeby网络。然后如果我们打开我们的导出文件，我们会看到类似这样的内容：
+假设我们在CLI项目中有一个Box合约，部署到Rinkeby网络。然后如果我们打开我们的导出文件，我们会看到类似这样的东西：
+
 ```
 // openzeppelin-cli-export.json
 {
@@ -115,7 +127,7 @@ module.exports = {
     }
   },
   "compiler": {
-    // 我们将忽略编译器设置
+    // we'll ignore compiler settings for this
   }
 }
 ```
@@ -126,32 +138,29 @@ module.exports = {
 
 * implementation：实现地址（您的可升级合约逻辑）
 
-* admin：代理管理员的地址，除非您设置了其他方式，否则它可能属于一个ProxyAdmin合约
+* admin：代理管理员的地址，除非您另行设置，否则可能属于ProxyAdmin合约
 
-如果我们决定使用插件和这个导出文件将我们的Box合约升级到BoxV2合约，那么它的样子就会是这样：
+如果我们决定将我们的Box合约升级到BoxV2合约，使用插件和这个导出文件，这就是它的样子：
 
-这些脚本只是如何使用导出数据的示例。我们对是否保留该文件或如何处理其数据没有任何建议。这现在取决于用户。
+这些脚本只是如何使用导出数据的示例。我们对是否保留该文件的状态或如何处理其数据没有任何建议。这现在取决于用户。
 
-使用Truffle，我们会编写一个迁移（您可以在[这里](https://www.trufflesuite.com/docs/truffle/getting-started/running-migrations)阅读更多关于Truffle迁移的信息，以及在[这里](../API-Reference/Truffle-Upgrades.md)阅读更多关于使用truffle-upgrades插件的信息）：
-
+使用Hardhat，我们会写一个脚本（你可以在[这里](https://hardhat.org/guides/scripts.html)阅读更多关于Hardhat脚本的信息，以及在[这里](../API-Reference/Hardhat-Upgrades.md)阅读更多关于使用hardhat-upgrades插件的信息）：
 ```
-// migrations/2_upgrade_box_contract.js
+// scripts/upgradeBoxToV2.js
 
-const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
+const { ethers, upgrades } = require("hardhat");
 const OZ_SDK_EXPORT = require("../openzeppelin-cli-export.json");
 
-const BoxV2 = artifacts.require('BoxV2');
-
-module.exports = async function (deployer) {
+async function main() {
   const [ Box ] = OZ_SDK_EXPORT.networks.rinkeby.proxies["openzeppelin-upgrades-migration-example/Box"];
-  const instance = await upgradeProxy(Box.address, BoxV2, { deployer });
-  console.log("Upgraded", instance.address);
-};
+  const BoxV2 = await ethers.getContractFactory("BoxV2");
+  await upgrades.upgradeProxy(Box.address, BoxV2);
+}
+
+main();
 ```
 
 ```
-$ npx truffle migrate --network rinkeby
-
+npx hardhat run scripts/upgradeBoxToV2.js --network rinkeby
 ```
-
 就这样！您已经将您的OpenZeppelin CLI项目迁移到了Truffle或Hardhat，并使用插件进行了升级。
