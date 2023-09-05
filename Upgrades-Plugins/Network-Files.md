@@ -2,7 +2,7 @@
 OpenZeppelin Upgrades会在项目根目录的.openzeppelin文件夹中跟踪您部署的所有合约版本，以及代理管理员。您将在该文件夹中找到每个网络的一个文件。建议您将所有网络的文件都提交到源代码控制中，除了开发网络（您可能会在.openzeppelin/unknown-*.json中看到这些文件）。
 
 > NOTE
-.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的*OpenZeppelin CLI*项目中使用这些插件，您必须先进行迁移。请参阅从*CLI迁移*的说明。
+.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的[OpenZeppelin CLI](https://docs.openzeppelin.com/cli/2.8/)项目中使用这些插件，您必须先进行迁移。请参阅从[CLI迁移](./Migrate-from-OpenZeppelin-CLI/Migrate-from-OpenZeppelin-CLI-Hardhat.md)的说明。
 
 ## <network_name>.json
 OpenZeppelin Upgrades会为您工作的每个网络（ropsten、mainnet等）生成一个文件。这些文件具有相同的结构：
@@ -34,9 +34,10 @@ OpenZeppelin Upgrades会为您工作的每个网络（ropsten、mainnet等）生
   }
 }
 ```
+
 除了部署地址之外，每个逻辑合约还会跟踪以下信息：
 * types：跟踪合约或其祖先中使用的所有类型，从基本类型如uint256到自定义的结构体类型。
-* storage：跟踪线性化合约的存储布局，引用types部分中定义的类型，并用于*验证后续版本之间的任何存储布局更改是否兼容*。
+* storage：跟踪线性化合约的存储布局，引用types部分中定义的类型，并用于[验证后续版本之间的任何存储布局更改是否兼容](./Frequently-Asked-Questions.md#实现是兼容的意味着什么)。
 
 文件的命名将是<network_name>.json，但请注意，<network_name>不是从Truffle或Hardhat配置文件中网络条目的名称中获取的，而是从与条目关联的链ID推断出来的。
 

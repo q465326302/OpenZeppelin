@@ -105,7 +105,7 @@ it('works before and after upgrading', async function () {
 
 插件将在项目根目录的.openzeppelin文件夹中跟踪您已部署的所有实现合约，以及代理管理员。您将在该文件夹中找到每个网络的一个文件。建议您将除了开发网络之外的所有网络的文件提交到源代码控制中（您可能会看到它们的文件名为.openzeppelin/unknown-*.json）。
 
-    注意：.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的OpenZeppelin CLI项目中使用Upgrades插件，可以查看[指南](./Migrate%20from%20OpenZeppelin%20CLI/Migrate-from-OpenZeppelin-CLI-Truffle.md)进行迁移。
+  注意：.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的OpenZeppelin CLI项目中使用Upgrades插件，可以查看[指南](./Migrate-from-OpenZeppelin-CLI/Migrate-from-OpenZeppelin-CLI-Hardhat.md)进行迁移。
 
 ## 代理模式
 这些插件支持UUPS、透明和beacon代理模式。UUPS和透明代理可以分别升级，而任意数量的beacon代理可以通过升级它们指向的beacon同时进行原子升级。有关可用的不同代理模式的更多详细信息，请参阅[Proxies](/Contracts/Contracts.4.x/API/Proxy.md)的文档。
