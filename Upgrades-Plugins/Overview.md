@@ -18,6 +18,7 @@
 ```
 npm install --save-dev @openzeppelin/hardhat-upgrades '@nomiclabs/hardhat-ethers@^2.0.0' 'ethers@^5.0.0'
 ```
+
 这将安装我们的Hardhat插件以及必要的对等依赖项。
 
 您还需要在Hardhat配置文件中加载它：
@@ -37,7 +38,7 @@ npm install --save-dev @openzeppelin/truffle-upgrades
 ```
 
 ## 使用
-请参阅使用*Truffle Upgrades*和*Hardhat Upgrades*的文档，或查看下面的示例代码片段。
+请参阅使用[Truffle Upgrades](./API-Reference/Truffle-Upgrades.md)和[Hardhat Upgrades](./API-Reference/Hardhat-Upgrades.md)的文档，或查看下面的示例代码片段。
 
 ### Hardhat使用
 Hardhat用户将能够编写使用该插件部署或升级合约的[脚本](https://hardhat.org/guides/scripts.html)，并管理代理管理员权限。
@@ -92,19 +93,19 @@ it('works before and after upgrading', async function () {
 
 例如，deployProxy执行以下操作：
 
-1. 验证实现是否可以*升级*。
-2. 为您的项目部署*代理管理员*（如果需要）。
-3. 部署*实现合约*。
+1. 验证实现是否可以[升级](./Frequently-Asked-Questions.md#什么是合约的升级安全性)。
+2. 为您的项目部署[代理管理员](./Frequently-Asked-Questions.md#代理管理员是什么)（如果需要）。
+3. 部署[实现合约](./Frequently-Asked-Questions.md#什么是实现合约)。
 4. 创建并初始化代理合约。
 
 当您调用upgradeProxy时：
-1. 验证新的实现是否可以*升级*并且与之前的版本*兼容*。
-2. 检查是否已部署了具有相同字节码的*实现合约*，如果没有，则部署一个新的实现合约。
+1. 验证新的实现是否可以[升级](./Frequently-Asked-Questions.md#什么是合约的升级安全性)并且与之前的版本[兼容](./Frequently-Asked-Questions.md#实现是兼容的意味着什么)。
+2. 检查是否已部署了具有相同字节码的[实现合约](./Frequently-Asked-Questions.md#什么是实现合约)，如果没有，则部署一个新的实现合约。
 3. 升级代理以使用新的实现合约。
 
 插件将在项目根目录的.openzeppelin文件夹中跟踪您已部署的所有实现合约，以及代理管理员。您将在该文件夹中找到每个网络的一个文件。建议您将除了开发网络之外的所有网络的文件提交到源代码控制中（您可能会看到它们的文件名为.openzeppelin/unknown-*.json）。
 
-    注意：.openzeppelin文件夹中的文件格式与*OpenZeppelin CLI*的文件格式不兼容。如果您想在现有的OpenZeppelin CLI项目中使用Upgrades插件，可以使用*指南进行迁移*。
+    注意：.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的OpenZeppelin CLI项目中使用Upgrades插件，可以使用指南进行迁移。
 
 ## 代理模式
 这些插件支持UUPS、透明和beacon代理模式。UUPS和透明代理可以分别升级，而任意数量的beacon代理可以通过升级它们指向的beacon同时进行原子升级。有关可用的不同代理模式的更多详细信息，请参阅*Proxies*的文档。
