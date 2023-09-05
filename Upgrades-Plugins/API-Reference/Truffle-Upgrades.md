@@ -71,7 +71,7 @@ async function deployProxy(
 
 * opts - 一个带有选项的对象：
     * initializer：设置一个不同的初始化函数进行调用，或者指定 false 禁用初始化。
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -108,7 +108,7 @@ async function upgradeProxy(
 * opts - 一个带有选项的对象：
 
     * call：在升级过程中启用执行任意函数调用。该调用使用函数名或签名以及可选参数进行描述。它被批处理到升级事务中，可以安全地调用迁移初始化函数。
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -136,7 +136,7 @@ async function deployBeacon(
 * Contract - 用作实现的Truffle合约类。
 
 * opts - 一个包含选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回值：**
 
@@ -171,7 +171,7 @@ async function upgradeBeacon(
 * Contract - 用作实现的 Truffle 合约类。
 
 * opts - 一个包含选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -208,7 +208,7 @@ async function upgradeBeacon(
 * Contract - 作为新实现的 Truffle 合约类。
 
 * opts - 一个带有选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -307,7 +307,7 @@ async function validateImplementation(
 
 * opts - 一个带有选项的对象：
 
-    * 请参阅[常见选项](#常见选项)。
+    * 请参阅[Common Options](#常见选项)。
 
 **自版本：**
 
@@ -336,7 +336,7 @@ async function deployImplementation(
 * Contract - 用作实现的Truffle合约类。
 
 * opts - 一个包含选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -369,7 +369,7 @@ async function validateUpgrade(
 * newContract - 新的实现合约。
 
 * opts - 一个带有选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **自版本：**
 
@@ -422,7 +422,7 @@ async function prepareUpgrade(
 * Contract - 新的实现合约。
 
 * opts - 一个带有选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -444,7 +444,7 @@ async function deployProxyAdmin(
 **参数：**
 
 * opts - 一个带有选项的对象：
-    * 参见[常见选项](#常见选项)。
+    * 参见[Common Options](#常见选项)。
 
 **返回：**
 
@@ -472,7 +472,7 @@ async function changeProxyAdmin(
 
 * opts - 带有选项的对象：
 
-  * 参见[常见选项](#常见选项)。
+  * 参见[Common Options](#常见选项)。
 
 ## 管理员转移代理管理员所有权
 
@@ -490,7 +490,7 @@ async function transferProxyAdminOwnership(
 
 * opts - 带有选项的对象：
 
-  * 请参阅[常见选项](#常见选项)。
+  * 请参阅[Common Options](#常见选项)。
 
 ## erc1967
 ```
