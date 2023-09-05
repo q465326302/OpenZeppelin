@@ -4,7 +4,7 @@
 值得一提的是，这些限制是基于以太坊虚拟机的工作原理，并适用于所有使用升级合约的项目，而不仅仅是OpenZeppelin Upgrades。
 
 ## 初始化函数
-你可以在不做任何修改的情况下使用Solidity合约与OpenZeppelin Upgrades，除了它们的构造函数。由于基于代理的升级系统的要求，升级合约中不能使用构造函数。要了解这一限制背后的原因，请参阅*代理*。
+你可以在不做任何修改的情况下使用Solidity合约与OpenZeppelin Upgrades，除了它们的构造函数。由于基于代理的升级系统的要求，升级合约中不能使用构造函数。要了解这一限制背后的原因，请参阅 [Proxies](./Proxy-Upgrade-Pattern.md#构造函数注意事项)。
 
 这意味着，在使用OpenZeppelin Upgrades处理合约时，你需要将其构造函数更改为一个常规函数，通常命名为initialize，在其中运行所有的设置逻辑：
 
@@ -21,6 +21,7 @@ contract MyContract {
     }
 }
 ```
+
 然而，尽管Solidity确保构造函数在合约的生命周期内仅被调用一次，但常规函数可以被多次调用。为了防止合约被多次初始化，您需要添加一个检查，以确保initialize函数仅被调用一次。
 
 ```
@@ -39,6 +40,7 @@ contract MyContract {
     }
 }
 ```
+
 由于在编写可升级合约时，这种模式非常常见，OpenZeppelin Contracts提供了一个Initializable基础合约，它具有一个初始化器修饰符，可以处理这个问题。
 ```
 // contracts/MyContract.sol
@@ -134,7 +136,7 @@ contract ERC20Upgradeable is Initializable, ContextUpgradeable, IERC20Upgradeabl
 
 无论是使用OpenZeppelin Contracts还是其他智能合约库，都要确保该库已设置为处理可升级合约。
 
-请在Contracts: Using with Upgrades中了解更多关于*OpenZeppelin Contracts Upgradeable*的信息。
+请在[Contracts: Using with Upgrades](../Contracts/Contracts.4.x/Using-with-Upgrades.md)中了解更多关于OpenZeppelin Contracts Upgradeable的信息。
 
 ### 在字段声明中避免初始值
 Solidity允许在合约中声明字段时定义初始值。
@@ -158,6 +160,7 @@ contract MyContract is Initializable {
 
 > NOTE
 仍然可以定义常量状态变量，因为编译器[不会为这些变量保留存储槽](https://solidity.readthedocs.io/en/latest/contracts.html#constant-state-variables)，而是将每个出现的地方替换为相应的常量表达式。因此，在OpenZeppelin Upgrades中仍然可以使用以下代码：
+
 ```
 contract MyContract {
     uint256 public constant hasInitialValue = 42; // define as constant
@@ -230,7 +233,7 @@ contract MyContract is Initializable {
 这意味着，如果您有一个初始合约，看起来像这样：
 
 ## 修改合约
-当编写合约的新版本时，无论是因为新增功能还是修复错误，还有一个额外的限制需要遵守：您不能更改合约状态变量的声明顺序或类型。您可以通过了解我们的*代理*来了解有关此限制背后原因的更多信息。
+当编写合约的新版本时，无论是因为新增功能还是修复错误，还有一个额外的限制需要遵守：您不能更改合约状态变量的声明顺序或类型。您可以通过了解我们的[Proxies](./Proxy-Upgrade-Pattern.md)来了解有关此限制背后原因的更多信息。
 
 > WARNING
 违反这些存储布局限制将导致升级后的合约的存储值混乱，并可能导致应用程序中的严重错误。
@@ -242,6 +245,7 @@ contract MyContract {
     string private y;
 }
 ```
+
 那么你就不能改变变量的类型。
 ```
 contract MyContract {
@@ -400,4 +404,4 @@ contract Base {
 }
 ```
 
-为了确定新合约版本中的适当存储间隙大小，您可以尝试使用upgradeProxy进行升级，或者只需使用validateUpgrade运行验证（请参阅*Hardhat*或*Truffle*的文档）。如果存储间隙没有被正确地减少，您将看到一个错误信息，指示存储间隙的预期大小。
+为了确定新合约版本中的适当存储间隙大小，您可以尝试使用upgradeProxy进行升级，或者只需使用validateUpgrade运行验证（请参阅[Hardhat](./API-Reference/Hardhat-Upgrades.md)或[Truffle](./API-Reference/Truffle-Upgrades.md)的文档）。如果存储间隙没有被正确地减少，您将看到一个错误信息，指示存储间隙的预期大小。
