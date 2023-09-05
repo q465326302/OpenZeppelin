@@ -21,7 +21,7 @@ validate命令对看起来像可升级合约的合约执行升级安全性检查
 
 * 具有NatSpec注释@custom:oz-upgrades。
 
-* 根据下面的*定义参考合约*，具有NatSpec注释@custom:oz-upgrades-from <reference>。
+* 根据下面的[定义参考合约](#先决条件)，具有NatSpec注释@custom:oz-upgrades-from <reference>。
 
 > TIP
 只需向每个实现合约添加NatSpec注释@custom:oz-upgrades或@custom:oz-upgrades-from <reference>，以便可以将其检测为用于验证的可升级合约。
@@ -113,36 +113,42 @@ npx @openzeppelin/upgrades-core validate [<BUILD_INFO_DIR>] [<OPTIONS>]
 * unsafeSkipStorageCheck - 跳过存储布局兼容性错误的检查。这是一种危险的选项，应作为最后的手段使用。
 
 ## 高级API
-高级API是*validate命令*的程序化等效物。如果您想从JavaScript或TypeScript环境中验证项目的所有可升级合约，请使用此API。
+高级API是[validate命令](#validate命令)的程序化等效物。如果您想从JavaScript或TypeScript环境中验证项目的所有可升级合约，请使用此API。
 
 ### 先决条件
-与*validate命令*相同的先决条件。
+与[validate命令](#validate命令)相同的先决条件。
 
 ### 用法
 导入validateUpgradeSafety函数：
 ```
 import { validateUpgradeSafety } from '@openzeppelin/upgrades-core';
 ```
+
 然后调用该函数来验证您的合约，并获取一个包含验证结果的项目报告。
 
-validateUpgradeSafety
-
-#### 验证升级安全性
+#### validateUpgradeSafety
 ```
 validateUpgradeSafety(
   buildInfoDir?: string,
+  contract?: string,
+  reference?: string,
   opts: ValidateUpgradeSafetyOptions = {},
 ): Promise<ProjectReport>
 ```
-从构建信息目录中检测可升级的合约，并验证它们是否是升级安全的。返回一个包含结果的项目报告。
 
-请注意，此函数不直接抛出验证错误。相反，您必须使用项目报告来确定是否发现了任何错误。
+检测来自构建信息目录的可升级合约，并验证它们是否可以安全升级。返回一个包含结果的[项目报告](#projectreport)。
 
-**参数:**
+注意，此函数不直接抛出验证错误。相反，您必须使用项目报告来确定是否发现了任何错误。
 
-* buildInfoDir - 构建信息目录的路径，其中包含具有Solidity编译器输入和输出的JSON文件。对于Hardhat项目，默认为artifacts/build-info，对于Foundry项目，默认为out/build-info。如果您的项目使用自定义输出目录，则必须在此处指定其构建信息目录。
+**参数：**
 
-* opts - 一个对象，具有以下选项，如*Common Options*中定义的那样：
+* buildInfoDir - 指向包含Solidity编译器输入和输出的JSON文件的构建信息目录的路径。对于Hardhat项目，默认为artifacts/build-info，对于Foundry项目，默认为out/build-info。如果您的项目使用自定义输出目录，则必须在此处指定其构建信息目录。
+
+* contract - 要验证的合约的名称或完全限定名称。如果未指定，则将验证构建信息目录中的所有可升级合约。
+
+* reference - 用于存储布局比较的参考合约的名称或完全限定名称。只能与合约一起使用。如果未指定，则使用正在验证的合约中的@custom:oz-upgrades-from注解。
+
+* opts - 一个对象，其中定义了以下选项，如[Common Options](./Hardhat-Upgrades.md#常见选项)中所定义：
 
   * unsafeAllow
 
@@ -150,9 +156,9 @@ validateUpgradeSafety(
 
   * unsafeSkipStorageCheck
 
-**返回:**
+**返回：**
 
-* 一个项目报告。
+一个[项目报告](#projectreport)。
 
 #### ProjectReport
 ```
@@ -182,7 +188,7 @@ interface ProjectReport {
 ### 先决条件
 编译您的合约以生成Solidity输入和输出的JSON对象。编译器的输出必须包括存储布局。
 
-请注意，低级API*不自动检测*可升级合约，因此不需要验证命令的其他先决条件。相反，您必须为每个要验证的实现合约创建UpgradeableContract的实例，并调用其函数以获取升级安全性和存储布局报告。
+请注意，低级API不自动检测可升级合约，因此不需要[验证命令](#validate命令)的其他先决条件。相反，您必须为每个要验证的实现合约创建UpgradeableContract的实例，并调用其函数以获取升级安全性和存储布局报告。
 
 ### 用法
 导入UpgradeableContract类：
@@ -221,7 +227,7 @@ constructor UpgradeableContract(
 
 * solcOutput - 实现合约的Solidity输出JSON对象。
 
-* opts - 一个带有以下选项的对象，如Common Options中定义的那样：
+* opts - 一个带有以下选项的对象，如[Common Options](./Hardhat-Upgrades.md#常见选项)中定义的那样：
 
     * kind
 
@@ -262,7 +268,7 @@ getStorageUpgradeReport(
 
 * upgradedContract - 另一个表示提议升级的UpgradeableContract实例。
 
-* opts - 一个包含以下选项的对象，如Common Options中定义的：
+* opts - 一个包含以下选项的对象，如[Common Options](./Hardhat-Upgrades.md#常见选项)中定义的：
 
     * kind
 
