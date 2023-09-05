@@ -210,7 +210,7 @@ IERC1967
 
 #### _upgradeBeaconToAndCall(address newBeacon, bytes data, bool forceCall)
 内部#
-进行信标升级并进行附加的设置调用。注意：这将升级信标的地址，而不是升级信标中包含的实现（有关此操作，请参阅 [UpgradeableBeacon._setImplementation](#_setbeaconaddress-beacon-bytes-data)）。
+进行Beacon升级并进行附加的设置调用。注意：这将升级Beacon的地址，而不是升级Beacon中包含的实现（有关此操作，请参阅 [UpgradeableBeacon._setImplementation](#_setbeaconaddress-beacon-bytes-data)）。
 
 发出 {BeaconUpgraded} 事件。
 
@@ -348,7 +348,7 @@ OWNABLE
 要求：
 * 此合约必须是代理的管理员。
 
-## 信标
+## Beacon
 
 ### BeaconProxy
 ```
@@ -392,30 +392,30 @@ IERC1967
 
 #### constructor(address beacon, bytes data)
 公开#
-使用信标初始化代理。
+使用Beacon初始化代理。
 
-如果数据非空，则将其用作委托调用到信标返回的实现中的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
+如果数据非空，则将其用作委托调用到Beacon返回的实现中的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
 
 要求：
 
-信标必须是一个具有[IBeacon](#ibeacon)接口的合约。
+Beacon必须是一个具有[IBeacon](#ibeacon)接口的合约。
 
 #### _beacon() → address
 内部#
-返回当前信标地址。
+返回当前Beacon地址。
 
 #### _implementation() → address
 内部#
-返回关联信标的当前实施地址。
+返回关联Beacon的当前实施地址。
 
 #### _setBeacon(address beacon, bytes data)
 内部#
-将代理更改为使用一个新的信标。已弃用：请参见[_upgradeBeaconToAndCall](#_upgradebeacontoandcalladdress-newbeacon-bytes-data-bool-forcecall)。
+将代理更改为使用一个新的Beacon。已弃用：请参见[_upgradeBeaconToAndCall](#_upgradebeacontoandcalladdress-newbeacon-bytes-data-bool-forcecall)。
 
-如果数据不为空，则将其用作委托调用中使用的数据，该委托调用将发送到信标返回的实现。
+如果数据不为空，则将其用作委托调用中使用的数据，该委托调用将发送到Beacon返回的实现。
 要求：
-* 信标必须是一个合约。
-* 信标返回的实现必须是一个合约。
+* Beacon必须是一个合约。
+* Beacon返回的实现必须是一个合约。
 
 ### IBeacon
 ```
@@ -461,7 +461,7 @@ OWNABLE
 
 #### constructor(address implementation_)
 公开#
-将初始实现的地址设置为部署者账户，部署者账户将成为可以升级信标的所有者。
+将初始实现的地址设置为部署者账户，部署者账户将成为可以升级Beacon的所有者。
 
 #### implementation() → address
 公开#
@@ -469,7 +469,7 @@ OWNABLE
 
 #### upgradeTo(address newImplementation)
 公开#
-对信标进行升级以实现新的实现。
+对Beacon进行升级以实现新的实现。
 发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 要求：
 * msg.sender必须是合约的所有者。

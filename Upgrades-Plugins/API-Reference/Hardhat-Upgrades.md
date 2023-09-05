@@ -141,7 +141,7 @@ async function deployBeacon(
   },
 ): Promise<ethers.Contract>
 ```
-创建一个*可升级的信标（beacon）*，给定一个以太坊合约工厂作为实现，并返回信标合约实例。
+创建一个*可升级的Beacon（beacon）*，给定一个以太坊合约工厂作为实现，并返回Beacon合约实例。
 
 **参数：**
 
@@ -153,7 +153,7 @@ async function deployBeacon(
 
 **返回：**
 
-* 信标合约实例。
+* Beacon合约实例。
 
 **自版本：**
 
@@ -175,18 +175,18 @@ async function upgradeBeacon(
   },
 ): Promise<ethers.Contract>
 ```
-升级指定地址的*可升级信标*到一个新的实现合约，并返回信标合约实例。
+升级指定地址的*可升级Beacon*到一个新的实现合约，并返回Beacon合约实例。
 
 **参数：**
 
-* beacon - 信标地址或信标合约实例。
+* beacon - Beacon地址或Beacon合约实例。
 * Contract - 用作新实现的ethers合约工厂。
 * opts - 一个包含选项的对象：
     * 其他选项，如Common Options中所述。
 
 **返回值：**
 
-* 信标合约实例。
+* Beacon合约实例。
 
 **自版本：**
 
@@ -238,16 +238,16 @@ async function forceImport(
   },
 ): Promise<ethers.Contract>
 ```
-强制导入现有的代理、信标或实现合约部署，用于与此插件一起使用。提供现有代理、信标或实现的地址，以及已部署的实现合约的 ethers 合约工厂。
+强制导入现有的代理、Beacon或实现合约部署，用于与此插件一起使用。提供现有代理、Beacon或实现的地址，以及已部署的实现合约的 ethers 合约工厂。
 
 > CATION
-当导入代理或信标时，deployedImpl 参数必须是**当前**正在使用的实现合约版本的合约工厂，而不是您计划升级到的版本。
+当导入代理或Beacon时，deployedImpl 参数必须是**当前**正在使用的实现合约版本的合约工厂，而不是您计划升级到的版本。
 
-使用此函数通过导入先前的部署来重新创建丢失的*网络文件*，或者即使这些代理或信标最初不是由此插件部署的，也可以注册代理或信标以进行升级。支持 UUPS、Transparent 和 Beacon 代理，以及信标和实现合约。
+使用此函数通过导入先前的部署来重新创建丢失的*网络文件*，或者即使这些代理或Beacon最初不是由此插件部署的，也可以注册代理或Beacon以进行升级。支持 UUPS、Transparent 和 Beacon 代理，以及Beacon和实现合约。
 
 **参数：**
 
-* ddress - 现有代理、信标或实现的地址。
+* ddress - 现有代理、Beacon或实现的地址。
 
 * deployedImpl - 已部署的实现合约的 ethers 合约工厂。
 
@@ -257,7 +257,7 @@ async function forceImport(
 
 **返回：**
 
-* 表示导入的代理、信标或实现的合约实例。
+* 表示导入的代理、Beacon或实现的合约实例。
 
 **自版本：**
 
@@ -338,7 +338,7 @@ async function validateUpgrade(
 
 **参数：**
 
-* referenceAddressOrContract - 使用当前实现的代理或信标地址，或与当前实现相对应的地址或以太合约工厂。
+* referenceAddressOrContract - 使用当前实现的代理或Beacon地址，或与当前实现相对应的地址或以太合约工厂。
 
 * newContract - 新的实现合约。
 
@@ -391,7 +391,7 @@ async function prepareUpgrade(
 
 **参数：**
 
-* referenceAddressOrContract - 代理或信标或实现地址或合约实例。
+* referenceAddressOrContract - 代理或Beacon或实现地址或合约实例。
 
 * Contract - 新的实现合约。
 
@@ -466,7 +466,7 @@ async function proposeUpgrade(
 ```
 **注意：**OpenZeppelin Platform处于测试阶段，该函数可能会发生变化。
 
-类似于prepareUpgrade。该方法验证并部署新的实现合约，还通过OpenZeppelin Platform创建升级提案，供升级管理员审查和批准。支持UUPS或透明代理。目前不支持信标代理或信标。对于信标，请使用prepareUpgrade以及在Platform上的事务提案来升级信标到部署的实现。
+类似于prepareUpgrade。该方法验证并部署新的实现合约，还通过OpenZeppelin Platform创建升级提案，供升级管理员审查和批准。支持UUPS或透明代理。目前不支持Beacon代理或Beacon。对于Beacon，请使用prepareUpgrade以及在Platform上的事务提案来升级Beacon到部署的实现。
 
 **参数：**
 
@@ -635,7 +635,7 @@ async function erc1967.getAdminAddress(proxyAddress: string): Promise<string>;
 
 **返回值：**
 
-* 根据调用的函数，返回实现、信标或管理员地址。
+* 根据调用的函数，返回实现、Beacon或管理员地址。
 
 ## beacon
 ```
@@ -673,11 +673,11 @@ function silenceWarnings()
 
 * 您的实现合约
 
-* *ERC1967Proxy*或*TransparentUpgradeableProxy*或*BeaconProxy*（用于UUPS、透明或信标代理）
+* *ERC1967Proxy*或*TransparentUpgradeableProxy*或*BeaconProxy*（用于UUPS、透明或Beacon代理）
 
 * *ProxyAdmin*（透明代理）
 
-* *UpgradeableBeacon*（信标代理）
+* *UpgradeableBeacon*（Beacon代理）
 
 **自版本：**
 

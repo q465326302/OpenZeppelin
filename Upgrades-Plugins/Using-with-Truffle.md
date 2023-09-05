@@ -110,7 +110,7 @@ describe('upgrades', () => {
 });
 ```
 
-### 信标代理
+### Beacon代理
 ```
 const { deployBeacon, deployBeaconProxy, upgradeBeacon } = require('@openzeppelin/truffle-upgrades');
 

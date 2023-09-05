@@ -1,20 +1,20 @@
 # OpenZeppelin Truffle Upgrades API
-deployProxy函数和upgradeProxy函数都会返回Truffle合约的实例，并且需要使用artifacts.require检索到的[Truffle合约类](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions)作为参数。对于*beacon*，deployBeacon和upgradeBeacon都将返回一个可用于beacon代理的可升级beacon实例。所有的部署和升级函数都会验证实现合约是否具备升级安全性，否则将失败。
+deployProxy函数和upgradeProxy函数都会返回Truffle合约的实例，并且需要使用artifacts.require检索到的[Truffle合约类](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions)作为参数。对于[beacon](/Contracts/Contracts.4.x/API/Proxy.md#beacon)，deployBeacon和upgradeBeacon都将返回一个可用于beacon代理的可升级beacon实例。所有的部署和升级函数都会验证实现合约是否具备升级安全性，否则将失败。
 
 ## 常见选项
 以下选项适用于一些函数。
 
 * deployer: 在迁移过程中应设置为Truffle迁移部署器。
 
-* kind: ("uups" | "transparent" | "beacon") 要部署、升级或导入的代理的类型，或者要与实现合约一起使用的代理的类型。deployProxy()和upgradeProxy()只支持值"uups" | "transparent"。默认为"transparent"。参见*Transparent vs UUPS*。
+* kind: ("uups" | "transparent" | "beacon") 要部署、升级或导入的代理的类型，或者要与实现合约一起使用的代理的类型。deployProxy()和upgradeProxy()只支持值"uups" | "transparent"。默认为"transparent"。参见[Transparent vs UUPS](/Contracts/Contracts.4.x/API/Proxy.md#透明代理和uups代理之间的区别)。
 
 * unsafeAllow: (ValidationError[]) 选择性地禁用一个或多个验证错误：
-    * "external-library-linking"：允许部署与实现合约链接的外部库。 (否则不支持外部库。)
+    * "external-library-linking"：允许部署与实现合约链接的外部库。 (否则[不支持外部库](../Frequently-Asked-Questions.md#为什么我不能使用外部库)。)
     * "struct-definition"，"enum-definition"：曾经需要部署带有结构体或枚举的合约。现在不再需要。
     * "state-variable-assignment"：允许在合约中分配状态变量，尽管它们将存储在实现中。
     * "state-variable-immutable"：允许使用不安全的不可变变量
     * "constructor"：允许定义一个构造函数。参见constructorArgs。
-    * "delegatecall"，"selfdestruct"：允许使用这些操作。不正确使用此选项可能会导致资金永久丢失。参见*Can I safely use delegatecall and selfdestruct?*
+    * "delegatecall"，"selfdestruct"：允许使用这些操作。不正确使用此选项可能会导致资金永久丢失。参见[Can I safely use delegatecall and selfdestruct?](../Frequently-Asked-Questions.md#我可以安全地使用delegatecall和selfdestruct吗)
 
 * "missing-public-upgradeto"：允许不包含公共upgradeTo函数的UUPS实现。启用此选项可能会导致回滚，因为内置的UUPS安全机制。
 
@@ -29,7 +29,7 @@ deployProxy函数和upgradeProxy函数都会返回Truffle合约的实例，并�
     * 如果设置为"never"，则永不重新部署实现合约。如果之前未部署实现合约或在网络文件中找不到实现合约，将抛出错误。
     * 如果设置为"onchange"，仅当字节码与先前部署的实现合约不同时，才重新部署实现合约。
 
-请注意，选项unsafeAllow也可以在源代码中以更细粒度的方式直接指定（如果使用Solidity >=0.8.2）。参见*How can I disable some of the checks?*
+请注意，选项unsafeAllow也可以在源代码中以更细粒度的方式直接指定（如果使用Solidity >=0.8.2）。参见[How can I disable some of the checks?](../Frequently-Asked-Questions.md#如何禁用其中一些检查)
 
 以下选项已被弃用。
 
@@ -56,6 +56,7 @@ async function deployProxy(
   },
 ): Promise<ContractInstance>
 ```
+
 创建一个 UUPS 或透明代理，给定一个用作实现的 Truffle 合约类，并返回一个带有代理地址和实现接口的合约实例。在迁移过程中，代理地址将存储在实现合约的构件中，因此您可以使用 Truffle 的 [deployed()](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions#-code-mycontract-deployed-code-) 函数加载它。
 
 如果设置了 args，将在代理部署期间使用提供的 args 调用初始化函数 initialize。
@@ -70,7 +71,7 @@ async function deployProxy(
 
 * opts - 一个带有选项的对象：
     * initializer：设置一个不同的初始化函数进行调用，或者指定 false 禁用初始化。
-    * 参见*常见选项*。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
@@ -107,13 +108,13 @@ async function upgradeProxy(
 * opts - 一个带有选项的对象：
 
     * call：在升级过程中启用执行任意函数调用。该调用使用函数名或签名以及可选参数进行描述。它被批处理到升级事务中，可以安全地调用迁移初始化函数。
-    * 参见*常见选项*。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
 * 一个带有代理地址和新实现接口的合约实例。
 
-## 部署信标
+## 部署Beacon
 ```
 async function deployBeacon(
   Contract: ContractClass,
@@ -127,24 +128,25 @@ async function deployBeacon(
   },
 ): Promise<ContractInstance>
 ```
-创建一个*可升级的信标*，给定一个用作实现的Truffle合约类，并返回信标合约实例。
+
+创建一个[可升级的Beacon](/Contracts/Contracts.4.x/API/Proxy.md#upgradeablebeacon)，给定一个用作实现的Truffle合约类，并返回Beacon合约实例。
 
 **参数：**
 
 * Contract - 用作实现的Truffle合约类。
 
 * opts - 一个包含选项的对象：
-    * 参见*常见选项*。
+    * 参见[常见选项](#常见选项)。
 
 **返回值：**
 
-* 信标合约实例。
+* Beacon合约实例。
 
 **自版本：**
 
 * @openzeppelin/truffle-upgrades@1.12.0
 
-## 升级信标
+## 升级Beacon
 ```
 async function upgradeBeacon(
   beacon: string | ContractInstance,
@@ -161,24 +163,25 @@ async function upgradeBeacon(
   },
 ): Promise<ContractInstance>
 ```
-创建一个*可升级的信标（beacon）*，并返回信标合约实例。
+
+创建一个[可升级的Beacon](/Contracts/Contracts.4.x/API/Proxy.md#upgradeablebeacon)，并返回Beacon合约实例。
 
 **参数：**
 
 * Contract - 用作实现的 Truffle 合约类。
 
 * opts - 一个包含选项的对象：
-    * 参见*常见选项*。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
-* 信标合约实例。
+* Beacon合约实例。
 
 **自版本：**
 
 * @openzeppelin/truffle-upgrades@1.12.0
 
-## 升级信标
+## 升级Beacon
 ```
 async function upgradeBeacon(
   beacon: string | ContractInstance,
@@ -195,20 +198,21 @@ async function upgradeBeacon(
   },
 ): Promise<ContractInstance>
 ```
-升级指定地址的*可升级信标*到一个新的实现合约，并返回信标合约实例。
+
+升级指定地址的[可升级的Beacon](/Contracts/Contracts.4.x/API/Proxy.md#upgradeablebeacon)到一个新的实现合约，并返回Beacon合约实例。
 
 **参数：**
 
-* beacon - 信标地址或信标合约实例。
+* beacon - Beacon地址或Beacon合约实例。
 
 * Contract - 作为新实现的 Truffle 合约类。
 
 * opts - 一个带有选项的对象：
-    * 参见常用选项。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
-* 信标合约实例。
+* Beacon合约实例。
 
 **自版本：**
 
@@ -226,7 +230,8 @@ async function deployBeaconProxy(
   },
 ): Promise<ContractInstance>
 ```
-给定一个现有的beacon合约地址和与beacon当前实现合约对应的Truffle合约类，创建一个*Beacon代理*，并返回一个包含beacon代理地址和实现接口的合约实例。如果设置了args，则在代理部署期间使用提供的args调用一个初始化函数initialize。
+
+给定一个现有的beacon合约地址和与beacon当前实现合约对应的Truffle合约类，创建一个[Beacon代理](/Contracts/Contracts.4.x/API/Proxy.md#beaconproxy)，并返回一个包含beacon代理地址和实现接口的合约实例。如果设置了args，则在代理部署期间使用提供的args调用一个初始化函数initialize。
 
 **参数：**
 
@@ -263,7 +268,7 @@ async function forceImport(
 > CAUTION
 当导入代理或beacon时，deployedImpl参数必须是**当前正在**使用的实现合约版本的合约类，而不是您计划升级到的版本。
 
-使用此函数通过导入先前的部署来重新创建丢失的*网络文件*，或者即使它们最初不是由此插件部署的，也可以注册代理或beacon进行升级。支持UUPS、Transparent和Beacon代理，以及beacon和实现合约。
+使用此函数通过导入先前的部署来重新创建丢失的[网络文件](../Network-Files.md)，或者即使它们最初不是由此插件部署的，也可以注册代理或beacon进行升级。支持UUPS、Transparent和Beacon代理，以及beacon和实现合约。
 
 **参数：**
 
@@ -302,7 +307,7 @@ async function validateImplementation(
 
 * opts - 一个带有选项的对象：
 
-    * 请参阅*常见选项*。
+    * 请参阅[常见选项](#常见选项)。
 
 **自版本：**
 
@@ -331,7 +336,7 @@ async function deployImplementation(
 * Contract - 用作实现的Truffle合约类。
 
 * opts - 一个包含选项的对象：
-    * 参见*常见选项*。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
@@ -359,12 +364,12 @@ async function validateUpgrade(
 
 **参数：**
 
-* referenceAddressOrContract - 使用当前实现的代理或信标地址，或与当前实现对应的地址或Truffle合约类。
+* referenceAddressOrContract - 使用当前实现的代理或Beacon地址，或与当前实现对应的地址或Truffle合约类。
 
 * newContract - 新的实现合约。
 
 * opts - 一个带有选项的对象：
-    * 参见*常见选项*。
+    * 参见[常见选项](#常见选项)。
 
 **自版本：**
 
@@ -379,6 +384,7 @@ const { validateUpgrade } = require('@openzeppelin/truffle-upgrades');
 const BoxV2 = artifacts.require('BoxV2');
 await validateUpgrade(PROXY_ADDRESS, BoxV2);
 ```
+
 验证两个合约实现之间的升级：
 ```
 const { validateUpgrade } = require('@openzeppelin/truffle-upgrades');
@@ -411,12 +417,12 @@ async function prepareUpgrade(
 
 **参数：**
 
-* referenceAddressOrContract - 代理或信标或实现地址或合约实例。
+* referenceAddressOrContract - 代理或Beacon或实现地址或合约实例。
 
 * Contract - 新的实现合约。
 
 * opts - 一个带有选项的对象：
-    * 参见常用选项。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
@@ -432,12 +438,13 @@ async function deployProxyAdmin(
   },
 ): Promise<string>
 ```
-部署一个*代理管理员*合约，并返回其地址，如果当前网络上没有部署代理管理员，则返回代理管理员的地址。请注意，此插件目前只支持每个网络使用一个代理管理员。
+
+部署一个[代理管理员](/Contracts/Contracts.4.x/API/Proxy.md#proxyadmin)合约，并返回其地址，如果当前网络上没有部署代理管理员，则返回代理管理员的地址。请注意，此插件目前只支持每个网络使用一个代理管理员。
 
 **参数：**
 
 * opts - 一个带有选项的对象：
-    * 参见常见选项。
+    * 参见[常见选项](#常见选项)。
 
 **返回：**
 
@@ -454,6 +461,7 @@ async function changeProxyAdmin(
   newAdmin: string,
 ): Promise<void>
 ```
+
 更改特定代理的管理员。
 
 **参数：**
@@ -461,6 +469,10 @@ async function changeProxyAdmin(
 * proxyAddress - 要更改的代理的地址。
 
 * newAdmin - 新的管理员地址。
+
+* opts - 带有选项的对象：
+
+  * 参见[常见选项](#常见选项)。
 
 ## 管理员转移代理管理员所有权
 
@@ -475,6 +487,10 @@ async function transferProxyAdminOwnership(
 **参数：**
 
 * newAdmin - 新的管理员地址。
+
+* opts - 带有选项的对象：
+
+  * 请参阅[常见选项](#常见选项)。
 
 ## erc1967
 ```
@@ -491,12 +507,13 @@ async function erc1967.getAdminAddress(proxyAddress: string): Promise<string>;
 
 **返回：**
 
-* 根据调用的函数，返回实现、信标或管理员地址。
+* 根据调用的函数，返回实现、Beacon或管理员地址。
 
-## 信标
+## Beacon
 ```
 async function beacon.getImplementationAddress(beaconAddress: string): Promise<string>;
 ```
+
 该模块提供了一个方便的函数，用于从beacon合约中获取实现地址。
 
 **参数：**

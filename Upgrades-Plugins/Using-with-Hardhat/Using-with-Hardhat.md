@@ -54,9 +54,9 @@ main();
 
 该插件将负责比较BoxV2与先前版本，以确保它们在升级时兼容，部署新的BoxV2实现合约（除非已经有一个来自先前的部署），并将现有代理升级到新的实现版本。
 
-### 信标代理
+### Beacon代理
 
-您还可以使用此插件使用deployBeacon函数部署一个可升级的信标合约，然后使用deployBeaconProxy函数部署一个或多个指向该信标合约的信标代理。
+您还可以使用此插件使用deployBeacon函数部署一个可升级的Beacon合约，然后使用deployBeaconProxy函数部署一个或多个指向该Beacon合约的Beacon代理。
 ```
 // scripts/create-box.js
 const { ethers, upgrades } = require("hardhat");
@@ -76,7 +76,7 @@ async function main() {
 main();
 ```
 
-然后，在另一个脚本中，您可以使用upgradeBeacon函数将信标升级到新版本。当信标升级时，所有指向它的信标代理将使用新的合约实现。
+然后，在另一个脚本中，您可以使用upgradeBeacon函数将Beacon升级到新版本。当Beacon升级时，所有指向它的Beacon代理将使用新的合约实现。
 
 ```
 // scripts/upgrade-box.js
@@ -115,7 +115,7 @@ describe("Box", function() {
 });
 ```
 
-### 信标代理
+### Beacon代理
 ```
 const { expect } = require("chai");
 

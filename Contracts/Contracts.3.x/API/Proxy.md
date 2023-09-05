@@ -263,26 +263,26 @@ PROXY
 
 #### _beacon() → address beacon
 内部#
-返回当前信标地址。
+返回当前Beacon地址。
 
 #### _implementation() → address
 内部#
-返回关联信标的当前实现地址。
+返回关联Beacon的当前实现地址。
 
 #### _setBeacon(address beacon, bytes data)
 内部#
-更改代理以使用新的信标。
+更改代理以使用新的Beacon。
 
-如果数据非空，则将其用作委托调用信标返回的实现的数据。
+如果数据非空，则将其用作委托调用Beacon返回的实现的数据。
 
 要求：
 
-* 信标必须是一个合约。
+* Beacon必须是一个合约。
 
-* 信标返回的实现必须是一个合约。
+* Beacon返回的实现必须是一个合约。
 
 ### IBeacon
-这是 [BeaconProxy](#beaconproxy)对其信标期望的接口。
+这是 [BeaconProxy](#beaconproxy)对其Beacon期望的接口。
 
 **FUNCTIONS**
 [implementation()](#implementation-e28692-address-1)
@@ -320,7 +320,7 @@ OWNABLE
 
 #### constructor(address implementation_)
 公开#
-将初始实现的地址设置为部署者账户，部署者账户作为可以升级信标的所有者。
+将初始实现的地址设置为部署者账户，部署者账户作为可以升级Beacon的所有者。
 
 #### implementation() → address
 公开#
@@ -328,7 +328,7 @@ OWNABLE
 
 #### upgradeTo(address newImplementation)
 公开#
-将信标升级为新的实现。
+将Beacon升级为新的实现。
 
 发出[Upgraded](#upgradedaddress-implementation-1)事件。
 
