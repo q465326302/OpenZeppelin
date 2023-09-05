@@ -105,18 +105,18 @@ it('works before and after upgrading', async function () {
 
 插件将在项目根目录的.openzeppelin文件夹中跟踪您已部署的所有实现合约，以及代理管理员。您将在该文件夹中找到每个网络的一个文件。建议您将除了开发网络之外的所有网络的文件提交到源代码控制中（您可能会看到它们的文件名为.openzeppelin/unknown-*.json）。
 
-    注意：.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的OpenZeppelin CLI项目中使用Upgrades插件，可以使用指南进行迁移。
+    注意：.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的OpenZeppelin CLI项目中使用Upgrades插件，可以查看[指南](./Migrate%20from%20OpenZeppelin%20CLI/Migrate-from-OpenZeppelin-CLI-Truffle.md)进行迁移。
 
 ## 代理模式
-这些插件支持UUPS、透明和beacon代理模式。UUPS和透明代理可以分别升级，而任意数量的beacon代理可以通过升级它们指向的beacon同时进行原子升级。有关可用的不同代理模式的更多详细信息，请参阅*Proxies*的文档。
+这些插件支持UUPS、透明和beacon代理模式。UUPS和透明代理可以分别升级，而任意数量的beacon代理可以通过升级它们指向的beacon同时进行原子升级。有关可用的不同代理模式的更多详细信息，请参阅[Proxies](/Contracts/Contracts.4.x/API/Proxy.md)的文档。
 
-对于UUPS和透明代理，可以像上面显示的那样使用deployProxy和upgradeProxy。对于beacon代理，使用deployBeacon、deployBeaconProxy和upgradeBeacon。有关示例，请参阅*Hardhat Upgrades*和*Truffle Upgrades*的文档。
+对于UUPS和透明代理，可以像上面显示的那样使用deployProxy和upgradeProxy。对于beacon代理，使用deployBeacon、deployBeaconProxy和upgradeBeacon。有关示例，请参阅[Hardhat Upgrades](./API-Reference/Hardhat-Upgrades.md)和[Truffle Upgrades](./API-Reference/Truffle-Upgrades.md)的文档。
 
 ## 管理所有权
-透明代理定义了一个具有升级权限的管理员地址。默认情况下，管理员是在幕后部署的*代理管理员合约*。您可以通过在插件中调用admin.changeProxyAdmin函数来更改代理的管理员。请注意，代理的管理员只能升级它，而不能与实现合约进行交互。有关此限制的更多信息，请阅读*透明代理和函数冲突的文档*。
+透明代理定义了一个具有升级权限的管理员地址。默认情况下，管理员是在幕后部署的[代理管理员合约](./Frequently-Asked-Questions.md#代理管理员是什么)。您可以通过在插件中调用admin.changeProxyAdmin函数来更改代理的管理员。请注意，代理的管理员只能升级它，而不能与实现合约进行交互。有关此限制的更多信息，请阅读[透明代理和函数冲突的文档](./Proxy-Upgrade-Pattern.md#透明代理和函数冲突)。
 
 代理管理员合约还定义了一个所有者地址，该地址具有操作它的权限。默认情况下，此地址是部署期间使用的外部拥有的账户。您可以通过在插件中调用admin.transferProxyAdminOwnership函数来更改代理管理员的所有者。请注意，更改代理管理员所有者实际上将升级项目中的任何代理的权力转移到新的所有者，因此请谨慎使用。有关管理员功能的更多详细信息，请参考每个插件的文档。
 
-UUPS和beacon代理不使用管理员地址。UUPS代理依赖于重写*_authorizeUpgrade*函数来包含对升级机制的访问限制，而beacon代理只能由其对应的beacon的所有者进行升级。
+UUPS和beacon代理不使用管理员地址。UUPS代理依赖于重写[_authorizeUpgrade](/Contracts/Contracts.4.x/API/Proxy.md#_authorizeupgradeaddress-newimplementation)函数来包含对升级机制的访问限制，而beacon代理只能由其对应的beacon的所有者进行升级。
 
-一旦您将升级代理或beacon的权限转移给另一个地址，您仍然可以使用本地设置来验证和部署实现合约。插件包含一个prepareUpgrade函数，该函数将验证新的实现是否可以升级并且与之前的版本兼容，并使用您的本地以太坊账户部署它。然后，您可以从管理员或所有者地址执行升级本身。您还可以使用proposeUpgrade函数在*Defender Admin*中自动设置升级。
+一旦您将升级代理或beacon的权限转移给另一个地址，您仍然可以使用本地设置来验证和部署实现合约。插件包含一个prepareUpgrade函数，该函数将验证新的实现是否可以升级并且与之前的版本兼容，并使用您的本地以太坊账户部署它。然后，您可以从管理员或所有者地址执行升级本身。您还可以使用proposeUpgrade函数在[Defender Admin](/Defender/Components/Admin/Admin.md)中自动设置升级。
