@@ -1,18 +1,18 @@
 # Frequently Asked Questions
 
 ## 在升级时，我可以更改Solidity编译器版本吗？
-是的。Solidity团队保证编译器会在版本之间保持存储布局不变。
+是的。Solidity团队保证编译器会在[版本之间保持存储布局不变](https://twitter.com/ethchris/status/1073692785176444928)。
 
 ## 为什么我会收到“无法从代理管理员调用回退函数”的错误？
 
-这是由于*透明代理模式*造成的。如果您使用OpenZeppelin Upgrades插件，则不应该收到此错误，因为它使用ProxyAdmin合约来管理您的代理。
+这是由于[透明代理模式](./Proxy-Upgrade-Pattern.md#透明代理和函数冲突)造成的。如果您使用OpenZeppelin Upgrades插件，则不应该收到此错误，因为它使用ProxyAdmin合约来管理您的代理。
 
 然而，如果您在编程方式使用OpenZeppelin Contracts代理，可能会遇到此类错误。解决方案是始终使用不是代理管理员的帐户与代理进行交互，除非您想特别调用代理本身的函数。
 
 ## 什么是合约的升级安全性？
 在部署合约的代理时，合约代码有一些限制。特别是，合约不能有构造函数，并且不应使用selfdestruct或delegatecall操作，出于安全原因。
 
-作为构造函数的替代，通常会设置一个初始化函数来处理合约的初始化。您可以使用*Initializable*基础合约来访问一个initializer修饰符，以确保该函数只被调用一次。
+作为构造函数的替代，通常会设置一个初始化函数来处理合约的初始化。您可以使用[Initializable](./Writing-Upgradeable-Contracts.md#初始化函数)基础合约来访问一个initializer修饰符，以确保该函数只被调用一次。
 ```
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 // Alternatively, if you are using @openzeppelin/contracts-upgradeable:
@@ -26,7 +26,7 @@ contract MyContract is Initializable {
 }
 ```
 
-这两个插件都会验证您尝试部署的合约是否符合这些规则。您可以在*此处*阅读有关如何编写升级安全合约的更多信息。
+这两个插件都会验证您尝试部署的合约是否符合这些规则。您可以在[此处](./Writing-Upgradeable-Contracts.md)阅读有关如何编写升级安全合约的更多信息。
 
 ## 如何禁用其中一些检查？
 部署和升级相关的函数都带有一个可选的opts对象，其中包括一个unsafeAllow选项。可以将其设置为禁用插件执行的任何检查。可以单独禁用的检查列表如下：
@@ -130,20 +130,20 @@ contract UsesUnsafeOperations is OnlyDelegateCall {
 
 两个插件将验证新的实现合约是否与先前的合约兼容。
 
-您可以在*这里*阅读有关如何对实现合约进行存储兼容性更改的更多信息。
+您可以在[这里](./Writing-Upgradeable-Contracts.md)阅读有关如何对实现合约进行存储兼容性更改的更多信息。
 
 ## 代理管理员是什么？
-ProxyAdmin是一个充当所有代理的所有者的合约。每个网络只部署一个。当您启动项目时，ProxyAdmin由部署者地址拥有，但您可以通过调用*transferOwnership*来转移所有权。
+ProxyAdmin是一个充当所有代理的所有者的合约。每个网络只部署一个。当您启动项目时，ProxyAdmin由部署者地址拥有，但您可以通过调用[transferOwnership](../Contracts/Contracts.4.x/API/Access.md#transferownershipaddress-newowner)来转移所有权。
 
 ## 什么是实现合约？
 可升级的部署需要至少两个合约：代理和实现。代理合约是您和您的用户将交互的实例，而实现是保存代码的合约。如果您对同一个实现合约调用deployProxy多次，则将部署多个代理，但只使用一个实现合约。
 
-当您将代理升级到新版本时，如果需要，将部署一个新的实现合约，并将代理设置为使用新的实现合约。您可以在*这里*阅读有关代理升级模式的更多信息。
+当您将代理升级到新版本时，如果需要，将部署一个新的实现合约，并将代理设置为使用新的实现合约。您可以在[这里](./Proxy-Upgrade-Pattern.md)阅读有关代理升级模式的更多信息。
 
 ## 什么是代理？
 代理是一个将其所有调用委托给第二个合约（称为实现合约）的合约。所有状态和资金都保存在代理中，但实际执行的代码是实现的代码。代理管理员可以将代理升级为使用不同的实现合约。
 
-您可以在*这里*阅读有关代理升级模式的更多信息。
+您可以在[这里](./Proxy-Upgrade-Pattern.md)阅读有关代理升级模式的更多信息。
 
 ## 为什么不能使用不可变变量？
 Solidity 0.6.5[引入了不可变关键字](https://github.com/ethereum/solidity/releases/tag/v0.6.5)，用于声明只能在构造函数期间分配一次且在构造函数后只能读取的变量。它通过在合约创建期间计算其值并直接将其值存储到字节码中实现。
@@ -177,15 +177,15 @@ contract MyContract is Initializable, ..., UUPSUpgradeable {
 }
 ```
 
-阅读有关*Transparent vs UUPS*中Transparent Proxy模式的差异的更多信息。
+阅读有关[Transparent vs UUPS](/Contracts/Contracts.4.x/API/Proxy.md#透明代理和uups代理之间的区别)中Transparent Proxy模式的差异的更多信息。
 
-我可以使用自定义类型，如结构体和枚举吗？
+## 我可以使用自定义类型，如结构体和枚举吗？
 过去版本的插件不支持在其代码或链接库中使用结构体或枚举的可升级合约。对于当前版本的插件，这不再是问题，当升级合约时，会自动检查结构体和枚举的兼容性。
 
 一些已经部署了具有结构体和/或枚举的代理并且需要升级这些代理的用户可能需要在下一次升级时使用override标志unsafeAllowCustomTypes，之后将不再需要。如果项目包含当前代理使用的实现的源代码，插件将在升级之前尝试恢复所需的元数据，如果这不可能，则回退到使用override标志。
 
 ## 为什么我必须重新编译所有的Truffle合约？
-Truffle的构建文件（build/contracts中的JSON文件）包含每个合约的AST（抽象语法树）。我们的插件使用这些信息来验证您的合约是否可以安全升级。
+Truffle的构建文件（build/contracts中的JSON文件）包含每个合约的AST（抽象语法树）。我们的插件使用这些信息来验证您的合约是否可以[安全升级](./Frequently-Asked-Questions.md#什么是合约的升级安全性)。
 
 Truffle有时只会部分重新编译已更改的合约。当发生这种情况时，我们将要求您触发完整的重新编译，可以使用truffle compile --all或删除build/contracts目录。技术原因是，由于Solidity不会生成确定性的AST，如果它们不是来自同一次编译运行，插件将无法正确解析引用。
 
@@ -202,6 +202,7 @@ contract V2 {
     uint y;
 }
 ```
+
 即使类型具有相同的大小和对齐方式，也不允许更改变量的类型，原因与上述类似。只要我们能够保证布局的其余部分不受此类型更改的影响，也可以通过添加文档字符串注释/// @custom:oz-retyped-from <previous type>来重写此检查。
 ```
 contract V1 {
