@@ -2,7 +2,7 @@
 此软件包为您的Hardhat脚本添加了功能，以便您可以部署和升级合约的代理。依赖于ethers.js。
 
 > TIP
-请查看逐步教程，从创建、测试和部署开始，一直到使用Gnosis Safe升级。
+请查看[逐步教程](https://forum.openzeppelin.com/t/openzeppelin-buidler-upgrades-step-by-step-tutorial/3580)，从创建、测试和部署开始，一直到使用Gnosis Safe升级。
 
 ## 安装
 ```

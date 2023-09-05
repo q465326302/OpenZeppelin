@@ -29,6 +29,7 @@ module.exports = async function (deployer) {
   console.log('Deployed', instance.address);
 };
 ```
+
 这将自动检查Box合约是否可升级，如果需要的话，设置代理管理员，部署一个Box合约的实现合约（除非先前已经有一个），创建一个代理，并通过调用initialize(42)来初始化它。
 
 然后，在将来的迁移中，您可以使用upgradeProxy函数将部署的实例升级到新版本。新版本可以是一个不同的合约（比如BoxV2），或者您可以只是修改现有的Box合约并重新编译它-插件会注意到它的变化。
@@ -45,6 +46,7 @@ module.exports = async function (deployer) {
   console.log("Upgraded", instance.address);
 };
 ```
+
 插件将负责比较BoxV2与先前版本，以确保它们在升级时兼容，部署新的BoxV2实现合约（除非已经存在先前的部署），并将现有的代理升级到新的实现。
 
 ### Beacon代理
