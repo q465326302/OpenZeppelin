@@ -6,59 +6,35 @@
 有关该主题的更详细的写作可以在[Perama的博客文章](https://perama-v.github.io/cairo/account-abstraction/)中找到。
 
 ## 目录
-* 快速入门
-
-* 标准接口
-
-* 密钥、签名和签名者
-
-    * 签名者
-
-    * MockSigner实用程序
-
-    * MockEthSigner实用程序
-
-* 账户入口点
-
-* 调用和AccountCallArray格式
-
-    * 调用
-
-    *  AccountCallArray
-
-* 多调用事务
-
-* API规范
-
-  * get_public_key
-
-  * get_nonce
-
-  * set_public_key
-
-  * is_valid_signature
-
-  * __execute__
-
-  * is_valid_eth_signature
-
-  * eth_execute
-
-  * _unsafe_execute
-
-* 预设
-
-    * 账户
-
-    * 以太坊账户
-
-* 使用ERC165进行账户内省
-
-* 扩展账户合约
-
-* L1逃生机制
-
-* 支付燃料费用
+- [Accounts](#accounts)
+  - [目录](#目录)
+  - [快速入门](#快速入门)
+  - [标准接口](#标准接口)
+  - [密钥、签名和签署者](#密钥签名和签署者)
+    - [签署者](#签署者)
+    - [MockSigner实用程序](#mocksigner实用程序)
+    - [MockEthSigner utility](#mockethsigner-utility)
+  - [Account entrypoint](#account-entrypoint)
+    - [调用和AccountCallArray格式](#调用和accountcallarray格式)
+      - [调用](#调用)
+    - [AccountCallArray](#accountcallarray)
+  - [多次调用交易](#多次调用交易)
+  - [API规范](#api规范)
+      - [get\_public\_key](#get_public_key)
+      - [get\_nonce](#get_nonce)
+      - [set\_public\_key](#set_public_key)
+      - [is\_valid\_signature](#is_valid_signature)
+      - [__execute__](#execute)
+      - [is\_valid\_eth\_signature](#is_valid_eth_signature)
+      - [eth\_execute](#eth_execute)
+      - [\_unsafe\_execute](#_unsafe_execute)
+  - [预设](#预设)
+    - [账户](#账户)
+    - [以太坊账户](#以太坊账户)
+  - [带ERC165的账户自省](#带erc165的账户自省)
+  - [扩展账户合约](#扩展账户合约)
+  - [L1逃生机制](#l1逃生机制)
+  - [支付燃料费用](#支付燃料费用)
 
 ## 快速入门
 一般的工作流程如下：
@@ -238,7 +214,7 @@ end
 一旦StarkNet允许在结构数组中使用指针，构建__execute__方法中的多重调用事务的方案将发生变化。在这种情况下，可以将多个事务传递给（而不是在内部构建）__execute__方法。
 
 ### 调用和AccountCallArray格式
-这个想法是将所有用户意图编码为表示智能合约调用的Call。用户还可以将多个消息打包到单个交易中（创建多个调用事务）。Cairo目前不支持带有指针的结构体数组，这意味着__execute__函数无法正确迭代多个调用。因此，该实现使用了AccountCallArray结构的解决方法。请参阅*多调用事务*。
+这个想法是将所有用户意图编码为表示智能合约调用的Call。用户还可以将多个消息打包到单个交易中（创建多个调用事务）。Cairo目前不支持带有指针的结构体数组，这意味着__execute__函数无法正确迭代多个调用。因此，该实现使用了AccountCallArray结构的解决方法。请参阅[多调用事务](#多次调用交易)。
 
 #### 调用
 单个调用的结构如下：
@@ -439,7 +415,7 @@ response: felt*
 当前的签名方案期望一个包含7个元素的数组，格式如下：[sig_v, uint256_sig_r_low, uint256_sig_r_high, uint256_sig_s_low, uint256_sig_s_high, uint256_hash_low, uint256_hash_high]，其中验证的参数比一个felt更大。
 
 #### _unsafe_execute
-这是一个*内部方法*，执行以下任务：
+这是一个[内部方法](./Extensibility.md#该模式)，执行以下任务：
 
 1. 递增nonce。
 
@@ -467,7 +443,7 @@ response: felt*
 对于账户合约，ERC165支持是静态的，不需要账户合约进行注册。
 
 ## 扩展账户合约
-账户合约可以通过遵循*可扩展性模式*来进行扩展。
+账户合约可以通过遵循[可扩展性模式](./Extensibility.md#可扩展性问题)来进行扩展。
 
 要实现自定义账户合约，应该暴露一对验证函数和执行函数。这就是为什么Account库提供了不同类型的这样的函数对，比如原始的is_valid_signature和execute，或者以太坊风格的is_valid_eth_signature和eth_execute。
 

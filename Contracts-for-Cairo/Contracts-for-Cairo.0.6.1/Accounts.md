@@ -83,6 +83,7 @@ await signer.send_transaction(
     [NEW_KEY]
 )
 ```
+
 或者，如果您想要在AccountRegistry合约上更新账户的L1地址，您可以执行以下操作
 ```
 await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])

@@ -6,61 +6,36 @@
 有关账户抽象的概述，请参阅StarkWare的[StarkNet Alpha 0.10](https://medium.com/starkware/starknet-alpha-0-10-0-923007290470)。关于这个主题的更详细讨论可以在[StarkNet账户抽象第1部分](https://community.starknet.io/t/starknet-account-abstraction-model-part-1/781)中找到。
 
 ## 目录
-* 快速入门
-
-* 账户入口点
-
-* 标准接口
-
-* 密钥、签名和签名者
-
-    * 签名验证
-
-    * 签名者
-
-    * MockSigner实用程序
-
-    * MockEthSigner实用程序
-
-* 调用和AccountCallArray格式
-
-    * 调用
-
-    *  AccountCallArray
-
-* 多调用事务
-
-* API规范
-
-    * 构造函数
-
-    * getPublicKey
-
-    * supportsInterface
-
-    * setPublicKey
-
-    * isValidSignature
-
-    * __validate__
-
-    * __validate_declare__
-
-    * __execute__
-
-* 预设
-
-    * 账户
-
-    * 以太坊账户
-
-* 使用ERC165进行账户内省
-
-* 扩展账户合约
-
-* L1逃生机制
-
-* 支付燃料费用
+- [Accounts](#accounts)
+  - [目录](#目录)
+  - [快速入门](#快速入门)
+    - [账户入口点](#账户入口点)
+  - [标准接口](#标准接口)
+  - [密钥、签名和签署者](#密钥签名和签署者)
+    - [签名验证](#签名验证)
+    - [签署者](#签署者)
+    - [MockSigner实用程序](#mocksigner实用程序)
+    - [MockEthSigner utility](#mockethsigner-utility)
+    - [调用和AccountCallArray格式](#调用和accountcallarray格式)
+      - [调用](#调用)
+    - [AccountCallArray](#accountcallarray)
+  - [多次调用交易](#多次调用交易)
+  - [API规范](#api规范)
+    - [构造函数](#构造函数)
+    - [getPublicKey](#getpublickey)
+    - [supportsInterface](#supportsinterface)
+    - [setPublicKey](#setpublickey)
+    - [isValidSignature](#isvalidsignature)
+    - [__validate__](#validate)
+    - [__validate\_declare__](#validate_declare)
+    - [__execute__](#execute)
+  - [预设](#预设)
+    - [账户](#账户)
+    - [以太坊账户](#以太坊账户)
+  - [带ERC165的账户自省](#带erc165的账户自省)
+  - [扩展账户合约](#扩展账户合约)
+  - [L1逃生机制](#l1逃生机制)
+  - [支付燃料费用](#支付燃料费用)
 
 ## 快速入门
 一般的工作流程如下：
@@ -92,11 +67,11 @@ await signer.send_transaction(account, some_contract_address, 'some_function', [
 ### 账户入口点
 账户合约只有三个入口点用于所有用户交互：
 
-1. __validate_declare__ 在声明之前验证声明签名。从Cairo v0.10.0开始，合约类应从一个账户合约中声明。
+1. [__validate_declare__](#validate_declare) 在声明之前验证声明签名。从Cairo v0.10.0开始，合约类应从一个账户合约中声明。
 
-2. __validate__ 在执行交易之前验证交易签名，然后再使用__execute__执行交易。
+2. [__validate__ ](#validate) 在执行交易之前验证交易签名，然后再使用__execute__执行交易。
 
-3. __execute__ 作为所有用户与任何合约进行交互的改变状态的入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因。
+3. [__execute__](#execute) 作为所有用户与任何合约进行交互的改变状态的入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因。
 ```
 await signer.send_transaction(
     account,
@@ -110,7 +85,7 @@ await signer.send_transaction(
 await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])
 ```
 
-您可以在“账户消息方案讨论”中阅读有关消息结构和哈希的更多信息。有关多调用的设计选择和实现的更多信息，请阅读“账户多调用应如何工作讨论”。
+您可以在[账户消息方案讨论中消息结构和哈希](https://github.com/OpenZeppelin/cairo-contracts/discussions/24)的更多信息。有关多调用的设计选择和实现的更多信息，请阅读[账户多调用应如何工作](https://github.com/OpenZeppelin/cairo-contracts/discussions/27)。
 
 “validate”和“execute”方法接受相同的参数；然而，“execute”方法返回一个交易响应。
 
@@ -186,7 +161,7 @@ namespace IAccount {
 尽管接口与签名验证方案无关，但该实现假设存在一个控制账户的公私钥对。这就是为什么构造函数期望一个public_key参数来设置它。由于还有一个setPublicKey()方法，因此可以有效地转移账户。
 
 ### 签名验证
-签名验证在Cairo v0.10中与执行分离。在接收到交易时，账户合约首先调用__validate__。只有当签名有效时，账户才会执行交易。这种解耦允许在协议级别上区分无效和回滚的交易。请参阅*账户入口点*。
+签名验证在Cairo v0.10中与执行分离。在接收到交易时，账户合约首先调用__validate__。只有当签名有效时，账户才会执行交易。这种解耦允许在协议级别上区分无效和回滚的交易。请参阅[账户入口点](#账户入口点)。
 
 ### 签署者
 签署者负责使用用户的私钥为给定的交易创建交易签名。该实现利用[Nile的Signer类](https://github.com/OpenZeppelin/nile/blob/main/src/nile/signer.py)通过Signer方法sign_transaction创建交易签名。
@@ -266,7 +241,7 @@ await signer.send_transactions(
 * 使用secp256k1曲线地址对消息进行签名。
 
 ### 调用和AccountCallArray格式
-这个想法是将所有用户意图编码为表示智能合约调用的Call。用户还可以将多个消息打包到单个交易中（创建多个调用事务）。Cairo目前不支持带有指针的结构体数组，这意味着__execute__函数无法正确迭代多个调用。因此，该实现使用了AccountCallArray结构的解决方法。请参阅*多调用事务*。
+这个想法是将所有用户意图编码为表示智能合约调用的Call。用户还可以将多个消息打包到单个交易中（创建多个调用事务）。Cairo目前不支持带有指针的结构体数组，这意味着__execute__函数无法正确迭代多个调用。因此，该实现使用了AccountCallArray结构的解决方法。请参阅[多调用事务](#多次调用交易)。
 
 #### 调用
 单个调用的结构如下：
@@ -384,22 +359,26 @@ publicKey: felt
 ```
 
 ### supportsInterface
-设置将控制此账户的公钥。它可以用于在安全性方面旋转密钥，更改被破坏密钥的情况，甚至转移账户的所有权。
+如果此合约实现了由interfaceId定义的接口，则返回TRUE。现在，账户合约通过静态支持实现了ERC165（参见[使用ERC165的账户内省](#带erc165的账户自省)）。
 
+参数:
+```
+interfaceId: felt
+```
+
+返回：
+```
+success: felt
+```
+
+### setPublicKey
+设置将控制此账户的公钥。它可以用于旋转密钥以增强安全性，更改在密钥被泄露的情况下的密钥，甚至转移账户的所有权。
 参数:
 ```
 newPublicKey: felt
 ```
-返回：无。
 
-### setPublicKey
-设置将控制此账户的公钥。它可以用于安全地更换密钥、在密钥被泄露的情况下更换密钥，甚至转让账户的所有权。
-
-参数：
-```
-newPublicKey: felt
-```
-返回值：无。
+返回:无
 
 ### isValidSignature
 该函数受[EIP-1271](https://eips.ethereum.org/EIPS/eip-1271)的启发，如果给定的签名有效，则返回TRUE，否则会回滚。将来，如果给定的签名无效，它将返回FALSE（有关更多信息，请查[看此问题](https://github.com/OpenZeppelin/cairo-contracts/issues/327)）。
@@ -475,13 +454,13 @@ response: felt*
 ## 带ERC165的账户自省
 某些合约，如ERC721，需要一种区分账户合约和非账户合约的方法。为了将合约声明为账户，它应该按照[#100](https://github.com/OpenZeppelin/cairo-contracts/discussions/100)中提议的方式实现[ERC165](https://eips.ethereum.org/EIPS/eip-165)。为了符合ERC165规范，我们的想法是计算IAccount的EVM选择器（而不是StarkNet选择器）的异或值。IAccount的结果magic value是0x50b70dcb。
 
-我们在StarkNet上的ERC165集成受到了OpenZeppelin的Solidity实现*ERC165Storage*的启发，该实现存储了实现合约支持的接口。对于账户合约，使用IAccount的magic value查询账户地址的supportsInterface应该返回TRUE。
+我们在StarkNet上的ERC165集成受到了OpenZeppelin的Solidity实现[ERC165Storage](/Contracts/Contracts.4.x/API/Utils.md#erc165storage)的启发，该实现存储了实现合约支持的接口。对于账户合约，使用IAccount的magic value查询账户地址的supportsInterface应该返回TRUE。
 
 > NOTE
 对于账户合约，ERC165支持是静态的，不需要账户合约进行注册。
 
 ## 扩展账户合约
-账户合约可以通过遵循*可扩展性模式*进行扩展。
+账户合约可以通过遵循[可扩展性模式](./Extensibility.md#可扩展性问题)进行扩展。
 
 要实现自定义账户合约，StarkNet编译器要求其包含三个入口函数__validate__、__validate_declare__和__execute__。
 
