@@ -22,6 +22,7 @@ cd my-project
 python3 -m venv env
 source env/bin/activate
 ```
+
 安装[Nile](https://github.com/OpenZeppelin/nile)开发环境，然后运行init来启动一个新项目。Nile将创建项目目录结构并安装[Cairo语言](https://www.cairo-lang.org/docs/quickstart.html)、[本地网络](https://github.com/Shard-Labs/starknet-devnet/)和[测试框架](https://docs.pytest.org/en/6.2.x/)。
 ```
 pip install cairo-nile
@@ -32,10 +33,12 @@ nile init
 ```
 pip install openzeppelin-cairo-contracts
 ```
+
+> WARNING
 直接通过GitHub安装可能包含不完整或破坏性的实现。虽然我们努力不引入此类更改，但我们仍强烈建议通过[官方发布](https://github.com/OpenZeppelin/cairo-contracts/releases/)进行安装。
 
 ### 使用基本预设
-预设是可以立即部署的即用合约。它们还可以作为使用库模块的示例。了解更多关于*预设的信息*。
+预设是可以立即部署的即用合约。它们还可以作为使用库模块的示例。了解更多[关于预设](./Extensibility.md#预设)。
 ```
 // contracts/MyToken.cairo
 
@@ -56,6 +59,7 @@ from openzeppelin.token.erc20.presets.ERC20 import (
     decreaseAllowance
 )
 ```
+
 立即编译和部署它:
 ```
 nile compile
@@ -64,11 +68,10 @@ nile deploy MyToken <name> <symbol> <decimals> <initial_supply> <recipient> --al
 ```
 
 > NOTE
-<initial_supply> 预计是两个整数，即 1 0。有关更多信息，请参阅 *uint256*。
+<initial_supply> 预计是两个整数，即 1 0。有关更多信息，请参阅 [uint256](./Utilities.md#uint256)。
 
-### 
-使用库模块编写自定义合约
-*阅读更多关于库的信息。*
+### 使用库模块编写自定义合约
+[阅读有关库的更多信息。](./Extensibility.md#库)
 ```
 %lang starknet
 
