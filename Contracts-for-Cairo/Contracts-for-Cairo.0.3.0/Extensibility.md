@@ -3,19 +3,15 @@
 预计这种模式将会发展（正如它已经做到的那样），或者在Cairo中[实现适当的可扩展性功能](https://community.starknet.io/t/contract-extensibility-pattern/210/11?u=martriay)后可能会消失。
 
 ## 目录
-* 可扩展性问题
-
-* 该模式™️
-
-    * 库
-
-    * 合约
-
-* 预设
-
-* 函数名称和编码风格
-
-* 模拟挂钩
+- [Extensibility](#extensibility)
+  - [目录](#目录)
+  - [可扩展性问题](#可扩展性问题)
+  - [该模式](#该模式)
+    - [库](#库)
+    - [合约](#合约)
+    - [预设](#预设)
+  - [函数名称和编码风格](#函数名称和编码风格)
+  - [模拟 hooks](#模拟-hooks)
 
 ## 可扩展性问题
 智能合约开发是一项关键任务。与所有软件开发一样，它容易出错；但与大多数情况不同的是，一个错误可能导致组织和个人遭受重大损失。因此，编写复杂的智能合约是一项非常谨慎的任务。
@@ -109,7 +105,7 @@
 * 所谓的“only owner”之类的保护函数以assert_为前缀（例如Ownable.assert_only_owner）。
 
 ## 模拟 hooks 
-与Solidity版本的[OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)不同，该库不实现* hooks *。主要原因是Cairo不支持重写函数。
+与Solidity版本的[OpenZeppelin Contracts](https://github.com/OpenZeppelin/openzeppelin-contracts)不同，该库不实现[hooks](/Contracts/Contracts.4.x/Extending-Contracts.md#使用-hooks)。主要原因是Cairo不支持重写函数。
 
 以下是Solidity中 hooks 的示例。
 ```
