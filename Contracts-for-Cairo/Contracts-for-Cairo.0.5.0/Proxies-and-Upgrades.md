@@ -3,40 +3,36 @@
 随着这种模式的成熟和可能出现更多的模式，预计会进行快速迭代。
 
 ## 目录
-* 快速入门
-
-* Solidity / Cairo 升级比较
-
-    * 构造函数
-
-    * 存储
-
-* 代理
-
-    * 代理合约
-
-    * 实现合约
-
-* 升级库 API
-
-    * 方法
-
-    * 事件
-
-* 使用代理
-
-    * 合约升级
-
-    * 声明合约
-
-    * 测试方法调用
-
-* 预设
+- [Proxies](#proxies)
+  - [目录](#目录)
+  - [快速入门](#快速入门)
+  - [Solidity/Cairo升级比较](#soliditycairo升级比较)
+    - [构造函数](#构造函数)
+    - [存储](#存储)
+  - [代理](#代理)
+    - [代理合约](#代理合约)
+    - [实现合约](#实现合约)
+  - [升级库API](#升级库api)
+    - [方法](#方法)
+      - [初始化器](#初始化器)
+        - [assert\_only\_admin](#assert_only_admin)
+        - [get\_implementation](#get_implementation)
+        - [get\_admin](#get_admin)
+        - [\_set\_admin](#_set_admin)
+        - [\_set\_implementation\_hash](#_set_implementation_hash)
+    - [Events](#events)
+      - [升级](#升级)
+      - [AdminChanged](#adminchanged)
+  - [使用代理](#使用代理)
+    - [合约升级](#合约升级)
+    - [声明合约](#声明合约)
+    - [测试方法调用](#测试方法调用)
+  - [预设](#预设)
 
 ## 快速入门
 一般的工作流程是：
 
-1. 声明一个实现合约类。
+1. 声明一个[实现合约类](https://starknet.io/docs/hello_starknet/intro.html#declare-the-contract-on-the-starknet-testnet)。
 
 2. 使用实现合约的类哈希和描述从实现中初始化代理的调用的输入部署代理合约（如果需要）。这将将调用重定向为一个库调用到实现（类似于 Solidity 的 delegatecall）。
 
@@ -68,12 +64,12 @@ PROXY = await starknet.deploy(
 ### 构造函数
 Solidity的OpenZeppelin合约需要使用另一个库来实现可升级合约。需要注意的是，在Solidity中，构造函数不是部署合约的运行时字节码的一部分；相反，构造函数的逻辑仅在合约实例部署时执行一次，然后被丢弃。这就是为什么代理无法模拟其实现的构造过程，因此需要一个不同的初始化机制。
 
-可升级合约中的构造函数问题通过使用初始化方法来解决。初始化方法本质上是常规方法，执行本应在构造函数中的逻辑。需要小心处理初始化方法，以确保它们只能被调用一次。因此，OpenZeppelin提供了一个[可升级合约库](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable)，其中大部分过程都被抽象化了。详细信息请参阅*OpenZeppelin的编写可升级合约*。
+可升级合约中的构造函数问题通过使用初始化方法来解决。初始化方法本质上是常规方法，执行本应在构造函数中的逻辑。需要小心处理初始化方法，以确保它们只能被调用一次。因此，OpenZeppelin提供了一个[可升级合约库](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable)，其中大部分过程都被抽象化了。详细信息请参阅[OpenZeppelin的编写可升级合约](/Upgrades-Plugins/Writing-Upgradeable-Contracts.md)。
 
-Cairo编程语言不支持继承。相反，Cairo合约遵循*可扩展性模式*，该模式已经使用初始化方法来模拟构造函数。可升级合约因此不需要一个单独的库来重构构造函数逻辑。
+Cairo编程语言不支持继承。相反，Cairo合约遵循[可扩展性模式](./Extensibility.md)，该模式已经使用初始化方法来模拟构造函数。可升级合约因此不需要一个单独的库来重构构造函数逻辑。
 
 ### 存储
-OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存储*的基本思想是将可升级合约的存储结构伪随机化，使其基于变量名而不是声明顺序，从而在升级过程中几乎不会发生存储冲突。
+OpenZeppelin的替代升级库还实现了非结构化存储。[非结构化存储](/Upgrades-Plugins/Proxy-Upgrade-Pattern.md#非结构化存储代理)的基本思想是将可升级合约的存储结构伪随机化，使其基于变量名而不是声明顺序，从而在升级过程中几乎不会发生存储冲突。
 
 与此同时，StarkNet编译器默认情况下通过对存储变量名（以及映射中的键）进行哈希运算来创建伪随机存储地址。换句话说，StarkNet已经使用了非结构化存储，不需要第二个库来修改存储设置。有关更多信息，请参阅[StarkNet的合约存储文档](https://starknet.io/documentation/contracts/#contracts_storage)。
 
@@ -83,7 +79,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在合约升级的情况下，只需将代理的引用更改为声明的实现类的类哈希即可。这允许开发人员添加功能，更新逻辑和修复错误，而无需触及状态或与应用程序交互的合约地址。
 
 ### 代理合约
-代理合约包括两个核心方法：
+[代理合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/upgrades/presets/Proxy.cairo)包括两个核心方法：
 
 1. __default__方法是一个回退方法，将函数调用和关联的calldata重定向到实现合约。
 
@@ -94,7 +90,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 在与合约交互时，用户应将函数调用发送到代理。代理的回退函数将函数调用重定向到实现合约以执行。
 
 ### 实现合约
-实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循*可扩展性模式*，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/upgrades/library.cairoo)导入。
+实现合约，也称为逻辑合约，接收来自代理合约的重定向函数调用。实现合约应遵循[可扩展性模式](./Extensibility.md#可扩展性问题)，并直接从[代理库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/upgrades/library.cairoo)导入。
 
 实现合约应：
 
@@ -114,7 +110,7 @@ OpenZeppelin的替代升级库还实现了非结构化存储。*非结构化存�
 
 * 使用传统构造函数设置其初始状态（用@constructor修饰）。而是使用调用代理构造函数的初始化方法。
 
-代理构造函数包括一个检查，确保初始化方法只能被调用一次；但是_set_implementation不包括此检查。开发人员需要使用访问控制（如*assert_only_admin*）保护其实现合约的可升级性。
+代理构造函数包括一个检查，确保初始化方法只能被调用一次；但是_set_implementation不包括此检查。开发人员需要使用访问控制（如[assert_only_admin](#assert_only_admin)）保护其实现合约的可升级性。
 
 有关完整的实现合约示例，请参见：
 
@@ -267,7 +263,7 @@ await signer.send_transaction(
 StarkNet 合约有两种形式：合约类和合约实例。合约类表示未实例化的无状态代码；而合约实例被实例化并包含状态。由于代理合约通过其类哈希引用实现合约，因此仅声明一个实现合约即足够（而不是进行完整的部署）。有关声明类的更多信息，请参阅 [StarkNet 的文档](https://starknet.io/docs/hello_starknet/intro.html#declare-contract)。
 
 ### 测试方法调用
-与大多数 StarkNet 合约一样，与代理合约交互需要一个*账户抽象*。然而，由于 StarkNet 测试框架的限制，@view 方法也需要一个账户抽象。这仅在测试时是必需的。例如，使用 Python 编写的 getter 方法的差异如下：
+与大多数 StarkNet 合约一样，与代理合约交互需要一个[账户抽象](./Accounts.md#快速入门)。然而，由于 StarkNet 测试框架的限制，@view 方法也需要一个账户抽象。这仅在测试时是必需的。例如，使用 Python 编写的 getter 方法的差异如下：
 
 ```
 # standard ERC20 call
