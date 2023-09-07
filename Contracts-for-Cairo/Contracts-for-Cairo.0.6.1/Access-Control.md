@@ -30,14 +30,13 @@
       - [grant\_role](#grant_role)
       - [revoke\_role](#revoke_role)
       - [renounce\_role](#renounce_role)
-    - [\_grant\_role](#_grant_role)
+      - [\_grant\_role](#_grant_role)
       - [\_revoke\_role](#_revoke_role)
       - [\_set\_role\_admin](#_set_role_admin)
     - [AccessControl events](#accesscontrol-events)
       - [RoleGranted](#rolegranted)
       - [RoleRevoked](#rolerevoked)
       - [RoleAdminChanged](#roleadminchanged)
-
 
 ## Ownable
 访问控制最常见和基本的形式是所有权的概念：有一个账户是合约的所有者，并且可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
@@ -124,6 +123,7 @@ owner: felt
 ```
 new_owner: felt
 ```
+
 返回：无。
 
 #### renounce_ownership
@@ -144,6 +144,7 @@ new_owner: felt
 ```
 new_owner: felt
 ```
+
 返回：无。
 
 ### Ownable events
@@ -403,9 +404,9 @@ has_role: felt
 ```
 
 #### get_role_admin
-返回控制角色的管理员角色。请参阅*grant_role*和*revoke_role*。
+返回控制角色的管理员角色。请参阅[grant_role](#grant_role)和[revoke_role](#revoke_role)。
 
-要更改角色的管理员，请使用*_set_role_admin*。
+要更改角色的管理员，请使用[_set_role_admin](#_set_role_admin)。
 
 参数:
 ```
@@ -437,7 +438,7 @@ user: felt
 #### revoke_role
 撤销用户的角色。
 
-如果用户被授予了角色，则发出[RoleGranted](#rolegranted)事件。
+如果用户被授予了角色，则发出c事件。
 
 要求：
 
@@ -470,7 +471,7 @@ user: felt
 
 返回值：无。
 
-### _grant_role
+#### _grant_role
 向用户授予角色。
 
 [内部](./Extensibility.md#该模式)函数，无访问限制。
@@ -490,7 +491,7 @@ user: felt
 
 [内部](./Extensibility.md#该模式)函数，没有访问限制。
 
-触发[RoleGranted](#rolegranted)事件。
+触发[RoleRevoked](#rolerevoked)事件。
 
 参数:
 ```
@@ -543,9 +544,9 @@ sender: felt
 
 发送者是发起合约调用的账户：
 
-* 如果使用revoke_role，发送者是管理员角色的持有者。
+* 如果使用[revoke_role](#revoke_role)，发送者是管理员角色的持有者。
 
-* 如果使用renounce_role，发送者是角色的持有者（即账户）。
+* 如果使用[renounce_role](#renounce_role)，发送者是角色的持有者（即账户）。
 
 ```
 role: felt

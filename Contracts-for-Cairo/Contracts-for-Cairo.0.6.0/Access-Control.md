@@ -30,6 +30,7 @@
       - [grant\_role](#grant_role)
       - [revoke\_role](#revoke_role)
       - [renounce\_role](#renounce_role)
+      - [\_grant\_role](#_grant_role)
       - [\_revoke\_role](#_revoke_role)
       - [\_set\_role\_admin](#_set_role_admin)
     - [AccessControl events](#accesscontrol-events)
@@ -43,7 +44,7 @@
 OpenZeppelin Contracts for Cairo提供了[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/access/ownable/library.cairo)来在合约中实现所有权。
 
 ### 快速入门
-将[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/access/ownable/library.cairo)集成到合约中首先需要分配一个所有者。实现合约的构造函数应该通过将所有者的地址传递给Ownable的*初始化器*来设置初始所有者，就像这样:
+将[Ownable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/access/ownable/library.cairo)集成到合约中首先需要分配一个所有者。实现合约的构造函数应该通过将所有者的地址传递给Ownable的[初始化器](./Accounts.md#构造函数)来设置初始所有者，就像这样:
 ```
 from openzeppelin.access.ownable.library import Ownable
 
@@ -116,7 +117,7 @@ owner: felt
 #### transfer_ownership
 将合约的所有权转移到一个新账户（new_owner）。只能由当前所有者调用。
 
-触发一个OwnershipTransferred事件。
+触发一个[OwnershipTransferred](#ownershiptransferred)事件。
 
 参数:
 ```
@@ -127,16 +128,16 @@ new_owner: felt
 #### renounce_ownership
 离开合约没有所有者。将不再能够使用assert_only_owner调用函数。只能由当前所有者调用。
 
-发出一个*OwnershipTransferred*事件。
+发出一个[OwnershipTransferred](#ownershiptransferred)事件。
 
 参数：无。
 
 返回：无。
 
 #### _transfer_ownership
-将合约的所有权转移到一个新的账户（new_owner）。*内部函数*，没有访问限制。
+将合约的所有权转移到一个新的账户（new_owner）。这是一个[内部](./Extensibility.md#该模式)函数，没有访问限制。
 
-触发一个*OwnershipTransferred*事件。
+触发一个[OwnershipTransferred](#ownershiptransferred)事件。
 
 参数:
 ```
@@ -162,12 +163,12 @@ newOwner: felt
 ## AccessControl
 虽然所有权的简单性对于简单的系统或快速原型设计非常有用，但通常需要不同级别的授权。您可能希望一个帐户有权禁止用户使用系统，但不能创建新的代币。[基于角色的访问控制（RBAC）](https://en.wikipedia.org/wiki/Role-based_access_control)在这方面提供了灵活性。
 
-本质上，我们将定义多个角色，每个角色可以执行不同的操作集。一个帐户可能具有“调解员”、“铸造者”或“管理员”等角色，您将检查这些角色而不是简单地使用*assert_only_owner*。此检查可以通过*assert_only_role*来强制执行。另外，您还可以定义授予角色、撤销角色等的规则。
+本质上，我们将定义多个角色，每个角色可以执行不同的操作集。一个帐户可能具有“调解员”、“铸造者”或“管理员”等角色，您将检查这些角色而不是简单地使用[assert_only_owner](#assert_only_owner)。此检查可以通过[assert_only_role](#assert_only_role)来强制执行。另外，您还可以定义授予角色、撤销角色等的规则。
 
 大多数软件使用基于角色的访问控制系统：一些用户是普通用户，一些可能是主管或经理，而少数人通常具有管理权限。
 
 ### 用法
-对于要定义的每个角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色（有关*创建标识符的信息*，请参见创建角色标识符）。
+对于要定义的每个角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色（有关[创建标识符的信息](#创建角色标识符)，请参见创建角色标识符）。
 
 下面是在[ERC20代币合约](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20.cairo)的一部分上实现AccessControl的简单示例，该示例定义并设置了“铸造者”角色。
 ```
@@ -199,9 +200,9 @@ func mint{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 ```
 
 > CAUTION
-在使用*AccessControl*之前，请确保您完全理解它的工作原理，或者复制粘贴本指南中的示例。
+在使用[AccessControl](#accesscontrol)之前，请确保您完全理解它的工作原理，或者复制粘贴本指南中的示例。
 
-虽然明确和明确，但这并不是我们不能通过*Ownable*实现的任何东西。实际上，AccessControl在需要细粒度权限的场景中非常出色，可以通过定义多个角色来实现。
+虽然明确和明确，但这并不是我们不能通过[Ownable](#ownable)实现的任何东西。实际上，AccessControl在需要细粒度权限的场景中非常出色，可以通过定义多个角色来实现。
 
 让我们通过定义一个“burner”角色来增强我们的ERC20代币示例，该角色允许账户销毁代币，并使用assert_only_role:
 ```
@@ -246,7 +247,7 @@ func burn{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 如此干净！通过这种方式分离关注点，可以实现比简单的所有权访问控制更细粒度的权限级别。限制系统的每个组件能够做什么被称为[最小特权原则](https://en.wikipedia.org/wiki/Principle_of_least_privilege)，这是一个良好的安全实践。请注意，如果需要，每个账户仍然可以拥有多个角色。
 
 ### 授予和撤销角色
-上面的ERC20代币示例使用了_grant_role，这是一个在编程分配角色时有用的*内部函数*（例如在构造过程中）。但是，如果我们以后想要将“铸造者”角色授予其他账户怎么办？
+上面的ERC20代币示例使用了_grant_role，这是一个在编程分配角色时有用的[内部](./Extensibility.md#该模式)函数（例如在构造过程中）。但是，如果我们以后想要将“铸造者”角色授予其他账户怎么办？
 
 默认情况下，**具有角色的账户无法授予或撤销它**：拥有角色只是使assert_only_role检查通过。要动态授予和撤销角色，您需要获得该角色的管理员的帮助。
 
@@ -401,9 +402,9 @@ has_role: felt
 ```
 
 #### get_role_admin
-返回控制角色的管理员角色。请参阅*grant_role*和*revoke_role*。
+返回控制角色的管理员角色。请参阅[grant_role](#grant_role)和[revoke_role](#revoke_role)。
 
-要更改角色的管理员，请使用*_set_role_admin*。
+要更改角色的管理员，请使用[_set_role_admin](#_set_role_admin)。
 
 参数:
 ```
@@ -418,7 +419,7 @@ admin: felt
 #### grant_role
 授予用户角色。
 
-如果用户尚未被授予角色，则发出*RoleGranted*事件。
+如果用户尚未被授予角色，则发出[RoleGranted](#rolegranted)事件。
 
 要求：
 
@@ -434,7 +435,7 @@ user: felt
 #### revoke_role
 撤销用户的角色。
 
-如果用户被授予了角色，则发出*RoleRevoked*事件。
+如果用户被授予了角色，则发出[RoleRevoked](#rolerevoked)事件。
 
 要求：
 
@@ -450,9 +451,9 @@ user: felt
 #### renounce_role
 从调用用户中撤销角色。
 
-角色通常通过*授予角色*和*撤销角色*进行管理：此函数的目的是提供一种机制，以防止账户被攻击者获取权限（例如当一个受信任的设备丢失时）。
+角色通常通过[授予角色](#grant_role)和[撤销角色](#revoke_role)进行管理：此函数的目的是提供一种机制，以防止账户被攻击者获取权限（例如当一个受信任的设备丢失时）。
 
-如果调用用户已被撤销角色，则会发出一个*RoleRevoked*事件。
+如果调用用户已被撤销角色，则会发出一个[RoleGranted](#rolegranted)事件。
 
 要求：
 
@@ -465,12 +466,27 @@ user: felt
 ```
 返回值：无。
 
+#### _grant_role
+向用户授予角色。
+
+[内部](./Extensibility.md#该模式)函数，无访问限制。
+
+触发一个[RoleGranted](#rolegranted) 事件。
+
+参数:
+```
+role: felt
+user: felt
+```
+
+返回值：无。
+
 #### _revoke_role
 撤销用户的角色。
 
-内部函数，没有访问限制。
+[内部](./Extensibility.md#该模式)函数，没有访问限制。
 
-触发*RoleRevoked*事件。
+触发[RoleRevoked](#rolerevoked)事件。
 
 参数:
 ```
@@ -480,9 +496,9 @@ user: felt
 返回值：无。
 
 #### _set_role_admin
-*内部函数*将admin_role设置为角色的管理员角色。
+[内部](./Extensibility.md#该模式)函数将admin_role设置为角色的管理员角色。
 
-触发*RoleAdminChanged*事件。
+触发[RoleAdminChanged](#roleadminchanged)事件。
 
 参数:
 ```
@@ -521,9 +537,9 @@ sender: felt
 
 发送者是发起合约调用的账户：
 
-* 如果使用revoke_role，发送者是管理员角色的持有者。
+* 如果使用[revoke_role](#revoke_role)，发送者是管理员角色的持有者。
 
-* 如果使用renounce_role，发送者是角色的持有者（即账户）。
+* 如果使用[renounce_role](#renounce_role)，发送者是角色的持有者（即账户）。
 
 ```
 role: felt
