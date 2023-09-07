@@ -5,9 +5,9 @@
 
 有关账户抽象的概述，请参阅StarkWare的[StarkNet Alpha 0.10](https://medium.com/starkware/starknet-alpha-0-10-0-923007290470)。关于这个主题的更详细讨论可以在[StarkNet账户抽象第1部分](https://community.starknet.io/t/starknet-account-abstraction-model-part-1/781)中找到。
 
-## 目录
+## 目录- [Accounts](#accounts)
 - [Accounts](#accounts)
-  - [目录](#目录)
+  - [目录- Accounts](#目录--accounts)
   - [快速入门](#快速入门)
     - [账户入口点](#账户入口点)
     - [反事实部署](#反事实部署)

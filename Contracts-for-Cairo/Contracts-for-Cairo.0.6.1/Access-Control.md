@@ -38,6 +38,7 @@
       - [RoleRevoked](#rolerevoked)
       - [RoleAdminChanged](#roleadminchanged)
 
+
 ## Ownable
 访问控制最常见和基本的形式是所有权的概念：有一个账户是合约的所有者，并且可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
 

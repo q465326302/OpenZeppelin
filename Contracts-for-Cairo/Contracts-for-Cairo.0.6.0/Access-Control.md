@@ -5,25 +5,37 @@
 在智能合约世界中，访问控制即“谁被允许执行这个操作”非常重要。合约的访问控制可能会管理谁可以铸造代币、对提案进行投票、冻结转账等等许多事情。因此，了解如何实现访问控制非常关键，[以免被他人窃取整个系统](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7/)。
 
 # 目录
-* Ownable
-
-  * 快速入门
-
-  * Ownable库API
-
-  * Ownable事件
-
-* AccessControl
-
-  * 用法
-
-  * 授予和撤销角色
-
-  * 创建角色标识符
-
-  * AccessControl库API
-
-  * AccessControl事件
+- [Access](#access)
+- [目录](#目录)
+  - [Ownable](#ownable)
+    - [快速入门](#快速入门)
+    - [Ownable库API](#ownable库api)
+      - [initializer](#initializer)
+      - [assert\_only\_owner](#assert_only_owner)
+      - [owner](#owner)
+      - [transfer\_ownership](#transfer_ownership)
+      - [renounce\_ownership](#renounce_ownership)
+      - [\_transfer\_ownership](#_transfer_ownership)
+    - [Ownable events](#ownable-events)
+      - [OwnershipTransferred](#ownershiptransferred)
+  - [AccessControl](#accesscontrol)
+    - [用法](#用法)
+    - [授予和撤销角色](#授予和撤销角色)
+    - [创建角色标识符](#创建角色标识符)
+    - [AccessControl library API](#accesscontrol-library-api)
+      - [initializer](#initializer-1)
+      - [assert\_only\_role](#assert_only_role)
+      - [has\_role](#has_role)
+      - [get\_role\_admin](#get_role_admin)
+      - [grant\_role](#grant_role)
+      - [revoke\_role](#revoke_role)
+      - [renounce\_role](#renounce_role)
+      - [\_revoke\_role](#_revoke_role)
+      - [\_set\_role\_admin](#_set_role_admin)
+    - [AccessControl events](#accesscontrol-events)
+      - [RoleGranted](#rolegranted)
+      - [RoleRevoked](#rolerevoked)
+      - [RoleAdminChanged](#roleadminchanged)
 
 ## Ownable
 访问控制最常见和基本的形式是所有权的概念：有一个账户是合约的所有者，并且可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
