@@ -1,53 +1,33 @@
 # ERC20
 
-ERC20代币标准是一种对*可互换代币*的规范，这种代币的所有单位都完全相等。ERC20.cairo合约在StarkNet上实现了对[EIP-20](https://eips.ethereum.org/EIPS/eip-20)的近似。
+ERC20代币标准是一种对[可互换代币](/Contracts/Contracts.4.x/Tokens/Tokens.md#不同类型的代币)的规范，这种代币的所有单位都完全相等。ERC20.cairo合约在StarkNet上实现了对[EIP-20](https://eips.ethereum.org/EIPS/eip-20)的近似。
 
 # 目录
-* 界面
-
-  * ERC20兼容性
-
-* 使用方法
-
-* 可扩展性
-
-* 预设
-
-  * ERC20（基本）
-
-  * ERC20Mintable
-
-  * ERC20Pausable
-
-  * ERC20Upgradeable
-
-* API规范
-
-  * 方法
-
-    * 名称
-
-    * 符号
-
-    * 小数位数
-
-    * 总供应量
-
-    * 余额
-
-    * 授权额度
-
-    * 转账
-
-    * 从授权额度转账
-
-    * 批准
-
-  * 事件
-
-    * 转账（事件）
-
-    * 授权（事件）
+- [ERC20](#erc20)
+- [目录](#目录)
+  - [接口](#接口)
+    - [ERC20兼容性](#erc20兼容性)
+  - [用途](#用途)
+  - [可扩展性](#可扩展性)
+  - [预设](#预设)
+    - [ERC20 (basic)](#erc20-basic)
+    - [ERC20Mintable](#erc20mintable)
+    - [ERC20Pausable](#erc20pausable)
+    - [ERC20Upgradeable](#erc20upgradeable)
+  - [API Specification](#api-specification)
+    - [方法](#方法)
+      - [name](#name)
+      - [symbol](#symbol)
+      - [decimals](#decimals)
+      - [totalSupply](#totalsupply)
+      - [balanceOf](#balanceof)
+      - [allowance](#allowance)
+      - [transfer](#transfer)
+      - [transferFrom](#transferfrom)
+      - [approve](#approve)
+      - [Events](#events)
+      - [Transfer (event)](#transfer-event)
+      - [Approval (event)](#approval-event)
 
 ## 接口
 ```
@@ -143,7 +123,7 @@ await signer.send_transaction(account, erc20.contract_address, 'transfer', [reci
 ```
 
 ## 可扩展性
-ERC20合约可以通过遵循*可扩展性模式进行扩展*。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
+ERC20合约可以通过遵循[可扩展性模式进行扩展](../Extensibility.md#可扩展性问题)。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
 
 ```
 @external
@@ -165,7 +145,7 @@ func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 
 * 添加角色，如所有者或铸币者。
 
-有关在ERC20合约中使用可扩展性模式的完整示例，请参阅*预设*。
+有关在ERC20合约中使用可扩展性模式的完整示例，请参阅[预设](#预设)。
 
 ## 预设
 以下合约预设已准备好部署，可以直接使用于快速原型设计和测试。每个预设都铸造了一个初始供应量，这对于不公开铸造方法的预设尤其必要。
@@ -180,7 +160,7 @@ func transfer{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}(
 [ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)预设允许合约所有者暂停/取消暂停所有修改状态的方法，例如转账、批准等。这个预设在以下情况下非常有用：在评估期结束之前阻止交易，并在出现严重错误时紧急关闭所有代币转移。
 
 ### ERC20Upgradeable
-[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅*合约升级*。
+[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅[合约升级](../Proxies-and-Upgrades.md#合约升级)。
 
 ## API Specification
 
@@ -261,6 +241,7 @@ totalSupply: Uint256
 ```
 account: felt
 ```
+
 返回值：
 ```
 balance: Uint256
@@ -276,6 +257,7 @@ balance: Uint256
 owner: felt
 spender: felt
 ```
+
 返回值：
 ```
 remaining: Uint256
@@ -284,7 +266,7 @@ remaining: Uint256
 #### transfer
 将数量代币从调用者的账户转移到接收者的账户。它返回一个表示是否成功的布尔值1。
 
-发出一个*Transfer*事件。
+发出一个[Transfer](#transfer)事件。
 
 参数:
 ```
@@ -295,7 +277,7 @@ amount: Uint256
 #### transferFrom
 使用津贴机制将数量代币从发送者移动到接收者。然后从调用者的津贴中扣除数量。返回1表示成功。
 
-发出一个*Transfer*事件。
+发出一个[Transfer](#transfer)事件。
 
 参数:
 ```
@@ -303,6 +285,7 @@ sender: felt
 recipient: felt
 amount: Uint256
 ```
+
 返回值：
 ```
 success: felt
@@ -311,13 +294,14 @@ success: felt
 #### approve
 设置spender的津贴为caller的代币数量。它返回一个布尔值1，表示是否成功。
 
-发出一个*Approval*事件。
+发出一个[Approval](#approval-event)事件。
 
 参数:
 ```
 spender: felt
 amount: Uint256
 ```
+
 返回值：
 ```
 success: felt
@@ -341,5 +325,15 @@ func Approval(owner: felt, spender: felt, value: Uint256) {
 ```
 from_: felt
 to: felt
+value: Uint256
+```
+
+#### Approval (event)
+当[approve](#approve)调用批准设置所有者对支出者的准许额度时发出。值是新的准许额度。
+
+参数：
+```
+owner: felt
+spender: felt
 value: Uint256
 ```

@@ -186,7 +186,7 @@ end
 [ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)预设允许合约所有者暂停/取消暂停所有修改状态的方法，例如转账、批准等。这个预设在以下情况下非常有用：在评估期结束之前阻止交易，并在出现严重错误时紧急关闭所有代币转移。
 
 ### ERC20Upgradeable
-[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅*合约升级*。
+[ERC20Upgradeable](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/token/erc20/presets/ERC20Upgradeable.cairo)预设允许合约所有者通过部署一个新的ERC20实现合约来升级合约，同时保留合约的状态。这个预设在消除错误和添加新功能等场景中非常有用。有关可升级性的更多信息，请参阅[合约升级](../Proxies-and-Upgrades.md#合约升级)。
 
 ## API Specification
 
