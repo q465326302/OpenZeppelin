@@ -5,15 +5,13 @@
 预计该模块会不断发展。
 
 # 目录
-* Initializable
-
-* Pausable
-
-* Reentrancy Guard
-
-* SafeMath
-
-  * SafeUint256
+- [Security](#security)
+- [目录](#目录)
+  - [Initializable](#initializable)
+  - [Pausable](#pausable)
+  - [重入保护](#重入保护)
+  - [SafeMath](#safemath)
+    - [SafeUint256](#safeuint256)
 
 ## Initializable
 Initializable库提供了一个简单的机制，模拟构造函数的功能。更具体地说，它使得逻辑可以只执行一次，这在无法使用构造函数设置合约的初始状态时非常有用。
@@ -31,6 +29,7 @@ func foo{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check_ptr}() {
     return ();
 }
 ```
+
 > CAUTION
 这个Initializable模式只应该用在一个函数上。
 
@@ -60,18 +59,19 @@ func whenPaused{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_ptr}
     return ();
 }
 ```
+
 > NOTE
 暂停和取消暂停已经包含了这些断言。换句话说，当已经暂停时，无法调用暂停操作，反之亦然。
 
 以下是使用Pausable库的完整实现列表：
 
-* [ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)
-* [ERC721MintablePausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/token/erc721/presets/ERC721MintablePausable.cairo)
+* [ERC20Pausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc20/presets/ERC20Pausable.cairo)
+* [ERC721MintablePausable](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/token/erc721/presets/ERC721MintablePausable.cairo)
 
 ## 重入保护
 [重入攻击](https://gus-tavo-guim.medium.com/reentrancy-attack-on-smart-contracts-how-to-identify-the-exploitable-and-an-example-of-an-attack-4470a2d8dfe4)是指调用者通过递归调用目标函数，能够获得比允许的更多资源的情况。
 
-由于Cairo不支持像Solidity那样的修饰符，[重入保护库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/security/reentrancyguard/library.cairo)提供了两个方法start和end来保护函数免受重入攻击。受保护的函数必须在第一个函数语句之前调用ReentrancyGuard.start，并在return语句之前调用ReentrancyGuard.end，如下所示：
+由于Cairo不支持像Solidity那样的修饰符，[重入保护库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/security/reentrancyguard/library.cairo)提供了两个方法start和end来保护函数免受重入攻击。受保护的函数必须在第一个函数语句之前调用ReentrancyGuard.start，并在return语句之前调用ReentrancyGuard.end，如下所示：
 ```
 from openzeppelin.security.reentrancyguard.library import ReentrancyGuard
 
@@ -88,7 +88,7 @@ func test_function{syscall_ptr : felt*, pedersen_ptr : HashBuiltin*, range_check
 ## SafeMath
 
 ### SafeUint256
-SafeUint256命名空间在[SafeMath库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.0/src/openzeppelin/security/safemath/library.cairo)中通过利用Cairo的Uint256库并集成溢出检查，为无符号256位整数（uint256）提供算术运算。Cairo的Uint256函数中有一些在溢出时不会回滚。例如，当总和超过256位时，uint256_add将返回一个位进位。该库包括了额外的断言，确保值不会溢出。
+SafeUint256命名空间在[SafeMath库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/security/safemath/library.cairo)中通过利用Cairo的Uint256库并集成溢出检查，为无符号256位整数（uint256）提供算术运算。Cairo的Uint256函数中有一些在溢出时不会回滚。例如，当总和超过256位时，uint256_add将返回一个位进位。该库包括了额外的断言，确保值不会溢出。
 
 使用SafeUint256方法非常简单。只需导入SafeUint256并插入算术方法，如下所示。
 ```

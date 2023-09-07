@@ -5,15 +5,13 @@
 预计该模块会不断发展。
 
 # 目录
-* Initializable
-
-* Pausable
-
-* Reentrancy Guard
-
-* SafeMath
-
-  * SafeUint256
+- [Security](#security)
+- [目录](#目录)
+  - [Initializable](#initializable)
+  - [Pausable](#pausable)
+  - [重入保护](#重入保护)
+  - [SafeMath](#safemath)
+    - [SafeUint256](#safeuint256)
 
 ## Initializable
 Initializable库提供了一个简单的机制，模拟构造函数的功能。更具体地说，它使得逻辑可以只执行一次，这在无法使用构造函数设置合约的初始状态时非常有用。
@@ -35,6 +33,7 @@ func foo{
     return ()
 end
 ```
+
 > CAUTION
 这个Initializable模式只应该用在一个函数上。
 
@@ -70,6 +69,7 @@ func whenPaused{
     return ()
 end
 ```
+
 > NOTE
 暂停和取消暂停已经包含了这些断言。换句话说，当已经暂停时，无法调用暂停操作，反之亦然。
 
