@@ -4,25 +4,18 @@
 
 ## 
 目录
-* ERC165
-
-  * 接口计算
-
-  * 注册接口
-
-  * 查询接口
-
-  * IERC165
-
-  * IERC165 API规范
-
-    * supportsInterface
-
-  * ERC165库函数
-
-    * supports_interface
-
-    * register_interface
+- [Introspection](#introspection)
+  - [](#)
+  - [ERC165](#erc165)
+    - [接口计算](#接口计算)
+    - [注册接口](#注册接口)
+    - [查询接口](#查询接口)
+    - [IERC165](#ierc165)
+    - [IERC165 API Specification](#ierc165-api-specification)
+      - [supportsInterface](#supportsinterface)
+    - [ERC165 Library Functions](#erc165-library-functions)
+      - [supports\_interface](#supports_interface)
+      - [register\_interface](#register_interface)
 
 ## ERC165
 ERC165标准允许智能合约对其他合约[进行类型内省](https://en.wikipedia.org/wiki/Type_introspection)，即检查可以调用哪些函数。这通常被称为合约的接口。
@@ -62,8 +55,9 @@ func check_support{syscall_ptr: felt*, pedersen_ptr: HashBuiltin*, range_check_p
     return (is_supported);
 }
 ```
+
 > NOTE
-supportsInterface是使用驼峰命名法的，因为它是ERC165接口中的一个公开的合约方法。这与库方法（例如[ERC165库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/introspection/erc165/library.cairo)中的supports_interface）不同，库方法使用下划线命名法，并且不是公开的。有关更多细节，请参阅*函数名称和编码风格*。
+supportsInterface是使用驼峰命名法的，因为它是ERC165接口中的一个公开的合约方法。这与库方法（例如[ERC165库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/introspection/erc165/library.cairo)中的supports_interface）不同，库方法使用下划线命名法，并且不是公开的。有关更多细节，请参阅[函数名称和编码风格](./Extensibility.md#函数名称和编码风格)。
 
 ### IERC165
 ```
@@ -87,6 +81,7 @@ func supportsInterface(interfaceId: felt) -> (success: felt) {
 ```
 interfaceId: felt
 ```
+
 返回：
 ```
 success: felt
@@ -108,6 +103,7 @@ func register_interface(interface_id: felt) {
 ```
 interface_id: felt
 ```
+
 返回：
 ```
 success: felt
@@ -120,4 +116,5 @@ success: felt
 ```
 interface_id: felt
 ```
+
 返回： 无
