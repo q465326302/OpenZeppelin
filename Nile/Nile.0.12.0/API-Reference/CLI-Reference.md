@@ -1,38 +1,38 @@
 # CLI Reference
-在这里，您可以找到Nile默认提供的核心命令的完整参考。
+在这里，您可以找到Nile提供的默认核心命令的完整参考。
 
 **TRANSACTIONS**
-设置
+[setup](#nile-setup-private_key_alias)
 
-声明
+[declare](#nile-declare-private_key_alias-contract_name)
 
-部署
+[deploy](#nile-deploy-private_key_alias-arg1-arg2)
 
-发送
+[send](#nile-send-private_key_alias-contract_id-arg1-arg2)
 
-状态
+[status](#nile-status-tx_hash)
 
-调试
+[debug](#nile-debug-tx_hash)
 
 **QUERIES**
-调用
+[call](#nile-call-contract_id-arg1-arg2)
 
-获取nonce
+[get-nonce](#nile-get-nonce)
 
-获取余额
+[get-balance](#nile-get-balance)
 
 **PROJECT MANAGEMENT**
-初始化
+[init](#nile-init)
 
-节点
+[node](#nile-node)
 
-编译
+[compile](#nile-compile-path_to_contract)
 
-运行
+[run](#nile-run-path_to_script)
 
-清理
+[clean](#nile-clean)
 
-版本
+[version](#nile-version)
 
 **UTILS**
 获取账户
@@ -78,7 +78,7 @@
 
 * --account_contract
 
-从cairo-lang v0.8.0开始，用户必须使用--account_contract标志编译帐户合约。如果合约的名称以Account结尾（例如Account.cairo，EthAccount.cairo），Nile会自动插入该标志。否则，用户必须包含该标志。
+从[cairo-lang](https://github.com/starkware-libs/cairo-lang) v0.8.0开始，用户必须使用--account_contract标志编译帐户合约。如果合约的名称以Account结尾（例如Account.cairo，EthAccount.cairo），Nile会自动插入该标志。否则，用户必须包含该标志。
 ```
 nile compile contracts/NewAccountType.cairo --account_contract # compiles account contract
 ```
@@ -101,8 +101,8 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 该命令使用别名而不是实际私钥，以避免意外泄露私钥。该别名与同名的环境变量关联，其值为私钥。
 
 > NOTE
-1. 创建或更新存储与账户管理相关的所有数据的localhost.accounts.json文件。
-2. 创建或更新存储与部署相关的所有数据的localhost.deployments.txt文件。
+1. 创建或更新localhost.accounts.json文件，存储所有与账户管理相关的数据。
+2. 创建或更新localhost.deployments.txt文件，存储所有与部署相关的数据。
 
 #### 参数
 * PRIVATE_KEY_ALIAS
@@ -118,7 +118,7 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 
 * --debug和--track
 
-监视账户部署交易的状态。有关完整描述，请参见*status*命令。
+监视账户部署交易的状态。有关完整描述，请参见[status](#nile-status-tx_hash)命令。
 
 ### nile declare <PRIVATE_KEY_ALIAS> <CONTRACT_NAME>
 通过账户声明一个合约。
@@ -153,13 +153,13 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 
 * --debug和--track
 
-监视账户部署交易的状态。有关完整描述，请参见状态命令。
+监视账户部署交易的状态。有关完整描述，请参见[status](#nile-status-tx_hash)命令。
 
 ### nile deploy <PRIVATE_KEY_ALIAS> <CONTRACT> [arg1, arg2...]
 通过账户部署合约。
 
 > NOTE
-创建或更新localhost.deployments.txt文件，存储与部署相关的所有数据。
+1. 创建或更新localhost.deployments.txt文件，存储与部署相关的所有数据。
 
 #### 参数
 * PRIVATE_KEY_ALIAS
@@ -211,7 +211,7 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 
 * --debug和--track
 
-监视账户部署交易的状态。有关完整描述，请参见状态命令。
+监视账户部署交易的状态。有关完整描述，请参见[status](#nile-status-tx_hash)命令。
 
 ### nile call <CONTRACT_ID> <METHOD> [arg1, arg2...]
 执行针对网络的读取操作。
@@ -237,45 +237,45 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 默认为localhost。
 
 ### nile send <PRIVATE_KEY_ALIAS> <CONTRACT_ID> <METHOD> [arg1, arg2...]
-Execute a transaction through an Account.
+执行一个通过账户的交易。
 
-#### Arguments
+#### 参数
 * PRIVATE_KEY_ALIAS
 
-Specify the alias representing the account to be used.
+指定代表要使用的账户的别名。
 
 * CONTRACT_ID
 
-Specify the contract to call (either alias or address).
+指定要调用的合约（别名或地址）。
 
 * METHOD
 
-Specify the method to execute.
+指定要执行的方法。
 
 * ARGS
 
-Optional calldata arguments for the method to execute.
+方法执行的可选calldata参数。
 
 #### Options
 * --network
 
-Select network: one of (localhost, integration, goerli, goerli2, mainnet).
+选择网络：（localhost，integration，goerli，goerli2，mainnet）之一。
 
-Default to localhost.
+默认为localhost。
 
-Default to localhost.
+默认为localhost。
 
 * --max_fee
 
-Specify the max fee you are willing to pay for the transaction.
+指定您愿意为交易支付的最高费用。
 
 * --simulate and --estimate_fee
 
-Flags for querying the network without executing the transaction.
+查询网络而不执行交易的标志。
 
 * --debug and --track
 
-Watch the status of the account deployment transaction. See the status command for a complete description.
+观察账户部署交易的状态。查看状态命令以获取完整描述。
 
 ### nile counterfactual-address <PRIVATE_KEY_ALIAS>
 预计算一个账户合约的部署地址。

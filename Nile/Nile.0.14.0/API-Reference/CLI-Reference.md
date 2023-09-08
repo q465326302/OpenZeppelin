@@ -1,8 +1,8 @@
 # CLI Reference
-在这里，您可以找到Nile默认提供的核心命令的完整参考。
+在这里，您可以找到Nile提供的默认核心命令的完整参考。
 
 ## 事务执行
-执行或查询事务状态的命令。
+执行或查询交易状态的命令。
 
 ### setup
 
@@ -13,8 +13,8 @@
 该命令使用别名而不是实际私钥，以避免意外泄露私钥。该别名与同名的环境变量关联，其值为私钥。
 
 > NOTE
-1. 创建或更新存储与账户管理相关的所有数据的localhost.accounts.json文件。
-2. 创建或更新存储与部署相关的所有数据的localhost.deployments.txt文件。
+1. 创建或更新localhost.accounts.json文件，存储所有与账户管理相关的数据。
+2. 创建或更新localhost.deployments.txt文件，存储所有与部署相关的数据。
 
 ##### 参数
 * PRIVATE_KEY_ALIAS
@@ -42,7 +42,7 @@
 
 * --debug和--track
 
-监视账户部署事务的状态。有关完整描述，请参阅*status*命令。
+查看账户部署交易的状态。请参阅[状态命令](#状态)以获取完整描述。
 
 ### 声明
 
@@ -83,7 +83,7 @@
 
 * --debug和--track
 
-监视账户部署交易的状态。有关完整描述，请参见*status*命令。
+监视账户部署交易的状态。有关完整描述，请参见[status](#状态)命令。
 
 ### 部署
 
@@ -143,7 +143,7 @@
 
 * --debug和--track
 
-监视账户部署交易的状态。有关完整描述，请参阅status命令。
+监视账户部署交易的状态。有关完整描述，请参阅[status](#状态)命令。
 
 ### 发送
 
@@ -184,7 +184,7 @@
 
 * --debug和--track
 
-监视账户部署交易的状态。有关完整描述，请参见status命令。
+监视账户部署交易的状态。有关完整描述，请参见[status](#状态)命令。
 
 ### 状态
 
@@ -344,6 +344,7 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 
 指定编译器必须用于解析Cairo导入的目录。
 
+> TIP
 请参阅[StarkNet文档](https://starknet.io/docs/how_cairo_works/imports.html?highlight=cairo%20path#import-search-paths)中的导入搜索路径。
 
 * --disable-hint-validation
