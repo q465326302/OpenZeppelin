@@ -1,44 +1,86 @@
-# 通过插件扩展Nile
-Nile可以通过插件扩展其CLI和Nile Runtime Environment功能。您可以fork此[示例模板](https://github.com/franalgaba/nile-plugin-example)，并按照提供的说明实现所需的功能。
+# NRE and scripting
+Nile提供了一个API，用于构建利用Nile运行时环境（NRE）的脚本，这是一个对象，从编译到账户和部署管理，都使用了Nile的功能。Nile脚本实现了一个异步的def run(nre)函数，该函数接收NileRuntimeEnvironment对象。
 
-## 工作原理
-此实现利用了[Click](https://click.palletsprojects.com/)的本机可扩展性功能。使用Click和利用Python[入口点](https://packaging.python.org/en/latest/specifications/entry-points/)，我们可以通过依赖项在Python环境中本地处理扩展。Nile上的插件实现会查找特定的Python入口点约束，以将命令添加到CLI或NRE中。
-
-1. 如果插件提供CLI命令，请使用Click。
+## 运行脚本
+1. 在项目的根目录下的scripts/目录中创建一个名为test_script.py的文件，并将以下内容添加到文件中。请记住，scripts/目录是一个建议，不是必需的。
 ```
-# First, import click dependency
-import click
-
-# Decorate the method that will be the command name with `click.command`
-@click.command()
-# Custom parameters can be added as defined in `click`: https://click.palletsprojects.com/en/7.x/options/
-def greet():
-    """
-    Plugin CLI command that does something.
-    """
-    # Done! Now implement the custom functionality in the command
-    click.echo("Hello Nile!")
+async def run(nre):
+    accounts = await nre.get_accounts(predeployed=True)
+    print("First Account:", accounts[0])
 ```
 
-2. 使用pyproject.toml文件中的Poetry插件功能定义插件入口点:
-```
-# We need to specify that Click commands are entry points in the group `nile_plugins`
-[tool.poetry.plugins."nile_plugins.cli"]
-# <command_name> = <package_method_location>
-"greet" = "nile_greet.main.greet"
-```
+> NOTE
+predeployed参数利用了本地节点已经部署的账户。请阅读[get_accounts](./API-Reference/NRE-Reference.md#get_accounts)的API参考文档以了解更多信息。
 
-3. 可选地为Nile运行时环境指定插件入口点。如果不需要实现Click命令，则可以删除cli入口点:
+2. 使用nile node运行一个开放网络节点。
 ```
-[tool.poetry.plugins."nile_plugins.cli"]
-"greet" = "nile_greet.main.greet"
-
-[tool.poetry.plugins."nile_plugins.nre"]
-"greet" = "nile_greet.nre.greet"
+nile node
 ```
 
-4. 完成！为了更好地理解通过setuptools进行python入口点的使用，请查阅[此文档](https://setuptools.pypa.io/en/latest/userguide/entry_point.html#entry-points-for-plugins)。
+3. 通过使用nile run运行脚本
+```
+nile run scripts/test_script.py
+```
 
-如何决定是否使用插件？只需从项目中安装/卸载插件依赖即可 😄。
+> NOTE
+您可以使用--network选项更改脚本的目标网络。
+有关NRE公开成员的完整参考，请参阅[NRE参考部分](./API-Reference/NRE-Reference.md)。
 
-在nile_plugins组下同时使用cli和nre入口点，可以开发强大且易于集成的插件。
+## 有用的脚本示例
+在本节中，您可以找到一些可能有用的脚本示例。
+
+### 声明OZ账户
+如果您需要在本地devnet节点中部署账户，可以使用此选项进行先前声明。
+```
+# scripts/declare_oz_account.py
+async def run(nre):
+  accounts = await nre.get_accounts(predeployed=True)
+  declarer_account = accounts[0]
+
+  # nile_account flag tells Nile to use its pre-packed artifact
+  #
+  # If we don't pass a max_fee, nile will estimate the transaction
+  # fee by default. This line is equivalent to:
+  #
+  # tx = await declarer_account.declare("Account", max_fee=0, nile_account=True)
+  # max_fee = await tx.estimate_fee()
+  # tx.update_fee(max_fee)
+  #
+  # Note that tx.update_fee will update tx.hash and tx.max_fee members
+  tx = await declarer_account.declare("Account", nile_account=True)
+
+  tx_status, *_ = await tx.execute(watch_mode="track")
+
+  print(tx_status.status, tx_status.error_message or "")
+```
+
+### 从预部署的开发网络账户转移资金
+用于在开发网络中给地址提供资金:
+```
+# scripts/transfer_funds.py
+from nile.common import ETH_TOKEN_ADDRESS
+from nile.utils import to_uint, hex_address
+
+async def run(nre):
+  accounts = await nre.get_accounts(predeployed=True)
+  account = accounts[0]
+
+  # define the recipient address
+  recipient = "0x05a0ca51cbc03e5ec8d9fad116f8737a6afe2613b3128ebd515643a1a5e5c52d"
+
+  # define the amount to transfer
+  amount = 2 * 10 ** 18
+
+  print(
+    f"Transferring {amount} WEI\n"
+    f"from {hex_address(account.address)}\n"
+    f"to   {recipient}\n"
+  )
+
+  # If we don't pass a max_fee, nile will estimate the transaction fee by default
+  tx = await account.send(ETH_TOKEN_ADDRESS, "transfer", [recipient, *to_uint(amount)])
+
+  tx_status, *_ = await tx.execute(watch_mode="track")
+
+  print(tx_status.status, tx_status.error_message or "")
+```

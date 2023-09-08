@@ -2,7 +2,7 @@
 Nile可以通过插件扩展其CLI和Nile Runtime Environment功能。您可以fork此[示例模板](https://github.com/franalgaba/nile-plugin-example)，并按照提供的说明实现所需的功能。
 
 ## 工作原理
-此实现利用了[Click](https://click.palletsprojects.com/)的本机可扩展性功能。使用Click和利用Python[入口点](https://packaging.python.org/en/latest/specifications/entry-points/)，我们可以通过依赖项在Python环境中本地处理扩展。Nile上的插件实现会查找特定的Python入口点约束，以将命令添加到CLI或NRE中。
+此实现利用了[Click](https://click.palletsprojects.com/)的可扩展性功能。使用Click和利用Python[入口点](https://packaging.python.org/en/latest/specifications/entry-points/)，我们可以在Python环境中通过依赖关系来项目本地扩展。Nile上的插件实现会查找特定的Python入口点约束，以将命令添加到CLI或NRE中。
 
 1. 如果插件提供CLI命令，请使用Click。
 ```
@@ -37,7 +37,7 @@ def greet():
 "greet" = "nile_greet.nre.greet"
 ```
 
-4. 完成！为了更好地理解通过setuptools进行python入口点的使用，请查阅[此文档](https://setuptools.pypa.io/en/latest/userguide/entry_point.html#entry-points-for-plugins)。
+4. 完成！为了更好地理解通过setuptools的python入口点，请查阅[此文档](https://setuptools.pypa.io/en/latest/userguide/entry_point.html#entry-points-for-plugins)。
 
 如何决定是否使用插件？只需从项目中安装/卸载插件依赖即可 😄。
 
