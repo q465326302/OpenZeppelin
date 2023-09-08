@@ -10,20 +10,19 @@
 UDC地址在主网、测试网和starknet-devnet中为0x041a78e741e5af2fec34b695679bc6891742439f7afb8484ecd7766661ad02bf。该地址可能在将来发生变化。
 
 # 目录
-
-* 快速入门
-
-* 部署UDC
-
-* 用法
-
-  * 部署者相关
-
-  * 部署者无关
-
-* 计算反事实地址
-
-* API规范
+- [Universal Deployer Contract](#universal-deployer-contract)
+- [目录](#目录)
+  - [快速入门](#快速入门)
+    - [Deploying the UDC](#deploying-the-udc)
+  - [Usage](#usage)
+    - [Deployer dependent](#deployer-dependent)
+    - [Deployer independent](#deployer-independent)
+  - [Calculating counterfactual addresses](#calculating-counterfactual-addresses)
+  - [API specification](#api-specification)
+    - [Methods](#methods)
+      - [deployContract](#deploycontract)
+    - [Events](#events)
+      - [ContractDeployed](#contractdeployed)
 
 ## 快速入门
 要部署一个合约，首先需要确保它已被声明，然后发送一个deployContract交易到Universal Deployer Contract。以下是一个Python的示例实现:
@@ -52,6 +51,7 @@ async def deploy_contract():
 ```
 
 ### Deploying the UDC
+> NOTE
 通用部署器合约已经在大多数网络和开发环境上部署完成。部署UDC需要将deploy_from_zero=TRUE传递给部署系统调用。这将在所有StarkNet实例中产生确定性和可预测的地址，便于SDK集成和部署的可复现性。
 
 ## Usage
@@ -117,7 +117,7 @@ async def deploy_contract():
 ```
 
 ## Calculating counterfactual addresses
-反事实地址是尚未部署的合约地址。计算合约的反事实地址的一个重要用例是部署账户合约。请参阅*反事实部署*。
+反事实地址是尚未部署的合约地址。计算合约的反事实地址的一个重要用例是部署账户合约。请参阅[反事实部署](./Accounts.md#反事实部署)。
 
 要预测反事实地址，可以使用StarkWare库的calculate_contract_address_from_hash函数，并传递与实际部署相同的参数。例如：
 ```
@@ -158,6 +158,7 @@ unique: felt
 calldata_len: felt
 calldata: felt*
 ```
+
 返回：
 ```
 address: felt

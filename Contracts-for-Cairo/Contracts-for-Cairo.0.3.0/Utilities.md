@@ -5,48 +5,33 @@
 预计这个模块会不断发展（就像它已经做过的那样）。
 
 # 目录
-* Constants
-
-* Strings
-
-  * str_to_felt
-
-  * felt_to_str
-
-* Uint256
-
-  * uint
-
-  * to_uint
-
-  * from_uint
-
-  * add_uint
-
-  * sub_uint
-
-* Assertions
-
-  * assert_revert
-
-  * assert_revert_entry_point
-
-  * assert_events_emitted
-
-* Memoization
-
-  * get_contract_class
-
-  * cached_contract
-
-* State
-
-* Account
-
-* MockSigner
+- [Utilities](#utilities)
+- [目录](#目录)
+  - [Constants](#constants)
+  - [字符串](#字符串)
+    - [str\_to\_felt](#str_to_felt)
+    - [felt\_to\_str](#felt_to_str)
+  - [Uint256](#uint256)
+    - [uint](#uint)
+    - [to\_uint](#to_uint)
+    - [from\_uint](#from_uint)
+    - [add\_uint](#add_uint)
+    - [sub\_uint](#sub_uint)
+    - [mul\_uint](#mul_uint)
+    - [div\_rem\_uint](#div_rem_uint)
+  - [Assertions](#assertions)
+    - [assert\_revert](#assert_revert)
+    - [assert\_revert\_entry\_point](#assert_revert_entry_point)
+    - [assert\_event\_emitted](#assert_event_emitted)
+  - [Memoization](#memoization)
+    - [get\_contract\_class](#get_contract_class)
+    - [cached\_contract](#cached_contract)
+  - [State](#state)
+  - [Account](#account)
+  - [MockSigner](#mocksigner)
 
 ## Constants
-为了提高Cairo合约的可读性，该项目包括可重用的[常量变量](https://github.com/OpenZeppelin/cairo-contracts/blob/ad399728e6fcd5956a4ed347fb5e8ee731d37ec4/src/openzeppelin/utils/constants/library.cairo)，如UINT8_MAX，或者EIP165接口ID，如IERC165_ID或IERC721_ID。有关接口ID如何计算的更多信息，请参阅*ERC165文档*。
+为了提高Cairo合约的可读性，该项目包括可重用的[常量变量](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.6.1/src/openzeppelin/utils/constants/library.cairo)，如UINT8_MAX，或者EIP165接口ID，如IERC165_ID或IERC721_ID。有关接口ID如何计算的更多信息，请参阅[ERC165文档](./Introspection.md#接口计算)。
 
 ## 字符串
 Cairo目前仅支持短字符串字面量（少于32个字符）。请注意，短字符串实际上不是字符串，而是Cairo字段元素的表示。以下方法提供了一种简单的字段元素与字符串之间的转换。
@@ -196,6 +181,7 @@ assert_event_emitted(
 ```
 contract_class = get_contract_class('ContractName')
 ```
+
 如果存在多个具有相同名称的合约，则必须使用is_path标志将合约的路径传递给它，而不是使用名称。要传递合约的路径。
 ```
 contract_class = get_contract_class('path/to/Contract.cairo', is_path=True)
@@ -248,10 +234,11 @@ starknet = await State.init()
 account1 = await Account.deploy(public_key)
 account2 = await Account.deploy(public_key)
 ```
-Account类还提供了访问账户合约类的功能，这对于遵循Memoization模式非常有用。要获取账户合约类，可以使用以下方法。
+
+Account类还提供了访问账户合约类的功能，这对于遵循[Memoization](#memoization)模式非常有用。要获取账户合约类，可以使用以下方法。
 ```
 fetch_class = Account.get_class
 ```
 
 ## MockSigner
-MockSigner用于在给定的账户上使用[Nile的Signer](https://github.com/OpenZeppelin/nile/blob/main/src/nile/signer.py)实例执行交易，构建交易并管理nonce。Signer实例管理签名，并由MockSigner利用Account合约的__execute__方法进行操作。有关更多信息，请参阅*MockSigner实用程序*。
+MockSigner用于在给定的账户上使用[Nile的Signer](https://github.com/OpenZeppelin/nile/blob/main/src/nile/signer.py)实例执行交易，构建交易并管理nonce。Signer实例管理签名，并由MockSigner利用Account合约的__execute__方法进行操作。有关更多信息，请参阅[MockSigner实用程序](./Accounts.md#mockethsigner-utility)。
