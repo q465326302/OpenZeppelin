@@ -2,23 +2,23 @@
 这里可以找到尼罗运行环境提供的函数的完整参考。
 
 **FUNCTIONS**
-编译
+[compile](#compilecontracts-cairo_pathnone-→-none)
 
-部署
+[deploy](#deploycontract-argumentsnone-aliasnone-overriding_pathnone-abinone-mainnet_tokennone-watch_modenone-→-address-abi)
 
-调用
+[call](#calladdress_or_alias-method-paramsnone-abinone-→-output)
 
-获取部署
+[get_deployment](#get_deploymentaddress_or_alias-→-address-abi)
 
-获取声明
+[get_declaration](#get_declarationhash_or_alias-→-class_hash)
 
-获取或部署账户
+[get_or_deploy_account](#get_or_deploy_accountsigner-watch_modenone-→-account)
 
-获取账户
+[get_accounts](#get_accountspredeployedfalse-→-accounts)
 
-获取nonce
+[get_nonce](#get_noncecontract_address-→-current_nonce)
 
-获取余额
+[get_balance](#get_balancecontract_address-→-balance)
 
 ### compile(contracts, cairo_path=None) → None
 编译合约列表。
@@ -141,7 +141,7 @@
 
 * watch_mode
 
-可以是None、track或debug。如果需要，阻塞执行以查询部署交易的状态。
+可以是None、track或debug。如果需要，阻止执行以查询部署事务的状态。
 
 #### 返回值
 * account

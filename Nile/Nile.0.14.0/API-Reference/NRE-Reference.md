@@ -91,12 +91,12 @@ NRE对象提供的功能。
 
 * watch_mode
 
-可以是None、track或debug。如果需要，阻塞执行以查询部署事务的状态。
+可以是None、track或debug。如果需要，阻止执行以查询部署事务的状态。
 
 ##### 返回值
 * account
 
-与签名者匹配的*账户*实例。
+与签名者匹配的[账户](#account-api)实例。
 
 ### get_accounts
 
@@ -111,7 +111,7 @@ NRE对象提供的功能。
 ##### 返回值
 * accounts
 
-已注册*账户*的列表。
+已注册[账户](#account-api)的列表。
 
 ### get_nonce
 
@@ -177,7 +177,7 @@ NRE对象提供的功能。
 ##### 返回值
 * transaction
 
-一个*Transaction*实例。
+一个[Transaction](#交易api)实例。
 
 ### declare
 
@@ -215,12 +215,12 @@ NRE对象提供的功能。
 ##### 返回值
 * transaction
 
-一个*Transaction*实例。
+一个[Transaction](#交易api)实例。
 
 ### deploy_contract
 
 #### async deploy_contract(self, contract_name, salt, unique, calldata, nonce=None, max_fee=None, deployer_address=None, alias=None, overriding_path=None, abi=None) → transaction
-返回一个表示通过UDC（Universal Deployer Contract）部署的交易实例。请参阅*Universal Deployer Contract文档*。
+返回一个表示通过UDC（Universal Deployer Contract）部署的交易实例。请参阅[Universal Deployer Contract文档](/Contracts-for-Cairo/Contracts-for-Cairo.0.6.1/Universal-Deployer-Contract.md)。
 
 ##### 参数
 * contract_name
@@ -266,7 +266,7 @@ NRE对象提供的功能。
 ##### 返回值
 * transaction
 
-一个*Transaction*实例。
+一个[Transaction](#交易api)实例。
 
 ## 交易API
 交易抽象的公共API。
@@ -302,7 +302,7 @@ NRE对象提供的功能。
 
 允许等待交易被包含在区块中。可以是None、track或debug。track表示在出现未决交易状态时继续探测网络。debug表示使用本地可用的合约，以使被拒绝的交易的错误消息更明确（意味着track）。
 
-默认为None（非阻塞）。
+默认为None（非阻止）。
 
 ##### 返回值
 * tx_status

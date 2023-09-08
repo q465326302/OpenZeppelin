@@ -16,7 +16,7 @@ import "@openzeppelin/contracts/security/PullPayment.sol";
 
 这是一个简单的[拉取支付策略](https://consensys.github.io/smart-contract-best-practices/development-recommendations/general/external-calls/#favor-pull-over-push-for-external-calls)的实现，支付合约不直接与接收方账户交互，接收方必须自行提取支付。
 
-从安全角度来看，拉取支付通常被认为是最佳实践。它防止接收方阻塞执行，并消除了重入的担忧。
+从安全角度来看，拉取支付通常被认为是最佳实践。它防止接收方阻止执行，并消除了重入的担忧。
 
 > TIP
 如果您想了解更多关于重入和其他保护措施的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
