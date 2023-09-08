@@ -39,6 +39,7 @@ async def test_increase_balance():
     execution_info = await contract.get_balance().call()
     assert execution_info.result == (30,)
 ```
+
 根据pytest的要求，测试文件必须以test_开头或以_test结尾。您可以通过运行pytest来运行测试套件。
 ```
 pytest
@@ -65,15 +66,15 @@ addopts = -n auto
 
 3. 完成！现在每次使用pytest运行测试时，它们将并行运行，大大加快了进程。
 
-## 重写率报告
-默认情况下，Nile不支持重写率报告，但是您可以使用[nile-coverage](https://github.com/ericnordelo/nile-coverage)插件轻松集成此功能。
+## Coverage Reports
+默认情况下，Nile不支持coverage报告，，但是您可以使用[nile-coverage](https://github.com/ericnordelo/nile-coverage)插件轻松集成此功能。
 
 1. 在您的项目中安装nile-coverage插件。
 ```
 python -m pip install nile-coverage
 ```
 
-2. 使用重写率命令（来自插件）生成重写率报告。
+2. 使用coverage命令（来自插件）生成coverage报告。
 ```
 nile coverage
 
@@ -85,4 +86,5 @@ TOTAL                           8       0  100.00%
 
 3. 完成！
 
+> TIP
 使用nile-coverage，您可以轻松地与[Codecov](https://codecov.io/)等工具集成。请查阅[插件文档](https://github.com/ericnordelo/nile-coverage/blob/main/README.md)以了解选项的参考。
