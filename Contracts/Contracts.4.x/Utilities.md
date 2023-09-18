@@ -79,9 +79,9 @@ OpenZeppelin Contracts提供的最受欢迎的与数学相关的库是[SafeMath]
 
 想要将一些代币支付分配给多个人吗？也许您有一个应用程序，可以将艺术品收益的30％发送给原始创建者，再将70％的收益发送给当前所有者。您可以使用[PaymentSplitter](./API/Finance.md#paymentsplitter)构建它！
 
-在Solidity中，盲目向帐户发送资金会存在一些安全问题。您可以在[以太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。修复重入和停滞问题的一种方法是，不立即将以太币发送到需要的账户，而是使用[PullPayment](./API/Security.md#pullpayment)，提供一个[_asyncTransfer](./API/Security.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送给某个地址，并请求稍后通过[withdrawPayments()](./API/Security.md#withdrawpaymentsaddress-payable-payee)来提取。
+在Solidity中，盲目向帐户发送资金会存在一些安全问题。您可以在[以太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。修复重入和停滞问题的一种方法是，不立即将以太发送到需要的账户，而是使用[PullPayment](./API/Security.md#pullpayment)，提供一个[_asyncTransfer](./API/Security.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送给某个地址，并请求稍后通过[withdrawPayments()](./API/Security.md#withdrawpaymentsaddress-payable-payee)来提取。
 
-如果您想托管一些资金，请查看[Escrow](./API/Utils.md#escrow)和[ConditionalEscrow](./API/Utils.md#conditionalescrow)，用于管理托管的以太币。
+如果您想托管一些资金，请查看[Escrow](./API/Utils.md#escrow)和[ConditionalEscrow](./API/Utils.md#conditionalescrow)，用于管理托管的以太。
 
 ## Collections
 

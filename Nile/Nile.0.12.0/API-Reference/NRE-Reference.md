@@ -175,7 +175,7 @@
 合约的nonce。
 
 ### get_balance(contract_address) → balance
-获取地址的以太币余额。
+获取地址的以太余额。
 
 #### 参数
 * contract_address

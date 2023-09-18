@@ -80,9 +80,9 @@ contract MyContract {
 ## 支付
 想要将一些支付分配给多个人吗？也许您有一个应用程序，将艺术品购买的30％发送给原始创作者，将利润的70％发送给当前所有者；您可以使用[PaymentSplitter](./API/Payment.md#paymentsplitter)来构建这个功能！
 
-在Solidity中，盲目向账户发送资金存在一些安全问题，因为这使得它们能够执行任意代码。您可以在以[太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。解决重入和停滞问题的一种方法是，不是立即将以太币发送到需要的账户，而是使用[PullPayment](./API/Payment.md#pullpayment)，它提供了一个[_asyncTransfer](./API/Payment.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送到某个地方，并要求他们稍后通过[withdrawPayments()](./API/Payment.md#withdrawpaymentsaddress-payable-payee)函数提取。
+在Solidity中，盲目向账户发送资金存在一些安全问题，因为这使得它们能够执行任意代码。您可以在以[太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。解决重入和停滞问题的一种方法是，不是立即将以太发送到需要的账户，而是使用[PullPayment](./API/Payment.md#pullpayment)，它提供了一个[_asyncTransfer](./API/Payment.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送到某个地方，并要求他们稍后通过[withdrawPayments()](./API/Payment.md#withdrawpaymentsaddress-payable-payee)函数提取。
 
-如果您想要托管一些资金，请查看[Escrow](./API/Payment.md#escrow)和[ConditionalEscrow](./API/Payment.md#conditionalescrow)来管理释放的一些托管以太币。
+如果您想要托管一些资金，请查看[Escrow](./API/Payment.md#escrow)和[ConditionalEscrow](./API/Payment.md#conditionalescrow)来管理释放的一些托管以太。
 
 ## 集合
 如果您需要比Solidity的本机数组和映射更强大的集合支持，请查看[EnumerableSet](./API/Utils.md#enumerableset)和[EnumerableMap](./API/Utils.md#enumerablemap)。它们类似于映射，因为它们以恒定的时间存储和删除元素，并且不允许重复的条目，但它们还支持枚举，这意味着您可以轻松地在链上和链下查询所有存储的条目。

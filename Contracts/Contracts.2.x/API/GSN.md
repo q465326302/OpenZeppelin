@@ -208,7 +208,7 @@ GSNRECIPIENT
 内部#
 
 ### GSNRecipientERC20Fee
-一种[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)是使用一种特殊的ERC20代币作为交易费，我们称之为燃气支付代币。收取的费用金额恰好等于收款方所收取的以太币金额。这意味着该代币基本上与以太币的价值挂钩。
+一种[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)是使用一种特殊的ERC20代币作为交易费，我们称之为燃气支付代币。收取的费用金额恰好等于收款方所收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
 
 燃气支付代币的分发策略并未在该合约中定义。它是一种可铸造的代币，其唯一的铸币者是收款方，因此策略必须在派生合约中实现，并利用内部的[_mint](#_mintaddress-account-uint256-amountl)函数。
 
@@ -390,7 +390,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 外部#
 向Relayer 添加股份并设置其解锁延迟。如果Relayer 不存在，则创建该Relayer ，并且调用此函数的调用者成为其所有者。如果Relayer 已经存在，则只有所有者可以调用此函数。Relayer 不能成为自己的所有者。
 
-此函数调用中的所有以太币将添加到Relayer 的股份中。其解锁延迟将分配给unstakeDelay，但新值必须大于或等于当前值。
+此函数调用中的所有以太将添加到Relayer 的股份中。其解锁延迟将分配给unstakeDelay，但新值必须大于或等于当前值。
 
 发出[Staked](#stakedaddress-relay-uint256-stake-uint256-unstakedelay)事件。
 
@@ -419,7 +419,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 
 #### depositFor(address target)
 外部#
-为合约存入以太币，以便它可以接收（并支付）中继交易。
+为合约存入以太，以便它可以接收（并支付）中继交易。
 
 未使用的余额只能由合约本身通过调用 [withdraw](#withdrawuint256-amount-address-payable-dest)来提取。
 
@@ -510,7 +510,7 @@ reason参数包含一个错误代码：值1-10对应于PreconditionCheck条目�
 
 请注意，实际编码的函数可能会被还原：这在状态参数中表示。
 
-charge是从接收者的余额中扣除的以太币值，支付给Relayer 的所有者。
+charge是从接收者的余额中扣除的以太值，支付给Relayer 的所有者。
 
 #### Penalized(address relay, address sender, uint256 amount)
 事件#

@@ -1,7 +1,7 @@
 # 连接到公共测试网络
 在[编写合约](../Developing-smart-contracts/Developing-smart-contracts-hardh.md)、[本地测试](../Deploying-and-interacting/Deploying-and-interacting-hardat.md)并进行[充分测试](../Writing-automated-tests/Writing-automated-tests-hardhat.md)后，就可以进入持久的公共测试环境，让您和测试用户开始与您的应用程序交互。
 
-我们将使用**公共测试网络**（也称为测试网络）进行测试，这些网络类似于主要的以太坊网络，但以太币没有价值且可以免费获取，因此非常适合免费测试您的合约。
+我们将使用**公共测试网络**（也称为测试网络）进行测试，这些网络类似于主要的以太坊网络，但以太没有价值且可以免费获取，因此非常适合免费测试您的合约。
 
 在本指南中，我们将使用我们喜爱的[Box合约](../Developing-smart-contracts/Developing-smart-contracts-hardh.md#第一份合约)，并将其部署到测试网络上，同时学习以下内容：
 
@@ -122,7 +122,7 @@ Type ".help" for more information.
 空的！这指向我们下一个任务：获取测试网资金，以便我们可以发送交易。
 
 ### 为测试网账户提供资金支持
-大多数公共测试网都有一个水龙头：一个可以免费提供少量测试以太币的网站。如果你在goerli网络上，请前往Alchemy的免费[Goerli水龙头获取免费的测试ETH](https://goerlifaucet.com/)。或者，你也可以使用MetaMask的水龙头直接向你的[MetaMask账户](https://faucet.metamask.io/)请求资金。如果你需要在Sepolia网络上获得测试以太币，可以使用[Infura的免费Sepolia水龙头](https://www.infura.io/faucet)获取免费的测试ETH。
+大多数公共测试网都有一个水龙头：一个可以免费提供少量测试以太的网站。如果你在goerli网络上，请前往Alchemy的免费[Goerli水龙头获取免费的测试ETH](https://goerlifaucet.com/)。或者，你也可以使用MetaMask的水龙头直接向你的[MetaMask账户](https://faucet.metamask.io/)请求资金。如果你需要在Sepolia网络上获得测试以太，可以使用[Infura的免费Sepolia水龙头](https://www.infura.io/faucet)获取免费的测试ETH。
 
 有了资金支持的账户，让我们将合约部署到测试网上！
 

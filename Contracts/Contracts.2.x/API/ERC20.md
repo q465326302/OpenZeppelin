@@ -322,7 +322,7 @@ IERC20
 公开#
 返回用于获取其用户表示的小数位数。例如，如果小数位数为2，则用户的余额为505个代币应显示为5.05（505 / 10 ** 2）。
 
-代币通常选择18个小数位，模仿以太币和Wei之间的关系。
+代币通常选择18个小数位，模仿以太和Wei之间的关系。
 
 > NOTE
 这些信息仅用于显示目的，不会影响合约的任何算术运算，包括[IERC20.balanceOf](#balanceofaddress-account-→-uint256)和[IERC20.Transfer](#transferaddress-recipient-uint256-amount-→-bool)。

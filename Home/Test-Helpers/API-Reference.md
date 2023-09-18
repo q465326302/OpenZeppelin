@@ -4,7 +4,7 @@
 所有返回的数字都是[BN](https://github.com/indutny/bn.js)类型。
 
 ## balance
-用于检查特定账户的以太币余额的辅助函数。
+用于检查特定账户的以太余额的辅助函数。
 
 所有这些函数都返回BN实例，默认以'wei'为单位。
 
@@ -26,7 +26,7 @@ const balanceEth = await balance.current(account, 'ether')
 ```
 async function balance.tracker(account, unit = 'wei')
 ```
-创建一个余额追踪器的实例，用于跟踪账户的以太币余额变化。
+创建一个余额追踪器的实例，用于跟踪账户的以太余额变化。
 
 ```
 const tracker = await balance.tracker(account)
@@ -107,7 +107,7 @@ bytes32类型变量的初始值，即Solidity中的bytes32(0x00)。
 以BN表示的最小有符号整数-2^255。
 
 ## ether
-将以太币的值转换为wei。
+将以太的值转换为wei。
 
 ## expectEvent
 ```
@@ -251,7 +251,7 @@ function makeInterfaceId.ERC1820(name)
 ```
 async function send.ether(from, to, value)
 ```
-从from发送value个以太币到to。
+从from发送value个以太到to。
 
 ### transaction
 ```

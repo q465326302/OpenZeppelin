@@ -62,7 +62,7 @@ contract MyContract is GSNRecipientSignature {
 ### GSNRecipientERC20Fee
 [GSNRecipientERC20Fee](../API/GSN.md#gsnrecipienterc20fee)要复杂一些（但不要担心，我们已经为您编写好了！）。与GSNRecipientSignature不同，GSNRecipientERC20Fee不需要任何离线服务。您将为用户提供专用的ERC20代币，这些代币用于支付转发到您的接收合约的调用。只要用户拥有足够的代币支付，他们的转发调用就会自动获得批准，并且接收合约将支付他们的交易费用！
 
-每个接收合约都有自己的专用代币。代币与以太币的兑换比率为1:1，因为代币用于支付使用GSN时的合约的燃气费用。
+每个接收合约都有自己的专用代币。代币与以太的兑换比率为1:1，因为代币用于支付使用GSN时的合约的燃气费用。
 
 GSNRecipientERC20Fee有一个内部的[_mint](../API/GSN.md#_mintaddress-account-uint256-amount)函数。首先，您需要设置一种调用它的方式（例如，添加一个具有某种形式的[访问控制](../Access-Control.md)（例如[onlyMinter](../API/Access.md#onlyminter)）的公共函数）。然后，根据您的业务逻辑向用户发放代币。例如，您可以向新用户铸造一定数量的代币，在用户离线购买代币时铸造代币，根据用户的订阅情况赠送代币等。
 
@@ -76,7 +76,7 @@ acceptRelayedCall函数的实现检查用户的代币余额。如果用户的代
 
 在_preRelayedCall函数中，将maxPossibleCharge数量的代币转移到接收合约中。假设转发调用将使用所有可用的燃气，转移所需的最大代币数量。然后，在_postRelayedCall函数中，计算实际金额，包括接收合约实现和ERC20代币转移，并退还差额。
 
-在_preRelayedCall中转移所需的最大代币数量是为了保护合约免受攻击（这与以太坊交易中锁定以太币的方式非常相似）。
+在_preRelayedCall中转移所需的最大代币数量是为了保护合约免受攻击（这与以太坊交易中锁定以太的方式非常相似）。
 
 > NOTE
 燃气费用估算并不是100%准确，我们可能会在日后进行进一步调整。

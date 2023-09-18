@@ -488,7 +488,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 ```
 
 实现了ERC20 Permit扩展，允许通过签名进行批准，该扩展在[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义。
-添加了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)方法，可以通过提供由账户签名的消息来改变账户的ERC20允许额度（参见[IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)，代币持有人账户不需要发送交易，因此根本不需要持有以太币。
+添加了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)方法，可以通过提供由账户签名的消息来改变账户的ERC20允许额度（参见[IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)，代币持有人账户不需要发送交易，因此根本不需要持有以太。
 *自v3.4版本以来可用。*
 
 **FUNCTIONS**

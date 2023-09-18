@@ -270,7 +270,7 @@ nile status --debug 的别名是 nile 状态 --调试。
 ### get-balance
 
 #### nile get-balance <ADDRESS>
-检索合约的以太币余额。
+检索合约的以太余额。
 
 ##### 参数
 * ADDRESS

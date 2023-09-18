@@ -37,21 +37,21 @@
 ✨ 等一下，这很重要 ✨
 首先，**所有货币数学运算都是在该货币的最小单位上进行的，并在显示货币时转换为正确的小数位数**。
 
-这意味着当您在智能合约中进行数学运算时，您需要理解您正在添加、除以和乘以货币的最小金额（如wei），而不是常用的显示货币值（以太币）。
+这意味着当您在智能合约中进行数学运算时，您需要理解您正在添加、除以和乘以货币的最小金额（如wei），而不是常用的显示货币值（以太）。
 
-在以太币中，货币的最小单位是wei，1 ETH === 10^18 wei。在代币中，过程非常类似：1 TKN === 10^(decimals) TKNbits。
+在以太中，货币的最小单位是wei，1 ETH === 10^18 wei。在代币中，过程非常类似：1 TKN === 10^(decimals) TKNbits。
 
 * 代币的最小单位是“bits”或TKNbits。
 
 * 代币的显示值是TKN，即TKNbits * 10^(decimals)
 
-人们通常称为“一个代币”的实际上是一堆TKNbits，显示为1 TKN。这与以太币和wei之间的关系相同。您始终在进行的计算是TKNbits和wei。
+人们通常称为“一个代币”的实际上是一堆TKNbits，显示为1 TKN。这与以太和wei之间的关系相同。您始终在进行的计算是TKNbits和wei。
 
 因此，如果您想要为每2 wei发行“一个代币”，并且您的小数位数为18，则您的汇率为0.5e18。然后，当我向您发送2 wei时，您的众售会向我发行2 * 0.5e18 TKNbits，这正好等于10^18 TKNbits，并显示为1 TKN。
 
 如果您想为每1 ETH发行“1 TKN”，并且您的小数位数为18，则您的汇率为1。这是因为实际上在数学运算中发生的是合约看到用户发送了10^18 wei，而不是1 ETH。然后它使用您的汇率1来计算TKNbits = rate * wei，或者1 * 10^18，仍然是10^18。由于您的小数位数为18，这显示为1 TKN。
 
-再举一个例子：如果我想为每美元（USD）以以太币发行“1 TKN”，我们将按以下方式计算：
+再举一个例子：如果我想为每美元（USD）以以太发行“1 TKN”，我们将按以下方式计算：
 
 * 假设1 ETH == 400美元
 
@@ -67,7 +67,7 @@
 
 * 因此，我们的汇率为400
 
-（当您保留18个小数位数时，这个过程非常简单，与以太币/wei相同）
+（当您保留18个小数位数时，这个过程非常简单，与以太/wei相同）
 
 ## 代币发行
 您必须做出的首要决定之一是“如何将这些代币分发给用户？”通常有以下三种方式：
@@ -226,4 +226,4 @@ contract MyCrowdsale is Crowdsale, TimedCrowdsale, PostDeliveryCrowdsale {
 ```
 
 ### RefundableCrowdsale
-[RefundableCrowdsale](../../API/Crowdsale.md#refundablecrowdsale)提供了如果达不到最低目标的用户可以退款的服务。如果目标未达到，用户可以[claimRefund](../../API/Crowdsale.md#claimrefundaddress-payable-refundee)来取回他们的以太币。
+[RefundableCrowdsale](../../API/Crowdsale.md#refundablecrowdsale)提供了如果达不到最低目标的用户可以退款的服务。如果目标未达到，用户可以[claimRefund](../../API/Crowdsale.md#claimrefundaddress-payable-refundee)来取回他们的以太。

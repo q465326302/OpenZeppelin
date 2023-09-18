@@ -360,7 +360,7 @@ nile状态的别名 --debug。
 默认为localhost。
 
 ### nile get-balance <ADDRESS>
-查询合约的以太币余额。
+查询合约的以太余额。
 
 #### 参数
 * ADDRESS
@@ -375,7 +375,7 @@ nile状态的别名 --debug。
 默认为localhost。
 
 ### nile get-balance <ADDRESS>
-检索合约的以太币余额。
+检索合约的以太余额。
 
 #### 参数
 * ADDRESS

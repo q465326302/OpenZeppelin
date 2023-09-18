@@ -62,7 +62,7 @@ address signer = ECDSA.recover(digest, signature);
 ### IERC20Permit
 ERC20 Permit扩展的接口，允许通过签名进行批准，如[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义的。
 
-新增了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)方法，可以通过提供由账户签名的消息来更改账户的ERC20授权（参见[IERC20.allowance](../API/ERC20.md#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖于[IERC20.approve](../API/ERC20.md#approveaddress-spender-uint256-amount-→-bool)，代币持有者账户无需发送交易，因此不需要持有任何以太币。
+新增了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)方法，可以通过提供由账户签名的消息来更改账户的ERC20授权（参见[IERC20.allowance](../API/ERC20.md#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖于[IERC20.approve](../API/ERC20.md#approveaddress-spender-uint256-amount-→-bool)，代币持有者账户无需发送交易，因此不需要持有任何以太。
 
 **FUNCTIONS**
 [permit(owner, spender, value, deadline, v, r, s)](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)
@@ -103,7 +103,7 @@ ERC20 Permit扩展的接口，允许通过签名进行批准，如[EIP-2612](htt
 ### ERC20Permit
 实施了ERC20 Permit扩展，允许通过签名进行批准，如[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义的。
 
-添加了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s-1)方法，可以通过提供由账户签名的消息来更改账户的ERC20授权（参见[IERC20.allowance](./ERC20.md#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖于[IERC20.approve](./ERC20.md#approveaddress-spender-uint256-amount-→-bool)，代币持有人账户不需要发送交易，因此不需要持有任何以太币。
+添加了[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s-1)方法，可以通过提供由账户签名的消息来更改账户的ERC20授权（参见[IERC20.allowance](./ERC20.md#allowanceaddress-owner-address-spender-→-uint256)）。通过不依赖于[IERC20.approve](./ERC20.md#approveaddress-spender-uint256-amount-→-bool)，代币持有人账户不需要发送交易，因此不需要持有任何以太。
 
 *自v3.4起可用。*
 
