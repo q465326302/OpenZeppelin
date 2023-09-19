@@ -37,7 +37,7 @@
 
 1. Defender帐户。前往[Defender](https://defender.openzeppelin.com/)注册一个新帐户。
 
-2. 用于支付交易燃气的ETH。交易需要燃气执行，因此请确保有一些ETH可用。对于本指南，我们将使用Rinkeby ETH。
+2. 用于支付交易gas的ETH。交易需要gas执行，因此请确保有一些ETH可用。对于本指南，我们将使用Rinkeby ETH。
 
 3. 多重签名。一个多重签名合约来控制我们的可升级合约。在本指南中，我们将使用[Gnosis Safe](https://safe.gnosis.io/)，但您也可以使用任何支持的多重签名，如传统的[Gnosis MultiSigWallet](https://github.com/gnosis/MultiSigWallet)。在Rinkeby网络上创建一个[Gnosis Safe多重签名](https://help.gnosis-safe.io/en/articles/3876461-create-a-safe-multisig)，M > N/2且M > 1。这应该至少是2到3个。
 

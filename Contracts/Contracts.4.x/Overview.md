@@ -1,9 +1,9 @@
 # Contracts
 **一个专注于安全智能合约开发的库。**基于社区审核的代码打造。
 
-实现了诸如[ERC20](./Tokens/ERC20/ERC20.md)和[ERC721](./Tokens/ERC721.md)之类的标准。
+实现了如[ERC20](./Tokens/ERC20/ERC20.md)和[ERC721](./Tokens/ERC721.md)等标准。
 
-灵活的[基于角色的权限控制](./Access-Control.md)方案。
+此外，该库提供了灵活的[基于角色的权限控制](./Access-Control.md)方案。
 
 同时，Contracts还提供了可重用的[Solidity组件](./Utilities.md)，用于构建自定义合约和复杂的去中心化系统。
 
@@ -35,7 +35,7 @@ contract MyNFT is ERC721 {
 > TIP
 如果您是智能合约开发的新手，请前往[“开发智能合约”](../../Learn/Developing-smart-contracts/Developing-smart-contracts-hardh.md)了解如何创建新项目并编译您的合约。
 
-为了保证系统安全，您应**始终**使用已安装的代码，不应从在线源复制粘贴,也不要自行修改代码。该库的设计使得只有您使用的合约和函数被部署，因此您不必担心它会不必要地增加燃气成本。
+为了保证系统安全，您应**始终**使用已安装的代码，不应从在线源复制粘贴,也不要自行修改代码。该库的设计使得只有您使用的合约和函数被部署，因此您不必担心它会不必要地增加gas成本。
 
 ## 安全性
 如果您发现任何安全问题，请通过我们在[Immunefi上的漏洞赏金计划](https://www.immunefi.com/bounty/openzeppelin)或直接发送至security@openzeppelin.org进行报告。

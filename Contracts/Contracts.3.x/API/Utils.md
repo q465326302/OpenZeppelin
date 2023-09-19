@@ -241,7 +241,7 @@ Solidity中transfer的替代方法：将amount wei发送给recipient，转发所
 ### Counters
 提供了一种只能递增或递减一个单位的计数器。这可以用于跟踪映射中的元素数量、发放ERC721 ID或计算请求ID。
 
-在使用Counters for Counters.Counter;时，可以省略[SafeMath](./Math.md#safemath)溢出检查，因为递增一个单位不可能导致256位整数溢出，从而节省了燃气。然而，这需要正确的使用方式，即不能直接访问底层的_value。
+在使用Counters for Counters.Counter;时，可以省略[SafeMath](./Math.md#safemath)溢出检查，因为递增一个单位不可能导致256位整数溢出，从而节省了gas。然而，这需要正确的使用方式，即不能直接访问底层的_value。
 
 **FUNCTIONS**
 [current(counter)](#currentstruct-counterscounter-counter-→-uint256)

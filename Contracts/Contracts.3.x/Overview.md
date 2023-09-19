@@ -7,7 +7,7 @@
 
 * 可重用的[Solidity组件](./Utilities.md)，用于构建自定义合约和复杂的去中心化系统。
 
-* 与*Gas Station Network*实现了一流的集成，可以实现无燃气费用的系统！
+* 与*Gas Station Network*实现了一流的集成，可以实现无gas费用的系统！
 
 * 通过领先的安全公司进行了[审计](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/audit)（上一次完整审计是在v2.0.0版本）。
 
@@ -37,7 +37,7 @@ contract MyNFT is ERC721 {
 > TIP
 如果您是智能合约开发的新手，请前往[“开发智能合约”](../../Learn/Developing-smart-contracts/Developing-smart-contracts-hardh.md)以了解如何创建新项目和编译您的合约。
 
-为了保护您的系统安全，您应**始终**使用已安装的代码，不要从在线源代码中复制粘贴，也不要自行修改。该库的设计使得只有您使用的合约和函数被部署，因此您不需要担心它会不必要地增加燃气成本。
+为了保护您的系统安全，您应**始终**使用已安装的代码，不要从在线源代码中复制粘贴，也不要自行修改。该库的设计使得只有您使用的合约和函数被部署，因此您不需要担心它会不必要地增加gas成本。
 
 ## 了解更多
 
@@ -47,7 +47,7 @@ contract MyNFT is ERC721 {
 
 * [代币](./Tokens/Tokens.md)：创建可交易的资产或收藏品，如众所周知的[ERC20](./Tokens/ERC20/ERC20.md)和[ERC721](./Tokens/ERC721.md)标准。
 
-* [Gas Station Network](./API/GSN.md)：让您的用户与您的合约交互，而无需为燃气支付费用。
+* [Gas Station Network](./API/GSN.md)：让您的用户与您的合约交互，而无需为gas支付费用。
 
 * [实用工具](../Contracts.4.x/Utilities.md)：通用的有用工具，包括非溢出数学、签名验证和无信任支付系统。
 

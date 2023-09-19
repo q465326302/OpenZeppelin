@@ -10,7 +10,7 @@
 
 使编写[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)变得简单的实用程序可以在[GSNRecipient](#gsnrecipient)中找到，或者您可以直接使用我们预先制作的策略之一：
 
-* [GSNRecipientERC20Fee](#gsnrecipienterc20fee)使用特定应用的[ERC20代币](../Tokens/ERC20/ERC20.md)向最终用户收取燃气费用
+* [GSNRecipientERC20Fee](#gsnrecipienterc20fee)使用特定应用的[ERC20代币](../Tokens/ERC20/ERC20.md)向最终用户收取gas费用
 
 * [GSNRecipientSignature](#gsnrecipientsignature)接受由受信任的第三方（例如后端中的私钥）签名的所有Relayer 调用
 
@@ -208,9 +208,9 @@ GSNRECIPIENT
 内部#
 
 ### GSNRecipientERC20Fee
-一种[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)是使用一种特殊的ERC20代币作为交易费，我们称之为燃气支付代币。收取的费用金额恰好等于收款方所收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
+一种[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)是使用一种特殊的ERC20代币作为交易费，我们称之为gas支付代币。收取的费用金额恰好等于收款方所收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
 
-燃气支付代币的分发策略并未在该合约中定义。它是一种可铸造的代币，其唯一的铸币者是收款方，因此策略必须在派生合约中实现，并利用内部的[_mint](#_mintaddress-account-uint256-amountl)函数。
+gas支付代币的分发策略并未在该合约中定义。它是一种可铸造的代币，其唯一的铸币者是收款方，因此策略必须在派生合约中实现，并利用内部的[_mint](#_mintaddress-account-uint256-amountl)函数。
 
 **FUNCTIONS**
 [constructor(name, symbol)](#constructorstring-name-string-symbol)
@@ -264,15 +264,15 @@ GSNRECIPIENT
 
 #### token() → contract IERC20
 公开#
-返回燃气支付代币。
+返回gas支付代币。
 
 #### _mint(address account, uint256 amount)
 内部#
-内部函数，用于铸造燃气支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
+内部函数，用于铸造gas支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
 外部#
-确保只有拥有足够的燃气支付代币余额的用户才能通过GSNRelayer 交易。
+确保只有拥有足够的gas支付代币余额的用户才能通过GSNRelayer 交易。
 
 #### _preRelayedCall(bytes context) → bytes32
 内部#
@@ -442,11 +442,11 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 外部#
 转发交易。
 
-为了成功转发交易，必须满足多个条件： - [canRelay](#canrelayaddress-relay-address-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata-→-uint256-status-bytes-recipientcontext)必须返回PreconditionCheck.OK - 发送者必须是注册的Relayer  - 交易的燃气价格必须大于或等于发送者请求的燃气价格 - 如果所有内部交易（对接收者的调用）使用了所有可用的燃气，交易必须有足够的燃气以防止燃气耗尽 - 接收者必须有足够的余额来支付最坏情况下的Relayer 费用（即当所有燃气都用完时）
+为了成功转发交易，必须满足多个条件： - [canRelay](#canrelayaddress-relay-address-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata-→-uint256-status-bytes-recipientcontext)必须返回PreconditionCheck.OK - 发送者必须是注册的Relayer  - 交易的gas价格必须大于或等于发送者请求的gas价格 - 如果所有内部交易（对接收者的调用）使用了所有可用的gas，交易必须有足够的gas以防止gas耗尽 - 接收者必须有足够的余额来支付最坏情况下的Relayer 费用（即当所有gas都用完时）
 
 如果满足所有条件，将转发调用并向接收者收费。按照以下顺序调用[preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)、编码函数和[postRelayedCall](#postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval-1)。
 
-参数： - from：发起请求的客户端 - to：目标[IRelayRecipient](#irelayrecipient)合约 - encodedFunction：要转发的函数调用，包括数据 - transactionFee：Relayer 接管的实际燃气成本的费用（%） - gasPrice：客户端愿意支付的燃气价格 - gasLimit：在调用编码函数时要转发的燃气 - nonce：客户端的nonce - signature：客户端对所有先前参数的签名，加上Relayer 和RelayHub地址 - approvalData：转发给[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-→-uint256-bytes)的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
+参数： - from：发起请求的客户端 - to：目标[IRelayRecipient](#irelayrecipient)合约 - encodedFunction：要转发的函数调用，包括数据 - transactionFee：Relayer 接管的实际gas成本的费用（%） - gasPrice：客户端愿意支付的gas价格 - gasLimit：在调用编码函数时要转发的gas - nonce：客户端的nonce - signature：客户端对所有先前参数的签名，加上Relayer 和RelayHub地址 - approvalData：转发给[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-→-uint256-bytes)的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
 
 发出[TransactionRelayed](#transactionrelayedaddress-relay-address-from-address-to-bytes4-selector-enum-irelayhubrelaycallstatus-status-uint256-charge)事件。
 
@@ -460,7 +460,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 
 #### penalizeRepeatedNonce(bytes unsignedTx1, bytes signature1, bytes unsignedTx2, bytes signature2)
 外部#
-惩罚一个Relayer 节点，该节点使用相同的nonce签署了两笔交易（只有第一笔交易有效），但数据不同（燃气价格、燃气限制等可能不同）。
+惩罚一个Relayer 节点，该节点使用相同的nonce签署了两笔交易（只有第一笔交易有效），但数据不同（gas价格、gas限制等可能不同）。
 
 必须提供两笔交易的（未签名的）交易数据和签名。
 

@@ -42,8 +42,8 @@ OpenZeppelin Contracts**每5周**发布一个新版本。
 ### 事件
 不会删除任何事件，它们的参数也不会以任何方式改变。新的事件可能会在以后的版本中添加，现有的事件可能会在新的合理情况下被触发（例如，[从2.1版本开始，ERC20还会在transferFrom调用中触发Approval事件](https://github.com/OpenZeppelin/openzeppelin-contracts/issues/707)）。
 
-### 燃气成本
-尽管通常会尝试降低使用OpenZeppelin Contracts的燃气成本，但不能保证这一点。特别是，用户不应该假设在升级库版本时燃气成本不会增加。
+### gas成本
+尽管通常会尝试降低使用OpenZeppelin Contracts的gas成本，但不能保证这一点。特别是，用户不应该假设在升级库版本时gas成本不会增加。
 
 ### 错误修复
 为了修复错误，可能需要打破API稳定性的保证，我们将这样做。然而，我们不会轻易做出这个决定，并且会探索所有选项，使更改尽可能不会造成破坏。如果有足够的理由，可能会废弃可能导致不安全行为的合约或函数，而不是删除它们（例如，[＃1543](https://github.com/OpenZeppelin/openzeppelin-contracts/pull/1543)和[＃1550](https://github.com/OpenZeppelin/openzeppelin-contracts/pull/1550)）。

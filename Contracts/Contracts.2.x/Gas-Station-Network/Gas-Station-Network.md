@@ -1,7 +1,7 @@
 # Writing GSN-capable contracts
-[Gas Station Network](https://gsn.openzeppelin.com/)（GSN）允许您构建应用程序，其中您为用户的交易付费，因此他们无需持有Ether来支付燃气费，从而简化了他们的入门流程。在本指南中，我们将学习如何编写智能合约，以便可以从GSN接收交易，并使用OpenZeppelin Contracts。
+[Gas Station Network](https://gsn.openzeppelin.com/)（GSN）允许您构建应用程序，其中您为用户的交易付费，因此他们无需持有Ether来支付gas费，从而简化了他们的入门流程。在本指南中，我们将学习如何编写智能合约，以便可以从GSN接收交易，并使用OpenZeppelin Contracts。
 
-如果您对GSN还不熟悉，您可能首先要查看该[系统的概述](/Learn/Sending%20gasless%20transactions/Sending-gasless-transactions.md)，以更清楚地了解如何实现无燃气交易。否则，请准备好！
+如果您对GSN还不熟悉，您可能首先要查看该[系统的概述](/Learn/Sending%20gasless%20transactions/Sending-gasless-transactions.md)，以更清楚地了解如何实现无gas交易。否则，请准备好！
 
 ## 接收Relayer 调用
 编写接收者的第一步是继承我们的GSNRecipient合约。如果您还继承了其他合约，例如ERC20或Crowdsale，这也没问题：将GSNRecipient添加到您的所有代币或众筹函数中将使它们成为GSN可调用的函数。
@@ -25,7 +25,7 @@ contract MyContract is GSNRecipient, ... {
 OpenZeppelin Contracts提供了一些经过验证的方法供您直接使用，但您仍然应该对底层发生的事情有一个基本的了解。
 
 #### acceptRelayedCall
-首先，RelayHub将询问您的接收者合约是否希望接收Relayer 调用。请记住， Relayer 将向您收取产生的燃气费用，因此您应该只接受您愿意支付的调用！
+首先，RelayHub将询问您的接收者合约是否希望接收Relayer 调用。请记住， Relayer 将向您收取产生的gas费用，因此您应该只接受您愿意支付的调用！
 ```
 function acceptRelayedCall(
   address relay,

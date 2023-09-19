@@ -71,7 +71,7 @@ interface KeeperCompatibleInterface {
 
 当您填写完注册Google表格后返回，Defender将要求您输入管理员地址（可以提取资金）、电子邮件（用于Chainlink的通知目的）和Keeper调用的Gas限制（在2300和2500000之间）。
 
-在撰写本文的时候，注册流程要求您为您的合约提供至少5个LINK的初始资金，因此请确保您用于请求注册的帐户至少拥有该金额的LINK。您可以选择将这个初始资金变得更大，以节省未来的充值燃气费用。
+在撰写本文的时候，注册流程要求您为您的合约提供至少5个LINK的初始资金，因此请确保您用于请求注册的帐户至少拥有该金额的LINK。您可以选择将这个初始资金变得更大，以节省未来的充值gas费用。
 ![guide-chainlink-4.png](img/guide-chainlink-4.png)
 
 一旦提交注册申请，您将有不超过几天的等待期，之后您的Upkeep将被注册为有效的Upkeep，并在注册表中分配一个数字标识符。 Defender将在您合约页面的Chainlink Keepers上反映这一点。请参见下面的截图，显示注册已提交，但其批准仍在等待中时，您的合约页面的外观。
@@ -108,7 +108,7 @@ interface KeeperCompatibleInterface {
 要这样做，首先创建一个Relayer ，我们将用它来补充您的Upkeep。您在Defender中创建的每个Relayer 都有一个唯一的地址，并且只能由您的团队使用。请确保您在Kovan或Mainnet网络中创建您的Relayer ，具体取决于您在哪个网络上运行您的Upkeep。
 ![guide-chainlink-11.png](img/guide-chainlink-11.png)
 
-创建完成后，将一些LINK和ETH转移到Relayer 的地址，以便它可以为您的Upkeep工作充值，并支付它发送的交易的燃气费用。在Kovan上，您可以从[此水龙头](https://kovan.chain.link/)获取测试LINK。
+创建完成后，将一些LINK和ETH转移到Relayer 的地址，以便它可以为您的Upkeep工作充值，并支付它发送的交易的gas费用。在Kovan上，您可以从[此水龙头](https://kovan.chain.link/)获取测试LINK。
 
 下一步是创建一个Autotask，该Autotask可以查询您的Upkeep余额，并在其低于阈值时添加LINK资金。将此Autotask设置为在连接到您先前创建的Relayer 的Webhook上运行，并使用[defender-autotask-examples存储库](https://github.com/OpenZeppelin/defender-autotask-examples/)中的[low-funds代码](https://github.com/OpenZeppelin/defender-autotask-examples/blob/master/chainlink/src/low-funds.js)。
 ![guide-chainlink-12.png](img/guide-chainlink-12.png)

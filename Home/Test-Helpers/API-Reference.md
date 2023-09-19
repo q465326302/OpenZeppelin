@@ -77,7 +77,7 @@ const balanceEther = tracker.get('ether'); // 以ether为单位
 async function tracker.deltaWithFees(unit = tracker.unit)
 ```
 
-返回一个包含自上次查询（使用get、delta或deltaWithFees）以来余额变化和此期间支付的燃气费用的对象。
+返回一个包含自上次查询（使用get、delta或deltaWithFees）以来余额变化和此期间支付的gas费用的对象。
 
 ```
 const tracker = await balance.tracker(account, 'gwei');

@@ -131,15 +131,15 @@ Forta Sentinel可以根据Bot IDs或Addresses进行过滤，并要求至少设�
 
 * **from**是交易的发件人地址
 
-* **gasPrice**是发送交易的燃气价格。在EIP1559交易中，它等于或低于maxFeePerGas。
+* **gasPrice**是发送交易的gas价格。在EIP1559交易中，它等于或低于maxFeePerGas。
 
 * **maxFeePerGas**是交易愿意支付的最高价格。仅存在于EIP1559交易中。
 
 * **maxPriorityFeePerGas**是交易愿意支付给矿工的超过BASE_FEE的wei数量的最高金额。仅存在于EIP1559交易中。
 
-* **gasLimit**是发送交易的燃气限制
+* **gasLimit**是发送交易的gas限制
 
-* **gasUsed**是交易中使用的燃气量
+* **gasUsed**是交易中使用的gas量
 
 * **value**是发送交易的价值
 

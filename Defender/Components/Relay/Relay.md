@@ -1,5 +1,5 @@
 # Relay
-DefenderRelayer 服务允许您通过常规的HTTP API发送交易，并负责私钥安全存储、交易签名、nonce管理、燃气定价估计和重新提交。这样，您就不必担心在后端脚本中保护私钥，或者监视您的交易以确保它们得到挖掘。
+DefenderRelayer 服务允许您通过常规的HTTP API发送交易，并负责私钥安全存储、交易签名、nonce管理、gas定价估计和重新提交。这样，您就不必担心在后端脚本中保护私钥，或者监视您的交易以确保它们得到挖掘。
 
 ## 用例
 每次在代码中使用热钱包时，请使用 Defender Relayer 。每当您需要从脚本或后端发送交易时，您可以连接到Relayer ，以简化密钥管理和交易提交。
@@ -8,7 +8,7 @@ DefenderRelayer 服务允许您通过常规的HTTP API发送交易，并负责�
 
 * 使用外部数据**更新链上Oracle**
 
-* 发送**元交易**以构建无需燃气费的体验
+* 发送**元交易**以构建无需gas费的体验
 
 * 通过**空投代币**来响应用户的注册
 
@@ -22,10 +22,10 @@ Defender Relayer 是专门分配给您团队的以太坊账户。每当您创建
 您可以将每个Relayer 视为发送交易的队列，所有通过同一个Relayer 发送的交易将按顺序发送，并且由您团队专属控制的同一以太坊账户进行控制。如果您想了解Relayer s在幕后的_工作原理_，请跳到“底层原理”部分！
 
 > IMPORTANT
-请记住，您需要为每个Relayer 单独提供ETH资金，以确保它们具有足够的资金支付您发送的交易的燃气费用。如果Relayer 的资金低于0.1 ETH，Defender将向您发送电子邮件通知。
+请记住，您需要为每个Relayer 单独提供ETH资金，以确保它们具有足够的资金支付您发送的交易的gas费用。如果Relayer 的资金低于0.1 ETH，Defender将向您发送电子邮件通知。
 
 > NOTE
-Defender Relayer s是以外部拥有账户的形式实现的。我们正在努力实现智能账户，以支持批量交易、燃气代币和链上管理的冷钥匙。
+Defender Relayer s是以外部拥有账户的形式实现的。我们正在努力实现智能账户，以支持批量交易、gas代币和链上管理的冷钥匙。
 
 ### API密钥
 每个Relayer 可以关联一个或多个**API密钥**。为了通过Relayer 发送交易，您需要使用一个API密钥/密钥对对请求进行身份验证。您可以根据需要创建或删除API密钥，这不会更改发送地址或Relayer 余额。
@@ -180,7 +180,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 如果提供了speed参数，则交易将按照_EIP1559Pricing Relayer 策略定价_。
 
 > NOTE
-主网络的燃气价格和优先费用是根据EthGasStation、EtherChain、GasNow、BlockNative和Etherscan报告的值计算的。在Polygon及其测试网络中，使用燃气站。在其他网络中，燃气价格是通过调用eth_gasPrice或eth_feeHistory到网络获取的。
+主网络的gas价格和优先费用是根据EthGasStation、EtherChain、GasNow、BlockNative和Etherscan报告的值计算的。在Polygon及其测试网络中，使用gas站。在其他网络中，gas价格是通过调用eth_gasPrice或eth_feeHistory到网络获取的。
 
 ### 固定gas价
 或者，您可以通过设置**gasPrice参数**或**maxFeePerGas和maxPriorityFeePerGas参数**中的一个固定的_gasPrice_或_固定的组合来指定交易的定价_。具有固定定价的交易要么使用指定的定价进行挖掘，或者如果在validUntil时间之前无法挖掘，则被替换为NOOP交易。
@@ -207,7 +207,7 @@ const signer = new DefenderRelaySigner(credentials, provider, { validForSeconds:
 validUntil是一个UTC时间戳。请确保使用UTC时区而不是本地时区。
 
 ### 交易ID
-由于Relayer 可能会在预期时间内未被挖掘的情况下，使用更新的燃气定价重新提交交易，因此给定交易的哈希值可能会随时间而变化。为了跟踪给定交易的状态，Relayer API返回一个transactionId标识符，您可以使用它来[查询](https://www.npmjs.com/package/defender-relay-client#querying)交易状态。
+由于Relayer 可能会在预期时间内未被挖掘的情况下，使用更新的gas定价重新提交交易，因此给定交易的哈希值可能会随时间而变化。为了跟踪给定交易的状态，Relayer API返回一个transactionId标识符，您可以使用它来[查询](https://www.npmjs.com/package/defender-relay-client#querying)交易状态。
 ```
 const tx = await Relayer .query(tx.transactionId);
 ```
@@ -216,7 +216,7 @@ const tx = await Relayer .query(tx.transactionId);
 查询终端点将返回Defender服务的最新交易视图，该视图每分钟更新一次。
 
 ### 替换交易
-虽然Defender Relay会自动重新提交未被挖掘的交易，并在其有效截止时间后自动取消它们，但您仍然可以在交易尚未被挖掘时手动替换或取消它。这使您可以在交易不再有效时取消交易，调整其TTL，或提高其speed或燃气价格。
+虽然Defender Relay会自动重新提交未被挖掘的交易，并在其有效截止时间后自动取消它们，但您仍然可以在交易尚未被挖掘时手动替换或取消它。这使您可以在交易不再有效时取消交易，调整其TTL，或提高其speed或gas价格。
 
 要执行此操作，请使用defender-relay-client的replaceByNonce或replaceById函数。
 ```
@@ -345,9 +345,9 @@ Defender Relayer s是通用的Relayer s，您可以使用它们将任何交易�
 您可以在[此处](https://gist.github.com/spalladino/7fb3533e36e9b9a833f8e5c568c86815)探索应用程序的关键部分代码。
 
 ### 更多元交易模式
-上述描述的模式只是可用的几种元交易变体之一。鉴于 Defender Relayer s 是通用的，您还可以使用它们进行任何其他类型的元交易，例如使用 [EIP2612](https://eips.ethereum.org/EIPS/eip-2612) 或 [EIP3009](https://eips.ethereum.org/EIPS/eip-3009) Relayer 无需燃气的 ERC20 转移。
+上述描述的模式只是可用的几种元交易变体之一。鉴于 Defender Relayer s 是通用的，您还可以使用它们进行任何其他类型的元交易，例如使用 [EIP2612](https://eips.ethereum.org/EIPS/eip-2612) 或 [EIP3009](https://eips.ethereum.org/EIPS/eip-3009) Relayer 无需gas的 ERC20 转移。
 
-特别是，您可以利用 Defender xDai Relayer s 代表您的用户在 xDai 上发送交易，鉴于该侧链中交易成本较低。这样，您可以为您的 dapp 提供完整的无燃气体验。同样适用于 Defender 支持的其他侧链，如 BSC、Fuse、Fantom、Polygon、Avalanche、Celo、Moonbeam、Moonriver、Aurora、Harmony 和 Arbitrum。
+特别是，您可以利用 Defender xDai Relayer s 代表您的用户在 xDai 上发送交易，鉴于该侧链中交易成本较低。这样，您可以为您的 dapp 提供完整的无gas体验。同样适用于 Defender 支持的其他侧链，如 BSC、Fuse、Fantom、Polygon、Avalanche、Celo、Moonbeam、Moonriver、Aurora、Harmony 和 Arbitrum。
 
 ## 手动操作
 您还可以通过Relayer 手动发送交易或直接从Defender网站上提取资金。要这样做，请转到Relayer 页面，打开齿轮菜单，并选择所需的选项。

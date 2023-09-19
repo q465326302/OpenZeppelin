@@ -16,7 +16,7 @@
 * [ERC20Capped](#erc20capped)：在铸造代币时强制执行总供应量上限。
 * [ERC20Pausable](#erc20pausable)：暂停代币转移的能力。
 * [ERC20Snapshot](#erc20snapshot)：高效存储过去的代币余额，以便随时查询。
-* [ERC20Permit](#erc20permit)：代币的无需燃气的批准（标准化为ERC2612）。
+* [ERC20Permit](#erc20permit)：代币的无需gas的批准（标准化为ERC2612）。
 * [ERC20FlashMint](#erc20flashmint)：代币级别支持闪电贷款，通过铸造和销毁短暂的代币（标准化为ERC3156）。
 * [ERC20Votes](#erc20votes)：支持投票和投票委托。
 * [ERC20VotesComp](#erc20votescomp)：支持投票和投票委托（与Compound的代币兼容，具有uint96限制）。
@@ -567,9 +567,9 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Snapshot.sol";
 > NOTE
 可以通过重写 [_getCurrentSnapshotId](#_getcurrentsnapshotid-→-uint256) 方法来自定义快照策略。例如，让它返回 block.number 将在每个新块的开头触发快照的创建。在重写此函数时，要小心其结果的单调性。非单调的快照ID会破坏合约。
 
-使用此方法为每个块实现快照将产生显著的燃气成本。对于燃气效率更高的替代方案，请考虑使用 [ERC20Votes](#erc20votes)。
+使用此方法为每个块实现快照将产生显著的gas成本。对于gas效率更高的替代方案，请考虑使用 [ERC20Votes](#erc20votes)。
 
-#### 燃气成本
+#### gas成本
 快照是高效的。快照创建是 O(1)。从快照中检索余额或总供应量的成本是 O(log n)，其中 n 是已创建的快照数量，尽管对于特定账户的 n 通常会更小，因为连续快照中相同的余额将存储为一个条目。
 
 由于额外的快照记账，普通 ERC20 转账存在常数开销。对于特定账户的第一次转账，这种开销是显著的。随后的转账将具有正常的成本，直到下一次快照，以此类推。

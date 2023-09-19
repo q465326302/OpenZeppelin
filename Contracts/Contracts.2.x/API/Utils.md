@@ -166,7 +166,7 @@ Solidity的transfer的替代方法：将amount wei发送给收款人，并将所
 
 #### enumerate(struct EnumerableSet.AddressSet set) → address
 内部#
-返回一个包含集合中所有值的数组。O(N)。注意，数组内的值的顺序没有保证，当添加或删除更多值时，它可能会发生变化。警告：对于大型集合，此函数可能会耗尽燃气：在这些情况下，请使用[length](#lengthstruct-enumerablesetaddressset-set-→-uint256)和[get](#getstruct-enumerablesetaddressset-set-uint256-index-→-address)。
+返回一个包含集合中所有值的数组。O(N)。注意，数组内的值的顺序没有保证，当添加或删除更多值时，它可能会发生变化。警告：对于大型集合，此函数可能会耗尽gas：在这些情况下，请使用[length](#lengthstruct-enumerablesetaddressset-set-→-uint256)和[get](#getstruct-enumerablesetaddressset-set-uint256-index-→-address)。
 
 #### length(struct EnumerableSet.AddressSet set) → uint256
 内部#

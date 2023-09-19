@@ -16,7 +16,7 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 要开始，您需要以下内容：
 
 1. **Defender主网帐户**。请前往[Defender](https://defender.openzeppelin.com/)注册新帐户，然后申请[主网访问](https://openzeppelin.com/apply/)，表示您有兴趣运行Keeper。我们将很快与您联系，激活您的主网访问权限。
-2. **支付交易燃气的ETH**。Keeper交易需要燃气进行执行，因此请确保有一些ETH可用于为您的Relay提供资金。
+2. **支付交易gas的ETH**。Keeper交易需要gas进行执行，因此请确保有一些ETH可用于为您的Relay提供资金。
 3. **债券的KP3R代币（可选）**。注册Keeper时，您可以选择[绑定](https://docs.keep3r.network/core/keepers#becoming-a-keeper)一定数量的KP3R代币。这会[影响您在执行工作时获得的奖励](https://forum.openzeppelin.com/t/what-benefit-is-there-for-adding-collateral-bonded-kp3r-vs-not-bonding/4502)。请注意，您仍然可以在不绑定任何代币的情况下运行Keeper。
 
 ## 创建Relayer 
@@ -81,15 +81,15 @@ Keep3r Network项目处于测试阶段。请自行承担风险。
 
 ### 微调
 
-Defender将根据当前网络价格自动选择您的交易的燃气价格。您可以通过在脚本中更改speed参数来调整您对燃气价格的激进程度，包括safeLow，average，fast或fastest。更高的燃气价格意味着如果有多个Keeper竞争一个作业，您将有更好的机会获得作业，但是您的交易也将更加昂贵！
+Defender将根据当前网络价格自动选择您的交易的gas价格。您可以通过在脚本中更改speed参数来调整您对gas价格的激进程度，包括safeLow，average，fast或fastest。更高的gas价格意味着如果有多个Keeper竞争一个作业，您将有更好的机会获得作业，但是您的交易也将更加昂贵！
 
-或者，您还可以自己设置燃气价格，如果您想最大限度地控制您的交易。只需设置gasPrice或maxFeePerGas / maxPriorityFeePerGas以进行交易，并且Defender将遵守该值。您可以依赖此来尝试在Defender上运行的所有其他Keeper之外出价，但请记住燃气费用的成本。
+或者，您还可以自己设置gas价格，如果您想最大限度地控制您的交易。只需设置gasPrice或maxFeePerGas / maxPriorityFeePerGas以进行交易，并且Defender将遵守该值。您可以依赖此来尝试在Defender上运行的所有其他Keeper之外出价，但请记住gas费用的成本。
 
 ## 执行作业
 您设置的Autotask将自动开始查找YearnV1EarnKeep3r，HegicPoolKeep3r和UniswapV2SlidingOracle合约中的可用作业。您可以查看Autotask日志，以了解您的Keeper在每次运行中所做的工作，并在Relayer 页面上监视您的奖励。
 
 > WARNING
-请记住，发送交易并不意味着您将自动获得奖励：其他Keeper也可能监视工作，如果他们的交易在您之前被挖掘，您将无法获得奖励！更糟糕的是：撤销的交易也要支付燃气费！
+请记住，发送交易并不意味着您将自动获得奖励：其他Keeper也可能监视工作，如果他们的交易在您之前被挖掘，您将无法获得奖励！更糟糕的是：撤销的交易也要支付gas费！
 
 ## 收集您的奖励
 在完成一些作业后，您可以将赚取的KP3R代币从Relayer 发送回您的钱包。要执行此操作，请转到Relayer 页面，并选择提取资金。输入您的钱包地址，选择KPR作为货币，并输入您要提取的代币数量。确保正确输入您的钱包地址，否则您可能会永久性地丢失您的代币！

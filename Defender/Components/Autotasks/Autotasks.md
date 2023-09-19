@@ -14,7 +14,7 @@ Defender Autotasks服务允许您定期运行代码片段，通过Webhooks或响
 
 * 通过Webhooks与**外部第三方服务**集成
 
-* 通过**元交易**为您的Dapp用户提供无需燃气费的交易
+* 通过**元交易**为您的Dapp用户提供无需gas费的交易
 
 ## Autotask中有什么?
 简而言之，Autotask是一段JavaScript代码片段，类似于无服务器函数，会定期调用，实际上它们是使用[Lambda函数](https://aws.amazon.com/lambda/)实现的。

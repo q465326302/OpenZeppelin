@@ -1506,10 +1506,10 @@ OWNABLE
 
 #### withdraw(address payable payee)
 公开#
-将累积余额提取给收款人，并将所有燃气转发给收款人。
+将累积余额提取给收款人，并将所有gas转发给收款人。
 
 > WARNING
-将所有燃气转发给收款人会打开重入漏洞的大门。请确保您信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
+将所有gas转发给收款人会打开重入漏洞的大门。请确保您信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
 
 ### Escrow
 ```
@@ -1781,7 +1781,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 内部#
 如果帐户支持interfaceIds中定义的所有接口，则返回true。自动查询对[IERC165](#ierc165)本身的支持。
 
-通过批量查询可以节省燃气费，跳过重复的[IERC165](#ierc165)支持检查。
+通过批量查询可以节省gas费，跳过重复的[IERC165](#ierc165)支持检查。
 
 参见[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
@@ -2146,7 +2146,7 @@ contract Example {
 返回包含所有键的数组
 
 > WARNING
-此操作将整个存储复制到内存中，这可能非常昂贵。这主要是为了供无需任何燃气费用的视图访问器查询而设计的。开发人员应该记住，此函数的成本是没有限制的，如果映射增长到复制到内存所需的燃气太多而无法适应一个块，则将无法调用该函数。
+此操作将整个存储复制到内存中，这可能非常昂贵。这主要是为了供无需任何gas费用的视图访问器查询而设计的。开发人员应该记住，此函数的成本是没有限制的，如果映射增长到复制到内存所需的gas太多而无法适应一个块，则将无法调用该函数。
 
 #### set(struct EnumerableMap.UintToUintMap map, uint256 key, uint256 value) → bool
 内部#

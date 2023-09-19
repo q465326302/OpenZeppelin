@@ -8,7 +8,7 @@
 
 使编写[GSN strategies](../Gas-Station-Network/Strategies.md)变得简单的实用程序可在[GSNRecipient](#gsnrecipient)中使用，或者您可以直接使用我们预先制作的策略之一：
 
-* [GSNRecipientERC20Fee](#gsnrecipienterc20fee) 使用特定应用程序的*ERC20代币*为最终用户收取燃气费用
+* [GSNRecipientERC20Fee](#gsnrecipienterc20fee) 使用特定应用程序的*ERC20代币*为最终用户收取gas费用
 
 * [GSNRecipientSignature](#gsnrecipientsignature) 接受已由可信第三方（例如后端中的私钥）签名的所有Relayer 调用
 
@@ -204,9 +204,9 @@ GSNRECIPIENT
 内部#
 
 ### GSNRecipientERC20Fee
-一种[GSN策略](../Gas-Station-Network/Strategies.md)是以一种特殊目的的ERC20代币收取交易费用，我们将其称为燃气支付代币。所收取的金额恰好等于收款方收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
+一种[GSN策略](../Gas-Station-Network/Strategies.md)是以一种特殊目的的ERC20代币收取交易费用，我们将其称为gas支付代币。所收取的金额恰好等于收款方收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
 
-燃气支付代币向用户的分发策略没有在该合约中定义。它是一种可铸造的代币，其唯一的铸造者是收款方，因此该策略必须在派生合约中实施，利用内部的[_mint](#_mintaddress-account-uint256-amount)函数。
+gas支付代币向用户的分发策略没有在该合约中定义。它是一种可铸造的代币，其唯一的铸造者是收款方，因此该策略必须在派生合约中实施，利用内部的[_mint](#_mintaddress-account-uint256-amount)函数。
 
 **FUNCTIONS**
 [constructor(name, symbol)](#constructorstring-name-string-symbol)
@@ -255,11 +255,11 @@ GSNRECIPIENT
 
 #### token() → contract __unstable__ERC20Owned
 公开#
-返回燃气支付代币。
+返回gas支付代币。
 
 #### _mint(address account, uint256 amount)
 内部#
-内部函数用于铸造燃气支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
+内部函数用于铸造gas支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
 公开#
@@ -267,7 +267,7 @@ GSNRECIPIENT
 
 #### _preRelayedCall(bytes context) → bytes32
 内部#
-对用户进行预付费。最大可能的费用（取决于燃气限制、燃气价格和费用）将从用户的燃气支付代币余额中扣除。请注意，这是对实际费用的过估计，这是因为我们无法预测执行实际需要多少燃气。剩余部分将在[_postRelayedCall](#_postrelayedcallbytes-context-bool-uint256-actualcharge-bytes32)中退还给用户。
+对用户进行预付费。最大可能的费用（取决于gas限制、gas价格和费用）将从用户的gas支付代币余额中扣除。请注意，这是对实际费用的过估计，这是因为我们无法预测执行实际需要多少gas。剩余部分将在[_postRelayedCall](#_postrelayedcallbytes-context-bool-uint256-actualcharge-bytes32)中退还给用户。
 
 #### _postRelayedCall(bytes context, bool, uint256 actualCharge, bytes32)
 内部#
@@ -433,11 +433,11 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 外部#
 转发一个交易。
 
-为了成功，必须满足多个条件：- [canRelay](#canrelayaddress-relay-address-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata-→-uint256-status-bytes-recipientcontext)必须返回PreconditionCheck.OK- 发送方必须是注册的Relayer - 交易的燃气价格必须大于或等于发送方请求的燃气价格- 如果所有内部交易（对接收方的调用）使用了它们可用的所有燃气，则交易必须有足够的燃气，以免燃气耗尽- 接收方必须有足够的余额来支付最坏情况下的Relayer 费用（即当所有燃气都用尽时）
+为了成功，必须满足多个条件：- [canRelay](#canrelayaddress-relay-address-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata-→-uint256-status-bytes-recipientcontext)必须返回PreconditionCheck.OK- 发送方必须是注册的Relayer - 交易的gas价格必须大于或等于发送方请求的gas价格- 如果所有内部交易（对接收方的调用）使用了它们可用的所有gas，则交易必须有足够的gas，以免gas耗尽- 接收方必须有足够的余额来支付最坏情况下的Relayer 费用（即当所有gas都用尽时）
 
 如果所有条件都满足，将转发调用并向接收方收费。按顺序调用[preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)、编码函数和[postRelayedCall](#postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval-2)。
 
-参数：- from：发起请求的客户端- to：目标[IRelayRecipient](#irelayrecipient)合约- encodedFunction：要转发的函数调用，包括数据- transactionFee：Relayer 接管的实际燃气成本的费用（%）- gasPrice：客户端愿意支付的燃气价格- gasLimit：调用编码函数时要转发的燃气- nonce：客户端的nonce- signature：客户端对所有先前参数的签名，加上Relayer 和RelayHub地址- approvalData：转发到[acceptRelayedCall](#acceptrelayedcalladdress-address-from-bytes-uint256-transactionfee-uint256-gasprice-uint256-uint256-bytes-uint256-maxpossiblecharge-→-uint256-bytes)的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
+参数：- from：发起请求的客户端- to：目标[IRelayRecipient](#irelayrecipient)合约- encodedFunction：要转发的函数调用，包括数据- transactionFee：Relayer 接管的实际gas成本的费用（%）- gasPrice：客户端愿意支付的gas价格- gasLimit：调用编码函数时要转发的gas- nonce：客户端的nonce- signature：客户端对所有先前参数的签名，加上Relayer 和RelayHub地址- approvalData：转发到[acceptRelayedCall](#acceptrelayedcalladdress-address-from-bytes-uint256-transactionfee-uint256-gasprice-uint256-uint256-bytes-uint256-maxpossiblecharge-→-uint256-bytes)的特定于dapp的数据。RelayHub不验证此值，但仍然可以用于例如签名。
 
 发出[TransactionRelayed](#transactionrelayedaddress-relay-address-from-address-to-bytes4-selector-enum-irelayhubrelaycallstatus-status-uint256-charge)事件。
 

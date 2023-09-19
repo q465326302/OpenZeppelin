@@ -224,7 +224,7 @@ OWNABLE
 ### Counters
 提供只能逐一递增或递减的计数器。这可以用于跟踪映射中的元素数量、发行ERC721 id或计数请求id。
 
-在使用Counters for Counters.Counter时，请包含以下内容；由于通过递增一无法使256位整数溢出，因此递增可以跳过[SafeMath](./Math.md#safemath)溢出检查，从而节省燃气。但是，这假设正确使用，即永远不直接访问底层的_value。
+在使用Counters for Counters.Counter时，请包含以下内容；由于通过递增一无法使256位整数溢出，因此递增可以跳过[SafeMath](./Math.md#safemath)溢出检查，从而节省gas。但是，这假设正确使用，即永远不直接访问底层的_value。
 
 **FUNCTIONS**
 [current(counter)](#currentstruct-counterscounter-counter-→-uint256)

@@ -43,8 +43,8 @@ OpenZeppelin Contracts遵循[语义化版本控制方案](#版本控制方案)�
 ### 草案
 一些合约实现了仍处于草案状态的EIP，这些合约的文件名以draft-开头，例如utils/cryptography/draft-EIP712.sol。由于它们作为草案的性质，这些合约的细节可能会发生变化，我们无法保证它们的稳定性。 OpenZeppelin Contracts的次要版本可能会包含标记为草案的合约的破坏性更改，这将在[更改日志](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/CHANGELOG.md)中充分的公布。包含的EIP被生产项目使用，这可能使它们不太可能发生重大变化。
 
-### 燃气成本
-虽然通常会尝试降低使用OpenZeppelin Contracts的燃气成本，但不能保证这一点。特别是，用户不应假设升级库版本时燃气成本不会增加。
+### gas成本
+虽然通常会尝试降低使用OpenZeppelin Contracts的gas成本，但不能保证这一点。特别是，用户不应假设升级库版本时gas成本不会增加。
 
 ### 错误修复
 为了修复错误，可能需要打破API稳定性保证，我们会这样做。但是，这个决定不会轻易做出，我们将尽一切可能采取措施使更改尽可能不会造成中断。当足够时，可能导致不安全行为的合约或函数将被弃用而不是删除（例如[＃1543](https://github.com/OpenZeppelin/openzeppelin-contracts/pull/1543)和[＃1550](https://github.com/OpenZeppelin/openzeppelin-contracts/pull/1550)）。

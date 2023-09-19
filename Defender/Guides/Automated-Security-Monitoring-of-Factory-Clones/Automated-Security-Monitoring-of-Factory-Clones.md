@@ -1,5 +1,5 @@
 # Automated Security Monitoring of Factory Clones
-工厂克隆模式可以优化燃气成本。然而，由于每个克隆都需要部署到新地址，有效地跟踪和监控这些合约可能是一项挑战。
+工厂克隆模式可以优化gas成本。然而，由于每个克隆都需要部署到新地址，有效地跟踪和监控这些合约可能是一项挑战。
 
 本指南展示了如何使用Defender自动化安全监控工厂合约以及由它创建的克隆合约。
 
@@ -147,7 +147,7 @@ exports.handler = async function (event) {
 ## 进行测试运行
 要从UI进行测试，请从Admin仪表板中选择工厂合约，导航到New Proposal → Admin action，并选择合约创建功能以及基于合约权限的执行策略。
 
-然后在下一个屏幕上，验证信息并选择批准和执行并支付燃气费。
+然后在下一个屏幕上，验证信息并选择批准和执行并支付gas费。
 ![guide-factory-6.png](img/guide-factory-6.png)
 
 前往Logging以验证Admin提案的状态、Sentinel的触发、Autotask的执行，最后将合约添加到Admin仪表板中。

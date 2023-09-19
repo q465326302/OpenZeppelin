@@ -268,7 +268,7 @@ console.log('Box value is', value.toString());
 ```
 
 > NOTE
-在实际应用中，您可能希望[估算您的交易的燃气](https://docs.ethers.io/v5/api/contract/contract/#contract-estimateGas)，并检查[燃气价格预言机](https://ethgasstation.info/)以了解每个交易的最佳值。
+在实际应用中，您可能希望[估算您的交易的gas](https://docs.ethers.io/v5/api/contract/contract/#contract-estimateGas)，并检查[gas价格预言机](https://ethgasstation.info/)以了解每个交易的最佳值。
 
 现在，我们可以运行这个代码片段，并检查box的值是否更新！
 

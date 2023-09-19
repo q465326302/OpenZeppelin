@@ -1,7 +1,7 @@
 # Writing GSN-capable contracts
-[Gas Station Network](https://gsn.openzeppelin.com/)（GSN）允许您构建应用程序，在这些应用程序中，您为用户的交易付费，因此他们无需持有Ether来支付燃气费，从而简化了他们的入门流程。在本指南中，我们将学习如何编写智能合约，以便从GSN接收交易，使用OpenZeppelin合约。
+[Gas Station Network](https://gsn.openzeppelin.com/)（GSN）允许您构建应用程序，在这些应用程序中，您为用户的交易付费，因此他们无需持有Ether来支付gas费，从而简化了他们的入门流程。在本指南中，我们将学习如何编写智能合约，以便从GSN接收交易，使用OpenZeppelin合约。
 
-如果您对GSN还不熟悉，您可能首先要查看系统概述，以更清晰地了解如何实现无燃气费交易。否则，准备好了！
+如果您对GSN还不熟悉，您可能首先要查看系统概述，以更清晰地了解如何实现无gas费交易。否则，准备好了！
 
 ## 接收Relayer 调用
 编写接收者的第一步是从我们的GSNRecipient合约继承。如果您还从其他合约（如ERC20）继承，这也可以正常工作：添加GSNRecipient将使您所有的代币函数都可通过GSN调用。
@@ -25,7 +25,7 @@ contract MyContract is GSNRecipient, ... {
 OpenZeppelin Contracts提供了一些经过试验和测试的方法供您直接使用，但您仍然应该对底层发生的事情有一个基本的了解。
 
 #### acceptRelayedCall
-首先，RelayHub将询问您的接收者合约是否希望接收Relayer 调用。请记住，您将为 Relayer 产生的燃气消耗费用付费，因此您只应该接受您愿意支付的调用！
+首先，RelayHub将询问您的接收者合约是否希望接收Relayer 调用。请记住，您将为 Relayer 产生的gas消耗费用付费，因此您只应该接受您愿意支付的调用！
 ```
     function acceptRelayedCall(
         address relay,
@@ -69,7 +69,7 @@ preRelayedCall将告知您呼叫可能的最高费用，并可用于提前向用
 
 postRelayedCall将为您提供准确的交易成本估计，这使其成为向用户收费的自然选择。它还将告诉您Relayer 调用是否恢复。这样，您就可以不收取用户恢复调用的费用，但请记住，您仍然会被Relayer 方收费。
 
-这些功能使您能够实现一种流程，例如，您可以使用自定义代币向用户收取Relayer 交易的费用。您可以在pre中锁定部分他们的代币，并在post中执行实际的收费。这类似于以太坊中的燃气费用工作原理：网络首先锁定足够的ETH以支付交易的燃气限制和燃气价格，然后支付实际花费的金额。
+这些功能使您能够实现一种流程，例如，您可以使用自定义代币向用户收取Relayer 交易的费用。您可以在pre中锁定部分他们的代币，并在post中执行实际的收费。这类似于以太坊中的gas费用工作原理：网络首先锁定足够的ETH以支付交易的gas限制和gas价格，然后支付实际花费的金额。
 
 ## 进一步阅读
 阅读我们在[OpenZeppelin Contracts](./Strategies.md)中预构建和发布的支付策略指南，或查看[GSN基础合约的API参考](../API/GSN.md)。

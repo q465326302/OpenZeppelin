@@ -54,7 +54,7 @@ CONTEXT
 
 #### fallback()
 外部#
-回退函数**不要重写**。请注意，其他合约在转移资金时会附带2300个基本燃气补贴，这不足以调用buyTokens。考虑直接调用buyTokens来购买代币。
+回退函数**不要重写**。请注意，其他合约在转移资金时会附带2300个基本gas补贴，这不足以调用buyTokens。考虑直接调用buyTokens来购买代币。
 
 #### token() → contract IERC20
 公开#
