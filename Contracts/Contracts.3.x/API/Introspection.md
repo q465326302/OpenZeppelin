@@ -85,7 +85,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 
 #### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
 内部#
-返回一个布尔数组，其中每个值对应于传入的接口是否被支持。这样可以批量检查合约的接口，因为您可能预期某些接口不被支持。
+返回一个布尔数组，其中每个值对应于传入的接口是否被支持。这样可以批量检查合约的接口，因为你可能预期某些接口不被支持。
 
 请参阅[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-e28692-bool-1)。
 

@@ -1,5 +1,5 @@
 # Using with Upgrades
-如果您的合约将使用可升级性部署，例如使用*OpenZeppelin Upgrades插件*，您将需要使用OpenZeppelin Contracts的升级安全变体。
+如果你的合约将使用可升级性部署，例如使用*OpenZeppelin Upgrades插件*，你将需要使用OpenZeppelin Contracts的升级安全变体。
 
 该变体作为一个名为@openzeppelin/contracts-upgradeable的单独包可用，该包托管在[OpenZeppelin/openzeppelin-contracts-upgradeable存储库](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable)中。
 
@@ -20,7 +20,7 @@ npm install @openzeppelin/contracts-upgradeable
 +contract MyCollectible is ERC721Upgradeable {
 ```
 
-构造函数被内部初始化函数所取代，遵循命名约定__{ContractName}_init。由于这些函数是内部函数，您必须始终定义自己的公共初始化函数，并调用您扩展的合约的父初始化函数。
+构造函数被内部初始化函数所取代，遵循命名约定__{ContractName}_init。由于这些函数是内部函数，你必须始终定义自己的公共初始化函数，并调用你扩展的合约的父初始化函数。
 
 ```
 -    constructor() ERC721("MyCollectible", "MCO") public {
@@ -60,6 +60,6 @@ main();
 
 ### 存储间隙
 
-您可能会注意到每个合约都包含一个名为__gap的状态变量。这是在可升级合约中放置的空的保留存储空间。它允许我们在将来自由地添加新的状态变量，而不会影响与现有部署的存储兼容性。
+你可能会注意到每个合约都包含一个名为__gap的状态变量。这是在可升级合约中放置的空的保留存储空间。它允许我们在将来自由地添加新的状态变量，而不会影响与现有部署的存储兼容性。
 
 简单地添加一个状态变量是不安全的，因为它会将下面继承链中的所有状态变量"向下移动"。这会使存储布局不兼容，如在[编写可升级合约](../../Upgrades-Plugins/Writing-Upgradeable-Contracts.md#修改合约)中所解释的那样。__gap数组的大小是根据合约使用的存储量总和计算的（在这种情况下为50个存储槽）。

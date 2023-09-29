@@ -1,7 +1,7 @@
 # Overview
 Nile是一个命令行工具，用于开发或与使用Cairo编写的StarkNet项目进行交互。它包含了开发、编译、测试和部署智能合约和dApp的不同组件，提供了执行任务的[CLI](./API-Reference/CLI-Reference.md) 和用于脚本编写的[运行时环境（NRE）](./NRE-and-scripting.md)。
 
-该软件包被设计为可扩展和高度可定制，可以通过使用插件进行定制。本指南将引导您完成我们推荐的安装设置，由于我们预计插件将提供许多功能，您也可以自由定制它。
+该软件包被设计为可扩展和高度可定制，可以通过使用插件进行定制。本指南将引导你完成我们推荐的安装设置，由于我们预计插件将提供许多功能，你也可以自由定制它。
 
 ## 快速入门
 通过使用一个示例合约探索创建Nile项目的基础知识。我们将在本地进行测试，将账户和合约部署到一个开放网络节点，并通过账户向合约发送交易。
@@ -9,7 +9,7 @@ Nile是一个命令行工具，用于开发或与使用Cairo编写的StarkNet项
 ### 要求
 
 #### GMP是GNU多精度算术库的缩写，它是一个用于高精度计算的库。
-在安装Cairo之前，您需要安装gmp:
+在安装Cairo之前，你需要安装gmp:
 ```
 sudo apt install -y libgmp3-dev # linux
 or
@@ -17,7 +17,7 @@ brew install gmp # mac
 ```
 
 > TIP
-如果您在Apple M1计算机上安装gmp时遇到任何问题，这里是一些可能的[解决方案列表](https://github.com/OpenZeppelin/nile/issues/22)。
+如果你在Apple M1计算机上安装gmp时遇到任何问题，这里是一些可能的[解决方案列表](https://github.com/OpenZeppelin/nile/issues/22)。
 
 #### 支持的Python版本
 一些Nile依赖项具有特定的Python版本要求。因此，我们建议使用类似[pyenv](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/access/ownable/library.cairo)的Python版本管理器，以及虚拟环境来避免冲突。
@@ -26,7 +26,7 @@ brew install gmp # mac
 目前支持的Python版本是>=3.9且<3.10。
 
 ### 安装
-创建一个用于您的项目的文件夹并进入该文件夹:
+创建一个用于你的项目的文件夹并进入该文件夹:
 ```
 mkdir myproject && cd myproject
 ```
@@ -42,7 +42,7 @@ source env/bin/activate
 pip install cairo-nile
 ```
 
-使用nile init快速设置您的开发环境:
+使用nile init快速设置你的开发环境:
 ```
 nile init
 ```
@@ -55,7 +55,7 @@ nile compile
 ```
 
 ### 测试
-nile init为您创建了一个示例的Cairo合约和测试。请查看contracts/contract.cairo和tests/test_contract.py来查看源代码。
+nile init为你创建了一个示例的Cairo合约和测试。请查看contracts/contract.cairo和tests/test_contract.py来查看源代码。
 
 运行pytest来运行智能合约的测试套件。
 ```
@@ -83,7 +83,7 @@ nile compile
 ### 与Starknet交互
 
 #### 运行本地节点
-默认情况下，如果您不使用--network选项指定网络，nile命令与starknet节点直接交互时会假设您正在使用本地节点（默认为localhost）。
+默认情况下，如果你不使用--network选项指定网络，nile命令与starknet节点直接交互时会假设你正在使用本地节点（默认为localhost）。
 
 使用nile node命令在开发环境中运行本地devnet节点。
 ```
@@ -121,7 +121,7 @@ Gas price: 10299808934 WEI
 
 在生产环境中，你需要为反事实地址提供以太以支付部署费用，这将在测试网中很快成为必需。目前正在实施多个桥接器和水龙头，如[Starkgate](https://goerli.starkgate.starknet.io/)，以支持开发者的体验。
 
-对于使用开发网络节点进行本地开发，您可以使用预先部署的账户来为您的地址提供资金，使用以下[脚本](./NRE-and-scripting.md#从预部署的开发网络账户转移资金)即可。
+对于使用开发网络节点进行本地开发，你可以使用预先部署的账户来为你的地址提供资金，使用以下[脚本](./NRE-and-scripting.md#从预部署的开发网络账户转移资金)即可。
 
 4. 在为预先计算的地址提供资金后，使用nile setup部署该账户。
 ```
@@ -133,12 +133,12 @@ nile setup ACCOUNT_1 --salt 123 --max_fee 52147932632842
 
 > IMPORTANT
 在StarkNet中，用户只能部署先前声明的合约。[Openzeppelin Account](https://github.com/OpenZeppelin/cairo-contracts/blob/main/src/openzeppelin/account/presets/Account.cairo)会在每次发布devnet、testnets和mainnet后不久被声明，但是账户更新发布和devnet发布之间可能存在不同步的时间段。
-然后，您可以通过脚本使用预部署的[账户声明OZ Account](./NRE-and-scripting.md#声明oz账户)。
+然后，你可以通过脚本使用预部署的[账户声明OZ Account](./NRE-and-scripting.md#声明oz账户)。
 
 #### 检查Declare the OZ Account脚本。
 
 1. 部署合约
-首先，声明合约以在网络上注册类哈希。只要合约的字节码不变，您只需要执行一次此操作。
+首先，声明合约以在网络上注册类哈希。只要合约的字节码不变，你只需要执行一次此操作。
 ```
 nile declare ACCOUNT_1 contract
 ```
@@ -149,7 +149,7 @@ nile deploy ACCOUNT_1 contract --alias my_contract
 ```
 
 > NOTE
-别名选项允许您在不使用地址的情况下与合约进行交互。
+别名选项允许你在不使用地址的情况下与合约进行交互。
 
 #### 从合约中读取数据
 使用nile call命令来读取合约的视图函数。

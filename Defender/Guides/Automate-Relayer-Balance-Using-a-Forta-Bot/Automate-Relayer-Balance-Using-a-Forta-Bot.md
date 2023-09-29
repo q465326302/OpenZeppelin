@@ -1,5 +1,5 @@
 # Automate ERC20 Token Balance Maintenance Using A Forta Bot and Defender Autotask
-本指南是将自定义 Forta 机器人与 Defender 集成的从头到尾的教程。您将通过 Sentinel 将该机器人连接到 Defender。每当机器人触发警报时，Sentinel 将向您发送通知，并触发一个Autotask来运行自定义逻辑，通过Relayer发送交易，自动为监控的账户充值。在此示例中，我们将监视 Polygon 网络上的 LINK，可以轻松替换任何 ERC20 代币。
+本指南是将自定义 Forta 机器人与 Defender 集成的从头到尾的教程。你将通过 Sentinel 将该机器人连接到 Defender。每当机器人触发警报时，Sentinel 将向你发送通知，并触发一个Autotask来运行自定义逻辑，通过Relayer发送交易，自动为监控的账户充值。在此示例中，我们将监视 Polygon 网络上的 LINK，可以轻松替换任何 ERC20 代币。
 
 ![guide-balance-automation-forta-sentinel](img/guide-balance-automation-forta-sentinel-1.png)
 
@@ -9,7 +9,7 @@
 > NOTE
 尽管本指南使用defender-client包创建 Relayer 、Sentinels和自动任务，但但通过Defender Web界面也可以使用相同的功能。
 
-您需要安装相关的Defender NPM软件包。请注意，Forta机器人的创建还需要安装[Docker](https://www.docker.com/get-started)。
+你需要安装相关的Defender NPM软件包。请注意，Forta机器人的创建还需要安装[Docker](https://www.docker.com/get-started)。
 ```
 $ mkdir minimum-balance && cd minimum-balance
 $ npm init -y
@@ -17,9 +17,9 @@ $ npm i --save-dev defender-relay-client defender-autotask-client defender-senti
 ```
 
 ## 创建 Relayer 
-从Defender Web界面，打开右上角的菜单。获取您的团队API密钥和secret ，并将它们保存到本地的.env文件中。
+从Defender Web界面，打开右上角的菜单。获取你的团队API密钥和secret ，并将它们保存到本地的.env文件中。
 
-使用defender-relay-client，在Polygon网络上创建一个新的[ Relayer](../../Components/Relay/Relay.md) ，并将 Relayer 的ID保存到您的.env文件中。
+使用defender-relay-client，在Polygon网络上创建一个新的[ Relayer](../../Components/Relay/Relay.md) ，并将 Relayer 的ID保存到你的.env文件中。
 ```
 const { RelayClient } = require('defender-relay-client');
 const { appendFileSync } = require('fs');
@@ -51,7 +51,7 @@ run().catch((error) => {
 保存文件并运行脚本。拥有Relayer 的ID就足以通过Autotask运行交易。
 
 ## 创建Autotask
-接下来，您需要创建一个[Autotask](../../Components/Autotasks/Autotasks.md)，该Autotask使用ethers.js将LINK从[集成的Relayer](../../Components/Autotasks/Autotasks.md)转移到您希望Forta机器人监视的账户。
+接下来，你需要创建一个[Autotask](../../Components/Autotasks/Autotasks.md)，该Autotask使用ethers.js将LINK从[集成的Relayer](../../Components/Autotasks/Autotasks.md)转移到你希望Forta机器人监视的账户。
 ```
 $ mkdir autotasks && touch autotasks/index.js
 ```
@@ -120,11 +120,11 @@ if (require.main === module) {
 现在是构建Forta机器人的时候了。
 
 ## 安装Forta CLI
-在这个演示中，您将使用命令行包来开发Forta机器人。
+在这个演示中，你将使用命令行包来开发Forta机器人。
 
 $ mkdir forta-bot && cd forta-bot $ npx forta-agent@latest init --typescript
 
-将生成一个密钥文件在 ~/.forta，您将使用密码加密它。
+将生成一个密钥文件在 ~/.forta，你将使用密码加密它。
 
 ## 创建机器人
 首先，需要安装bignumber包：
@@ -186,7 +186,7 @@ export default {
 }
 ```
 
-编辑package.json，为您的机器人指定一个唯一的名称（小写）和描述，并指定链ID。
+编辑package.json，为你的机器人指定一个唯一的名称（小写）和描述，并指定链ID。
 
 ```
 {
@@ -207,13 +207,13 @@ $ npx hardhat forta:run
 
 机器人的部署可以通过CLI、应用程序或Hardhat插件进行。
 
-请记住，您从中部署机器人的账户需要有一些MATIC的资金。
+请记住，你从中部署机器人的账户需要有一些MATIC的资金。
 
 ```
 $ npm run publish
 ```
 
-这将构建代理图像并将其推送到远程存储库。在输入安装 forta-agent 时创建的密码后，您将获得代理 ID 和清单。
+这将构建代理图像并将其推送到远程存储库。在输入安装 forta-agent 时创建的密码后，你将获得代理 ID 和清单。
 ```
 ❯ npm run publish
 
@@ -229,12 +229,12 @@ adding agent to registry...
 successfully added agent id 0xd6d29c1584801d5baa867c9edaf595e794be63d207758155f28bed8ffa98d472 with manifest QmSNSaNwbjcvi2SuX73pqzEUcTzb4zdXpjPRbiCzsBLKuo
 ```
 
-恭喜您部署了一个 Forta 机器人！
+恭喜你部署了一个 Forta 机器人！
 
-为了方便起见，将代理 ID 保存到您的主项目文件夹中的 .env 文件中。在创建订阅此机器人的 Sentinel 时，您将需要它。
+为了方便起见，将代理 ID 保存到你的主项目文件夹中的 .env 文件中。在创建订阅此机器人的 Sentinel 时，你将需要它。
 
 ## 创建 Forta Sentinel
-使用 sentinel-client 包，编写一个脚本，创建一个连接到您的 Relayer  和 Autotask 的 Forta Sentinel。
+使用 sentinel-client 包，编写一个脚本，创建一个连接到你的 Relayer  和 Autotask 的 Forta Sentinel。
 ```
 require('dotenv').config()
 const { SentinelClient } = require('defender-sentinel-client')
@@ -278,7 +278,7 @@ Sentinel被配置为在机器人发送警报时触发通知和Autotask。为了�
 
 运行脚本创建Sentinel。
 
-恭喜！您现在可以通过将LINK从监视的账户转移，使余额降到0.1以下，从而进一步尝试此集成。 Forta机器人将发出警报，导致Sentinel触发Autotask，该Autotask在Relayer 上运行转账函数，重新为监视的账户充值。
+恭喜！你现在可以通过将LINK从监视的账户转移，使余额降到0.1以下，从而进一步尝试此集成。 Forta机器人将发出警报，导致Sentinel触发Autotask，该Autotask在Relayer 上运行转账函数，重新为监视的账户充值。
 
 ## 参考资料
 

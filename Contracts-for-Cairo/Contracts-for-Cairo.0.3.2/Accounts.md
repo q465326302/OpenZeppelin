@@ -178,15 +178,15 @@ await signer.send_transactions(
 * 使用secp256k1曲线地址对消息进行签名
 
 ## Account entrypoint
-__execute__作为所有用户与任何合约进行交互的单个入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因:
+__execute__作为所有用户与任何合约进行交互的单个入口点，包括管理账户合约本身。这就是为什么如果你想要更改控制账户的公钥，你将发送一个针对该账户合约的交易的原因:
 ```
 await signer.send_transaction(account, account.contract_address, 'set_public_key', [NEW_KEY])
 ```
-如果您想要在AccountRegistry合约中更新账户的L1地址，您可以执行以下操作
+如果你想要在AccountRegistry合约中更新账户的L1地址，你可以执行以下操作
 ```
 await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])
 ```
-您可以在[账户消息方案讨论](https://github.com/OpenZeppelin/cairo-contracts/discussions/24)中阅读更多关于消息结构和哈希的信息。有关多调用的设计选择和实现的更多信息，请阅读[账户多调用应如何工作讨论](https://github.com/OpenZeppelin/cairo-contracts/discussions/27)。
+你可以在[账户消息方案讨论](https://github.com/OpenZeppelin/cairo-contracts/discussions/24)中阅读更多关于消息结构和哈希的信息。有关多调用的设计选择和实现的更多信息，请阅读[账户多调用应如何工作讨论](https://github.com/OpenZeppelin/cairo-contracts/discussions/27)。
 
 __execute__方法具有以下接口:
 ```

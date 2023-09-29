@@ -398,12 +398,12 @@ IERC20
 
 发出一个包含相同id的 [Snapshot](#snapshotuint256-id)事件。
 
-[_snapshot](#_snapshot-→-uint256)是内部的，您必须决定如何将其外部公开。它的使用可能仅限于一组账户，例如使用 [AccessControl](./Access.md#accesscontrol)，或者可能对公众开放。
+[_snapshot](#_snapshot-→-uint256)是内部的，你必须决定如何将其外部公开。它的使用可能仅限于一组账户，例如使用 [AccessControl](./Access.md#accesscontrol)，或者可能对公众开放。
 
 > WARNING
-尽管某些信任最小化机制（如分叉）需要以开放的方式调用[_snapshot](#_snapshot-→-uint256)，但您必须考虑到它可能被攻击者以两种方式使用。
+尽管某些信任最小化机制（如分叉）需要以开放的方式调用[_snapshot](#_snapshot-→-uint256)，但你必须考虑到它可能被攻击者以两种方式使用。
 首先，它可以用于增加从快照中检索值的成本，尽管它将以对数方式增长，因此在长期内这种攻击将失效。其次，它可以用于针对特定账户，并增加ERC20转账的成本，如上文的gas成本部分所述。
-我们还没有测量实际数字；如果您对此感兴趣，请与我们联系。
+我们还没有测量实际数字；如果你对此感兴趣，请与我们联系。
 
 #### balanceOfAt(address account, uint256 snapshotId) → uint256
 公开#
@@ -621,7 +621,7 @@ IERC20
 ## Utilities
 
 ### SafeERC20
-对ERC20操作的包装，当代币合约返回false时会抛出异常。同时支持返回无值（而是在失败时回滚或抛出异常）的代币，假设非回滚调用都是成功的。要使用这个库，您可以在您的合约中添加一个使用SafeERC20 for IERC20;语句，这样您就可以调用安全操作，如token.safeTransfer(…​)等。
+对ERC20操作的包装，当代币合约返回false时会抛出异常。同时支持返回无值（而是在失败时回滚或抛出异常）的代币，假设非回滚调用都是成功的。要使用这个库，你可以在你的合约中添加一个使用SafeERC20 for IERC20;语句，这样你就可以调用安全操作，如token.safeTransfer(…​)等。
 
 **FUNCTIONS**
 [safeTransfer(token, to, value)](#safetransfercontract-ierc20-token-address-to-uint256-value)

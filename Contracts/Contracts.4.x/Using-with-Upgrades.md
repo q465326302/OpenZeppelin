@@ -1,5 +1,5 @@
 # Using with Upgrades
-如果您的合约将使用可升级性部署，例如使用[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)，您需要使用OpenZeppelin Contracts的可升级变体。
+如果你的合约将使用可升级性部署，例如使用[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)，你需要使用OpenZeppelin Contracts的可升级变体。
 
 这个升级版本作为一个单独的包@openzeppelin/contracts-upgradeable可用，它托管在[OpenZeppelin/openzeppelin-contracts-upgradeable存储库](https://github.com/OpenZeppelin/openzeppelin-contracts-upgradeable)中。
 
@@ -26,7 +26,7 @@ npm install @openzeppelin/contracts-upgradeable
 +contract MyCollectible is ERC721Upgradeable {
 ```
 
-构造函数被内部初始化函数所替代，遵循命名约定__{ContractName}_init。由于这些是内部函数，您必须始终定义自己的公共初始化函数，并调用扩展合约的父初始化函数。
+构造函数被内部初始化函数所替代，遵循命名约定__{ContractName}_init。由于这些是内部函数，你必须始终定义自己的公共初始化函数，并调用扩展合约的父初始化函数。
 ```
 -    constructor() ERC721("MyCollectible", "MCO") public {
 +    function initialize() initializer public {
@@ -37,7 +37,7 @@ npm install @openzeppelin/contracts-upgradeable
 > CAUTION
 在使用多重继承时需要特别注意。请参见下面标题为[“多重继承”](#多重继承)的部分。
 
-一旦设置并编译了此合约，您可以使用[Upgrades插件](../../Upgrades-Plugins/Overview.md)部署它。以下代码片段展示了使用Hardhat的示例部署脚本。
+一旦设置并编译了此合约，你可以使用[Upgrades插件](../../Upgrades-Plugins/Overview.md)部署它。以下代码片段展示了使用Hardhat的示例部署脚本。
 
 ```
 // scripts/deploy-my-collectible.js
@@ -63,6 +63,6 @@ main();
 每个合约中的函数__{ContractName}_init_unchained是初始化函数减去对父初始化函数的调用，可以用来避免双重初始化问题，但不建议手动执行此操作。我们希望能够在未来版本的Upgrades插件中实现对此的安全检查。
 
 ### 存储间隙
-您可能会注意到每个合约都包括一个名为__gap的状态变量。这是升级合约中的空保留存储空间。它允许我们在不损害现有部署的存储兼容性的情况下自由添加新的状态变量。
+你可能会注意到每个合约都包括一个名为__gap的状态变量。这是升级合约中的空保留存储空间。它允许我们在不损害现有部署的存储兼容性的情况下自由添加新的状态变量。
 
 简单地添加状态变量是不安全的，因为它会“向下移动”继承链下面的所有状态变量。这使得存储布局不兼容，如[编写可升级合约](../../Upgrades-Plugins/Writing-Upgradeable-Contracts.md#修改合约)中所解释的那样。__gap数组的大小是根据合约使用的存储总量是加起来等于同一个数字（在本例中为50个存储槽）。

@@ -7,17 +7,17 @@
 这个仓库包含了高度实验性的代码。请预期会有快速迭代。**请自行承担使用风险**。
 
 ### 第一次使用？
-在安装Cairo之前，您需要在您的机器上安装gmp。
+在安装Cairo之前，你需要在你的机器上安装gmp。
 ```
 sudo apt install -y libgmp3-dev # linux
 brew install gmp # mac
 ```
 
 > TIP
-如果您在Apple M1电脑上安装gmp时遇到任何问题，[这里是一些可能的解决方案列表](https://github.com/OpenZeppelin/nile/issues/22)。
+如果你在Apple M1电脑上安装gmp时遇到任何问题，[这里是一些可能的解决方案列表](https://github.com/OpenZeppelin/nile/issues/22)。
 
-### 设置您的项目
-创建一个用于您的项目的目录，然后进入该目录并创建一个Python虚拟环境。
+### 设置你的项目
+创建一个用于你的项目的目录，然后进入该目录并创建一个Python虚拟环境。
 ```
 mkdir my-project
 cd my-project

@@ -1,16 +1,16 @@
 # OpenZeppelin Upgrades Core & CLI
-@openzeppelin/upgrades-core软件包提供了一个validate命令，用于检查可升级合约的升级安全性和存储布局兼容性。它可以在开发过程中使用，以确保您的合约是升级安全的并且与先前版本兼容。
+@openzeppelin/upgrades-core软件包提供了一个validate命令，用于检查可升级合约的升级安全性和存储布局兼容性。它可以在开发过程中使用，以确保你的合约是升级安全的并且与先前版本兼容。
 
 它还提供了编程接口来以程序化的方式执行这些检查，并包含了这些检查的核心逻辑，以便与OpenZeppelin Upgrades插件一起执行这些检查。
 
 ## Validate命令
-从包含构建信息文件的目录中检测可升级合约，并验证它们是否是升级安全的。如果您想要从命令行、脚本或作为CI/CD流程的一部分验证项目中的所有可升级合约，请使用此命令。
+从包含构建信息文件的目录中检测可升级合约，并验证它们是否是升级安全的。如果你想要从命令行、脚本或作为CI/CD流程的一部分验证项目中的所有可升级合约，请使用此命令。
 
 > TIP
-"构建信息文件"由您的编译工具链（Hardhat、Foundry）生成，包含编译过程的输入和输出。
+"构建信息文件"由你的编译工具链（Hardhat、Foundry）生成，包含编译过程的输入和输出。
 
 ### 先决条件
-在使用validate命令之前，您必须定义可升级合约，以便可以检测和验证它们，定义存储布局比较的参考合约，并编译您的合约。
+在使用validate命令之前，你必须定义可升级合约，以便可以检测和验证它们，定义存储布局比较的参考合约，并编译你的合约。
 
 #### 定义可升级合约
 validate命令对看起来像可升级合约的合约执行升级安全性检查。具体来说，它对满足以下任一条件的实现合约执行检查：
@@ -29,9 +29,9 @@ validate命令对看起来像可升级合约的合约执行升级安全性检查
 #### 定义参考合约
 
 > IMPORTANT
-如果一个实现合约是作为对现有代理的升级部署的，您**必须**定义一个参考合约，用于进行存储布局比较。否则，如果存在任何存储布局不兼容性，您将不会收到错误。
+如果一个实现合约是作为对现有代理的升级部署的，你**必须**定义一个参考合约，用于进行存储布局比较。否则，如果存在任何存储布局不兼容性，你将不会收到错误。
 
-通过向您的实现合约添加NatSpec注释@custom:oz-upgrades-from <reference>来定义参考合约，其中<reference>是用于存储布局比较的参考合约的合约名称或完全限定合约名称。合约不需要在范围内，如果在项目中是明确的，则合约名称就足够了。
+通过向你的实现合约添加NatSpec注释@custom:oz-upgrades-from <reference>来定义参考合约，其中<reference>是用于存储布局比较的参考合约的合约名称或完全限定合约名称。合约不需要在范围内，如果在项目中是明确的，则合约名称就足够了。
 
 示例：
 ```
@@ -56,7 +56,7 @@ contract MyContractV2 {
 ```
 
 #### 编译具有存储布局的合约
-编译您的合约，并确保您的构建已配置为在构建信息目录中输出带有Solidity编译器输入和输出的JSON文件。编译器输出必须包括存储布局。如果存在任何先前的构建工件，则必须首先清理它们以避免重复的合约定义。
+编译你的合约，并确保你的构建已配置为在构建信息目录中输出带有Solidity编译器输入和输出的JSON文件。编译器输出必须包括存储布局。如果存在任何先前的构建工件，则必须首先清理它们以避免重复的合约定义。
 
 #### Hardhat
 配置 hardhat.config.js 或 hardhat.config.ts 以在输出选择中包含存储布局：
@@ -87,7 +87,7 @@ build_info = true
 extra_output = ["storageLayout"]
 ```
 
-然后编译您的合约。
+然后编译你的合约。
 ```
 forge clean && forge build
 ```
@@ -102,7 +102,7 @@ npx @openzeppelin/upgrades-core validate [<BUILD_INFO_DIR>] [<OPTIONS>]
 
 **参数：**
 
-* <BUILD_INFO_DIR> - 可选的构建信息目录的路径，该目录包含包含Solidity编译器输入和输出的JSON文件。对于Hardhat项目，默认为artifacts/build-info，对于Foundry项目，默认为out/build-info。如果您的项目使用自定义输出目录，您必须在此处指定其构建信息目录。
+* <BUILD_INFO_DIR> - 可选的构建信息目录的路径，该目录包含包含Solidity编译器输入和输出的JSON文件。对于Hardhat项目，默认为artifacts/build-info，对于Foundry项目，默认为out/build-info。如果你的项目使用自定义输出目录，你必须在此处指定其构建信息目录。
 
 **选项：**
 
@@ -113,7 +113,7 @@ npx @openzeppelin/upgrades-core validate [<BUILD_INFO_DIR>] [<OPTIONS>]
 * unsafeSkipStorageCheck - 跳过存储布局兼容性错误的检查。这是一种危险的选项，应作为最后的手段使用。
 
 ## 高级API
-高级API是[validate命令](#validate命令)的程序化等效物。如果您想从JavaScript或TypeScript环境中验证项目的所有可升级合约，请使用此API。
+高级API是[validate命令](#validate命令)的程序化等效物。如果你想从JavaScript或TypeScript环境中验证项目的所有可升级合约，请使用此API。
 
 ### 先决条件
 与[validate命令](#validate命令)相同的先决条件。
@@ -124,7 +124,7 @@ npx @openzeppelin/upgrades-core validate [<BUILD_INFO_DIR>] [<OPTIONS>]
 import { validateUpgradeSafety } from '@openzeppelin/upgrades-core';
 ```
 
-然后调用该函数来验证您的合约，并获取一个包含验证结果的项目报告。
+然后调用该函数来验证你的合约，并获取一个包含验证结果的项目报告。
 
 #### validateUpgradeSafety
 ```
@@ -138,11 +138,11 @@ validateUpgradeSafety(
 
 检测来自构建信息目录的可升级合约，并验证它们是否可以安全升级。返回一个包含结果的[项目报告](#projectreport)。
 
-注意，此函数不直接抛出验证错误。相反，您必须使用项目报告来确定是否发现了任何错误。
+注意，此函数不直接抛出验证错误。相反，你必须使用项目报告来确定是否发现了任何错误。
 
 **参数：**
 
-* buildInfoDir - 指向包含Solidity编译器输入和输出的JSON文件的构建信息目录的路径。对于Hardhat项目，默认为artifacts/build-info，对于Foundry项目，默认为out/build-info。如果您的项目使用自定义输出目录，则必须在此处指定其构建信息目录。
+* buildInfoDir - 指向包含Solidity编译器输入和输出的JSON文件的构建信息目录的路径。对于Hardhat项目，默认为artifacts/build-info，对于Foundry项目，默认为out/build-info。如果你的项目使用自定义输出目录，则必须在此处指定其构建信息目录。
 
 * contract - 要验证的合约的名称或完全限定名称。如果未指定，则将验证构建信息目录中的所有可升级合约。
 
@@ -183,12 +183,12 @@ interface ProjectReport {
 * numTotal - 检测到的可升级合约的总数。
 
 ## 低级API
-低级API使用[Solidity输入和输出的JSON对象](https://docs.soliditylang.org/en/latest/using-the-compiler.html#compiler-input-and-output-json-description)，可以对单个合约执行升级安全检查和存储布局比较。如果您想验证特定的合约而不是整个项目，请使用此API。
+低级API使用[Solidity输入和输出的JSON对象](https://docs.soliditylang.org/en/latest/using-the-compiler.html#compiler-input-and-output-json-description)，可以对单个合约执行升级安全检查和存储布局比较。如果你想验证特定的合约而不是整个项目，请使用此API。
 
 ### 先决条件
-编译您的合约以生成Solidity输入和输出的JSON对象。编译器的输出必须包括存储布局。
+编译你的合约以生成Solidity输入和输出的JSON对象。编译器的输出必须包括存储布局。
 
-请注意，低级API不自动检测可升级合约，因此不需要[验证命令](#validate命令)的其他先决条件。相反，您必须为每个要验证的实现合约创建UpgradeableContract的实例，并调用其函数以获取升级安全性和存储布局报告。
+请注意，低级API不自动检测可升级合约，因此不需要[验证命令](#validate命令)的其他先决条件。相反，你必须为每个要验证的实现合约创建UpgradeableContract的实例，并调用其函数以获取升级安全性和存储布局报告。
 
 ### 用法
 导入UpgradeableContract类：
@@ -196,7 +196,7 @@ interface ProjectReport {
 import { UpgradeableContract } from '@openzeppelin/upgrades-core';
 ```
 
-然后为您想要验证的每个实现合约创建一个UpgradeableContract的实例，并调用.getErrorReport()和/或.getStorageLayoutReport()方法来获取升级安全性和存储布局报告。
+然后为你想要验证的每个实现合约创建一个UpgradeableContract的实例，并调用.getErrorReport()和/或.getStorageLayoutReport()方法来获取升级安全性和存储布局报告。
 
 #### UpgradeableContract
 这个类表示可升级合约的实现，并提供访问错误报告的功能。

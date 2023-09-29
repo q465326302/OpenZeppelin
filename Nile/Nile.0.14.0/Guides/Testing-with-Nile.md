@@ -40,19 +40,19 @@ async def test_increase_balance():
     assert execution_info.result == (30,)
 ```
 
-根据pytest的要求，测试文件必须以test_开头或以_test结尾。您可以通过运行pytest来运行测试套件。
+根据pytest的要求，测试文件必须以test_开头或以_test结尾。你可以通过运行pytest来运行测试套件。
 ```
 pytest
 ```
 
 > TIP
-要了解如何测试复杂项目的参考资料，您可以查看[cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)存储库。
+要了解如何测试复杂项目的参考资料，你可以查看[cairo-contracts](https://github.com/OpenZeppelin/cairo-contracts)存储库。
 
 ## 处理慢速测试
-我们非常清楚的一个问题是，当您有大量测试时，运行测试会变得非常缓慢。我们强烈建议使用[pytest-xdist](https://pytest-xdist.readthedocs.io/en/latest/)来加快这个过程。
+我们非常清楚的一个问题是，当你有大量测试时，运行测试会变得非常缓慢。我们强烈建议使用[pytest-xdist](https://pytest-xdist.readthedocs.io/en/latest/)来加快这个过程。
 
 ### 使用xdist进行并行处理
-1. 在您的项目中安装pytest-xdist。
+1. 在你的项目中安装pytest-xdist。
 ```
 python -m pip install pytest-xdist
 ```
@@ -67,9 +67,9 @@ addopts = -n auto
 3. 完成！现在每次使用pytest运行测试时，它们将并行运行，大大加快了进程。
 
 ## Coverage Reports
-默认情况下，Nile不支持coverage报告，，但是您可以使用[nile-coverage](https://github.com/ericnordelo/nile-coverage)插件轻松集成此功能。
+默认情况下，Nile不支持coverage报告，，但是你可以使用[nile-coverage](https://github.com/ericnordelo/nile-coverage)插件轻松集成此功能。
 
-1. 在您的项目中安装nile-coverage插件。
+1. 在你的项目中安装nile-coverage插件。
 ```
 python -m pip install nile-coverage
 ```
@@ -87,4 +87,4 @@ TOTAL                           8       0  100.00%
 3. 完成！
 
 > TIP
-使用nile-coverage，您可以轻松地与[Codecov](https://codecov.io/)等工具集成。请查阅[插件文档](https://github.com/ericnordelo/nile-coverage/blob/main/README.md)以了解选项的参考。
+使用nile-coverage，你可以轻松地与[Codecov](https://codecov.io/)等工具集成。请查阅[插件文档](https://github.com/ericnordelo/nile-coverage/blob/main/README.md)以了解选项的参考。

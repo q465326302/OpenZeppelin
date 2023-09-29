@@ -1,5 +1,5 @@
 # Upgrading a contract via a multisig
-本指南将引导您通过使用[Defender Admin](../../Components/Admin/Admin.md)作为接口和Hardhat脚本作为背后的工具，升级一个由多签钱包保护的生产中的智能合约的过程。具体来说，我们将：
+本指南将引导你通过使用[Defender Admin](../../Components/Admin/Admin.md)作为接口和Hardhat脚本作为背后的工具，升级一个由多签钱包保护的生产中的智能合约的过程。具体来说，我们将：
 
 * 使用Hardhat的Upgrades Plugin插件编写和部署可升级的合约
 * 将升级权限转移给多重签名钱包以增加安全性
@@ -14,7 +14,7 @@
 这允许我们更改合约代码，同时保留状态、余额和地址。
 
 ## 升级过程
-升级管理员帐户（[ProxyAdmin](../../../Upgrades-Plugins/Frequently-Asked-Questions.md#代理管理员是什么)合约的所有者）是具有[升级](../../../Learn/Upgrading-smart-contracts/Upgrading-smart-contracts-truffle.md#升级)可升级合约能力的帐户。默认所有者是用于部署合约的外部拥有的帐户。虽然这对于本地或测试网部署足够好，但在生产中，您需要更好地保护您的合约。获取您的升级管理员帐户的攻击者可以更改您项目中的任何可升级合约！
+升级管理员帐户（[ProxyAdmin](../../../Upgrades-Plugins/Frequently-Asked-Questions.md#代理管理员是什么)合约的所有者）是具有[升级](../../../Learn/Upgrading-smart-contracts/Upgrading-smart-contracts-truffle.md#升级)可升级合约能力的帐户。默认所有者是用于部署合约的外部拥有的帐户。虽然这对于本地或测试网部署足够好，但在生产中，你需要更好地保护你的合约。获取你的升级管理员帐户的攻击者可以更改你项目中的任何可升级合约！
 
 建议在部署后将**ProxyAdmin的所有权转移给一个多重签名**，要求多个所有者批准升级提案。
 
@@ -33,13 +33,13 @@
 6. **升级合约**。需要多重签名的所有者批准后最终执行升级。
 
 ## 先决条件
-要开始，您需要以下内容：
+要开始，你需要以下内容：
 
 1. Defender帐户。前往[Defender](https://defender.openzeppelin.com/)注册一个新帐户。
 
 2. 用于支付交易gas的ETH。交易需要gas执行，因此请确保有一些ETH可用。对于本指南，我们将使用Rinkeby ETH。
 
-3. 多重签名。一个多重签名合约来控制我们的可升级合约。在本指南中，我们将使用[Gnosis Safe](https://safe.gnosis.io/)，但您也可以使用任何支持的多重签名，如传统的[Gnosis MultiSigWallet](https://github.com/gnosis/MultiSigWallet)。在Rinkeby网络上创建一个[Gnosis Safe多重签名](https://help.gnosis-safe.io/en/articles/3876461-create-a-safe-multisig)，M > N/2且M > 1。这应该至少是2到3个。
+3. 多重签名。一个多重签名合约来控制我们的可升级合约。在本指南中，我们将使用[Gnosis Safe](https://safe.gnosis.io/)，但你也可以使用任何支持的多重签名，如传统的[Gnosis MultiSigWallet](https://github.com/gnosis/MultiSigWallet)。在Rinkeby网络上创建一个[Gnosis Safe多重签名](https://help.gnosis-safe.io/en/articles/3876461-create-a-safe-multisig)，M > N/2且M > 1。这应该至少是2到3个。
 
 4. Hardhat项目。安装了[Hardhat Upgrades](../../../Learn/Developing-smart-contracts/Developing-smart-contracts-hardh.md#添加更多合约)插件、Hardhat Defender、ethers.js和dotenv的[Hardhat项目](../../../Upgrades-Plugins/Using-with-Hardhat/Using-with-Hardhat.md)。
 
@@ -101,9 +101,9 @@ main()
 
 通常我们会先进行测试，然后部署到本地测试网络并手动进行交互。为了验证本指南的目的，我们将直接跳到部公共测试网络。
 
-在本指南中，我们将部署到 Rinkeby，因为 Gnosis Safe 支持 Rinkeby 测试网络。如果您需要配置帮助，请参阅[连接到公共测试网络](../../../Learn/Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)和 [Hardhat：部署到实时网络](https://hardhat.org/tutorial/deploying-to-a-live-network.html)。
+在本指南中，我们将部署到 Rinkeby，因为 Gnosis Safe 支持 Rinkeby 测试网络。如果你需要配置帮助，请参阅[连接到公共测试网络](../../../Learn/Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)和 [Hardhat：部署到实时网络](https://hardhat.org/tutorial/deploying-to-a-live-network.html)。
 
-我们可以创建一个 .env 文件来存储我们的助记词和提供程序 API 密钥。您应该将 .env 添加到您的 .gitignore 中。
+我们可以创建一个 .env 文件来存储我们的助记词和提供程序 API 密钥。你应该将 .env 添加到你的 .gitignore 中。
 
 ```
 MNEMONIC="Enter your seed phrase"
@@ -118,7 +118,7 @@ DEFENDER_TEAM_API_SECRET_KEY="Enter your Defender Team API Secret"
 我们将使用以下hardhat.config.js来部署到Rinkeby。
 
 > NOTE
-在本指南中，我们将使用Alchemy，但您也可以使用Infura或其他公共节点提供者连接到网络。
+在本指南中，我们将使用Alchemy，但你也可以使用Infura或其他公共节点提供者连接到网络。
 
 ```
 // hardhat.config.js
@@ -164,7 +164,7 @@ Box deployed to: 0x5C1e1732274630Ac9E9cCaF05dB09da64bE190B5
 > WARNING
 确保仅将[ProxyAdmin](../../../Upgrades-Plugins/Frequently-Asked-Questions.md#代理管理员是什么)的所有权转移给我们控制的地址。
 
-在scripts目录中创建transfer-ownership.js文件，并使用以下JavaScript代码更改gnosisSafe的值为您的Gnosis Safe地址。
+在scripts目录中创建transfer-ownership.js文件，并使用以下JavaScript代码更改gnosisSafe的值为你的Gnosis Safe地址。
 
 ```
 // scripts/transfer-ownership.js
@@ -332,4 +332,4 @@ Upgrade proposal created at: https://defender.openzeppelin.com/#/admin/contracts
 
 ## 问题
 
-如果您有任何问题或评论，请在[论坛](https://forum.openzeppelin.com/c/support/defender/36)上提出！
+如果你有任何问题或评论，请在[论坛](https://forum.openzeppelin.com/c/support/defender/36)上提出！

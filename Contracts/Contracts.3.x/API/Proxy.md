@@ -1,7 +1,7 @@
 # Proxies
 这是一个低级别的合约集，实现了不同的代理模式，包括可升级和不可升级的模式。如果想深入了解这个模式，请参阅[Proxy Upgrade Pattern](../../../Upgrades-Plugins/Proxy-Upgrade-Pattern.md)页面。
 
-抽象[Proxy](#proxy)合约实现了核心委托功能。如果我们提供的具体代理不适合您的需求，我们鼓励在这个基础合约上进行构建，因为它包含了一个可能难以正确实现的汇编块。
+抽象[Proxy](#proxy)合约实现了核心委托功能。如果我们提供的具体代理不适合你的需求，我们鼓励在这个基础合约上进行构建，因为它包含了一个可能难以正确实现的汇编块。
 
 Upgradeability 是在 [UpgradeableProxy](#upgradeableproxy) 合约中实现的，尽管它只提供了一个内部的升级接口。为了向管理员提供外部暴露的升级接口，我们提供了 [TransparentUpgradeableProxy](#transparentupgradeableproxy)。这两个合约都使用了 [EIP1967](https://eips.ethereum.org/EIPS/eip-1967) 中指定的存储槽来避免与代理后面的实现合约的存储冲突。
 
@@ -10,7 +10,7 @@ Upgradeability 是在 [UpgradeableProxy](#upgradeableproxy) 合约中实现的�
 [Clones](#clones)库提供了一种以廉价方式部署最小化的不可升级代理。这对于需要部署许多相同合约实例的应用程序非常有用（例如每个用户一个实例，或每个任务一个实例）。这些实例旨在部署成本低廉，并且调用成本低廉。缺点是它们无法升级。
 
 > CAUTION
-正确且安全地使用可升级代理是一项困难的任务，需要对代理模式、Solidity和EVM有深入的了解。除非您需要很多低级别的控制，我们建议使用[OpenZeppelin Truffle和Buidler的升级插件](/Upgrades-Plugins/Overview.md)。
+正确且安全地使用可升级代理是一项困难的任务，需要对代理模式、Solidity和EVM有深入的了解。除非你需要很多低级别的控制，我们建议使用[OpenZeppelin Truffle和Buidler的升级插件](/Upgrades-Plugins/Overview.md)。
 
 ## 核心
 
@@ -121,7 +121,7 @@ PROXY
 
 这些属性意味着管理员账户只能用于管理员操作，如升级代理或更改管理员，因此最好使用专用账户，不要用于其他任何操作。这样可以避免在尝试调用代理实现的函数时突然出现错误的麻烦。
 
-我们建议专用账户是[ProxyAdmin](#proxyadmin)合约的一个实例。如果以这种方式设置，您应该将ProxyAdmin实例视为代理的真正管理界面。
+我们建议专用账户是[ProxyAdmin](#proxyadmin)合约的一个实例。如果以这种方式设置，你应该将ProxyAdmin实例视为代理的真正管理界面。
 
 **MODIFIERS**
 [ifAdmin()](#ifadmin)

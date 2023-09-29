@@ -1,5 +1,5 @@
 # Adding cross-chain support to contracts
-如果您的合约用于多链操作使用，您需要特定的工具来识别和处理这些跨链操作。
+如果你的合约用于多链操作使用，你需要特定的工具来识别和处理这些跨链操作。
 
 OpenZeppelin提供了[CrossChainEnabled](./API/Crosschain.md#crosschainenabledamb)抽象合约，其中包括专用的内部函数。
 
@@ -50,7 +50,7 @@ contract MyToken is Initializable, ERC20Upgradeable, UUPSUpgradeable {
 
 例如，我们可以在xDai上拥有我们的代币，而我们的治理合约在主网上，或者我们可以在主网上拥有我们的代币，而我们的治理合约在Optimism上。
 
-为了实现这一点，我们将首先向我们的合约添加[CrossChainEnabled](./API/Crosschain.md#cross-chain-awareness)。您会注意到，这合约现在是抽象的。这是因为CrossChainEnabled是一个抽象合约：它不与任何特定的链相绑定，并且以抽象的方式处理跨链交互。这就是使我们能够轻松地将代码重用于不同链的原因。我们以后可以通过继承特定链的实现来进行专门化。
+为了实现这一点，我们将首先向我们的合约添加[CrossChainEnabled](./API/Crosschain.md#cross-chain-awareness)。你会注意到，这合约现在是抽象的。这是因为CrossChainEnabled是一个抽象合约：它不与任何特定的链相绑定，并且以抽象的方式处理跨链交互。这就是使我们能够轻松地将代码重用于不同链的原因。我们以后可以通过继承特定链的实现来进行专门化。
 ```
  import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
 +import "@openzeppelin/contracts-upgradeable/crosschain/CrossChainEnabled.sol";

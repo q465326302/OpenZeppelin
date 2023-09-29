@@ -1,12 +1,12 @@
 # Creating ERC20 Supply
-在本指南中，您将学习如何创建具有自定义供应机制的ERC20代币。我们将展示两种使用OpenZeppelin Contracts的惯用方法，您将能够将其应用于智能合约开发实践中。
+在本指南中，你将学习如何创建具有自定义供应机制的ERC20代币。我们将展示两种使用OpenZeppelin Contracts的惯用方法，你将能够将其应用于智能合约开发实践中。
 
-建立在以太坊上的代币实现的标准接口称为ERC20，Contracts包括一个广泛使用的实现：名为ERC20合约的合约。这个合约与标准本身一样简单和基本。实际上，如果您尝试部署一个原样的[ERC20](../../../API/ERC20.md)实例，它将完全无用...它将没有供应！没有供应的代币有什么用呢？
+建立在以太坊上的代币实现的标准接口称为ERC20，Contracts包括一个广泛使用的实现：名为ERC20合约的合约。这个合约与标准本身一样简单和基本。实际上，如果你尝试部署一个原样的[ERC20](../../../API/ERC20.md)实例，它将完全无用...它将没有供应！没有供应的代币有什么用呢？
 
 供应的创建方式未在ERC20文档中定义。每个代币都可以使用自己的机制，不论分散还是集中，简单还是复杂等等。
 
 ## 固定供应
-假设我们想要一个固定供应量为1000的代币，最初分配给部署合约的帐户。如果您使用的是Contracts v1，则可能编写了以下代码：
+假设我们想要一个固定供应量为1000的代币，最初分配给部署合约的帐户。如果你使用的是Contracts v1，则可能编写了以下代码：
 ```
 contract ERC20FixedSupply is ERC20 {
     constructor() {
@@ -16,7 +16,7 @@ contract ERC20FixedSupply is ERC20 {
 }
 ```
 
-从Contracts v2开始，不推荐也不能使用这种模式。变量totalSupply和balances现在是ERC20的私有实现细节，您无法直接写入它们。相反，有一个内部的[_mint](../../../API/ERC20.md#_mintaddress-account-uint256-amount)函数会执行这个操作：
+从Contracts v2开始，不推荐也不能使用这种模式。变量totalSupply和balances现在是ERC20的私有实现细节，你无法直接写入它们。相反，有一个内部的[_mint](../../../API/ERC20.md#_mintaddress-account-uint256-amount)函数会执行这个操作：
 ```
 contract ERC20FixedSupply is ERC20 {
     constructor() ERC20("Fixed", "FIX") {
@@ -90,4 +90,4 @@ contract ERC20WithAutoMinerReward is ERC20 {
 ```
 
 ## 总结
-我们已经看到了两种实现ERC20供应机制的方法：通过_mint内部实现和通过ERC20PresetMinterPauser外部实现。希望这有助于您了解如何使用OpenZeppelin Contracts以及其背后的设计原理，并可以将其应用于您自己的智能合约中。
+我们已经看到了两种实现ERC20供应机制的方法：通过_mint内部实现和通过ERC20PresetMinterPauser外部实现。希望这有助于你了解如何使用OpenZeppelin Contracts以及其背后的设计原理，并可以将其应用于你自己的智能合约中。

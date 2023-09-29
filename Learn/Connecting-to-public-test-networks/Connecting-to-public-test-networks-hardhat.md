@@ -1,9 +1,9 @@
 # 连接到公共测试网络
-在[编写合约](../Developing-smart-contracts/Developing-smart-contracts-hardh.md)、[本地测试](../Deploying-and-interacting/Deploying-and-interacting-hardat.md)并进行[充分测试](../Writing-automated-tests/Writing-automated-tests-hardhat.md)后，就可以进入持久的公共测试环境，让您和测试用户开始与您的应用程序交互。
+在经过[编写合约](../Developing-smart-contracts/Developing-smart-contracts-hardh.md)、[本地测试](../Deploying-and-interacting/Deploying-and-interacting-hardat.md)并进行[充分测试](../Writing-automated-tests/Writing-automated-tests-hardhat.md)后，就可以进入持久的公共测试环境，让你和测试用户开始与你的应用程序交互。
 
-我们将使用**公共测试网络**（也称为测试网络）进行测试，这些网络类似于主要的以太坊网络，但以太没有价值且可以免费获取，因此非常适合免费测试您的合约。
+我们将使用**公共测试网络**（也称为测试网络）进行测试，这些网络类似于主要的以太坊网络，但以太没有价值且可以免费获取，因此非常适合免费测试你的合约。
 
-在本指南中，我们将使用我们喜爱的[Box合约](../Developing-smart-contracts/Developing-smart-contracts-hardh.md#第一份合约)，并将其部署到测试网络上，同时学习以下内容：
+在本指南中，我们将使用我们熟悉的[Box合约](../Developing-smart-contracts/Developing-smart-contracts-hardh.md#第一份合约)，并将其部署到测试网络上，同时学习以下内容：
 
 - [连接到公共测试网络](#连接到公共测试网络)
   - [可用的测试网络](#可用的测试网络)
@@ -15,10 +15,10 @@
   - [在测试网络上工作](#在测试网络上工作)
   - [下一步](#下一步)
 
-请记住，将项目部署到公共测试网络是开发以太坊项目的必要步骤。它们提供了一个安全的测试环境，可以紧密模拟主网络 - 您不希望在一个会让您和用户损失资金的网络中测试您的项目！
+请记住，将项目部署到公共测试网络是开发以太坊项目的必要步骤。它们提供了一个安全的测试环境，可以紧密的模拟主网络 - 你不希望在一个会让你和用户损失资金的网络中测试你的项目！
 
 > NOTE
-有关Truffle和Hardhat的说明都可用。使用此切换选择您的首选项！
+有关*Truffle*和*Hardhat*的说明都可用。使用此切换选择你的首选项！
 
 ## 可用的测试网络
 有两个可供选择的测试网络，每个都具有自己的特点：
@@ -44,17 +44,17 @@
 
 ### 访问测试网络节点
 
-虽然您可以自己创建连接到测试网络的[Geth](https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options)或[OpenEthereum](https://openethereum.github.io/wiki/Chain-specification)节点，但最简单的访问测试网络的方法是通过公共节点服务，例如[Alchemy](https://alchemy.com/)或[Infura](https://infura.io/)。Alchemy和Infura通过免费和付费计划提供所有测试网络和主网络的公共节点访问。
+虽然你可以自己创建连接到测试网络的[Geth](https://github.com/ethereum/go-ethereum/wiki/Command-Line-Options)或[OpenEthereum](https://openethereum.github.io/wiki/Chain-specification)节点，但最简单的访问测试网络的方法是通过公共节点服务，例如[Alchemy](https://alchemy.com/)或[Infura](https://infura.io/)。Alchemy和Infura通过免费和付费计划提供所有测试网络和主网络的公共节点访问。
 
 > NOTE
 当一个节点可以被公众访问，并且不管理任何账户时，我们称其为公共节点。这意味着它可以回复查询和Relayer 已签名的交易，但不能自行签署交易。
 
-在本指南中，我们将使用Alchemy，但您也可以使用[Infura](https://infura.io/)或其他公共节点提供者。
+在本指南中，我们将使用Alchemy，但你也可以使用[Infura](https://infura.io/)或其他公共节点提供者。
 
-前往[Alchemy](https://dashboard.alchemyapi.io/signup?referral=53fcee38-b894-4d5f-bd65-885d241f8d29)（包括推荐代码），注册并记下您分配的API密钥-我们稍后将使用它连接到网络。
+前往[Alchemy](https://dashboard.alchemyapi.io/signup?referral=53fcee38-b894-4d5f-bd65-885d241f8d29)（包括推荐代码），注册并记下你分配的API密钥-我们稍后将使用它连接到网络。
 
 ### 创建新账户
-要在测试网发送交易，您需要一个新的以太坊账户。有许多方法可以做到这一点：在这里，我们将使用助记词包，它将输出一个新的助记词（一组12个单词），我们将使用它来派生我们的账户：
+要在测试网发送交易，你需要一个新的以太坊账户。有许多方法可以做到这一点：在这里，我们将使用助记词包，它将输出一个新的助记词（一组12个单词），我们将使用它来派生我们的账户：
 ```
 npx mnemonics
 drama film snack motion ...
@@ -67,9 +67,9 @@ drama film snack motion ...
 由于我们使用公共节点，因此我们需要在本地签署所有交易。我们将使用我们的助记词和Alchemy端点来配置网络。
 
 > NOTE
-这部分假定您已经设置好了一个项目。如果您还没有这样做，请转到[设置Solidity项目的指南](../Developing-smart-contracts/Developing-smart-contracts-hardh.md)。
+这部分假定你已经设置好了一个项目。如果你还没有这样做，请转到[设置Solidity项目的指南](../Developing-smart-contracts/Developing-smart-contracts-hardh.md)。
 
-我们需要更新我们的配置文件，添加一个连接到测试网络的新网络连接。在这里，我们将使用Goerli，但您可以使用任何您想要的网络。
+我们需要更新我们的配置文件，添加一个连接到测试网络的新网络连接。在这里，我们将使用Goerli，但你可以使用任何你想要的网络。
 ```
 // hardhat.config.js
 + const { alchemyApiKey, mnemonic } = require('./secrets.json');
@@ -88,7 +88,7 @@ drama film snack motion ...
 > NOTE
 请查看[HDWalletProvider文档](https://github.com/trufflesuite/truffle/tree/master/packages/hdwallet-provider)以获取有关配置选项的信息。
 
-请注意代码第一行中，我们正在从一个名为 secrets.json 的文件中加载项目 ID 和助记词，该文件应该看起来像以下内容，但要使用您自己的值。请务必将其加入 .gitignore 中，以确保您不会将机密信息上传到网络中！
+请注意代码第一行中，我们正在从一个名为 secrets.json 的文件中加载项目 ID 和助记词，该文件应该看起来像以下内容，但要使用你自己的值。请务必将其加入 .gitignore 中，以确保你不会将机密信息上传到网络中！
 
 ```
 {
@@ -100,7 +100,7 @@ drama film snack motion ...
 > TIP
 你可以使用任何你喜欢的项目 secrets 管理解决方案，而不是一个secrets.json文件。一个流行且简单的选项是使用[dotenv](https://github.com/motdotla/dotenv)将 secrets 作为环境变量注入。
 
-现在我们可以通过列出我们在goerli网络中可用的账户来测试这个配置是否工作。请记住，您的账户将会不同，因为它们取决于您使用的助记词。
+现在我们可以通过列出我们在goerli网络中可用的账户来测试这个配置是否工作。请记住，你的账户将会不同，因为它们取决于你使用的助记词。
 ```
 npx hardhat console --network goerli
 Welcome to Node.js v12.22.1.
@@ -127,21 +127,21 @@ Type ".help" for more information.
 有了资金支持的账户，让我们将合约部署到测试网上！
 
 ## 在测试网络上工作
-通过配置项目以在公共测试网络上运行，我们现在终于可以[部署我们的Box合约](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#部署智能合约)了。这里的命令与您在[本地开发网络](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#建立本地区块链)上的命令完全相同，但是由于会挖掘新块，所以需要几秒钟才能运行。
+通过配置项目以在公共测试网络上运行，我们现在终于可以[部署我们的Box合约](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#部署智能合约)了。这里的命令与你在[本地开发网络](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#建立本地区块链)上的命令完全相同，但是由于会挖掘新块，所以需要几秒钟才能运行。
 ```
 npx hardhat run --network goerli scripts/deploy.js
 Deploying Box...
 Box deployed to: 0xD7fBC6865542846e5d7236821B5e045288259cf0
 ```
 
-就是这样！您的Box合约实例将永久存储在测试网络中，并且对任何人都可以公开访问。
+就是这样！你的Box合约实例将永久存储在测试网络中，并且对任何人都可以公开访问。
 
-您可以在区块浏览器（如[Etherscan](https://etherscan.io/)）上查看您的合约。请记住，在您部署合约的测试网络上访问浏览器，例如在goerli上访问[goerli.etherscan.io](https://goerli.etherscan.io/)。
+你可以在区块浏览器（如[Etherscan](https://etherscan.io/)）上查看你的合约。请记住，在你部署合约的测试网络上访问浏览器，例如在goerli上访问[goerli.etherscan.io](https://goerli.etherscan.io/)。
 
 > TIP
-您可以在上面的示例中查看我们部署的合约以及发送到它的所有交易，[链接](https://goerli.etherscan.io/address/0xA4D767f2Fba05242502ECEcb2Ae97232F7611353)在此。
+你可以在上面的示例中查看我们部署的合约以及发送到它的所有交易，[链接](https://goerli.etherscan.io/address/0xA4D767f2Fba05242502ECEcb2Ae97232F7611353)在此。
 
-您也可以像平常一样与实例进行交互，可以使用[控制台](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#从控制台交互)或[编程方式](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#以编程方式交互)。
+你也可以像平常一样与实例进行交互，可以使用[控制台](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#从控制台交互)或[编程方式](../Deploying-and-interacting/Deploying-and-interacting-hardat.md#以编程方式交互)。
 ```
 npx hardhat console --network goerli
 Welcome to Node.js v12.22.1.
@@ -158,7 +158,7 @@ undefined
 '42'
 ```
 
-请记住，每笔交易都会产生一定的gas，因此您最终需要用更多的资金来充值您的账户。
+请记住，每笔交易都会产生一定的gas，因此你最终需要用更多的资金来充值你的账户。
 
 ## 下一步
-在公共测试网络上彻底测试您的应用程序之后，您已经准备好进行开发旅程的最后一步：[在生产环境中部署您的应用程序](../Preparing-for-mainnet/Preparing-for-mainnet.md)。
+在公共测试网络上彻底测试你的应用程序之后，你已经准备好进行开发旅程的最后一步：[在生产环境中部署你的应用程序](../Preparing-for-mainnet/Preparing-for-mainnet.md)。

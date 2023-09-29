@@ -1,5 +1,5 @@
 # CLI Reference
-在这里，您可以找到Nile提供的默认核心命令的完整参考。
+在这里，你可以找到Nile提供的默认核心命令的完整参考。
 
 ## 事务执行
 执行或查询交易状态的命令。
@@ -34,7 +34,7 @@
 
 * --max_fee
 
-指定您愿意为交易支付的最大费用。
+指定你愿意为交易支付的最大费用。
 
 * --simulate和--estimate_fee
 
@@ -67,7 +67,7 @@
 
 * --max_fee
 
-指定您愿意为交易支付的最大费用。
+指定你愿意为交易支付的最大费用。
 
 * --alias
 
@@ -119,7 +119,7 @@
 
 * --max_fee
 
-指定您愿意为交易支付的最大费用。
+指定你愿意为交易支付的最大费用。
 
 * --alias
 
@@ -176,7 +176,7 @@
 
 * --max_fee
 
-指定您愿意为交易支付的最大费用。
+指定你愿意为交易支付的最大费用。
 
 * --simulate和--estimate_fee
 
@@ -387,7 +387,7 @@ nile compile contracts/NewAccountType.cairo --account_contract # compiles accoun
 检索一个可供脚本集成的就绪账户列表。
 
 > NOTE
-账户列表仅包括存在于本地<NETWORK>.accounts.json文件中的账户。在最近的一个版本中，我们添加了一个标志来获取预部署的账户，如果您连接的网络是一个starknet-devnet实例。
+账户列表仅包括存在于本地<NETWORK>.accounts.json文件中的账户。在最近的一个版本中，我们添加了一个标志来获取预部署的账户，如果你连接的网络是一个starknet-devnet实例。
 通过预部署的账户发送交易可以通过脚本完成，但当前的CLI版本不允许使用这些账户进行nile send。
 
 ##### 选项

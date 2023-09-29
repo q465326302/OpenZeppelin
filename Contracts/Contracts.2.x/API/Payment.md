@@ -90,7 +90,7 @@ payees中的所有地址必须非零。两个数组的长度必须相同且非�
 从安全角度考虑，拉取支付通常被认为是最佳实践。它可以防止接收方阻止执行，并消除了重入的担忧。
 
 > TIP
-如果您想了解更多关于重入和其他保护措施的信息，请查看我们的博客文章[ Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
+如果你想了解更多关于重入和其他保护措施的信息，请查看我们的博客文章[ Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
 
 要使用该功能，请从PullPayment合约派生，并使用[_asyncTransfer](#_asynctransferaddress-dest-uint256-amount)代替Solidity的transfer函数。收款人可以使用[payments](#paymentsaddress-dest-→-uint256)查询其应付款项，并使用[withdrawPayments](#withdrawpaymentsaddress-payable-payee)提取款项。
 
@@ -122,7 +122,7 @@ payees中的所有地址必须非零。两个数组的长度必须相同且非�
 与[withdrawPayments](#withdrawpaymentsaddress-payable-payee)相同，但将所有gas转发给收件人。
 
 > WARNING
-转发所有gas会打开重入漏洞的大门。确保您信任收件人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Utils.md#reentrancyguard)。
+转发所有gas会打开重入漏洞的大门。确保你信任收件人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Utils.md#reentrancyguard)。
 
 *自v2.4.0起可用。*
 
@@ -193,7 +193,7 @@ SECONDARY
 与[withdraw](#withdrawaddress-payable-payee)相同，但将所有gas转发给收件人。
 
 > WARNING
-转发所有gas会打开重入漏洞的大门。确保您信任收件人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Utils.md#reentrancyguard)。
+转发所有gas会打开重入漏洞的大门。确保你信任收件人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Utils.md#reentrancyguard)。
 
 *自v2.4.0起可用。*
 

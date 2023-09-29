@@ -50,7 +50,7 @@ import "@openzeppelin/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL1.
 
 此版本仅应部署在L1上，以处理源自L2的跨链消息。对于另一侧，请使用[CrossChainEnabledArbitrumL2](#crosschainenabledarbitruml2)。
 
-桥接合约由Arbitrum团队提供和维护。您可以在[Arbitrum的开发人员文档](https://developer.offchainlabs.com/docs/useful_addresses)中找到此合约在rinkeby测试网上的地址。
+桥接合约由Arbitrum团队提供和维护。你可以在[Arbitrum的开发人员文档](https://developer.offchainlabs.com/docs/useful_addresses)中找到此合约在rinkeby测试网上的地址。
 
 *自v4.6以来可用。*
 
@@ -105,7 +105,7 @@ import "@openzeppelin/contracts/crosschain/optimism/CrossChainEnabledOptimism.so
 
 [Optimism](https://www.optimism.io/)专业化或[CrossChainEnabled](#crosschainenabled的特殊化)抽象。
 
-CrossDomainMessenger合约由Optimism团队提供和维护。您可以在[Optimism monorepo的部署部分](https://github.com/ethereum-optimism/optimism/tree/develop/packages/contracts/deployments)找到该合约在mainnet和kovan上的地址。
+CrossDomainMessenger合约由Optimism团队提供和维护。你可以在[Optimism monorepo的部署部分](https://github.com/ethereum-optimism/optimism/tree/develop/packages/contracts/deployments)找到该合约在mainnet和kovan上的地址。
 
 *自v4.6以来可用。*
 
@@ -134,7 +134,7 @@ import "@openzeppelin/contracts/crosschain/polygon/CrossChainEnabledPolygonChild
 
 此版本仅应部署在子链上，以处理源自父链的跨链消息。
 
-fxChild合约由多边形团队提供和维护。您可以在[Polygon的Fx-Portal文档](https://docs.polygon.technology/docs/develop/l1-l2-communication/fx-portal/#contract-addresses)中找到此合约的地址，包括polygon和mumbai。
+fxChild合约由多边形团队提供和维护。你可以在[Polygon的Fx-Portal文档](https://docs.polygon.technology/docs/develop/l1-l2-communication/fx-portal/#contract-addresses)中找到此合约的地址，包括polygon和mumbai。
 
 *自v4.6以来可用。*
 

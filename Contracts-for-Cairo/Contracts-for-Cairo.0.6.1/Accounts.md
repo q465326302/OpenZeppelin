@@ -74,7 +74,7 @@ await signer.send_transaction(account, some_contract_address, 'some_function', [
 
 2. [__validate__ ](#validate)在执行交易之前验证交易签名，然后再使用__execute__执行交易。
 
-3. [__execute__](#execute) 作为所有用户与任何合约进行交互的改变状态的入口点，包括管理账户合约本身。这就是为什么如果您想要更改控制账户的公钥，您将发送一个针对该账户合约的交易的原因。
+3. [__execute__](#execute) 作为所有用户与任何合约进行交互的改变状态的入口点，包括管理账户合约本身。这就是为什么如果你想要更改控制账户的公钥，你将发送一个针对该账户合约的交易的原因。
 ```
 await signer.send_transaction(
     account,
@@ -84,13 +84,13 @@ await signer.send_transaction(
 )
 ```
 
-或者，如果您想要在AccountRegistry合约上更新账户的L1地址，您可以执行以下操作
+或者，如果你想要在AccountRegistry合约上更新账户的L1地址，你可以执行以下操作
 ```
 await signer.send_transaction(account, registry.contract_address, 'set_L1_address', [NEW_ADDRESS])
 ```
 
 > NOTE
-您可以阅读有关[账户消息方案讨论中消息结构和哈希](https://github.com/OpenZeppelin/cairo-contracts/discussions/24)的更多信息。有关多调用的设计选择和实现的更多信息，请阅读[账户多调用应如何工作](https://github.com/OpenZeppelin/cairo-contracts/discussions/27)讨论。
+你可以阅读有关[账户消息方案讨论中消息结构和哈希](https://github.com/OpenZeppelin/cairo-contracts/discussions/24)的更多信息。有关多调用的设计选择和实现的更多信息，请阅读[账户多调用应如何工作](https://github.com/OpenZeppelin/cairo-contracts/discussions/27)讨论。
 
 __validate__和__execute__方法接受相同的参数；然而，__execute__方法返回一个交易响应。
 

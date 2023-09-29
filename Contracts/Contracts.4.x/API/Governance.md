@@ -5,7 +5,7 @@
 这个模块化的Governor合约系统允许部署类似于[Compound的Governor Alpha和Bravo](https://compound.finance/docs/governance)等链上投票协议，通过能够轻松定制协议的多个方面。
 
 > TIP
-对于一个引导式体验，可以使用[Contracts Wizard](https://wizard.openzeppelin.com/#governor)来设置您的Governor合约。
+对于一个引导式体验，可以使用[Contracts Wizard](https://wizard.openzeppelin.com/#governor)来设置你的Governor合约。
 对于一个书面步骤，可以查看我们的[《如何设置链上治理》指南](./Governance.md)。
 
 * [Governor](#governor): 包含所有逻辑和原语的核心合约。它是抽象的，并需要选择下面每个模块中的一个，或者自定义模块。
@@ -34,7 +34,7 @@ Timelock扩展为治理决策添加了延迟。工作流程扩展为在执行之
 
 * [GovernorPreventLateQuorum](#governorpreventlatequorum): 确保在达到法定人数后有一个最小的投票期限，以作为对大型投票人的安全防护措施。
 
-除了模块和扩展之外，核心合约还需要实现一些虚拟函数来满足您的特定规格要求：
+除了模块和扩展之外，核心合约还需要实现一些虚拟函数来满足你的特定规格要求：
 
 * [votingDelay()](#votingdelay-→-uint256): 提案提交后到固定投票权和开始投票之间的延迟（以EIP-6372时钟为单位）。这可以用来强制在提案发布后用户购买代币或委托他们的投票之前进行延迟。
 
@@ -43,7 +43,7 @@ Timelock扩展为治理决策添加了延迟。工作流程扩展为在执行之
 * [quorum(uint256 timepoint)](#quorumnumeratoruint256-timepoint-→-uint256): 提案成功所需的法定人数。此函数包括一个时间点参数（参见EIP-6372），以便法定人数可以随时间变化，例如跟随代币的totalSupply。
 
 > NOTE
-Governor合约的函数不包括访问控制。如果要限制访问，应通过重载特定函数来添加这些检查。其中，[Governor._cancel](#_canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)默认是internal的，如果需要使用此函数，您将需要自己公开它（并使用正确的访问控制机制）。
+Governor合约的函数不包括访问控制。如果要限制访问，应通过重载特定函数来添加这些检查。其中，[Governor._cancel](#_canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)默认是internal的，如果需要使用此函数，你将需要自己公开它（并使用正确的访问控制机制）。
 
 ## 核心
 
@@ -1490,7 +1490,7 @@ GovernorBravo是一种[Governor](#governor)的兼容性层，它在Governor之�
 
 该兼容性层包括一个投票系统，并通过继承要求添加一个兼容*IGovernorTimelock*的模块。它不包括代币绑定，也不包括任何变量升级模式。
 
-在使用此模块时，您可能需要启用Solidity优化器，以避免达到合约大小限制。
+在使用此模块时，你可能需要启用Solidity优化器，以避免达到合约大小限制。
 
 *自v4.3版本起可用。*
 

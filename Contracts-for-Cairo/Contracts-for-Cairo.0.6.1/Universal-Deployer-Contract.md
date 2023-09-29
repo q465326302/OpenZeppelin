@@ -1,5 +1,5 @@
 # Universal Deployer Contract
-通用部署合约（UDC）是一个单例智能合约，它包装了[部署系统调用](https://www.cairo-lang.org/docs/hello_starknet/deploying_from_contracts.html#the-deploy-system-call)，以将其暴露给任何没有实现该调用的合约，例如**账户合约。您可以将其视为用于StarkNet合约的标准化通用工厂**。
+通用部署合约（UDC）是一个单例智能合约，它包装了[部署系统调用](https://www.cairo-lang.org/docs/hello_starknet/deploying_from_contracts.html#the-deploy-system-call)，以将其暴露给任何没有实现该调用的合约，例如**账户合约。你可以将其视为用于StarkNet合约的标准化通用工厂**。
 
 由于StarkNet没有部署交易类型，它通过遵循[标准部署器接口](https://community.starknet.io/t/snip-deployer-contract-interface/2772)并发出ContractDeployed事件，提供了一种规范的智能合约部署方式。
 

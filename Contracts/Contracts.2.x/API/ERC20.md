@@ -467,7 +467,7 @@ IERC20
 ### ERC20Pausable
 带有可暂停转账和授权功能的ERC20。
 
-如果您希望在众筹结束之前停止交易，或者在出现严重错误时紧急冻结所有代币转账，这将非常有用。
+如果你希望在众筹结束之前停止交易，或者在出现严重错误时紧急冻结所有代币转账，这将非常有用。
 
 **MODIFIERS**
 PAUSABLE
@@ -654,7 +654,7 @@ IERC20
 ## Utilities
 
 ### SafeERC20
-在ERC20操作周围包装器，当代币合约返回false时会抛出异常。也支持返回无值（而是在失败时回滚或抛出异常）的代币，假设非回滚调用是成功的。要使用这个库，您可以在您的合约中添加一个using SafeERC20 for ERC20;语句，这样您就可以调用安全操作，如token.safeTransfer(…​)等。
+在ERC20操作周围包装器，当代币合约返回false时会抛出异常。也支持返回无值（而是在失败时回滚或抛出异常）的代币，假设非回滚调用是成功的。要使用这个库，你可以在你的合约中添加一个using SafeERC20 for ERC20;语句，这样你就可以调用安全操作，如token.safeTransfer(…​)等。
 
 **FUNCTIONS**
 [safeTransfer(token, to, value)](#safetransfercontract-ierc20-token-address-to-uint256-value)

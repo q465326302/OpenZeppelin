@@ -8,9 +8,9 @@
 OpenZeppelin合约有一些库：大多数位于[Utils](../Contracts.4.x/Utilities.md)目录中。
 
 ## 重写
-继承通常用于将父级合约的功能添加到您自己的合约中，但这不是它的全部作用。您还可以使用重写来更改父级的某些部分行为。
+继承通常用于将父级合约的功能添加到你自己的合约中，但这不是它的全部作用。你还可以使用重写来更改父级的某些部分行为。
 
-例如，想象一下，您想改变[AccessControl](./API/Access.md)，使[revokeRole](./API/Access.md#revokerolebytes32-role-address-account)不能再被调用。这可以使用重写来实现：
+例如，想象一下，你想改变[AccessControl](./API/Access.md)，使[revokeRole](./API/Access.md#revokerolebytes32-role-address-account)不能再被调用。这可以使用重写来实现：
 ```
 // contracts/ModifiedAccessControl.sol
 // SPDX-License-Identifier: MIT
@@ -29,9 +29,9 @@ contract ModifiedAccessControl is AccessControl {
 我们的重写替换了旧的revokeRole函数，任何对它的调用都会立即回滚。我们无法从合约中删除该函数，但在所有调用上回滚足够了。
 
 ### 调用super
-有时，您想要扩展父级的行为，而不是彻底更改它的其他内容。这就是super的作用。
+有时，你想要扩展父级的行为，而不是彻底更改它的其他内容。这就是super的作用。
 
-super关键字将允许您调用在父合约中定义的函数，即使它们被重写。这个机制可以用来在函数中添加额外的检查、触发事件或以其他你认为合适的方式添加功能。
+super关键字将允许你调用在父合约中定义的函数，即使它们被重写。这个机制可以用来在函数中添加额外的检查、触发事件或以其他你认为合适的方式添加功能。
 
 > TIP
 有关如何使用重写的更多信息，请转到[官方Solidity文档](https://solidity.readthedocs.io/en/latest/contracts.html#index-17)。
@@ -62,9 +62,9 @@ contract ModifiedAccessControl is AccessControl {
 [AccessControlDefaultAdminRules](./API/Access.md)中实现并扩展了相同的规则，该扩展还为DEFAULT_ADMIN_ROLE添加了强制安全措施。
 
 ## 使用 hooks 
-有时，为了扩展父合约，您需要重写多个相关函数，这会导致代码重复和错误的可能性增加。
+有时，为了扩展父合约，你需要重写多个相关函数，这会导致代码重复和错误的可能性增加。
 
-例如，考虑以[IERC721Receiver](./Tokens/ERC721.md#预设erc721合约)的方式实现安全的[ERC20](./API/ERC20.md#erc20)转账。您可能认为重写[transfer](./API/ERC20.md#transferaddress-to-uint256-amount-→-bool)和[transferFrom](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)就足够了，但是[_transfer](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)和[_mint](./API/ERC20.md#_mintaddress-account-uint256-amount)呢？为了避免你处理这些细节，我们引入了**hooks( hooks )**。
+例如，考虑以[IERC721Receiver](./Tokens/ERC721.md#预设erc721合约)的方式实现安全的[ERC20](./API/ERC20.md#erc20)转账。你可能认为重写[transfer](./API/ERC20.md#transferaddress-to-uint256-amount-→-bool)和[transferFrom](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)就足够了，但是[_transfer](./API/ERC20.md#_transferaddress-from-address-to-uint256-amount)和[_mint](./API/ERC20.md#_mintaddress-account-uint256-amount)呢？为了避免你处理这些细节，我们引入了**hooks( hooks )**。
 
 hooks 只是在某些操作发生之前或之后调用的函数。它们提供了一个集中的点来挂钩和扩展原始行为。
 
@@ -94,7 +94,7 @@ contract ERC20WithSafeTransfer is ERC20 {
 使用 hooks 的这种方式可以使代码更简洁、更安全，而无需依赖于父合约的内部实现。
 
 ###  hooks 的规则
-在编写使用 hooks 的代码时，应遵循一些指导方针以防止出现问题。它们非常简单，但确保您遵循它们：
+在编写使用 hooks 的代码时，应遵循一些指导方针以防止出现问题。它们非常简单，但确保你遵循它们：
 
 1. 每当重写父级的 hooks 时，请重新应用virtual属性到 hooks 上。这将允许子合约向 hooks 添加更多功能。
 

@@ -50,7 +50,7 @@ CONTEXT
 
 #### constructor(uint256 rate, address payable wallet, contract IERC20 token)
 公开#
-汇率是以wei和最小且不可分割的代币单位之间的转换关系。因此，如果您使用的是一个名为TOK的ERC20Detailed代币，其小数位为3位，且汇率为1，那么1 wei将给您1个单位，或者0.001 TOK。
+汇率是以wei和最小且不可分割的代币单位之间的转换关系。因此，如果你使用的是一个名为TOK的ERC20Detailed代币，其小数位为3位，且汇率为1，那么1 wei将给你1个单位，或者0.001 TOK。
 
 #### fallback()
 外部#

@@ -19,7 +19,7 @@ import "@openzeppelin/contracts/security/PullPayment.sol";
 从安全角度来看，拉取支付通常被认为是最佳实践。它防止接收方阻止执行，并消除了重入的担忧。
 
 > TIP
-如果您想了解更多关于重入和其他保护措施的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
+如果你想了解更多关于重入和其他保护措施的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/).
 
 使用时，继承PullPayment合约，并使用[_asyncTransfer](#_asynctransferaddress-dest-uint256-amount)代替Solidity的transfer函数。支付方可以使用[payments](#paymentsaddress-dest-→-uint256)查询其应付款项，并使用[withdrawPayments](#withdrawpaymentsaddress-payable-payee)提取款项。
 
@@ -62,7 +62,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 请注意，由于只有一个nonReentrant保护，标记为nonReentrant的函数可能不会相互调用。可以通过将这些函数设置为私有，并向其添加外部的nonReentrant入口点来解决此问题。
 
 > TIP
-如果您想了解更多关于重入和其他保护措施的信息，请查看我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
+如果你想了解更多关于重入和其他保护措施的信息，请查看我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
 
 **MODIFIERS**
 [nonReentrant()](#nonreentrant)

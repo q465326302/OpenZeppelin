@@ -5,14 +5,14 @@
 
 * [Pausable](#pausable)：提供了一种简单的方式来暂停合约中的活动（通常是为了应对外部威胁）。
 
-* [ReentrancyGuard](#reentrancyguard)：保护您免受[重入调用](https://blog.openzeppelin.com/reentrancy-after-istanbul/)的影响。
+* [ReentrancyGuard](#reentrancyguard)：保护你免受[重入调用](https://blog.openzeppelin.com/reentrancy-after-istanbul/)的影响。
 
 [Address](#address)、[Arrays](#arrays)和[Strings](#strings)库提供了与这些原生数据类型相关的更多操作，而[SafeCast](#safecast)则提供了安全地在不同的有符号和无符号数值类型之间进行转换的方法。
 
 对于新的数据类型：
 * [Counters](#counters)：提供了一个只能递增或递减的计数器。非常适用于ID生成、计算合约活动等。
 
-* [EnumerableMap](#enumerablemap)：类似于Solidity的[映射类型](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)，但具有键值枚举功能：这将让您知道映射中有多少条目，并对它们进行迭代（这在映射中是不可能的）。
+* [EnumerableMap](#enumerablemap)：类似于Solidity的[映射类型](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)，但具有键值枚举功能：这将让你知道映射中有多少条目，并对它们进行迭代（这在映射中是不可能的）。
 
 * [EnumerableSet](#enumerableset)：类似于[EnumerableMap](#enumerablemap)，但用于[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))。可以用来存储特权账户、发行的ID等。
 
@@ -27,7 +27,7 @@
 ### Pausable
 合约模块，允许子合约实现由授权账户触发的紧急停止机制。
 
-通过继承使用此模块。它将提供whenNotPaused和whenPaused修饰符，可以应用于您合约的函数。请注意，仅通过包含此模块，不会使函数可暂停，只有在放置修饰符之后才能暂停。
+通过继承使用此模块。它将提供whenNotPaused和whenPaused修饰符，可以应用于你合约的函数。请注意，仅通过包含此模块，不会使函数可暂停，只有在放置修饰符之后才能暂停。
 
 **MODIFIERS**
 [whenNotPaused()](#whennotpaused)
@@ -100,7 +100,7 @@
 请注意，由于只有一个nonReentrant保护程序，标记为nonReentrant的函数可能不能互相调用。可以通过将这些函数设置为私有函数，然后为它们添加外部的nonReentrant入口来解决这个问题。
 
 > TIP
-如果您想了解更多关于重入性及其替代保护方法的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
+如果你想了解更多关于重入性及其替代保护方法的信息，请查阅我们的博客文章[Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
 
 **MODIFIERS**
 [nonReentrant()](#nonreentrant)

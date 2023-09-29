@@ -246,7 +246,7 @@ async function forceImport(
 强制导入现有的代理、Beacon或实现合约部署，用于与此插件一起使用。提供现有代理、Beacon或实现的地址，以及已部署的实现合约的 ethers 合约工厂。
 
 > CATION
-当导入代理或Beacon时，deployedImpl 参数必须是**当前**正在使用的实现合约版本的合约工厂，而不是您计划升级到的版本。
+当导入代理或Beacon时，deployedImpl 参数必须是**当前**正在使用的实现合约版本的合约工厂，而不是你计划升级到的版本。
 
 使用此函数通过导入先前的部署来重新创建丢失的[网络文件](../Network-Files.md)，或者即使这些代理或Beacon最初不是由此插件部署的，也可以注册代理或Beacon以进行升级。支持 UUPS、Transparent 和 Beacon 代理，以及Beacon和实现合约。
 
@@ -359,7 +359,7 @@ async function validateUpgrade(
 
 **示例：**
 
-验证将现有代理升级到新合约（将PROXY_ADDRESS替换为您的代理地址）：
+验证将现有代理升级到新合约（将PROXY_ADDRESS替换为你的代理地址）：
 ```
 const { ethers, upgrades } = require('hardhat');
 
@@ -396,7 +396,7 @@ async function prepareUpgrade(
 ): Promise<string | ethers.providers.TransactionResponse>
 ```
 
-验证和部署一个新的实现合约，并返回其地址。如果referenceAddressOrContract是当前实现地址，则需要使用kind选项。使用此方法可以准备从您无法直接控制或无法在Hardhat中使用的管理员地址运行的升级。
+验证和部署一个新的实现合约，并返回其地址。如果referenceAddressOrContract是当前实现地址，则需要使用kind选项。使用此方法可以准备从你无法直接控制或无法在Hardhat中使用的管理员地址运行的升级。
 
 **参数：**
 
@@ -462,7 +462,7 @@ async function getDefaultApprovalProcess(
 
 **注意**：OpenZeppelin Defender部署目前处于测试阶段，此功能可能会发生变化。
 
-获取在OpenZeppelin Defender上为您的部署环境配置的默认升级审批流程。例如，这对于确定您可以在脚本中使用的默认多签钱包非常有用，您可以将其指定为您的代理的所有者。
+获取在OpenZeppelin Defender上为你的部署环境配置的默认升级审批流程。例如，这对于确定你可以在脚本中使用的默认多签钱包非常有用，你可以将其指定为你的代理的所有者。
 
 **返回：**
 
@@ -498,7 +498,7 @@ async function proposeUpgradeWithApproval(
 ```
 **注意：**OpenZeppelin Platform处于beta版本，并且此函数可能会发生变化。
 
-获取在Platform上配置的部署环境的默认升级批准流程。例如，这对于确定您可以在脚本中使用的默认多签钱包非常有用，以将其分配为代理的所有者。
+获取在Platform上配置的部署环境的默认升级批准流程。例如，这对于确定你可以在脚本中使用的默认多签钱包非常有用，以将其分配为代理的所有者。
 
 **返回：**
 
@@ -545,7 +545,7 @@ async function proposeUpgrade(
 
 * opts - 带有选项的对象：
 
-  * approvalProcessId：升级批准过程的ID。默认为Defender上为您的部署环境配置的升级批准过程。
+  * approvalProcessId：升级批准过程的ID。默认为Defender上为你的部署环境配置的升级批准过程。
 
   * Common Options中描述的[Common Options](#常见选项)。
 
@@ -733,9 +733,9 @@ function silenceWarnings()
 
 参数与hardhat-etherscan的验证任务相同。如果提供的地址是一个代理，此任务将验证代理的实现合约、代理本身和任何与代理相关的合约，并将代理链接到Etherscan上的实现合约ABI。如果提供的地址不是代理，则会在该地址上运行hardhat-etherscan的常规验证任务。
 
-当您在代理地址上运行此任务时，将验证以下合约：
+当你在代理地址上运行此任务时，将验证以下合约：
 
-* 您的实现合约
+* 你的实现合约
 
 * [ERC1967Proxy](/Contracts/Contracts.4.x/API/Proxy.md#erc1967proxy)或[TransparentUpgradeableProxy](/Contracts/Contracts.4.x/API/Proxy.md#transparentupgradeableproxy)或[BeaconProxy](/Contracts/Contracts.4.x/API/Proxy.md#beaconproxy)（用于UUPS、透明或Beacon代理）
 
@@ -754,7 +754,7 @@ function silenceWarnings()
 npm install --save-dev @nomiclabs/hardhat-etherscan
 ```
 
-然后在您的Hardhat配置中导入@nomiclabs/hardhat-etherscan插件以及@openzeppelin/hardhat-upgrades插件。例如，如果您正在使用JavaScript，请在hardhat.config.js中导入这些插件：
+然后在你的Hardhat配置中导入@nomiclabs/hardhat-etherscan插件以及@openzeppelin/hardhat-upgrades插件。例如，如果你正在使用JavaScript，请在hardhat.config.js中导入这些插件：
 ```
 require("@nomiclabs/hardhat-etherscan");
 require("@openzeppelin/hardhat-upgrades");
@@ -765,7 +765,7 @@ require("@openzeppelin/hardhat-upgrades");
 import "@nomiclabs/hardhat-etherscan";
 import "@openzeppelin/hardhat-upgrades";
 ```
-最后，按照[hardhat-etherscan的使用文档](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#usage)配置您的Etherscan API密钥，并在命令行中使用代理地址运行verify任务。
+最后，按照[hardhat-etherscan的使用文档](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#usage)配置你的Etherscan API密钥，并在命令行中使用代理地址运行verify任务。
 ```
 npx hardhat verify --network mainnet PROXY_ADDRESS
 ```
@@ -775,4 +775,4 @@ npx hardhat verify --network mainnet PROXY_ADDRESS
 await hre.run("verify:verify", {
   address: PROXY_ADDRESS,
 });
-请注意，如果您的实现合约只使用初始化函数，那么在验证时不需要包含构造函数参数。然而，如果您的实现合约具有带有参数的实际构造函数（例如用于设置不可变变量），则根据[任务](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#usage)或[子任务](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#using-programmatically)的使用信息包含构造函数参数。
+请注意，如果你的实现合约只使用初始化函数，那么在验证时不需要包含构造函数参数。然而，如果你的实现合约具有带有参数的实际构造函数（例如用于设置不可变变量），则根据[任务](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#usage)或[子任务](https://hardhat.org/hardhat-runner/plugins/nomiclabs-hardhat-etherscan#using-programmatically)的使用信息包含构造函数参数。

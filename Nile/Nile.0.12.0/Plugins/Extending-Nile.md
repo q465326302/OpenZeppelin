@@ -23,14 +23,14 @@ nile run scripts/test_script.py
 ```
 
 > NOTE
-您可以使用--network选项更改脚本的目标网络。
+你可以使用--network选项更改脚本的目标网络。
 有关NRE公开成员的完整参考，请参阅[NRE参考部分](./API-Reference/NRE-Reference.md)。
 
 ## 有用的脚本示例
-在本节中，您可以找到一些可能有用的脚本示例。
+在本节中，你可以找到一些可能有用的脚本示例。
 
 ### 声明OZ账户
-如果您需要在本地devnet节点中部署账户，可以使用此选项进行先前声明。
+如果你需要在本地devnet节点中部署账户，可以使用此选项进行先前声明。
 ```
 # scripts/declare_oz_account.py
 async def run(nre):

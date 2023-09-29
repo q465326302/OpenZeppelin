@@ -213,7 +213,7 @@ CREATE2 EVM操作码的帮助程序使得使用CREATE2更加简单和安全。CR
 请注意，由于只有一个nonReentrant保护，标记为nonReentrant的函数可能不会相互调用。可以通过将这些函数设置为private，然后为它们添加外部的nonReentrant入口来解决这个问题。
 
 > TIP
-如果您想了解更多关于重入性及其替代方法的信息，请查阅我们的博客文章[ Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
+如果你想了解更多关于重入性及其替代方法的信息，请查阅我们的博客文章[ Reentrancy After Istanbul](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
 
 *自v2.5.0版本起*：由于伊斯坦布尔硬分叉引入了净燃料计量变化，该模块现在更加高效。
 

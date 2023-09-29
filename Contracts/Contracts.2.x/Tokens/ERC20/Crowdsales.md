@@ -1,11 +1,11 @@
 # Crowdsales
-众售是以太坊的一种流行用途；它们允许您以各种方式将代币分配给网络参与者，主要是以Ether作为交换。它们有各种形式和口味，因此让我们看看OpenZeppelin Contracts中提供的各种类型以及如何使用它们。
+众售是以太坊的一种流行用途；它们允许你以各种方式将代币分配给网络参与者，主要是以Ether作为交换。它们有各种形式和口味，因此让我们看看OpenZeppelin Contracts中提供的各种类型以及如何使用它们。
 
 众售有许多不同的属性，但以下是一些重要的属性：
 
 * 价格和汇率配置
 
-* 您的众售以固定价格出售代币吗？
+* 你的众售以固定价格出售代币吗？
 
 * 价格是否随时间变化或根据需求变化？
 
@@ -37,7 +37,7 @@
 ✨ 等一下，这很重要 ✨
 首先，**所有货币数学运算都是在该货币的最小单位上进行的，并在显示货币时转换为正确的小数位数**。
 
-这意味着当您在智能合约中进行数学运算时，您需要理解您正在添加、除以和乘以货币的最小金额（如wei），而不是常用的显示货币值（以太）。
+这意味着当你在智能合约中进行数学运算时，你需要理解你正在添加、除以和乘以货币的最小金额（如wei），而不是常用的显示货币值（以太）。
 
 在以太中，货币的最小单位是wei，1 ETH === 10^18 wei。在代币中，过程非常类似：1 TKN === 10^(decimals) TKNbits。
 
@@ -45,11 +45,11 @@
 
 * 代币的显示值是TKN，即TKNbits * 10^(decimals)
 
-人们通常称为“一个代币”的实际上是一堆TKNbits，显示为1 TKN。这与以太和wei之间的关系相同。您始终在进行的计算是TKNbits和wei。
+人们通常称为“一个代币”的实际上是一堆TKNbits，显示为1 TKN。这与以太和wei之间的关系相同。你始终在进行的计算是TKNbits和wei。
 
-因此，如果您想要为每2 wei发行“一个代币”，并且您的小数位数为18，则您的汇率为0.5e18。然后，当我向您发送2 wei时，您的众售会向我发行2 * 0.5e18 TKNbits，这正好等于10^18 TKNbits，并显示为1 TKN。
+因此，如果你想要为每2 wei发行“一个代币”，并且你的小数位数为18，则你的汇率为0.5e18。然后，当我向你发送2 wei时，你的众售会向我发行2 * 0.5e18 TKNbits，这正好等于10^18 TKNbits，并显示为1 TKN。
 
-如果您想为每1 ETH发行“1 TKN”，并且您的小数位数为18，则您的汇率为1。这是因为实际上在数学运算中发生的是合约看到用户发送了10^18 wei，而不是1 ETH。然后它使用您的汇率1来计算TKNbits = rate * wei，或者1 * 10^18，仍然是10^18。由于您的小数位数为18，这显示为1 TKN。
+如果你想为每1 ETH发行“1 TKN”，并且你的小数位数为18，则你的汇率为1。这是因为实际上在数学运算中发生的是合约看到用户发送了10^18 wei，而不是1 ETH。然后它使用你的汇率1来计算TKNbits = rate * wei，或者1 * 10^18，仍然是10^18。由于你的小数位数为18，这显示为1 TKN。
 
 再举一个例子：如果我想为每美元（USD）以以太发行“1 TKN”，我们将按以下方式计算：
 
@@ -67,10 +67,10 @@
 
 * 因此，我们的汇率为400
 
-（当您保留18个小数位数时，这个过程非常简单，与以太/wei相同）
+（当你保留18个小数位数时，这个过程非常简单，与以太/wei相同）
 
 ## 代币发行
-您必须做出的首要决定之一是“如何将这些代币分发给用户？”通常有以下三种方式：
+你必须做出的首要决定之一是“如何将这些代币分发给用户？”通常有以下三种方式：
 
 * （默认） - 众售合约拥有代币，并将代币从自己的所有权转移到购买它们的用户。
 
@@ -79,12 +79,12 @@
 * [AllowanceCrowdsale](../../API/Crowdsale.md#allowancecrowdsale) - 众售获得给予另一个已经拥有要在众售中出售的代币的钱包（如Multisig）的津贴。
 
 ### 默认发行
-在默认情况下，您的众售必须拥有要出售的代币。您可以通过各种方法将代币发送给众售，但在Solidity中的代码如下：
+在默认情况下，你的众售必须拥有要出售的代币。你可以通过各种方法将代币发送给众售，但在Solidity中的代码如下：
 ```
 IERC20(tokenAddress).transfer(CROWDSALE_ADDRESS, SOME_TOKEN_AMOUNT);
 ```
 
-然后当您部署您的众售时，只需告诉它有关代币的信息。
+然后当你部署你的众售时，只需告诉它有关代币的信息。
 ```
 new Crowdsale(
     1,             // rate in TKNbits
@@ -94,7 +94,7 @@ new Crowdsale(
 ```
 
 ### Minted Crowdsale
-要使用[MintedCrowdsale](../../API/Crowdsale.md#mintedcrowdsale)，您的代币还必须是一个[ERC20Mintable](../../API/ERC20.md#erc20mintable)代币，众筹活动有权从中进行铸币。这可以如下所示：
+要使用[MintedCrowdsale](../../API/Crowdsale.md#mintedcrowdsale)，你的代币还必须是一个[ERC20Mintable](../../API/ERC20.md#erc20mintable)代币，众筹活动有权从中进行铸币。这可以如下所示：
 ```
 contract MyToken is ERC20, ERC20Mintable {
     // ... see "Tokens" for more info
@@ -160,17 +160,17 @@ IERC20(tokenAddress).approve(CROWDSALE_ADDRESS, SOME_TOKEN_AMOUNT);
 ```
 
 ## 验证
-您的众筹可能是以下几种验证要求的一部分：
+你的众筹可能是以下几种验证要求的一部分：
 
-* [CappedCrowdsale](../../API/Crowdsale.md#cappedcrowdsale) - 为您的众筹添加了一个上限，使超过该上限的购买无效。
+* [CappedCrowdsale](../../API/Crowdsale.md#cappedcrowdsale) - 为你的众筹添加了一个上限，使超过该上限的购买无效。
 
 * [IndividuallyCappedCrowdsale](../../API/Crowdsale.md#individuallycappedcrowdsale) - 限制个人的贡献额。
 
-* [WhitelistCrowdsale](../../API/Crowdsale.md#whitelistcrowdsale) - 只允许白名单参与者购买代币。这对于将您的KYC / AML白名单上链非常有用！
+* [WhitelistCrowdsale](../../API/Crowdsale.md#whitelistcrowdsale) - 只允许白名单参与者购买代币。这对于将你的KYC / AML白名单上链非常有用！
 
-* [TimedCrowdsale](../../API/Crowdsale.md#timedcrowdsale) - 为您的众筹添加了一个[开放时间](../../API/Crowdsale.md#openingtime-→-uint256)和[结束时间](../../API/Crowdsale.md#closingtime-→-uint256)。
+* [TimedCrowdsale](../../API/Crowdsale.md#timedcrowdsale) - 为你的众筹添加了一个[开放时间](../../API/Crowdsale.md#openingtime-→-uint256)和[结束时间](../../API/Crowdsale.md#closingtime-→-uint256)。
 
-只需根据您的需要随意混合和匹配这些众筹方式。
+只需根据你的需要随意混合和匹配这些众筹方式。
 ```
 contract MyCrowdsale is Crowdsale, CappedCrowdsale, TimedCrowdsale {
 
@@ -195,7 +195,7 @@ contract MyCrowdsale is Crowdsale, CappedCrowdsale, TimedCrowdsale {
 ```
 
 ## 分发
-每个众售的生命周期中都会有一个时刻，它必须放弃它所托管的代币。这是您决定何时发生的！
+每个众售的生命周期中都会有一个时刻，它必须放弃它所托管的代币。这是你决定何时发生的！
 
 默认行为是在参与者购买代币时释放它们，但有时可能并不理想。例如，如果我们希望在销售中未达到最低筹集目标时为用户提供退款怎么办？或者，出于合规原因，也许我们想在销售结束后等待用户认领他们的代币并开始交易？
 

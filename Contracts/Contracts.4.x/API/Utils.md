@@ -6,7 +6,7 @@
 对于新的数据类型：
 
 * [Counters](#counters)：一种简单的方式来获取只能递增、递减或重置的计数器。非常适用于ID生成、计算合约活动等。
-* [EnumerableMap](#enumerablemap)：类似于Solidity的[mapping](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)类型，但具有键值枚举功能：这将让您知道一个映射有多少条目，并可以对它们进行迭代（这在mapping中是不可能的）。
+* [EnumerableMap](#enumerablemap)：类似于Solidity的[mapping](https://solidity.readthedocs.io/en/latest/types.html#mapping-types)类型，但具有键值枚举功能：这将让你知道一个映射有多少条目，并可以对它们进行迭代（这在mapping中是不可能的）。
 * [EnumerableSet](./Utils.md#enumerableset)：类似于[EnumerableMap](#enumerablemap)，但用于[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))。可用于存储特权账户、发行的ID等。
 
 > NOTE
@@ -1314,7 +1314,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 
 这些函数处理Merkle树证明的验证。
 
-树和证明可以使用我们的[JavaScript库](https://github.com/OpenZeppelin/merkle-tree)生成。您可以在自述文件中找到快速入门指南。
+树和证明可以使用我们的[JavaScript库](https://github.com/OpenZeppelin/merkle-tree)生成。你可以在自述文件中找到快速入门指南。
 
 > WARNING
 在进行哈希之前，应避免使用长度为64字节的叶值，或者使用除keccak256之外的哈希函数进行哈希。这是因为Merkle树中内部节点的排序对的拼接可能会被重新解释为叶值。OpenZeppelin的JavaScript库可以直接生成抵御此攻击的Merkle树。
@@ -1509,7 +1509,7 @@ OWNABLE
 将累积余额提取给收款人，并将所有gas转发给收款人。
 
 > WARNING
-将所有gas转发给收款人会打开重入漏洞的大门。请确保您信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
+将所有gas转发给收款人会打开重入漏洞的大门。请确保你信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
 
 ### Escrow
 ```
@@ -1771,7 +1771,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 
 #### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
 内部#
-返回一个布尔数组，其中每个值对应于传入的接口和它们是否被支持。这使您可以批量检查合约的接口，其中您的期望是某些接口可能不被支持。
+返回一个布尔数组，其中每个值对应于传入的接口和它们是否被支持。这使你可以批量检查合约的接口，其中你的期望是某些接口可能不被支持。
 
 请参阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
@@ -2002,7 +2002,7 @@ contract Example {
 
 > WARNING
 尝试从存储中删除这样的结构可能会导致数据损坏，使该结构无法使用。有关更多信息，请参阅[ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
-要清理一个可枚举地图，您可以逐个删除所有元素，或者使用一个可枚举地图的数组创建一个新的实例。
+要清理一个可枚举地图，你可以逐个删除所有元素，或者使用一个可枚举地图的数组创建一个新的实例。
 
 **FUNCTIONS**
 [set(map, key, value)](#setstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-bytes32-value-→-bool)
@@ -2377,7 +2377,7 @@ contract Example {
 > WARNING
 尝试从存储中删除这样的结构很可能导致数据损坏，使结构无法使用。有关更多信息，请参阅 [ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
 
-为了清理一个EnumerableSet，您可以逐个删除所有元素，或者使用一个EnumerableSet数组创建一个全新的实例。
+为了清理一个EnumerableSet，你可以逐个删除所有元素，或者使用一个EnumerableSet数组创建一个全新的实例。
 
 **FUNCTIONS**
 [add(set, value)](#addstruct-enumerablesetbytes32set-set-bytes32-value-→-bool)
@@ -2619,7 +2619,7 @@ import "@openzeppelin/contracts/utils/Checkpoints.sol";
 
 这个库定义了History结构体，用于在不同时间点上对数值进行检查点，并在以后通过区块号查找过去的数值。以[Votes](./Governance.md#votes)为例。
 
-要创建一个检查点历史，请在您的合约中定义一个变量类型Checkpoints.History，并使用[push](#pushstruct-checkpointstrace160-self-uint96-key-uint160-value-→-uint160-uint160)函数为当前交易块存储一个新的检查点。
+要创建一个检查点历史，请在你的合约中定义一个变量类型Checkpoints.History，并使用[push](#pushstruct-checkpointstrace160-self-uint96-key-uint160-value-→-uint160-uint160)函数为当前交易块存储一个新的检查点。
 
 *从版本4.5开始提供。*
 

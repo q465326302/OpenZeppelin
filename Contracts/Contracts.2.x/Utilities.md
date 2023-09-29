@@ -6,7 +6,7 @@ OpenZeppelin Contracts提供了许多在项目中可以使用的实用工具。�
 ### 在链上检查签名
 [ECDSA](./API/Cryptography.md#ecdsa)提供了用于恢复和管理以太坊账户ECDSA签名的函数。这些签名通常通过[web3.eth.sign](https://web3js.readthedocs.io/en/v1.2.4/web3-eth.html#sign)生成，并且是一个65字节的数组（在Solidity中为bytes类型），按照以下方式排列：[[v（1）]，[r（32）]，[s（32）]]。
 
-可以使用[ECDSA.recover](./API/Cryptography.md#recoverbytes32-hash-bytes-signature-→-address)来恢复数据签名者，并将其地址与签名进行验证。大多数钱包会对要签名的数据进行哈希处理，并添加前缀'\x19Ethereum Signed Message:\n'，因此在尝试恢复以太坊签名消息哈希的签名者时，您需要使用[toEthSignedMessageHash](./API/Cryptography.md#toethsignedmessagehashbytes32-hash-→-bytes32)。
+可以使用[ECDSA.recover](./API/Cryptography.md#recoverbytes32-hash-bytes-signature-→-address)来恢复数据签名者，并将其地址与签名进行验证。大多数钱包会对要签名的数据进行哈希处理，并添加前缀'\x19Ethereum Signed Message:\n'，因此在尝试恢复以太坊签名消息哈希的签名者时，你需要使用[toEthSignedMessageHash](./API/Cryptography.md#toethsignedmessagehashbytes32-hash-→-bytes32)。
 
 ```
 using ECDSA for bytes32;
@@ -63,7 +63,7 @@ contract MyContract {
 ```
 
 ## Math
-最受欢迎的与数学相关的库OpenZeppelin Contracts提供了[SafeMath](./API/Math.md#safemath)，它提供了数学函数，可以保护您的合约免受溢出和下溢的影响。
+最受欢迎的与数学相关的库OpenZeppelin Contracts提供了[SafeMath](./API/Math.md#safemath)，它提供了数学函数，可以保护你的合约免受溢出和下溢的影响。
 
 在合约中包含使用SafeMath for uint256;，然后调用以下函数：
 
@@ -80,14 +80,14 @@ contract MyContract {
 很简单！
 
 ## Payment
-想要在多个人之间分割一些付款吗？也许您有一个应用程序，将艺术购买的30％发送给原始创作者，将70％的利润发送给当前所有者；您可以使用[PaymentSplitter](./API/Payment.md#paymentsplitter)构建这个功能！
+想要在多个人之间分割一些付款吗？也许你有一个应用程序，将艺术购买的30％发送给原始创作者，将70％的利润发送给当前所有者；你可以使用[PaymentSplitter](./API/Payment.md#paymentsplitter)构建这个功能！
 
-在Solidity中，盲目向帐户发送资金存在一些安全问题，因为这允许它们执行任意代码。您可以在[以太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。修复重新进入和停滞问题的一种方法是，不要立即向需要资金的帐户发送以太，而是使用[PullPayment](./API/Payment.md#pullpayment)，它提供了一个[_asyncTransfer](./API/Payment.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送给某个人，并要求他们稍后通过[withdrawPayments()](./API/Payment.md#withdrawpaymentsaddress-payable-payee)提取。
+在Solidity中，盲目向帐户发送资金存在一些安全问题，因为这允许它们执行任意代码。你可以在[以太坊智能合约最佳实践网站](https://consensys.github.io/smart-contract-best-practices/)上阅读有关这些安全问题的信息。修复重新进入和停滞问题的一种方法是，不要立即向需要资金的帐户发送以太，而是使用[PullPayment](./API/Payment.md#pullpayment)，它提供了一个[_asyncTransfer](./API/Payment.md#_asynctransferaddress-dest-uint256-amount)函数，用于将资金发送给某个人，并要求他们稍后通过[withdrawPayments()](./API/Payment.md#withdrawpaymentsaddress-payable-payee)提取。
 
-如果您想要托管一些资金，请查看[Escrow](./API/Payment.md#escrow)和[ConditionalEscrow](./API/Payment.md#conditionalescrow)来管理某些托管以太的释放。
+如果你想要托管一些资金，请查看[Escrow](./API/Payment.md#escrow)和[ConditionalEscrow](./API/Payment.md#conditionalescrow)来管理某些托管以太的释放。
 
 ## Collections
-如果您需要比Solidity的本地数组和映射更强大的集合支持，请查看[EnumerableSet](./API/Utils.md#enumerableset)。它类似于映射，因为它以恒定时间存储和删除元素，并且不允许重复的条目，但它还支持枚举，这意味着您可以轻松地查询集合的所有元素，无论是在链上还是离线。
+如果你需要比Solidity的本地数组和映射更强大的集合支持，请查看[EnumerableSet](./API/Utils.md#enumerableset)。它类似于映射，因为它以恒定时间存储和删除元素，并且不允许重复的条目，但它还支持枚举，这意味着你可以轻松地查询集合的所有元素，无论是在链上还是离线。
 
 ## Collections
 想要检查地址是否为合约吗？使用[Address](./API/Utils.md#address)和[Address.isContract()](./API/Utils.md#iscontractaddress-account-→-bool)。

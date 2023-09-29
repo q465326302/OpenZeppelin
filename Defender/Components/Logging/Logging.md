@@ -1,7 +1,7 @@
 # Logging
 Defender会生成系统中每个可能相关事件的日志记录。这包括手动操作，例如修改Autotask或Sentinel，以及自动操作，例如发送交易或触发通知。日志可以选择转发到Datadog或Splunk进行聚合。
 
-这是一个高级功能，如果您有兴趣，请通过填写此[表格](https://zpl.in/defender-inquiry)告诉我们。
+这是一个高级功能，如果你有兴趣，请通过填写此[表格](https://zpl.in/defender-inquiry)告诉我们。
 
 ## 用例
 使用Defender Logging跟踪系统中的所有更改和操作，例如：
@@ -10,7 +10,7 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 
 * 检测基础架构中的**潜在攻击**，例如登录失败的尝试
 
-* 跟踪**Relayer 活动**以了解从您的账户发送的交易
+* 跟踪**Relayer 活动**以了解从你的账户发送的交易
 
 * 保留对Autotasks、Sentinels和Relayer s的所有更改的**审计记录**
 
@@ -38,26 +38,26 @@ Defender会生成系统中每个可能相关事件的日志记录。这包括手
 * 已注销
 
 ## 日志转发
-生成的日志可以转发到Datadog和Splunk，或任何支持API密钥身份验证的其他服务。您可以使用此功能将所有日志聚合到一个地方，跨您的基础架构。
+生成的日志可以转发到Datadog和Splunk，或任何支持API密钥身份验证的其他服务。你可以使用此功能将所有日志聚合到一个地方，跨你的基础架构。
 
 ## 设置日志转发目的地
 要设置日志转发目的地，请在Defender的右上角打开用户菜单或[单击此处](https://defender.openzeppelin.com/#/logs/forwarding)。
 ![logging-1.png](img/logging-1.png)
 
-您可以通过点击“添加转发目的地”按钮来访问日志目的地配置页面。
+你可以通过点击“添加转发目的地”按钮来访问日志目的地配置页面。
 ![logging-2.png](img/logging-2.png)
 
 表单字段：
 
 * **URL**字段是必填字段。所有日志都将通过HTTP POST方法转发到此URL地址。
 
-* **API Header Name**是可选字段。这是包含API密钥值的请求头的名称。大多数日志管理服务都需要它。请参考您的日志管理服务文档以确定您是否需要它。
+* **API Header Name**是可选字段。这是包含API密钥值的请求头的名称。大多数日志管理服务都需要它。请参考你的日志管理服务文档以确定你是否需要它。
 
-* **API Key**是可选字段。API密钥会随每个请求一起发送，用于身份验证目的。大多数日志管理服务都需要它。请参考您的日志管理服务文档以确定您是否需要它。
+* **API Key**是可选字段。API密钥会随每个请求一起发送，用于身份验证目的。大多数日志管理服务都需要它。请参考你的日志管理服务文档以确定你是否需要它。
 
-* **日志类型**让您指定要转发的Defender生成日志的子集，基于Defender组件。
+* **日志类型**让你指定要转发的Defender生成日志的子集，基于Defender组件。
 
-* **日志级别**让您指定要转发的Defender生成日志的子集，基于日志级别。例如，调试日志可用于Autotasks调试目的，并且可能包含不应导出到外部系统的数据。
+* **日志级别**让你指定要转发的Defender生成日志的子集，基于日志级别。例如，调试日志可用于Autotasks调试目的，并且可能包含不应导出到外部系统的数据。
 
 > NOTE
 在下一节中，我们将介绍如何使用Splunk和Datadog设置日志转发，但值得注意的是，日志转发适用于支持API密钥身份验证的任何其他服务。
@@ -95,7 +95,7 @@ API密钥应包含Splunk前缀。
 * **API密钥**：xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 > NOTE
-Datadog在世界各地使用不同的站点。例如，如果您依赖于欧盟服务器，则URL字段值应为https://http-intake.logs.datadoghq.eu/api/v2/logs
+Datadog在世界各地使用不同的站点。例如，如果你依赖于欧盟服务器，则URL字段值应为https://http-intake.logs.datadoghq.eu/api/v2/logs
 
 > NOTE
 可以通过从左侧菜单中打开日志部分并选择AWS提供程序来从Datadog站点获取API密钥值。在按照这些步骤操作后，“API密钥”值将显示在页面底部的部分中。

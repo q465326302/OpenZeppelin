@@ -13,7 +13,7 @@
 
 默认情况下，所有者账户将是部署合约的账户。可以使用[transferOwnership](#transferownershipaddress-newowner)函数将其更改。
 
-通过继承使用此模块。它将提供修饰符onlyOwner，可以应用于您的函数，以限制它们只能被所有者使用。
+通过继承使用此模块。它将提供修饰符onlyOwner，可以应用于你的函数，以限制它们只能被所有者使用。
 
 **MODIFIERS**
 [onlyOwner()](#onlyowner)
@@ -412,7 +412,7 @@ ACCESSCONTROL
 * **执行者：**负责执行操作的地址（智能合约或EOA）。
 
 ### 操作结构
-由[TimelockControler](#timelockcontroller)执行的操作可以包含一个或多个后续调用。根据您是否需要多个调用以原子方式执行，您可以使用简单或批处理操作。
+由[TimelockControler](#timelockcontroller)执行的操作可以包含一个或多个后续调用。根据你是否需要多个调用以原子方式执行，你可以使用简单或批处理操作。
 
 两种操作都包含：
 

@@ -22,7 +22,7 @@ contract MyContract {
 }
 ```
 
-然而，尽管Solidity确保构造函数在合约的生命周期内仅被调用一次，但常规函数可以被多次调用。为了防止合约被多次初始化，您需要添加一个检查，以确保initialize函数仅被调用一次。
+然而，尽管Solidity确保构造函数在合约的生命周期内仅被调用一次，但常规函数可以被多次调用。为了防止合约被多次初始化，你需要添加一个检查，以确保initialize函数仅被调用一次。
 
 ```
 // contracts/MyContract.sol
@@ -58,7 +58,7 @@ contract MyContract is Initializable {
 }
 ```
 
-构造函数和普通函数之间的另一个区别是Solidity会自动调用所有合约祖先的构造函数。当编写一个初始化函数时，您需要特别注意手动调用所有父合约的初始化函数。请注意，即使使用继承，初始化函数修饰符也只能调用一次，因此父合约应该使用onlyInitializing修饰符。
+构造函数和普通函数之间的另一个区别是Solidity会自动调用所有合约祖先的构造函数。当编写一个初始化函数时，你需要特别注意手动调用所有父合约的初始化函数。请注意，即使使用继承，初始化函数修饰符也只能调用一次，因此父合约应该使用onlyInitializing修饰符。
 ```
 // contracts/MyContract.sol
 // SPDX-License-Identifier: MIT
@@ -85,7 +85,7 @@ contract MyContract is BaseContract {
 ```
 
 ### 使用可升级的智能合约库
-请记住，这个限制不仅影响您的合约，还影响您从库中导入的合约。例如，考虑OpenZeppelin Contracts中的[ERC20](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.7.3/contracts/token/ERC20/ERC20.sol)合约：该合约在其构造函数中初始化代币的名称和符号。
+请记住，这个限制不仅影响你的合约，还影响你从库中导入的合约。例如，考虑OpenZeppelin Contracts中的[ERC20](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v4.7.3/contracts/token/ERC20/ERC20.sol)合约：该合约在其构造函数中初始化代币的名称和符号。
 ```
 // @openzeppelin/contracts/token/ERC20/ERC20.sol
 pragma solidity ^0.8.0;
@@ -169,7 +169,7 @@ contract MyContract {
 
 ### 初始化实现合约
 
-不要将实现合约保持为未初始化状态。未初始化的实现合约可能会被攻击者接管，从而可能影响代理。为了防止实现合约被使用，您应该在构造函数中调用_disableInitializers函数来在部署时自动锁定它：
+不要将实现合约保持为未初始化状态。未初始化的实现合约可能会被攻击者接管，从而可能影响代理。为了防止实现合约被使用，你应该在构造函数中调用_disableInitializers函数来在部署时自动锁定它：
 ```
 /// @custom:oz-upgrades-unsafe-allow constructor
 constructor() {
@@ -198,7 +198,7 @@ contract MyContract is Initializable {
 }
 ```
 
-如果您希望ERC20实例可以升级，最简单的方法是接受该合约的一个实例作为参数，并在创建后注入它：
+如果你希望ERC20实例可以升级，最简单的方法是接受该合约的一个实例作为参数，并在创建后注入它：
 
 ```
 // contracts/MyContract.sol
@@ -218,27 +218,27 @@ contract MyContract is Initializable {
 ```
 
 ## 潜在的不安全操作
-在使用可升级智能合约时，您将始终与合约实例进行交互，而不是与底层逻辑合约进行交互。然而，没有任何防止恶意参与者直接向逻辑合约发送交易的措施。这并不构成威胁，因为逻辑合约的状态更改不会影响您的合约实例，因为您的项目中从未使用过逻辑合约的存储。
+在使用可升级智能合约时，你将始终与合约实例进行交互，而不是与底层逻辑合约进行交互。然而，没有任何防止恶意参与者直接向逻辑合约发送交易的措施。这并不构成威胁，因为逻辑合约的状态更改不会影响你的合约实例，因为你的项目中从未使用过逻辑合约的存储。
 
-然而，有一个例外情况。如果对逻辑合约的直接调用触发了自毁操作，则逻辑合约将被销毁，并且您的所有合约实例将最终将所有调用委托给一个没有任何代码的地址。这将有效地破坏您项目中的所有合约实例。
+然而，有一个例外情况。如果对逻辑合约的直接调用触发了自毁操作，则逻辑合约将被销毁，并且你的所有合约实例将最终将所有调用委托给一个没有任何代码的地址。这将有效地破坏你项目中的所有合约实例。
 
 如果逻辑合约包含委托调用操作，也可以实现类似的效果。如果可以使合约委托调用到包含自毁操作的恶意合约中，那么调用合约将被销毁。
 
-因此，不允许在您的合约中使用selfdestruct或delegatecall操作。
+因此，不允许在你的合约中使用selfdestruct或delegatecall操作。
 
 ## 修改合约
-当编写合约的新版本时，无论是因为新增功能还是修复错误，还有一个额外的限制需要遵守：您不能更改合约状态变量的声明顺序或类型。您可以通过了解我们的代理来了解有关此限制背后原因的更多信息。
+当编写合约的新版本时，无论是因为新增功能还是修复错误，还有一个额外的限制需要遵守：你不能更改合约状态变量的声明顺序或类型。你可以通过了解我们的代理来了解有关此限制背后原因的更多信息。
 
 违反这些存储布局限制将导致升级后的合约的存储值混乱，并可能导致应用程序中的严重错误。
-这意味着，如果您有一个初始合约，看起来像这样：
+这意味着，如果你有一个初始合约，看起来像这样：
 
 ## 修改合约
-当编写合约的新版本时，无论是因为新增功能还是修复错误，还有一个额外的限制需要遵守：您不能更改合约状态变量的声明顺序或类型。您可以通过了解我们的[Proxies](./Proxy-Upgrade-Pattern.md)来了解有关此限制背后原因的更多信息。
+当编写合约的新版本时，无论是因为新增功能还是修复错误，还有一个额外的限制需要遵守：你不能更改合约状态变量的声明顺序或类型。你可以通过了解我们的[Proxies](./Proxy-Upgrade-Pattern.md)来了解有关此限制背后原因的更多信息。
 
 > WARNING
 违反这些存储布局限制将导致升级后的合约的存储值混乱，并可能导致应用程序中的严重错误。
 
-这意味着，如果您有一个初始合约，看起来像这样：
+这意味着，如果你有一个初始合约，看起来像这样：
 ```
 contract MyContract {
     uint256 private x;
@@ -310,7 +310,7 @@ contract MyContract {
 }
 ```
 
-请注意，通过更改合约的父合约，您可能会无意中更改合约的存储变量。例如，如果您有以下合约：
+请注意，通过更改合约的父合约，你可能会无意中更改合约的存储变量。例如，如果你有以下合约：
 ```
 contract A {
     uint256 a;
@@ -330,7 +330,7 @@ contract MyContract is A, B {}
 contract MyContract is B, A {}
 ```
 
-在以下情况下，如果子合约有任何自己的变量，您也不能向基本合约添加新变量。
+在以下情况下，如果子合约有任何自己的变量，你也不能向基本合约添加新变量。
 ```
 contract Base {
     uint256 base1;
@@ -404,4 +404,4 @@ contract Base {
 }
 ```
 
-为了确定新合约版本中的适当存储间隙大小，您可以尝试使用upgradeProxy进行升级，或者只需使用validateUpgrade运行验证（请参阅[Hardhat](./API-Reference/Hardhat-Upgrades.md)或[Truffle](./API-Reference/Truffle-Upgrades.md)的文档）。如果存储间隙没有被正确地减少，您将看到一个错误信息，指示存储间隙的预期大小。
+为了确定新合约版本中的适当存储间隙大小，你可以尝试使用upgradeProxy进行升级，或者只需使用validateUpgrade运行验证（请参阅[Hardhat](./API-Reference/Hardhat-Upgrades.md)或[Truffle](./API-Reference/Truffle-Upgrades.md)的文档）。如果存储间隙没有被正确地减少，你将看到一个错误信息，指示存储间隙的预期大小。

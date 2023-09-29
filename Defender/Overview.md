@@ -2,7 +2,7 @@
 OpenZeppelin Defender为以太坊提供了一个安全运营（SecOps）平台，内置最佳实践。开发团队实施Defender以加快交付speed并最小化安全风险。
 
 # 开始
-Defender是免费的！只需前往[defender.openzeppelin.com](https://hubs.li/H0F1_Q50)，点击“登录”，然后选择创建一个新账户。验证您的电子邮件地址后，您将被重回到您自己的Defender账户。请参见下文，了解如何邀请更多用户加入您的团队！
+Defender是免费的！只需前往[defender.openzeppelin.com](https://hubs.li/H0F1_Q50)，点击“登录”，然后选择创建一个新账户。验证你的电子邮件地址后，你将被重回到你自己的Defender账户。请参见下文，了解如何邀请更多用户加入你的团队！
 
 # 组件
 通过自动化以太坊操作，以更低的风险为用户提供高质量的产品。点击每个组件的卡片了解更多信息。
@@ -57,8 +57,8 @@ Defender是免费的！只需前往[defender.openzeppelin.com](https://hubs.li/H
 
 [Linea Goerli](https://linea.build/)
 
-如果您想使用其他网络或第二层解决方案，请与我们联系！
+如果你想使用其他网络或第二层解决方案，请与我们联系！
 
 # 反馈意见
 
-作为Defender用户，您的反馈非常重要！我们致力于打造Defender产品，帮助您安全地管理项目，而没有您的反馈，我们无法做到这一点。如有任何问题、功能请求或问题，请随时通过[社区论坛](https://forum.openzeppelin.com/c/support/defender/36)、Telegram或defender@openzeppelin.com与我们联系。如需了解企业使用情况，请点击此处[链接](http://zpl.in/defender-inquiry)。
+作为Defender用户，你的反馈非常重要！我们致力于打造Defender产品，帮助你安全地管理项目，而没有你的反馈，我们无法做到这一点。如有任何问题、功能请求或问题，请随时通过[社区论坛](https://forum.openzeppelin.com/c/support/defender/36)、Telegram或defender@openzeppelin.com与我们联系。如需了解企业使用情况，请点击此处[链接](http://zpl.in/defender-inquiry)。

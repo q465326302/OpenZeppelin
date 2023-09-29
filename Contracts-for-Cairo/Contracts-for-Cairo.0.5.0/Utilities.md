@@ -116,7 +116,7 @@ print(z)
 为了简化StarkNet事务的测试断言的冗长性，该项目包括以下辅助方法。
 
 ### assert_revert
-一个异步的包装方法，用于执行应该失败的事务的try-except模式。请注意，此包装器不检查StarkNet的错误代码。这样可以更灵活地检查事务是否仅仅失败。如果您想检查确切的错误代码，可以使用StarkNet的[error_codes模块](https://github.com/starkware-libs/cairo-lang/blob/ed6cf8d6cec50a6ad95fa36d1eb4a7f48538019e/src/starkware/starknet/definitions/error_codes.py)，并实现额外的逻辑来assert_revert方法。
+一个异步的包装方法，用于执行应该失败的事务的try-except模式。请注意，此包装器不检查StarkNet的错误代码。这样可以更灵活地检查事务是否仅仅失败。如果你想检查确切的错误代码，可以使用StarkNet的[error_codes模块](https://github.com/starkware-libs/cairo-lang/blob/ed6cf8d6cec50a6ad95fa36d1eb4a7f48538019e/src/starkware/starknet/definitions/error_codes.py)，并实现额外的逻辑来assert_revert方法。
 
 要成功使用此包装器，事务方法应该用assert_revert包装；然而，await应该在包装器之前，像这样
 ```

@@ -1,5 +1,5 @@
 # Access Control
-访问控制——即“谁被允许做这件事”——在智能合约世界中非常重要。您的合约的访问控制可以会管理谁可以铸造代币、投票支持提案、冻结转账等等。因此，了解如何实现访问控制非常关键，以免其他人[窃取您的整个系统](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7)。
+访问控制——即“谁被允许做这件事”——在智能合约世界中非常重要。你的合约的访问控制可以会管理谁可以铸造代币、投票支持提案、冻结转账等等。因此，了解如何实现访问控制非常关键，以免其他人[窃取你的整个系统](https://blog.openzeppelin.com/on-the-parity-wallet-multisig-hack-405a8c12e8f7)。
 
 ## Ownership and Ownable
 最常见和基本的访问控制形式是所有权的概念：合约有一个所有者账户，可以对其进行管理任务。对于只有一个管理用户的合约来说，这种方法是完全合理的。
@@ -23,9 +23,9 @@ contract MyContract is Ownable {
 }
 ```
 
-默认情况下，Ownable合约的[所有者](./API/Access.md#owner-→-address)是部署它的账户，这是您所需要的。
+默认情况下，Ownable合约的[所有者](./API/Access.md#owner-→-address)是部署它的账户，这是你所需要的。
 
-Ownable还允许您：
+Ownable还允许你：
 
 * 将[所有权从所有者账户](./API/Access.md#transferownershipaddress-newowner)转移到新账户，以及
 
@@ -34,19 +34,19 @@ Ownable还允许您：
 > WARNING
 移除所有者将意味着只有所有者才能调用的管理任务将无法被调用！
 
-请注意，**合约也可以是另一个合约的所有者**！这打开了使用[Gnosis Safe](https://gnosis-safe.io/)、[Aragon DAO](https://aragon.org/)或您创建的完全自定义合约的大门。
+请注意，**合约也可以是另一个合约的所有者**！这打开了使用[Gnosis Safe](https://gnosis-safe.io/)、[Aragon DAO](https://aragon.org/)或你创建的完全自定义合约的大门。
 
-通过这种方式，您可以使用组合性将额外的访问控制复杂性层添加到您的合约中。例如，您可以使用由项目负责人运行的2-of-3多签名，而不是使用单个常规以太坊帐户（外部拥有帐户或EOA）作为所有者。在空间中的知名项目，例如[MakerDAO](https://makerdao.com/)，使用类似于此的系统。
+通过这种方式，你可以使用组合性将额外的访问控制复杂性层添加到你的合约中。例如，你可以使用由项目负责人运行的2-of-3多签名，而不是使用单个常规以太坊帐户（外部拥有帐户或EOA）作为所有者。在空间中的知名项目，例如[MakerDAO](https://makerdao.com/)，使用类似于此的系统。
 
 ## Role-Based Access Control
-虽然所有权的简单性对于简单的系统或快速原型设计可能很有用，但通常需要不同级别的授权。您可能希望某个帐户有权禁止用户使用系统，但不能创建新代币。[基于角色的访问控制（RBAC）](https://en.wikipedia.org/wiki/Role-based_access_control)在这方面提供了灵活性。
+虽然所有权的简单性对于简单的系统或快速原型设计可能很有用，但通常需要不同级别的授权。你可能希望某个帐户有权禁止用户使用系统，但不能创建新代币。[基于角色的访问控制（RBAC）](https://en.wikipedia.org/wiki/Role-based_access_control)在这方面提供了灵活性。
 
-本质上，我们将定义多个角色，每个角色允许执行不同的操作集。一个账户可以有“管理员”、“铸造者”或“管理员”等角色，然后您将检查这些角色，而不是仅使用onlyOwner。这个检查可以通过onlyRole修饰符强制执行。另外，您将能够为如何授予角色、撤销角色等定义规则。
+本质上，我们将定义多个角色，每个角色允许执行不同的操作集。一个账户可以有“管理员”、“铸造者”或“管理员”等角色，然后你将检查这些角色，而不是仅使用onlyOwner。这个检查可以通过onlyRole修饰符强制执行。另外，你将能够为如何授予角色、撤销角色等定义规则。
 
 大多数软件使用基于角色的访问控制系统：有些用户是普通用户，有些可能是监管人员或经理，还有一些人具有管理特权。
 
 ### Using AccessControl
-OpenZeppelin Contracts提供了[AccessControl](./API/Access.md#accesscontrol)，用于实现基于角色的访问控制。它的使用很简单：对于每个要定义的角色，您将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色。
+OpenZeppelin Contracts提供了[AccessControl](./API/Access.md#accesscontrol)，用于实现基于角色的访问控制。它的使用很简单：对于每个要定义的角色，你将创建一个新的角色标识符，用于授予、撤销和检查帐户是否具有该角色。
 
 以下是在[ERC20代币](./Tokens/ERC20/ERC20.md#erc20)中使用AccessControl定义“铸造者”角色的简单示例，允许具有该角色的账户创建新的代币：
 ```
@@ -112,7 +112,7 @@ contract MyToken is ERC20, AccessControl {
 ### Granting and Revoking Roles
 上面的ERC20代币示例使用了_grantRole，这是一个内部函数，用于在构建过程中以编程方式分配角色（例如在构造函数中）。但是，如果我们稍后想要将“铸造者”角色授予其他账户，该怎么办？
 
-默认情况下，**具有角色的账户无法授予或撤销它**。拥有角色只是使hasRole检查通过。要动态地授予和撤销角色，您需要该角色的管理员的帮助。
+默认情况下，**具有角色的账户无法授予或撤销它**。拥有角色只是使hasRole检查通过。要动态地授予和撤销角色，你需要该角色的管理员的帮助。
 
 每个角色都有一个关联的管理员角色，该角色授予调用grantRole和revokeRole函数的权限。如果调用账户具有相应的管理员角色，则可以使用这些函数来授予或撤销角色。多个角色可以具有相同的管理员角色，以便更容易管理。角色的管理员甚至可以是角色本身，这将导致具有该角色的账户也能够授予和撤销它。
 
@@ -181,7 +181,7 @@ for (let i = 0; i < minterCount; ++i) {
 
 在 AccessControl 上构建了一个附加功能：将 executor 角色授予 address(0) 可以让任何人在timelock过期后执行提案。尽管这个功能很有用，但应该谨慎使用。
 
-此时，具有提议者和执行者角色，并且timelock负责自己的管理，您现在可以将任何合约的所有权/控制权转移到timelock。
+此时，具有提议者和执行者角色，并且timelock负责自己的管理，你现在可以将任何合约的所有权/控制权转移到timelock。
 
 下一步是可选的，即部署者放弃其管理特权，让 timelock 自我管理。如果部署者决定这样做，所有后续维护操作，包括分配新的提议者/调度程序或更改 timelock 持续时间，都必须遵循 timelock 工作流程。这将将 timelock 的治理与附加到 timelock 的合约的治理联系起来，并对 timelock 维护操作强制实施延迟。
 

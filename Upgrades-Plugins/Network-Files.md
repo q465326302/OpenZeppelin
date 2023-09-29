@@ -1,11 +1,11 @@
 # Network Files
-OpenZeppelin Upgrades会在项目根目录的.openzeppelin文件夹中跟踪您部署的所有合约版本，以及代理管理员。您将在该文件夹中找到每个网络的一个文件。建议您将所有网络的文件都提交到源代码控制中，除了开发网络（您可能会在.openzeppelin/unknown-*.json中看到这些文件）。
+OpenZeppelin Upgrades会在项目根目录的.openzeppelin文件夹中跟踪你部署的所有合约版本，以及代理管理员。你将在该文件夹中找到每个网络的一个文件。建议你将所有网络的文件都提交到源代码控制中，除了开发网络（你可能会在.openzeppelin/unknown-*.json中看到这些文件）。
 
 > NOTE
-.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果您想在现有的[OpenZeppelin CLI](https://docs.openzeppelin.com/cli/2.8/)项目中使用这些插件，您必须先进行迁移。请参阅从[CLI迁移](./Migrate-from-OpenZeppelin-CLI/Migrate-from-OpenZeppelin-CLI-Hardhat.md)的说明。
+.openzeppelin文件夹中的文件格式与OpenZeppelin CLI的文件格式不兼容。如果你想在现有的[OpenZeppelin CLI](https://docs.openzeppelin.com/cli/2.8/)项目中使用这些插件，你必须先进行迁移。请参阅从[CLI迁移](./Migrate-from-OpenZeppelin-CLI/Migrate-from-OpenZeppelin-CLI-Hardhat.md)的说明。
 
 ## <network_name>.json
-OpenZeppelin Upgrades会为您工作的每个网络（ropsten、mainnet等）生成一个文件。这些文件具有相同的结构：
+OpenZeppelin Upgrades会为你工作的每个网络（ropsten、mainnet等）生成一个文件。这些文件具有相同的结构：
 ```
 // .openzeppelin/<network_name>.json
 {
@@ -58,8 +58,8 @@ OpenZeppelin Upgrades会为您工作的每个网络（ropsten、mainnet等）生
 ## 临时文件
 使用Hardhat版本2.12.3或更高版本的Hardhat开发网络将在操作系统的临时目录下的openzeppelin-upgrades文件夹中写入网络文件。这些文件的名称为hardhat-<chain_id>-<instance_id>.json，其中<instance_id>是一个以0x为前缀的十六进制id，用于唯一标识Hardhat网络的一个实例/运行。当相应的Hardhat网络实例不再活动时，例如在Hardhat测试完成后，可以安全地删除临时文件夹中的文件。
 
-您可以通过以下方式确定临时网络文件的位置：
+你可以通过以下方式确定临时网络文件的位置：
 
 1. 运行export DEBUG=@openzeppelin:*以启用调试日志记录。
-2. 运行您的Hardhat测试或脚本。
+2. 运行你的Hardhat测试或脚本。
 3. 找到包含文本"development manifest file:"的日志消息。

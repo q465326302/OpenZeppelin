@@ -1,5 +1,5 @@
 # 升级智能合约
-使用[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)部署的智能合约可以进行**升级**，修改其代码，同时保留其地址、状态和余额。这使您能够逐步为项目添加新功能，或修复在[生产](../Preparing-for-mainnet/Preparing-for-mainnet.md)中发现的任何错误。
+使用[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)部署的智能合约可以进行**升级**，修改其代码，同时保留其地址、状态和余额。这使你能够逐步为项目添加新功能，或修复在[生产](../Preparing-for-mainnet/Preparing-for-mainnet.md)中发现的任何错误。
 
 在本指南中，我们将学习：
 
@@ -16,14 +16,14 @@
 
 
 > NOTE
-有关Truffle和Hardhat的说明都可用。使用此切换选择您的首选项！
+有关*Truffle*和*Hardhat*的说明都可用。使用此切换选择你的首选项！
 
 ## 升级包含什么内容
 以太坊中的智能合约默认情况下是不可变的。一旦创建，就没有办法修改它们，有效地成为参与者之间不可打破的合约。
 
 然而，对于某些情况，修改它们是可取的。想象一下两个当事方之间的传统合约：如果他们都同意更改它，他们将能够这样做。在以太坊上，他们可能希望修改智能合约以修复他们发现的错误（这甚至可能导致黑客窃取他们的资金！），添加其他功能，或仅仅是更改其执行的规则。
 
-要修复无法升级的合约中的错误，您需要执行以下操作：
+要修复无法升级的合约中的错误，你需要执行以下操作：
 
 1. 部署合约的新版本
 
@@ -36,7 +36,7 @@
 为了避免经历这种混乱，我们已经将合约升级直接构建到我们的插件中。这允许我们**更改合约代码，同时保留状态、余额和地址**。让我们看看它的实际应用。
 
 ## 使用升级插件进行升级
-每当您使用[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)中的deployProxy部署新合约时，该合约实例可以稍后**升级**。默认情况下，只有最初部署合约的地址才有权升级它。
+每当你使用[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)中的deployProxy部署新合约时，该合约实例可以稍后**升级**。默认情况下，只有最初部署合约的地址才有权升级它。
 
 deployProxy将创建以下交易：
 
@@ -78,7 +78,7 @@ contract Box {
 npm install --save-dev @openzeppelin/hardhat-upgrades
 ```
 
-我们需要配置Hardhat以使用@openzeppelin/hardhat-upgrades插件。为此，请在您的hardhat.config.js文件中添加插件，如下所示。
+我们需要配置Hardhat以使用@openzeppelin/hardhat-upgrades插件。为此，请在你的hardhat.config.js文件中添加插件，如下所示。
 ```
 // hardhat.config.js
 ...
@@ -206,20 +206,20 @@ undefined
 '43'
 ```
 
-就是这样！请注意，无论您是在本地区块链、测试网络还是主网络上工作，Box 的价值和地址都在升级过程中得到保留。
+就是这样！请注意，无论你是在本地区块链、测试网络还是主网络上工作，Box 的价值和地址都在升级过程中得到保留。
 
 让我们看看 [OpenZeppelin Upgrades 插件](../../Upgrades-Plugins/Overview.md)是如何实现这一点的。
 
 ## 升级是如何工作的
-本节内容将比其他部分更加理论化，如果您感到不感兴趣，可以跳过，稍后再回来查看。
+本节内容将比其他部分更加理论化，如果你感到不感兴趣，可以跳过，稍后再回来查看。
 
-当您创建一个新的可升级合约实例时，[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)实际上会部署三个合约：
+当你创建一个新的可升级合约实例时，[OpenZeppelin Upgrades插件](../../Upgrades-Plugins/Overview.md)实际上会部署三个合约：
 
-1. 您编写的合约，也就是包含逻辑的实现合约。
+1. 你编写的合约，也就是包含逻辑的实现合约。
 
 2. 一个ProxyAdmin来作为代理的管理员。
 
-3. 一个代理合约指向实现合约，这是您实际上与之交互的合约。
+3. 一个代理合约指向实现合约，这是你实际上与之交互的合约。
 
 在这里，代理是一个简单的合约，只是将所有调用委托给一个实现合约。委托调用类似于普通调用，只是所有代码都在调用者的上下文中执行，而不是被调用者的上下文中执行。因此，实现合约中的转账实际上将转移代理的余额，对合约存储的任何读写都将从代理自己的存储中读取或写入。
 
@@ -232,18 +232,18 @@ undefined
 2. 向代理发送交易，将其实现地址更新为新的地址。
 
 > NOTE
-您可以使用相同的实现合约拥有多个代理，因此如果您计划部署多个相同合约的副本，使用此模式可以节省 gas。
+你可以使用相同的实现合约拥有多个代理，因此如果你计划部署多个相同合约的副本，使用此模式可以节省 gas。
 
 任何智能合约的用户都始终与代理交互，代理永远不会更改其地址。这样可以在不要求用户做任何更改的情况下，推出升级或修复错误-他们只需像往常一样与相同的地址交互。
 
 > NOTE
-如果您想了解更多关于OpenZeppelin代理如何工作的信息，请查看[代理](../../Upgrades-Plugins/Proxy-Upgrade-Pattern.md)。
+如果你想了解更多关于OpenZeppelin代理如何工作的信息，请查看[代理](../../Upgrades-Plugins/Proxy-Upgrade-Pattern.md)。
 
 ## 合约升级的限制
 虽然任何智能合约都可以被设计成可升级的，但是 Solidity 语言的一些限制需要加以解决。这些限制在编写合约的初始版本和升级版本时都会出现。
 
 ### 初始化
-可升级合约不能有构造函数。为了帮助您运行初始化代码，[OpenZeppelin Contracts](../../Contracts/Contracts.4.x/Overview.md)提供了[Initializable基础合约，允许您将方法标记为initializer](../Upgrading-smart-contracts/Upgrading-smart-contracts-hardhat.md)，确保它只能运行一次。
+可升级合约不能有构造函数。为了帮助你运行初始化代码，[OpenZeppelin Contracts](../../Contracts/Contracts.4.x/Overview.md)提供了[Initializable基础合约，允许你将方法标记为initializer](../Upgrading-smart-contracts/Upgrading-smart-contracts-hardhat.md)，确保它只能运行一次。
 
 例如，让我们编写一个带有初始化器的Box合约的新版本，将一个管理员的地址存储在其中，只允许该管理员更改其内容。
 ```
@@ -297,17 +297,17 @@ async function main () {
 main();
 ```
 
-就实际目的而言，初始化器的作用类似于构造函数。然而，请记住，由于它是一个常规函数，您需要手动调用所有基础合约（如果有的话）的初始化器。
+就实际目的而言，初始化器的作用类似于构造函数。然而，请记住，由于它是一个常规函数，你需要手动调用所有基础合约（如果有的话）的初始化器。
 
-您可能已经注意到，我们包括了一个构造函数和一个初始化器。这个构造函数的目的是将实现合约保持在初始化状态，这是对某些潜在攻击的缓解。
+你可能已经注意到，我们包括了一个构造函数和一个初始化器。这个构造函数的目的是将实现合约保持在初始化状态，这是对某些潜在攻击的缓解。
 
 要了解更多关于编写可升级合约时的注意事项以及其他信息，请查看我们的[编写可升级合约指南](../../Upgrades-Plugins/Writing-Upgradeable-Contracts.md)。
 
 
 ### 升级
-由于技术限制，当您将合约升级到新版本时，您无法更改该合约的**存储布局**。
+由于技术限制，当你将合约升级到新版本时，你无法更改该合约的**存储布局**。
 
-这意味着，如果您已经在合约中声明了一个状态变量，您无法删除它，更改其类型或在其之前声明另一个变量。在我们的 Box 示例中，这意味着我们只能在value之后添加新的状态变量。
+这意味着，如果你已经在合约中声明了一个状态变量，你无法删除它，更改其类型或在其之前声明另一个变量。在我们的 Box 示例中，这意味着我们只能在value之后添加新的状态变量。
 ```
 // contracts/Box.sol
 contract Box {
@@ -320,7 +320,7 @@ contract Box {
 }
 ```
 
-幸运的是，这个限制只影响状态变量。您可以随意更改合约的函数和事件。
+幸运的是，这个限制只影响状态变量。你可以随意更改合约的函数和事件。
 
 > NOTE
 如果你意外地搞乱了合约的存储布局，升级插件将在你尝试升级时发出警告。
@@ -333,9 +333,9 @@ contract Box {
 当我们想要升级时，我们应该为新的实现合约创建单元测试，并创建更高级别的测试，以测试使用upgradeProxy进行升级后通过代理进行交互，并检查状态是否在升级后得以维护。
 
 ## 可能存在的问题
-在学习如何升级合约时，您可能会发现自己处于本地环境中的冲突合约情况。为了解决这个问题，请考虑使用以下步骤：
+在学习如何升级合约时，你可能会发现自己处于本地环境中的冲突合约情况。为了解决这个问题，请考虑使用以下步骤：
 
 停止使用npx hardhat node运行的节点ctrl+C。执行清理命令：npx hardhat clean。
 
 ## 下一步
-现在您已经知道如何升级智能合约，并可以迭代开发项目，是时候将项目带到[测试网](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)和[生产环境](../Preparing-for-mainnet/Preparing-for-mainnet.md)了！您可以放心，如果出现错误，您有工具来修改合约并改变它。
+现在你已经知道如何升级智能合约，并可以迭代开发项目，是时候将项目带到[测试网](../Connecting-to-public-test-networks/Connecting-to-public-test-networks-hardhat.md)和[生产环境](../Preparing-for-mainnet/Preparing-for-mainnet.md)了！你可以放心，如果出现错误，你有工具来修改合约并改变它。

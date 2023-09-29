@@ -14,7 +14,7 @@ Relay API分为两个模块：
 有关身份验证的更多信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
-您可以使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包简化与Relay API的交互。
+你可以使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包简化与Relay API的交互。
 
 > NOTE
 不建议在浏览器环境中使用[defender-relay-client](https://www.npmjs.com/package/defender-relay-client) npm包，因为密钥将被公开暴露。
@@ -30,7 +30,7 @@ Relay客户端模块公开以下终端：
 
 ### 列出 Relayer 
 
-要列出现有的 Relayer ，您可以在客户端上调用list函数，该函数返回ListRelayer Response对象：
+要列出现有的 Relayer ，你可以在客户端上调用list函数，该函数返回ListRelayer Response对象：
 ```
 await client.list();
 ```
@@ -63,7 +63,7 @@ curl \
 
 ### 列出 Relayer 密钥
 
-要列出与现有 Relayer 关联的密钥，您可以在客户端上调用listKeys函数，并提供一个relayerId参数，该函数将返回一个RelayerKey对象数组：
+要列出与现有 Relayer 关联的密钥，你可以在客户端上调用listKeys函数，并提供一个relayerId参数，该函数将返回一个RelayerKey对象数组：
 ```
 await client.listKeys('58b3d255-e357-4b0d-aa16-e86f745e63b9');
 ```
@@ -92,7 +92,7 @@ curl \
 ```
 
 ### 创建 Relayer 
-要创建新的 Relayer ，您需要按照接口CreateRelayer Request中直接描述的参数提供参数。
+要创建新的 Relayer ，你需要按照接口CreateRelayer Request中直接描述的参数提供参数。
 ```
 interface CreateRelayerRequest {
   name: string;
@@ -163,7 +163,7 @@ const requestParameters = {
 await client.create(requestParameters);
 ```
 
-您还可以通过在useAddressFromRelayer Id参数中引用现有的Relayer Id来将现有的Relayer 克隆到不同的网络中：
+你还可以通过在useAddressFromRelayer Id参数中引用现有的Relayer Id来将现有的Relayer 克隆到不同的网络中：
 ```
 const requestParameters = {
   name: 'MyClonedRelayer',
@@ -232,7 +232,7 @@ curl \
 ```
 
 ### 更新 Relayer 
-要更新 Relayer ，您可以在客户端上调用更新函数。这将需要 Relayer ID和UpdateRelayer Request对象作为参数：
+要更新 Relayer ，你可以在客户端上调用更新函数。这将需要 Relayer ID和UpdateRelayer Request对象作为参数：
 ```
 interface UpdateRelayer Request {
   name?: string;
@@ -363,7 +363,7 @@ curl \
     "https://api.defender.openzeppelin.com/txs"
 ```
 
-您将收到以下格式的回复
+你将收到以下格式的回复
 ```
 type Address = string;
 type BigUInt = string | number;
@@ -503,7 +503,7 @@ curl \
 ```
 
 #### 列出交易记录
-要检索最近从您的Relayer 发送的交易记录列表，请向txs发出GET请求。您可以选择设置since、limit和status（mined、pending或failed）作为查询参数。
+要检索最近从你的Relayer 发送的交易记录列表，请向txs发出GET请求。你可以选择设置since、limit和status（mined、pending或failed）作为查询参数。
 
 请求示例：
 ```
@@ -540,7 +540,7 @@ curl \
 ```
 
 ### 签名终端
-要根据[EIP-191标准](https://eips.ethereum.org/EIPS/eip-191)（以\x19Ethereum Signed Message：\n为前缀）使用您的Relay私钥对任意消息进行签名，可以通过向/sign发送一个包含要签名的十六进制字符串的负载的POST请求来实现。有效载荷格式如下：
+要根据[EIP-191标准](https://eips.ethereum.org/EIPS/eip-191)（以\x19Ethereum Signed Message：\n为前缀）使用你的Relay私钥对任意消息进行签名，可以通过向/sign发送一个包含要签名的十六进制字符串的负载的POST请求来实现。有效载荷格式如下：
 ```
 interface SignMessagePayload {
   message: Hex;
@@ -561,7 +561,7 @@ curl \
     "https://api.defender.openzeppelin.com/sign"
 ```
 
-您将收到以下格式的回复：
+你将收到以下格式的回复：
 ```
 interface SignedMessagePayload {
   sig: Hex;
@@ -604,7 +604,7 @@ curl \
     "https://api.defender.openzeppelin.com/sign-typed-data"
 ```
 
-您将收到以下格式的响应:
+你将收到以下格式的响应:
 ```
 interface SignedMessagePayload {
   sig: Hex;
@@ -639,7 +639,7 @@ curl \
     "https://api.defender.openzeppelin.com/Relayer "
 ```
 
-您将收到以下格式的回复:
+你将收到以下格式的回复:
 ```
 interface Relayer Model {
   Relayer Id: string;
@@ -666,7 +666,7 @@ interface Relayer Model {
 ```
 
 ### JSON RPC 端点
-要向您的Relayer 网络发出JSON RPC调用，请向/Relayer /jsonrpc端点发出POST请求，并提供方法名称和参数。请注意，不支持事件过滤方法和WebSocket订阅。
+要向你的Relayer 网络发出JSON RPC调用，请向/Relayer /jsonrpc端点发出POST请求，并提供方法名称和参数。请注意，不支持事件过滤方法和WebSocket订阅。
 
 请求的示例：
 ```

@@ -3,13 +3,13 @@
 OpenZeppelin提供工具来部署和保护可升级的智能合约。
 
 * [Upgrades Plugins](../Upgrades-Plugins/Overview.md) 用于部署可升级合约，并进行自动化安全检查。
-* [Upgradeable Contracts](../Contracts/Contracts.4.x/Using-with-Upgrades.md) 使用我们的 Solidity 组件构建您的合约。
+* [Upgradeable Contracts](../Contracts/Contracts.4.x/Using-with-Upgrades.md) 使用我们的 Solidity 组件构建你的合约。
 * [Defender Admin](../Defender/Components/Admin/Admin.md#升级) 用于管理生产环境中的升级，并自动化运营。
 
 在下面找到我们所有与可升级性相关的资源。
 
 > TIP
-如果您不知道从哪里开始，我们建议从学习：[升级智能合约开始](../Learn/Upgrading-smart-contracts/Connecting-to-public-test-networks-truffle.md)。
+如果你不知道从哪里开始，我们建议从学习：[升级智能合约开始](../Learn/Upgrading-smart-contracts/Connecting-to-public-test-networks-truffle.md)。
 
 ## Resources
 

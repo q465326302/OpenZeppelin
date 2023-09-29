@@ -1,5 +1,5 @@
 # Using with Truffle
-该软件包为您的Truffle迁移和测试添加了功能，以便您可以为您的合约部署和升级代理。
+该软件包为你的Truffle迁移和测试添加了功能，以便你可以为你的合约部署和升级代理。
 
 > NOTE
 目前还不支持从[Truffle外部脚本](https://www.trufflesuite.com/docs/truffle/getting-started/writing-external-scripts)中使用。
@@ -32,7 +32,7 @@ module.exports = async function (deployer) {
 
 这将自动检查Box合约是否可升级，如果需要的话，设置代理管理员，部署一个Box合约的实现合约（除非先前已经有一个），创建一个代理，并通过调用initialize(42)来初始化它。
 
-然后，在将来的迁移中，您可以使用upgradeProxy函数将部署的实例升级到新版本。新版本可以是一个不同的合约（比如BoxV2），或者您可以只是修改现有的Box合约并重新编译它-插件会注意到它的变化。
+然后，在将来的迁移中，你可以使用upgradeProxy函数将部署的实例升级到新版本。新版本可以是一个不同的合约（比如BoxV2），或者你可以只是修改现有的Box合约并重新编译它-插件会注意到它的变化。
 ```
 // migrations/MM_upgrade_box_contract.js
 const { upgradeProxy } = require('@openzeppelin/truffle-upgrades');
@@ -51,7 +51,7 @@ module.exports = async function (deployer) {
 
 ### Beacon代理
 
-您还可以使用此插件通过deployBeacon函数部署一个可升级的beacon合约，然后通过使用deployBeaconProxy函数部署一个或多个指向该beacon的beacon代理。
+你还可以使用此插件通过deployBeacon函数部署一个可升级的beacon合约，然后通过使用deployBeaconProxy函数部署一个或多个指向该beacon的beacon代理。
 
 ```
 // migrations/NN_deploy_upgradeable_box.js
@@ -68,7 +68,7 @@ module.exports = async function (deployer) {
 };
 ```
 
-在未来的迁移中，您可以使用erc1967.getBeaconAddress函数从部署的beacon代理实例中获取beacon地址，然后调用upgradeBeacon函数将该beacon升级到新版本。当beacon升级时，所有指向它的beacon代理将使用新的合约实现。
+在未来的迁移中，你可以使用erc1967.getBeaconAddress函数从部署的beacon代理实例中获取beacon地址，然后调用upgradeBeacon函数将该beacon升级到新版本。当beacon升级时，所有指向它的beacon代理将使用新的合约实现。
 
 ```
 // migrations/MM_upgrade_box_contract.js

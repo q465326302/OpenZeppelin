@@ -1,5 +1,5 @@
 # Test Helpers
-用于以太坊智能合约测试的断言库。确保您的合约的作用符合预期！
+用于以太坊智能合约测试的断言库。确保你的合约的作用符合预期！
 
 * 检查[事务回滚](./API-Reference.md#expectrevert)的原因以及是否以正确
 
@@ -24,10 +24,10 @@ npm install --save-dev @openzeppelin/test-helpers
 npm install --save-dev @nomiclabs/hardhat-web3 web3
 ```
 
-请记得按照[安装说明](https://hardhat.org/plugins/nomiclabs-hardhat-web3.html#installation)将插件包含在您的配置中。
+请记得按照[安装说明](https://hardhat.org/plugins/nomiclabs-hardhat-web3.html#installation)将插件包含在你的配置中。
 
 ### 用法
-在您的测试文件中导入@openzeppelin/test-helpers以访问不同的断言和实用程序。
+在你的测试文件中导入@openzeppelin/test-helpers以访问不同的断言和实用程序。
 ```
 const {
   BN,           // Big Number support

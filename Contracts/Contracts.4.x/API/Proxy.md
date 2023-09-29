@@ -18,7 +18,7 @@
 * [UUPSUpgradeable](#uupsupgradeable)：一种可以包含在实现合约中的可升级性机制。
 
 > CAUTION
-正确和安全地使用可升级代理是一项困难的任务，需要对代理模式、Solidity和EVM有深入的了解。除非您需要很多低级别的控制，否则我们建议使用[OpenZeppelin Upgrades](../../../Upgrades-Plugins/Overview.md)插件来进行Truffle和Hardhat的升级。
+正确和安全地使用可升级代理是一项困难的任务，需要对代理模式、Solidity和EVM有深入的了解。除非你需要很多低级别的控制，否则我们建议使用[OpenZeppelin Upgrades](../../../Upgrades-Plugins/Overview.md)插件来进行Truffle和Hardhat的升级。
 
 另一组代理是beacon代理。这种模式由Dharma推广，允许多个代理在单个事务中升级到不同的实现。
 
@@ -37,7 +37,7 @@ OpenZeppelin中最初提供的代理遵循了[透明代理模式](https://blog.o
 
 虽然这两种代理都共享相同的升级接口，但在UUPS代理中，升级由实现处理，并且最终可以被移除。而透明代理则在代理本身中包含了升级和管理员逻辑。这意味着[TransparentUpgradeableProxy](#transparentupgradeableproxy)的部署成本比UUPS代理更高。
 
-UUPS代理是使用[ERC1967Proxy](#erc1967proxy)实现的。请注意，该代理本身不可升级。实现的角色是在合约的逻辑之外，包含所有必要的代码来更新存储在代理存储空间的特定槽位中的实现地址。这就是*UUPSUpgradeable*合约的作用。继承它（并使用相关的访问控制机制重写 [_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation) 函数）将使您的合约成为符合UUPS的实现。
+UUPS代理是使用[ERC1967Proxy](#erc1967proxy)实现的。请注意，该代理本身不可升级。实现的角色是在合约的逻辑之外，包含所有必要的代码来更新存储在代理存储空间的特定槽位中的实现地址。这就是*UUPSUpgradeable*合约的作用。继承它（并使用相关的访问控制机制重写 [_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation) 函数）将使你的合约成为符合UUPS的实现。
 
 请注意，由于两种代理都使用相同的存储槽位来存储实现地址，使用符合UUPS的实现与[TransparentUpgradeableProxy](#transparentupgradeableproxy)结合使用可能会允许非管理员执行升级操作。
 
@@ -231,7 +231,7 @@ import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.so
 
 这些属性意味着管理员账户只能用于管理员操作，如升级代理或更改管理员，所以最好是一个专用账户，不要用于其他任何用途。这样可以避免在尝试从代理实现中调用函数时出现突然的错误，从而带来麻烦。
 
-我们建议专用账户是[ProxyAdmin](#proxyadmin)合约的一个实例。如果以这种方式设置，您应该将ProxyAdmin实例视为代理的真正管理接口。
+我们建议专用账户是[ProxyAdmin](#proxyadmin)合约的一个实例。如果以这种方式设置，你应该将ProxyAdmin实例视为代理的真正管理接口。
 
 > NOTE
 该代理的真正接口是在ITransparentUpgradeableProxy中定义的接口。该合约不继承该接口，而是在_fallback中使用自定义调度机制隐式实现管理员函数。因此，编译器不会为该合约生成ABI。这是为了完全实现透明性，避免由于代理和实现之间的选择器冲突而解码失败。

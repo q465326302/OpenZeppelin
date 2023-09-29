@@ -11,18 +11,18 @@
 
 * Autotask使用[Sentinel API](https://www.npmjs.com/package/defender-sentinel-client)将克隆地址添加到由Contract Sentinel监视的地址列表中
 
-在这种情况下，合约的 ABI 可以预先提供，因为克隆合约将具有相同的 ABI。或者，您可以使用 [Etherscan 的 API ](https://docs.etherscan.io/api-endpoints/contracts)动态地从已验证的合约地址检索 ABI。
+在这种情况下，合约的 ABI 可以预先提供，因为克隆合约将具有相同的 ABI。或者，你可以使用 [Etherscan 的 API ](https://docs.etherscan.io/api-endpoints/contracts)动态地从已验证的合约地址检索 ABI。
 
 ## 生成API密钥
 
 为了以编程方式将合约添加到Admin仪表板中，defender-admin-client API需要API密钥和和secret.
 
-您可以使用现有的API密钥或创建一个仅用于此目的的API密钥。
+你可以使用现有的API密钥或创建一个仅用于此目的的API密钥。
 
 要创建一个新密钥，请打开右上角的菜单，然后选择团队API密钥。生成一个新的具有至少创建Admin提议能力的密钥和secret。将其复制并保存在安全位置。
 ![guide-factory-1.png](img/guide-factory-1.png)
 
-您可以使用Defender的便捷[Secrets vault](../../Components/Autotasks/Autotasks.md)来安全地存储在之前步骤中创建的Admin API密钥和secret。
+你可以使用Defender的便捷[Secrets vault](../../Components/Autotasks/Autotasks.md)来安全地存储在之前步骤中创建的Admin API密钥和secret。
 
 从左侧选择Autotask，然后选择Secrets。为API密钥和密钥命名，并粘贴相应的字符串。
 ![guide-factory-2.png](img/guide-factory-2.png)
@@ -139,7 +139,7 @@ exports.handler = async function (event) {
 
 在执行自动任务下，选择在上一步中创建的自动任务名称。
 
-与任何帐户操作一样，触发此Sentinels将记录在Defender日志中。如果需要，可以选择在触发此Sentinels时接收通知的方式。只需从“创建新通知”中选择您的选择。
+与任何帐户操作一样，触发此Sentinels将记录在Defender日志中。如果需要，可以选择在触发此Sentinels时接收通知的方式。只需从“创建新通知”中选择你的选择。
 
 选择创建。
 ![guide-factory-5.png](img/guide-factory-5.png)
@@ -156,7 +156,7 @@ exports.handler = async function (event) {
 导航到Admin以查看仪表板中的新合约以及其他合约。
 ![guide-factory-8.png](img/guide-factory-8.png)
 
-您需要克隆合约的地址，以进行下一步操作。从仪表板上的列表中复制其地址。
+你需要克隆合约的地址，以进行下一步操作。从仪表板上的列表中复制其地址。
 ![guide-factory-9.png](img/guide-factory-9.png)
 
 ## 创建监视克隆合约的Sentinels
@@ -178,7 +178,7 @@ exports.handler = async function (event) {
 
 在当前状态下，Sentinels监视单个克隆合约的值变化。但是，合约Sentinels可以监视多个地址，前提是它们遵守相同的ABI。
 
-在下一步中，您将向现有Autotask添加一个额外的组件，该组件利用SentinelsAPI将其他合约地址推送到由此Sentinels监视的合约数组中。
+在下一步中，你将向现有Autotask添加一个额外的组件，该组件利用SentinelsAPI将其他合约地址推送到由此Sentinels监视的合约数组中。
 
 ## 将Sentinels代码添加到Autotask中
 将[以下代码](https://github.com/offgridauthor/defender-admin-autoadd/blob/main/autotasks/index.js)添加到先前创建的Autotask中：
@@ -188,7 +188,7 @@ const { SentinelClient } = require('defender-sentinel-client')
 
 可以使用与defender-admin-client相同的API密钥，前提是该密钥具有编辑Sentinels所需的权限。
 
-请注意，subscriberId变量是指Sentinel的ID。您可以通过以下方式找到此值：
+请注意，subscriberId变量是指Sentinel的ID。你可以通过以下方式找到此值：
 
 * 使用await client.list()查询已创建的Sentinel列表；
 
@@ -210,7 +210,7 @@ await sentinelClient.update(subscriberId, { addresses: subscribedAddresses })
 
 现在当Autotask运行时，它不仅会将合约添加到管理员仪表板中，还会将新创建的克隆合约添加到Contract Sentinel监视的地址数组中。
 
-为了验证，从工厂创建另一个Box克隆合约。在Logging中，您将看到一系列步骤已成功触发。
+为了验证，从工厂创建另一个Box克隆合约。在Logging中，你将看到一系列步骤已成功触发。
 
 ![guide-factory-10.png](img/guide-factory-10.png)
 

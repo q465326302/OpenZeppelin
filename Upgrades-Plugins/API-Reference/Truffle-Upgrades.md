@@ -57,7 +57,7 @@ async function deployProxy(
 ): Promise<ContractInstance>
 ```
 
-创建一个 UUPS 或透明代理，给定一个用作实现的 Truffle 合约类，并返回一个带有代理地址和实现接口的合约实例。在迁移过程中，代理地址将存储在实现合约的构件中，因此您可以使用 Truffle 的 [deployed()](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions#-code-mycontract-deployed-code-) 函数加载它。
+创建一个 UUPS 或透明代理，给定一个用作实现的 Truffle 合约类，并返回一个带有代理地址和实现接口的合约实例。在迁移过程中，代理地址将存储在实现合约的构件中，因此你可以使用 Truffle 的 [deployed()](https://www.trufflesuite.com/docs/truffle/reference/contract-abstractions#-code-mycontract-deployed-code-) 函数加载它。
 
 如果设置了 args，将在代理部署期间使用提供的 args 调用初始化函数 initialize。
 
@@ -266,7 +266,7 @@ async function forceImport(
 强制导入现有代理、beacon或实现合约部署，以便与此插件一起使用。提供现有代理、beacon或实现的地址，以及部署的实现合约的Truffle合约类。
 
 > CAUTION
-当导入代理或beacon时，deployedImpl参数必须是**当前正在**使用的实现合约版本的合约类，而不是您计划升级到的版本。
+当导入代理或beacon时，deployedImpl参数必须是**当前正在**使用的实现合约版本的合约类，而不是你计划升级到的版本。
 
 使用此函数通过导入先前的部署来重新创建丢失的[网络文件](../Network-Files.md)，或者即使它们最初不是由此插件部署的，也可以注册代理或beacon进行升级。支持UUPS、Transparent和Beacon代理，以及beacon和实现合约。
 
@@ -377,7 +377,7 @@ async function validateUpgrade(
 
 **示例：**
 
-验证将现有代理升级到新合约（将PROXY_ADDRESS替换为您的代理地址）：
+验证将现有代理升级到新合约（将PROXY_ADDRESS替换为你的代理地址）：
 ```
 const { validateUpgrade } = require('@openzeppelin/truffle-upgrades');
 
@@ -413,7 +413,7 @@ async function prepareUpgrade(
 ): Promise<string>
 ```
 
-验证并部署一个新的实现合约，并返回其地址。如果referenceAddressOrContract是当前实现的地址，则kind选项是必需的。使用此方法准备从您无法直接控制或无法从Truffle使用的管理地址运行升级。
+验证并部署一个新的实现合约，并返回其地址。如果referenceAddressOrContract是当前实现的地址，则kind选项是必需的。使用此方法准备从你无法直接控制或无法从Truffle使用的管理地址运行升级。
 
 **参数：**
 

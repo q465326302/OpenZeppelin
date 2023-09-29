@@ -1,12 +1,12 @@
 # How to Relay Gasless Meta-Transactions
 [无需gas元交易](../../../Contracts/Contracts.4.x/API/Meta%20Transactions.md)为用户提供了更无缝的体验，使他们在与区块链互动时不必花费太多的钱。这种方法允许用户免费签署交易，并由第三方安全执行，而第三方支付gas费用以执行交易。
 
-使用OpenZeppelin Defender可以轻松安全地实现无需gas的元交易中继。Defender [Relay](../../Components/Relay/Relay.md)允许您轻松发送交易，并处理私钥存储、交易签名、nonce管理、gas估算以及必要时的自动重新提交。
+使用OpenZeppelin Defender可以轻松安全地实现无需gas的元交易中继。Defender [Relay](../../Components/Relay/Relay.md)允许你轻松发送交易，并处理私钥存储、交易签名、nonce管理、gas估算以及必要时的自动重新提交。
 
 此[演示应用程序](https://github.com/OpenZeppelin/workshops/tree/master/25-defender-metatx-api)使用[MinimalForwarder](../../../Contracts/Contracts.4.x/API/Meta-Transactions.md#minimalforwarder)和[ERC2771Context](../../../Contracts/Contracts.4.x/API/Meta-Transactions.md#erc2771context)实现元交易，以将msg.sender与 Relayer 的地址分离。用户需要做的就是使用他们想要发出交易的账户签署消息。签名是使用用户的私钥与目标合约和所需交易的数据形成的。这种签名在链外进行，不需要gas费用。将签名传递给Relayer ，以便它可以为用户执行交易（并支付gas费用）。
 
 ## 演示应用程序概述
-您可以在此处查看[实时演示dapp](https://defender-metatx-workshop-demo.openzeppelin.com/)。如果用户有可用的资金支付交易，则直接接受注册，否则将数据作为元交易发送。
+你可以在此处查看[实时演示dapp](https://defender-metatx-workshop-demo.openzeppelin.com/)。如果用户有可用的资金支付交易，则直接接受注册，否则将数据作为元交易发送。
 
 在示例代码中，[SimpleRegistry合约](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/SimpleRegistry.sol)的功能是获取字符串并存储它。通过将签署者与交易发送者分离，合约的[元交易实现](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/contracts/Registry.sol)可以实现相同的结果。
 
@@ -15,7 +15,7 @@
 两个合约之间的第二个基本变化是元交易合约需要指定受信任的Relayer地址，本例中为MinimalForwarder合约的地址。
 
 ## 配置项目
-首先，fork存储库，然后将其git clone到您的计算机并安装依赖项：
+首先，fork存储库，然后将其git clone到你的计算机并安装依赖项：
 ```
 $ git clone https://github.com/[GitHub username]/workshops.git
 $ cd workshops/25-defender-metatx-api/
@@ -35,7 +35,7 @@ TEAM_API_SECRET="Defender Team API secret"
 $ yarn create-relay
 ```
 
-编辑 [scripts/createRelay.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/scripts/createRelay.js) 文件，在 .env 文件中提供您的 Defender API 密钥，并根据需要调整变量名称。
+编辑 [scripts/createRelay.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/scripts/createRelay.js) 文件，在 .env 文件中提供你的 Defender API 密钥，并根据需要调整变量名称。
 
 使用 create 方法创建 Relayer ：
 ```
@@ -49,12 +49,12 @@ const requestParams = {
 const Relayer  = await relayClient.create(requestParams);
 ```
 
-请注意，您稍后需要从控制台日志或创建的relay.json文件中获取Relayer Id。在创建Autotask时，您将使用此ID。
+请注意，你稍后需要从控制台日志或创建的relay.json文件中获取Relayer Id。在创建Autotask时，你将使用此ID。
 
-当您想要通过API发送交易时，将使用Relayer 的API密钥和secret。在上面的代码中，它附加到现有的.env文件中。
+当你想要通过API发送交易时，将使用Relayer 的API密钥和secret。在上面的代码中，它附加到现有的.env文件中。
 
 ## 使用Hardhat编译合约
-请使用以下代码编写您的Registry.sol合约：
+请使用以下代码编写你的Registry.sol合约：
 ```
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
@@ -85,7 +85,7 @@ contract Registry is ERC2771Context {
 运行npx hardhat compile以准备部署代码。
 
 ## 使用Relayer 进行部署
-您可以轻松地部署已编译的智能合约，而无需处理私钥，方法是使用Defender Relayer 客户端。
+你可以轻松地部署已编译的智能合约，而无需处理私钥，方法是使用Defender Relayer 客户端。
 
 创建relay-client的实例，将Relay的API密钥和secret作为其凭据提供，并在调用deploy()时连接到它。
 ```
@@ -186,17 +186,17 @@ module.exports = {
 // ...
 ```
 
-前往[Defender](https://defender.openzeppelin.com/)获取Autotask的Webhook，以便您可以测试功能将应用程序连接到Autotask以Relayer 元交易。
+前往[Defender](https://defender.openzeppelin.com/)获取Autotask的Webhook，以便你可以测试功能将应用程序连接到Autotask以Relayer 元交易。
 ![guide-metatx-1.gif](img/guide-metatx-1.gif)
 
-将Autotask webhook保存到您的.env文件中，命名为WEBHOOK_URL，并在/app .env文件中命名为REACT_APP_WEBHOOK_URL。
+将Autotask webhook保存到你的.env文件中，命名为WEBHOOK_URL，并在/app .env文件中命名为REACT_APP_WEBHOOK_URL。
 
 使用yarn sign，然后使用yarn invoke测试元交易的功能。
 
 ## 创建Web应用程序
 关键构建块已经建立，下一步是创建一个利用这些组件的Web应用程序。
 
-您可以在[register.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js)文件中查看此关系的详细信息。用户的交易请求通过Autotask的webhook发送到Relayer ，根据应用程序提供的参数执行Autotask的逻辑。请注意，签名者的nonce将从交易中递增。
+你可以在[register.js](https://github.com/OpenZeppelin/workshops/blob/master/25-defender-metatx-api/app/src/eth/register.js)文件中查看此关系的详细信息。用户的交易请求通过Autotask的webhook发送到Relayer ，根据应用程序提供的参数执行Autotask的逻辑。请注意，签名者的nonce将从交易中递增。
 ```
 import { ethers } from 'ethers';
 import { createInstance } from './forwarder';

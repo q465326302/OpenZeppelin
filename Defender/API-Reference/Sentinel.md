@@ -1,10 +1,10 @@
 # Sentinel API Referencev
-Sentinel API允许您以编程方式创建和管理Sentinels。
+Sentinel API允许你以编程方式创建和管理Sentinels。
 
 请求需要使用从Team API Key协商的代币进行身份验证，该代币具有相应的功能。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
-我们建议您使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包简化与Sentinel API的交互。
+我们建议你使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包简化与Sentinel API的交互。
 
 > NOTE
 不建议在浏览器环境中使用[defender-sentinel-client](https://www.npmjs.com/package/defender-sentinel-client) npm包，因为密钥将公开暴露。
@@ -15,7 +15,7 @@ const client = new SentinelClient(creds);
 ```
 
 ## 通知端点
-Sentinels需要一个通知配置来在事件触发时通知正确的渠道。为此，您可以使用现有的通知ID（例如来自另一个Sentinels），或创建一个新的通知ID。
+Sentinels需要一个通知配置来在事件触发时通知正确的渠道。为此，你可以使用现有的通知ID（例如来自另一个Sentinels），或创建一个新的通知ID。
 
 以下通知渠道可用：
 
@@ -26,7 +26,7 @@ Sentinels需要一个通知配置来在事件触发时通知正确的渠道。�
 * Datadog
 
 ### 列出通知
-要列出所有通知渠道，您可以在客户端上调用listNotificationChannels函数，该函数返回一个NotificationResponse []对象。
+要列出所有通知渠道，你可以在客户端上调用listNotificationChannels函数，该函数返回一个NotificationResponse []对象。
 ```
 // List existing notification channels
 // This returns a `NotificationResponse[]` object.
@@ -65,7 +65,7 @@ curl \
 ```
 
 ### 创建通知
-要创建新的通知频道，您可以在客户端上调用createNotificationChannel函数。
+要创建新的通知频道，你可以在客户端上调用createNotificationChannel函数。
 
 createNotificationChannel函数需要CreateNotificationRequest对象，并返回一个NotificationResponse对象。
 ```
@@ -119,7 +119,7 @@ const notification = await client.createNotificationChannel({
 ```
 
 ### 更新通知
-要更新现有的通知通道，您可以在客户端上调用updateNotificationChannel函数，该函数返回一个NotificationResponse对象。该函数将UpdateNotificationRequest对象作为参数传入。
+要更新现有的通知通道，你可以在客户端上调用updateNotificationChannel函数，该函数返回一个NotificationResponse对象。该函数将UpdateNotificationRequest对象作为参数传入。
 ```
 const notificationChannel = await client.updateNotificationChannel(
 {
@@ -134,14 +134,14 @@ const notificationChannel = await client.updateNotificationChannel(
 ```
 
 ### 收到通知
-要检索通知频道，您可以在客户端上调用getNotificationChannel函数，该函数返回一个NotificationResponse对象。该函数以GetNotificationRequest对象作为参数。
+要检索通知频道，你可以在客户端上调用getNotificationChannel函数，该函数返回一个NotificationResponse对象。该函数以GetNotificationRequest对象作为参数。
 ```
 const notificationToRetrieve = {type: 'email', notificationId: '14e99e8f-e2be-4eb1-a543-b2d90b68cdd8'}
 const notificationChannel = await client.getNotificationChannel(notificationToRetrieve);
 ```
 
 ### 删除通知
-要删除通知频道，您可以在客户端上调用deleteNotificationChannel函数，如果成功则返回一个字符串。该函数将DeleteNotificationRequest对象作为参数。
+要删除通知频道，你可以在客户端上调用deleteNotificationChannel函数，如果成功则返回一个字符串。该函数将DeleteNotificationRequest对象作为参数。
 ```
 const notificationToDelete = {type: 'email', notificationId: '14e99e8f-e2be-4eb1-a543-b2d90b68cdd8'}
 const deleted = await client.deleteNotificationChannel(notificationToDelete);
@@ -150,7 +150,7 @@ const deleted = await client.deleteNotificationChannel(notificationToDelete);
 ## Sentinels终端
 
 ### 列出Sentinels
-要列出现有的Sentinels，您可以在客户端上调用list函数，该函数返回一个ListSentinelResponse对象：
+要列出现有的Sentinels，你可以在客户端上调用list函数，该函数返回一个ListSentinelResponse对象：
 ```
 await client.list();
 ```
@@ -197,7 +197,7 @@ curl \
 ```
 
 ### 创建Sentinels
-要创建一个新的Sentinels，您需要提供网络、名称、暂停状态、条件、警报阈值和通知配置。该请求被导出为CreateSentinelRequest类型。
+要创建一个新的Sentinels，你需要提供网络、名称、暂停状态、条件、警报阈值和通知配置。该请求被导出为CreateSentinelRequest类型。
 ```
 type CreateSentinelRequest =
   | ExternalCreateBlockSubscriberRequest
@@ -274,7 +274,7 @@ const requestParameters = {
 };
 ```
 
-如果您希望基于其他事件触发Sentinels，可以添加另一个EventCondition或FunctionCondition对象，例如：
+如果你希望基于其他事件触发Sentinels，可以添加另一个EventCondition或FunctionCondition对象，例如：
 ```
 functionConditions: [{ functionSignature: 'renounceOwnership()' }],
 eventConditions: [
@@ -285,12 +285,12 @@ eventConditions: [
 ]
 ```
 
-您还可以通过修改txCondition属性应用交易条件：可能的变量包括：value、gasPrice、maxFeePerGas、maxPriorityFeePerGas、gasLimit、gasUsed、to、from、nonce、status（'success'、'failed'或'any'）、input或transactionIndex。
+你还可以通过修改txCondition属性应用交易条件：可能的变量包括：value、gasPrice、maxFeePerGas、maxPriorityFeePerGas、gasLimit、gasUsed、to、from、nonce、status（'success'、'failed'或'any'）、input或transactionIndex。
 ```
 txCondition: 'gasPrice > 0',
 ```
 
-您也可以按照以下方式构建一个请求Forta（FORTA）Sentinels。
+你也可以按照以下方式构建一个请求Forta（FORTA）Sentinels。
 ```
 const requestParameters = {
   type: 'FORTA',
@@ -328,7 +328,7 @@ const requestParameters = {
 requestParameters.privateFortaNodeId: '0x0f06aB75c7DD497981b75CD82F6566e3a5CAd8f2'
 ```
 
-一旦填充了所有必需的参数，您可以通过客户端调用 create 函数来创建一个 Sentinel。这将返回一个 CreateSentinelResponse 对象。
+一旦填充了所有必需的参数，你可以通过客户端调用 create 函数来创建一个 Sentinel。这将返回一个 CreateSentinelResponse 对象。
 ```
 await client.create(requestParameters);
 ```
@@ -341,7 +341,7 @@ autotaskCondition: '3dcfee82-f5bd-43e3-8480-0676e5c28964',
 autotaskTrigger: '1abfee11-a5bc-51e5-1180-0675a5b24c61',
 ```
 
-通过POST请求使用subscribers端点可以创建新的sentinel。如果您希望直接调用API，则需要构建CreateBlockSubscriberRequest对象。
+通过POST请求使用subscribers端点可以创建新的sentinel。如果你希望直接调用API，则需要构建CreateBlockSubscriberRequest对象。
 
 > CANTION
 Defender目前仅支持Sentinels的有限子集（仅支持单个addressRule），我们强烈建议通过JS客户端进行操作，以避免不兼容性。
@@ -448,7 +448,7 @@ type Network =
 ```
 
 ### 获取Sentinels
-您可以通过ID检索Sentinel。这将返回一个CreateSentinelResponse对象。
+你可以通过ID检索Sentinel。这将返回一个CreateSentinelResponse对象。
 ```
 await client.get('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1');
 ```
@@ -465,14 +465,14 @@ curl \
 ```
 
 ### 更新Sentinels
-要更新Sentinels，您可以在客户端上调用update函数。这将需要SentinelsID和UpdateSentinelRequest对象作为参数：
+要更新Sentinels，你可以在客户端上调用update函数。这将需要SentinelsID和UpdateSentinelRequest对象作为参数：
 ```
 await client.update('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1', {name: 'My Updated Name', paused: true});
 ```
 
 使用subscribers/{id}端点通过PUT请求来更新现有的Sentinels。
 
-如果您希望直接调用API，则需要构造一个CreateBlockSubscriberRequest对象。
+如果你希望直接调用API，则需要构造一个CreateBlockSubscriberRequest对象。
 ```
 curl \
   -X PUT \
@@ -485,7 +485,7 @@ curl \
 ```
 
 ### 删除Sentinels
-您可以通过ID删除一个Sentinels。这将返回一个DeletedSentinelResponse对象。
+你可以通过ID删除一个Sentinels。这将返回一个DeletedSentinelResponse对象。
 ```
 await client.delete('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1');
 ```
@@ -509,15 +509,15 @@ curl \
 ```
 
 ### 暂停或恢复Sentinel。
-您可以通过ID暂停和取消暂停一个Sentinel。这将返回一个CreateSentinelResponse对象。
+你可以通过ID暂停和取消暂停一个Sentinel。这将返回一个CreateSentinelResponse对象。
 ```
 await client.pause('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1');
 await client.unpause('8181d9e0-88ce-4db0-802a-2b56e2e6a7b1');
 ```
-如果您希望直接调用API，可以使用更新端点，并根据需要设置pause为true或false。
+如果你希望直接调用API，可以使用更新端点，并根据需要设置pause为true或false。
 
 ### 列出网络
-要列出启用了租户的网络，您可以在客户端上调用listNetworks函数，它返回一个Network[]对象：
+要列出启用了租户的网络，你可以在客户端上调用listNetworks函数，它返回一个Network[]对象：
 ```
 
 await client.listNetworks(); // 列出所有网络
@@ -535,7 +535,7 @@ curl
 "https://defender-api.openzeppelin.com/sentinel/networks"
 ```
 
-您可以通过传递type查询参数来查询特定类型的网络（生产或测试）：
+你可以通过传递type查询参数来查询特定类型的网络（生产或测试）：
 ```
 curl
 -X GET

@@ -14,7 +14,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 默认情况下，所有者帐户将是部署合约的帐户。这可以在之后通过 [transferOwnership](#transferownershipaddress-newowner) 更改。
 
-这个模块通过继承使用。它将提供修饰符 onlyOwner，可以应用于您的函数，以限制它们的使用仅限于所有者。
+这个模块通过继承使用。它将提供修饰符 onlyOwner，可以应用于你的函数，以限制它们的使用仅限于所有者。
 
 **MODIFIERS**
 [onlyOwner()](#onlyowner)
@@ -571,7 +571,7 @@ IACCESSCONTROL
 对于DEFAULT_ADMIN_ROLE，只有在没有[defaultAdmin](#defaultadmin-→-address)或者该角色已被先前放弃的情况下才允许授予。
 
 > NOTE
-通过另一种机制公开此函数可能会使DEFAULT_ADMIN_ROLE再次可分配。请确保在您的实现中保证这是预期的行为。
+通过另一种机制公开此函数可能会使DEFAULT_ADMIN_ROLE再次可分配。请确保在你的实现中保证这是预期的行为。
 
 #### _revokeRole(bytes32 role, address account)
 内部#

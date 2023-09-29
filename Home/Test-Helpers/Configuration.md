@@ -1,5 +1,5 @@
 # Configuration
-测试助手需要进行一些轻量级配置，以正确连接到您的测试环境。
+测试助手需要进行一些轻量级配置，以正确连接到你的测试环境。
 
 在可能的情况下，这将自动完成，但某些情况需要手动设置。这可以通过调用configure函数来实现。：
 ```
@@ -17,7 +17,7 @@ const { expectRevert } = require('@openzeppelin/test-helpers');
 
 在Truffle环境中，web3提供者将从Truffle的全局web3实例中获取。否则，默认值为http://localhost:8545/。
 
-您可以通过provider键重写此行为并配置自己的提供者：
+你可以通过provider键重写此行为并配置自己的提供者：
 ```
 require('@openzeppelin/test-helpers/configure')({
   provider: 'http://localhost:8080',

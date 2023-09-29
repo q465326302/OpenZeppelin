@@ -1,8 +1,8 @@
 # Automatic generation
-@amxx/graphprotocol-utils软件包提供的图形编译工具可以用于自动生成适合您的应用程序的模式和清单。作为OpenZeppelin Subgraphs的一部分实现的模块与此兼容。
+@amxx/graphprotocol-utils软件包提供的图形编译工具可以用于自动生成适合你的应用程序的模式和清单。作为OpenZeppelin Subgraphs的一部分实现的模块与此兼容。
 
-## 描述您的应用程序
-要生成模式和清单，您必须提供您希望索引的合约的描述。
+## 描述你的应用程序
+要生成模式和清单，你必须提供你希望索引的合约的描述。
 
 以下是一个示例配置文件，用于在主网上索引6个合约：
 ```
@@ -38,8 +38,8 @@ npx graph-compiler \
 
 * generated/sample.subgraph.yaml 包含子图清单。
 
-## 部署您的子图
-为了将您的子图部署到托管服务或任何其他图节点，您必须首先创建它。此操作在[此处](https://thegraph.com/docs/developer/deploy-subgraph-hosted)有文档记录。完成此操作后，您可以使用 graph-cli 工具编译和部署生成的子图：
+## 部署你的子图
+为了将你的子图部署到托管服务或任何其他图节点，你必须首先创建它。此操作在[此处](https://thegraph.com/docs/developer/deploy-subgraph-hosted)有文档记录。完成此操作后，你可以使用 graph-cli 工具编译和部署生成的子图：
 ```
 npx graph-cli codegen generated/sample.subgraph.yaml
 npx graph-cli build generated/sample.subgraph.yaml

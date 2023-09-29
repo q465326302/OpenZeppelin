@@ -160,13 +160,13 @@ OpenZeppelin Upgrades解决这个问题的方法是通过透明代理模式。�
 |Owner|returns proxy.owner()|returns proxy.upgradeTo()|fails|
 |Other|returns erc20.owner()|fails|returns erc20.transfer()|
 
-幸运的是，OpenZeppelin Upgrades针对这种情况进行了处理，并创建了一个中间的ProxyAdmin合约，负责通过Upgrades插件创建的所有代理。即使您从节点的默认账户调用deploy命令，ProxyAdmin合约仍将是所有代理的实际管理员。这意味着您可以从节点的任何账户与代理进行交互，而不必担心透明代理模式的细微差别。只有通过Solidity创建代理的高级用户需要了解透明代理模式。
+幸运的是，OpenZeppelin Upgrades针对这种情况进行了处理，并创建了一个中间的ProxyAdmin合约，负责通过Upgrades插件创建的所有代理。即使你从节点的默认账户调用deploy命令，ProxyAdmin合约仍将是所有代理的实际管理员。这意味着你可以从节点的任何账户与代理进行交互，而不必担心透明代理模式的细微差别。只有通过Solidity创建代理的高级用户需要了解透明代理模式。
 
 ## 总结
 任何使用可升级合约的开发人员都应该熟悉本文所描述的代理方式。最后，这个概念非常简单，OpenZeppelin Upgrades旨在以一种方式封装所有代理机制，以使开发项目时需要记住的事项最少。以下是要记住的几点：
 
 * 基本了解代理的概念
 * 总是扩展存储而不是修改它
-* 确保您的合约使用初始化函数而不是构造函数
+* 确保你的合约使用初始化函数而不是构造函数
 
-此外，OpenZeppelin Upgrades将在列表中的某一项出现问题时通知您。
+此外，OpenZeppelin Upgrades将在列表中的某一项出现问题时通知你。

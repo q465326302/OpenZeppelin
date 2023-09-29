@@ -1,10 +1,10 @@
 # Admin API Reference
-Admin API允许您以编程方式创建新的Admin提案。
+Admin API允许你以编程方式创建新的Admin提案。
 
 请求需要使用从Team API Key协商的代币进行身份验证。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
-我们建议您使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包来简化与Admin API的交互。
+我们建议你使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包来简化与Admin API的交互。
 
 > NOTE
 不建议在浏览器环境中使用[defender-admin-client](https://www.npmjs.com/package/defender-admin-client) npm包，因为密钥将被公开显示。
@@ -130,7 +130,7 @@ interface ProposalFunctionInputType {
 }
 ```
 
-请注意，自定义提案需要填写字段via（通过该地址发送多签请求）、viaType（多签类型）、functionInterface（要调用的函数的ABI定义）和functionInputs等字段。另一方面，升级类型的提案只需要提供metadata.newImplementationAddress字段，因为Defender将自动为您计算其余字段。
+请注意，自定义提案需要填写字段via（通过该地址发送多签请求）、viaType（多签类型）、functionInterface（要调用的函数的ABI定义）和functionInputs等字段。另一方面，升级类型的提案只需要提供metadata.newImplementationAddress字段，因为Defender将自动为你计算其余字段。
 
 以下是一个升级请求的示例：
 ```
@@ -159,7 +159,7 @@ curl \
 ```
 
 > WARNING
-Defender API仅验证函数输入是否与签名相匹配，但不验证提案是否实际可执行。这意味着您可以创建调用合约上的不存在函数或尝试升级无法升级的合约的提案。但是，您将无法之后批准这些提案。
+Defender API仅验证函数输入是否与签名相匹配，但不验证提案是否实际可执行。这意味着你可以创建调用合约上的不存在函数或尝试升级无法升级的合约的提案。但是，你将无法之后批准这些提案。
 
 ### 存档提案
 可以通过API调用将提案存档（或取消存档），方法是在PUT调用有效负载中传递一个布尔值存档值。：
@@ -232,7 +232,7 @@ const simulation = await client.simulateProposal(
 );
 ```
 
-在创建提案请求中，您还可以选择将simulate标志设置为true（前提是这不是批量提案），在同一请求中模拟提案。您可以通过设置overrideSimulationOpts属性来重写模拟参数，该属性是一个SimulationRequest对象。
+在创建提案请求中，你还可以选择将simulate标志设置为true（前提是这不是批量提案），在同一请求中模拟提案。你可以通过设置overrideSimulationOpts属性来重写模拟参数，该属性是一个SimulationRequest对象。
 ```
 const proposalWithSimulation = await client.createProposal({
   contract: {
@@ -274,10 +274,10 @@ const proposalWithSimulation = await client.createProposal({
 目前不支持在批量提案中启用simulate标志作为createProposal请求的一部分。
 
 > NOTE
-模拟可能因多种原因而失败，例如网络拥塞、不稳定的提供商或达到配额限制。我们建议您跟踪响应代码以确保成功返回响应。如果事务被回滚并附带了原因字符串，可以从响应对象下的response.meta.returnString获取。从response.meta.reverted中跟踪事务撤消。
+模拟可能因多种原因而失败，例如网络拥塞、不稳定的提供商或达到配额限制。我们建议你跟踪响应代码以确保成功返回响应。如果事务被回滚并附带了原因字符串，可以从响应对象下的response.meta.returnString获取。从response.meta.reverted中跟踪事务撤消。
 
 ### 检索模拟。
-您也可以检索提案的现有模拟。
+你也可以检索提案的现有模拟。
 ```
 const proposal = await client.getProposal(contractId, proposalId);
 
@@ -288,7 +288,7 @@ const simulation = await client.getProposalSimulation(
 ```
 
 ## 合约终端点
-/contracts端点可用于管理导入到Defender管理面板中的合约。通过向端点发出PUT请求，您可以根据其网络和地址创建或更新合约：
+/contracts端点可用于管理导入到Defender管理面板中的合约。通过向端点发出PUT请求，你可以根据其网络和地址创建或更新合约：
 ```
 DATA='{
   "address": "0x179810822f56b0e79469189741a3fa5f2f9a7631",
@@ -307,10 +307,10 @@ curl \
     "https://defender-api.openzeppelin.com/admin/contracts"
 ```
 
-您还可以向相同的端点发出GET请求，以检索导入的所有合约列表。
+你还可以向相同的端点发出GET请求，以检索导入的所有合约列表。
 
 ## 验证端点
-/verifications端点可用于验证Defender支持的任何网络中任何合约的部署字节码。通过向端点发出POST请求，您可以发出验证请求，其结果将存储在Defender的地址簿中。这将使任何具有访问您的Defender工作区权限的人都能访问这些结果。
+/verifications端点可用于验证Defender支持的任何网络中任何合约的部署字节码。通过向端点发出POST请求，你可以发出验证请求，其结果将存储在Defender的地址簿中。这将使任何具有访问你的Defender工作区权限的人都能访问这些结果。
 ```
 DATA='
 {
@@ -332,7 +332,7 @@ curl \
     "https://defender-api.openzeppelin.com/admin/verifications"
 ```
 
-您还可以向 `/verifications/${contractNetwork}/${contractAddress}` 发出 GET 请求，以获取与 contractAddress 在Defender中关联的最新验证信息。对于上面的示例，请求的URL将是：
+你还可以向 `/verifications/${contractNetwork}/${contractAddress}` 发出 GET 请求，以获取与 contractAddress 在Defender中关联的最新验证信息。对于上面的示例，请求的URL将是：
 ```
 curl \
   -X GET \

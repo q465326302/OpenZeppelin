@@ -4,17 +4,17 @@
 这组合约提供了通过[Gas Station Network（GSN）](https://gsn.openzeppelin.com/)调用合约所需的所有工具。
 
 > TIP
-如果您对GSN还不熟悉，请查看我们关于[该系统的概述](/Learn/Sending%20gasless%20transactions/Sending-gasless-transactions.md)以及[创建支持GSN的合约的基本指南](../Gas-Station-Network/Gas-Station-Network.md)。
+如果你对GSN还不熟悉，请查看我们关于[该系统的概述](/Learn/Sending%20gasless%20transactions/Sending-gasless-transactions.md)以及[创建支持GSN的合约的基本指南](../Gas-Station-Network/Gas-Station-Network.md)。
 
 接收方必须继承的核心合约是[GSNRecipient](#gsnrecipient)：它包括所有必要的接口，以及一些帮助方法，使与GSN的交互更容易。
 
-使编写[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)变得简单的实用程序可以在[GSNRecipient](#gsnrecipient)中找到，或者您可以直接使用我们预先制作的策略之一：
+使编写[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)变得简单的实用程序可以在[GSNRecipient](#gsnrecipient)中找到，或者你可以直接使用我们预先制作的策略之一：
 
 * [GSNRecipientERC20Fee](#gsnrecipienterc20fee)使用特定应用的[ERC20代币](../Tokens/ERC20/ERC20.md)向最终用户收取gas费用
 
 * [GSNRecipientSignature](#gsnrecipientsignature)接受由受信任的第三方（例如后端中的私钥）签名的所有Relayer 调用
 
-您还可以查看组成GSN协议的两个合约接口：[IRelayRecipient](#irelayrecipient)和[IRelayHub](#irelayhub)，但您不需要直接使用它们。
+你还可以查看组成GSN协议的两个合约接口：[IRelayRecipient](#irelayrecipient)和[IRelayHub](#irelayhub)，但你不需要直接使用它们。
 
 ## 接收方
 
@@ -22,7 +22,7 @@
 基本GSN接收方合约：包括[IRelayRecipient](#irelayrecipient)接口，并在继承树中的所有合约上启用GSN支持。
 
 > TIP
-此合约是抽象的。[IRelayRecipient.acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-maxpossiblecharge-→-uint256-bytes)、[_preRelayedCall](#_prerelayedcallbytes-→-bytes32)和[_postRelayedCall](#_postrelayedcallbytes-bool-uint256-bytes32)函数未实现，必须由派生合约提供。有关如何使用预构建的[GSNRecipientSignature](#gsnrecipientsignature)和[GSNRecipientERC20Fee](#gsnrecipienterc20fee)的更多信息，请参阅[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)，或者如何编写您自己的策略。
+此合约是抽象的。[IRelayRecipient.acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-maxpossiblecharge-→-uint256-bytes)、[_preRelayedCall](#_prerelayedcallbytes-→-bytes32)和[_postRelayedCall](#_postrelayedcallbytes-bool-uint256-bytes32)函数未实现，必须由派生合约提供。有关如何使用预构建的[GSNRecipientSignature](#gsnrecipientsignature)和[GSNRecipientERC20Fee](#gsnrecipienterc20fee)的更多信息，请参阅[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)，或者如何编写你自己的策略。
 
 **FUNCTIONS**
 [getHubAddr()](#gethubaddr-→-address)
@@ -288,7 +288,7 @@ GSNRECIPIENT
 一个通过GSN从[IRelayHub](#irelayhub)调用的合约的基本接口。
 
 > TIP
-您不需要自己编写实现！请继承自[GSNRecipient](#gsnrecipient)。
+你不需要自己编写实现！请继承自[GSNRecipient](#gsnrecipient)。
 
 **FUNCTIONS**
 [getHubAddr()](#gethubaddr-e28692-address-1)

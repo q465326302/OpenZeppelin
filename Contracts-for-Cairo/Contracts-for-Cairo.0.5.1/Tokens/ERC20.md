@@ -94,7 +94,7 @@ func constructor(
 }
 ```
 
-要创建代币，您需要像这样部署它:
+要创建代币，你需要像这样部署它:
 ```
 erc20 = await starknet.deploy(
     "openzeppelin/token/erc20/presets/ERC20.cairo",
@@ -123,7 +123,7 @@ await signer.send_transaction(account, erc20.contract_address, 'transfer', [reci
 ```
 
 ## 可扩展性
-ERC20合约可以通过遵循[可扩展性模式进行扩展](../Extensibility.md#可扩展性问题)。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设您想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
+ERC20合约可以通过遵循[可扩展性模式进行扩展](../Extensibility.md#可扩展性问题)。整合该模式的基本思想是从ERC20库中导入必要的ERC20方法，然后在此基础上加入扩展逻辑。例如，假设你想要实现一个暂停机制。合约应首先从[Pausable库](https://github.com/OpenZeppelin/cairo-contracts/blob/release-v0.4.0b/src/openzeppelin/security/pausable/library.cairo)导入ERC20方法和扩展逻辑，即Pausable.pause，Pausable.unpause。接下来，合约应公开具有扩展逻辑的方法，如下所示。
 
 ```
 @external

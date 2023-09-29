@@ -1,7 +1,7 @@
 # New Releases and API Stability
 开发智能合约很难，对采取保守的方法有时更受青睐。然而，及时了解新版本的发布也非常重要：这些版本可能包括错误修复，或废弃旧模式以支持更新和更好的实践。
 
-在这里，我们描述了何时应该预期新版本发布，以及这对您作为OpenZeppelin Contracts的用户的影响。
+在这里，我们描述了何时应该预期新版本发布，以及这对你作为OpenZeppelin Contracts的用户的影响。
 
 ## 发布计划
 OpenZeppelin Contracts遵循[语义化版本控制方案](#版本控制方案)。
@@ -17,7 +17,7 @@ OpenZeppelin Contracts遵循[语义化版本控制方案](#版本控制方案)�
 ## API稳定性
 在[OpenZeppelin Contracts 2.0版本](https://github.com/OpenZeppelin/openzeppelin-contracts/releases/tag/v2.0.0)发布时，我们承诺保持稳定的API。我们的目标是更精确地定义我们对稳定性和API的理解，以便库的用户可以理解这些保证，并且可以确信他们的项目不会意外中断。
 
-简而言之，API稳定意味着如果您的项目今天正常工作，那么在次要升级后它仍将继续正常工作。新合约和功能将在次要版本中添加，但只会以向后兼容的方式添加。
+简而言之，API稳定意味着如果你的项目今天正常工作，那么在次要升级后它仍将继续正常工作。新合约和功能将在次要版本中添加，但只会以向后兼容的方式添加。
 
 ### 版本控制方案
 我们遵循[SemVer](https://semver.org/)，这意味着API在主要版本之间可能会发生破坏性变化（这种情况[不会经常发生](#主要版本)）。
@@ -54,4 +54,4 @@ OpenZeppelin Contracts遵循[语义化版本控制方案](#版本控制方案)�
 
 因此，**最低要求的Solidity编译器版本不是稳定性保证的一部分**，当用户在使用较新版本的Contracts时可能需要升级编译器。错误修复仍将被回溯到过去的主要版本，以便正在使用的所有版本都可以接收这些更新。
 
-您可以在[这里](https://github.com/OpenZeppelin/openzeppelin-contracts/issues/1498#issuecomment-449191611)阅读更多关于这一决策背后的原因、我们考虑的其他选项以及为什么选择这条道路的信息。
+你可以在[这里](https://github.com/OpenZeppelin/openzeppelin-contracts/issues/1498#issuecomment-449191611)阅读更多关于这一决策背后的原因、我们考虑的其他选项以及为什么选择这条道路的信息。

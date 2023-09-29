@@ -9,15 +9,15 @@ Defender Serverless是一个用于在Defender上自动化资源管理的Serverle
 https://www.serverless.com/framework/docs/getting-started/
 
 ## 安装
-您可以直接使用我们预配置的模板初始化Serverless项目：
+你可以直接使用我们预配置的模板初始化Serverless项目：
 ```
 sls install --url https://github.com/OpenZeppelin/defender-serverless/tree/main/template -n my-service
 ```
 
 > NOTE
-要使上述命令正确运行，您需要访问此存储库。
+要使上述命令正确运行，你需要访问此存储库。
 
-或者，您可以使用以下命令将其直接安装到现有项目中：
+或者，你可以使用以下命令将其直接安装到现有项目中：
 
 yarn add defender-serverless
 
@@ -30,13 +30,13 @@ yarn add defender-serverless
 
 * 利用defender-serverless存储库中提供的示例模板。
 
-如果您已经在Defender中拥有资源，例如合约、通知、Relayer 、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
+如果你已经在Defender中拥有资源，例如合约、通知、Relayer 、自动任务等，则可以从Defender的设置页面导出包含这些资源的serverless.yml配置文件。
 ![serverless-plugin-1.png](img/serverless-plugin-1.png)
 
 > NOTE
-如果您之前已经使用defender-serverless部署到同一个账户，并且通过Defender用户界面创建了新的资源，则导出功能将根据最新部署堆栈的名称自动为新资源分配stackResourceId。如果您以前没有使用defender-serverless部署过，则默认使用my-stack作为堆栈名称。
+如果你之前已经使用defender-serverless部署到同一个账户，并且通过Defender用户界面创建了新的资源，则导出功能将根据最新部署堆栈的名称自动为新资源分配stackResourceId。如果你以前没有使用defender-serverless部署过，则默认使用my-stack作为堆栈名称。
 
-该插件允许您从serverless.yml中以声明方式定义Autotasks、Sentinels、Notifications、Relayer s、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer 、一个Policy和一个单一的Relayer  API密钥：
+该插件允许你从serverless.yml中以声明方式定义Autotasks、Sentinels、Notifications、Relayer s、Contracts、Policies和Secrets，并通过使用serverless deploy命令行界面进行配置。以下是一个示例模板，其中定义了一个Autotask、一个Relayer 、一个Policy和一个单一的Relayer  API密钥：
 ```
 service: defender-serverless-template
 configValidationMode: error
@@ -88,10 +88,10 @@ plugins:
 
 确保Defender团队API密钥已设置所有适当的API功能。
 
-stackName（例如mystack）与资源键（例如Relayer -1）结合使用，唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.Relayer -1），允许您在同一Defender团队中管理多个部署。
+stackName（例如mystack）与资源键（例如Relayer -1）结合使用，唯一地标识每个资源。此标识符称为stackResourceId（例如mystack.Relayer -1），允许你在同一Defender团队中管理多个部署。
 
 ### SSOT模式
-在serverless.yml文件的provider属性下，您可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着在部署时，除了 Relayer 之外，所有未在当前模板文件中定义的Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
+在serverless.yml文件的provider属性下，你可以选择添加ssot布尔值。 SSOT或单一真相源确保Defender中堆栈的状态与serverless.yml模板完全同步。这意味着在部署时，除了 Relayer 之外，所有未在当前模板文件中定义的Defender资源都将从Defender中删除。如果在模板中未定义SSOT，则默认为false。
 
 为了防止意外删除资源，从serverless.yml文件中删除的任何资源都不会自动删除。为了预期此行为，必须启用SSOT模式。
 
@@ -128,7 +128,7 @@ secrets:
 
 ### 部署
 
-您可以使用sls deploy将当前堆栈部署到Defender。
+你可以使用sls deploy将当前堆栈部署到Defender。
 
 部署接受一个可选的--stage标志，默认为从上面的模板安装时的dev。
 
@@ -137,26 +137,26 @@ secrets:
 此命令将在当前工作目录的.defender文件夹中附加一个日志条目。此外，如果创建了任何新的 Relayer 密钥，则将这些密钥存储为JSON对象在.defender / Relayer -keys文件夹中。
 
 > WARNING
-在安装模板时，我们确保忽略.defender文件夹中的任何git提交。但是，如果直接安装，请确保将此文件夹添加到您的.gitignore文件中。
+在安装模板时，我们确保忽略.defender文件夹中的任何git提交。但是，如果直接安装，请确保将此文件夹添加到你的.gitignore文件中。
 
 ### 信息
 
-您可以使用sls info检索在serverless.yml文件中定义的每个资源的信息，包括唯一标识符和每个Defender组件特有的属性。
+你可以使用sls info检索在serverless.yml文件中定义的每个资源的信息，包括唯一标识符和每个Defender组件特有的属性。
 
 ### 删除
 
-您可以使用sls remove删除在serverless.yml文件中定义的所有Defender资源。
+你可以使用sls remove删除在serverless.yml文件中定义的所有Defender资源。
 
 > NOTE
 为了避免潜在的资金损失，Relayers只能通过Defender UI直接删除。
 
 ### 日志
 
-您可以使用sls logs --function <stack_resource_id> --data {…}检索给定自动任务标识符（例如mystack.autotask-example-1）的最新自动任务日志。此命令将连续运行并每2秒检索一次日志。--data标志是可选的。
+你可以使用sls logs --function <stack_resource_id> --data {…}检索给定自动任务标识符（例如mystack.autotask-example-1）的最新自动任务日志。此命令将连续运行并每2秒检索一次日志。--data标志是可选的。
 
 ### 调用
 
-您可以使用sls invoke --function <stack_resource_id>手动运行自动任务，给定其标识符（例如mystack.autotask-example-1）。
+你可以使用sls invoke --function <stack_resource_id>手动运行自动任务，给定其标识符（例如mystack.autotask-example-1）。
 
 > NOTE
 每个命令都有一个标准输出到JSON对象。
@@ -173,4 +173,4 @@ secrets:
 
 * serverless.yml文件的验证错误（请参见[类型和模式验证](#类型和模式验证)）
 
-通常，修复错误并重试部署应足够，因为任何现有资源都将落在部署的更新条款中。但是，如果不确定，您可以随时调用sls remove来删除整个堆栈，并重试。
+通常，修复错误并重试部署应足够，因为任何现有资源都将落在部署的更新条款中。但是，如果不确定，你可以随时调用sls remove来删除整个堆栈，并重试。

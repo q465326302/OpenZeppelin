@@ -5,14 +5,14 @@
 
 ## 为什么我会收到“无法从代理管理员调用回退函数”的错误？
 
-这是由于[透明代理模式](./Proxy-Upgrade-Pattern.md#透明代理和函数冲突)造成的。如果您使用OpenZeppelin Upgrades插件，则不应该收到此错误，因为它使用ProxyAdmin合约来管理您的代理。
+这是由于[透明代理模式](./Proxy-Upgrade-Pattern.md#透明代理和函数冲突)造成的。如果你使用OpenZeppelin Upgrades插件，则不应该收到此错误，因为它使用ProxyAdmin合约来管理你的代理。
 
-然而，如果您在编程方式使用OpenZeppelin Contracts代理，可能会遇到此类错误。解决方案是始终使用不是代理管理员的帐户与代理进行交互，除非您想特别调用代理本身的函数。
+然而，如果你在编程方式使用OpenZeppelin Contracts代理，可能会遇到此类错误。解决方案是始终使用不是代理管理员的帐户与代理进行交互，除非你想特别调用代理本身的函数。
 
 ## 什么是合约的升级安全性？
 在部署合约的代理时，合约代码有一些限制。特别是，合约不能有构造函数，并且不应使用selfdestruct或delegatecall操作，出于安全原因。
 
-作为构造函数的替代，通常会设置一个初始化函数来处理合约的初始化。您可以使用[Initializable](./Writing-Upgradeable-Contracts.md#初始化函数)基础合约来访问一个initializer修饰符，以确保该函数只被调用一次。
+作为构造函数的替代，通常会设置一个初始化函数来处理合约的初始化。你可以使用[Initializable](./Writing-Upgradeable-Contracts.md#初始化函数)基础合约来访问一个initializer修饰符，以确保该函数只被调用一次。
 ```
 import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
 // Alternatively, if you are using @openzeppelin/contracts-upgradeable:
@@ -26,7 +26,7 @@ contract MyContract is Initializable {
 }
 ```
 
-这两个插件都会验证您尝试部署的合约是否符合这些规则。您可以在[此处](./Writing-Upgradeable-Contracts.md)阅读有关如何编写升级安全合约的更多信息。
+这两个插件都会验证你尝试部署的合约是否符合这些规则。你可以在[此处](./Writing-Upgradeable-Contracts.md)阅读有关如何编写升级安全合约的更多信息。
 
 ## 如何禁用其中一些检查？
 部署和升级相关的函数都带有一个可选的opts对象，其中包括一个unsafeAllow选项。可以将其设置为禁用插件执行的任何检查。可以单独禁用的检查列表如下：
@@ -51,7 +51,7 @@ contract MyContract is Initializable {
 
 此函数是原始的unsafeAllowCustomTypes和unsafeAllowLinkedLibraries的通用版本，允许手动禁用任何检查。
 
-例如，为了升级到包含委托调用的实现，您可以调用：
+例如，为了升级到包含委托调用的实现，你可以调用：
 ```
 await upgradeProxy(proxyAddress, implementationFactory, { unsafeAllow: ['delegatecall'] });
 ```
@@ -82,14 +82,14 @@ contract SomeContract {
 
 * /// @custom:oz-upgrades-unsafe-allow selfdestruct
 
-在某些情况下，您可能希望在一行中允许多个错误。
+在某些情况下，你可能希望在一行中允许多个错误。
 ```
 contract SomeOtherContract {
   /// @custom:oz-upgrades-unsafe-allow state-variable-immutable state-variable-assignment
   uint256 immutable x = 1;
 }
 ```
-您还可以使用以下内容来允许可达代码中特定的错误，其中包括任何引用的合约、函数和库：
+你还可以使用以下内容来允许可达代码中特定的错误，其中包括任何引用的合约、函数和库：
 
 * /// @custom:oz-upgrades-unsafe-allow-reachable delegatecall
 
@@ -130,20 +130,20 @@ contract UsesUnsafeOperations is OnlyDelegateCall {
 
 两个插件将验证新的实现合约是否与先前的合约兼容。
 
-您可以在[这里](./Writing-Upgradeable-Contracts.md)阅读有关如何对实现合约进行存储兼容性更改的更多信息。
+你可以在[这里](./Writing-Upgradeable-Contracts.md)阅读有关如何对实现合约进行存储兼容性更改的更多信息。
 
 ## 代理管理员是什么？
-ProxyAdmin是一个充当所有代理的所有者的合约。每个网络只部署一个。当您启动项目时，ProxyAdmin由部署者地址拥有，但您可以通过调用[transferOwnership](../Contracts/Contracts.4.x/API/Access.md#transferownershipaddress-newowner)来转移所有权。
+ProxyAdmin是一个充当所有代理的所有者的合约。每个网络只部署一个。当你启动项目时，ProxyAdmin由部署者地址拥有，但你可以通过调用[transferOwnership](../Contracts/Contracts.4.x/API/Access.md#transferownershipaddress-newowner)来转移所有权。
 
 ## 什么是实现合约？
-可升级的部署需要至少两个合约：代理和实现。代理合约是您和您的用户将交互的实例，而实现是保存代码的合约。如果您对同一个实现合约调用deployProxy多次，则将部署多个代理，但只使用一个实现合约。
+可升级的部署需要至少两个合约：代理和实现。代理合约是你和你的用户将交互的实例，而实现是保存代码的合约。如果你对同一个实现合约调用deployProxy多次，则将部署多个代理，但只使用一个实现合约。
 
-当您将代理升级到新版本时，如果需要，将部署一个新的实现合约，并将代理设置为使用新的实现合约。您可以在[这里](./Proxy-Upgrade-Pattern.md)阅读有关代理升级模式的更多信息。
+当你将代理升级到新版本时，如果需要，将部署一个新的实现合约，并将代理设置为使用新的实现合约。你可以在[这里](./Proxy-Upgrade-Pattern.md)阅读有关代理升级模式的更多信息。
 
 ## 什么是代理？
 代理是一个将其所有调用委托给第二个合约（称为实现合约）的合约。所有状态和资金都保存在代理中，但实际执行的代码是实现的代码。代理管理员可以将代理升级为使用不同的实现合约。
 
-您可以在[这里](./Proxy-Upgrade-Pattern.md)阅读有关代理升级模式的更多信息。
+你可以在[这里](./Proxy-Upgrade-Pattern.md)阅读有关代理升级模式的更多信息。
 
 ## 为什么不能使用不可变变量？
 Solidity 0.6.5[引入了不可变关键字](https://github.com/ethereum/solidity/releases/tag/v0.6.5)，用于声明只能在构造函数期间分配一次且在构造函数后只能读取的变量。它通过在合约创建期间计算其值并直接将其值存储到字节码中实现。
@@ -154,16 +154,16 @@ Solidity 0.6.5[引入了不可变关键字](https://github.com/ethereum/solidity
 2. 由于不可变变量的值存储在字节码中，它的值将在指向给定合约的所有代理之间共享，而不是每个代理的存储中。
 
 > NOTE
-在某些情况下，不可变变量是可升级的。插件目前无法自动检测这些情况，因此它们将将其视为错误。您可以使用选项unsafeAllow: ['state-variable-immutable']手动禁用检查，或在Solidity >=0.8.2中，在变量声明之前放置注释/// @custom:oz-upgrades-unsafe-allow state-variable-immutable。
+在某些情况下，不可变变量是可升级的。插件目前无法自动检测这些情况，因此它们将将其视为错误。你可以使用选项unsafeAllow: ['state-variable-immutable']手动禁用检查，或在Solidity >=0.8.2中，在变量声明之前放置注释/// @custom:oz-upgrades-unsafe-allow state-variable-immutable。
 
 ## 为什么我不能使用外部库？
 目前，插件对链接到外部库的可升级合约只提供部分支持。这是因为在编译时无法确定要链接的实现，因此很难保证升级操作的安全性。
 
 计划在不久的将来添加此功能，并添加一些限制条件，使问题更容易解决，例如假设外部库的源代码要么存在于代码库中，要么已部署和挖掘，因此可以从区块链中获取以进行分析。
 
-在此期间，您可以通过在deployProxy或upgradeProxy调用中将unsafeAllowLinkedLibraries标志设置为true，或在unsafeAllow数组中包含'external-library-linking'，以部署链接到外部库的可升级合约。请记住，插件将不会验证链接的库是否具有升级安全性。目前必须手动完成此操作，直到完全支持外部库。
+在此期间，你可以通过在deployProxy或upgradeProxy调用中将unsafeAllowLinkedLibraries标志设置为true，或在unsafeAllow数组中包含'external-library-linking'，以部署链接到外部库的可升级合约。请记住，插件将不会验证链接的库是否具有升级安全性。目前必须手动完成此操作，直到完全支持外部库。
 
-您可以在[GitHub上](https://github.com/OpenZeppelin/openzeppelin-upgrades/issues/52)关注或贡献此问题。
+你可以在[GitHub上](https://github.com/OpenZeppelin/openzeppelin-upgrades/issues/52)关注或贡献此问题。
 
 ## 为什么需要一个公共的upgradeTo函数？
 当使用UUPS代理（通过kind: 'uups'选项）时，实现合约必须包含公共函数upgradeTo(address newImplementation)。这是因为在UUPS模式中，代理本身不包含升级函数，整个升级功能机制存在于实现方。因此，在每次部署和升级时，我们必须确保包含该函数，否则可能会永久禁用合约的可升级性。
@@ -185,9 +185,9 @@ contract MyContract is Initializable, ..., UUPSUpgradeable {
 一些已经部署了具有结构体和/或枚举的代理并且需要升级这些代理的用户可能需要在下一次升级时使用override标志unsafeAllowCustomTypes，之后将不再需要。如果项目包含当前代理使用的实现的源代码，插件将在升级之前尝试恢复所需的元数据，如果这不可能，则回退到使用override标志。
 
 ## 为什么我必须重新编译所有的Truffle合约？
-Truffle的构建文件（build/contracts中的JSON文件）包含每个合约的AST（抽象语法树）。我们的插件使用这些信息来验证您的合约是否可以[安全升级](./Frequently-Asked-Questions.md#什么是合约的升级安全性)。
+Truffle的构建文件（build/contracts中的JSON文件）包含每个合约的AST（抽象语法树）。我们的插件使用这些信息来验证你的合约是否可以[安全升级](./Frequently-Asked-Questions.md#什么是合约的升级安全性)。
 
-Truffle有时只会部分重新编译已更改的合约。当发生这种情况时，我们将要求您触发完整的重新编译，可以使用truffle compile --all或删除build/contracts目录。技术原因是，由于Solidity不会生成确定性的AST，如果它们不是来自同一次编译运行，插件将无法正确解析引用。
+Truffle有时只会部分重新编译已更改的合约。当发生这种情况时，我们将要求你触发完整的重新编译，可以使用truffle compile --all或删除build/contracts目录。技术原因是，由于Solidity不会生成确定性的AST，如果它们不是来自同一次编译运行，插件将无法正确解析引用。
 
 ## 我如何重命名变量或更改其类型？
 默认情况下，不允许重命名变量，因为重命名实际上可能是一个意外的重新排序。例如，如果变量uint a; uint b; 升级为uint b; uint a;，如果简单地允许重命名，这不会被视为错误，但这可能是一个意外，特别是当涉及多重继承时。

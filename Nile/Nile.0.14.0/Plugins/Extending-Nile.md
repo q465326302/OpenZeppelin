@@ -1,5 +1,5 @@
 # 通过插件扩展Nile
-Nile可以通过插件扩展其CLI和Nile Runtime Environment功能。您可以fork此[示例模板](https://github.com/franalgaba/nile-plugin-example)，并按照提供的说明实现所需的功能。
+Nile可以通过插件扩展其CLI和Nile Runtime Environment功能。你可以fork此[示例模板](https://github.com/franalgaba/nile-plugin-example)，并按照提供的说明实现所需的功能。
 
 ## 工作原理
 此实现利用了[Click](https://click.palletsprojects.com/)的可扩展性功能。使用Click和利用Python[入口点](https://packaging.python.org/en/latest/specifications/entry-points/)，我们可以在Python环境中通过依赖关系来项目本地扩展。Nile上的插件实现会查找特定的Python入口点约束，以将命令添加到CLI或NRE中。

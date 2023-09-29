@@ -10,7 +10,7 @@ OpenZeppelin Defender的关键功能之一是其在安全监控和一般自动�
 
 fork [demo 仓库](https://github.com/offgridauthor/pause-guardian)。
 
-克隆您的fork并安装依赖项：
+克隆你的fork并安装依赖项：
 ```
 $ git clone https://github.com/[GitHub username]/pause-guardian.git
 $ cd pause-guardian
@@ -66,13 +66,13 @@ const contract = erc20.print(params)
 
 `$ npm run relay`
 
-现在您已经拥有了Relayer ，需要授予它适当的角色。
+现在你已经拥有了Relayer ，需要授予它适当的角色。
 
 通过Defender的Web界面，可以轻松管理访问控制。通过Admin仪表板，选择新创建的ERC20合约，然后选择New Proposal -→ Modify Access。在下一个屏幕上，从下拉菜单中选择PAUSER角色，并提供刚刚创建的Relayer 的地址。选择EOA作为执行策略，并选择用于部署合约的帐户的地址。给访问提案一个标题并执行它。
 ![guide-pauseguardian-2.gif](img/guide-pauseguardian-2.gif)
 
 ## 创建Autotask以发送暂停交易
-现在您已经拥有了适当访问权限的Relayer 来暂停合约，是时候开始构建自动化功能了。
+现在你已经拥有了适当访问权限的Relayer 来暂停合约，是时候开始构建自动化功能了。
 
 创建一个Autotask，使用Relayer 向部署的ERC20合约发送暂停交易。
 

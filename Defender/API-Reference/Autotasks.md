@@ -1,10 +1,10 @@
 # Autotask API Reference
-Autotask API允许您以编程方式列出、创建、检索、更新、删除Autotasks，以及将新代码上传到任何Autotask中。
+Autotask API允许你以编程方式列出、创建、检索、更新、删除Autotasks，以及将新代码上传到任何Autotask中。
 
 请求需要使用从Team API Key与相应能力协商的代币进行身份验证。有关如何协商它的信息，请参阅[身份验证](./Authentication.md)部分。
 
 > NOTE
-我们建议您使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包来简化与Autotask API的交互。
+我们建议你使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包来简化与Autotask API的交互。
 
 > NOTE
 不建议在浏览器环境中使用[defender-autotask-client](https://www.npmjs.com/package/defender-autotask-client) npm包，因为密钥将公开暴露。
@@ -25,7 +25,7 @@ interface CreateAutotaskRequest {
 }
 ```
 
-使用defender-autotask-client，您可以这样调用创建端点：
+使用defender-autotask-client，你可以这样调用创建端点：
 ```
 const myAutotask = {
   name: "my-autotask",
@@ -42,7 +42,7 @@ await client.create(myAutotask);
 ## 列表终端点
 autotasks端点用于通过GET请求检索Autotask。
 
-使用defender-autotask-client，您可以调用列表端点，如下所示：
+使用defender-autotask-client，你可以调用列表端点，如下所示：
 ```
 await client.list();
 ```
@@ -73,7 +73,7 @@ await client.list();
 ## 获取端点
 使用GET请求，可以通过autotasks/{id}终端点来检索Autotask。该端点接受一个autotask Id作为参数。
 
-使用defender-autotask-client，您可以像这样调用get端点：
+使用defender-autotask-client，你可以像这样调用get端点：
 ```
 await client.get("671d1f80-99e3-4829-aa15-f01e3298e428");
 ```
@@ -106,7 +106,7 @@ interface UpdateAutotaskRequest {
 }
 ```
 
-使用defender-autotask-client，您可以这样调用更新端点：
+使用defender-autotask-client，你可以这样调用更新端点：
 ```
 const myAutotask = {
   autotaskId: "671d1f80-99e3-4829-aa15-f01e3298e428",
@@ -134,7 +134,7 @@ await client.update(myAutotask);
 ## 删除终端点
 autotasks/{id}终端点用于通过DELETE请求删除Autotask。该终端点接受一个autotask Id。
 
-使用defender-autotask-client，您可以调用删除终端点如下：
+使用defender-autotask-client，你可以调用删除终端点如下：
 ```
 await client.delete("671d1f80-99e3-4829-aa15-f01e3298e428");
 ```
@@ -167,7 +167,7 @@ await client.updateCodeFromFolder("671d1f80-99e3-4829-aa15-f01e3298e428", './cod
 ```
 
 > NOTE
-您可以在捆绑包中包含多个文件，只要捆绑包在压缩和base64编码后不超过5mb，并在zip文件的根目录下包含一个index.js作为入口点。
+你可以在捆绑包中包含多个文件，只要捆绑包在压缩和base64编码后不超过5mb，并在zip文件的根目录下包含一个index.js作为入口点。
 
 ## Autotask Runs Endpoints
 使用autotasks/{id}/runs/manual端点可以手动触发autotask运行：

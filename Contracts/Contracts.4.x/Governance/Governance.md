@@ -7,10 +7,10 @@
 ## 介绍
 去中心化协议在公开发布后不断发展。通常，初始团队在最初的阶段保留对这种发展的控制权，但最终将其委托给利益相关者社区。这个社区做出决策的过程称为链上治理，它已成为去中心化协议的核心组件，推动各种决策，例如参数调整、智能合约升级、与其他协议的集成、财务管理、赠款等。
 
-这个治理协议通常在一个特殊用途的合约中实现，称为“Governor”。Compound设计的GovernorAlpha和GovernorBravo合约迄今为止非常成功和受欢迎，但缺点是具有不同要求的项目必须分叉代码，以定制它们的需求，这可能会带来引入高风险的安全问题。对于OpenZeppelin Contracts，我们着手建立了一套模块化的Governor合约系统，以避免分叉，并且可以通过使用Solidity继承编写小模块来适应不同的需求。您会在OpenZeppelin Contracts中找到最常见的要求，但编写其他要求很简单，并且我们将根据社区的要求在未来的版本中添加新功能。此外，OpenZeppelin Governor的设计要求最小化存储的使用，并且在操作上更加高效。
+这个治理协议通常在一个特殊用途的合约中实现，称为“Governor”。Compound设计的GovernorAlpha和GovernorBravo合约迄今为止非常成功和受欢迎，但缺点是具有不同要求的项目必须分叉代码，以定制它们的需求，这可能会带来引入高风险的安全问题。对于OpenZeppelin Contracts，我们着手建立了一套模块化的Governor合约系统，以避免分叉，并且可以通过使用Solidity继承编写小模块来适应不同的需求。你会在OpenZeppelin Contracts中找到最常见的要求，但编写其他要求很简单，并且我们将根据社区的要求在未来的版本中添加新功能。此外，OpenZeppelin Governor的设计要求最小化存储的使用，并且在操作上更加高效。
 
 ## 兼容性
-OpenZeppelin的Governor系统在设计时考虑了与基于Compound的GovernorAlpha和GovernorBravo的现有系统的兼容性。因此，您会发现许多模块都有两个变体之一，其中一个是为与这些系统兼容而构建的。
+OpenZeppelin的Governor系统在设计时考虑了与基于Compound的GovernorAlpha和GovernorBravo的现有系统的兼容性。因此，你会发现许多模块都有两个变体之一，其中一个是为与这些系统兼容而构建的。
 
 ### ERC20Votes和ERC20VotesComp
 跟踪投票和投票委托的ERC20扩展就是这样一个例子。较短的版本是更通用的版本，因为它可以支持大于2^96的代币供应，而“Comp”变体在这方面受到限制，但正好符合GovernorAlpha和Bravo使用的COMP代币的接口。两个合约变体共享相同的事件，因此仅查看事件时它们是完全兼容的。
@@ -21,7 +21,7 @@ OpenZeppelin的Governor系统在设计时考虑了与基于Compound的GovernorAl
 请注意，即使使用此模块，`proposalId`的计算方式仍将有所不同。Governor使用提案参数的哈希，目的是通过事件索引将其数据保持在链下，而原始的Bravo实现使用顺序`proposalId`。由于这个和其他差异，GovernorBravo的几个函数不包括在兼容性模块中。
 
 ### GovernorTimelockControl和GovernorTimelockCompound
-在使用Governor合约的timelock时，您可以使用OpenZeppelin的TimelockController或Compound的Timelock。根据timelock的选择，您应选择相应的Governor模块：GovernorTimelockControl或GovernorTimelockCompound。这允许您将现有的GovernorAlpha实例迁移到基于OpenZeppelin的Governor，而无需更改使用的timelock。
+在使用Governor合约的timelock时，你可以使用OpenZeppelin的TimelockController或Compound的Timelock。根据timelock的选择，你应选择相应的Governor模块：GovernorTimelockControl或GovernorTimelockCompound。这允许你将现有的GovernorAlpha实例迁移到基于OpenZeppelin的Governor，而无需更改使用的timelock。
 
 ### 计数
 [Tally](https://www.tally.xyz/)是一个完整的用户使用的链上治理应用程序。它包括投票仪表板、提案创建向导、实时研究和分析以及教学内容。
@@ -62,7 +62,7 @@ contract MyToken is ERC20, ERC20Permit, ERC20Votes {
 }
 ```
 
-如果您的项目已经有一个活跃的代币，但不包括ERC20Votes且不可升级，您可以使用ERC20Wrapper将其包装成一个治理代币。这将允许代币持有人通过1对1的方式参与治理。
+如果你的项目已经有一个活跃的代币，但不包括ERC20Votes且不可升级，你可以使用ERC20Wrapper将其包装成一个治理代币。这将允许代币持有人通过1对1的方式参与治理。
 
 ```
 // SPDX-License-Identifier: MIT
@@ -105,7 +105,7 @@ contract MyTokenWrapped is ERC20, ERC20Permit, ERC20Votes, ERC20Wrapper {
 代币用于存储投票余额的内部时钟将决定与其关联的Governor合约的操作模式。默认情况下，使用块号。自v4.9以来，开发人员可以重写[IERC6372](../API/Interfaces.md#ierc6372)时钟，改用时间戳而不是区块号。
 
 ### Governor
-首先，我们将构建一个没有时间锁定的Governor。Governor合约提供了核心逻辑，但我们仍需要选择：1）如何确定投票权力，2）需要多少票才能达成法定人数，3）人们在投票时有哪些选项以及如何计算这些选票，以及4）应使用哪种类型的代币进行投票。您可以通过编写自己的模块来自定义这些方面，或者更轻松地从OpenZeppelin Contracts中选择一个模块。
+首先，我们将构建一个没有时间锁定的Governor。Governor合约提供了核心逻辑，但我们仍需要选择：1）如何确定投票权力，2）需要多少票才能达成法定人数，3）人们在投票时有哪些选项以及如何计算这些选票，以及4）应使用哪种类型的代币进行投票。你可以通过编写自己的模块来自定义这些方面，或者更轻松地从OpenZeppelin Contracts中选择一个模块。
 
 对于1），我们将使用GovernorVotes模块，该模块连接到一个IVotes实例，根据账户在提案激活时持有的代币余额来确定其投票权力。该模块需要代币的地址作为构造函数参数。该模块还发现代币使用的时钟模式（ERC6372），并将其应用于Governor。
 
@@ -271,12 +271,12 @@ await governor.propose(
 ![Governance-1.png](img/Governance-1.png)
 
 ### 执行提案
-投票期结束后，如果达到法定人数（足够的投票权参与）并且多数投票赞成，则认为提案成功并可以继续执行。一旦提案通过，它可以排队并从您投票的同一位置执行。
+投票期结束后，如果达到法定人数（足够的投票权参与）并且多数投票赞成，则认为提案成功并可以继续执行。一旦提案通过，它可以排队并从你投票的同一位置执行。
 ![Governance-2.png](img/Governance-2.png)
 
 现在我们将手动使用Ethers.js来执行此操作。
 
-如果设置了时间锁，则执行的第一步是排队。您会注意到，无论是队列还是执行函数都需要传递整个提案参数，而不仅仅是提案ID。这是必要的，因为这些数据不存储在链上，这是为了节省gas的措施。请注意，这些参数始终可以在合约发出的事件中找到。唯一不以完整形式发送的参数是描述，因为只需要以其散列形式来计算提案ID。
+如果设置了时间锁，则执行的第一步是排队。你会注意到，无论是队列还是执行函数都需要传递整个提案参数，而不仅仅是提案ID。这是必要的，因为这些数据不存储在链上，这是为了节省gas的措施。请注意，这些参数始终可以在合约发出的事件中找到。唯一不以完整形式发送的参数是描述，因为只需要以其散列形式来计算提案ID。
 
 要排队，我们调用queue函数：
 ```
@@ -394,4 +394,4 @@ contract MyGovernor is Governor, GovernorCompatibilityBravo, GovernorVotes, Gove
 ### 免责声明
 时间戳投票是最近在EIP-6372和EIP-5805中正式规范并在v4.9中推出的功能。在该功能发布时，像[Tally](https://www.tally.xyz/)这样的治理工具还不支持它。虽然时间戳的支持很快就会到来，但用户可能会遇到截止日期和持续时间的无效报告。这些非链上工具的无效报告不会影响治理合约的链上安全性和功能。
 
-支持时间戳的 Governor（v4.9 及以上版本）与旧代币（v4.9 之前的版本）兼容，并将以“区块号”模式运行（这是所有旧代币的模式）。另一方面，旧的 Governor 实例（v4.9 之前的版本）与使用时间戳运行的新代币不兼容。如果您更新代币代码以使用时间戳，请确保同时更新 Governor 代码。
+支持时间戳的 Governor（v4.9 及以上版本）与旧代币（v4.9 之前的版本）兼容，并将以“区块号”模式运行（这是所有旧代币的模式）。另一方面，旧的 Governor 实例（v4.9 之前的版本）与使用时间戳运行的新代币不兼容。如果你更新代币代码以使用时间戳，请确保同时更新 Governor 代码。
