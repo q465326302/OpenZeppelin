@@ -1,18 +1,18 @@
 # Setting up a Node project
-新的软件行业往往从每个项目共享相同的技术栈开始。以太坊生态系统也不例外，语言选择是[JavaScript](https://en.wikipedia.org/wiki/JavaScript)。包括OpenZeppelin软件在内的所有最常用的以太坊库都是用JavaScript或其变体编写的。
+新的软件行业通常从每个项目共享相同的技术栈开始。以太坊生态系统也不例外，它语言选择是[JavaScript](https://en.wikipedia.org/wiki/JavaScript)。包括OpenZeppelin软件在内的所有最常用的以太坊库都是用JavaScript或其变体编写的。
 
 传统上，JavaScript代码在网页浏览器上作为网站的一部分运行，但也可以使用[Node](https://nodejs.org/)作为独立进程执行。
 
-本指南将帮助你设置Node开发环境，这是你需要使用不同的OpenZeppelin工具和其他第三方产品的必要步骤。
+本指南将帮助你设置Node开发环境，这是使用OpenZeppelin工具和其他第三方产品的必要步骤。
 
 > TIP
-如果你已经熟悉Node、npm和Git，请随意跳过本指南！
+如果你已经熟悉Node、npm和Git，可以选择跳过本指南！
 
 ## 安装Node
 有多种方法可以在你的计算机上获取Node：你可以通过[软件包管理器](https://nodejs.org/en/download/package-manager/)获取它，也可以[直接下载安装程序](https://nodejs.org/en/download/)。
 
 > TIP
-如果你正在运行Windows，请考虑尽可能使用[Windows子系统来运行Linux](https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2)，因为许多生态系统都是为Linux编写的。
+如果你正在运行Windows，建议尽可能使用[Windows子系统来运行Linux](https://docs.microsoft.com/en-us/windows/nodejs/setup-on-wsl2)，因为许多生态系统都是为Linux编写的。
 
 完成后，在终端上运行 node --version 检查你的安装：14.x或16.x系列的任何版本都应与大多数以太坊软件兼容。
 ```

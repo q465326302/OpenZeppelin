@@ -77,7 +77,7 @@ contract MyToken is ERC20, AccessControl {
 > NOTE
 确保在使用[AccessControl](./API/Access.md#accesscontrol)之前和复制本指南中的示例代码之前,充分理解它的工作原理，。
 
-尽管清晰明确，但这并不是我们无法通过Ownable实现的任何内容。实际上，AccessControl在需要精细权限控制的场景中表现出色，这可以通过定义多个角色来实现。
+尽管这个合约很简单，但是用ownable并不能实现它的功能，这时AccessControl就能派上用场了，它可以用来配置多个角色
 
 让我们通过定义“burner”角色来增强我们的ERC20代币示例，该角色允许帐户销毁代币，并使用onlyRole修饰符：
 ```
