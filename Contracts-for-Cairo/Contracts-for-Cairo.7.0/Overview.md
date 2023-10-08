@@ -39,7 +39,7 @@ Scarb.toml src
 openzeppelin = { git = "https://github.com/OpenZeppelin/cairo-contracts.git", tag = "v0.7.0" }
 ```
 
->WARNING
+> WARNING
 确保标签与目标发布版本匹配。
 
 ## 基本用法
