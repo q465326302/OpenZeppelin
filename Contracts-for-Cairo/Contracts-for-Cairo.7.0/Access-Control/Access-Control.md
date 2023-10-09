@@ -307,7 +307,7 @@ bytes32 public constant SOME_ROLE = keccak256("SOME_ROLE")
 
 这些标识符占用32字节（256位）。
 
-Cairo字段元素（felt252）最多存储252位。由于这种差异，该库对合同应如何创建标识符保持中立态度。一些值得考虑的想法：
+Cairo字段元素（felt252）最多存储252位。由于这种差异，该库对合约应如何创建标识符保持中立态度。一些值得考虑的想法：
 
 * 使用[sn_keccak](https://docs.starknet.io/documentation/architecture_and_concepts/Cryptography/hash-functions/#starknet_keccak)代替。
 

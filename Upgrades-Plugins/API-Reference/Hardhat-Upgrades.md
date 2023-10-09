@@ -587,13 +587,13 @@ async function proposeUpgrade(
 
 使用[Defender Admin](/Defender/API-Reference/Admin.md)提出升级建议。
 
-此方法与prepareUpgrade类似。这种方法验证并部署新的实施合同，但也在Defender Admin中创建一个升级提案，供升级管理员审查和批准。支持UUPS或透明代理。目前不支持信标代理或信标。对于信标，使用prepareUpgrade以及Defender Admin中的自定义操作来升级到已部署的实施。
+此方法与prepareUpgrade类似。这种方法验证并部署新的实施合约，但也在Defender Admin中创建一个升级提案，供升级管理员审查和批准。支持UUPS或透明代理。目前不支持信标代理或信标。对于信标，使用prepareUpgrade以及Defender Admin中的自定义操作来升级到已部署的实施。
 
 **参数：**
 
 * proxyAddress - 代理地址。
 
-* ImplFactory - 新的实施合同。
+* ImplFactory - 新的实施合约。
 
 * opts - 带有选项的对象：
 
@@ -601,15 +601,15 @@ async function proposeUpgrade(
 
   * description：Defender Admin中看到的升级提案的描述，默认为完整的实施地址。
 
-  * multisig：拥有执行升级权利的多签名钱包合同的地址。这在[透明代理](/Contracts/Contracts.4.x/API/Proxy.md#transparentupgradeableproxy)中是自动检测的，但对于[UUPS代理](/Contracts/Contracts.4.x/API/Proxy.md#uupsupgradeable)是必需的（在[这里](/Contracts/Contracts.4.x/API/Proxy.md#透明代理和uups代理之间的区别)阅读更多）。支持Gnosis Safe和Gnosis MultisigWallet多签名。
+  * multisig：拥有执行升级权利的多签名钱包合约的地址。这在[透明代理](/Contracts/Contracts.4.x/API/Proxy.md#transparentupgradeableproxy)中是自动检测的，但对于[UUPS代理](/Contracts/Contracts.4.x/API/Proxy.md#uupsupgradeable)是必需的（在[这里](/Contracts/Contracts.4.x/API/Proxy.md#透明代理和uups代理之间的区别)阅读更多）。支持Gnosis Safe和Gnosis MultisigWallet多签名。
 
-* proxyAdmin：管理代理的[ProxyAdmin](/Contracts/Contracts.4.x/API/Proxy.md#proxyadmin)合同的地址，如果存在的话。这在[透明代理](/Contracts/Contracts.4.x/API/Proxy.md#transparentupgradeableproxy)中是自动检测的，但对于[UUPS代理](/Contracts/Contracts.4.x/API/Proxy.md#uupsupgradeable)是必需的（在这里阅读更多），尽管UUPS代理通常不需要使用ProxyAdmin。
+* proxyAdmin：管理代理的[ProxyAdmin](/Contracts/Contracts.4.x/API/Proxy.md#proxyadmin)合约的地址，如果存在的话。这在[透明代理](/Contracts/Contracts.4.x/API/Proxy.md#transparentupgradeableproxy)中是自动检测的，但对于[UUPS代理](/Contracts/Contracts.4.x/API/Proxy.md#uupsupgradeable)是必需的（在这里阅读更多），尽管UUPS代理通常不需要使用ProxyAdmin。
 
 * 如Common Options中所述的[Common Options](#常见选项)。
 
 **返回：**
 
-* 一个对象，包含Defender提案的URL，以及与部署新实施合同相对应的ethers交易响应。请注意，如果新的实施合同最初是由于forceImport而导入的，那么ethers交易响应将是未定义的。
+* 一个对象，包含Defender提案的URL，以及与部署新实施合约相对应的ethers交易响应。请注意，如果新的实施合约最初是由于forceImport而导入的，那么ethers交易响应将是未定义的。
 
 ## deployProxyAdmin
 ```

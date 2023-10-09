@@ -53,7 +53,7 @@ mod MyAccount {
     use openzeppelin::introspection::interface::ISRC5;
     use starknet::account::Call;
 
-    // 此合同使用的存储成员在每个使用`unsafe_state`的导入模块中定义。\
+    // 此合约使用的存储成员在每个使用`unsafe_state`的导入模块中定义。\
     //将来添加组件后，这种设计将得到改进。
     #[storage]
     struct Storage {}
