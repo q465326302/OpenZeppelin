@@ -68,7 +68,7 @@ internal#
 
 ##### _transfer_ownership(ref self: ContractState, new_owner: ContractAddress)
 internal#
-将合同的所有权转移给新的账户（new_owner）。这是一个没有访问限制的内部函数。
+将合约的所有权转移给新的账户（new_owner）。这是一个没有访问限制的内部函数。
 
 触发一个*OwnershipTransferred*事件。
 
@@ -158,7 +158,7 @@ DEFAULT_ADMIN_ROLE是所有角色的初始管理员，尽管没有发出*RoleAdm
 event#
 当账户被授予角色时发出。
 
-发送者是发起合同呼叫的账户，是管理员角色的持有者。
+发送者是发起合约呼叫的账户，是管理员角色的持有者。
 
 ##### RoleRevoked(role: felt252, account: ContractAddress, sender: ContractAddress)
 event#
@@ -175,7 +175,7 @@ event#
 use openzeppelin::access::accesscontrol::AccessControl;
 ```
 
-允许子级实现基于角色的访问控制机制的合同模块。角色由其felt252标识符引用。
+允许子级实现基于角色的访问控制机制的合约模块。角色由其felt252标识符引用。
 
 ```
 const MY_ROLE: felt252 = selector!('MY_ROLE');

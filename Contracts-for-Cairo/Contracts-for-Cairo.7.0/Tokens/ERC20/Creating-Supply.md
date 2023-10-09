@@ -78,7 +78,7 @@ mod MyToken {
 
     #[constructor]
     fn constructor(self: @ContractState, owner: ContractAddress) {
-        // 设置合同所有者
+        // 设置合约所有者
         let mut unsafe_ownable = Ownable::unsafe_new_contract_state();
         Ownable::InternalImpl::initializer(ref unsafe_ownable, owner);
 
