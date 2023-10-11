@@ -147,7 +147,7 @@ internal#
 internal#
 
 #### RelayHubChanged(address oldRelayHub, address newRelayHub)
-事件#
+event#
 当合约将其[IRelayHub](#irelayhub)合约更改为新合约时发出。
 
 ## Strategies
@@ -473,31 +473,31 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 在RelayHub中返回一个账户的nonce。
 
 #### Staked(address relay, uint256 stake, uint256 unstakeDelay)
-事件#
+event#
 当Relayer 的质押或解质押延迟增加时发出
 
 #### RelayAdded(address relay, address owner, uint256 transactionFee, uint256 stake, uint256 unstakeDelay, string url)
-事件#
+event#
 当一个继电器被注册或重新注册时发出。通过查看这些事件（并过滤掉[RelayRemoved](#relayremovedaddress-relay-uint256-unstaketime)事件），客户端可以发现可用继电器的列表。
 
 #### RelayRemoved(address relay, uint256 unstakeTime)
-事件#
+event#
 当 Relayer 被移除（取消注册）时发出。unstakeTime是可以调用解除质押的时间。
 
 #### Unstaked(address relay, uint256 stake)
-事件#
+event#
 当一个Relayer 被解除质押时，包括返回的质押金额时发出。
 
 #### Deposited(address recipient, address from, uint256 amount)
-事件#
+event#
 在调用[depositFor](#depositforaddress-target)时发出，包括被资助的金额和账户。
 
 #### Withdrawn(address account, address dest, uint256 amount)
-事件#
+event#
 当一个账户从RelayHub中提取资金时发出。
 
 #### CanRelayFailed(address relay, address from, address to, bytes4 selector, uint256 reason)
-事件#
+event#
 当Relayer 调用失败时发出。
 
 这可能是由于错误的[relayCall](#relaycalladdress-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata)参数或接收方不接受Relayer 调用引起的。实际的Relayer 调用未执行，并且接收方未收费。
@@ -505,7 +505,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 reason参数包含一个错误代码：值1-10对应于PreconditionCheck条目，而大于10的值是从[acceptRelayedCall](#acceptrelayedcalladdress-address-from-bytes-uint256-transactionfee-uint256-gasprice-uint256-uint256-bytes-uint256-maxpossiblecharge-→-uint256-bytes)返回的自定义接收方错误代码。
 
 #### TransactionRelayed(address relay, address from, address to, bytes4 selector, enum IRelayHub.RelayCallStatus status, uint256 charge)
-事件#
+event#
 当一个交易被Relayer 时发出。在监控Relayer 操作和Relayer 调用合约时非常有用。
 
 请注意，实际编码的函数可能会被还原：这在状态参数中表示。
@@ -513,5 +513,5 @@ reason参数包含一个错误代码：值1-10对应于PreconditionCheck条目�
 charge是从接收者的余额中扣除的以太值，支付给Relayer 的所有者。
 
 #### Penalized(address relay, address sender, uint256 amount)
-事件#
+event#
 当继电器受到惩罚时发出的信号。

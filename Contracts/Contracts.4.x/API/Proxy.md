@@ -476,7 +476,7 @@ public#
 * newImplementation必须是一个合约。
 
 #### Upgraded(address indexed implementation)
-事件#
+event#
 当由beacon返回的实现发生变化时发出。
 
 ## Minimal Clones
@@ -616,7 +616,7 @@ internal#
 如果合约当前正在初始化，则返回true。请参阅[onlyInitializing()](#onlyinitializing).
 
 #### Initialized(uint8 version)
-事件#
+event#
 当合约已初始化或重新初始化时触发。
 
 ### UUPSUpgradeable

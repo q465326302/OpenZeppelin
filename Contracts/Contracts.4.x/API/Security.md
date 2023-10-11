@@ -153,9 +153,9 @@ internal#
 * 合约必须暂停。
 
 #### Paused(address account)
-事件#
+event#
 当账户触发暂停时发出的信号。
 
 #### Unpaused(address account)
-事件#
+event#
 当账户解除暂停时发出。

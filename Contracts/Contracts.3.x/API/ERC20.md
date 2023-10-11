@@ -102,13 +102,13 @@ ERC20标准接口是根据EIP定义的。
 发出一个[Transfer](#transferaddress-from-address-to-uint256-value)事件。
 
 #### Transfer(address from, address to, uint256 value)
-事件#
+event#
 当价值代币从一个账户（from）转移到另一个账户（to）时发出。
 
 请注意，价值可能为零。
 
 #### Approval(address owner, address spender, uint256 value)
-事件#
+event#
 当通过调用[approve](#approveaddress-spender-uint256-amount-→-bool)设置所有者的支出者的津贴时发出。 value是新的津贴。
 
 #### ERC20
@@ -417,7 +417,7 @@ public#
 internal#
 
 #### Snapshot(uint256 id)
-事件#
+event#
 当通过id标识的快照被创建时，[_snapshot](#_snapshot-→-uint256)发出的。
 
 ### ERC20Pausable

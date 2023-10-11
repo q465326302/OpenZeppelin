@@ -75,9 +75,9 @@ public#
 被暂停者呼叫以解除暂停，恢复正常状态。
 
 #### Paused(address account)
-事件#
+event#
 当暂停是由暂停者（账户）触发时发出。
 
 #### Unpaused(address account)
-事件#
+event#
 当暂停由暂停者（账户）解除时发出。

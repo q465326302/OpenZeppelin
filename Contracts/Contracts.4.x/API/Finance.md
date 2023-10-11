@@ -99,16 +99,16 @@ public#
 触发将他们应得的代币数量转账到其账户，根据其在总份额中的百分比和之前的提取情况。代币必须是一个IERC20合约的地址。
 
 #### PayeeAdded(address account, uint256 shares)
-事件#
+event#
 
 #### PaymentReleased(address to, uint256 amount)
-事件#
+event#
 
 #### ERC20PaymentReleased(contract IERC20 indexed token, address to, uint256 amount)
-事件#
+event#
 
 #### PaymentReceived(address from, uint256 amount)
-事件#
+event#
 
 ### VestingWallet
 ```
@@ -200,7 +200,7 @@ internal#
 实现分配公式的虚拟化。根据资产的总历史分配，这将返回随时间变化的已分配金额。
 
 #### EtherReleased(uint256 amount)
-事件#
+event#
 
 #### ERC20Released(address indexed token, uint256 amount)
-事件#
+event#

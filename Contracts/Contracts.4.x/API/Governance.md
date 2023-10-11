@@ -231,25 +231,25 @@ public#
 根据params的长度发出[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)或[VoteCastWithParams](#votecastwithparamsaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason-bytes-params)事件。
 
 #### ProposalCreated(uint256 proposalId, address proposer, address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, uint256 voteStart, uint256 voteEnd, string description)
-事件#
+event#
 当提案被创建时发出。
 
 #### ProposalCanceled(uint256 proposalId)
-事件#
+event#
 当一个提案被取消时发出的信号。
 
 #### ProposalExecuted(uint256 proposalId)
-事件#
+event#
 当提案执行时发出。
 
 #### VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason)
-事件#
+event#
 当没有参数投票时发出的信号。
 
 注意：支持值应视为桶。它们的解释取决于所使用的投票模块。
 
 #### VoteCastWithParams(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params)
-事件#
+event#
 在使用参数进行投票时发出。
 
 注意：支持值应被视为桶。它们的解释取决于所使用的投票模块。参数是额外编码的参数。它们的解释也取决于所使用的投票模块。
@@ -839,7 +839,7 @@ internal#
 * 新的分子必须小于或等于分母。
 
 #### QuorumNumeratorUpdated(uint256 oldQuorumNumerator, uint256 newQuorumNumerator)
-事件#
+event#
 
 ### GovernorVotesComp
 ```
@@ -1068,7 +1068,7 @@ internal#
 不建议在存在其他排队的治理提案时更改timelock。
 
 #### TimelockChange(address oldTimelock, address newTimelock)
-事件#
+event#
 当用于提案执行的时间锁控制器被修改时发出。
 
 ### GovernorTimelockCompound
@@ -1212,7 +1212,7 @@ public#
 不建议在存在其他排队中的治理提案时更改timelock。
 
 #### TimelockChange(address oldTimelock, address newTimelock)
-事件#
+event#
 
 ### GovernorSettings
 ```
@@ -1352,10 +1352,10 @@ internal#
 发出[ProposalThresholdSet](#proposalthresholdsetuint256-oldproposalthreshold-uint256-newproposalthreshold)事件。
 
 #### VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)
-事件#
+event#
 
 #### VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)
-事件#
+event#
 
 #### ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)
 
@@ -1474,11 +1474,11 @@ internal#
 发出[LateQuorumVoteExtensionSet](#latequorumvoteextensionsetuint64-oldvoteextension-uint64-newvoteextension)事件。
 
 #### ProposalExtended(uint256 indexed proposalId, uint64 extendedDeadline)
-事件#
+event#
 当提案的截止日期因在投票期间达到法定人数而被推迟时发出。
 
 #### LateQuorumVoteExtensionSet(uint64 oldVoteExtension, uint64 newVoteExtension)
-事件#
+event#
 当[lateQuorumVoteExtension](#latequorumvoteextension-→-uint64)参数被更改时发出。
 
 ### GovernorCompatibilityBravo
@@ -2036,23 +2036,23 @@ public#
 请参阅 [IERC1155Receiver.onERC1155BatchReceived](./ERC1155.md#onerc1155batchreceivedaddress-operator-address-from-uint256-ids-uint256-values-bytes-data-→-bytes4).
 
 #### CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)
-事件#
+event#
 当一个调用被安排作为操作ID的一部分时发出。
 
 #### CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)
-事件#
+event#
 当作为操作id的一部分执行调用时发出。
 
 #### CallSalt(bytes32 indexed id, bytes32 salt)
-事件#
+event#
 当使用非零盐值调度新提案时发出。
 
 #### Cancelled(bytes32 indexed id)
-事件# 
+event# 
 当操作ID被取消时发出。
 
 #### MinDelayChange(uint256 oldDuration, uint256 newDuration)
-事件# 
+event# 
 当未来操作的最小延迟被修改时发出。
 
 ## 术语

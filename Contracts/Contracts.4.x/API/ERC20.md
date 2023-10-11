@@ -86,12 +86,12 @@ ERC20标准的接口定义，如EIP中所述。
 触发一个[transfer](#transferaddress-to-uint256-amount-→-bool)事件。
 
 #### Transfer(address indexed from, address indexed to, uint256 value)
-事件#
+event#
 当价值代币从一个帐户（从）转移到另一个帐户（到）时发出。
 请注意，价值可能为零。
 
 #### Approval(address indexed owner, address indexed spender, uint256 value)
-事件#
+event#
 当调用[approve](#approveaddress-spender-uint256-amount-→-bool)设置所有者的支出者的津贴时，发出津贴设置事件。 value是新的津贴。
 
 ### IERC20Metadata
@@ -638,7 +638,7 @@ internal#
 要了解更多有关 hooks 的信息，请前往 [Using Hooks](../Extending-Contracts.md#使用-hooks) 。
 
 #### Snapshot(uint256 id)
-事件#
+event#
 当由id标识的快照创建时，由[_snapshot](#_snapshot-→-uint256)发出。
 
 #### ERC20Votes

@@ -76,13 +76,13 @@ public#
 public#
 
 #### PayeeAdded(address account, uint256 shares)
-事件#
+event#
 
 #### PaymentReleased(address to, uint256 amount)
-事件#
+event#
 
 #### PaymentReceived(address from, uint256 amount)
-事件#
+event#
 
 ### PullPayment
 简单实现了一种[拉取支付](https://consensys.github.io/smart-contract-best-practices/recommendations/#favor-pull-over-push-for-external-calls)策略，支付合约不直接与接收方账户进行交互，接收方必须自行提取支付。
@@ -198,10 +198,10 @@ public#
 *自v2.4.0起可用。*
 
 #### Deposited(address payee, uint256 weiAmount)
-事件#
+event#
 
 #### Withdrawn(address payee, uint256 weiAmount)
-事件#
+event#
 
 ### ConditionalEscrow
 基本抽象的托管只允许在满足条件的情况下提取。预期用途：参见[Escrow](#escrow)。同样适用于此处的使用准则。
@@ -336,7 +336,7 @@ public#
 返回退款人是否可以提取他们的存款（被退款）。重写的函数接收一个“收款人”参数，但我们在这里忽略它，因为条件是全局的，而不是每个收款人。
 
 #### RefundsClosed()
-事件#
+event#
 
 #### RefundsEnabled()
-事件#
+event#

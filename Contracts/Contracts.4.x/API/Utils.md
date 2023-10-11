@@ -1561,10 +1561,10 @@ public#
 转发所有的gas会打开重入漏洞的可能性。请确保你信任收款人，或者遵循检查-效应-交互模式或使用[ReentrancyGuard](./Security.md#reentrancyguard)。
 
 #### Deposited(address indexed payee, uint256 weiAmount)
-事件#
+event#
 
 #### Withdrawn(address indexed payee, uint256 weiAmount)
-事件#
+event#
 
 ### RefundEscrow
 ```
@@ -1651,10 +1651,10 @@ public#
 返回退款人是否可以取回他们的存款（退款）。重写的函数接收一个“受款人”参数，但在这里我们忽略它，因为条件是全局的，不是针对每个受款人的。
 
 #### RefundsClosed()
-事件#
+event#
 
 #### RefundsEnabled()
-事件#
+event#
 
 ## Introspection
 这组接口和合约处理合约的类型内省，即[检查可以在合约上调用](https://en.wikipedia.org/wiki/Type_introspection)的函数。这通常被称为合约的接口。
@@ -1884,10 +1884,10 @@ import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 外部#
 
 #### InterfaceImplementerSet(address indexed account, bytes32 indexed interfaceHash, address indexed implementer)
-事件#
+event#
 
 #### ManagerChanged(address indexed account, address indexed newManager)
-事件#
+event#
 
 ### IERC1820Implementer
 ```

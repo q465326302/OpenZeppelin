@@ -61,7 +61,7 @@ internal#
 将合约的所有权转移给一个新账户（newOwner）。内部函数，没有访问限制。
 
 #### OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
-事件#
+event#
 
 ### Ownable2Step
 ```
@@ -106,7 +106,7 @@ public#
 新业主接受所有权转移。
 
 #### OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)
-事件#
+event#
 
 ## IAccessControl
 ```
@@ -159,18 +159,18 @@ AccessControl的外部接口声明支持ERC165检测。
 * 调用者必须是账户。
 
 #### RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)
-事件#
+event#
 当将newAdminRole设置为角色的管理员角色时，替换了previousAdminRole时，会发出此事件。
 尽管没有发出RoleAdminChanged信号，DEFAULT_ADMIN_ROLE仍是所有角色的起始管理员。
 自v3.1起可用。
 
 #### RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
-事件#
+event#
 当账户被授予角色时发出。
 发送者是发起合约调用的账户，是管理员角色持有者，除非使用*AccessControl._setupRole*。
 
 #### RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
-事件#
+event#
 当账户被撤销角色时发出。
 发送者是发起合约调用的账户：- 如果使用revokeRole，则是管理员角色持有人- 如果使用renounceRole，则是角色持有人（即账户）。
 

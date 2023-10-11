@@ -74,13 +74,13 @@ public#
 根据他们在总股份中所占的比例和之前的提款情况，触发将他们所欠的以太转账到他们的账户。
 
 #### PayeeAdded(address account, uint256 shares)
-事件#
+event#
 
 #### PaymentReleased(address to, uint256 amount)
-事件#
+event#
 
 #### PaymentReceived(address from, uint256 amount)
-事件#
+event#
 
 ### PullPayment
 简单实现了一种[拉取支付](https://consensys.github.io/smart-contract-best-practices/recommendations/#favor-pull-over-push-for-external-calls)策略，其中支付合约不直接与接收方账户进行交互，接收方必须自行提取支付。
@@ -167,10 +167,10 @@ public#
 将所有燃料转发给收款人会导致可重新进入漏洞。请确保你信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Utils.md#reentrancyguard)。
 
 #### Deposited(address payee, uint256 weiAmount)
-事件#
+event#
 
 #### Withdrawn(address payee, uint256 weiAmount)
-事件#
+event#
 
 ### ConditionalEscrow
 基本抽象托管只允许在满足条件时进行提款。预期用途：参见[Escrow](#escrow)。同样的使用准则适用于这里。
@@ -287,7 +287,7 @@ public#
 返回退款人是否可以取回他们的存款（被退款）。重写的函数接收一个'payee'参数，但在这里我们忽略它，因为条件是全局的，而不是每个收款人的。
 
 #### RefundsClosed()
-事件#
+event#
 
 #### RefundsEnabled()
-事件#
+event#

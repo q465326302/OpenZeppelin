@@ -128,7 +128,7 @@ internal#
 internal#
 
 #### Snapshot(uint256 id)
-事件#
+event#
 
 ### TokenVesting
 一个代币持有者合约，可以像典型的锁定期计划一样逐步释放其代币余额，包括一个起始期和锁定期。可由所有者选择性地撤销。
@@ -214,10 +214,10 @@ public#
 public#
 
 #### TokensReleased(address token, uint256 amount)
-事件#
+event#
 
 #### TokenVestingRevoked(address token)
-事件#
+event#
 
 ## Miscellaneous
 

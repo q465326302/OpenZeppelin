@@ -467,10 +467,10 @@ convertToAssets和previewRedeem之间的任何不利差异应被视为份额价�
 一些实现将要求在进行提款之前向Vault预请求。这些方法应该分别执行。
 
 #### Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
-事件#
+event#
 
 #### Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
-事件#
+event#
 
 ### IERC5313
 ```
@@ -505,7 +505,7 @@ import "@openzeppelin/contracts/interfaces/IERC5267.sol";
 返回描述此合约用于EIP-712签名的域分隔符使用的字段和值。
 
 #### EIP712DomainChanged()
-事件#
+event#
 可能会发出信号，表明域名可能已更改。
 
 ### IERC5805

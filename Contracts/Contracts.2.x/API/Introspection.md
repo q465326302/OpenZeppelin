@@ -180,10 +180,10 @@ account为零地址是调用者地址的别名。
 外部#
 
 #### InterfaceImplementerSet(address account, bytes32 interfaceHash, address implementer)
-事件#
+event#
 
 #### ManagerChanged(address account, address newManager)
-事件#
+event#
 
 ### IERC1820Implementer
 ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-implementation-erc1820implementerinterface)中所定义。被注册为IERC1820Registry中的实现者的合约使用。

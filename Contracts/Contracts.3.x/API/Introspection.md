@@ -188,10 +188,10 @@ internal#
 外部#
 
 #### InterfaceImplementerSet(address account, bytes32 interfaceHash, address implementer)
-事件#
+event#
 
 #### ManagerChanged(address account, address newManager)
-事件#
+event#
 
 ### IERC1820Implementer
 

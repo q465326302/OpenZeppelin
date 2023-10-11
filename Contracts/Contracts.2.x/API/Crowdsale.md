@@ -101,7 +101,7 @@ internal#
 确定以太坊在购买时如何存储/转发。
 
 #### TokensPurchased(address purchaser, address beneficiary, uint256 value, uint256 amount)
-事件#
+event#
 
 ## Emission
 
@@ -547,7 +547,7 @@ internal#
 延长众筹活动。
 
 #### TimedCrowdsaleExtended(uint256 prevClosingTime, uint256 newClosingTime)
-事件#
+event#
 
 ### WhitelistCrowdsale
 只有被列入白名单的用户才能参与的众筹活动。
@@ -729,7 +729,7 @@ internal#
 可以被重写以添加最终化逻辑。重写的函数应该调用super._finalization()来确保完整地执行最终化链。
 
 #### CrowdsaleFinalized()
-事件#
+event#
 
 ### PostDeliveryCrowdsale
 众筹活动将令代币在结束之前无法提取。

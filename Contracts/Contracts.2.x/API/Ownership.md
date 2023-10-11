@@ -68,7 +68,7 @@ internal#
 将合约的所有权转移到一个新账户（newOwner）。
 
 #### OwnershipTransferred(address previousOwner, address newOwner)
-事件#
+event#
 
 ### Secondary
 一个次要合约只能由其主要账户（创建它的账户）使用。
@@ -106,5 +106,5 @@ public#
 将合约转让给新的主要方。
 
 #### PrimaryTransferred(address recipient)
-事件#
+event#
 当主要合约发生变化时发出。

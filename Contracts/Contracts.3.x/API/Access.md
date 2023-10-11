@@ -54,7 +54,7 @@ public#
 将合约的所有权转移到一个新账户（newOwner）。只能由当前所有者调用。
 
 #### OwnershipTransferred(address previousOwner, address newOwner)
-事件#
+event#
 
 ### AccessControl
 允许children实施基于角色的访问控制机制的合约模块。
@@ -176,7 +176,7 @@ internal#
 发出[RoleAdminChanged](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)事件。
 
 #### RoleAdminChanged(bytes32 role, bytes32 previousAdminRole, bytes32 newAdminRole) 
-事件#
+event#
 当将newAdminRole设置为角色的管理员角色时，取代previousAdminRole时，会发出此事件。
 
 尽管没有发出[RoleAdminChanged](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)信号，DEFAULT_ADMIN_ROLE仍然是所有角色的起始管理员。
@@ -184,13 +184,13 @@ internal#
 *从v3.1版本开始可用。*
 
 #### RoleGranted(bytes32 role, address account, address sender)
-事件#
+event#
 当账户被授予角色时发出。
 
 发送者是发起合约调用的账户，是管理员角色的持有者，除非使用 [_setupRole](#_setuprolebytes32-role-address-account)。
 
 #### RoleRevoked(bytes32 role, address account, address sender)
-事件#
+event#
 当账户被撤销角色时发出。
 
 发送者是发起合约调用的账户：- 如果使用revokeRole，发送者是管理员角色的持有者- 如果使用renounceRole，发送者是角色的持有者（即账户）
@@ -375,19 +375,19 @@ public#
 * 调用者必须是时间锁本身。只有通过调度并稍后执行将时间锁作为目标，数据为ABI编码调用此函数的操作才能实现。
 
 #### CallScheduled(bytes32 id, uint256 index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)
-事件#
+event#
 当一个调用被计划为操作ID的一部分时触发。
 
 #### CallExecuted(bytes32 id, uint256 index, address target, uint256 value, bytes data)
-事件#
+event#
 当作为操作id的一部分执行呼叫时发出的信号。
 
 #### Cancelled(bytes32 id)
-事件#
+event#
 当操作ID被取消时发出。
 
 #### MinDelayChange(uint256 oldDuration, uint256 newDuration)
-事件#
+event#
 当将来操作的最小延迟被修改时发出。
 
 ### Terminology

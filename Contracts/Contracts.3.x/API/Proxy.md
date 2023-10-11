@@ -107,7 +107,7 @@ internal#
 发出一个 [Upgraded](#upgradedaddress-implementation)事件。
 
 #### Upgraded(address implementation)
-事件#
+event#
 当实现被升级时发出。
 
 ### TransparentUpgradeableProxy
@@ -220,7 +220,7 @@ internal#
 确保管理员不能访问回退函数。请参阅 [Proxy._beforeFallback](#_beforefallback)。
 
 #### AdminChanged(address previousAdmin, address newAdmin)
-事件#
+event#
 当管理员账户发生变化时发出。
 
 ## Beacon
@@ -338,7 +338,7 @@ public#
 * newImplementation必须是一个合约。
 
 #### Upgraded(address implementation)
-事件#
+event#
 当由beacon返回的实现发生变化时发出。
 
 ## Minimal Clones

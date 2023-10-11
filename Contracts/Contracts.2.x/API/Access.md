@@ -78,10 +78,10 @@ internal#
 internal#
 
 #### CapperAdded(address account)
-事件#
+event#
 
 #### CapperRemoved(address account)
-事件# 
+event# 
 
 ### MinterRole
 
@@ -133,10 +133,10 @@ internal#
 internal#
 
 #### MinterAdded(address account)
-事件#
+event#
 
 #### MinterRemoved(address account)
-事件#
+event#
 
 ### PauserRole
 
@@ -188,10 +188,10 @@ internal#
 internal#
 
 #### PauserAdded(address account)
-事件#
+event#
 
 #### PauserRemoved(address account)
-事件#
+event#
 
 ### SignerRole
 
@@ -243,10 +243,10 @@ internal#
 internal#
 
 #### SignerAdded(address account)
-事件#
+event#
 
 #### SignerRemoved(address account)
-事件#
+event#
 
 ### WhitelistAdminRole
 WhitelistAdmins负责分配和删除白名单账户。
@@ -299,10 +299,10 @@ internal#
 internal#
 
 #### WhitelistAdminAdded(address account)
-事件#
+event#
 
 #### WhitelistAdminRemoved(address account)
-事件#
+event#
 
 ### WhitelistedRole
 白名单帐户已由白名单管理员批准，可以执行特定操作（例如参与众筹）。这个角色很特殊，只有白名单管理员才能添加它（也可以删除它），而不是白名单本身的帐户。
@@ -376,7 +376,7 @@ internal#
 internal#
 
 #### WhitelistedAdded(address account)
-事件#
+event#
 
 #### WhitelistedRemoved(address account)
-事件#
+event#
