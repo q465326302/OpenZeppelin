@@ -340,7 +340,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### onlyGovernance()
-修饰符#
+modifier#
 限制一个函数，只能通过治理提案执行。例如，[GovernorSettings](#governorsettings)中的治理参数设置器使用此修饰符进行保护。
 
 治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过重写[_executor](#_executor-→-address)函数来实现。执行者只能在治理程序的[execute](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
@@ -1915,7 +1915,7 @@ IACCESSCONTROL
 [RoleRevoked(role, account, sender)](./Access.md#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### onlyRoleOrOpenRole(bytes32 role)
-修饰符#
+modifier#
 对函数进行修改，使其只能被特定角色调用。除了检查发送者的角色外，还要考虑 address(0) 的角色。将角色授予 address(0) 相当于为所有人启用此角色。
 
 #### constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)

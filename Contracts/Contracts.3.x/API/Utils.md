@@ -49,14 +49,14 @@
 [Unpaused(account)](#unpausedaddress-account)
 
 #### whenNotPaused()
-修饰符#
+modifier#
 修改使函数仅在合约未暂停时可调用。
 
 要求：
 * 合约不能被暂停。
 
 #### whenPaused()
-修饰符#
+modifier#
 只有当合约被暂停时才能调用的修饰符。
 
 要求：
@@ -109,7 +109,7 @@
 [constructor()](#constructor-1)
 
 #### nonReentrant()
-修饰符#
+modifier#
 禁止合约直接或间接调用自身的功能。不支持从另一个非重入函数调用非重入函数。可以通过将非重入函数设置为external，并使其调用一个执行实际工作的私有函数来防止这种情况发生。
 
 #### constructor()

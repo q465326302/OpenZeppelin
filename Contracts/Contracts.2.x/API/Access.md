@@ -57,7 +57,7 @@ CONTEXT
 [CapperRemoved(account)](#capperremovedaddress-account)
 
 #### onlyCapper()
-修饰符#
+modifier#
 
 #### constructor()
 内部#
@@ -112,7 +112,7 @@ CONTEXT
 [MinterRemoved(account)](#minterremovedaddress-account)
 
 #### onlyMinter()
-修饰符#
+modifier#
 
 #### constructor()
 内部#
@@ -167,7 +167,7 @@ CONTEXT
 [PauserRemoved(account)](#pauserremovedaddress-account)
 
 #### onlyPauser()
-修饰符#
+modifier#
 
 #### constructor()
 内部#
@@ -222,7 +222,7 @@ CONTEXT
 [SignerRemoved(account)](#signerremovedaddress-account)
 
 #### onlySigner()
-修饰符#
+modifier#
 
 #### constructor()
 内部#
@@ -278,7 +278,7 @@ CONTEXT
 [WhitelistAdminRemoved(account)](#whitelistadminremovedaddress-account)
 
 #### onlyWhitelistAdmin()
-修饰符#
+modifier#
 
 #### constructor()
 内部#
@@ -355,7 +355,7 @@ WHITELISTADMINROLE
 [WhitelistAdminRemoved(account)](#whitelistadminremovedaddress-account)
 
 #### onlyWhitelisted()
-修饰符#
+modifier#
 
 #### isWhitelisted(address account) → bool
 公开#

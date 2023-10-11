@@ -36,7 +36,7 @@ CONTEXT
 [OwnershipTransferred(previousOwner, newOwner)](#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### onlyOwner()
-修饰符#
+modifier#
 如果被除了所有者之外的任何账户调用，则抛出异常。
 
 #### constructor()
@@ -92,7 +92,7 @@ CONTEXT
 [PrimaryTransferred(recipient)](#primarytransferredaddress-recipient)
 
 #### onlyPrimary()
-修饰符#
+modifier#
 
 #### constructor()
 内部#

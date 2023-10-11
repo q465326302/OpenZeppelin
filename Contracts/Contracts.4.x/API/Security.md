@@ -72,7 +72,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 [_reentrancyGuardEntered()](#_reentrancyguardentered-→-bool)
 
 #### nonReentrant()
-修饰符#
+modifier#
 防止合约直接或间接地调用自身。不支持从另一个非可重入函数调用非可重入函数。可以通过使非可重入函数为external，并使其调用执行实际工作的私有函数来防止发生这种情况。
 
 #### constructor()
@@ -108,14 +108,14 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 [Unpaused(account)](#unpausedaddress-account)
 
 #### whenNotPaused()
-修饰符#
+modifier#
 当合约暂停时，使函数无法调用。
 
 要求：
 * 合约不能暂停。
 
 #### whenPaused()
-修饰符#
+modifier#
 仅当合约暂停时才能调用的修饰符。
 
 要求：

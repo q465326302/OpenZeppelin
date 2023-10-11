@@ -518,7 +518,7 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### onlyWhileOpen()
-修饰符#
+modifier#
 如果不在众筹时间范围内，则进行还原。
 
 #### constructor(uint256 openingTime, uint256 closingTime)

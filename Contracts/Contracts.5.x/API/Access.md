@@ -7,12 +7,12 @@
 
 ## 授权
 
-### Ownable
+### [Ownable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/Ownable.sol)
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 合约模块提供了一个基本的访问控制机制，其中有一个帐户（所有者）可以被授予对特定功能的独占访问权。
 
-默认情况下，所有者帐户将是部署合约的帐户。这可以在之后通过 [transferOwnership](#transferownershipaddress-newowner) 更改。
+初始所有者被设置为部署者提供的地址。这可以在后期通过*transferOwnership*进行更改。
 
 这个模块通过继承使用。它将提供修饰符 onlyOwner，可以应用于你的函数，以限制它们的使用仅限于所有者。
 

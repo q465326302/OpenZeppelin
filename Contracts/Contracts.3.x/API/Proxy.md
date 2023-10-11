@@ -161,7 +161,7 @@ PROXY
 [AdminChanged(previousAdmin, newAdmin)](#adminchangedaddress-previousadmin-address-newadmin)
 
 #### ifAdmin()
-修饰符#
+modifier#
 除非发送者是管理员，否则将调用委托给实现的内部使用的修饰符。
 
 #### constructor(address _logic, address admin_, bytes _data)
@@ -396,7 +396,7 @@ OWNABLE
 [initializer()](#initializer)
 
 #### initializer()
-修饰符#
+modifier#
 
 ### ProxyAdmin
 这是一个辅助合约，用于将其分配为[TransparentUpgradeableProxy](#transparentupgradeableproxy)的管理员。要了解为什么要使用此合约，请参阅[TransparentUpgradeableProxy](#transparentupgradeableproxy)的文档。

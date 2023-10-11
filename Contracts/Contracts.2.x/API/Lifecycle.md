@@ -51,11 +51,11 @@ PAUSERROLE
 [PauserRemoved(account)](./Access.md#pauserremovedaddress-account)
 
 #### whenNotPaused()
-修饰符#
+modifier#
 当合约未暂停时，对函数进行调用的修改器。
 
 #### whenPaused()
-修饰符#
+modifier#
 当合约暂停时才能调用的修饰符。
 
 #### constructor()

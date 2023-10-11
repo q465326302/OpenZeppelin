@@ -224,7 +224,7 @@ CREATE2 EVM操作码的帮助程序使得使用CREATE2更加简单和安全。CR
 [constructor()]
 
 #### nonReentrant()
-修饰符#
+modifier#
 防止合约直接或间接调用自身的功能。不支持从另一个nonReentrant函数调用nonReentrant函数。可以通过将nonReentrant函数设置为external，并使其调用执行实际工作的private函数来防止这种情况发生。
 
 #### constructor()

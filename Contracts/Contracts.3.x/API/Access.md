@@ -31,7 +31,7 @@
 [OwnershipTransferred(previousOwner, newOwner)](#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### onlyOwner()
-修饰符#
+modifier#
 如果被除了所有者之外的任何账户调用，则会抛出异常。
 
 #### constructor()
@@ -277,7 +277,7 @@ ACCESSCONTROL
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-role-address-account-address-sender)
 
 #### onlyRole(bytes32 role)
-修饰符#
+modifier#
 修改以使特定角色才能调用函数。除了检查发送者的角色外，还要考虑address(0)的角色。将角色授予address(0)等效于为所有人启用该角色。
 
 #### constructor(uint256 minDelay, address[] proposers, address[] executors)

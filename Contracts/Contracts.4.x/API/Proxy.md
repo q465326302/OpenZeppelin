@@ -273,7 +273,7 @@ IERC1967
 [BeaconUpgraded(beacon)](./Interfaces.md)
 
 #### ifAdmin()
-修饰符# 
+modifier# 
 用于内部使用的修饰符，除非发送者是管理员，否则将调用委托给实现。
 
 > CAUTION
@@ -575,7 +575,7 @@ constructor() {
 [Initialized(version)](#initializeduint8-version)
 
 #### initializer()
-修饰符#
+modifier#
 一个定义了受保护的初始化函数的修饰符，该函数最多只能被调用一次。在其作用域内，只能使用Initializing函数来初始化父合约。
 
 与reinitializer(1)类似，但是标记为initializer的函数可以嵌套在构造函数的上下文中。
@@ -583,7 +583,7 @@ constructor() {
 触发一个[Initialized(version)](#initializeduint8-version)事件。
 
 #### reinitializer(uint8 version)
-修饰符#
+modifier#
 一个修饰符，定义了一个受保护的重新初始化函数，最多只能调用一次，并且只有在合约在之前没有被初始化为更高版本的情况下才能调用。在其作用域内，只能使用Initializing函数来初始化父合约。
 
 重新初始化器可以在原始初始化步骤之后使用。这对于配置通过升级添加的需要初始化的模块是必要的。
@@ -598,7 +598,7 @@ constructor() {
 发出一个[Initialized(version)](#initializeduint8-version)事件。
 
 #### onlyInitializing()
-修饰符#
+modifier#
 修改以保护初始化函数，使其只能被具有[initializer()](#initializer)和[reinitializer(version)](#reinitializeruint8-version)修饰符的函数直接或间接调用。
 
 #### _disableInitializers()
@@ -660,11 +660,11 @@ IERC1967
 [BeaconUpgraded(beacon)](./Interfaces.md)
 
 #### onlyProxy()
-修饰符#
+modifier#
 检查执行是否通过delegatecall调用，并且执行上下文是指向自身的实现（根据ERC1967定义）。这仅适用于使用当前合约作为其实现的UUPS和透明代理。通过ERC1167最小代理（克隆）执行函数通常不会通过此测试，但不能保证一定会失败。
 
 #### notDelegated()
-修饰符#
+modifier#
 检查执行是否未通过委托调用进行。这允许一个函数可以在实现合约上调用，但不能通过代理调用。
 
 #### proxiableUUID() → bytes32
