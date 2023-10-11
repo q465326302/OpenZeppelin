@@ -1683,7 +1683,7 @@ ERC165标准的接口，如在[EIP](https://eips.ethereum.org/EIPS/eip-165)中�
 supportsInterface(interfaceId)
 
 #### supportsInterface(bytes4 interfaceId) → bool
-外部#
+external#
 如果此合约实现了interfaceId定义的接口，则返回true。有关如何创建这些id的详细信息，请参阅相应的[EIP部分](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)。
 
 此函数调用必须使用少于30,000 gas。
@@ -1829,7 +1829,7 @@ import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 [ManagerChanged(account, newManager)](#managerchangedaddress-indexed-account-address-indexed-newmanager)
 
 ### setManager(address account, address newManager)
-外部#
+external#
 将newManager设置为account的管理者。账户的管理者可以为其设置接口实现者。
 
 默认情况下，每个账户都是其自己的管理者。将0x0的值传递给newManager将重置管理者为初始状态。
@@ -1840,13 +1840,13 @@ import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 * 调用者必须是account的当前管理者。
 
 #### getManager(address account) → address
-外部#
+external#
 返回账户的经理。
 
 参见[setManager](#setmanageraddress-account-address-newmanager)。
 
 #### setInterfaceImplementer(address account, bytes32 _interfaceHash, address implementer)
-外部#
+external#
 将实现者合约设置为账户的实现者，用于接口哈希。
 
 账户是调用者地址的别名。零地址也可以用于实现者中以移除旧的地址。
@@ -1863,7 +1863,7 @@ import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 * 实现者必须实现[IERC1820Implementer](#ierc1820implementer)接口并在查询支持时返回true，除非实现者是调用者。参见[IERC1820Implementer.canImplementInterfaceForAddress](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32)。
 
 #### getInterfaceImplementer(address account, bytes32 _interfaceHash) → address
-外部#
+external#
 返回接口哈希在账户上的实现者。如果没有注册这样的实现者，则返回零地址。
 
 如果接口哈希是一个[IERC165](#ierc165)接口id（即以28个零结尾），将查询账户是否支持它。
@@ -1871,17 +1871,17 @@ import "@openzeppelin/contracts/utils/introspection/IERC1820Registry.sol";
 账户为零地址是调用者地址的别名。
 
 #### interfaceHash(string interfaceName) → bytes32
-外部#
+external#
 返回与接口名称对应的接口哈希，该[哈希在EIP](https://eips.ethereum.org/EIPS/eip-1820#interface-name)的相应部分中定义。
 
 #### updateERC165Cache(address account, bytes4 interfaceId)
-外部#
+external#
 
 #### implementsERC165Interface(address account, bytes4 interfaceId) → bool
-外部#
+external#
 
 #### implementsERC165InterfaceNoCache(address account, bytes4 interfaceId) → bool
-外部#
+external#
 
 #### InterfaceImplementerSet(address indexed account, bytes32 indexed interfaceHash, address indexed implementer)
 event#
@@ -1900,7 +1900,7 @@ ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#int
 [canImplementInterfaceForAddress(interfaceHash, account)](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32)
 
 #### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
-外部#
+external#
 如果该合约为帐户实现了interfaceHash，则返回特殊值（ERC1820_ACCEPT_MAGIC）。
 
 请参阅[IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)。

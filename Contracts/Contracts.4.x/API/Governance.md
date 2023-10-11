@@ -350,7 +350,7 @@ internal#
 设置[name](#name-e28692-string-1)和[version](#version-e28692-string-1)的值
 
 #### receive()
-外部#
+external#
 接收ETH的函数，将由治理合约处理（如果执行者是第三方合约，则禁用）
 
 #### supportsInterface(bytes4 interfaceId) → bool
@@ -490,7 +490,7 @@ internal#
 发出(#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### relay(address target, uint256 value, bytes data)
-外部#
+external#
 将交易或函数调用转发到任意目标。在使用时间锁定等合约作为治理执行者的情况下，可以在治理提案中调用此函数来恢复错误发送到治理合约的代币或以太。请注意，如果执行者只是治理本身，则使用Relayer 是多余的。
 
 #### _executor() → address
@@ -820,7 +820,7 @@ public#
 以投票数量为单位，返回时间点的法定人数：供应量 * 分子 / 分母。
 
 #### updateQuorumNumerator(uint256 newQuorumNumerator)
-外部#
+external#
 更改法定人数的分子。
 
 发出一个[QuorumNumeratorUpdated](#quorumnumeratorupdateduint256-oldquorumnumerator-uint256-newquorumnumerator)事件。
@@ -1061,7 +1061,7 @@ internal#
 通过这个地址，governor执行行动。在这种情况下，是指timelock定。
 
 #### updateTimelock(contract TimelockController newTimelock)
-外部#
+external#
 公共端点用于更新底层的timelock实例。仅限于timelock本身，因此更新必须通过治理提案进行提议、计划和执行。
 
 > CAUTION
@@ -1201,7 +1201,7 @@ public#
 接受对时间锁的管理员权限。
 
 #### updateTimelock(contract ICompoundTimelock newTimelock)
-外部#
+external#
 公共端点用于更新底层的timelock实例。该端点仅限timelock本身使用，因此更新必须通过治理提案进行提议、计划和执行。
 
 出于安全原因，在设置新的timelock之前，必须将timelock移交给另一个管理员。两个操作（移交timelock）和进行更新可以合并为一个提案。
@@ -1842,7 +1842,7 @@ public#
 返回一个地址的nonce。
 
 #### DOMAIN_SEPARATOR() → bytes32
-外部#
+external#
 返回合约[的EIP712](./Utils.md#eip712)域分隔符。
 
 #### _getVotingUnits(address) → uint256
@@ -1930,7 +1930,7 @@ public#
 可选的管理员可以在部署后帮助进行角色的初始配置，而不受延迟的限制，但是应该在之后放弃此角色，改为通过时间锁定的提案进行管理。之前的合约版本会自动将此管理员分配给部署者，也应该放弃此角色。
 
 #### receive()
-外部#
+external#
 合约可能会在维护过程中收到/持有ETH。
 
 #### supportsInterface(bytes4 interfaceId) → bool
@@ -2015,7 +2015,7 @@ internal#
 执行一个操作的调用。
 
 #### updateDelay(uint256 newDelay)
-外部#
+external#
 更改未来操作的最小时间锁定持续时间。
 
 发出[MinDelayChange](#mindelaychangeuint256-oldduration-uint256-newduration)事件。

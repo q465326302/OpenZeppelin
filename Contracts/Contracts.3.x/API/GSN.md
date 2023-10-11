@@ -291,11 +291,11 @@ internal#
 [postRelayedCall(context, success, actualCharge, preRetVal)](#postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval-2)
 
 #### getHubAddr() → address
-外部#
+external#
 返回此收件人与之交互的[IRelayHub](#irelayhub)实例的地址。
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256 maxPossibleCharge) → uint256, bytes
-外部#
+external#
 [IRelayHub](#irelayhub)调用acceptRelayedCall方法来验证接收者是否同意为Relayer 调用支付费用。需要注意的是，无论Relayer 调用的执行结果如何（即是否回滚），接收者都将被收取费用。
 
 Relayer 请求由from发起，并将由relay提供服务。encodedFunction是Relayer 调用的calldata，因此它的前四个字节是函数选择器。Relayer 调用将转发gasLimit gas，并以至少gasPrice的燃料价格执行事务。relay的费用是transactionFee，接收者的最大可能费用为maxPossibleCharge（以wei为单位）。nonce是发送者（from）在[IRelayHub](#irelayhub)中用于防止重放攻击的nonce，approvalData是一个可选参数，可以用于保存对所有或部分先前值的签名。
@@ -305,7 +305,7 @@ Relayer 请求由from发起，并将由relay提供服务。encodedFunction是Rel
 [acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-maxpossiblecharge-→-uint256-bytes)方法使用50k gas进行调用：如果在执行过程中用尽，则该请求将被视为被拒绝。正常的回滚也会触发拒绝。
 
 #### preRelayedCall(bytes context) → bytes32
-外部#
+external#
 在被[IRelayHub](#irelayhub)批准的Relayer 调用请求上调用，在执行Relayer 调用之前。这允许例如预先收取交易发送者的费用。
 
 上下文是通过[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-maxpossiblecharge-→-uint256-bytes)返回的元组的第二个值。
@@ -315,7 +315,7 @@ Relayer 请求由from发起，并将由relay提供服务。encodedFunction是Rel
 [preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)使用100k gas进行调用：如果在执行过程中用尽gas或者发生回滚，Relayer 调用将不会被执行，但是收件人仍然需要支付交易的费用。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
-外部#
+external#
 在[IRelayHub](#irelayhub)对已批准的Relayer 调用请求进行调用后，Relayer 调用执行完成。这允许例如收取用户Relayer 调用费用、返回[preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)的超额收费或执行与合约特定的簿记。
 
 context是通过[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-maxpossiblecharge-→-uint256-bytes)返回的元组的第二个值。success是Relayer 调用的执行状态。actualCharge是接收者将为交易支付的估计费用，不包括[postRelayedCall](#postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval-2)本身使用的任何gas。preRetVal是[preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)的返回值。
@@ -424,13 +424,13 @@ external#
 external#
 
 #### canRelay(address relay, address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData) → uint256 status, bytes recipientContext
-外部#
+external#
 检查RelayHub是否接受Relayer 操作。为了实现这一点，必须满足多个条件： - 所有参数必须由发送者（from）签名 - 发送者的nonce必须是当前的nonce - 收件人必须接受此交易（通过[acceptRelayedCall](#acceptrelayedcalladdress-address-from-bytes-uint256-transactionfee-uint256-gasprice-uint256-uint256-bytes-uint256-maxpossiblecharge-→-uint256-bytes)）
 
 返回PreconditionCheck值（如果可以Relayer 交易则返回OK），或者如果在[acceptRelayedCall](#acceptrelayedcalladdress-address-from-bytes-uint256-transactionfee-uint256-gasprice-uint256-uint256-bytes-uint256-maxpossiblecharge-→-uint256-bytes)中返回了收件人特定的错误代码，则返回该错误代码。
 
 #### relayCall(address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData)
-外部#
+external#
 转发一个交易。
 
 为了成功，必须满足多个条件：- [canRelay](#canrelayaddress-relay-address-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata-→-uint256-status-bytes-recipientcontext)必须返回PreconditionCheck.OK- 发送方必须是注册的Relayer - 交易的gas价格必须大于或等于发送方请求的gas价格- 如果所有内部交易（对接收方的调用）使用了它们可用的所有gas，则交易必须有足够的gas，以免gas耗尽- 接收方必须有足够的余额来支付最坏情况下的Relayer 费用（即当所有gas都用尽时）
@@ -442,25 +442,25 @@ external#
 发出[TransactionRelayed](#transactionrelayedaddress-relay-address-from-address-to-bytes4-selector-enum-irelayhubrelaycallstatus-status-uint256-charge)事件。
 
 #### requiredGas(uint256 relayedCallStipend) → uint256
-外部#
+external#
 返回应向[relayCall](#relaycalladdress-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata)的调用转发多少gas，以便Relayer 事务可以花费多达relayedCallStipend gas。
 
 #### maxPossibleCharge(uint256 relayedCallStipend, uint256 gasPrice, uint256 transactionFee) → uint256
-外部#
+external#
 根据转发的燃料量、燃料价格和Relayer 费用，返回最大的接收者费用。
 
 #### penalizeRepeatedNonce(bytes unsignedTx1, bytes signature1, bytes unsignedTx2, bytes signature2)
-外部#
+external#
 对使用相同nonce签署了两个交易的Relayer 进行惩罚（只有第一个交易有效），并且数据不同（例如，燃料价格、燃料限制等可能不同）。
 
 必须提供两个交易的（未签名的）交易数据和签名。
 
 #### penalizeIllegalTransaction(bytes unsignedTx, bytes signature)
-外部#
+external#
 对于发送了未针对RelayHub的[registerRelay](#registerrelayuint256-transactionfee-string-url)或[relayCall](#relaycalladdress-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata)的交易的Relayer 进行惩罚。
 
 #### getNonce(address from) → uint256
-外部#
+external#
 在RelayHub中返回账户的nonce。
 
 #### Staked(address relay, uint256 stake, uint256 unstakeDelay)

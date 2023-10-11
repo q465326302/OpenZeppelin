@@ -52,26 +52,26 @@ ERC20标准的接口定义，如EIP中所述。
 [Approval(owner, spender, value)](#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)
 
 #### totalSupply() → uint256
-外部#
+external#
 返回存在的代币数量。
 
 #### balanceOf(address account) → uint256
-外部#
+external#
 返回账户拥有的代币数量。
 
 #### transfer(address to, uint256 amount) → bool
-外部#
+external#
 将数量代币从调用者的账户转移到to账户。
 返回一个布尔值，指示操作是否成功。
 发出一个[transfer](#transferaddress-to-uint256-amount-→-bool)事件。
 
 #### allowance(address owner, address spender) → uint256
-外部#
+external#
 返回spender将被允许通过[transferFrom](#transferfromaddress-from-address-to-uint256-amount-→-bool)代表owner花费的剩余代币数量。默认情况下为零。
 当调用[approve](#approveaddress-spender-uint256-amount-→-bool)或[transferFrom](#transferfromaddress-from-address-to-uint256-amount-→-bool)时，此值会发生变化。
 
 #### approve(address spender, uint256 amount) → bool
-外部#
+external#
 将金额设置为调用者代币的支出。
 返回一个布尔值，指示操作是否成功。
 > IMPORTANT
@@ -80,7 +80,7 @@ ERC20标准的接口定义，如EIP中所述。
 发出一个[Approval](#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)事件。
 
 #### transferFrom(address from, address to, uint256 amount) → bool
-外部#
+external#
 使用津贴机制，将一定数量的代币从一个账户移动到另一个账户。移动后，调用者的津贴会相应减少。
 返回一个布尔值，表示操作是否成功。
 触发一个[transfer](#transferaddress-to-uint256-amount-→-bool)事件。
@@ -122,15 +122,15 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)
 
 #### name() → string
-外部#
+external#
 返回代币的名称。
 
 #### symbol() → string
-外部#
+external#
 返回代币的符号。
 
 #### decimals() → uint8 
-外部#
+external#
 返回代币的小数位数。
 
 ### ERC20
@@ -545,7 +545,7 @@ public#
 请参阅 [IERC20Permit.nonces](#noncesaddress-owner-→-uint256).
 
 #### DOMAIN_SEPARATOR() → bytes32
-外部#
+external#
 请参阅 [IERC20Permit.DOMAIN_SEPARATOR](#domain_separator-→-bytes32).
 
 #### _useNonce(address owner) → uint256 current
@@ -862,11 +862,11 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### getCurrentVotes(address account) → uint96
-外部#
+external#
 [getVotes](#getvotesaddress-account-→-uint256)信息的Comp版本访问器，返回类型为uint96。
 
 #### getPriorVotes(address account, uint256 blockNumber) → uint96
-外部#
+external#
 [getPastVotes](#getpastvotesaddress-account-uint256-timepoint-→-uint256)记录的访问器的Comp版本，返回类型为uint96。
 
 #### _maxSupply() → uint224

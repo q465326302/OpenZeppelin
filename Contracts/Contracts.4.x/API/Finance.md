@@ -49,7 +49,7 @@ public#
 payees中的所有地址必须是非零的。两个数组必须具有相同的非零长度，并且payees中不能有重复项。
 
 #### receive()
-外部#
+external#
 接收到的以太将被记录在[PaymentReceived](#paymentreceivedaddress-from-uint256-amount事件中。请注意，这些事件并不完全可靠：合约可以收到以太而不触发此函数。这仅影响事件的可靠性，而不影响以太的实际分割。
 
 要了解更多信息，请参阅[Solidity文档](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function)中的回退函数。
@@ -144,7 +144,7 @@ public#
 设定受益人、开始时间戳和锁定期的锁定钱包。
 
 #### receive()
-外部#
+external#
 合约应该能够接收以太。
 
 #### beneficiary() → address

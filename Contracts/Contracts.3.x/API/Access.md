@@ -285,7 +285,7 @@ public#
 使用给定的minDelay初始化合约。
 
 #### receive()
-外部#
+external#
 合约可能在维护过程中接收/持有ETH。
 
 #### isOperation(bytes32 id) → bool pending
@@ -366,7 +366,7 @@ public#
 * 调用者必须具有'executor'角色。
 
 #### updateDelay(uint256 newDelay)
-外部#
+external#
 更改未来操作的最小时间锁持续时间。
 
 触发[MinDelayChange](#mindelaychangeuint256-oldduration-uint256-newduration)事件。

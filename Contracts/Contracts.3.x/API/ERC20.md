@@ -61,15 +61,15 @@ ERC20标准接口是根据EIP定义的。
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### totalSupply() → uint256
-外部#
+external#
 返回存在的代币数量。
 
 #### balanceOf(address account) → uint256
-外部#
+external#
 返回账户拥有的代币数量。
 
 #### transfer(address recipient, uint256 amount) → bool
-外部#
+external#
 将指定数量的代币从调用者的账户转移到接收者的账户。
 
 返回一个布尔值，表示操作是否成功。
@@ -77,13 +77,13 @@ ERC20标准接口是根据EIP定义的。
 触发一个[Transfer](#transferaddress-from-address-to-uint256-value)事件。
 
 #### allowance(address owner, address spender) → uint256
-外部#
+external#
 返回spender将被允许代表owner通过[transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)进行花费的剩余代币数量。默认情况下，该值为零。
 
 当调用[approve](#approveaddress-spender-uint256-amount-→-bool)或[transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)时，此值会发生变化。
 
 #### approve(address spender, uint256 amount) → bool
-外部#
+external#
 将spender的津贴设置为caller的代币数量。
 
 返回一个布尔值，指示操作是否成功。
@@ -94,7 +94,7 @@ ERC20标准接口是根据EIP定义的。
 发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件。
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
-外部#
+external#
 使用津贴机制，将数量代币从发送者移动到接收者。然后从调用者的津贴中扣除该数量。
 
 返回一个布尔值，指示操作是否成功。

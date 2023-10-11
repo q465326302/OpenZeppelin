@@ -127,31 +127,31 @@ AccessControl的外部接口声明支持ERC165检测。
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### hasRole(bytes32 role, address account) → bool
-外部#
+external#
 如果账户已被授予角色，则返回true。
 
 #### getRoleAdmin(bytes32 role) → bytes32
-外部#
+external#
 返回控制角色的管理员角色。请参见*grantRole*和*revokeRole*。
 
 要更改角色的管理员，请使用*AccessControl._setRoleAdmin*。
 
 #### grantRole(bytes32 role, address account)
-外部#
+external#
 授予账户角色。
 如果账户之前没有被授予角色，则发出一个RoleGranted事件。
 要求：
 * 调用者必须具有角色管理员角色。
 
 #### revokeRole(bytes32 role, address account)
-外部#
+external#
 从账户中撤销角色。
 如果账户已被授予角色，则发出一个*RoleRevoked*事件。
 要求：
 * 调用者必须具有角色的管理员角色。
 
 #### renounceRole(bytes32 role, address account)
-外部#
+external#
 从调用账户中撤销角色。
 角色通常通过grantRole和revokeRole进行管理：此函数的目的是为了提供一种机制，以便在账户受到攻击时失去其特权（例如，当信任的设备遗失时）。
 如果调用账户已被授予角色，则发出*RoleRevoked*事件。
@@ -391,7 +391,7 @@ IACCESSCONTROL
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### getRoleMember(bytes32 role, uint256 index) → address
-外部#
+external#
 返回具有角色的帐户之一。索引必须是0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
 
 角色承载者没有特定的排序方式，其排序可能随时更改。
@@ -400,7 +400,7 @@ IACCESSCONTROL
 使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
-外部#
+external#
 返回具有角色的帐户数量。可与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有承担者。
 
 ### AccessControlEnumerable

@@ -53,7 +53,7 @@ public#
 汇率是以wei和最小且不可分割的代币单位之间的转换关系。因此，如果你使用的是一个名为TOK的ERC20Detailed代币，其小数位为3位，且汇率为1，那么1 wei将给你1个单位，或者0.001 TOK。
 
 #### fallback()
-外部#
+external#
 回退函数**不要重写**。请注意，其他合约在转移资金时会附带2300个基本gas补贴，这不足以调用buyTokens。考虑直接调用buyTokens来购买代币。
 
 #### token() → contract IERC20
@@ -352,7 +352,7 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### setCap(address beneficiary, uint256 cap)
-外部#
+external#
 设定特定受益人的最大捐款额。
 
 #### getCap(address beneficiary) → uint256

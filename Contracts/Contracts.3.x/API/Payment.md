@@ -44,7 +44,7 @@ public#
 payees中的所有地址必须非零。两个数组的非零长度必须相同，并且payees中不能有重复的地址。
 
 #### receive()
-外部#
+external#
 接收到的以太将被记录在[PaymentReceived](#paymentreceivedaddress-from-uint256-amount)事件中。请注意，这些事件并不完全可靠：合约可能会收到以太而不触发此函数。这只影响事件的可靠性，而不影响以太的实际分割。
 
 要了解更多信息，请参阅Solidity文档中的[回退函数部分](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function)。

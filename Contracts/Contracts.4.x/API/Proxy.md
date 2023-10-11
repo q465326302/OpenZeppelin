@@ -87,11 +87,11 @@ internal#
 这个函数不会返回到它的内部调用点，它将直接返回给外部调用者。
 
 #### fallback()
-外部#
+external#
 回退函数将调用委托给由_implementation()返回的地址。如果合约中没有其他函数与调用数据匹配，将运行该函数。
 
 #### receive()
-外部#
+external#
 回退函数将调用委托给 _implementation() 返回的地址。如果调用数据为空，则会运行。
 
 #### _beforeFallback()
@@ -428,7 +428,7 @@ import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
 [implementation()](#implementation-→-address)
 
 #### implementation() → address
-外部#
+external#
 必须返回一个可用作委托调用目标的地址。
 
 [BeaconProxy](#beaconproxy)将检查该地址是否为一个合约。
@@ -668,7 +668,7 @@ modifier#
 检查执行是否未通过委托调用进行。这允许一个函数可以在实现合约上调用，但不能通过代理调用。
 
 #### proxiableUUID() → bytes32
-外部#
+external#
 实现ERC1822 [proxiableUUID](#proxiableuuid-→-bytes32)函数。该函数返回实现使用的存储槽。在执行升级时，它用于验证实现的兼容性。
 
 > IMPORTANT

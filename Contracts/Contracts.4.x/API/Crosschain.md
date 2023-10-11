@@ -159,7 +159,7 @@ internal#
 查看 [CrossChainEnabled._crossChainSender](#_crosschainsender-e28692-address-4)
 
 #### processMessageFromRoot(uint256, address rootMessageSender, bytes data)
-外部#
+external#
 外部入口点用于接收和转发来自fxChild的消息。
 
 非可重入性非常重要，以避免跨链调用能够通过仅使用用户定义的参数循环执行来模拟任何人。

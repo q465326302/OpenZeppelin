@@ -72,7 +72,7 @@ ERC20 Permit扩展的接口，允许通过签名进行批准，如[EIP-2612](htt
 [DOMAIN_SEPARATOR()](#domain_separator-→-bytes32)
 
 #### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
-外部#
+external#
 设置spender的津贴为owner的代币，前提是owner已经签署了批准。
 
 > IMPORTANT
@@ -177,5 +177,5 @@ public#
 请查看[IERC20Permit.nonces](#noncesaddress-owner-→-uint256).
 
 #### DOMAIN_SEPARATOR() → bytes32
-外部#
+external#
 请查看[IERC20Permit.DOMAIN_SEPARATOR](#domain_separator-→-bytes32).

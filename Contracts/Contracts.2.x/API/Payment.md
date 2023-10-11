@@ -48,7 +48,7 @@ public#
 payees中的所有地址必须非零。两个数组的长度必须相同且非零，并且payees中不能有重复的地址。
 
 #### fallback()
-外部#
+external#
 接收到的以太将被记录在[PaymentReceived](#paymentreleasedaddress-to-uint256-amount)事件中。请注意，这些事件并不完全可靠：合约可能会收到以太而不触发此函数。这只影响事件的可靠性，而不影响以太的实际分割。
 
 要了解更多信息，请参阅Solidity文档中的[回退函数](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function)部分。
@@ -118,7 +118,7 @@ public#
 此函数已被弃用，请改用[withdrawPaymentsWithGas](#withdrawpaymentswithgasaddress-payable-payee)。使用固定的gas限制调用合约是一种反模式，并可能在网络升级（硬分叉）中破坏合约交互。了解[更多信息](https://diligence.consensys.net/blog/2019/09/stop-using-soliditys-transfer-now/)。
 
 #### withdrawPaymentsWithGas(address payable payee)
-外部#
+external#
 与[withdrawPayments](#withdrawpaymentsaddress-payable-payee)相同，但将所有gas转发给收件人。
 
 > WARNING

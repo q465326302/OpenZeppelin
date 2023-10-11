@@ -108,27 +108,27 @@ IERC20
 [Approval(owner, spender, value)](./ERC20.md#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)
 
 #### transferAndCall(address to, uint256 amount) → bool
-外部#
+external#
 从msg.sender地址转移代币到另一个地址，然后调用接收方的onTransferReceived函数。
 
 #### transferAndCall(address to, uint256 amount, bytes data) → bool
-外部#
+external#
 从msg.sender地址将代币转移到另一个地址，然后调用接收者的onTransferReceived方法。
 
 #### transferFromAndCall(address from, address to, uint256 amount) → bool
-外部#
+external#
 将代币从一个地址转移到另一个地址，然后在接收者上调用onTransferReceived函数。
 
 #### transferFromAndCall(address from, address to, uint256 amount, bytes data) → bool
-外部#
+external#
 将代币从一个地址转移到另一个地址，然后在接收者上调用onTransferReceived函数。
 
 #### approveAndCall(address spender, uint256 amount) → bool
-外部#
+external#
 批准通过地址代表msg.sender花费指定数量的代币，并调用spender的onApprovalReceived函数。
 
 #### approveAndCall(address spender, uint256 amount, bytes data) → bool
-外部#
+external#
 批准传递的地址代表msg.sender花费指定数量的代币，并在spender上调用onApprovalReceived。
 
 ### IERC1363Receiver
@@ -142,7 +142,7 @@ import "@openzeppelin/contracts/interfaces/IERC1363Receiver.sol";
 [onTransferReceived(operator, from, amount, data)](#ontransferreceivedaddress-operator-address-from-uint256-amount-bytes-data-→-bytes4)
 
 #### onTransferReceived(address operator, address from, uint256 amount, bytes data) → bytes4
-外部#
+external#
 在转账或从智能合约中转账后，任何ERC1363智能合约都会调用此函数。此函数可能会抛出错误并拒绝转账。返回值如果不是预定的特殊值，必须导致交易被撤销。注意：代币合约地址始终为消息发送者。
 
 #### IERC1363Spender
@@ -156,7 +156,7 @@ import "@openzeppelin/contracts/interfaces/IERC1363Spender.sol";
 [onApprovalReceived(owner, amount, data)](#onapprovalreceivedaddress-owner-uint256-amount-bytes-data-→-bytes4)
 
 #### onApprovalReceived(address owner, uint256 amount, bytes data) → bytes4
-外部#
+external#
 在approve之后，任何ERC1363智能合约都会调用此函数来操作接收者。该函数可能会抛出异常以回滚并拒绝授权。返回值若非特定的魔术值，必须导致交易被回滚。注意：代币合约地址始终为消息发送者。
 
 ### IERC1822Proxiable
@@ -170,7 +170,7 @@ ERC1822: 通用可升级代理标准（UUPS）记录了一种通过简化代理�
 [proxiableUUID()](#proxiableuuid-→-bytes32)
 
 #### proxiableUUID() → bytes32
-外部#
+external#
 返回可代理合约假定用于存储实现地址的存储槽。
 
 > IMPORTANT
@@ -206,7 +206,7 @@ IERC165
 [supportsInterface(interfaceId)](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)
 
 ### royaltyInfo(uint256 tokenId, uint256 salePrice) → address receiver, uint256 royaltyAmount
-外部#
+external#
 根据可能以任何货币单位表示的销售价格，返回应支付的版税金额以及版税支付对象。版税金额应以相同的货币单位支付。
 
 ### IERC3156FlashLender
@@ -224,15 +224,15 @@ import "@openzeppelin/contracts/interfaces/IERC3156FlashLender.sol";
 [flashLoan(receiver, token, amount, data)](#flashloancontract-ierc3156flashborrower-receiver-address-token-uint256-amount-bytes-data-→-bool)
 
 #### maxFlashLoan(address token) → uint256
-外部#
+external#
 可供借出的货币数量。
 
 #### flashFee(address token, uint256 amount) → uint256
-外部#
+external#
 给定贷款的费用。
 
 #### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool
-外部#
+external#
 发起闪电贷。
 
 ### IERC3156FlashBorrower
@@ -248,7 +248,7 @@ import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
 [onFlashLoan(initiator, token, amount, fee, data)](#onflashloanaddress-initiator-address-token-uint256-amount-uint256-fee-bytes-data-→-bytes32)
 
 #### onFlashLoan(address initiator, address token, uint256 amount, uint256 fee, bytes data) → bytes32
-外部#
+external#
 接收一笔闪电贷款。
 
 ### IERC4626
@@ -300,14 +300,14 @@ IERC20
 [Approval(owner, spender, value)](./ERC20.md#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)
 
 #### asset() → address assetTokenAddress
-外部#
+external#
 返回用于Vault的账户、存款和提款的底层代币的地址。
 
 * 必须是一个ERC-20代币合约。
 * 不得回滚。
 
 #### totalAssets() → uint256 totalManagedAssets
-外部#
+external#
 返回Vault管理的基础资产的总金额。
 
 * 应包括从收益中产生的任何复利。
@@ -315,7 +315,7 @@ IERC20
 * 不能回滚。
 
 #### convertToShares(uint256 assets) → uint256 shares
-外部#
+external#
 在理想情况下，返回Vault将为提供的资产交换的股份数量。
 
 * 必须不包括针对Vault中资产收取的任何费用。
@@ -327,7 +327,7 @@ IERC20
 此计算可能不反映“每个用户”的每股价格，而应反映“平均用户”的每股价格，即用户在兑换时应该期望看到的价格。
 
 #### convertToAssets(uint256 shares) → uint256 assets
-外部#
+external#
 这个函数返回在理想情况下，保险库会为提供的份额兑换的资产数量。
 
 * 不应包含在保险库中对资产收取的任何费用。
@@ -342,7 +342,7 @@ IERC20
 这个计算可能不反映“每用户”的每份价格，而应反映“平均用户”的每份价格，也就是平均用户在兑换时应该期望看到的价格。
 
 #### maxDeposit(address receiver) → uint256 maxAssets
-外部#
+external#
 返回接收者可以通过存款调用向保险库存入的基础资产的最大数量。
 
 如果接收者受到某些存款限制，必须返回一个有限的值。
@@ -352,7 +352,7 @@ IERC20
 不得出现回滚。
 
 #### previewDeposit(uint256 assets) → uint256 shares
-外部#
+external#
 允许链上或链下用户模拟其存款在当前区块的影响，考虑当前链上条件。
 
 * 在同一笔交易中，必须返回与预览存款相同或更多的 Vault 份额。换句话说，如果在同一笔交易中调用存款函数，存款应该返回与预览存款相同或更多的份额。
@@ -367,7 +367,7 @@ IERC20
 在 convertToShares 和 previewDeposit 之间的不利差异应被视为份额价格滑点或其他类型的条件，这意味着存款人将通过存款失去资产。
 
 #### deposit(uint256 assets, address receiver) → uint256 shares
-外部#
+external#
 Mints（铸造）通过存入与基础代币数量完全相等的份额将Vault（保险库）份额分享给接收者。
 
 * 必须触发Deposit（存款）事件。
@@ -378,11 +378,11 @@ Mints（铸造）通过存入与基础代币数量完全相等的份额将Vault�
 大多数实现都需要预先批准Vault对其基础资产代币的使用权。
 
 #### maxMint(address receiver) → uint256 maxShares
-外部#
+external#
 如果通过铸造调用，返回接收者可以铸造的Vault股份的最大数量。- 如果接收者受到某些铸造限制，则必须返回有限值。- 如果没有关于可以铸造的最大股份数的限制，则必须返回2 ** 256 - 1。- 不能回滚。
 
 #### previewMint(uint256 shares) → uint256 assets
-外部#
+external#
 允许在链上或链外的用户在当前区块模拟其铸币操作的影响，根据当前链上的条件。
 
 * 必须返回尽可能接近并且不少于在同一交易中进行铸币调用时将存入的确切资产数量。也就是说，如果在同一交易中调用，铸币应该返回与预览铸币相同或更少的资产数量。
@@ -393,7 +393,7 @@ Mints（铸造）通过存入与基础代币数量完全相等的份额将Vault�
 convertToAssets和previewMint之间的任何不利差异应被视为份额价格滑点或其他类型的条件，这意味着存款人通过铸币将失去资产。
 
 #### mint(uint256 shares, address receiver) → uint256 assets
-外部#
+external#
 Mints（铸币）通过存入相应数量的基础代币将Vault（保险库）的份额准确地分享给接收者。
 
 * 必须触发Deposit（存款）事件。
@@ -404,14 +404,14 @@ Mints（铸币）通过存入相应数量的基础代币将Vault（保险库）�
 大多数实现将要求预先批准Vault合约与Vault的基础资产代币。
 
 #### maxWithdraw(address owner) → uint256 maxAssets
-外部#
+external#
 通过提款调用，返回从Vault中的所有者余额中可以提取的基础资产的最大金额。
 
 * 如果所有者受到提款限制或时间锁的限制，必须返回有限的值。
 * 不得回滚。
 
 #### previewWithdraw(uint256 assets) → uint256 shares
-外部#
+external#
 允许链上或链下用户模拟其在当前区块中提现的影响，根据当前的链上条件。
 
 * 必须返回尽可能接近并且不少于在同一笔交易中调用提现时将烧毁的确切Vault股份数量。换句话说，如果在同一笔交易中调用，提现应该返回与previewWithdraw相同或更少的股份。
@@ -423,7 +423,7 @@ Mints（铸币）通过存入相应数量的基础代币将Vault（保险库）�
 convertToShares和previewWithdraw之间的任何不利差异应被视为份额价格滑点或其他类型的条件，这意味着存款人将通过存款损失资产。
 
 #### withdraw(uint256 assets, address receiver, address owner) → uint256 shares
-外部#
+external#
 将所有者的股份销毁，并将底层代币的确切资产发送给接收者。
 
 * 必须发出Withdraw事件。
@@ -433,7 +433,7 @@ convertToShares和previewWithdraw之间的任何不利差异应被视为份额�
 请注意，某些实现可能要求在执行提款之前向Vault发出预请求。这些方法应在单独执行。
 
 #### maxRedeem(address owner) → uint256 maxShares
-外部#
+external#
 通过赎回调用，返回可以从Vault中的所有者余额中赎回的最大数量的Vault股份。
 
 * 如果所有者受到某种提款限制或时间锁定的限制，必须返回有限的值。
@@ -441,7 +441,7 @@ convertToShares和previewWithdraw之间的任何不利差异应被视为份额�
 * 不能回滚。
 
 #### previewRedeem(uint256 shares) → uint256 assets
-外部#
+external#
 允许链上或链下用户模拟在当前区块下他们的赎回效果允许链上或链下用户在当前区块模拟其赎回的效果，给定当前链上条件。
 
 * 在同一交易中，必须返回尽可能接近且不超过赎回调用中将提取的确切资产金额。也就是说，如果在同一交易中调用redeem，它应返回与previewRedeem相同或更多的资产。
@@ -456,7 +456,7 @@ convertToShares和previewWithdraw之间的任何不利差异应被视为份额�
 convertToAssets和previewRedeem之间的任何不利差异应被视为份额价格滑动或其他类型的条件，这意味着存款人通过赎回将损失资产。
 
 #### redeem(uint256 shares, address receiver, address owner) → uint256 assets
-外部#
+external#
 准确地从所有者处销毁份额，并将基础代币的资产发送给接收者。
 
 * 必须发出撤回事件。
@@ -486,7 +486,7 @@ import "@openzeppelin/contracts/interfaces/IERC5313.sol";
 [owner()](#owner-→-address)
 
 #### owner() → address
-外部#
+external#
 获取所有者的地址。
 
 ### IERC5267
@@ -501,7 +501,7 @@ import "@openzeppelin/contracts/interfaces/IERC5267.sol";
 [EIP712DomainChanged()](#eip712domainchanged)
 
 #### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
-外部#
+external#
 返回描述此合约用于EIP-712签名的域分隔符使用的字段和值。
 
 #### EIP712DomainChanged()
@@ -544,9 +544,9 @@ import "@openzeppelin/contracts/interfaces/IERC6372.sol";
 [CLOCK_MODE()](#clock_mode-→-string)
 
 #### clock() → uint48
-外部#
+external#
 用于标记检查点的时钟。可以被重写以实现基于时间戳的检查点（和投票）。
 
 #### CLOCK_MODE() → string
-外部#
+external#
 时钟描述

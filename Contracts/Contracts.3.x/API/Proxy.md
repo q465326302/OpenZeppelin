@@ -51,15 +51,15 @@ internal#
 该函数不会返回到其内部调用位置，而是直接返回给外部调用者。
 
 #### fallback()
-外部#
+external#
 回退函数将调用委托给由_implementation()返回的地址。如果合约中没有其他函数与调用数据匹配，则会运行该函数。
 
 #### receive()
-外部#
+external#
 回退函数将调用委托给_implementation()返回的地址。如果调用数据为空，则会运行。
 
 #### _beforeFallback()
-外部#
+external#
 在回退到实现之前调用的 hooks 。可以作为手动回退调用的一部分，也可以作为Solidity回退或接收函数的一部分。
 
 如果被重写，则应调用super._beforeFallback()。
@@ -169,7 +169,7 @@ public#
 通过_admin管理的升级代理进行初始化，由_logic的实现支持，并可选择使用[UpgradeableProxy.constructor](#constructoraddress-_logic-bytes-_data)中解释的_data进行初始化。
 
 #### admin() → address admin_
-外部#
+external#
 返回当前管理员。
 
 > NOTE
@@ -179,7 +179,7 @@ public#
 要获取此值，客户端可以使用[eth_getStorageAt](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC调用直接从下面显示的存储槽（由EIP1967指定）读取。0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103
 
 #### implementation() → address implementation_
-外部#
+external#
 返回当前的实现。
 
 > NOTE
@@ -189,7 +189,7 @@ public#
 要获取此值，客户端可以使用[eth_getStorageAt](https://eth.wiki/json-rpc/API#eth_getstorageat) RPC调用直接从下面显示的存储槽中读取（由EIP1967指定）。 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc
 
 #### changeAdmin(address newAdmin)
-外部#
+external#
 更改代理的管理员。
 
 触发[AdminChanged](#adminchangedaddress-previousadmin-address-newadmin)事件。
@@ -198,14 +198,14 @@ public#
 只有管理员可以调用此函数。请参阅[ProxyAdmin.changeProxyAdmin](#changeproxyadmincontract-transparentupgradeableproxy-proxy-address-newadmin)。
 
 #### upgradeTo(address newImplementation)
-外部#
+external#
 升级代理的实现。
 
 > NOTE
 只有管理员可以调用此函数。请参阅[ProxyAdmin.upgrade](#upgradecontract-transparentupgradeableproxy-proxy-address-implementation)。
 
 #### upgradeToAndCall(address newImplementation, bytes data)
-外部#
+external#
 升级代理的实现，并根据数据中的指示调用新实现的函数，该数据应为一个编码的函数调用。这对于在被代理的合约中初始化新的存储变量非常有用。
 
 > NOTE
@@ -288,7 +288,7 @@ internal#
 [implementation()](#implementation-e28692-address-1)
 
 #### implementation() → address
-外部#
+external#
 必须返回一个可以用作委托调用目标的地址。
 
 [BeaconProxy](#beaconproxy)将检查该地址是否为合约。
