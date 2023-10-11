@@ -53,7 +53,7 @@ internal#
 放弃所有权将使合约没有所有者，从而禁用仅对所有者可用的任何功能。
 
 #### transferOwnership(address newOwner)
-公开#
+public#
 将合约的所有权转移给一个新的账户（newOwner）。只有当前所有者才能调用。
 
 #### _transferOwnership(address newOwner)
@@ -90,11 +90,11 @@ OWNABLE
 OwnershipTransferred(previousOwner, newOwner)
 
 #### pendingOwner() → address
-公开#
+public#
 返回待定所有者的地址。
 
 #### transferOwnership(address newOwner)
-公开#
+public#
 开始将合约的所有权转移给新账户。如果有待处理的转移，则替换它。只能由当前所有者调用。
 
 #### _transferOwnership(address newOwner)
@@ -102,7 +102,7 @@ internal#
 将合约的所有权转移到一个新账户（newOwner）并删除任何待定的所有者。内部函数，没有访问限制。
 
 #### acceptOwnership()
-公开#
+public#
 新业主接受所有权转移。
 
 #### OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)
@@ -237,11 +237,11 @@ IACCESSCONTROL
 *自v4.1版本以来可用。*
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请查看[IERC165.supportsInterface](../API/Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### hasRole(bytes32 role, address account) → bool
-公开#
+public#
 如果账户被授予了角色，则返回 true。
 
 #### _checkRole(bytes32 role)
@@ -259,12 +259,12 @@ internal#
 ```
 
 #### getRoleAdmin(bytes32 role) → bytes32
-公开#
+public#
 返回控制角色的管理员角色。请参阅[grantRole](#grantrolebytes32-role-address-account-1)和[revokeRole](#revokerolebytes32-role-address-account-1)。
 要更改角色的管理员，请使用[_setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole-1)。
 
 #### grantRole(bytes32 role, address account)
-公开#
+public#
 授予账户角色。
 如果账户尚未被授予角色，则发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 要求：
@@ -272,7 +272,7 @@ internal#
 可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### revokeRole(bytes32 role, address account)
-公开#
+public#
 从帐户中撤销角色。
 如果该帐户已被授予角色，则会发出一个[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 要求：
@@ -280,7 +280,7 @@ internal#
 可能会发出一个[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### renounceRole(bytes32 role, address account)
-公开#
+public#
 从调用账户中撤销角色。
 角色通常通过[grantRole](#grantrolebytes32-role-address-account-1)和[revokeRole](#revokerolebytes32-role-address-account-1)进行管理：此函数的目的是为了提供一种机制，以便在账户被攻击时失去其特权（例如当信任的设备丢失时）。
 如果调用账户已被撤销角色，则发出[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
@@ -435,11 +435,11 @@ IACCESSCONTROL
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请参见[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### getRoleMember(bytes32 role, uint256 index) → address
-公开#
+public#
 返回具有该角色的帐户之一。索引必须是介于0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
 
 角色持有人没有特定的排序方式，并且它们的顺序可能随时更改。
@@ -448,7 +448,7 @@ IACCESSCONTROL
 在使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
-公开#
+public#
 返回拥有某个角色的账户数量。可以与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有持有者。
 
 #### _grantRole(bytes32 role, address account)
@@ -538,23 +538,23 @@ internal#
 设置默认[管理员延迟](#defaultadmindelay-→-uint48)和默认管理员地址的[初始值](#defaultadmin-→-address)。
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请参见[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### owner() → address
-公开#
+public#
 请参见[IERC5313.owner](./Interfaces.md#owner-→-address) .
 
 #### grantRole(bytes32 role, address account)
-公开#
+public#
 查看[AccessControl.grantRole](#grantrolebytes32-role-address-account-1)。针对DEFAULT_ADMIN_ROLE进行还原。
 
 #### revokeRole(bytes32 role, address account)
-公开#
+public#
 请参阅[AccessControl.revokeRole](#revokerolebytes32-role-address-account-1)。默认情况下撤销DEFAULT_ADMIN_ROLE角色。
 
 #### renounceRole(bytes32 role, address account)
-公开#
+public#
 请参阅[AccessControl.renounceRole](#renouncerolebytes32-role-address-account-1)。
 
 对于DEFAULT_ADMIN_ROLE，它只允许通过首先调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin) 到address（0）来进行两步操作，因此在调用此函数时需要确认[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)计划也已经通过。
@@ -582,11 +582,11 @@ internal#
 参见 [AccessControl._setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)。对于DEFAULT_ADMIN_ROLE进行还原。
 
 #### defaultAdmin() → address
-公开#
+public#
 返回当前 DEFAULT_ADMIN_ROLE 持有者的地址。
 
 #### pendingDefaultAdmin() → address newAdmin, uint48 schedule
-公开#
+public#
 返回一个新管理员和接受日程的元组。
 
 日程表过期后，新管理员将能够通过调用 [acceptDefaultAdminTransfer](#acceptdefaultadmintransfer) 接受 [defaultAdmin](#defaultadmin-→-address) 角色，完成角色转移。
@@ -597,7 +597,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 一个零地址的newAdmin意味着 [defaultAdmin](#defaultadmin-→-address)正在放弃。
 
 #### defaultAdminDelay() → uint48
-公开#
+public#
 返回启动[defaultAdmin](#defaultadmin-→-address) 转移的接受所需的延迟时间。
 
 在调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)设置接受计划时，此延迟将添加到当前时间戳。
@@ -606,7 +606,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 如果已经安排了延迟更改，则该函数将在安排过程中立即生效，返回新的延迟。请参见[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
 
 #### pendingDefaultAdminDelay() → uint48 newDelay, uint48 schedule
-公开#
+public#
 返回一个新延迟和一个效果计划的元组。
 
 计划过期后，对于每个使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)开始的新[defaultAdmin](#defaultadmin-→-address)转移，新延迟将立即生效。
@@ -617,7 +617,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 一个仅为newDelay的零值意味着在效果计划之后，下一个[defaultAdminDelay](#defaultadmindelay-→-uint48)将为零。
 
 #### defaultAdminDelayIncreaseWait() → uint48
-公开#
+public#
 将默认[defaultAdminDelay](#defaultadmindelay-→-uint48) 增加的最长时间（使用[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)计划）生效的秒数。默认为5天。
 
 当计划增加[默认管理员延迟](#defaultadmindelay-→-uint48)时，它会在新的延迟时间过去后生效，目的是为了给予足够的时间来撤销任何意外更改（例如使用毫秒而不是秒），以避免合约被锁定。但是，为了避免过度计划，此函数将被限制等待时间，并且可以被重写以进行自定义的[默认管理员延迟](#defaultadmindelay-→-uint48)增加计划。
@@ -626,7 +626,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 在重写此值时，请确保添加合理的时间，否则存在设置新延迟的风险，该延迟几乎立即生效，而在输入错误的情况下无法进行人为干预（例如，设置毫秒而不是秒）。
 
 #### beginDefaultAdminTransfer(address newAdmin)
-公开#
+public#
 通过设置一个待确认的[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)，以当前时间戳加上[defaultAdminDelay](#defaultadmindelay-→-uint48)为限，启动[defaultAdmin](#defaultadmin-→-address)转移。
 
 要求：
@@ -641,7 +641,7 @@ internal#
 内部函数，没有访问限制。
 
 #### cancelDefaultAdminTransfer()
-公开#
+public#
 取消先前使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)启动的[ defaultAdmin](#defaultadmin-→-address)转移。
 
 尚未接受的[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)也可以使用此函数取消。
@@ -658,7 +658,7 @@ internal#
 这是一个没有访问限制的内部函数。
 
 #### acceptDefaultAdminTransfer()
-公开#
+public#
 完成之前使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)开始的[defaultAdmin](#defaultadmin-→-address)转移。
 
 调用该函数后：
@@ -676,7 +676,7 @@ internal#
 这是一个没有访问限制的内部函数。
 
 #### changeDefaultAdminDelay(uint48 newDelay)
-公开#
+public#
 通过设置一个[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)来启动一个[defaultAdminDelay](#defaultadmindelay-→-uint48)更新，该延迟计划在当前时间戳加上[defaultAdminDelay](#defaultadmindelay-→-uint48)后生效。
 
 该函数保证在调用此方法时和[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)生效计划之间的任何对[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)的调用都将使用在调用之前设置的当前[defaultAdminDelay](#defaultadmindelay-→-uint48)。
@@ -699,7 +699,7 @@ internal#
 内部函数，没有访问限制。
 
 #### rollbackDefaultAdminDelay()
-公开#
+public#
 取消预定的[defaultAdminDelay](#defaultadmindelay-→-uint48)更改。
 要求：
 * 只能由当前的[defaultAdmin](#defaultadmin-→-address)调用。

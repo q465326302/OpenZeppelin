@@ -181,20 +181,20 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(string name_, string symbol_)
-公开#
+public#
 设置[名称](#name-e28692-string-1)和[符号](#symbol-e28692-string-1)的值。
 这两个值都是不可变的：它们只能在构建期间设置一次。
 
 #### name() → string
-公开#
+public#
 返回代币的名称。
 
 #### symbol() → string
-公开#
+public#
 返回代币的符号，通常是名称的缩写。
 
 #### decimals() → uint8
-公开#
+public#
 返回用于用户表示的小数位数。例如，如果小数位数为2，则505个代币的余额应该显示为5.05（505 / 10 ** 2）。
 代币通常选择18的值，模仿以太和Wei之间的关系。除非被重写，否则该函数返回默认值18。
 
@@ -202,26 +202,26 @@ IERC20
 这些信息仅用于显示目的，它不会影响合约的任何算术，包括[IERC20.balanceOf](#balanceofaddress-account-e28692-uint256)和[IERC20.transfer](#transferaddress-to-uint256-amount-→-bool)。
 
 #### totalSupply() → uint256
-公开#
+public#
 请查看[IERC20.totalSupply](#totalsupply-→-uint256)。
 
 #### balanceOf(address account) → uint256
-公开#
+public#
 请查看[IERC20.balanceOf](#balanceofaddress-account-→-uint256).
 
 #### transfer(address to, uint256 amount) → bool
-公开#
+public#
 请参阅[IERC20.transfer](#transferaddress-to-uint256-amount-→-bool)。
 要求：
 * to地址不能为零地址。
 * 调用者必须至少拥有amount数量的余额。
 
 #### allowance(address owner, address spender) → uint256
-公开#
+public#
 请查看 [IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256).
 
 #### approve(address spender, uint256 amount) → bool
-公开#
+public#
 请查看[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)。
 
 > NOTE
@@ -231,7 +231,7 @@ IERC20
 * spender不能是零地址。
 
 #### transferFrom(address from, address to, uint256 amount) → bool
-公开#
+public#
 查看[IERC20.transferFrom](#transferfromaddress-from-address-to-uint256-amount-→-bool)。
 触发一个[Approval](#approveaddress-spender-uint256-amount-→-bool)事件，表示更新的授权额度。这不是EIP所必需的。请参见[ERC20](#erc20)开头的注释。
 
@@ -244,7 +244,7 @@ IERC20
 * 调用者必须对from的代币拥有至少amount的授权额度。
 
 #### increaseAllowance(address spender, uint256 addedValue) → bool
-公开#
+public#
 原子地增加调用者授予给spender的授权金额。
 这是[approve](#approveaddress-spender-uint256-amount-e28692-bool-1)的一种替代方案，可用作解决[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题的方法。
 发出一个[Approval](#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)事件，指示更新的授权金额。
@@ -365,12 +365,12 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### burn(uint256 amount)
-公开#
+public#
 销毁调用者的代币数量。
 参见 [ERC20._burn](#_burnaddress-account-uint256-amount-1)。
 
 #### burnFrom(address account, uint256 amount)
-公开#
+public#
 销毁账户中指定数量的代币，从调用者的授权中扣除。
 请参阅[ERC20._burn](#_burnaddress-account-uint256-amount-1)和[ERC20.allowance](#allowanceaddress-owner-address-spender-e28692-uint256-1)。
 
@@ -419,7 +419,7 @@ internal#
 设置帽子的价值。这个值是不可变的，只能在构造过程中设置一次。
 
 #### cap() → uint256
-公开#
+public#
 返回代币总供应量的上限。
 
 #### _mint(address account, uint256 amount)
@@ -537,11 +537,11 @@ internal#
 使用name参数初始化[EIP712](./Utils.md#eip712)域分隔符，并将version设置为“1”。最好使用与ERC20代币名称相同的名称。
 
 #### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
-公开#
+public#
 请参阅 [IERC20Permit.permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s).
 
 #### nonces(address owner) → uint256
-公开#
+public#
 请参阅 [IERC20Permit.nonces](#noncesaddress-owner-→-uint256).
 
 #### DOMAIN_SEPARATOR() → bytes32
@@ -618,11 +618,11 @@ internal#
 获取当前snapshotId
 
 #### balanceOfAt(address account, uint256 snapshotId) → uint256
-公开#
+public#
 检索创建snapshotId时账户的余额。
 
 #### totalSupplyAt(uint256 snapshotId) → uint256
-公开#
+public#
 检索创建snapshotId时的总供应量。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
@@ -715,49 +715,49 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### clock() → uint48
-公开#
+public#
 用于标记检查点的时钟。可以被重写以实现基于时间戳的检查点（和投票）。
 
 #### CLOCK_MODE() → string
-公开#
+public#
 时钟的描述
 
 #### checkpoints(address account, uint32 pos) → struct ERC20Votes.Checkpoint
-公开#
+public#
 获取账户的第pos个检查点。
 
 #### numCheckpoints(address account) → uint32
-公开#
+public#
 获取账户的检查点数量。
 
 #### delegates(address account) → address
-公开#
+public#
 获取当前账户正在委托给的地址。
 
 #### getVotes(address account) → uint256
-公开#
+public#
 获取账户当前的投票余额
 
 #### getPastVotes(address account, uint256 timepoint) → uint256
-公开#
+public#
 获取账户在时间点结束时的投票数。
 
 要求：
 * 时间点必须在过去。
 
 #### getPastTotalSupply(uint256 timepoint) → uint256
-公开#
+public#
 在时间点结束时检索totalSupply。注意，这个值是所有余额的总和。它不是所有委托投票的总和！
 
 要求：
 * 时间点必须在过去。
 
 #### delegate(address delegatee)
-公开#
+public#
 将选票从发件人委派给受委托人。
 
 #### delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)
-公开#
+public#
 将签署者的投票委托给代表
 
 #### _maxSupply() → uint224
@@ -920,19 +920,19 @@ IERC20
 internal#
 
 #### decimals() → uint8
-公开#
+public#
 请查看 [ERC20.decimals](#decimals-→-uint8).
 
 #### underlying() → contract IERC20
-公开#
+public#
 返回被包装的基础ERC返回被封装的基础ERC-20代币的地址。
 
 #### depositFor(address account, uint256 amount) → bool
-公开#
+public#
 允许用户存入基础代币，并铸造相应数量的封装代币。
 
 #### withdrawTo(address account, uint256 amount) → bool
-公开#
+public#
 允许用户烧掉一定数量的封装代币，并提取相应数量的基础代币。
 
 #### _recover(address account) → uint256
@@ -985,11 +985,11 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### maxFlashLoan(address token) → uint256
-公开#
+public#
 返回可供借贷的最大代币数量。
 
 #### flashFee(address token, uint256 amount) → uint256
-公开#
+public#
 返回执行闪电贷款时应用的费用。该函数调用 [_flashFee](#_flashfeeaddress-token-uint256-amount-→-uint256) 函数，该函数返回执行闪电贷款时应用的费用。
 
 #### _flashFee(address token, uint256 amount) → uint256
@@ -1001,7 +1001,7 @@ internal#
 返回闪电交易手续费的接收地址。默认情况下，此实现返回地址(0)，这意味着手续费金额将被烧掉。可以重载此函数以更改手续费接收者。
 
 #### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool
-公开#
+public#
 执行闪电贷款。新的代币被铸造并发送给接收方，接收方需要实现[IERC3156FlashBorrower](./Interfaces.md#ierc3156flashborrower)接口。在闪电贷款结束时，接收方应当拥有amount + fee代币并将其批准回到代币合约本身，以便它们可以被销毁。
 
 ### ERC4626
@@ -1083,74 +1083,74 @@ internal#
 设置基础资产合约。这必须是一个ERC20兼容合约（ERC20或ERC777）。
 
 #### decimals() → uint8
-公开#
+public#
 十进制数是通过将十进制偏移量加到基础资产的小数位上计算出来的。在构建保险库合约期间，这个“原始”值被缓存。如果读取操作失败（例如，资产尚未创建），则默认值为18，表示基础资产的小数位数。
 
 请参阅[IERC20Metadata.decimals](#decimals-→-uint8)。
 
 #### asset() → address
-公开#
+public#
 请参阅[IERC4626.asset](./Interfaces.md#totalassets-→-uint256-totalmanagedassets).
 
 #### totalAssets() → uint256
-公开#
+public#
 请参阅[IERC4626.totalAssets](./Interfaces.md#totalassets-→-uint256-totalmanagedassets).
 
 #### convertToShares(uint256 assets) → uint256
-公开#
+public#
 请参阅[IERC4626.convertToShares](./Interfaces.md#converttosharesuint256-assets-→-uint256-shares).
 
 #### convertToAssets(uint256 shares) → uint256
-公开#
+public#
 请参阅[IERC4626.convertToAssets](./Interfaces.md#converttoassetsuint256-shares-→-uint256-assets).
 
 #### maxDeposit(address) → uint256
-公开#
+public#
 请参阅 [IERC4626.maxDeposit](./Interfaces.md#maxdepositaddress-receiver-→-uint256-maxassets).
 
 ##### maxMint(address) → uint256
-公开#
+public#
 请参阅 [IERC4626.maxMint](./Interfaces.md#maxmintaddress-receiver-→-uint256-maxshares).
 
 #### maxWithdraw(address owner) → uint256
-公开#
+public#
 请参阅 [IERC4626.maxWithdraw](./Interfaces.md#maxwithdrawaddress-owner-→-uint256-maxassets).
 
 #### maxRedeem(address owner) → uint256
-公开#
+public#
 请参阅 [IERC4626.maxRedeem](./Interfaces.md#maxredeemaddress-owner-→-uint256-maxshares).
 
 #### previewDeposit(uint256 assets) → uint256
-公开#
+public#
 请参阅 [IERC4626.previewDeposit](./Interfaces.md#previewdeposituint256-assets-→-uint256-shares).
 
 #### previewMint(uint256 shares) → uint256
-公开#
+public#
 请参阅 [IERC4626.previewMint](./Interfaces.md#previewmintuint256-shares-→-uint256-assets).
 
 ####  previewWithdraw(uint256 assets) → uint256
-公开#
+public#
 请参阅 [IERC4626.previewWithdraw](./Interfaces.md#previewwithdrawuint256-assets-→-uint256-shares).
 
 #### previewRedeem(uint256 shares) → uint256
-公开#
+public#
 请参阅 [IERC4626.previewRedeem](./Interfaces.md#previewredeemuint256-shares-→-uint256-assets).
 
 #### deposit(uint256 assets, address receiver) → uint256
-公开#
+public#
 请参阅 [IERC4626.deposit](./Interfaces.md#deposituint256-assets-address-receiver-→-uint256-shares).
 
 #### mint(uint256 shares, address receiver) → uint256
-公开#
+public#
 请参阅 [IERC4626.mint](./Interfaces.md#mintuint256-shares-address-receiver-→-uint256-assets).
 与[deposit](#deposituint256-assets-address-receiver-→-uint256)相反，即使保险库处于份额价格为零的状态，也允许进行铸造。在这种情况下，股份将被铸造而无需存入任何资产。
 
 #### withdraw(uint256 assets, address receiver, address owner) → uint256
-公开#
+public#
 请参阅 [IERC4626.withdraw](./Interfaces.md#withdrawuint256-assets-address-receiver-address-owner-→-uint256-shares).
 
 #### redeem(uint256 shares, address receiver, address owner) → uint256
-公开#
+public#
 请参阅 [IERC4626.redeem](./Interfaces.md#redeemuint256-shares-address-receiver-address-owner-→-uint256-assets).
 
 #### _convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256
@@ -1261,26 +1261,26 @@ IACCESSCONTROL
 [RoleRevoked(role, account, sender)](./Access.md#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### constructor(string name, string symbol)
-公开#
+public#
 将DEFAULT_ADMIN_ROLE、MINTER_ROLE和PAUSER_ROLE授权给部署合约的账户。
 请参阅 [ERC20.constructor](#constructorstring-name_-string-symbol_)。
 
 #### mint(address to, uint256 amount)
-公开#
+public#
 为to创建指定数量的新代币。
 请参考 [ERC20._mint](#_mintaddress-account-uint256-amount)。
 要求：
 * 调用者必须具有MINTER_ROLE角色。
 
 #### pause()
-公开#
+public#
 暂停所有代币转移。
 请参阅 [ERC20Pausable](#erc20pausable) 和 [Pausable._pause](./Security.md#_pause)。
 要求：
 * 调用者必须具有 PAUSER_ROLE。
 
 #### unpause()
-公开#
+public#
 取消所有代币转移的暂停状态。
 请参阅 [ERC20Pausable](#erc20pausable)和[Pausable._unpause](./Security.md#_unpause)。
 要求：
@@ -1339,7 +1339,7 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(string name, string symbol, uint256 initialSupply, address owner)
-公开#
+public#
 Mint函数会初始化一定数量的代币并将它们转移到所有者账户中。
 请参阅 [ERC20.constructor](#constructorstring-name_-string-symbol_)。
 
@@ -1406,21 +1406,21 @@ import "@openzeppelin/contracts/token/ERC20/utils/TokenTimelock.sol";
 [release()](#release)
 
 #### constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)
-公开#
+public#
 部署一个时间锁实例，能够持有指定的代币，并在 *releaseTime_* 后调用 release 时才释放给 beneficiary_。释放时间以 Unix 时间戳（以秒为单位）指定。
 
 #### token() → contract IERC20
-公开#
+public#
 返回当前持有的代币。
 
 #### beneficiary() → address
-公开#
+public#
 返回将收到代币的受益人。
 
 #### releaseTime() → uint256
-公开#
+public#
 返回代币释放时间，以自 Unix 纪元以来的秒数表示（即 Unix 时间戳）。
 
 #### release()
-公开#
+public#
 将由时间锁持有的代币转移给受益人。只有在释放时间之后调用才会成功。

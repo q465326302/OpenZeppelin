@@ -138,7 +138,7 @@ IERC1967
 [BeaconUpgraded(beacon)](./Interfaces.md)
 
 #### constructor(address _logic, bytes _data)
-公开#
+public#
 使用由_logic指定的初始实现初始化可升级代理。
 
 如果_data非空，则将其用作对_logic的委托调用中的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
@@ -280,7 +280,7 @@ modifier#
 该修饰符已弃用，因为如果修改的函数具有参数，并且实现提供具有相同选择器的函数，则可能会导致问题。
 
 #### constructor(address _logic, address admin_, bytes _data)
-公开#
+public#
 通过_admin初始化一个可升级的代理，由_logic的实现支持，并可选择使用[ERC1967Proxy.constructor](#constructoraddress-_logic-bytes-_data)中解释的_data进行初始化。
 
 #### _fallback()
@@ -319,31 +319,31 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### getProxyImplementation(contract ITransparentUpgradeableProxy proxy) → address
-公开#
+public#
 返回代理的当前实现。
 要求：
 * 此合约必须是代理的管理员。
 
 #### getProxyAdmin(contract ITransparentUpgradeableProxy proxy) → address
-公开#
+public#
 返回代理的当前管理员。
 要求：
 * 此合约必须是代理的管理员。
 
 #### changeProxyAdmin(contract ITransparentUpgradeableProxy proxy, address newAdmin)
-公开#
+public#
 将代理的管理员更改为新管理员。
 要求：
 * 此合约必须是代理的当前管理员。
 
 #### upgrade(contract ITransparentUpgradeableProxy proxy, address implementation)
-公开#
+public#
 将代理升级为实现。请参阅{TransparentUpgradeableProxy-upgradeTo}。
 要求：
 * 此合约必须是代理的管理员。
 
 #### upgradeAndCall(contract ITransparentUpgradeableProxy proxy, address implementation, bytes data)
-公开#
+public#
 将代理升级为实现合约，并在新实现上调用一个函数。参见{TransparentUpgradeableProxy-upgradeToAndCall}。
 要求：
 * 此合约必须是代理的管理员。
@@ -391,7 +391,7 @@ IERC1967
 [BeaconUpgraded(beacon)](./Interfaces.md)
 
 #### constructor(address beacon, bytes data)
-公开#
+public#
 使用Beacon初始化代理。
 
 如果数据非空，则将其用作委托调用到Beacon返回的实现中的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
@@ -460,15 +460,15 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### constructor(address implementation_)
-公开#
+public#
 将初始实现的地址设置为部署者账户，部署者账户将成为可以升级Beacon的所有者。
 
 #### implementation() → address
-公开#
+public#
 返回当前实现的地址。
 
 #### upgradeTo(address newImplementation)
-公开#
+public#
 对Beacon进行升级以实现新的实现。
 发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 要求：
@@ -675,14 +675,14 @@ modifier#
 指向proxiable合约的代理本身不应被视为可代理的，因为这会导致代理升级到自身并耗尽所有的gas。因此，如果通过代理调用此函数，它是关键的，该函数会触发revert。这是通过notDelegated修饰符来保证的。
 
 #### upgradeTo(address newImplementation)
-公开#
+public#
 升级代理的实现到newImplementation。
 
 调用[_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation)。
 发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 
 #### upgradeToAndCall(address newImplementation, bytes data)
-公开#
+public#
 将代理的实现升级为newImplementation，并随后执行data中编码的函数调用。
 
 调用[_authorizeUpgrade](#_authorizeupgradeaddress-newimplementation)函数。

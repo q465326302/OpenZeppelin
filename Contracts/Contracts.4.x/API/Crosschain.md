@@ -31,7 +31,7 @@ import "@openzeppelin/contracts/crosschain/amb/CrossChainEnabledAMB.sol";
 [_crossChainSender()](#_crosschainsender-→-address)
 
 #### constructor(address bridge)
-公开# 
+public# 
 
 #### _isCrossChain() → bool
 internal#

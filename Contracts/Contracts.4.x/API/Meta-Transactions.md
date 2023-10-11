@@ -21,7 +21,7 @@ import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 internal#
 
 #### isTrustedForwarder(address forwarder) → bool
-公开#
+public#
 
 #### _msgSender() → address sender
 internal#
@@ -58,13 +58,13 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor()
-公开#
+public#
 
 #### getNonce(address from) → uint256
-公开#
+public#
 
 #### verify(struct MinimalForwarder.ForwardRequest req, bytes signature) → bool
-公开#
+public#
 
 #### execute(struct MinimalForwarder.ForwardRequest req, bytes signature) → bool, bytes
-公开#
+public#

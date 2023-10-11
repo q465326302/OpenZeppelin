@@ -43,7 +43,7 @@ PaymentSplitter遵循拉取付款模型。这意味着付款不会自动转发�
 [PaymentReceived(from, amount)](#paymentreceivedaddress-from-uint256-amount)
 
 #### constructor(address[] payees, uint256[] shares_)
-公开#
+public#
 创建一个PaymentSplitter实例，其中payees中的每个帐户都被分配在shares数组中匹配位置的股份数。
 
 payees中的所有地址必须是非零的。两个数组必须具有相同的非零长度，并且payees中不能有重复项。
@@ -55,47 +55,47 @@ payees中的所有地址必须是非零的。两个数组必须具有相同的�
 要了解更多信息，请参阅[Solidity文档](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function)中的回退函数。
 
 #### totalShares() → uint256
-公开#
+public#
 获取支付受款人持有的总股数。
 
 #### totalReleased() → uint256
-公开#
+public#
 获取已经释放的以太总量的方法。
 
 #### totalReleased(contract IERC20 token) → uint256
-公开#
+public#
 获取已释放的代币总量的Getter函数。代币应该是一个IERC20合约的地址。
 
 #### shares(address account) → uint256
-公开#
+public#
 获取账户持有的股票数量的方法。
 
 #### released(address account) → uint256
-公开#
+public#
 获取已经释放给收款人的以太数量。
 
 #### released(contract IERC20 token, address account) → uint256
-公开#
+public#
 获取已经释放给收款人的代币代币数量。代币应该是一个IERC20合约的地址。
 
 #### payee(uint256 index) → address
-公开#
+public#
 获取收款人号码索引的地址。
 
 #### releasable(address account) → uint256
-公开#
+public#
 获取收款人可释放的以太数量。
 
 #### releasable(contract IERC20 token, address account) → uint256
-公开#
+public#
 获取收款人可释放代币的数量。代币应该是一个IERC20合约的地址。
 
 #### release(address payable account)
-公开#
+public#
 触发将他们应得的以太数量转移至账户，根据他们在总股份中的百分比和之前的提款。
 
 #### release(contract IERC20 token, address account)
-公开#
+public#
 触发将他们应得的代币数量转账到其账户，根据其在总份额中的百分比和之前的提取情况。代币必须是一个IERC20合约的地址。
 
 #### PayeeAdded(address account, uint256 shares)
@@ -140,7 +140,7 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
 [ERC20Released(token, amount)](#erc20releasedaddress-indexed-token-uint256-amount)
 
 #### constructor(address beneficiaryAddress, uint64 startTimestamp, uint64 durationSeconds)
-公开#
+public#
 设定受益人、开始时间戳和锁定期的锁定钱包。
 
 #### receive()
@@ -148,51 +148,51 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
 合约应该能够接收以太。
 
 #### beneficiary() → address
-公开#
+public#
 获取受益人地址的方法。
 
 #### start() → uint256
-公开#
+public#
 获取开始时间戳。
 
 #### duration() → uint256
-公开#
+public#
 获取归属期限的方法。
 
 #### released() → uint256
-公开#
+public#
 已经释放的以太数量
 
 #### released(address token) → uint256
-公开#
+public#
 已发布的代币数量
 
 #### releasable() → uint256
-公开#
+public#
 获取可释放以太的数量的函数。
 
 #### releasable(address token) → uint256
-公开#
+public#
 获取可释放代币的数量的函数。token应该是一个IERC20合约的地址。
 
 #### release()
-公开#
+public#
 释放已经归属的本机代币（以太）。
 
 发出一个[EtherReleased](#etherreleaseduint256-amount)事件。
 
 #### release(address token)
-公开#
+public#
 释放已经归属的代币。
 
 发出[ERC20Released](#erc20releasedaddress-indexed-token-uint256-amount)事件。
 
 #### vestedAmount(uint64 timestamp) → uint256
-公开#
+public#
 计算已经归属的以太数量。默认实现是线性归属曲线。
 
 #### vestedAmount(address token, uint64 timestamp) → uint256
-公开#
+public#
 计算已经归属的代币数量。默认实现是线性归属曲线。
 
 #### _vestingSchedule(uint256 totalAllocation, uint64 timestamp) → uint256

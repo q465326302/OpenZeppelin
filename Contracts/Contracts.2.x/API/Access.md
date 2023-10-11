@@ -63,13 +63,13 @@ modifier#
 internal#
 
 #### isCapper(address account) → bool
-公开#
+public#
 
 #### addCapper(address account)
-公开#
+public#
 
 #### renounceCapper()
-公开#
+public#
 
 #### _addCapper(address account)
 internal#
@@ -118,13 +118,13 @@ modifier#
 internal#
 
 #### isMinter(address account) → bool
-公开#
+public#
 
 #### addMinter(address account)
-公开#
+public#
 
 #### renounceMinter()
-公开#
+public#
 
 #### _addMinter(address account)
 internal#
@@ -173,13 +173,13 @@ modifier#
 internal#
 
 #### isPauser(address account) → bool
-公开#
+public#
 
 #### addPauser(address account)
-公开#
+public#
 
 #### renouncePauser()
-公开#
+public#
 
 #### _addPauser(address account)
 internal#
@@ -228,13 +228,13 @@ modifier#
 internal#
 
 #### isSigner(address account) → bool
-公开#
+public#
 
 #### addSigner(address account)
-公开#
+public#
 
 #### renounceSigner()
-公开#
+public#
 
 #### _addSigner(address account)
 internal#
@@ -284,13 +284,13 @@ modifier#
 internal#
 
 #### isWhitelistAdmin(address account) → bool
-公开#
+public#
 
 #### addWhitelistAdmin(address account)
-公开#
+public#
 
 #### renounceWhitelistAdmin()
-公开#
+public#
 
 #### _addWhitelistAdmin(address account)
 internal#
@@ -358,16 +358,16 @@ WHITELISTADMINROLE
 modifier#
 
 #### isWhitelisted(address account) → bool
-公开#
+public#
 
 #### addWhitelisted(address account)
-公开#
+public#
 
 #### removeWhitelisted(address account)
-公开#
+public#
 
 #### renounceWhitelisted()
-公开#
+public#
 
 #### _addWhitelisted(address account)
 internal#

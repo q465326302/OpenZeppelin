@@ -38,7 +38,7 @@ PaymentSplitter遵循拉取付款模式。这意味着付款不会自动转发�
 [PaymentReceived(from, amount)](#paymentreceivedaddress-from-uint256-amount)
 
 #### constructor(address[] payees, uint256[] shares_)
-公开#
+public#
 创建一个PaymentSplitter的实例，其中payees中的每个账户都被分配到shares数组中相应位置的份额。
 
 payees中的所有地址必须非零。两个数组的非零长度必须相同，并且payees中不能有重复的地址。
@@ -50,27 +50,27 @@ payees中的所有地址必须非零。两个数组的非零长度必须相同�
 要了解更多信息，请参阅Solidity文档中的[回退函数部分](https://solidity.readthedocs.io/en/latest/contracts.html#fallback-function)。
 
 #### totalShares() → uint256
-公开#
+public#
 获取支付人持有的股份总数。
 
 #### totalReleased() → uint256
-公开# 
+public# 
 以太已经释放的总量的获取器。
 
 #### shares(address account) → uint256
-公开#
+public#
 获取账户持有的股份数量。
 
 #### released(address account) → uint256
-公开#
+public#
 获取已释放给收款人的以太数量。
 
 #### payee(uint256 index) → address
-公开#
+public#
 获取收款人号码索引的地址。
 
 #### release(address payable account)
-公开#
+public#
 根据他们在总股份中所占的比例和之前的提款情况，触发将他们所欠的以太转账到他们的账户。
 
 #### PayeeAdded(address account, uint256 shares)
@@ -105,7 +105,7 @@ payees中的所有地址必须非零。两个数组的非零长度必须相同�
 internal#
 
 #### withdrawPayments(address payable payee)
-公开#
+public#
 撤回累积的支付，将所有的gas转发给收款人。
 
 请注意，任何账户都可以调用此函数，不仅限于收款人。这意味着即使不了解PullPayment协议的合约也可以通过让一个单独的账户调用[withdrawPayments](#withdrawpaymentsaddress-payable-payee)来接收资金。
@@ -114,7 +114,7 @@ internal#
 转发所有的gas会打开可重入性漏洞的大门。请确保信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](./Utils.md#reentrancyguard)。
 
 #### payments(address dest) → uint256
-公开#
+public#
 返回到某个地址所欠款项的支付。
 
 #### _asyncTransfer(address dest, uint256 amount)
@@ -153,14 +153,14 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### depositsOf(address payee) → uint256
-公开#
+public#
 
 #### deposit(address payee)
-公开#
+public#
 将发送的金额存储为可提取的信用。
 
 #### withdraw(address payable payee)
-公开#
+public#
 提取收款人的累积余额，将所有燃料转发给收款人。
 
 > WARNING
@@ -204,11 +204,11 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### withdrawalAllowed(address payee) → bool
-公开#
+public#
 返回一个地址是否被允许提取其资金。由派生合约实施。
 
 #### withdraw(address payable payee)
-公开#
+public#
 
 ### RefundEscrow
 托管款项给受益人的托管账户，款项由多个参与方存入。预期用途：参见 [Escrow](#escrow)。同样的使用指南适用于此处。所有与退款托管交互都将通过拥有者合约进行。拥有者账户（即实例化此合约的合约）可以存入款项，关闭存款期，并允许受益人提款或向存款人退款。
@@ -257,33 +257,33 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### constructor(address payable beneficiary_)
-公开#
+public#
 构造函数。
 
 #### state() → enum RefundEscrow.State
-公开#
+public#
 
 #### beneficiary() → address payable
-公开#
+public#
 
 #### deposit(address refundee)
-公开#
+public#
 存储可能在以后退还的资金。
 
 #### close()
-公开#
+public#
 允许受益人提取他们的资金，并拒绝进一步的存款。
 
 #### enableRefunds()
-公开#
+public#
 允许退款，并拒绝进一步的存款。
 
 #### beneficiaryWithdraw()
-公开#
+public#
 提取受益人的资金。
 
 #### withdrawalAllowed(address) → bool
-公开#
+public#
 返回退款人是否可以取回他们的存款（被退款）。重写的函数接收一个'payee'参数，但在这里我们忽略它，因为条件是全局的，而不是每个收款人的。
 
 #### RefundsClosed()

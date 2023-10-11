@@ -63,15 +63,15 @@ internal#
 在未暂停状态下初始化合约。将Pauser角色分配给部署者。
 
 #### paused() → bool
-公开#
+public#
 如果合约暂停，则返回true，否则返回false。
 
 #### pause()
-公开#
+public#
 被暂停器调用暂停，触发停止状态。
 
 #### unpause()、
-公开#
+public#
 被暂停者呼叫以解除暂停，恢复正常状态。
 
 #### Paused(address account)

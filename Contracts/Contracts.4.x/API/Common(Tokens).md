@@ -32,11 +32,11 @@ ERC-2981仅指定了一种信号版税信息的方式，不强制执行其支付
 [_resetTokenRoyalty(tokenId)](#_resettokenroyaltyuint256-tokenid)
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请参阅[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### royaltyInfo(uint256 tokenId, uint256 salePrice) → address, uint256
-公开#
+public#
 根据可能以任何交换单位计价的销售价格，返回应支付的版税金额及其受益人。版税金额应以同一交换单位计价并支付。
 
 #### _feeDenominator() → uint96

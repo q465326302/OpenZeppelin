@@ -169,11 +169,11 @@ internal#
 使用与ERC20代币名称相同的名称是一个好主意。
 
 #### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
-公开#
+public#
 请查看[IERC20Permit.permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s).
 
 #### nonces(address owner) → uint256
-公开#
+public#
 请查看[IERC20Permit.nonces](#noncesaddress-owner-→-uint256).
 
 #### DOMAIN_SEPARATOR() → bytes32

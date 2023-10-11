@@ -91,7 +91,7 @@ PROXY
 [Upgraded(implementation)](#upgradedaddress-implementation)
 
 #### constructor(address _logic, bytes _data)
-公开#
+public#
 使用_logic参数初始化可升级代理的初始实现。
 
 如果_data参数非空，则将其用作对_logic进行委托调用的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
@@ -165,7 +165,7 @@ modifier#
 除非发送者是管理员，否则将调用委托给实现的内部使用的修饰符。
 
 #### constructor(address _logic, address admin_, bytes _data)
-公开#
+public#
 通过_admin管理的升级代理进行初始化，由_logic的实现支持，并可选择使用[UpgradeableProxy.constructor](#constructoraddress-_logic-bytes-_data)中解释的_data进行初始化。
 
 #### admin() → address admin_
@@ -253,7 +253,7 @@ PROXY
 [_beforeFallback()](#_beforefallback)
 
 #### constructor(address beacon, bytes data)
-公开#
+public#
 使用beacon初始化代理。
 
 如果数据非空，则将其用作对由beacon返回的实现进行委托调用的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
@@ -319,15 +319,15 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### constructor(address implementation_)
-公开#
+public#
 将初始实现的地址设置为部署者账户，部署者账户作为可以升级Beacon的所有者。
 
 #### implementation() → address
-公开#
+public#
 返回当前实现的地址。
 
 #### upgradeTo(address newImplementation)
-公开#
+public#
 将Beacon升级为新的实现。
 
 发出[Upgraded](#upgradedaddress-implementation-1)事件。
@@ -426,35 +426,35 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### getProxyImplementation(contract TransparentUpgradeableProxy proxy) → address
-公开#
+public#
 返回代理的当前实现。
 
 要求：
 * 该合约必须是代理的管理员。
 
 #### getProxyAdmin(contract TransparentUpgradeableProxy proxy) → address
-公开#
+public#
 返回代理的当前管理员。
 
 要求：
 * 此合约必须是代理的管理员。
 
 #### changeProxyAdmin(contract TransparentUpgradeableProxy proxy, address newAdmin)
-公开#
+public#
 将proxy的管理员更改为newAdmin。
 
 要求：
 * 此合约必须是proxy的当前管理员。
 
 #### upgrade(contract TransparentUpgradeableProxy proxy, address implementation)
-公开#
+public#
 将代理升级为实现。参见[TransparentUpgradeableProxy.upgradeTo](#upgradetoaddress-newimplementation-1)。
 
 要求：
 * 该合约必须是代理的管理员。
 
 #### upgradeAndCall(contract TransparentUpgradeableProxy proxy, address implementation, bytes data)
-公开#
+public#
 将代理升级为实现，并在新实现上调用一个函数。参见[TransparentUpgradeableProxy.upgradeToAndCall](#upgradetoandcalladdress-newimplementation-bytes-data)。
 
 要求：

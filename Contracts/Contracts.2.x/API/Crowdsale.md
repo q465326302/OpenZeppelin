@@ -49,7 +49,7 @@ CONTEXT
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(uint256 rate, address payable wallet, contract IERC20 token)
-公开#
+public#
 汇率是以wei和最小且不可分割的代币单位之间的转换关系。因此，如果你使用的是一个名为TOK的ERC20Detailed代币，其小数位为3位，且汇率为1，那么1 wei将给你1个单位，或者0.001 TOK。
 
 #### fallback()
@@ -57,19 +57,19 @@ CONTEXT
 回退函数**不要重写**。请注意，其他合约在转移资金时会附带2300个基本gas补贴，这不足以调用buyTokens。考虑直接调用buyTokens来购买代币。
 
 #### token() → contract IERC20
-公开#
+public#
 
 #### wallet() → address payable
-公开#
+public#
 
 #### rate() → uint256
-公开#
+public#
 
 #### weiRaised() → uint256
-公开#
+public#
 
 #### buyTokens(address beneficiary)
-公开#
+public#
 低级代币购买请勿**重写此函数**。此函数具有非重入保护，因此不应由另一个非重入函数调用。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
@@ -155,13 +155,13 @@ CONTEXT
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(address tokenWallet)
-公开#
+public#
 
 #### tokenWallet() → address
-公开#
+public#
 
 #### remainingTokens() → uint256
-公开#
+public#
 检查津贴中剩余的代币数量。
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
@@ -266,14 +266,14 @@ CONTEXT
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(uint256 cap)
-公开#
+public#
 构造函数，接受众筹中接受的最大wei金额。
 
 #### cap() → uint256
-公开#
+public#
 
 #### capReached() → bool
-公开#
+public#
 检查是否达到了上限。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
@@ -356,11 +356,11 @@ CROWDSALE
 设定特定受益人的最大捐款额。
 
 #### getCap(address beneficiary) → uint256
-公开#
+public#
 返回特定受益人的上限。
 
 #### getContribution(address beneficiary) → uint256
-公开#
+public#
 返回特定受益人迄今为止的捐款金额。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
@@ -522,20 +522,20 @@ modifier#
 如果不在众筹时间范围内，则进行还原。
 
 #### constructor(uint256 openingTime, uint256 closingTime)
-公开#
+public#
 构造函数，接受众筹开始和结束时间。
 
 #### openingTime() → uint256
-公开#
+public#
 
 #### closingTime() → uint256
-公开#
+public#
 
 #### isOpen() → bool
-公开#
+public#
 
 #### hasClosed() → bool
-公开#
+public#
 检查众筹开放的期限是否已经过去。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
@@ -718,10 +718,10 @@ CROWDSALE
 internal#
 
 #### finalized() → bool
-公开#
+public#
 
 #### finalize()
-公开#
+public#
 必须在众筹结束后调用，以完成一些额外的最终工作。调用合约的最终化函数。
 
 #### _finalization()
@@ -799,11 +799,11 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### withdrawTokens(address beneficiary)
-公开#
+public#
 在众筹结束后才能提取代币。
 
 #### balanceOf(address account) → uint256
-公开#
+public#
 
 #### _processPurchase(address beneficiary, uint256 tokenAmount)
 internal#
@@ -889,18 +889,18 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor(uint256 goal)
-公开#
+public#
 构造函数，创建RefundEscrow。
 
 #### goal() → uint256
-公开#
+public#
 
 #### claimRefund(address payable refundee)
-公开#
+public#
 如果众筹活动不成功，投资者可以在这里申请退款。
 
 #### goalReached() → bool
-公开#
+public#
 检查是否达到了筹款目标。
 
 #### _finalization()
@@ -997,4 +997,4 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### withdrawTokens(address beneficiary)
-公开#
+public#

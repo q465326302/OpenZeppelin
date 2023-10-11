@@ -116,13 +116,13 @@ ACCESSCONTROL
 [RoleRevoked(role, account, sender)](./Access.md#rolerevokedbytes32-role-address-account-address-sender)
 
 #### constructor(string name, string symbol)
-公开#
+public#
 将DEFAULT_ADMIN_ROLE、MINTER_ROLE和PAUSER_ROLE授予部署合约的账户。
 
 请参阅 [ERC20.constructor](./ERC20.md#constructorstring-name_-string-symbol_)。
 
 #### mint(address to, uint256 amount)
-公开#
+public#
 创建给定数量的新代币。
 
 参考 [ERC20._mint](./ERC20.md#_mintaddress-account-uint256-amount)。
@@ -131,7 +131,7 @@ ACCESSCONTROL
 * 调用者必须具有MINTER_ROLE角色。
 
 #### pause()
-公开#
+public#
 暂停所有代币转移。
 
 参见 [ERC20Pausable](./ERC20.md#erc20pausable)和[Pausable._pause](./Utils.md#_pause)。
@@ -140,7 +140,7 @@ ACCESSCONTROL
 * 调用者必须具有PAUSER_ROLE。
 
 #### unpause()
-公开#
+public#
 取消暂停所有代币转账。
 
 参考 [ERC20Pausable](./ERC20.md#erc20pausable) 和 [Pausable._unpause](./Utils.md#_unpause)。
@@ -288,13 +288,13 @@ ACCESSCONTROL
 [RoleRevoked(role, account, sender)](./Access.md#rolegrantedbytes32-role-address-account-address-sender)
 
 #### constructor(string name, string symbol, string baseURI)
-公开#
+public#
 将DEFAULT_ADMIN_ROLE、MINTER_ROLE和PAUSER_ROLE授予部署合约的账户。
 
 Token的URI将根据baseURI和它们的token ID自动生成。请参阅[ERC721.tokenURI](./ERC721.md#tokenuriuint256-tokenid-e28692-string-1)。
 
 #### mint(address to)
-公开#
+public#
 为to创建一个新的代币。其代币ID将自动分配（并可在发出的[IERC721.Transfer](./ERC721.md#transferaddress-from-address-to-uint256-tokenid)事件中获得），代币URI将根据在构造函数中传递的基本URI自动生成。
 
 请参阅[ERC721._mint](./ERC721.md#_mintaddress-to-uint256-tokenid)。
@@ -303,7 +303,7 @@ Token的URI将根据baseURI和它们的token ID自动生成。请参阅[ERC721.t
 * 调用者必须具有MINTER_ROLE。
 
 #### pause()
-公开#
+public#
 暂停所有代币转移。
 
 请参阅[ERC721Pausable](./ERC721.md#erc721pausable)和[Pausable._pause](./Utils.md#_pause)。
@@ -312,7 +312,7 @@ Token的URI将根据baseURI和它们的token ID自动生成。请参阅[ERC721.t
 * 调用者必须具有PAUSER_ROLE。
 
 #### unpause()
-公开#
+public#
 解除所有代币转移的暂停。
 
 参见[ERC721Pausable](./ERC721.md#erc721pausable)和[Pausable._unpause](./Utils.md#_unpause)。
@@ -435,11 +435,11 @@ ACCESSCONTROL
 [RoleRevoked(role, account, sender)](./Access.md#rolegrantedbytes32-role-address-account-address-sender)
 
 #### constructor(string uri)
-公开#
+public#
 将DEFAULT_ADMIN_ROLE、MINTER_ROLE和PAUSER_ROLE授予部署合约的账户。
 
 #### mint(address to, uint256 id, uint256 amount, bytes data)
-公开#
+public#
 为特定的代币类型创建指定数量的新代币。
 
 请参考[ERC1155._mint](./ERC1155.md#_mintaddress-account-uint256-id-uint256-amount-bytes-data)。
@@ -448,12 +448,12 @@ ACCESSCONTROL
 * 调用者必须具有MINTER_ROLE角色。
 
 #### mintBatch(address to, uint256[] ids, uint256[] amounts, bytes data)
-公开#
+public#
 
 批量版本的mint。
 
 #### pause()
-公开#
+public#
 暂停所有代币转账。
 
 请参考 [ERC1155Pausable](./ERC1155.md#erc1155pausable)和[Pausable._pause](./Utils.md#_pause)。
@@ -462,7 +462,7 @@ ACCESSCONTROL
 * 调用者必须具有PAUSER_ROLE角色。
 
 #### unpause()
-公开#
+public#
 取消暂停所有代币转账。
 
 参考 [ERC1155Pausable](./ERC1155.md#erc1155pausable) 和 [Pausable._unpause](./Utils.md#_unpause)。
@@ -536,7 +536,7 @@ IERC20
 [Approval(owner, spender, value)](./ERC20.md#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(string name, string symbol, uint256 initialSupply, address owner)
-公开#
+public#
 初始化供应量的代币并将它们转移到所有者。
 
 参见[ERC20.constructor](./ERC20.md#constructorstring-name_-string-symbol_)。
@@ -619,7 +619,7 @@ IERC777
 [RevokedOperator(operator, tokenHolder)](./ERC777.md#revokedoperatoraddress-operator-address-tokenholder)
 
 #### constructor(string name, string symbol, address[] defaultOperators, uint256 initialSupply, address owner)
-公开#
+public#
 初始化供应一定数量的代币并将它们转移到所有者。
 
 参见 [ERC777.constructor](./ERC777.md#constructorstring-name_-string-symbol_-address-defaultoperators_)。

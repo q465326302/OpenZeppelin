@@ -33,7 +33,7 @@ import "@openzeppelin/contracts/security/PullPayment.sol";
 internal#
 
 #### withdrawPayments(address payable payee)
-公开#
+public#
 
 提取累积的支付金额，并将所有的gas转给收款人。
 
@@ -43,7 +43,7 @@ internal#
 转发所有的gas会打开重入漏洞的大门。确保你信任收款人，或者遵循检查-效果-交互模式或使用[ReentrancyGuard](#reentrancyguard)。
 
 #### payments(address dest) → uint256
-公开#
+public#
 返回欠某个地址的付款。
 
 #### _asyncTransfer(address dest, uint256 amount)
@@ -127,7 +127,7 @@ internal#
 在未暂停状态下初始化合约。
 
 #### paused() → bool
-公开#
+public#
 如果合约已暂停，则返回true，否则返回false。
 
 #### _requireNotPaused()

@@ -1456,7 +1456,7 @@ address signer = ECDSA.recover(digest, signature);
 ```
 
 #### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
-公开#
+public#
 请参阅{EIP-5267}。
 
 *自v4.9版本起可用。*
@@ -1501,11 +1501,11 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### withdrawalAllowed(address payee) → bool
-公开#
+public#
 返回地址是否被允许提取资金。由派生合约实现。
 
 #### withdraw(address payable payee)
-公开#
+public#
 将累积余额提取给收款人，并将所有gas转发给收款人。
 
 > WARNING
@@ -1547,14 +1547,14 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### depositsOf(address payee) → uint256
-公开#
+public#
 
 #### deposit(address payee)
-公开#
+public#
 将发送的金额存为信用以便提取。
 
 #### withdraw(address payable payee)
-公开#
+public#
 提取累积余额给收款人，将所有的gas转发给收款人。
 
 > WARNING
@@ -1621,33 +1621,33 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Access.md#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
 #### constructor(address payable beneficiary_)
-公开#
+public#
 构造函数。
 
 #### state() → enum RefundEscrow.State
-公开#
+public#
 
 #### beneficiary() → address payable
-公开#
+public#
 
 #### deposit(address refundee)
-公开#
+public#
 存储可能稍后退还的资金。
 
 #### close()
-公开#
+public#
 允许受益人取款并拒绝进一步存款。
 
 #### enableRefunds()
-公开#
+public#
 允许退款，并拒绝进一步存款
 
 #### beneficiaryWithdraw()
-公开#
+public#
 撤回受益人的资金。
 
 #### withdrawalAllowed(address) → bool
-公开#
+public#
 返回退款人是否可以取回他们的存款（退款）。重写的函数接收一个“受款人”参数，但在这里我们忽略它，因为条件是全局的，不是针对每个受款人的。
 
 #### RefundsClosed()
@@ -1708,7 +1708,7 @@ function supportsInterface(bytes4 interfaceId) public view virtual override retu
 [supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-e28692-bool-1)
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请查阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool).
 
 ### ERC165Storage
@@ -1726,7 +1726,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Storage.sol";
 [_registerInterface(interfaceId)](#_registerinterfacebytes4-interfaceid)
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请查阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool).
 
 #### _registerInterface(bytes4 interfaceId)
@@ -1924,7 +1924,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC1820Implementer.sol";
 [_registerInterfaceForAddress(interfaceHash, account)](#_registerinterfaceforaddressbytes32-interfacehash-address-account)
 
 #### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
-公开#
+public#
 请查阅[IERC1820Implementer.canImplementInterfaceForAddress](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32).
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)

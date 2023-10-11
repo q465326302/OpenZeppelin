@@ -63,7 +63,7 @@ IRELAYRECIPIENT
 [RelayHubChanged(oldRelayHub, newRelayHub)](#relayhubchangedaddress-oldrelayhub-address-newrelayhub)
 
 #### getHubAddr() → address
-公开#
+public#
 返回此接收者的[IRelayHub](#irelayhub)合约的地址。
 
 #### _upgradeRelayHub(address newRelayHub)
@@ -74,7 +74,7 @@ internal#
 升级后，[GSNRecipient](#gsnrecipient)将无法从旧的[IRelayHub](#irelayhub)实例接收Relayer 调用。此外，所有资金应通过[_withdrawDeposits](#_withdrawdepositsuint256-amount-address-payable-payee)事先提取。
 
 #### relayHubVersion() → string
-公开#
+public#
 返回此接收方实现构建的[IRelayHub](#irelayhub)的版本字符串。如果使用[_upgradeRelayHub](#_upgraderelayhubaddress-newrelayhub)，则新的[IRelayHub](#irelayhub)实例应与此版本兼容。
 
 #### _withdrawDeposits(uint256 amount, address payable payee)
@@ -194,7 +194,7 @@ GSNRECIPIENT
 [RelayHubChanged(oldRelayHub, newRelayHub)](#relayhubchangedaddress-oldrelayhub-address-newrelayhub)
 
 #### constructor(address trustedSigner)
-公开#
+public#
 设置可信签名者，该签名者将负责批准Relayer 调用的签名。
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256) → uint256, bytes
@@ -259,11 +259,11 @@ GSNRECIPIENT
 [RelayHubChanged(oldRelayHub, newRelayHub)](#relayhubchangedaddress-oldrelayhub-address-newrelayhub)
 
 #### constructor(string name, string symbol)
-公开#
+public#
 构造函数的参数是燃料支付代币将具有的细节：名称和符号。小数位数被硬编码为18。
 
 #### token() → contract IERC20
-公开#
+public#
 返回gas支付代币。
 
 #### _mint(address account, uint256 amount)

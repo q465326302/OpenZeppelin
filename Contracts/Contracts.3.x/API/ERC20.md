@@ -169,7 +169,7 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(string name_, string symbol_)
-公开#
+public#
 设置[名称](#name-→-string)和[符号](#symbol-→-string)的值，并使用默认值18初始化[小数位](#decimals-→-uint8)。
 
 要选择不同的[小数位](#decimals-→-uint8)值，请使用[_setupDecimals](#_setupdecimalsuint8-decimals)。
@@ -177,15 +177,15 @@ IERC20
 这三个值都是不可变的：它们只能在构造期间设置一次。
 
 #### name() → string
-公开#
+public#
 返回代币的名称。
 
 #### symbol() → string
-公开#
+public#
 返回代币的符号，通常是名称的缩写版本。
 
 #### decimals() → uint8
-公开#
+public#
 返回用于获取其用户表示的小数位数。例如，如果小数位数等于2，则用户的余额为505个代币应显示为5.05（505 / 10 ** 2）。
 
 通常，代币选择18个小数位，模仿以太和Wei之间的关系。这是[ERC20](#erc20)使用的值，除非调用了[_setupDecimals](#_setupdecimalsuint8-decimals)。
@@ -194,15 +194,15 @@ IERC20
 此信息仅用于显示目的：它绝不会影响合约的任何算术操作，包括[IERC20.balanceOf](#balanceofaddress-account-→-uint256)和[IERC20.Transfer](#transferaddress-recipient-uint256-amount-→-bool)。
 
 #### totalSupply() → uint256
-公开#
+public#
 请参阅 [IERC20.totalSupply](#totalsupply-→-uint256).
 
 #### balanceOf(address account) → uint256
-公开#
+public#
 请参阅 [IERC20.balanceOf](#balanceofaddress-account-→-uint256).
 
 #### transfer(address recipient, uint256 amount) → bool
-公开#
+public#
 请参阅 [IERC20.Transfer](#transferaddress-from-address-to-uint256-value).
 要求：
 * 接收者不能是零地址。
@@ -210,17 +210,17 @@ IERC20
 * 调用者必须拥有至少等额的余额。
 
 #### allowance(address owner, address spender) → uint256
-公开#
+public#
 请参阅[IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256).
 
 #### approve(address spender, uint256 amount) → bool
-公开#
+public#
 请参阅 [IERC20.approve](#approveaddress-spender-uint256-amount-→-bool).
 要求:
 * 接收者（spender）不能是零地址。
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
-公开#
+public#
 请参阅 [IERC20.transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool).
 发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件，表示更新的津贴。根据EIP的要求，这不是必需的。请参阅[ERC20](#erc20)开头的注释。
 
@@ -232,7 +232,7 @@ IERC20
 * 调用者必须至少拥有发送者的代币的amount的津贴。
 
 #### increaseAllowance(address spender, uint256 addedValue) → bool
-公开#
+public#
 以调用者为基础，原子性地增加授权给spender的津贴。
 
 这是一个可用作对[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题的缓解措施的替代方法。
@@ -243,7 +243,7 @@ IERC20
 * spender不能是零地址。
 
 #### decreaseAllowance(address spender, uint256 subtractedValue) → bool
-公开#
+public#
 以原子方式减少调用者授予给spender的津贴。
 
 这是一种替代[approve](#approveaddress-spender-uint256-amount-e28692-bool-1)的方法，可以用作解决[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题的方法。
@@ -406,11 +406,11 @@ internal#
 我们还没有测量实际数字；如果你对此感兴趣，请与我们联系。
 
 #### balanceOfAt(address account, uint256 snapshotId) → uint256
-公开#
+public#
 检索在创建快照ID时的账户余额。
 
 #### totalSupplyAt(uint256 snapshotId) → uint256
-公开#
+public#
 检索在创建快照ID时的总供应量。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
@@ -540,13 +540,13 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### burn(uint256 amount)
-公开#
+public#
 从调用者销毁指定数量的代币。
 
 参见 [ERC20._burn](#_burnaddress-account-uint256-amount)。
 
 #### burnFrom(address account, uint256 amount)
-公开#
+public#
 从账户中销毁指定数量的代币，从调用者的津贴中扣除。
 
 参见[ERC20._burn](#_burnaddress-account-uint256-amount)和[ERC20.allowance](#allowanceaddress-owner-address-spender-e28692-uint256-1)。
@@ -608,7 +608,7 @@ internal#
 设置上限值。该值是不可变的，只能在构造过程中设置一次。
 
 #### cap() → uint256
-公开#
+public#
 返回代币总供应量的上限。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
@@ -670,16 +670,16 @@ internal#
 [release()](#release)
 
 #### constructor(contract IERC20 token_, address beneficiary_, uint256 releaseTime_)
-公开#
+public#
 
 #### token() → contract IERC20
-公开#
+public#
 
 #### beneficiary() → address
-公开#
+public#
 
 #### releaseTime() → uint256
-公开#
+public#
 
 #### release()
-公开#
+public#

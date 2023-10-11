@@ -67,7 +67,7 @@ internal#
 在未暂停状态下初始化合约。
 
 #### paused() → bool
-公开#
+public#
 如果合约暂停，则返回true，否则返回false。
 
 #### _pause()

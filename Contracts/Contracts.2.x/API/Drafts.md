@@ -30,26 +30,26 @@ await migrator.beginMigration(newToken.address);
 [migrateAll(account)](#migratealladdress-account)
 
 #### constructor(contract IERC20 legacyToken)
-公开#
+public#
 
 #### legacyToken() → contract IERC20
-公开#
+public#
 返回正在迁移的传统代币。
 
 #### newToken() → contract IERC20
-公开#
+public#
 返回我们正在迁移的新代币。
 
 #### beginMigration(contract ERC20Mintable newToken_)
-公开#
+public#
 通过设置将要铸造的新代币开始迁移。这个合约必须是新代币的铸造者。
 
 #### migrate(address account, uint256 amount)
-公开#
+public#
 将账户中旧代币的部分余额转移到该合约，并为该账户铸造同等数量的新代币。
 
 #### migrateAll(address account)
-公开#
+public#
 将账户的允许余额中的所有旧代币转移到该合约，并为该账户铸造相同数量的新代币。
 
 ### ERC20Snapshot
@@ -110,13 +110,13 @@ IERC20
 [Approval(owner, spender, value)](./ERC20.md#approvaladdress-owner-address-spender-uint256-value)
 
 #### snapshot() → uint256
-公开#
+public#
 
 #### balanceOfAt(address account, uint256 snapshotId) → uint256
-公开#
+public#
 
 #### totalSupplyAt(uint256 snapshotId) → uint256
-公开#
+public#
 
 #### _transfer(address from, address to, uint256 value)
 internal#
@@ -183,35 +183,35 @@ OWNABLE
 [OwnershipTransferred(previousOwner, newOwner)](./Ownership.md#ownershiptransferredaddress-previousowner-address-newowner)
 
 #### constructor(address beneficiary, uint256 start, uint256 cliffDuration, uint256 duration, bool revocable)
-公开#
+public#
 创建一个分期释放合约，将其ERC20代币的余额逐渐线性释放给受益人，直到开始时间+持续时间为止。到那时，所有余额都将被释放完毕。
 
 #### beneficiary() → address
-公开#
+public#
 
 #### cliff() → uint256
-公开#
+public#
 
 #### start() → uint256
-公开#
+public#
 
 #### duration() → uint256
-公开#
+public#
 
 #### revocable() → bool
-公开#
+public#
 
 #### released(address token) → uint256
-公开#
+public#
 
 #### revoked(address token) → bool
-公开#
+public#
 
 #### release(contract IERC20 token)
-公开#
+public#
 
 #### revoke(contract IERC20 token)
-公开#
+public#
 
 #### TokensReleased(address token, uint256 amount)
 事件#

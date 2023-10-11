@@ -39,18 +39,18 @@ internal#
 初始化合约，将部署者设为初始所有者。
 
 #### owner() → address
-公开#
+public#
 返回当前所有者的地址。
 
 #### renounceOwnership()
-公开#
+public#
 没有所有者的合约将被废弃。将无法再调用只能由所有者调用的函数。只能由当前所有者调用。
 
 > NOTE
 放弃所有权将使合约失去所有者，从而删除只有所有者才能使用的功能。
 
 #### transferOwnership(address newOwner)
-公开#
+public#
 将合约的所有权转移到一个新账户（newOwner）。只能由当前所有者调用。
 
 #### OwnershipTransferred(address previousOwner, address newOwner)
@@ -107,15 +107,15 @@ DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此�
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-role-address-account-address-sender)
 
 #### hasRole(bytes32 role, address account) → bool
-公开#
+public#
 如果帐户已被授予角色，则返回true。
 
 #### getRoleMemberCount(bytes32 role) → uint256
-公开#
+public#
 返回具有角色的账户数量。可以与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，以枚举角色的所有承担者。
 
 #### getRoleMember(bytes32 role, uint256 index) → address
-公开#
+public#
 返回具有角色的帐户之一。索引必须是0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
 
 角色持有人不以任何特定方式排序，其排序可能在任何时刻发生变化。
@@ -124,13 +124,13 @@ DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此�
 在使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一个区块上执行所有查询。有关更多信息，请参阅以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleAdmin(bytes32 role) → bytes32
-公开#
+public#
 返回控制角色的管理员角色。请参见[grantRole](#grantrolebytes32-role-address-account)和[revokeRole](#revokerolebytes32-role-address-account)。
 
 要更改角色的管理员，请使用[_setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)。
 
 #### grantRole(bytes32 role, address account)
-公开#
+public#
 授予账户角色。
 
 如果账户尚未被授予角色，则发出[RoleGranted](#rolegrantedbytes32-role-address-account-address-sender)事件。
@@ -139,7 +139,7 @@ DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此�
 * 调用者必须具有该角色的管理员角色。
 
 #### revokeRole(bytes32 role, address account)
-公开#
+public#
 撤销账户的角色。
 
 如果账户已被授予角色，则发出一个[RoleRevoked](#rolerevokedbytes32-role-address-account-address-sender)事件。
@@ -148,7 +148,7 @@ DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此�
 * 调用者必须具有角色的管理员角色。
 
 #### renounceRole(bytes32 role, address account)
-公开#
+public#
 从调用账户中撤销角色。
 
 角色通常通过[grantRole](#grantrolebytes32-role-address-account)和[revokeRole](#revokerolebytes32-role-address-account)进行管理：该函数的目的是为账户提供一种机制，以防它们被损害而丧失特权（例如当一个受信任的设备丢失时）。
@@ -281,7 +281,7 @@ modifier#
 修改以使特定角色才能调用函数。除了检查发送者的角色外，还要考虑address(0)的角色。将角色授予address(0)等效于为所有人启用该角色。
 
 #### constructor(uint256 minDelay, address[] proposers, address[] executors)
-公开#
+public#
 使用给定的minDelay初始化合约。
 
 #### receive()
@@ -289,41 +289,41 @@ modifier#
 合约可能在维护过程中接收/持有ETH。
 
 #### isOperation(bytes32 id) → bool pending
-公开#
+public#
 返回一个id是否对应于已注册的操作。这包括待处理、准备好和完成的操作。
 
 #### isOperationPending(bytes32 id) → bool pending
-公开#
+public#
 返回操作是否挂起。
 
 ### isOperationReady(bytes32 id) → bool ready
-公开#
+public#
 返回操作是否准备好。
 
 #### isOperationDone(bytes32 id) → bool done
-公开#
+public#
 返回操作是否已完成。
 
 #### getTimestamp(bytes32 id) → uint256 timestamp
-公开#
+public#
 返回操作准备就绪的时间戳（对于未设置的操作为0，对于完成的操作为1）。
 
 #### getMinDelay() → uint256 duration
-公开#
+public#
 返回操作变为有效所需的最小延迟时间。
 
 通过执行调用updateDelay的操作可以更改此值。
 
 #### hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) → bytes32 hash
-公开#
+public#
 返回包含单个事务的操作的标识符。
 
 #### hashOperationBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt) → bytes32 hash
-公开#
+public#
 返回包含一批交易的操作的标识符。
 
 #### schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)
-公开#
+public#
 安排一个包含单个交易的操作。
 
 发出一个[CallScheduled](#callscheduledbytes32-id-uint256-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)事件。
@@ -332,7 +332,7 @@ modifier#
 * 调用者必须具有“提议者”角色。
 
 #### scheduleBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt, uint256 delay)
-公开#
+public#
 安排一个包含一批交易的操作。
 
 每个交易在批处理中发出一个[CallScheduled](#callscheduledbytes32-id-uint256-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)事件。
@@ -341,14 +341,14 @@ modifier#
 * 调用者必须具有'proposer'角色。
 
 #### cancel(bytes32 id)
-公开#
+public#
 取消一项操作。
 
 要求：
 * 呼叫者必须具有“提议者”角色。
 
 #### execute(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt)
-公开#
+public#
 执行一个包含单个事务的（准备好的）操作。
 
 发出一个[CallExecuted](#callexecutedbytes32-id-uint256-index-address-target-uint256-value-bytes-data)事件。
@@ -357,7 +357,7 @@ modifier#
 * 调用者必须具有“执行者”角色。
 
 #### executeBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt)
-公开#
+public#
 执行一个包含一批交易的准备操作。
 
 每个批次中的交易都会发出一个[CallExecuted](#callexecutedbytes32-id-uint256-index-address-target-uint256-value-bytes-data)事件。

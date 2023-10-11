@@ -45,7 +45,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 internal#
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 参见 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 时间复杂度为 O(1)，保证始终使用少于 30,000 gas。
@@ -217,7 +217,7 @@ ERC1820实现者的接口，根据[EIP](https://eips.ethereum.org/EIPS/eip-1820#
 [_registerInterfaceForAddress(interfaceHash, account)](#_registerinterfaceforaddressbytes32-interfacehash-address-account)
 
 #### canImplementInterfaceForAddress(bytes32 interfaceHash, address account) → bytes32
-公开#
+public#
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
 internal#

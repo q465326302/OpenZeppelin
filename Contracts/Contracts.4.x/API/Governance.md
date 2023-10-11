@@ -93,23 +93,23 @@ IERC165
 [VoteCastWithParams(voter, proposalId, support, weight, reason, params)](#_getvotesaddress-account-uint256-timepoint-bytes-→-uint256)
 
 #### name() → string
-公开#
+public#
 构建ERC712域分隔符时使用的governor实例的名称。
 
 #### version() → string
-公开#
+public#
 governor实例的版本（用于构建ERC712域分隔符）。默认值为“1”。
 
 #### clock() → uint48
-公开#
+public#
 请参阅 [IERC6372](./Interfaces.md#ierc6372)
 
 #### CLOCK_MODE() → string
-公开#
+public#
 请参阅 EIP-6372.
 
 #### COUNTING_MODE() → string
-公开#
+public#
 这是一个描述[castVote](#castvoteuint256-proposalid-uint8-support-→-uint256-balance)可能的支持值以及这些投票如何计算的字符串，用于UI显示正确的投票选项和解释结果。该字符串是一个URL编码的键值对序列，每个键值对描述一个方面，例如support=bravo&quorum=for,abstain。
 
 有两个标准键：support和quorum。
@@ -127,68 +127,68 @@ governor实例的版本（用于构建ERC712域分隔符）。默认值为“1�
 该字符串可以通过标准的[URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) JavaScript类解码。
 
 #### hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 用于从提案详细信息中重新构建提案ID的哈希函数。
 
 #### state(uint256 proposalId) → enum IGovernor.ProposalState
-公开#
+public#
 根据Compound的约定，提案的当前状态。
 
 #### proposalSnapshot(uint256 proposalId) → uint256
-公开#
+public#
 用于检索用户投票和法定人数的时间点。如果使用块编号（按照Compound的Comp），快照将在该块结束时执行。因此，对该提案的投票将从以下块的开始开始。
 
 #### proposalDeadline(uint256 proposalId) → uint256
-公开#
+public#
 投票截止时间点。如果使用块编号，则投票在该块结束时关闭，因此可以在该块期间投票。
 
 #### proposalProposer(uint256 proposalId) → address
-公开#
+public#
 创建提案的账户。
 
 #### votingDelay() → uint256
-公开#
+public#
 在提案创建和投票开始之间存在延迟。此持续时间的单位取决于此合约使用的时钟（请参阅EIP-6372）。
 
 可以增加此延迟时间，以便用户有时间购买投票权或委托投票权，然后再开始对提案进行投票。
 
 #### votingPeriod() → uint256
-公开#
+public#
 投票开始和投票结束之间的延迟。此持续时间的单位取决于此合约使用的时钟（参见EIP-6372）。
 
 > NOTE
 [votingDelay](#votingdelay-→-uint256)可以延迟投票的开始。在设置投票持续时间与投票延迟相比时，必须考虑到这一点。
 
 #### quorum(uint256 timepoint) → uint256
-公开#
+public#
 成功提案所需的最低投票数。
 
 > NOTE
 时间点参数对应于用于计算投票的快照。这允许根据此时间点的总供应量等值来调整法定人数（请参阅[ERC20Votes](./ERC20.md#erc20votes)）。
 
 #### getVotes(address account, uint256 timepoint) → uint256
-公开#
+public#
 特定时间点上帐户的投票权力。
 
 注意：这可以通过多种方式实现，例如通过从一个（或多个）[ERC20Votes](./ERC20.md#erc20votes)代币中读取委托余额来实现。
 
 #### getVotesWithParams(address account, uint256 timepoint, bytes params) → uint256
-公开#
+public#
 给定额外的编码参数，一个账户在特定时间点的投票权力。
 
 #### hasVoted(uint256 proposalId, address account) → bool
-公开#
+public#
 返回帐户是否对提案ID投票。
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256 proposalId
-公开#
+public#
 
 创建一个新提案。投票在[IGovernor.votingDelay](#votingdelay-→-uint256)指定的延迟后开始，并持续[IGovernor.votingPeriod](#votingperiod-→-uint256)指定的持续时间。
 
 发出一个[ProposalCreated](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)事件。
 
 #### execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256 proposalId
-公开#
+public#
 
 成功执行提案。这需要达到法定人数，投票成功，并达到截止日期。
 
@@ -197,35 +197,35 @@ governor实例的版本（用于构建ERC712域分隔符）。默认值为“1�
 注意：某些模块可以修改执行要求，例如添加额外的时间锁。
 
 #### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256 proposalId
-公开#
+public#
 取消提案。提案可以被提出者取消，但只能在待定状态下取消，即在投票开始之前。
 
 发出一个[ProposalCanceled](#proposalcanceleduint256-proposalid)事件。
 
 #### castVote(uint256 proposalId, uint8 support) → uint256 balance
-公开#
+public#
 投票
 
 发出一个[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### castVoteWithReason(uint256 proposalId, uint8 support, string reason) → uint256 balance
-公开#
+public#
 投票并附上理由。
 
 触发[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) → uint256 balance
-公开#
+public#
 根据参数的长度，发出[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)或[VoteCastWithParams](#votecastwithparamsaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason-bytes-params)事件。
 
 #### castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) → uint256 balance
-公开#
+public#
 使用用户的密码签名进行投票。
 
 发出一个[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) → uint256 balance
-公开#
+public#
 使用用户的加密签名进行投票，并附加编码参数进行投票。
 
 根据params的长度发出[VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)或[VoteCastWithParams](#votecastwithparamsaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason-bytes-params)事件。
@@ -354,19 +354,19 @@ internal#
 接收ETH的函数，将由治理合约处理（如果执行者是第三方合约，则禁用）
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请参见 [IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### name() → string
-公开#
+public#
 请参见 [IGovernor.name](#name-→-string).
 
 #### version() → string
-公开#
+public#
 请参见 [IGovernor.version](#version-→-string).
 
 #### hashProposal(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 请参考 [IGovernor.hashProposal](#hashproposaladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)。
 
 提案ID是通过对ABI编码的targets数组、values数组、calldatas数组和descriptionHash（bytes32，它本身是描述字符串的keccak256哈希）进行哈希计算得到的。这个提案ID可以从[ProposalCreated](#proposalcreateduint256-proposalid-address-proposer-address-targets-uint256-values-string-signatures-bytes-calldatas-uint256-votestart-uint256-voteend-string-description)事件的提案数据中生成。甚至可以在提案提交之前提前计算出来。
@@ -374,23 +374,23 @@ internal#
 请注意，chainId和governor地址不是提案ID计算的一部分。因此，如果在多个网络上的多个治理合约提交相同的提案（具有相同的操作和相同的描述），则它们将具有相同的ID。这也意味着为了在同一个治理合约上执行相同的操作两次，提案人必须更改描述以避免提案ID冲突。
 
 #### state(uint256 proposalId) → enum IGovernor.ProposalState
-公开#
+public#
 请参考 [IGovernor.state](#stateuint256-proposalid-→-enum-igovernorproposalstate).
 
 #### proposalThreshold() → uint256
-公开#
+public#
 Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*。
 
 #### proposalSnapshot(uint256 proposalId) → uint256
-公开#
+public#
 请参阅[IGovernor.proposalSnapshot](#proposalsnapshotuint256-proposalid-→-uint256)。
 
 #### proposalDeadline(uint256 proposalId) → uint256
-公开#
+public#
 请参阅 [IGovernor.proposalDeadline](#proposaldeadlineuint256-proposalid-→-uint256).
 
 #### proposalProposer(uint256 proposalId) → address
-公开#
+public#
 返回创建给定提案的账户。
 
 #### _quorumReached(uint256 proposalId) → bool
@@ -419,15 +419,15 @@ internal#
 注意：应该由特定的实现来重写以使用适当的值，附加参数的含义在该实现的上下文中。
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
-公开#
+public#
 查看 [IGovernor.propose](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256-proposalid) 函数。该函数包含 opt-in 前置交易保护，其描述在 [_isValidDescriptionForProposer](#_isvaliddescriptionforproposeraddress-proposer-string-description-→-bool) 中说明。
 
 #### execute(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 请参阅 [IGovernor.execute](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid).
 
 #### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 请参阅 [IGovernor.cancel](#canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid).
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
@@ -449,31 +449,31 @@ internal#
 发出[IGovernor.ProposalCanceled](#proposalcanceleduint256-proposalid)事件。
 
 #### getVotes(address account, uint256 timepoint) → uint256
-公开#
+public#
 请参阅 [IGovernor.getVotes](#getvotesaddress-account-uint256-timepoint-→-uint256).
 
 #### getVotesWithParams(address account, uint256 timepoint, bytes params) → uint256
-公开#
+public#
 请参阅 [IGovernor.getVotesWithParams](#getvoteswithparamsaddress-account-uint256-timepoint-bytes-params-→-uint256).
 
 #### castVote(uint256 proposalId, uint8 support) → uint256
-公开#
+public#
 请参阅 [IGovernor.castVote](#castvoteuint256-proposalid-uint8-support-→-uint256-balance).
 
 #### castVoteWithReason(uint256 proposalId, uint8 support, string reason) → uint256
-公开#
+public#
 请参阅 [IGovernor.castVoteWithReason](#castvotewithreasonuint256-proposalid-uint8-support-string-reason-→-uint256-balance).
 
 #### castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string reason, bytes params) → uint256
-公开#
+public#
 请参阅 [IGovernor.castVoteWithReasonAndParams](#castvotewithreasonandparamsuint256-proposalid-uint8-support-string-reason-bytes-params-→-uint256-balance).
 
 #### castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s) → uint256
-公开#
+public#
 请参阅 [IGovernor.castVoteBySig](#castvotebysiguint256-proposalid-uint8-support-uint8-v-bytes32-r-bytes32-s-→-uint256-balance).
 
 #### castVoteWithReasonAndParamsBySig(uint256 proposalId, uint8 support, string reason, bytes params, uint8 v, bytes32 r, bytes32 s) → uint256
-公开#
+public#
 请参阅 [IGovernor.castVoteWithReasonAndParamsBySig](#castvotewithreasonandparamsbysiguint256-proposalid-uint8-support-string-reason-bytes-params-uint8-v-bytes32-r-bytes32-s-→-uint256-balance).
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason) → uint256
@@ -498,15 +498,15 @@ internal#
 governor执行行动的地址。将通过执行通过另一个合约（如时间锁）的模块来进行重载。
 
 #### onERC721Received(address, address, uint256, bytes) → bytes4
-公开#
+public#
 请参阅  [IERC721Receiver.onERC721Received](./ERC721.md#onerc721receivedaddress-operator-address-from-uint256-tokenid-bytes-data-→-bytes4).
 
 ####  onERC1155Received(address, address, uint256, uint256, bytes) → bytes4
-公开#
+public#
 请参阅 [IERC1155Receiver.onERC1155Received](./ERC1155.md#onerc1155receivedaddress-operator-address-from-uint256-id-uint256-value-bytes-data-→-bytes4).
 
 #### onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) → bytes4
-公开#
+public#
 请参阅 [IERC1155Receiver.onERC1155BatchReceived](./ERC1155.md#onerc1155batchreceivedaddress-operator-address-from-uint256-ids-uint256-values-bytes-data-→-bytes4).
 
 #### _isValidDescriptionForProposer(address proposer, string description) → bool
@@ -597,15 +597,15 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### COUNTING_MODE() → string
-公开#
+public#
 请参阅 [IGovernor.COUNTING_MODE](#counting_mode-→-string).
 
 #### hasVoted(uint256 proposalId, address account) → bool
-公开#
+public#
 请参阅 [IGovernor.hasVoted](#hasvoteduint256-proposalid-address-account-→-bool).
 
 #### proposalVotes(uint256 proposalId) → uint256 againstVotes, uint256 forVotes, uint256 abstainVotes
-公开#
+public#
 访问内部投票计数器。
 
 #### _quorumReached(uint256 proposalId) → bool
@@ -702,11 +702,11 @@ IERC5267
 internal#
 
 #### clock() → uint48
-公开#
+public#
 如果代币没有实施EIP-6372协议，那么Clock（按照EIP-6372规定）将被设置为与代币的时钟匹配，否则将回退到区块号。
 
 #### CLOCK_MODE() → string
-公开#
+public#
 在EIP-6372中指定的时钟的机器可读描述。
 
 #### _getVotes(address account, uint256 timepoint, bytes) → uint256
@@ -804,19 +804,19 @@ internal#
 该分数被指定为分子/分母。默认情况下，分母为100，因此法定人数被指定为百分比：分子为10对应于法定人数为总供应量的10％。可以通过重写[quorumDenominator](#quorumdenominator-→-uint256)来自定义分母。
 
 #### quorumNumerator() → uint256
-公开#
+public#
 返回当前配额分子。请参见[quorumDenominator](#quorumdenominator-→-uint256).
 
 #### quorumNumerator(uint256 timepoint) → uint256
-公开#
+public#
 返回特定时间点的法定人数的分子。参见[quorumDenominator](#quorumdenominator-→-uint256)。
 
 #### quorumDenominator() → uint256
-公开#
+public#
 返回法定人数的分母。默认为100，但可以被重写。
 
 #### quorum(uint256 timepoint) → uint256
-公开#
+public#
 以投票数量为单位，返回时间点的法定人数：供应量 * 分子 / 分母。
 
 #### updateQuorumNumerator(uint256 newQuorumNumerator)
@@ -921,11 +921,11 @@ IERC5267
 internal#
 
 #### clock() → uint48
-公开#
+public#
 如果代币没有实施EIP-6372，则根据EIP-6372中指定的方式设置时钟。如果代币没有实施EIP-6372，则回退到区块号。
 
 #### CLOCK_MODE() → string
-公开#
+public#
 在EIP-6372中指定的时钟的机器可读描述。
 
 #### _getVotes(address account, uint256 timepoint, bytes) → uint256
@@ -1029,23 +1029,23 @@ internal#
 设置时间锁。
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请参阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool).
 
 #### state(uint256 proposalId) → enum IGovernor.ProposalState
-公开#
+public#
 重写了[Governor.state](#stateuint256-proposalid-e28692-enum-igovernorproposalstate-1)函数的版本，增加了对Queued状态的支持。
 
 #### timelock() → address
-公开#
+public#
 公共访问器来检查时间锁的地址
 
 #### proposalEta(uint256 proposalId) → uint256
-公开#
+public#
 公共访问器用于检查排队提案的预计时间
 
 #### queue(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 将提案排队到时间锁的功能。
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash)
@@ -1165,23 +1165,23 @@ internal#
 设置时间锁。
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请参阅 [IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool).
 
 #### state(uint256 proposalId) → enum IGovernor.ProposalState
-公开#
+public#
 重写的[Governor.state](#stateuint256-proposalid-e28692-enum-igovernorproposalstate-1)函数的版本，增加了对Queued和Expired状态的支持。
 
 #### timelock() → address
-公开#
+public#
 公共访问器用于检查时间锁的地址
 
 #### proposalEta(uint256 proposalId) → uint256
-公开#
+public#
 公共访问者来检查排队提案的预计时间
 
 #### queue(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 将一个提案排队到时间锁定的函数。
 
 #### _execute(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
@@ -1197,7 +1197,7 @@ internal#
 行动的执行地址是governor。在这种情况下，时间锁。
 
 #### __acceptAdmin()
-公开#
+public#
 接受对时间锁的管理员权限。
 
 #### updateTimelock(contract ICompoundTimelock newTimelock)
@@ -1305,31 +1305,31 @@ internal#
 初始化治理参数。
 
 #### votingDelay() → uint256
-公开#
+public#
 请参阅 [IGovernor.votingDelay](#votingdelay-→-uint256).
 
 #### votingPeriod() → uint256
-公开#
+public#
 请参阅 [IGovernor.votingPeriod](#votingperiod-→-uint256).
 
 #### proposalThreshold() → uint256
-公开#
+public#
 请参阅 [Governor.proposalThreshold](#proposalthreshold-→-uint256).
 
 #### setVotingDelay(uint256 newVotingDelay)
-公开#
+public#
 更新投票延迟。此操作只能通过治理提案完成。
 
 发送 [VotingDelaySet](#votingdelaysetuint256-oldvotingdelay-uint256-newvotingdelay)事件。
 
 #### setVotingPeriod(uint256 newVotingPeriod)
-公开#
+public#
 更新投票期限。此操作只能通过治理提案进行。
 
 发出一个[VotingPeriodSet](#votingperiodsetuint256-oldvotingperiod-uint256-newvotingperiod)事件。
 
 #### setProposalThreshold(uint256 newProposalThreshold)
-公开#
+public#
 更新提案门槛。此操作只能通过治理提案进行。
 
 发出[ProposalThresholdSet](#proposalthresholdsetuint256-oldproposalthreshold-uint256-newproposalthreshold)事件。
@@ -1448,7 +1448,7 @@ internal#
 初始化投票扩展参数：从提案达到法定人数到投票期结束所需的时间，以块数或秒数（取决于议长时钟模式）计算。如有需要，投票期限将延长超过提案创建时设定的期限。
 
 #### proposalDeadline(uint256 proposalId) → uint256
-公开#
+public#
 如果提案在投票期结束时才达到法定人数，那么返回的提案截止日期可能会超过提案创建时设定的截止日期。请参阅[Governor.proposalDeadline](#proposaldeadlineuint256-proposalid-e28692-uint256-1)。
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
@@ -1458,11 +1458,11 @@ internal#
 可能会发出[ProposalExtended](#proposalextendeduint256-indexed-proposalid-uint64-extendeddeadline)事件。
 
 #### lateQuorumVoteExtension() → uint64
-公开#
+public#
 返回投票扩展参数的当前值：从提案达到法定人数直到其投票期结束所需通过的区块数量。
 
 #### setLateQuorumVoteExtension(uint64 newVoteExtension)
-公开#
+public#
 更改*lateQuorumVoteExtension*。此操作只能由治理执行者执行，通常是通过治理提案进行。
 
 发出*LateQuorumVoteExtensionSet*事件。
@@ -1576,7 +1576,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 ### COUNTING_MODE() → string
-公开#
+public#
 这是一个用于解释支持和解释[castVote](#castvoteuint256-proposalid-uint8-support-→-uint256)结果的字符串，旨在被UI界面使用以显示正确的投票选项和解释结果。该字符串是一个URL编码的键值对序列，每个键值对描述一个方面，例如support=bravo&quorum=for,abstain。
 
 有两个标准键：support和quorum。
@@ -1592,47 +1592,47 @@ IERC5267
 这个字符串可以通过标准的[URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams) JavaScript类进行解码。
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
-公开#
+public#
 请参阅 [IGovernor.propose](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256-proposalid).
 
 #### propose(address[] targets, uint256[] values, string[] signatures, bytes[] calldatas, string description) → uint256
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.propose].
 
 #### queue(uint256 proposalId)
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.queue].
 
 #### execute(uint256 proposalId)
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.execute].
 
 #### cancel(uint256 proposalId)
-公开#
+public#
 取消与GovernorBravo逻辑的提案。
 
 #### cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-公开#
+public#
 使用GovernorBravo逻辑取消提案。在任何时刻，提案可以被取消，无论是由提案人取消，还是由第三方取消，前提是提案人的投票权已经降低到提案阈值以下。
 
 #### proposals(uint256 proposalId) → uint256 id, address proposer, uint256 eta, uint256 startBlock, uint256 endBlock, uint256 forVotes, uint256 againstVotes, uint256 abstainVotes, bool canceled, bool executed
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.proposals].
 
 #### getActions(uint256 proposalId) → address[] targets, uint256[] values, string[] signatures, bytes[] calldatas
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.getActions].
 
 #### getReceipt(uint256 proposalId, address voter) → struct IGovernorCompatibilityBravo.Receipt
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.getReceipt].
 
 #### quorumVotes() → uint256
-公开#
+public#
 请参阅 [IGovernorCompatibilityBravo.quorumVotes].
 
 #### hasVoted(uint256 proposalId, address account) → bool
-公开#
+public#
 请参阅 [IGovernor.hasVoted](#hasvoteduint256-proposalid-address-account-→-bool).
 
 #### _quorumReached(uint256 proposalId) → bool
@@ -1725,7 +1725,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### propose(address[] targets, uint256[] values, bytes[] calldatas, string description) → uint256
-公开#
+public#
 请查看[IGovernor.propose](#proposeaddress-targets-uint256-values-bytes-calldatas-string-description-→-uint256-proposalid)函数。该函数具有opt-in的前运行保护，其描述在[_isValidDescriptionForProposer](#_isvaliddescriptionforproposeraddress-proposer-string-description-→-bool)中解释。
 
 ## 实用程序
@@ -1776,27 +1776,27 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### clock() → uint48
-公开#
+public#
 用于标记检查点的时钟。可以被重写以实现基于时间戳的检查点（和投票），在这种情况下，[CLOCK_MODE](#clock_mode-e28692-string-3)也应该被重写以匹配。
 
 #### CLOCK_MODE() → string
-公开#
+public#
 
 EIP-6372规定的时钟的机器可读描述。
 
 #### getVotes(address account) → uint256
-公开#
+public#
 返回该账户当前的投票数量。
 
 #### getPastVotes(address account, uint256 timepoint) → uint256
-公开#
+public#
 返回特定时刻过去账户的投票数量。如果时钟（clock()）配置为使用区块号，则会返回相应区块结束时的值。
 
 要求：
 * timepoint 必须在过去。如果使用区块号进行操作，则该区块必须已经被挖掘。
 
 #### getPastTotalSupply(uint256 timepoint) → uint256
-公开#
+public#
 在过去的特定时刻返回可用的总票数。如果时钟（clock()）配置为使用区块号，这将返回相应区块结束时的值。
 
 > NOTE
@@ -1810,15 +1810,15 @@ internal#
 返回当前总投票供应量。
 
 #### delegates(address account) → address
-公开#
+public#
 返回账户选择的代表。
 
 #### delegate(address delegatee)
-公开#
+public#
 将发件人的选票委托给受托人。
 
 #### delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)
-公开#
+public#
 将签名者的选票授予代表。
 
 #### _delegate(address account, address delegatee)
@@ -1838,7 +1838,7 @@ internal#
 返回当前值并增加随机数。
 
 #### nonces(address owner) → uint256
-公开#
+public#
 返回一个地址的nonce。
 
 #### DOMAIN_SEPARATOR() → bytes32
@@ -1919,7 +1919,7 @@ modifier#
 对函数进行修改，使其只能被特定角色调用。除了检查发送者的角色外，还要考虑 address(0) 的角色。将角色授予 address(0) 相当于为所有人启用此角色。
 
 #### constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)
-公开#
+public#
 使用以下参数初始化合约：
 * minDelay: 操作的初始最小延迟
 * proposers: 被授予提案人和取消人角色的账户
@@ -1934,45 +1934,45 @@ modifier#
 合约可能会在维护过程中收到/持有ETH。
 
 #### supportsInterface(bytes4 interfaceId) → bool
-公开#
+public#
 请查阅 [IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool).
 
 #### isOperation(bytes32 id) → bool
-公开#
+public#
 返回一个id是否对应于注册的操作。这包括待处理、准备好和完成的操作。
 
 #### isOperationPending(bytes32 id) → bool
-公开#
+public#
 返回操作是否挂起。请注意，“挂起”操作也可能是“就绪”的。
 
 #### isOperationReady(bytes32 id) → bool
-公开#
+public#
 返回操作是否准备好执行。请注意，“准备就绪”的操作也是“待处理”的。
 
 #### isOperationDone(bytes32 id) → bool
-公开#
+public#
 返回操作是否已完成。
 
 #### getTimestamp(bytes32 id) → uint256
-公开#
+public#
 返回操作准备就绪的时间戳（未设置操作为0，完成操作为1）。
 
 #### getMinDelay() → uint256
-公开#
+public#
 返回操作变得有效所需的最小延迟。
 
 通过执行调用updateDelay的操作可以更改该值。
 
 #### hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) → bytes32
-公开#
+public#
 返回包含单个交易的操作的标识符。
 
 #### hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) → bytes32
-公开#
+public#
 返回包含一批交易的操作的标识符。
 
 #### schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)
-公开#
+public#
 安排一个包含单个交易的操作。
 
 如果盐值不为零，则发出[CallSalt](#callsaltbytes32-indexed-id-bytes32-salt)；同时发出[CallScheduled](#callscheduledbytes32-indexed-id-uint256-indexed-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)。
@@ -1980,7 +1980,7 @@ modifier#
 * 调用者必须具有“提议者”角色。
 
 #### scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)
-公开#
+public#
 安排一个包含一批交易的操作。
 
 如果盐不为零，则发出[CallSalt](#callsaltbytes32-indexed-id-bytes32-salt)，如果批处理中的每个交易发出一个[CallScheduled](#callscheduledbytes32-indexed-id-uint256-indexed-index-address-target-uint256-value-bytes-data-bytes32-predecessor-uint256-delay)事件。
@@ -1988,14 +1988,14 @@ modifier#
 * 调用者必须具有“提议者”角色。
 
 #### cancel(bytes32 id)
-公开#
+public#
 取消一个操作。
 
 要求：
 * 呼叫者必须拥有“取消者”角色。
 
 #### execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt)
-公开#
+public#
 执行一个包含单个事务的（准备好的）操作。
 
 发出[CallExecuted](#callexecutedbytes32-indexed-id-uint256-indexed-index-address-target-uint256-value-bytes-data)事件。
@@ -2025,11 +2025,11 @@ internal#
 
 #### onERC721Received(address, address, uint256, bytes) → bytes4
 
-公开#
+public#
 请参阅 [IERC721Receiver.onERC721Received](./ERC721.md#onerc721receivedaddress-operator-address-from-uint256-tokenid-bytes-data-→-bytes4).
 
 #### onERC1155Received(address, address, uint256, uint256, bytes) → bytes4
-公开#
+public#
 请参阅 [IERC1155Receiver.onERC1155Received](./ERC1155.md#onerc1155receivedaddress-operator-address-from-uint256-id-uint256-value-bytes-data-→-bytes4).
 
 #### onERC1155BatchReceived(address, address, uint256[], uint256[], bytes) → bytes4

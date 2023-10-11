@@ -159,15 +159,15 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### totalSupply() → uint256
-公开#
+public#
 请查阅  [IERC20.totalSupply](#totalsupply-→-uint256).
 
 #### balanceOf(address account) → uint256
-公开#
+public#
 请查阅 [IERC20.balanceOf](#balanceofaddress-account-→-uint256).
 
 #### transfer(address recipient, uint256 amount) → bool
-公开#
+public#
 请参阅[IERC20.Transfer](#transferaddress-recipient-uint256-amount-→-bool)。
 
 要求：
@@ -177,11 +177,11 @@ IERC20
 * 调用者必须拥有至少amount的余额。
 
 #### allowance(address owner, address spender) → uint256
-公开#
+public#
 请查阅 [IERC20.allowance](#allowanceaddress-owner-address-spender-→-uint256).
 
 #### approve(address spender, uint256 amount) → bool
-公开#
+public#
 请查阅 [IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)。
 
 要求：
@@ -189,7 +189,7 @@ IERC20
 * spender 不能为零地址。
 
 #### transferFrom(address sender, address recipient, uint256 amount) → bool
-公开#
+public#
 参见[IERC20.transferFrom](#transferfromaddress-sender-address-recipient-uint256-amount-→-bool)。
 
 发出一个[Approval](#approvaladdress-owner-address-spender-uint256-value)事件，表示更新的授权额度。这不是EIP所要求的。请参阅[ERC20](#erc20)开头的注释；
@@ -197,7 +197,7 @@ IERC20
 要求：- 发送者和接收者不能是零地址。- 发送者必须至少拥有amount数量的余额。- 调用者必须至少拥有发送者的代币的amount数量的授权额度。
 
 #### increaseAllowance(address spender, uint256 addedValue) → bool
-公开#
+public#
 原子性地增加调用者授予给spender的津贴。
 
 这是一个替代[approve](#approveaddress-spender-uint256-amount-e28692-bool-1)的方法，可以用作解决[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题的方法。
@@ -208,7 +208,7 @@ IERC20
 * spender不能为零地址。
 
 #### decreaseAllowance(address spender, uint256 subtractedValue) → bool
-公开#
+public#
 以原子方式将调用者授予给spender的津贴减少。
 
 这是一种替代[approve](#approveaddress-spender-uint256-amount-e28692-bool-1)的方法，可用于解决[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中描述的问题。
@@ -307,19 +307,19 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(string name, string symbol, uint8 decimals)
-公开#
+public#
 设置name、symbol和decimals的值。这三个值都是不可变的：它们只能在构造过程中设置一次。
 
 #### name() → string
-公开#
+public#
 返回代币的名称。
 
 #### symbol() → string
-公开#
+public#
 返回代币的符号，通常是名称的缩写版本。
 
 #### decimals() → uint8
-公开#
+public#
 返回用于获取其用户表示的小数位数。例如，如果小数位数为2，则用户的余额为505个代币应显示为5.05（505 / 10 ** 2）。
 
 代币通常选择18个小数位，模仿以太和Wei之间的关系。
@@ -398,7 +398,7 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### mint(address account, uint256 amount) → bool
-公开#
+public#
 请参考[ERC20._mint](#_mintaddress-account-uint256-amount)。
 
 要求：
@@ -455,13 +455,13 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### burn(uint256 amount)
-公开#
+public#
 销毁来自调用者的代币数量。
 
 参见[ERC20._burn](#_burnaddress-account-uint256-amount)。
 
 #### burnFrom(address account, uint256 amount)
-公开#
+public#
 请查阅 [ERC20._burnFrom](#_burnfromaddress-account-uint256-amount).
 
 ### ERC20Pausable
@@ -550,19 +550,19 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### transfer(address to, uint256 value) → bool
-公开#
+public#
 
 #### transferFrom(address from, address to, uint256 value) → bool
-公开#
+public#
 
 #### approve(address spender, uint256 value) → bool
-公开#
+public#
 
 #### increaseAllowance(address spender, uint256 addedValue) → bool
-公开#
+public#
 
 #### decreaseAllowance(address spender, uint256 subtractedValue) → bool
-公开#
+public#
 
 
 ### ERC20Capped
@@ -636,11 +636,11 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(uint256 cap)
-公开#
+public#
 设置上限的值。这个值是不可变的，只能在构造过程中设置一次。
 
 #### cap() → uint256
-公开#
+public#
 返回代币总供应量的上限。
 
 #### _mint(address account, uint256 value)
@@ -701,16 +701,16 @@ internal#
 [release()](#release)
 
 #### constructor(contract IERC20 token, address beneficiary, uint256 releaseTime)
-公开#
+public#
 
 #### token() → contract IERC20
-公开#
+public#
 
 #### beneficiary() → address
-公开#
+public#
 
 #### releaseTime() → uint256
 公开
 
 #### release()
-公开#
+public#

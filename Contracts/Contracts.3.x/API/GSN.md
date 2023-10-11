@@ -59,7 +59,7 @@ IRELAYRECIPIENT
 [RelayHubChanged(oldRelayHub, newRelayHub)](#relayhubchangedaddress-oldrelayhub-address-newrelayhub)
 
 #### getHubAddr() → address
-公开#
+public#
 返回此收件人的[IRelayHub](#irelayhub)合约的地址。
 
 #### _upgradeRelayHub(address newRelayHub)
@@ -70,7 +70,7 @@ internal#
 升级后，[GSNRecipient](#gsnrecipient)将无法从旧的[IRelayHub](#irelayhub)实例接收Relayer 调用。此外，所有资金应通过[_withdrawDeposits](#_withdrawdepositsuint256-amount-address-payable-payee)提前提取。
 
 #### relayHubVersion() → string
-公开#
+public#
 返回此接收方实现版本的[IRelayHub](#irelayhub)版本字符串。如果使用[_upgradeRelayHub](#_upgraderelayhubaddress-newrelayhub)，则新的[IRelayHub](#irelayhub)实例应与此版本兼容。
 
 #### _withdrawDeposits(uint256 amount, address payable payee)
@@ -92,7 +92,7 @@ internal#
 > 从*GSNRecipient*派生的合约不应使用msg.data，而应使用*_msgData*。
 
 #### preRelayedCall(bytes context) → bytes32
-公开#
+public#
 请查看IRelayRecipient.preRelayedCall。
 
 不应直接重写此函数，请使用_preRelayedCall代替。
@@ -107,13 +107,13 @@ internal#
 由GSNRecipient.preRelayedCall调用，用于断言调用者是RelayHub合约。派生合约必须实现此函数以执行任何他们希望进行的Relayer 调用预处理。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
-公开#
+public#
 请参阅IRelayRecipient.preRelayedCall。
 
 由GSNRecipient.preRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的Relayer 调用预处理。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
-公开#
+public#
 请参阅IRelayRecipient.postRelayedCall。
 
 此函数不应直接被重写，而应使用_postRelayedCall。
@@ -190,11 +190,11 @@ GSNRECIPIENT
 [RelayHubChanged(oldRelayHub, newRelayHub)](#relayhubchangedaddress-oldrelayhub-address-newrelayhub)
 
 #### constructor(address trustedSigner)
-公开#
+public#
 设置可信的签名者，该签名者将会产生用于批准Relayer 调用的签名。
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256) → uint256, bytes
-公开#
+public#
 确保只有带有可信签名的交易才能通过GSNRelayer 。
 
 #### _preRelayedCall(bytes) → bytes32
@@ -250,11 +250,11 @@ GSNRECIPIENT
 [RelayHubChanged(oldRelayHub, newRelayHub)](#relayhubchangedaddress-oldrelayhub-address-newrelayhub)
 
 #### constructor(string name, string symbol)
-公开#
+public#
 构造函数的参数是燃料支付代币的详细信息：名称和符号。小数位数被硬编码为18。
 
 #### token() → contract __unstable__ERC20Owned
-公开#
+public#
 返回gas支付代币。
 
 #### _mint(address account, uint256 amount)
@@ -262,7 +262,7 @@ internal#
 内部函数用于铸造gas支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
-公开#
+public#
 确保只有拥有足够的Gas支付代币余额的用户才能通过GSNRelayer 交易。
 
 #### _preRelayedCall(bytes context) → bytes32

@@ -44,15 +44,15 @@ internal#
 初始化合约，将部署者设为初始所有者。
 
 #### owner() → address
-公开#
+public#
 返回当前所有者的地址。
 
 #### isOwner() → bool
-公开#
+public#
 如果调用者是当前所有者，则返回true。
 
 #### renounceOwnership()
-公开#
+public#
 
 离开合约而没有所有者。将不再能够调用只有所有者的功能。只能由当前所有者调用。
 
@@ -60,7 +60,7 @@ internal#
 放弃所有权将使合约失去所有者，从而删除只有所有者才能使用的任何功能。
 
 #### transferOwnership(address newOwner)
-公开#
+public#
 将合约的所有权转移到一个新账户（newOwner）。只能由当前所有者调用。
 
 #### _transferOwnership(address newOwner)
@@ -99,10 +99,10 @@ internal#
 将主要账户设置为创建次级合约的账户。
 
 #### primary() → address
-公开#
+public#
 
 #### transferPrimary(address recipient)
-公开#
+public#
 将合约转让给新的主要方。
 
 #### PrimaryTransferred(address recipient)
