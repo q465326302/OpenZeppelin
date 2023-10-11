@@ -3223,5 +3223,5 @@ import "@openzeppelin/contracts/utils/Multicall.sol";
 [multicall(data)](#multicallbytes-data-→-bytes-results)
 
 #### multicall(bytes[] data) → bytes[] results
-外部# 
+external#
 接收并执行这个合约上的一批函数调用。

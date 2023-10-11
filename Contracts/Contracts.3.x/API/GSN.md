@@ -378,7 +378,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 [Penalized(relay, sender, amount)](#penalizedaddress-relay-address-sender-uint256-amount)
 
 #### stake(address relayaddr, uint256 unstakeDelay)
-外部# 
+external#
 向Relayer 添加股份并设置其解锁延迟。如果Relayer 不存在，则创建它，并且调用此函数的调用者成为其所有者。如果Relayer 已经存在，则只有所有者可以调用此函数。Relayer 不能成为自己的所有者。
 
 此函数调用中的所有以太将被添加到Relayer 的股份中。其解锁延迟将分配给unstakeDelay，但新值必须大于或等于当前值。
@@ -386,7 +386,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 触发一个[Staked](#stakedaddress-relay-uint256-stake-uint256-unstakedelay事件。
 
 #### registerRelay(uint256 transactionFee, string url)
-外部# 
+external#
 将调用者注册为Relayer 。Relayer 必须进行抵押，并且不能是合约（即必须直接从EOA调用此函数）。
 
 此函数可以被多次调用，每次调用都会发出新的[RelayAdded](#relayaddedaddress-relay-address-owner-uint256-transactionfee-uint256-stake-uint256-unstakedelay-string-url)事件。注意，[relayCall](#relaycalladdress-from-address-to-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-signature-bytes-approvaldata)不强制执行接收到的transactionFee。
@@ -394,7 +394,7 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 发出一个[RelayAdded](#relayaddedaddress-relay-address-owner-uint256-transactionfee-uint256-stake-uint256-unstakedelay-string-url)事件。
 
 #### removeRelayByOwner(address relay)
-外部# 
+external#
 移除（注销）一个Relayer 。已注销（但已抵押）的Relayer 也可以被移除。
 
 只能由Relayer 的所有者调用。在Relayer 的解除锁定延迟过后，可以调用解锁（[unstake](#unstakeaddress-relay)）函数。
@@ -402,14 +402,14 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 发出一个[RelayRemoved](#relayremovedaddress-relay-uint256-unstaketime)事件。
 
 #### unstake(address relay)
-外部# 
+external#
 
 #### getRelay(address relay) → uint256 totalStake, uint256 unstakeDelay, uint256 unstakeTime, address payable owner, enum IRelayHub.RelayState state
-外部# 
+external#
 返回Relayer 的状态。请注意，Relayer 在解除抵押或受到惩罚时可以被删除，导致此函数返回一个空条目。
 
 #### depositFor(address target)
-外部# 
+external#
 存入以太到合约中，以便能够接收（和支付）Relayer 的交易。
 
 未使用的余额只能通过合约本身调用[withdraw](#withdrawuint256-amount-address-payable-dest)来提取。
@@ -417,11 +417,11 @@ RelayHub是GSN的核心合约，用户不需要直接与该合约进行交互。
 触发一个[Deposited](#depositedaddress-recipient-address-from-uint256-amount)事件。
 
 #### balanceOf(address target) → uint256
-外部# 
+external#
 返回一个账户的存款。这些存款可以是合约的资金，也可以是Relayer 所有者的收入。
 
 #### withdraw(uint256 amount, address payable dest)
-外部# 
+external#
 
 #### canRelay(address relay, address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData) → uint256 status, bytes recipientContext
 外部#

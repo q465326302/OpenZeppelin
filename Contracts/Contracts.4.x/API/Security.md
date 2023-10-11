@@ -76,10 +76,10 @@ modifier#
 防止合约直接或间接地调用自身。不支持从另一个非可重入函数调用非可重入函数。可以通过使非可重入函数为external，并使其调用执行实际工作的私有函数来防止发生这种情况。
 
 #### constructor()
-外部# 
+external#
 
 #### _reentrancyGuardEntered() → bool
-外部# 
+external#
 如果重入保护当前设置为“进入”（entered），则返回true，这表示在调用堆栈中存在一个非重入函数。
 
 ### Pausable

@@ -133,7 +133,7 @@ internal#
 [ManagerChanged(account, newManager)](#managerchangedaddress-account-address-newmanager)
 
 #### setManager(address account, address newManager)
-外部# 
+external#
 将newManager设置为account的经理。账户的经理能够为其设置接口实现者。
 
 默认情况下，每个账户都是其自己的经理。如果在newManager中传递一个值为0x0，将重置经理为初始状态。
