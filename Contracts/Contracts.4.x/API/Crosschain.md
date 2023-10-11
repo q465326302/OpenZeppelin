@@ -34,11 +34,11 @@ import "@openzeppelin/contracts/crosschain/amb/CrossChainEnabledAMB.sol";
 公开# 
 
 #### _isCrossChain() → bool
-内部#
+internal#
 查看 [CrossChainEnabled._isCrossChain](#_iscrosschain-→-bool) 函数
 
 #### _crossChainSender() → address
-内部#
+internal#
 请查看 [CrossChainEnabled._crossChainSender](#_crosschainsender-→-address)。
 
 ### CrossChainEnabledArbitrumL1
@@ -60,14 +60,14 @@ import "@openzeppelin/contracts/crosschain/arbitrum/CrossChainEnabledArbitrumL1.
 [_crossChainSender()](#_crosschainsender-e28692-address-1)
 
 #### constructor(address bridge)
-内部#
+internal#
 
 #### _isCrossChain() → bool
-内部#
+internal#
 查看[CrossChainEnabled._isCrossChain](#_iscrosschain-e28692-bool-1)方法
 
 #### _crossChainSender() → address
-内部#
+internal#
 查看 [CrossChainEnabled._crossChainSender](#_crosschainsender-e28692-address-1)。
 
 ### CrossChainEnabledArbitrumL2
@@ -91,11 +91,11 @@ Arbitrum L2包括固定地址的ArbSys合约。因此，此[CrossChainEnabled](#
 [_crossChainSender()](#_crosschainsender-e28692-address-2)
 
 #### _isCrossChain() → bool
-内部#
+internal#
 查看 [CrossChainEnabled._isCrossChain ](#_iscrosschain-e28692-bool-2)
 
 #### _crossChainSender() → address
-内部#
+internal#
 查看 [CrossChainEnabled._crossChainSender](#_crosschainsender-e28692-address-2)。
 
 ### CrossChainEnabledOptimism
@@ -115,14 +115,14 @@ CrossDomainMessenger合约由Optimism团队提供和维护。你可以在[Optimi
 [_crossChainSender()](#_crosschainsender-e28692-address-3)
 
 #### constructor(address messenger)
-内部#
+internal#
 
 #### _isCrossChain() → bool
-内部#
+internal#
 查看 [CrossChainEnabled._isCrossChain](#_iscrosschain-e28692-bool-3)
 
 #### _crossChainSender() → address
-内部#
+internal#
 查看 [CrossChainEnabled._crossChainSender](#_crosschainsender-e28692-address-3)
 
 ### CrossChainEnabledPolygonChild
@@ -148,14 +148,14 @@ REENTRANCYGUARD
 [_reentrancyGuardEntered()](./Security.md#_reentrancyguardentered-→-bool)
 
 #### constructor(address fxChild)
-内部#
+internal#
 
 #### _isCrossChain() → bool
-内部#
+internal#
 查看 [CrossChainEnabled._isCrossChain](#_iscrosschain-e28692-bool-4)
 
 #### _crossChainSender() → address
-内部#
+internal#
 查看 [CrossChainEnabled._crossChainSender](#_crosschainsender-e28692-address-4)
 
 #### processMessageFromRoot(uint256, address rootMessageSender, bytes data)
@@ -181,11 +181,11 @@ import "@openzeppelin/contracts/crosschain/amb/LibAMB.sol";
 [crossChainSender(bridge)](#crosschainsenderaddress-bridge-e28692-address)
 
 #### isCrossChain(address bridge) → bool
-内部#
+internal#
 返回当前函数调用是否是通过桥Relayer 传递的跨链消息的结果。
 
 #### crossChainSender(address bridge) → address
-内部#
+internal#
 返回通过桥触发当前跨链消息的发送者地址。
 
 > NOTE
@@ -205,11 +205,11 @@ import "@openzeppelin/contracts/crosschain/arbitrum/LibArbitrumL1.sol";
 [crossChainSender(bridge)](#crosschainsenderaddress-bridge-e28692-address-1)
 
 #### isCrossChain(address bridge) → bool
-内部#
+internal#
 返回当前函数调用是否是通过桥Relayer 的跨链消息的结果。
 
 #### crossChainSender(address bridge) → address
-内部#
+internal#
 返回通过桥接触发当前跨链消息的发送者地址。
 
 > NOTE
@@ -232,10 +232,10 @@ import "@openzeppelin/contracts/crosschain/arbitrum/LibArbitrumL2.sol";
 [crossChainSender(arbsys)](#crosschainsenderaddress-arbsys-→-address)
 
 #### isCrossChain(address arbsys) → bool
-内部#
+internal#
 
 #### crossChainSender(address arbsys) → address
-内部#
+internal#
 返回通过arbsys触发当前跨链消息的发送者地址。
 
 > NOTE
@@ -253,11 +253,11 @@ import "@openzeppelin/contracts/crosschain/optimism/LibOptimism.sol";
 [crossChainSender(messenger)](#crosschainsenderaddress-messenger-→-address)
 
 #### isCrossChain(address messenger) → bool
-内部#
+internal#
 返回当前函数调用是否是由信使Relayer 的跨链消息的结果。
 
 #### crossChainSender(address messenger) → address
-内部#
+internal#
 返回通过信使触发当前跨链消息的发送者地址。
 
 > NOTE

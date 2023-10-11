@@ -30,7 +30,7 @@ import "@openzeppelin/contracts/security/PullPayment.sol";
 [_asyncTransfer(dest, amount)](#_asynctransferaddress-dest-uint256-amount)
 
 #### constructor()
-内部#
+internal#
 
 #### withdrawPayments(address payable payee)
 公开#
@@ -47,7 +47,7 @@ import "@openzeppelin/contracts/security/PullPayment.sol";
 返回欠某个地址的付款。
 
 #### _asyncTransfer(address dest, uint256 amount)
-内部#
+internal#
 支付方调用该函数将发送的金额存储为可提取的信用额度。以这种方式发送的资金存储在一个[第三方](./Utils.md#escrow)的托管合约中，因此在提取之前不会有被花费的风险。
 
 ### ReentrancyGuard
@@ -123,7 +123,7 @@ modifier#
 合约必须暂停。
 
 #### constructor()
-内部#
+internal#
 在未暂停状态下初始化合约。
 
 #### paused() → bool
@@ -131,22 +131,22 @@ modifier#
 如果合约已暂停，则返回true，否则返回false。
 
 #### _requireNotPaused()
-内部#
+internal#
 如果合约被暂停，就会抛出异常。
 
 #### _requirePaused()
-内部#
+internal#
 如果合约没有暂停，则会抛出异常。
 
 #### _pause()
-内部#
+internal#
 触发停止状态。
 
 要求：
 * 合约不能暂停。
 
 #### _unpause()
-内部#
+internal#
 回到正常状态。
 
 要求：

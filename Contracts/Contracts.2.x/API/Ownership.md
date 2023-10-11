@@ -40,7 +40,7 @@ modifier#
 如果被除了所有者之外的任何账户调用，则抛出异常。
 
 #### constructor()
-内部#
+internal#
 初始化合约，将部署者设为初始所有者。
 
 #### owner() → address
@@ -64,7 +64,7 @@ modifier#
 将合约的所有权转移到一个新账户（newOwner）。只能由当前所有者调用。
 
 #### _transferOwnership(address newOwner)
-内部#
+internal#
 将合约的所有权转移到一个新账户（newOwner）。
 
 #### OwnershipTransferred(address previousOwner, address newOwner)
@@ -95,7 +95,7 @@ CONTEXT
 modifier#
 
 #### constructor()
-内部#
+internal#
 将主要账户设置为创建次级合约的账户。
 
 #### primary() → address

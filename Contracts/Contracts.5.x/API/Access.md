@@ -35,7 +35,7 @@ modifier#
 如果被除了所有者以外的任何账户调用，就会抛出异常。
 
 #### constructor()
-内部#
+internal#
 初始化合约，将部署者设置为初始所有者。
 
 #### owner() → address
@@ -57,7 +57,7 @@ modifier#
 将合约的所有权转移给一个新的账户（newOwner）。只有当前所有者才能调用。
 
 #### _transferOwnership(address newOwner)
-内部#
+internal#
 将合约的所有权转移给一个新账户（newOwner）。内部函数，没有访问限制。
 
 #### OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
@@ -98,7 +98,7 @@ OwnershipTransferred(previousOwner, newOwner)
 开始将合约的所有权转移给新账户。如果有待处理的转移，则替换它。只能由当前所有者调用。
 
 #### _transferOwnership(address newOwner)
-内部#
+internal#
 将合约的所有权转移到一个新账户（newOwner）并删除任何待定的所有者。内部函数，没有访问限制。
 
 #### acceptOwnership()
@@ -245,13 +245,13 @@ IACCESSCONTROL
 如果账户被授予了角色，则返回 true。
 
 #### _checkRole(bytes32 role)
-内部#
+internal#
 如果 _msgSender() 没有角色，则使用标准消息进行回退。重写此函数会更改 [onlyRole](#onlyrolebytes32-role) 修饰符的行为。
 回退消息的格式在 [_checkRole](#_checkrolebytes32-role-address-account) 中描述。
 *自 v4.6 起可用。*
 
 #### _checkRole(bytes32 role, address account)
-内部#
+internal#
 如果账户缺少角色，请使用标准消息进行回退。
 回退原因的格式由以下正则表达式给出：
 ```
@@ -289,7 +289,7 @@ IACCESSCONTROL
 可能会发出[RoleRevoked](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### _setupRole(bytes32 role, address account)
-内部#
+internal#
 授予账户角色。
 如果账户尚未被授予角色，则会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。请注意，与[grantRole](#grantrolebytes32-role-address-account-1)不同，此函数不对调用账户进行任何检查。
 可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
@@ -302,19 +302,19 @@ IACCESSCONTROL
 此函数已过时，建议使用[_grantRole](#_grantrolebytes32-role-address-account)。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
-内部#
+internal#
 将adminRole设置为角色的管理员角色。
 
 触发一个[RoleAdminChanged](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)事件。
 
 #### _grantRole(bytes32 role, address account)
-内部#
+internal#
 授予账户角色。
 内部功能没有访问限制。
 可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
 
 #### _revokeRole(bytes32 role, address account)
-内部#
+internal#
 从帐户中撤销角色。
 内部函数，没有访问限制。
 可能会发出[RoleRevoked](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
@@ -360,11 +360,11 @@ IACCESSCONTROL
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### _checkRole(bytes32 role)
-内部#
+internal#
 请查看[AccessControl._checkRole](#_checkrolebytes32-role-address-account)。
 
 #### _crossChainRoleAlias(bytes32 role) → bytes32
-内部#
+internal#
 返回与角色对应的别名角色。
 
 ### IAccessControlEnumerable
@@ -452,11 +452,11 @@ IACCESSCONTROL
 返回拥有某个角色的账户数量。可以与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有持有者。
 
 #### _grantRole(bytes32 role, address account)
-内部#
+internal#
 重载[_grantRole](#_grantrolebytes32-role-address-account-1)以跟踪可枚举成员资格
 
 #### _revokeRole(bytes32 role, address account)
-内部#
+internal#
 重载 [_revokeRole](#_revokerolebytes32-role-address-account-1) 以跟踪可枚举的成员资格
 
 ### AccessControlDefaultAdminRules
@@ -534,7 +534,7 @@ IACCESSCONTROL
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
 #### constructor(uint48 initialDelay, address initialDefaultAdmin)
-内部#
+internal#
 设置默认[管理员延迟](#defaultadmindelay-→-uint48)和默认管理员地址的[初始值](#defaultadmin-→-address)。
 
 #### supportsInterface(bytes4 interfaceId) → bool
@@ -565,7 +565,7 @@ IACCESSCONTROL
 放弃DEFAULT_ADMIN_ROLE将使合约失去 [defaultAdmin](#defaultadmin-→-address)，从而禁用仅适用于其的任何功能，并且无法重新分配非受管理角色。
 
 #### _grantRole(bytes32 role, address account)
-内部#
+internal#
 请参见[AccessControl._grantRole](#_grantrolebytes32-role-address-account-1)。
 
 对于DEFAULT_ADMIN_ROLE，只有在没有[defaultAdmin](#defaultadmin-→-address)或者该角色已被先前放弃的情况下才允许授予。
@@ -574,11 +574,11 @@ IACCESSCONTROL
 通过另一种机制公开此函数可能会使DEFAULT_ADMIN_ROLE再次可分配。请确保在你的实现中保证这是预期的行为。
 
 #### _revokeRole(bytes32 role, address account)
-内部#
+internal#
 请查看[AccessControl._revokeRole](#_revokerolebytes32-role-address-account-1)函数。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
-内部#
+internal#
 参见 [AccessControl._setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)。对于DEFAULT_ADMIN_ROLE进行还原。
 
 #### defaultAdmin() → address
@@ -635,7 +635,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 触发DefaultAdminRoleChangeStarted事件。
 
 #### _beginDefaultAdminTransfer(address newAdmin)
-内部#
+internal#
 查看 [beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)。
 
 内部函数，没有访问限制。
@@ -652,7 +652,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 可能会发出DefaultAdminTransferCanceled事件。
 
 #### _cancelDefaultAdminTransfer()
-内部#
+internal#
 查看[cancelDefaultAdminTransfer](#canceldefaultadmintransfer)。
 
 这是一个没有访问限制的内部函数。
@@ -671,7 +671,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 * [pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)的acceptSchedule应已通过。
 
 #### _acceptDefaultAdminTransfer()
-内部#
+internal#
 查看[acceptDefaultAdminTransfer](#acceptdefaultadmintransfer)。
 这是一个没有访问限制的内部函数。
 
@@ -694,7 +694,7 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 发出DefaultAdminDelayChangeScheduled事件，可能还会发出DefaultAdminDelayChangeCanceled事件。
 
 #### _changeDefaultAdminDelay(uint48 newDelay)
-内部#
+internal#
 查看[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
 内部函数，没有访问限制。
 
@@ -707,12 +707,12 @@ acceptSchedule 中只有零值表示没有待处理的管理员转移。
 可能会发出DefaultAdminDelayChangeCanceled事件。
 
 #### _rollbackDefaultAdminDelay()
-内部#
+internal#
 查看[rollbackDefaultAdminDelay](#rollbackdefaultadmindelay)。
 这是一个没有访问限制的内部函数。
 
 #### _delayChangeWait(uint48 newDelay) → uint48
-内部#
+internal#
 返回在newDelay成为新的[defaultAdminDelay](#defaultadmindelay-→-uint48)之后需要等待的秒数。
 返回的值保证了如果延迟被减少，它将在遵守先前设置的延迟的等待后生效。
 请参阅[defaultAdminDelayIncreaseWait](#defaultadmindelayincreasewait-→-uint48)。

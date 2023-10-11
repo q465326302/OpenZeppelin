@@ -41,63 +41,63 @@ Solidity语言中缺少的标准数学工具。
 [log256(value, rounding)](#log256uint256-value-enum-mathrounding-rounding-→-uint256)
 
 #### max(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个数中的较大值。
 
 #### min(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个数字中较小的数字。
 
 #### average(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个数字的平均值。结果向零舍入。
 
 #### ceilDiv(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个数相除的上取整结果。
 
 与标准除法（/）不同的是，它向上舍入而不是向下舍入。
 
 #### mulDiv(uint256 x, uint256 y, uint256 denominator) → uint256 result
-内部#
+internal#
 原始信用归Remco Bloemen使用MIT许可证（https://xn—​2-umb.com/21/muldiv），由Uniswap Labs进行进一步编辑，同样使用MIT许可证。
 
 #### mulDiv(uint256 x, uint256 y, uint256 denominator, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 
 #### sqrt(uint256 a) → uint256
-内部#
+internal#
 返回一个数的平方根。如果这个数不是一个完全平方数，则取下整数部分。
 
 受到Henry S. Warren, Jr.的《Hacker’s Delight》（第11章）的启发。
 
 #### sqrt(uint256 a, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 
 #### log2(uint256 value) → uint256
-内部#
+internal#
 返回一个正数的以2为底的对数的向下取整值。如果给定0，则返回0。
 
 #### log2(uint256 value, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 返回以所选舍入方式为基数2的对数，如果给定0，则返回0。
 
 #### log10(uint256 value) → uint256
-内部#
+internal#
 返回一个正数的以10为底的对数，向下取整。如果给定0，则返回0。
 
 #### log10(uint256 value, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 返回正数的以10为底的对数，根据选择的舍入方向。如果给定0，则返回0。
 
 #### log256(uint256 value) → uint256
-内部#
+internal#
 返回一个正数的以256为底的对数，向下取整。如果给定的是0，则返回0。
 
 将结果加一即可得到以十六进制字符串表示该值所需的十六进制符号对数。
 
 #### log256(uint256 value, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 返回以256为底的对数，按照选择的舍入方向，对一个正值进行计算。如果给定0，则返回0。
 
 ### SignedMath
@@ -114,19 +114,19 @@ Solidity语言中缺少标准的有符号数学工具。
 [abs(n)](#absint256-n-→-uint256)
 
 #### max(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号数中的最大值。
 
 #### min(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号数字中的最小值。
 
 #### average(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号数的平均值，避免溢出。结果向零舍入。
 
 #### abs(int256 n) → uint256
-内部#
+internal#
 返回有符号值的绝对无符号值。
 
 ### SafeCast
@@ -272,7 +272,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 [toInt256(value)](#toint256uint256-value-→-int256)
 
 #### toUint248(uint256 value) → uint248
-内部#
+internal#
 将uint256强制转换为uint248，如果溢出（输入大于最大的uint248）则会回滚。
 
 与Solidity的uint248操作符相对应。
@@ -283,7 +283,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 **从v4.7开始可用。**
 
 #### toUint240(uint256 value) → uint240
-内部#
+internal#
 将uint256从uint240降级为，当输入大于最大的uint240时回滚（发生溢出）。
 
 与Solidity的uint240操作符相对应。
@@ -294,7 +294,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 **自v4.7起可用。**
 
 #### toUint232(uint256 value) → uint232
-内部#
+internal#
 将uint256转换为uint232，并在溢出时回滚（当输入大于最大的uint232时）。
 
 与Solidity的uint232操作符相对应。
@@ -305,7 +305,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始可用。*
 
 #### toUint224(uint256 value) → uint224
-内部#
+internal#
 将uint256向下转换为uint224，并在溢出时回滚（当输入大于最大的uint224时）。
 
 与Solidity的uint224操作符相对应。
@@ -316,7 +316,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.2起可用。*
 
 #### toUint216(uint256 value) → uint216
-内部#
+internal#
 将uint256转换为downcasted uint216，并在溢出时回滚（当输入大于最大的uint216时）。
 
 对应Solidity的uint216运算符。
@@ -327,7 +327,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint208(uint256 value) → uint208
-内部#
+internal#
 将uint256转换为downcasted uint208，如果溢出（输入大于最大的uint208）则回滚。
 
 与Solidity的uint208操作符相对应。
@@ -338,7 +338,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint200(uint256 value) → uint200
-内部#
+internal#
 从uint256返回下转型的uint200，当输入大于最大的uint200时会回滚（溢出）。
 
 与Solidity的uint200操作符相对应。
@@ -349,7 +349,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint192(uint256 value) → uint192
-内部#
+internal#
 将uint256向下转换为uint192，并在溢出时回滚（当输入大于最大的uint192时）。
 
 这是Solidity中uint192运算符的对应物。
@@ -360,7 +360,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始提供。*
 
 #### toUint184(uint256 value) → uint184
-内部#
+internal#
 将uint256转换为uint184，并在溢出时回滚（当输入大于最大的uint184时）。
 
 与Solidity的uint184运算符相对应。
@@ -371,7 +371,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始可用。*
 
 #### toUint176(uint256 value) → uint176
-内部#
+internal#
 将uint256从uint176中向下转换，当溢出时返回（当输入大于最大的uint176时）。
 
 与Solidity的uint176运算符相对应。
@@ -382,7 +382,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint168(uint256 value) → uint168
-内部#
+internal#
 将uint256从uint168向下转换，并在溢出时返回（当输入大于最大uint168时）。
 
 与Solidity的uint168操作符相对应。
@@ -393,7 +393,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint160(uint256 value) → uint160
-内部#
+internal#
 将uint256从uint160降低，并在溢出时返回（当输入大于最大的uint160时）。
 
 与Solidity的uint160操作符相对应。
@@ -404,7 +404,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7以来可用。*
 
 #### toUint152(uint256 value) → uint152
-内部#
+internal#
 将uint256类型的数字向下转换为uint152类型的数字，并在溢出时回滚（当输入大于最大的uint152时）。
 
 这是Solidity中uint152运算符的对应函数。
@@ -415,7 +415,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7版本开始可用。*
 
 #### toUint144(uint256 value) → uint144
-内部#
+internal#
 将uint256从uint144返回为向下转型，溢出时回滚（当输入大于最大的uint144时）。
 
 与Solidity的uint144操作符相对应。
@@ -426,7 +426,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint136(uint256 value) → uint136
-内部#
+internal#
 将uint256从uint136返回为降低，当溢出时回滚（当输入大于最大的uint136时）。
 
 与Solidity的uint136操作符相对应。
@@ -437,7 +437,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint128(uint256 value) → uint128
-内部#
+internal#
 将uint256转换为uint128，并在溢出时引发错误（当输入大于最大的uint128时）。
 
 与Solidity的uint128操作符相对应。
@@ -448,7 +448,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v2.5开始提供。*
 
 #### toUint120(uint256 value) → uint120
-内部#
+internal#
 将uint256向下转换为uint120，并在溢出时返回（当输入大于最大的uint120时）。
 
 与Solidity的uint120运算符相对应。
@@ -459,7 +459,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7以来可用。*
 
 #### toUint112(uint256 value) → uint112
-内部#
+internal#
 从uint256返回向下转换的uint112，当输入大于最大的uint112时，会发生溢出并导致程序回滚。
 
 与Solidity的uint112运算符相对应。
@@ -470,7 +470,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint104(uint256 value) → uint104
-内部#
+internal#
 将uint256转换为downcasted uint104，并在溢出时进行回滚（当输入大于最大的uint104时）。
 
 与Solidity的uint104运算符相对应。
@@ -481,7 +481,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint96(uint256 value) → uint96
-内部#
+internal#
 将uint256类型的值向下转换为uint96类型的值，当输入值大于最大的uint96时，将引发错误。
 
 这是Solidity中uint96操作符的对应函数。
@@ -492,7 +492,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.2版本开始可用。*
 
 #### toUint88(uint256 value) → uint88
-内部#
+internal#
 将uint256转换为uint88，并在溢出时回滚（当输入大于最大的uint88时）。
 
 与Solidity的uint88操作符相对应。
@@ -503,7 +503,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint80(uint256 value) → uint80
-内部#
+internal#
 将uint256向下转换为uint80，当输入大于最大uint80时会发生溢出，从而导致回滚。
 
 要求：
@@ -512,7 +512,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 从v4.7开始提供。
 
 #### toUint72(uint256 value) → uint72
-内部#
+internal#
 将uint256转换为下投uint64，当输入大于最大的uint64时会回滚（即溢出）。
 
 与Solidity的uint64操作符相对应。
@@ -523,7 +523,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v2.5开始可用。*
 
 #### toUint64(uint256 value) → uint64
-内部#
+internal#
 将uint256向下转换为uint64，当输入大于最大的uint64时返回溢出。
 
 这是Solidity的uint64运算符的对应部分。
@@ -535,7 +535,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v2.5版本起可用。*
 
 #### toUint56(uint256 value) → uint56
-内部#
+internal#
 将uint256转换为downcasted uint56，当输入大于最大的uint56时会回滚（溢出）。
 
 与Solidity的uint56操作符相对应。
@@ -546,7 +546,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint48(uint256 value) → uint48
-内部#
+internal#
 将uint256转换为uint48，并在溢出时回滚（当输入大于最大的uint48时）。
 
 与Solidity的uint48运算符相对应。
@@ -557,7 +557,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始可用。*
 
 #### toUint40(uint256 value) → uint40
-内部#
+internal#
 将uint256强制转换为uint40，并在溢出时回滚（当输入大于最大的uint40时）。
 
 与Solidity的uint40操作符相对应。
@@ -568,7 +568,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7以来可用。*
 
 #### toUint32(uint256 value) → uint32
-内部#
+internal#
 从uint256返回downcasted uint32，当输入大于最大uint32时，返回溢出（Overflow）。
 
 与Solidity的uint32操作符相对应。
@@ -579,7 +579,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v2.5起可用。*
 
 #### toUint24(uint256 value) → uint24
-内部#
+internal#
 从uint256返回downcasted uint24，在溢出时回滚（当输入大于最大uint24时）。
 
 与Solidity的uint24操作符相对应。
@@ -590,7 +590,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toUint16(uint256 value) → uint16
-内部#
+internal#
 将uint256转换为uint16，并在溢出时返回（当输入大于最大的uint16时）。
 
 与Solidity的uint16操作符相对应。
@@ -601,7 +601,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v2.5起可用。*
 
 #### toUint8(uint256 value) → uint8
-内部#
+internal#
 将uint256类型下转型为uint8类型，在溢出时进行回滚（当输入大于最大的uint8时）。
 
 与Solidity的uint8运算符相对应。
@@ -612,7 +612,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v2.5版本开始提供。*
 
 #### toUint256(int256 value) → uint256
-内部#
+internal#
 将有符号的int256转换为无符号的uint256。
 
 要求：
@@ -621,7 +621,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v3.0开始可用。*
 
 #### toInt248(int256 value) → int248 downcasted
-内部#
+internal#
 将int256转换为int248，并在溢出时进行还原（当输入小于最小的int248或大于最大的int248时）。
 
 与Solidity的int248运算符相对应。
@@ -632,7 +632,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt240(int256 value) → int240 downcasted
-内部#
+internal#
 将int256转换为下降的int240，当溢出时回滚（当输入小于最小的int240或大于最大的int240时）。
 
 与Solidity的int240运算符相对应。
@@ -643,7 +643,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt232(int256 value) → int232 downcasted
-内部#
+internal#
 将int256的值向下转换为int232，并在溢出时恢复（当输入小于最小int232或大于最大int232时）。
 
 与Solidity的int232运算符相对应。
@@ -654,7 +654,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt224(int256 value) → int224 downcasted
-内部#
+internal#
 将int256转换为下限为int224的整数，当溢出时恢复（当输入小于最小int224或大于最大int224时）。
 
 与Solidity的int224运算符相对应。
@@ -665,7 +665,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt216(int256 value) → int216 downcasted
-内部#
+internal#
 将int256类型的数值转换为int216类型的数值，并在溢出时进行回滚（当输入小于最小的int216或大于最大的int216时）。
 
 与Solidity的int216操作符相对应。
@@ -676,7 +676,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt208(int256 value) → int208 downcasted
-内部#
+internal#
 将int256转换为int208，并在溢出时进行回滚（当输入小于最小的int208或大于最大的int208时）。
 
 与Solidity的int208操作符相对应。
@@ -687,7 +687,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始可用。*
 
 #### toInt200(int256 value) → int200 downcasted
-内部#
+internal#
 将int256强制转换为int200，并在溢出时回滚（当输入小于最小的int200或大于最大的int200时）。
 
 与Solidity的int200运算符相对应。
@@ -698,7 +698,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt192(int256 value) → int192 downcasted
-内部#
+internal#
 将int256转换为int192，并在溢出时返回，当输入小于最小int192或大于最大int192时会发生溢出。
 
 与Solidity的int192运算符相对应。
@@ -709,7 +709,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt184(int256 value) → int184 downcasted
-内部#
+internal#
 将int256返回为downcasted int184，当溢出时进行回滚（当输入小于最小int184或大于最大int184时）。
 
 与Solidity的int184运算符相对应。
@@ -720,7 +720,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt176(int256 value) → int176 downcasted
-内部#
+internal#
 返回从int256到int176的向下转换，当溢出时恢复（当输入小于最小int176或大于最大int176时）。
 
 这是Solidity的int176运算符的对应物。
@@ -731,7 +731,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 **自v4.7起可用。**
 
 #### toInt168(int256 value) → int168 downcasted
-内部#
+internal#
 将int256转换为int168，并在溢出时进行回滚（当输入小于最小的int168或大于最大的int168时）。
 
 与Solidity的int168运算符相对应。
@@ -742,7 +742,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt160(int256 value) → int160 downcasted
-内部#
+internal#
 将int256转换为int160，并在溢出时恢复（当输入小于最小int160或大于最大int160时）。
 
 与Solidity的int160操作符相对应。
@@ -753,7 +753,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7版本开始提供。*
 
 #### toInt152(int256 value) → int152 downcasted
-内部#
+internal#
 将int256转换为int152，并在溢出时返回，当输入小于最小的int152或大于最大的int152时进行回滚。
 
 与Solidity的int152操作符相对应。
@@ -764,7 +764,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 **自v4.7起可用。**
 
 #### toInt144(int256 value) → int144 downcasted
-内部#
+internal#
 将int256转换为int144，并在溢出时进行回滚（当输入小于最小的int144或大于最大的int144时）。
 
 与Solidity的int144操作符相对应。
@@ -775,7 +775,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt136(int256 value) → int136 downcasted
-内部#
+internal#
 将int256转换为int136，如果溢出则返回错误（当输入小于最小的int136或大于最大的int136时）。
 
 与Solidity的int136运算符相对应。
@@ -786,7 +786,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始可用。*
 
 #### toInt128(int256 value) → int128 downcasted
-内部#
+internal#
 将int256从int128反向转换为int128，当输入小于最小int128或大于最大int128时，返回溢出（revert）。
 
 与Solidity的int128操作符相对应。
@@ -797,7 +797,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v3.1起可用。*
 
 #### toInt120(int256 value) → int120 downcasted
-内部#
+internal#
 将int256转换为int120，并在溢出时回滚（当输入小于最小int120或大于最大int120时）。
 
 与Solidity的int120运算符相对应。
@@ -808,7 +808,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt112(int256 value) → int112 downcasted
-内部#
+internal#
 将int256向下转换为int112，并在溢出时进行回滚（当输入小于最小的int112或大于最大的int112时）。
 
 与Solidity的int112运算符相对应。
@@ -819,7 +819,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt104(int256 value) → int104 downcasted
-内部#
+internal#
 将int256转换为int104，并在溢出时恢复（当输入小于最小int104或大于最大int104时）。
 
 与Solidity的int104运算符相对应。
@@ -830,7 +830,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 从v4.7开始提供。
 
 #### toInt96(int256 value) → int96 downcasted
-内部#
+internal#
 将int256转换为int96，并在溢出时返回，当输入小于最小int96或大于最大int96时将回滚。
 
 与Solidity的int96运算符相对应。
@@ -841,7 +841,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 从v4.7开始提供。
 
 #### toInt88(int256 value) → int88 downcasted
-内部#
+internal#
 从int256返回向下转型的int88，当输入小于最小的int88或大于最大的int88时会回滚（溢出）。
 
 与Solidity的int88操作符相对应。
@@ -852,7 +852,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7开始可用。*
 
 #### toInt80(int256 value) → int80 downcasted
-内部#
+internal#
 将int256强制转换为int80，并在溢出时回滚（当输入小于最小的int80或大于最大的int80时）。
 
 与Solidity的int80运算符相对应。
@@ -863,7 +863,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7以来可用。*
 
 #### toInt72(int256 value) → int72 downcasted
-内部#
+internal#
 将int256强制转换为int72，并在溢出时回滚（当输入小于最小int72或大于最大int72时）。
 
 与Solidity的int72操作符相对应。
@@ -874,7 +874,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 **从v4.7开始可用。**
 
 #### toInt64(int256 value) → int64 downcasted
-内部#
+internal#
 将int256转换为int64，并在溢出时回滚（当输入小于最小的int64或大于最大的int64时）。
 
 与Solidity的int64操作符相对应。
@@ -885,7 +885,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v3.1起可用。*
 
 #### toInt56(int256 value) → int56 downcasted
-内部#
+internal#
 将int256转换为int56，当输入小于最小int56或大于最大int56时，将返回溢出（revert）。
 
 与Solidity的int56操作符相对应。
@@ -896,7 +896,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始提供。*
 
 #### toInt48(int256 value) → int48 downcasted
-内部#
+internal#
 将int256转换为int48，并在溢出时进行回滚（当输入小于最小int48或大于最大int48时）。
 
 与Solidity的int48运算符相对应。
@@ -907,7 +907,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt40(int256 value) → int40 downcasted
-内部#
+internal#
 将int256转换为downcasted int40，当溢出时返回（当输入小于最小int40或大于最大int40时）。
 
 与Solidity的int40操作符相对应。
@@ -918,7 +918,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *从v4.7开始可用。*
 
 #### toInt32(int256 value) → int32 downcasted
-内部#
+internal#
 将int256转换为int32，如果溢出则返回错误（当输入小于最小int32或大于最大int32时）。
 
 与Solidity的int32操作符相对应。
@@ -929,7 +929,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v3.1起可用。*
 
 #### toInt24(int256 value) → int24 downcasted
-内部#
+internal#
 将int256转换为int24，如果溢出则返回revert（当输入小于最小int24或大于最大int24时）。
 
 与Solidity的int24运算符对应。
@@ -940,7 +940,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v4.7起可用。*
 
 #### toInt16(int256 value) → int16 downcasted
-内部#
+internal#
 将int256转换为int16，并在溢出时返回，即当输入小于最小int16或大于最大int16时返回。
 
 与Solidity的int16操作符相对应。
@@ -951,7 +951,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v3.1起可用。*
 
 #### toInt16(int256 value) → int16 downcasted
-内部#
+internal#
 将int256类型的值向下转换为int16类型的值，并在溢出时返回（当输入值小于最小int16或大于最大int16时）。
 
 这是Solidity中int16运算符的对应方法。
@@ -962,7 +962,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v3.1版本起可用。*
 
 #### toInt8(int256 value) → int8 downcasted
-内部#
+internal#
 将int256转换为int8，并在溢出时进行回滚（当输入小于最小int8或大于最大int8时）。
 
 与Solidity的int8操作符相对应。
@@ -973,7 +973,7 @@ import "@openzeppelin/contracts/utils/math/SafeCast.sol";
 *自v3.1起可用。*
 
 #### toInt256(uint256 value) → int256
-内部#
+internal#
 将无符号的uint256转换为有符号的int256。
 
 要求：
@@ -1019,37 +1019,37 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 [mod(a, b, errorMessage)](#moduint256-a-uint256-b-→-uint256)
 
 #### tryAdd(uint256 a, uint256 b) → bool, uint256
-内部#
+internal#
 返回两个无符号整数的加法结果，同时返回溢出标志。
 
 *自版本3.4起可用。*
 
 #### trySub(uint256 a, uint256 b) → bool, uint256
-内部#
+internal#
 返回两个无符号整数的减法结果，并带有溢出标志。
 
 *自v3.4起可用。*
 
 #### tryMul(uint256 a, uint256 b) → bool, uint256
-内部#
+internal#
 返回两个无符号整数的乘积，并带有溢出标志。
 
 *自 v3.4 版本起可用。*
 
 #### tryDiv(uint256 a, uint256 b) → bool, uint256
-内部#
+internal#
 返回两个无符号整数的除法结果，并带有除零标志。
 
 *自v3.4版本起可用。*
 
 #### tryMod(uint256 a, uint256 b) → bool, uint256
-内部#
+internal#
 返回两个无符号整数相除的余数，并标记除以零的情况。
 
 *从v3.4版本开始可用。*
 
 #### add(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个无符号整数的加法结果，当溢出时返回反向结果。
 
 与Solidity的+运算符相对应。
@@ -1058,7 +1058,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 * 加法不能溢出。
 
 #### sub(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个无符号整数的减法结果，在溢出时返回反转的结果（当结果为负数时）。
 
 与Solidity的-运算符相对应。
@@ -1067,7 +1067,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 * 减法不能溢出。
 
 #### mul(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个无符号整数的乘积，如果溢出则返回零。
 
 与Solidity的*操作符相对应。
@@ -1076,7 +1076,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 * 乘法不能溢出。
 
 #### div(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个无符号整数的整数除法，如果除以零则返回反转。结果向零舍入。
 
 与Solidity的/运算符相对应。
@@ -1085,7 +1085,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 * 除数不能为零。
 
 #### mod(uint256 a, uint256 b) → uint256
-内部#
+internal#
 返回两个无符号整数相除的余数（无符号整数取模），在除以零时回退。
 
 这个函数是 Solidity 中 % 运算符的对应函数。该函数使用了一个 revert 指令（保留剩余的 gas），而 Solidity 使用了一个无效的指令来回退（消耗所有剩余的 gas）。
@@ -1094,7 +1094,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 * 除数不能为零。
 
 #### sub(uint256 a, uint256 b, string errorMessage) → uint256
-内部#
+internal#
 返回两个无符号整数的减法结果，在溢出时使用自定义消息进行回退（当结果为负数时）。
 
 > CAUTION
@@ -1105,7 +1105,7 @@ Solidity的-运算符的对应物。
 * 减法不能溢出。
 
 #### div(uint256 a, uint256 b, string errorMessage) → uint256
-内部#
+internal#
 返回两个无符号整数的整数除法，如果除零则返回自定义消息。结果向零舍入。
 
 这是Solidity中/操作符的对应函数。注意：此函数使用revert操作码（保留剩余的gas），而Solidity使用无效操作码来回滚（消耗所有剩余的gas）。
@@ -1114,7 +1114,7 @@ Solidity的-运算符的对应物。
 * 除数不能为零。
 
 #### mod(uint256 a, uint256 b, string errorMessage) → uint256
-内部#
+internal#
 返回两个无符号整数相除的余数（无符号整数取模），在除以零时返回自定义消息。
 
 > CAUTION
@@ -1144,7 +1144,7 @@ Solidity的算术操作封装。
 [add(a, b)](#addint256-a-int256-b-→-int256)
 
 #### mul(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号整数的乘积，如果溢出则返回相反数。
 
 与Solidity的*运算符相对应。
@@ -1153,7 +1153,7 @@ Solidity的算术操作封装。
 * 乘法不能溢出。
 
 #### div(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号整数的整数除法结果。在除以零时会回滚。结果向零舍入。
 
 这是 Solidity 中 / 运算符的对应操作。
@@ -1162,7 +1162,7 @@ Solidity的算术操作封装。
 * 被除数不能为零。
 
 #### sub(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号整数的减法结果，如果溢出则返回相反数。
 
 与Solidity的-运算符相对应。
@@ -1171,7 +1171,7 @@ Solidity的算术操作封装。
 * 减法不能溢出。
 
 #### add(int256 a, int256 b) → int256
-内部#
+internal#
 返回两个有符号整数的加法结果，如果溢出则返回相反数。
 
 与Solidity的+运算符相对应。
@@ -1212,7 +1212,7 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 [toDataWithIntendedValidatorHash(validator, data)](#todatawithintendedvalidatorhashaddress-validator-bytes-data-→-bytes32)
 
 #### tryRecover(bytes32 hash, bytes signature) → address, enum ECDSA.RecoverError
-内部#
+internal#
 返回使用签名或错误字符串对哈希消息（哈希）进行签名的地址。然后可以使用该地址进行验证。
 
 ecrecover EVM 操作码允许生成可塑（非唯一）的签名：该函数通过要求 s 值位于低半序列中，并且 v 值为 27 或 28 来拒绝这些签名。
@@ -1224,7 +1224,7 @@ ecrecover EVM 操作码允许生成可塑（非唯一）的签名：该函数通
 *自 v4.3 起可用。*
 
 #### recover(bytes32 hash, bytes signature) → address
-内部#
+internal#
 返回使用签名对哈希消息（hash）进行签名的地址。可以将此地址用于验证目的。
 
 ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s值在低半序中，并且v值为27或28来拒绝它们。
@@ -1233,7 +1233,7 @@ ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s
 为了确保验证安全，哈希必须是对原始消息进行哈希操作的结果：可以通过接收原始消息的哈希（否则可能过长），然后对其调用[toEthSignedMessageHash](#toethsignedmessagehashbytes-s-→-bytes32)来确保这一点。
 
 #### tryRecover(bytes32 hash, bytes32 r, bytes32 vs) → address, enum ECDSA.RecoverError
-内部#
+internal#
 [ECDSA.tryRecover](#tryrecoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address-enum-ecdsarecovererror)的重载函数，接收r和vs字段作为独立参数。
 
 参考[EIP-2098的短签名](https://eips.ethereum.org/EIPS/eip-2098)。
@@ -1241,41 +1241,41 @@ ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s
 *自v4.3版本开始可用。*
 
 #### recover(bytes32 hash, bytes32 r, bytes32 vs) → address
-内部#
+internal#
 [ECDSA.recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)的重载版本，可以分别接收r和vs字段的短签名。
 
 *自v4.2版本起可用。*
 
 #### tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) → address, enum ECDSA.RecoverError
-内部#
+internal#
 [ECDSA.tryRecover](#tryrecoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address-enum-ecdsarecovererror)的重载版本，接收单独的v、r和s签名字段。
 
 *自v4.3版本开始提供。*
 
 #### recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) → address
-内部#
+internal#
 *ECDSA.recover*的重载版本，接收单独的v、r和s签名字段。
 
 #### toEthSignedMessageHash(bytes32 hash) → bytes32 message
-内部#
+internal#
 返回一个以哈希值创建的以太坊已签名消息。这个方法会产生与使[用eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应的哈希值，作为EIP-191的一部分。
 
 参见[recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 #### toEthSignedMessageHash(bytes s) → bytes32
-内部#
+internal#
 返回一个以s创建的以太坊签名消息。这将产生与使用[eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应，作为EIP-191的一部分。
 
 参见 [recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 #### toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) → bytes32 data
-内部#
+internal#
 返回一个以域分隔符（domainSeparator）和结构哈希（structHash）创建的以太坊签名类型数据。这个方法生成的哈希与使用[eth_signTypedData](https://eips.ethereum.org/EIPS/eip-712) JSON-RPC方法作为EIP-712的一部分进行签名的哈希相对应。
 
 参见[recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
 
 #### toDataWithIntendedValidatorHash(address validator, bytes data) → bytes32
-内部#
+internal#
 根据EIP-191版本0，从验证器和数据创建一个带有预期验证者的以太坊签名数据。
 
 请参见[recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)。
@@ -1295,7 +1295,7 @@ import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
 [isValidERC1271SignatureNow(signer, hash, signature)](#isvaliderc1271signaturenowaddress-signer-bytes32-hash-bytes-signature-→-bool)
 
 #### isValidSignatureNow(address signer, bytes32 hash, bytes signature) → bool
-内部#
+internal#
 检查给定签名者和数据哈希是否有效。如果签名者是智能合约，则使用ERC1271对该智能合约进行验证签名，否则使用ECDSA.recover进行验证。
 
 > NOTE
@@ -1337,29 +1337,29 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 [processMultiProofCalldata(proof, proofFlags, leaves)](#processmultiproofcalldatabytes32-proof-bool-proofflags-bytes32-leaves-→-bytes32-merkleroot)
 
 #### verify(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
-内部#
+internal#
 如果可以通过提供包含从叶子到树根的分支上的兄弟哈希的证明来证明叶子是Merkle树的一部分，则返回true。假设每对叶子和每对原始图像都已排序。
 
 #### verifyCalldata(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
-内部#
+internal#
 [verify](#verifybytes32-proof-bytes32-root-bytes32-leaf-→-bool)的Calldata版本
 
 *从v4.7版本开始可用。*
 
 #### processProof(bytes32[] proof, bytes32 leaf) → bytes32
-内部#
+internal#
 从叶节点开始使用证明，通过遍历 Merkle 树返回重建的哈希值。只有当重建的哈希值与树的根节点匹配时，证明才有效。在处理证明时，假设叶节点和预映像的配对已经排序。
 
 *自 v4.4 版本起可用。*
 
 #### processProofCalldata(bytes32[] proof, bytes32 leaf) → bytes32
-内部#
+internal#
 [processProof](#processproofbytes32-proof-bytes32-leaf-→-bytes32)的Calldata版本
 
 *自v4.7版本开始可用。*
 
 #### multiProofVerify(bytes32[] proof, bool[] proofFlags, bytes32 root, bytes32[] leaves) → bool
-内部#
+internal#
 如果根据processMultiProof中的proof和proofFlags描述，可以同时*证明叶子节点是merkle树*的一部分，则返回true。
 
 > CAUTION
@@ -1368,7 +1368,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 *自v4.7版本开始可用。*
 
 #### multiProofVerifyCalldata(bytes32[] proof, bool[] proofFlags, bytes32 root, bytes32[] leaves) → bool
-内部#
+internal#
 *multiProofVerify*的Calldata版本
 
 > CAUTION
@@ -1376,7 +1376,7 @@ import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 **自v4.7起可用。**
 
 #### processMultiProof(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
-内部#
+internal#
 从叶子节点和兄弟节点的证明中返回重建的树的根节点。重建过程是通过将叶子节点/内部节点与另一个叶子节点/内部节点或证明兄弟节点组合来逐步重建所有内部节点，具体取决于每个proofFlags项是true还是false。
 
 > CAUTION
@@ -1427,7 +1427,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(string name, string version)
-内部#
+internal#
 初始化域分隔符和参数缓存。
 
 名称和版本的含义在[EIP 712](https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator)中指定：
@@ -1438,11 +1438,11 @@ IERC5267
 除非通过[智能合约升级](../../../Learn/Upgrading-smart-contracts/Upgrading-smart-contracts-hardhat.md)，否则这些参数不能更改。
 
 #### _domainSeparatorV4() → bytes32
-内部#
+internal#
 返回当前链的域分隔符。
 
 #### _hashTypedDataV4(bytes32 structHash) → bytes32
-内部#
+internal#
 给定一个已经[哈希的结构体](https://eips.ethereum.org/EIPS/eip-712#definition-of-hashstruct)，这个函数返回完全编码的 EIP712 消息在该域中的哈希值。
 
 这个哈希值可以与 [ECDSA.recover](#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address) 一起使用，以获得消息的签名者。例如：
@@ -1730,7 +1730,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Storage.sol";
 请查阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool).
 
 #### _registerInterface(bytes4 interfaceId)
-内部#
+internal#
 将合约注册为接口标识符（interfaceId）所定义的接口的实现者。对于实际的ERC165接口的支持是自动的，不需要注册其接口标识符。
 
 参见[IERC165.supportsInterface](#_registerinterfacebytes4-interfaceid)。
@@ -1760,17 +1760,17 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 [supportsERC165InterfaceUnchecked(account, interfaceId)](#supportserc165interfaceuncheckedaddress-account-bytes4-interfaceid-→-bool)
 
 #### supportsERC165(address account) → bool
-内部#
+internal#
 如果账户支持[IERC165](#ierc165)接口，则返回true。
 
 #### supportsInterface(address account, bytes4 interfaceId) → bool
-内部#
+internal#
 如果账户支持由interfaceId定义的接口，则返回true。对于[IERC165]本身的支持会自动查询。
 
 参见[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
-内部#
+internal#
 返回一个布尔数组，其中每个值对应于传入的接口和它们是否被支持。这使你可以批量检查合约的接口，其中你的期望是某些接口可能不被支持。
 
 请参阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
@@ -1778,7 +1778,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 *自v3.4起可用。*
 
 #### supportsAllInterfaces(address account, bytes4[] interfaceIds) → bool
-内部#
+internal#
 如果帐户支持interfaceIds中定义的所有接口，则返回true。自动查询对[IERC165](#ierc165)本身的支持。
 
 通过批量查询可以节省gas费，跳过重复的[IERC165](#ierc165)支持检查。
@@ -1786,7 +1786,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
 参见[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) → bool
-内部#
+internal#
 假设账户包含支持ERC165的合约，否则此方法的行为是未定义的。可以使用[supportsERC165](#supportserc165address-account-→-bool)来检查此前提条件。
 
 某些预编译合约可能错误地表示支持给定的接口，因此在使用此函数时应谨慎。
@@ -1928,7 +1928,7 @@ import "@openzeppelin/contracts/utils/introspection/ERC1820Implementer.sol";
 请查阅[IERC1820Implementer.canImplementInterfaceForAddress](#canimplementinterfaceforaddressbytes32-interfacehash-address-account-→-bytes32).
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
-内部#
+internal#
 将合约声明为愿意成为帐户的interfaceHash实现者。
 
 请参考[IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)和[IERC1820Registry.interfaceHash](#interfacehashstring-interfacename-→-bytes32)。
@@ -1952,19 +1952,19 @@ import "@openzeppelin/contracts/utils/structs/BitMaps.sol";
 [unset(bitmap, index)](#unsetstruct-bitmapsbitmap-bitmap-uint256-index)
 
 #### get(struct BitMaps.BitMap bitmap, uint256 index) → bool
-内部#
+internal#
 返回索引处的位是否设置。
 
 #### setTo(struct BitMaps.BitMap bitmap, uint256 index, bool value)
-内部#
+internal#
 将索引处的位设置为布尔值。
 
 #### set(struct BitMaps.BitMap bitmap, uint256 index)
-内部#
+internal#
 设置索引处的位。
 
 #### unset(struct BitMaps.BitMap bitmap, uint256 index)
-内部#
+internal#
 取消设置在索引处的位。
 
 ### EnumerableMap
@@ -2096,27 +2096,27 @@ contract Example {
 [keys(map)](#keysstruct-enumerablemapbytes32touintmap-map-→-bytes32)
 
 #### set(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key, bytes32 value) → bool
-内部#
+internal#
 向映射中添加一个键值对，或者更新现有键的值。O(1)。
 
 如果键被添加到映射中，即如果它之前不存在，则返回true。
 
 #### remove(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool
-内部#
+internal#
 从映射中删除一个键值对。O(1)。
 
 如果键被从映射中删除，即键存在，则返回true。
 
 #### contains(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool
-内部#
+internal#
 如果键在映射中，则返回true。O(1)。
 
 #### length(struct EnumerableMap.Bytes32ToBytes32Map map) → uint256
-内部#
+internal#
 返回地图中键值对的数量。O(1)。
 
 #### at(struct EnumerableMap.Bytes32ToBytes32Map map, uint256 index) → bytes32, bytes32
-内部#
+internal#
 在地图中返回存储在位置索引处的键值对。 O(1)。
 
 请注意，对于数组中条目的顺序没有任何保证，并且当添加或删除更多条目时，它可能会发生变化。
@@ -2125,228 +2125,228 @@ contract Example {
 * 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bool, bytes32
-内部#
+internal#
 尝试返回与键关联的值。O(1)时间复杂度。如果键不在映射中，则不会回滚。
 
 #### get(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key) → bytes32
-内部#
+internal#
 返回与键关联的值。O(1)。
 
 要求：
 * 键必须在映射中。
 
 #### get(struct EnumerableMap.Bytes32ToBytes32Map map, bytes32 key, string errorMessage) → bytes32
-内部#
+internal#
 与*get*相同，当key不在map中时，使用自定义错误消息。
 
 由于此函数需要不必要地为错误消息分配内存，因此此函数已弃用。对于自定义的回滚原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.Bytes32ToBytes32Map map) → bytes32[]
-内部#
+internal#
 返回包含所有键的数组
 
 > WARNING
 此操作将整个存储复制到内存中，这可能非常昂贵。这主要是为了供无需任何gas费用的视图访问器查询而设计的。开发人员应该记住，此函数的成本是没有限制的，如果映射增长到复制到内存所需的gas太多而无法适应一个块，则将无法调用该函数。
 
 #### set(struct EnumerableMap.UintToUintMap map, uint256 key, uint256 value) → bool
-内部#
+internal#
 向映射中添加一个键值对，或者更新现有键的值。O(1)。
 
 如果键被添加到映射中（即如果它之前不存在），则返回true。
 
 #### remove(struct EnumerableMap.UintToUintMap map, uint256 key) → bool
-内部#
+internal#
 从映射中删除一个值。O(1)。
 
 如果键从映射中被删除，也就是说它存在，则返回true。
 
 #### contains(struct EnumerableMap.UintToUintMap map, uint256 key) → bool
-内部#
+internal#
 如果键存在于映射中，则返回true。O(1)。
 
 #### length(struct EnumerableMap.UintToUintMap map) → uint256
-内部#
+internal#
 返回映射中元素的数量。O(1)。
 
 #### at(struct EnumerableMap.UintToUintMap map, uint256 index) → uint256, uint256
-内部#
+internal#
 返回映射中存储在位置索引处的元素。O(1)。请注意，对数组中值的排序没有任何保证，当添加或删除更多值时，它可能会发生变化。
 
 要求：
 * 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.UintToUintMap map, uint256 key) → bool, uint256
-内部#
+internal#
 尝试返回与键相关联的值。O(1)时间复杂度。如果键不在映射中，则不会回滚。
 
 #### get(struct EnumerableMap.UintToUintMap map, uint256 key) → uint256
-内部#
+internal#
 返回与键关联的值。O(1)。
 
 要求：
 * 键必须在地图中。
 
 #### get(struct EnumerableMap.UintToUintMap map, uint256 key, string errorMessage) → uint256
-内部#
+internal#
 与[get](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)相同，当键不在映射中时显示自定义错误消息。
 
 此函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。要使用自定义的还原原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.UintToUintMap map) → uint256[]
-内部#
+internal#
 返回包含所有键的数组
 
 > WARNING
 这个操作将整个存储复制到内存中，这可能非常昂贵。它主要用于无需支付任何gas费用的视图访问器查询。开发人员应该记住，这个函数的成本是无限的，如果映射增长到一定程度，复制到内存所消耗的gas太多而无法放入一个块中，那么使用它作为状态更改函数的一部分可能会导致该函数无法调用。
 
 #### set(struct EnumerableMap.UintToAddressMap map, uint256 key, address value) → bool
-内部#
+internal#
 向地图中添加一个键值对，或更新现有键的值。O(1)。
 
 如果键被添加到地图中，即它之前不存在，则返回true。
 
 #### remove(struct EnumerableMap.UintToAddressMap map, uint256 key) → bool
-内部#
+internal#
 从映射中删除一个值。O(1)。
 
 如果键被从映射中删除，即键存在，则返回true。
 
 #### contains(struct EnumerableMap.UintToAddressMap map, uint256 key) → bool
-内部#
+internal#
 
 #### length(struct EnumerableMap.UintToAddressMap map) → uint256
-内部#
+internal#
 返回地图中的元素数量。O(1)。
 
 #### at(struct EnumerableMap.UintToAddressMap map, uint256 index) → uint256, address
-内部#
+internal#
 返回在映射中存储在位置index处的元素。O(1)。请注意，数组内部值的排序没有保证，并且当添加或删除更多值时可能会发生变化。
 
 要求:
 * 索引必须严格小于*长度*。
 
 #### tryGet(struct EnumerableMap.UintToAddressMap map, uint256 key) → bool, address
-内部#
+internal#
 尝试返回与键相关联的值。O(1)。如果键不在映射中，则不会回滚。
 
 #### get(struct EnumerableMap.UintToAddressMap map, uint256 key) → address
-内部#
+internal#
 返回与键关联的值。O(1)。
 
 要求：
 * 键必须在映射中。
 
 #### get(struct EnumerableMap.UintToAddressMap map, uint256 key, string errorMessage) → address
-内部#
+internal#
 与*get*相同，当key不在映射中时带有自定义错误消息。
 
 该函数已弃用，因为它不必要地为错误消息分配内存。要使用自定义的回滚原因，请使用*tryGet*。
 
 #### keys(struct EnumerableMap.UintToAddressMap map) → uint256[]
-内部#
+internal#
 返回一个包含所有键的数组
 
 > WARNING
 这个操作将整个存储复制到内存中，这可能非常昂贵。这主要是为了在没有任何gas费用的情况下查询的视图访问器使用的。开发者应该记住，这个函数的成本是无界的，如果映射增长到一个使得复制到内存消耗的gas太多以至于无法适应一个块的点，那么在一个状态更改函数的一部分使用它可能使函数无法调用。
 
 #### set(struct EnumerableMap.AddressToUintMap map, address key, uint256 value) → bool
-内部#
+internal#
 向地图中添加一个键值对，或者更新现有键的值。O(1)。
 
 如果键被添加到地图中，即如果它之前不存在，则返回true。
 
 #### remove(struct EnumerableMap.AddressToUintMap map, address key) → bool
-内部#
+internal#
 从地图中删除一个值。O(1)。
 
 如果键从地图中被删除，即存在，则返回true。
 
 #### contains(struct EnumerableMap.AddressToUintMap map, address key) → bool
-内部#
+internal#
 如果键存在于map中，则返回true。O(1)。
 
 #### length(struct EnumerableMap.AddressToUintMap map) → uint256
-内部#
+internal#
 返回映射中的元素数量。O(1)。
 
 #### at(struct EnumerableMap.AddressToUintMap map, uint256 index) → address, uint256
-内部#
+internal#
 返回在映射中存储的位置索引处的元素。O(1)。请注意，数组内的值的排序没有任何保证，并且当添加或删除更多值时，它可能会改变。
 
 要求：
 * 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.AddressToUintMap map, address key) → bool, uint256
-内部#
+internal#
 尝试返回与键关联的值。 O(1)。如果键不在映射中，则不会回滚。
 
 #### get(struct EnumerableMap.AddressToUintMap map, address key) → uint256
-内部#
+internal#
 返回与键关联的值。O(1)。
 
 要求：
 * 键必须在映射中。
 
 #### get(struct EnumerableMap.AddressToUintMap map, address key, string errorMessage) → uint256get(struct EnumerableMap.AddressToUintMap map, address key, string errorMessage) → uint256
-内部#
+internal#
 与[get](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)相同，当键不在映射中时使用自定义错误消息。
 
 > CAUTION
 由于该函数不必要地需要为错误消息分配内存，所以此函数已被弃用。要使用自定义的还原原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.AddressToUintMap map) → address[]
-内部#
+internal#
 返回包含所有键的数组
 
 > WARNING
 该操作将整个存储复制到内存中，这可能非常昂贵。它主要用于无需支付任何燃料费用的视图访问器查询。开发人员应该记住，这个函数的成本是无限的，如果映射增长到复制到内存消耗太多燃料无法适应一个区块，那么在状态变更函数中使用它可能导致函数无法调用。
 
 #### set(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, uint256 value) → bool
-内部#
+internal#
 向地图中添加一个键值对，或者更新一个已存在键的值。O(1)。
 
 如果键被添加到地图中（即原先不存在），则返回true。
 
 #### remove(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
-内部#
+internal#
 从映射中删除一个值。O(1)。
 
 如果键从映射中被删除（即存在），则返回true。
 
 #### contains(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
-内部#
+internal#
 如果键在地图中，则返回true。O(1)。
 
 #### length(struct EnumerableMap.Bytes32ToUintMap map) → uint256
-内部#
+internal#
 返回映射中的元素数量。O(1)。
 
 #### at(struct EnumerableMap.Bytes32ToUintMap map, uint256 index) → bytes32, uint256
-内部#
+internal#
 在地图中返回存储在位置索引处的元素。O(1)。请注意，数组中的值的排序没有任何保证，并且当添加或删除更多值时，它可能会发生变化。
 
 要求：
 * 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
 
 #### tryGet(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool, uint256
-内部#
+internal#
 尝试返回与键关联的值。O(1)。如果键不在映射中，则不会回退。
 
 #### get(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → uint256
-内部#
+internal#
 返回与键关联的值。O(1)。
 
 要求：
 * 键必须在映射中存在。
 
 #### get(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, string errorMessage) → uint256
-内部#
+internal#
 与[get](#getstruct-enumerablemapbytes32touintmap-map-bytes32-key-string-errormessage-→-uint256)相同，当键不在映射中时，显示自定义错误消息。
 
 这个函数已被弃用，因为它需要为错误消息分配内存，这是不必要的。如果需要自定义的还原原因，请使用[tryGet](#trygetstruct-enumerablemapbytes32touintmap-map-bytes32-key-→-bool-uint256)。
 
 #### keys(struct EnumerableMap.Bytes32ToUintMap map) → bytes32[]
-内部#
+internal#
 返回包含所有键的数组
 
 > WARNING
@@ -2417,27 +2417,27 @@ contract Example {
 [values(set)](#valuesstruct-enumerablesetuintset-set-→-uint256)
 
 #### add(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
-内部#
+internal#
 向集合中添加一个值。O(1)。
 
 如果值被添加到集合中（即之前不存在），则返回true。
 
 #### remove(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
-内部#
+internal#
 从集合中删除一个值。O(1)。
 
 如果该值从集合中被删除，即存在，则返回true。
 
 #### contains(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
-内部#
+internal#
 如果值在集合中，则返回true。O(1)。
 
 #### length(struct EnumerableSet.Bytes32Set set) → uint256
-内部#
+internal#
 返回集合中的值的数量。O(1)。
 
 #### at(struct EnumerableSet.Bytes32Set set, uint256 index) → bytes32
-内部#
+internal#
 在集合中返回存储在位置index处的值。时间复杂度为O(1)。
 
 请注意，数组中的值的顺序没有任何保证，并且当添加或删除更多值时，它可能会发生改变。
@@ -2446,34 +2446,34 @@ contract Example {
 * index必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### values(struct EnumerableSet.Bytes32Set set) → bytes32[]
-内部#
+internal#
 将整个集合作为数组返回
 
 > WARNING
 此操作将整个存储复制到内存中，这可能非常昂贵。这主要用于无需支付任何gas费用的视图访问器进行查询。开发人员应该记住，这个函数的成本是无限的，如果集合增长到需要消耗太多gas无法适应一个区块的情况下，将其用作状态更改函数的一部分可能导致该函数无法调用。
 
 #### add(struct EnumerableSet.AddressSet set, address value) → bool
-内部#
+internal#
 向一个集合中添加一个值。O(1)。
 
 如果该值被成功添加到集合中（即之前不存在），则返回true。
 
 #### remove(struct EnumerableSet.AddressSet set, address value) → bool
-内部#
+internal#
 从集合中移除一个值。O(1)。
 
 如果值被从集合中移除，也就是说它存在于集合中，则返回true。
 
 #### contains(struct EnumerableSet.AddressSet set, address value) → bool
-内部#
+internal#
 如果值在集合中，则返回true。O(1)。
 
 #### length(struct EnumerableSet.AddressSet set) → uint256
-内部#
+internal#
 返回集合中的值的数量。O(1)。
 
 #### at(struct EnumerableSet.AddressSet set, uint256 index) → address
-内部#
+internal#
 返回集合中存储在索引位置的值。O(1)。
 
 请注意，数组内的值的顺序没有任何保证，并且在添加或删除更多值时可能会发生变化。
@@ -2482,34 +2482,34 @@ contract Example {
 * 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### values(struct EnumerableSet.AddressSet set) → address[]
-内部#
+internal#
 将整个集合作为数组返回
 
 > WARNING
 这个操作将整个存储复制到内存中，这可能会非常昂贵。这主要是为了供没有任何gas费用的查询访问器使用。开发人员应该记住，这个函数的成本是无限制的，如果集合增长到一个复制到内存消耗太多gas而无法适应一个块的程度，使用它作为状态更改函数的一部分可能会导致该函数无法调用。
 
 #### add(struct EnumerableSet.UintSet set, uint256 value) → bool
-内部#
+internal#
 向集合中添加一个值。O(1)。
 
 如果该值被添加到集合中（即如果它之前不存在），则返回true。
 
 #### remove(struct EnumerableSet.UintSet set, uint256 value) → bool
-内部#
+internal#
 从集合中删除一个值。O(1)。
 
 如果该值从集合中被删除，即存在于集合中，则返回true。
 
 #### contains(struct EnumerableSet.UintSet set, uint256 value) → bool
-内部#
+internal#
 如果值在集合中，则返回true。O(1)。
 
 #### length(struct EnumerableSet.UintSet set) → uint256
-内部#
+internal#
 返回集合中的值的数量。O(1)。
 
 #### at(struct EnumerableSet.UintSet set, uint256 index) → uint256
-内部#
+internal#
 在集合中返回存储在索引位置上的值。O(1)。
 
 请注意，数组内部的值的排序没有保证，并且当添加或删除更多值时可能会改变。
@@ -2518,7 +2518,7 @@ contract Example {
 * 索引必须严格小于[length](#lengthstruct-enumerablesetuintset-set-→-uint256)。
 
 #### values(struct EnumerableSet.UintSet set) → uint256[]
-内部#
+internal#
 将整个集合作为数组返回
 
 > WARNING
@@ -2560,56 +2560,56 @@ DoubleEndedQueue.Bytes32Deque queue;
 [empty(deque)](#emptystruct-doubleendedqueuebytes32deque-deque-→-bool)
 
 #### pushBack(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
-内部#
+internal#
 在队列的末尾插入一个项目。
 
 #### popBack(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
-内部#
+internal#
 删除队列末尾的项并返回它。
 
 如果队列为空，则返回Empty。
 
 #### pushFront(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
-内部#
+internal#
 在队列的开头插入一个项目。
 
 #### popFront(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
-内部#
+internal#
 从队列的开头移除并返回该项。
 
 如果队列为空，则返回Empty。
 
 #### front(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
-内部#
+internal#
 返回队列开头的项目。
 
 如果队列为空，则返回Empty。
 
 #### back(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
-内部#
+internal#
 返回队列末尾的项。
 
 如果队列为空，则返回Empty。
 
 #### at(struct DoubleEndedQueue.Bytes32Deque deque, uint256 index) → bytes32 value
-内部#
+internal#
 根据索引返回队列中位置处的项，其中第一个项为0，最后一个项为length(deque) - 1。
 
 如果索引超出了边界，则返回越界错误。
 
 #### clear(struct DoubleEndedQueue.Bytes32Deque deque)
-内部#
+internal#
 将队列重置为空。
 
 > NOTE
 当前的项目将被留在存储中。这不会影响队列的功能，但会错过潜在的gas退款。
 
 #### length(struct DoubleEndedQueue.Bytes32Deque deque) → uint256
-内部#
+internal#
 返回队列中的项目数量。
 
 #### empty(struct DoubleEndedQueue.Bytes32Deque deque) → bool
-内部#
+internal#
 如果队列为空，则返回true。
 
 ### Checkpoints
@@ -2667,82 +2667,82 @@ import "@openzeppelin/contracts/utils/Checkpoints.sol";
 [length(self)](#lengthstruct-checkpointstrace160-self-→-uint256)
 
 #### getAtBlock(struct Checkpoints.History self, uint256 blockNumber) → uint256
-内部#
+internal#
 返回给定块号的值。如果该块的检查点不可用，则返回其之前最近的检查点，否则返回零。由于返回的数字对应于该块的结束处，所以请求的块号必须在过去，不包括当前块。
 
 #### getAtProbablyRecentBlock(struct Checkpoints.History self, uint256 blockNumber) → uint256
-内部#
+internal#
 返回给定区块号的值。如果该区块上没有可用的检查点，则返回其之前最近的检查点，否则返回零。类似于[upperLookup](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)，但针对可能是“最近”的检查点进行了优化，其中“最近”定义为最后sqrt(N)个检查点之一，其中N是检查点的数量。
 
 #### push(struct Checkpoints.History self, uint256 value) → uint256, uint256
-内部#
+internal#
 将一个值推入历史记录，以便将其存储为当前块的检查点。
 
 返回先前的值和新值。
 
 #### push(struct Checkpoints.History self, function (uint256,uint256) view returns (uint256) op, uint256 delta) → uint256, uint256
-内部#
+internal#
 通过使用二元运算op更新最新值，将一个值推入历史记录。新值将设置为op（最新值，增量）。
 
 返回先前的值和新值。
 
 #### latest(struct Checkpoints.History self) → uint224
-内部#
+internal#
 返回最近的检查点中的值，如果没有检查点，则返回零。
 
 #### latestCheckpoint(struct Checkpoints.History self) → bool exists, uint32 _blockNumber, uint224 _value
-内部#
+internal#
 返回结构中是否存在检查点（即它不为空），如果存在，则返回最新检查点中的键和值。
 
 #### length(struct Checkpoints.History self) → uint256
-内部#
+internal#
 返回检查点的数量。
 
 #### push(struct Checkpoints.Trace224 self, uint32 key, uint224 value) → uint224, uint224
-内部#
+internal#
 将一个（键，值）对推送到Trace224中，以便将其存储为检查点。
 
 返回先前的值和新值。
 
 #### lowerLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224
-内部#
+internal#
 如果存在大于或等于搜索键的第一个（最旧的）检查点的键，则返回该键的值；如果不存在，则返回零。
 
 #### upperLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224
-内部#
+internal#
 返回key小于或等于搜索key的最后一个（最近的）检查点中的值，如果没有，则返回零。
 
 #### upperLookupRecent(struct Checkpoints.Trace224 self, uint32 key) → uint224
-内部#
+internal#
 返回最近的键值小于或等于搜索键的最后一个检查点中的值，如果没有，则返回零。
 
 > NOTE
 这是一种经过优化的[upperLookup](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)变体，用于查找“最近”的检查点（具有高键值的检查点）。
 
 #### latest(struct Checkpoints.Trace224 self) → uint224
-内部#
+internal#
 返回最近的检查点中的值，如果没有检查点，则返回零。
 
 #### latestCheckpoint(struct Checkpoints.Trace224 self) → bool exists, uint32 _key, uint224 _value
-内部#
+internal#
 返回结构中是否有检查点（即它不为空），如果有，则返回最近检查点中的键和值。
 
 #### length(struct Checkpoints.Trace224 self) → uint256
-内部#
+internal#
 返回检查点的数量。
 
 #### push(struct Checkpoints.Trace160 self, uint96 key, uint160 value) → uint160, uint160
-内部#
+internal#
 将（键，值）对推入Trace160，以便将其存储为检查点。
 
 返回先前的值和新值。
 
 #### lowerLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160
-内部#
+internal#
 如果有，则返回第一个（最旧的）检查点中大于或等于搜索键的键的值；如果没有，则返回零。
 
 #### upperLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160
-内部#
+internal#
 如果没有，则返回小于或等于搜索键的最后一个（最新的）检查点中的值，如果没有，则返回零。
 
 #### upperLookupRecent(struct Checkpoints.Trace160 self, uint96 key) → uint160
@@ -2752,15 +2752,15 @@ import "@openzeppelin/contracts/utils/Checkpoints.sol";
 这是[upperLookup](#upperlookupstruct-checkpointstrace160-self-uint96-key-→-uint160)的一个变体，它被优化用于查找“最近的”检查点（具有较高键的检查点）。
 
 #### latest(struct Checkpoints.Trace160 self) → uint160
-内部#
+internal#
 如果没有检查点，则返回最近检查点中的值，否则返回零。
 
 #### latestCheckpoint(struct Checkpoints.Trace160 self) → bool exists, uint96 _key, uint160 _value
-内部#
+internal#
 返回结构中是否存在检查点（即它不为空），如果存在，则返回最近检查点中的键和值。
 
 #### length(struct Checkpoints.Trace160 self) → uint256
-内部#
+internal#
 返回检查点的数量。
 
 ## Libraries
@@ -2782,7 +2782,7 @@ CREATE2 EVM指令的辅助工具旨在使使用更加简便和安全。CREATE2�
 [computeAddress(salt, bytecodeHash, deployer)](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)
 
 #### deploy(uint256 amount, bytes32 salt, bytes bytecode) → address addr
-内部#
+internal#
 使用CREATE2部署合约。可以通过[computeAddress](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)提前知道合约将被部署的地址。
 
 合约的字节码可以通过Solidity中的type(contractName).creationCode获得。
@@ -2794,11 +2794,11 @@ CREATE2 EVM指令的辅助工具旨在使使用更加简便和安全。CREATE2�
 * 如果amount非零，则字节码必须有一个可支付的构造函数。
 
 #### computeAddress(bytes32 salt, bytes32 bytecodeHash) → address
-内部#
+internal#
 如果通过[deploy](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address-addr)部署合约，将返回合约存储的地址。如果bytecodeHash或salt发生变化，将导致一个新的目标地址。
 
 #### computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) → address addr
-内部#
+internal#
 如果通过位于[deploy](#deployuint256-amount-bytes32-salt-bytes-bytecode-→-address-addr)的合约部署，返回合约存储的地址。如果deployer是该合约的地址，则返回与[computeAddress](#computeaddressbytes32-salt-bytes32-bytecodehash-address-deployer-→-address-addr)相同的值。
 
 ### Address
@@ -2833,7 +2833,7 @@ import "@openzeppelin/contracts/utils/Address.sol";
 [verifyCallResult(success, returndata, errorMessage)](#verifycallresultbool-success-bytes-returndata-string-errormessage-→-bytes)
 
 #### isContract(address account) → bool
-内部#
+internal#
 如果账户是合约，则返回true。
 
 > IMPORTANT
@@ -2850,7 +2850,7 @@ isContract函数会返回false的地址包括但不限于以下类型：
 强烈不建议阻止合约之间的调用。这会破坏可组合性，破坏对智能钱包（如Gnosis Safe）的支持，并且不能提供安全性，因为可以通过从合约构造函数中调用来绕过阻止。
 
 #### sendValue(address payable recipient, uint256 amount)
-内部#
+internal#
 Solidity的transfer方法的替代方案：将amount wei发送给recipient，并转发所有可用的gas，在发生错误时回滚。
 
 [EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能会导致合约超过transfer方法所施加的2300 gas限制，从而无法通过transfer方法接收资金。[sendValue](#sendvalueaddress-payable-recipient-uint256-amount)方法消除了这个限制。
@@ -2861,7 +2861,7 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 由于控制权转移到了recipient，必须注意不要创建可重入漏洞。考虑使用[ReentrancyGuard](./Security.md#reentrancyguard)或[checks-effects-interactions模式](https://solidity.readthedocs.io/en/v0.8.0/security-considerations.html#use-the-checks-effects-interactions-pattern)。
 
 #### functionCall(address target, bytes data) → bytes
-内部#
+internal#
 使用低级别调用执行Solidity函数调用。普通调用是对函数调用的不安全替代：请改用此函数。
 
 如果目标合约使用revert原因进行还原，则此函数将其上升（类似于常规的Solidity函数调用）。
@@ -2875,13 +2875,13 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 *自v3.1以来可用。*
 
 #### functionCall(address target, bytes data, string errorMessage) → bytes
-内部#
+internal#
 与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但在目标函数发生回滚时，使用errorMessage作为回退原因的回滚。
 
 *自v3.1起可用。*
 
 #### functionCallWithValue(address target, bytes data, uint256 value) → bytes
-内部#
+internal#
 与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但还将wei的值转移到目标。
 
 要求：
@@ -2891,19 +2891,19 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 *自v3.1起可用。*
 
 #### functionCallWithValue(address target, bytes data, uint256 value, string errorMessage) → bytes
-内部#
+internal#
 与[functionCallWithValue](#functioncallwithvalueaddress-target-bytes-data-uint256-value-string-errormessage-→-bytes)相同，但当目标函数回退时，errorMessage作为回退原因的回退。
 
 *从v3.1版本开始可用。*
 
 #### functionStaticCall(address target, bytes data) → bytes
-内部#
+internal#
 与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行静态调用。
 
 *自v3.3起可用。*
 
 #### functionStaticCall(address target, bytes data, string errorMessage) → bytes
-内部#
+internal#
 与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行静态调用。
 
 *自v3.3起可用。*
@@ -2914,19 +2914,19 @@ Solidity的transfer方法的替代方案：将amount wei发送给recipient，并
 *从v3.4版本开始提供。*
 
 #### functionDelegateCall(address target, bytes data, string errorMessage) → bytes
-内部#
+internal#
 与[functionCall](#functioncalladdress-target-bytes-data-→-bytes)相同，但执行委托调用。
 
 *自v3.4起可用。*
 
 #### verifyCallResultFromTarget(address target, bool success, bytes returndata, string errorMessage) → bytes
-内部#
+internal#
 用于验证低级调用智能合约是否成功的工具，并在调用失败或目标不是合约的情况下回滚（通过冒泡回滚原因或使用提供的原因）。
 
 *自v4.8版本起可用。*
 
 #### verifyCallResult(bool success, bytes returndata, string errorMessage) → bytes
-内部#
+internal#
 用于验证低级调用是否成功并在失败时回滚的工具，可以通过冒泡回滚原因或使用提供的原因来实现。
 
 *自v4.3版本起可用。*
@@ -2948,27 +2948,27 @@ import "@openzeppelin/contracts/utils/Arrays.sol";
 [unsafeAccess(arr, pos)](#unsafeaccessuint256-arr-uint256-pos-→-struct-storageslotuint256slot)
 
 #### findUpperBound(uint256[] array, uint256 element) → uint256
-内部#
+internal#
 搜索一个排序数组并返回第一个大于或等于元素的索引。如果不存在这样的索引（即数组中的所有值都严格小于元素），则返回数组的长度。时间复杂度为O(log n)。
 
 数组应按升序排序，并且不包含重复元素。
 
 #### unsafeAccess(address[] arr, uint256 pos) → struct StorageSlot.AddressSlot
-内部#
+internal#
 以"不安全"的方式访问数组。跳过Solidity的"索引超出范围"检查。
 
 > WARNING
 只在确定pos小于数组长度的情况下使用。
 
 #### unsafeAccess(bytes32[] arr, uint256 pos) → struct StorageSlot.Bytes32Slot
-内部#
+internal#
 以"不安全"的方式访问数组。跳过Solidity的"索引超出范围"检查。
 
 > WARNING
 只有在确定pos小于数组长度时才使用。
 
 #### unsafeAccess(uint256[] arr, uint256 pos) → struct StorageSlot.Uint256Slot
-内部#
+internal#
 以一种“不安全”的方式访问数组。跳过Solidity的“索引超出范围”检查。
 
 > WARNING
@@ -2987,7 +2987,7 @@ import "@openzeppelin/contracts/utils/Base64.sol";
 [encode(data)](#encodebytes-data-→-string)
 
 #### encode(bytes data) → string
-内部#
+internal#
 将一个字节转换为其Base64字符串表示形式。
 
 ### Counters
@@ -3009,16 +3009,16 @@ import "@openzeppelin/contracts/utils/Counters.sol";
 [reset(counter)](#resetstruct-counterscounter-counter)
 
 #### current(struct Counters.Counter counter) → uint256
-内部#
+internal#
 
 #### increment(struct Counters.Counter counter)
-内部#
+internal#
 
 #### decrement(struct Counters.Counter counter)
-内部#
+internal#
 
 #### reset(struct Counters.Counter counter)
-内部#
+internal#
 
 ### Strings
 ```
@@ -3041,27 +3041,27 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 [equal(a, b)](#equalstring-a-string-b-→-bool)
 
 #### toString(uint256 value) → string
-内部#
+internal#
 将uint256转换为其ASCII字符串十进制表示形式。
 
 #### toString(int256 value) → string
-内部#
+internal#
 将int256转换为其ASCII字符串十进制表示。
 
 #### toHexString(uint256 value) → string
-内部#
+internal#
 将一个uint256转换为其ASCII字符串十六进制表示形式。
 
 #### toHexString(uint256 value, uint256 length) → string
-内部#
+internal#
 将uint256转换为固定长度的ASCII字符串十六进制表示形式。
 
 #### toHexString(address addr) → string
-内部#
+internal#
 将长度固定为20字节的地址转换为其非校验的ASCII字符串十六进制表示形式。
 
 #### equal(string a, string b) → bool
-内部#
+internal#
 如果两个字符串相等，则返回true。
 
 ### ShortStrings
@@ -3105,29 +3105,29 @@ contract Named {
 [byteLengthWithFallback(value, store)](#bytelengthwithfallbackshortstring-value-string-store-→-uint256)
 
 #### toShortString(string str) → ShortString
-内部#
+internal#
 将最多31个字符的字符串编码为ShortString。
 
 如果输入字符串过长，将触发StringTooLong错误。
 
 #### toString(ShortString sstr) → string
-内部#
+internal#
 将短字符串解码回“正常”字符串
 
 #### byteLength(ShortString sstr) → uint256
-内部#
+internal#
 返回ShortString的长度。
 
 #### toShortStringWithFallback(string value, string store) → ShortString
-内部#
+internal#
 将字符串编码为ShortString，如果字符串太长则写入存储。
 
 #### toStringWithFallback(ShortString value, string store) → string
-内部#
+internal#
 解码一个被编码为ShortString或使用{setWithFallback}写入存储的字符串。
 
 #### byteLengthWithFallback(ShortString value, string store) → uint256
-内部#
+internal#
 返回使用ShortString编码或使用{setWithFallback}写入存储的字符串的长度。
 
 > WARNING
@@ -3180,35 +3180,35 @@ contract ERC1967 {
 [getBytesSlot(store)](#getbytesslotbytes32-slot-→-struct-storageslotbytesslot-r)
 
 #### getAddressSlot(bytes32 slot) → struct StorageSlot.AddressSlot r
-内部#
+internal#
 返回在slot中位于成员值的AddressSlot。
 
 #### getBooleanSlot(bytes32 slot) → struct StorageSlot.BooleanSlot r
-内部#
+internal#
 返回一个位于槽位的BooleanSlot的成员值。
 
 #### getBytes32Slot(bytes32 slot) → struct StorageSlot.Bytes32Slot r
-内部#
+internal#
 返回一个位于slot的成员值的Bytes32Slot。
 
 #### getUint256Slot(bytes32 slot) → struct StorageSlot.Uint256Slot r
-内部#
+internal#
 返回一个位于slot位置的具有成员值的Uint256Slot。
 
 #### getStringSlot(bytes32 slot) → struct StorageSlot.StringSlot r
-内部#
+internal#
 返回一个StringSlot，其成员值位于slot中。
 
 #### getStringSlot(string store) → struct StorageSlot.StringSlot r
-内部#
+internal#
 返回字符串存储指针存储的StringSlot表示。
 
 #### getBytesSlot(bytes32 slot) → struct StorageSlot.BytesSlot r
-内部#
+internal#
 返回位于插槽的成员值的BytesSlot。
 
 #### getBytesSlot(bytes store) → struct StorageSlot.BytesSlot r
-内部#
+internal#
 将字节存储指针存储的返回为BytesSlot表示形式。
 
 ### Multicall

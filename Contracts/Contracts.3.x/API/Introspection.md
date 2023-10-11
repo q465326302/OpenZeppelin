@@ -42,7 +42,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 [_registerInterface(interfaceId)](#_registerinterfacebytes4-interfaceid)
 
 #### constructor()
-内部#
+internal#
 
 #### supportsInterface(bytes4 interfaceId) → bool
 公开#
@@ -51,7 +51,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 时间复杂度为 O(1)，保证始终使用少于 30,000 gas。
 
 #### _registerInterface(bytes4 interfaceId)
-内部#
+internal#
 将合约注册为实现interfaceId定义的接口。对于实际的ERC165接口的支持是自动的，不需要注册其接口id。
 
 请参阅 [IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
@@ -74,17 +74,17 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 [supportsAllInterfaces(account, interfaceIds)](#supportsallinterfacesaddress-account-bytes4-interfaceids-→-bool)
 
 #### supportsERC165(address account) → bool
-内部#
+internal#
 如果账户支持[IERC165](#ierc165)接口，则返回true。
 
 #### supportsInterface(address account, bytes4 interfaceId) → bool
-内部#
+internal#
 如果账户支持interfaceId定义的接口，则返回true。对于[IERC165](#ierc165)本身的支持会自动查询。
 
 请参见[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-e28692-bool-1)。
 
 #### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
-内部#
+internal#
 返回一个布尔数组，其中每个值对应于传入的接口是否被支持。这样可以批量检查合约的接口，因为你可能预期某些接口不被支持。
 
 请参阅[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-e28692-bool-1)。
@@ -92,7 +92,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 *自v3.4起可用。*
 
 #### supportsAllInterfaces(address account, bytes4[] interfaceIds) → bool
-内部#
+internal#
 如果帐户支持interfaceIds中定义的所有接口，则返回true。自动查询对[IERC165](#ierc165)本身的支持。
 
 批量查询可以通过跳过对[IERC165](#ierc165)支持的重复检查来节省gas。
@@ -220,7 +220,7 @@ ERC1820实现者的接口，根据[EIP](https://eips.ethereum.org/EIPS/eip-1820#
 公开#
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
-内部#
+internal#
 将合约声明为愿意成为账户的interfaceHash的实现者。
 
 请参考[IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-_interfacehash-address-implementer)和[IERC1820Registry.interfaceHash](#interfacehashstring-interfacename-→-bytes32)。

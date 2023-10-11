@@ -14,7 +14,7 @@
 [toEthSignedMessageHash(hash)](#toethsignedmessagehashbytes32-hash-→-bytes32)
 
 #### recover(bytes32 hash, bytes signature) → address
-内部#
+internal#
 返回使用签名对哈希消息（hash）进行签名的地址。该地址可以用于验证目的。
 
 ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s值在低半序中，并且v值为27或28来拒绝它们。
@@ -26,7 +26,7 @@ ecrecover EVM操作码允许可塑（非唯一）签名：该函数通过要求s
 hash必须是用于确保验证安全性的哈希操作的结果：可以制作恢复到任意地址的签名，用于非哈希数据。确保这一点的安全方法是接收原始消息的哈希（可能太长），然后对其调用[toEthSignedMessageHash](#toethsignedmessagehashbytes32-hash-→-bytes32)。
 
 #### toEthSignedMessageHash(bytes32 hash) → bytes32
-内部#
+internal#
 返回一个由哈希创建的以太坊签名消息。这个函数复制了[eth_sign](https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_sign) JSON-RPC方法的行为。
 
 参见[recover](#recoverbytes32-hash-bytes-signature-→-address)。
@@ -38,5 +38,5 @@ hash必须是用于确保验证安全性的哈希操作的结果：可以制作�
 [verify(proof, root, leaf)](#verifyvar-typebytes32-proof-bytes32-root-bytes32-leaf-→-bool)
 
 #### verify([.var-type]#bytes32[# proof, bytes32 root, bytes32 leaf) → bool]
-内部#
+internal#
 如果可以证明一个叶子节点是由根节点定义的Merkle树的一部分，则返回true。为此，必须提供一个证明，其中包含从叶子节点到树根的分支上的兄弟节点哈希。假设每对叶子节点和每对原始数据都已排序。

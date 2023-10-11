@@ -256,7 +256,7 @@ IERC20
 * spender必须对调用者拥有至少减去的值的津贴。
 
 #### _transfer(address sender, address recipient, uint256 amount)
-内部#
+internal#
 将代币数量从发送方移动到接收方。
 
 这个内部函数等同于[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)，并且可以用于实现自动代币费用、削减机制等。
@@ -271,7 +271,7 @@ IERC20
 * 发送方必须至少有amount的余额。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 创建一定数量的代币，并将其分配给账户，增加总供应量。
 
 触发一个[transfer](#transferaddress-from-address-to-uint256-value)事件，其中将from设置为零地址。
@@ -280,7 +280,7 @@ IERC20
 * to不能为零地址。
 
 #### _burn(address account, uint256 amount)
-内部#
+internal#
 销毁账户中的代币数量，从而减少总供应量。
 
 发出一个[transfer](#transferaddress-from-address-to-uint256-value)事件，将目标地址设置为零地址。
@@ -291,7 +291,7 @@ IERC20
 * 账户必须至少拥有指定数量的代币。
 
 #### _approve(address owner, address spender, uint256 amount)
-内部#
+internal#
 将金额设置为拥有者的代币分配给支出者的金额。
 
 这个内部函数等同于approve，并可以用于为某些子系统设置自动津贴等。
@@ -305,14 +305,14 @@ IERC20
 
 #### _setupdecimals(uint8 decimals)
 
-内部#
+internal#
 将 [decimals](#decimals-→-uint8)设置为除默认值18以外的其他值。
 
 > WARNING
 此函数只应在构造函数中调用。与代币合约交互的大多数应用程序不会期望[decimals](#decimals-→-uint8)发生变化，并且如果发生变化可能会工作不正确。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 在任何代币转移之前调用的 hooks 。这包括铸造和销毁。
 
 调用条件：
@@ -393,7 +393,7 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### _snapshot() → uint256
-内部#
+internal#
 创建一个新的快照并返回 Snapshot的 Snapshotid。
 
 发出一个包含相同id的 [Snapshot](#snapshotuint256-id)事件。
@@ -414,7 +414,7 @@ IERC20
 检索在创建快照ID时的总供应量。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 
 #### Snapshot(uint256 id)
 事件#
@@ -482,7 +482,7 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 请参考[ERC20._beforeTokenTransfer](#_beforetokentransferaddress-from-address-to-uint256-amount).
 
 要求：
@@ -604,7 +604,7 @@ IERC20
 [Approval(owner, spender, value)](#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(uint256 cap_)
-内部#
+internal#
 设置上限值。该值是不可变的，只能在构造过程中设置一次。
 
 #### cap() → uint256
@@ -612,7 +612,7 @@ IERC20
 返回代币总供应量的上限。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 请参阅[ERC20._beforeTokenTransfer](#_beforetokentransferaddress-from-address-to-uint256-amount)。
 
 需求：
@@ -635,22 +635,22 @@ IERC20
 [safeDecreaseAllowance(token, spender, value)](#safedecreaseallowancecontract-ierc20-token-address-spender-uint256-value)
 
 #### safeTransfer(contract IERC20 token, address to, uint256 value)
-内部#
+internal#
 
 #### safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)
-内部#
+internal#
 
 #### safeApprove(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 已弃用。此函数存在与[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)中发现的类似问题，不建议使用。
 
 尽可能使用[safeIncreaseAllowance](#safeincreaseallowancecontract-ierc20-token-address-spender-uint256-value)和[safeDecreaseAllowance](#safedecreaseallowancecontract-ierc20-token-address-spender-uint256-value)。
 
 #### safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 
 #### safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 
 
 ### TokenTimelock

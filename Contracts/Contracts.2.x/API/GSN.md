@@ -67,7 +67,7 @@ IRELAYRECIPIENT
 返回此接收者的[IRelayHub](#irelayhub)合约的地址。
 
 #### _upgradeRelayHub(address newRelayHub)
-内部#
+internal#
 切换到新的[IRelayHub](#irelayhub)实例。添加此方法是为了未来的兼容性：没有理由不使用默认实例。
 
 > IMPORTANT
@@ -78,20 +78,20 @@ IRELAYRECIPIENT
 返回此接收方实现构建的[IRelayHub](#irelayhub)的版本字符串。如果使用[_upgradeRelayHub](#_upgraderelayhubaddress-newrelayhub)，则新的[IRelayHub](#irelayhub)实例应与此版本兼容。
 
 #### _withdrawDeposits(uint256 amount, address payable payee)
-内部#
+internal#
 从RelayHub中提取接收者的存款。
 
 派生合约应该在外部接口中以适当的访问控制方式公开此功能。
 
 #### _msgSender() → address payable
-内部#
+internal#
 msg.sender的替代品。返回交易的实际发送者：对于常规交易是msg.sender，对于GSNRelayer 调用是最终用户（其中msg.sender实际上是RelayHub）。
 
 > IMPORTANT
 从[GSNRecipient](#gsnrecipient)派生的合约不应使用[_msg.sender](#_msgsender-→-address-payable)，而应使用_msgSender。
 
 #### _msgData() → bytes
-内部#
+internal#
 替代msg.data。返回交易的实际calldata：对于常规交易，返回msg.data，对于GSNRelayer 调用，返回一个简化版本（其中msg.data包含额外的信息）。
 
 > IMPORTANT
@@ -124,27 +124,27 @@ msg.sender的替代品。返回交易的实际发送者：对于常规交易是m
     * 调用者必须是RelayHub合约。
 
 #### _postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
-内部#
+internal#
 请参阅IRelayRecipient.postRelayedCall。
 
 由GSNRecipient.postRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的Relayer 调用后处理。
 
 #### _approveRelayedCall() → uint256, bytes
-内部#
+internal#
 在acceptRelayedCall中返回此内容以继续执行Relayer 调用。请注意，RelayHub将向此合约收取费用。
 
 #### _approveRelayedCall(bytes context) → uint256, bytes
-内部#
+internal#
 请查看 GSNRecipient._approveRelayedCall。
 
 此重载将上下文转发给 _preRelayedCall 和 _postRelayedCall。
 
 #### _rejectRelayedCall(uint256 errorCode) → uint256, bytes
-内部#
+internal#
 在acceptRelayedCall中返回这个值以阻止执行Relayer 调用。不会收取任何费用。
 
 #### _computeCharge(uint256 gas, uint256 gasPrice, uint256 serviceFee) → uint256
-内部#
+internal#
 
 #### RelayHubChanged(address oldRelayHub, address newRelayHub)
 事件#
@@ -198,14 +198,14 @@ GSNRECIPIENT
 设置可信签名者，该签名者将负责批准Relayer 调用的签名。
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256) → uint256, bytes
-内部#
+internal#
 确保只有带有可信签名的交易才能通过GSNRelayer 。
 
 #### _preRelayedCall(bytes) → bytes32
-内部#
+internal#
 
 #### _postRelayedCall(bytes, bool, uint256, bytes32)
-内部#
+internal#
 
 ### GSNRecipientERC20Fee
 一种[GSN策略](../Gas-Station-Network/Strategies.md#gsn-strategies)是使用一种特殊的ERC20代币作为交易费，我们称之为gas支付代币。收取的费用金额恰好等于收款方所收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
@@ -267,7 +267,7 @@ GSNRECIPIENT
 返回gas支付代币。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 内部函数，用于铸造gas支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
@@ -275,11 +275,11 @@ GSNRECIPIENT
 确保只有拥有足够的gas支付代币余额的用户才能通过GSNRelayer 交易。
 
 #### _preRelayedCall(bytes context) → bytes32
-内部#
+internal#
 对用户进行预充值。将从用户的燃料支付代币余额中扣除最大可能的费用（取决于燃料限制、燃料价格和费用）。请注意，这是对实际费用的过估计，这是必要的，因为我们无法预测执行实际上需要多少燃料。剩余费用将在[_postRelayedCall](#_postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval)中返还给用户。
 
 #### _postRelayedCall(bytes context, bool, uint256 actualCharge, bytes32)
-内部#
+internal#
 一旦实际执行成本确定，将向用户退还之前多收取的金额。
 
 ## Protocol
@@ -300,11 +300,11 @@ GSNRECIPIENT
 [postRelayedCall(context, success, actualCharge, preRetVal)](#postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval-1)
 
 #### getHubAddr() → address
-内部#
+internal#
 返回此收件人与之交互的[IRelayHub](#irelayhub)实例的地址。
 
 #### acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256 maxPossibleCharge) → uint256, bytes
-内部#
+internal#
 被[IRelayHub](#irelayhub)调用以验证接收方是否同意为Relayer 调用付费。请注意，无论Relayer 调用的执行结果如何（即是否还原），接收方都将被收费。
 
 Relayer 请求由from发起，并将由relay提供服务。encodedFunction是Relayer 调用的calldata，因此它的前四个字节是函数选择器。Relayer 调用将转发gasLimit gas，并以至少gasPrice的燃料价格执行事务。relay的费用为transactionFee，并且接收方的最大可能费用为maxPossibleCharge（以wei为单位）。nonce是发送方（from）在[IRelayHub](#irelayhub)中用于重放攻击保护的nonce，approvalData是一个可选参数，可用于保存对所有或部分先前值的签名。
@@ -314,7 +314,7 @@ Relayer 请求由from发起，并将由relay提供服务。encodedFunction是Rel
 [acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-→-uint256-bytes)使用50k gas进行调用：如果在执行过程中用尽，请求将被视为被拒绝。正常的还原也会触发拒绝。
 
 #### preRelayedCall(bytes context) → bytes32
-内部#
+internal#
 在[IRelayHub](#irelayhub)上调用已批准的Relayer 调用请求之前，调用preRelayedCall。在执行Relayer 调用之前，这允许例如预先向交易发送方收费。
 
 context是[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-→-uint256-bytes)返回的元组的第二个值。
@@ -324,7 +324,7 @@ context是[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes
 [preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)使用100k gas进行调用：如果在执行过程中用完gas或者发生回滚，Relayer 调用将不会被执行，但是接收方仍将被收取交易费用。
 
 #### postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
-内部#
+internal#
 在[IRelayHub](#irelayhub)上的已批准的Relayer 调用请求中调用，在Relayer 调用执行后。这允许例如为Relayer 调用的成本向用户收费，从[preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)返回任何超额费用，或执行特定于合约的簿记。
 
 context是[acceptRelayedCall](#acceptrelayedcalladdress-relay-address-from-bytes-encodedfunction-uint256-transactionfee-uint256-gasprice-uint256-gaslimit-uint256-nonce-bytes-approvaldata-uint256-→-uint256-bytes)返回的元组的第二个值。success是Relayer 调用的执行状态。actualCharge是接收方将为交易收取的估计费用，不包括[postRelayedCall](#postrelayedcallbytes-context-bool-success-uint256-actualcharge-bytes32-preretval-1)本身使用的任何gas。preRetVal是[preRelayedCall](#prerelayedcallbytes-context-e28692-bytes32-1)的返回值。

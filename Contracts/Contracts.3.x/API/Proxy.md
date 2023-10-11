@@ -35,17 +35,17 @@ Upgradeability 是在 [UpgradeableProxy](#upgradeableproxy) 合约中实现的�
 [_beforeFallback()](#_beforefallback)
 
 #### _delegate(address implementation)
-内部#
+internal#
 将当前调用委托给实现。
 
 此函数不会返回到其内部调用点，而是直接返回给外部调用者。
 
 #### _implementation() → address
-内部#
+internal#
 这是一个虚函数，应该被重写，以便返回后备函数和[_fallback](#_fallback)应该委派的地址。
 
 #### _fallback()
-内部#
+internal#
 将当前调用委托给_implementation()返回的地址。
 
 该函数不会返回到其内部调用位置，而是直接返回给外部调用者。
@@ -97,11 +97,11 @@ PROXY
 如果_data参数非空，则将其用作对_logic进行委托调用的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
 
 #### _implementation() → address impl
-内部#
+internal#
 返回当前实现地址。
 
 #### _upgradeTo(address newImplementation)
-内部#
+internal#
 将代理升级到新的实现。
 
 发出一个 [Upgraded](#upgradedaddress-implementation)事件。
@@ -212,11 +212,11 @@ modifier#
 只有管理员可以调用此函数。请参阅[ProxyAdmin.upgradeAndCall](#upgradeandcallcontract-transparentupgradeableproxy-proxy-address-implementation-bytes-data)。
 
 #### _admin() → address adm
-内部#
+internal#
 返回当前管理员。
 
 #### _beforeFallback()
-内部#
+internal#
 确保管理员不能访问回退函数。请参阅 [Proxy._beforeFallback](#_beforefallback)。
 
 #### AdminChanged(address previousAdmin, address newAdmin)
@@ -262,15 +262,15 @@ PROXY
 * beacon必须是一个具有[IBeacon](#ibeacon)接口的合约。
 
 #### _beacon() → address beacon
-内部#
+internal#
 返回当前Beacon地址。
 
 #### _implementation() → address
-内部#
+internal#
 返回关联Beacon的当前实现地址。
 
 #### _setBeacon(address beacon, bytes data)
-内部#
+internal#
 更改代理以使用新的Beacon。
 
 如果数据非空，则将其用作委托调用Beacon返回的实现的数据。
@@ -362,23 +362,23 @@ OWNABLE
 [predictDeterministicAddress(master, salt)](#predictdeterministicaddressaddress-master-bytes32-salt-→-address-predicted)
 
 #### clone(address master) → address instance
-内部#
+internal#
 部署并返回一个模仿主合约行为的克隆合约的地址。
 
 该函数使用了create操作码，这个操作码不应该会引发回滚。
 
 #### cloneDeterministic(address master, bytes32 salt) → address instance
-内部#
+internal#
 部署并返回一个模仿主合约行为的克隆合约的地址。
 
 该函数使用create2操作码和一个salt来确定性地部署克隆合约。如果多次使用相同的主合约和salt，将会回滚，因为克隆合约不能在相同的地址上部署两次。
 
 #### predictDeterministicAddress(address master, bytes32 salt, address deployer) → address predicted
-内部#
+internal#
 使用[Clones.cloneDeterministic](#clonedeterministicaddress-master-bytes32-salt-→-address-instance)部署的克隆体的地址计算。
 
 #### predictDeterministicAddress(address master, bytes32 salt) → address predicted
-内部#
+internal#
 使用[Clones.cloneDeterministic](#clonedeterministicaddress-master-bytes32-salt-→-address-instance)部署的克隆体的地址计算。
 
 ## Utilities

@@ -27,7 +27,7 @@ EIP中指定的编码非常通用，因此在Solidity中实现这样的通用编
 [_hashTypedDataV4(structHash)](#_hashtypeddatav4bytes32-structhash-→-bytes32)
 
 #### constructor(string name, string version)
-内部#
+internal#
 初始化域分隔符和参数缓存。
 
 在[EIP 712](https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator)中指定了名称和版本的含义：
@@ -40,11 +40,11 @@ EIP中指定的编码非常通用，因此在Solidity中实现这样的通用编
 除非通过[智能合约升级](../../../Learn/Upgrading-smart-contracts/Upgrading-smart-contracts-hardhat.md)，否则这些参数不能更改。
 
 #### _domainSeparatorV4() → bytes32
-内部#
+internal#
 返回当前链的域分隔符。
 
 #### _hashTypedDataV4(bytes32 structHash) → bytes32
-内部#
+internal#
 给定一个已经[哈希的结构体](https://eips.ethereum.org/EIPS/eip-712#definition-of-hashstruct)，这个函数返回此域的完全编码的EIP712消息的哈希值。
 
 这个哈希值可以与[ECDSA.recover](./Cryptography.md#recoverbytes32-hash-uint8-v-bytes32-r-bytes32-s-→-address)一起使用，以获取消息的签名者。例如：
@@ -91,13 +91,13 @@ ERC20 Permit扩展的接口，允许通过签名进行批准，如[EIP-2612](htt
 有关签名格式的更多信息，请参见相关的[EIP部分](https://eips.ethereum.org/EIPS/eip-2612#specification)。
 
 #### nonces(address owner) → uint256
-内部#
+internal#
 返回所有者的当前nonce。无论何时为 [permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)生成签名，都必须包含此值。
 
 每次成功调用[permit](#permitaddress-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)都会使所有者的nonce增加一。这可以防止签名被多次使用。
 
 #### DOMAIN_SEPARATOR() → bytes32
-内部#
+internal#
 返回[EIP712](./Drafts.md#eip712)定义的用于许可签名编码的域分隔符。
 
 ### ERC20Permit
@@ -163,7 +163,7 @@ IERC20
 [Approval(owner, spender, value)](./ERC20.md#approvaladdress-owner-address-spender-uint256-value)
 
 #### constructor(string name)
-内部#
+internal#
 使用名称参数初始化[EIP712](#eip712)域分隔符，并将版本设置为"1"。
 
 使用与ERC20代币名称相同的名称是一个好主意。

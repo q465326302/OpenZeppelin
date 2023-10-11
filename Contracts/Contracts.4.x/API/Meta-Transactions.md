@@ -18,16 +18,16 @@ import "@openzeppelin/contracts/metatx/ERC2771Context.sol";
 [_msgData()](#_msgdata-→-bytes)
 
 #### constructor(address trustedForwarder)
-内部#
+internal#
 
 #### isTrustedForwarder(address forwarder) → bool
 公开#
 
 #### _msgSender() → address sender
-内部#
+internal#
 
 #### _msgData() → bytes
-内部#
+internal#
 
 ## 实用程序
 

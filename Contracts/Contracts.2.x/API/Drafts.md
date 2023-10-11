@@ -119,13 +119,13 @@ IERC20
 公开#
 
 #### _transfer(address from, address to, uint256 value)
-内部#
+internal#
 
 #### _mint(address account, uint256 value)
-内部#
+internal#
 
 #### _burn(address account, uint256 value)
-内部#
+internal#
 
 #### Snapshot(uint256 id)
 事件#
@@ -234,13 +234,13 @@ OWNABLE
 [decrement(counter)](#decrementstruct-counterscounter-counter)
 
 #### current(struct Counters.Counter counter) → uint256
-内部#
+internal#
 
 #### increment(struct Counters.Counter counter)
-内部#
+internal#
 
 #### decrement(struct Counters.Counter counter)
-内部#
+internal#
 
 ### SignedSafeMath
 带有安全检查并在出错时回滚的签名数学操作。
@@ -255,19 +255,19 @@ OWNABLE
 [add(a, b)](#addint256-a-int256-b-→-int256)
 
 #### mul(int256 a, int256 b) → int256
-内部#
+internal#
 乘以两个有符号整数，溢出时返回。
 
 #### div(int256 a, int256 b) → int256
-内部#
+internal#
 两个有符号整数的整数除法，截断商，除以零时会回退。
 
 #### sub(int256 a, int256 b) → int256
-内部#
+internal#
 减去两个有符号整数，溢出时回滚。
 
 #### add(int256 a, int256 b) → int256
-内部#
+internal#
 将两个有符号整数相加，溢出时返回反向值。
 
 ## ERC 1046

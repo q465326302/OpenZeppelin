@@ -15,15 +15,15 @@
 [has(role, account)](#hasstruct-rolesrole-role-address-account-→-bool)
 
 #### add(struct Roles.Role role, address account)
-内部#
+internal#
 给这个角色授予账户访问权限。
 
 #### remove(struct Roles.Role role, address account)
-内部#
+internal#
 移除该角色对账户的访问权限。
 
 #### has(struct Roles.Role role, address account) → bool
-内部#
+internal#
 检查账户是否具有此角色。
 
 ## Roles
@@ -60,7 +60,7 @@ CONTEXT
 modifier#
 
 #### constructor()
-内部#
+internal#
 
 #### isCapper(address account) → bool
 公开#
@@ -72,10 +72,10 @@ modifier#
 公开#
 
 #### _addCapper(address account)
-内部#
+internal#
 
 #### _removeCapper(address account)
-内部#
+internal#
 
 #### CapperAdded(address account)
 事件#
@@ -115,7 +115,7 @@ CONTEXT
 modifier#
 
 #### constructor()
-内部#
+internal#
 
 #### isMinter(address account) → bool
 公开#
@@ -127,10 +127,10 @@ modifier#
 公开#
 
 #### _addMinter(address account)
-内部#
+internal#
 
 #### _removeMinter(address account)
-内部#
+internal#
 
 #### MinterAdded(address account)
 事件#
@@ -170,7 +170,7 @@ CONTEXT
 modifier#
 
 #### constructor()
-内部#
+internal#
 
 #### isPauser(address account) → bool
 公开#
@@ -182,10 +182,10 @@ modifier#
 公开#
 
 #### _addPauser(address account)
-内部#
+internal#
 
 #### _removePauser(address account)
-内部#
+internal#
 
 #### PauserAdded(address account)
 事件#
@@ -225,7 +225,7 @@ CONTEXT
 modifier#
 
 #### constructor()
-内部#
+internal#
 
 #### isSigner(address account) → bool
 公开#
@@ -237,10 +237,10 @@ modifier#
 公开#
 
 #### _addSigner(address account)
-内部#
+internal#
 
 #### _removeSigner(address account)
-内部#
+internal#
 
 #### SignerAdded(address account)
 事件#
@@ -281,7 +281,7 @@ CONTEXT
 modifier#
 
 #### constructor()
-内部#
+internal#
 
 #### isWhitelistAdmin(address account) → bool
 公开#
@@ -293,10 +293,10 @@ modifier#
 公开#
 
 #### _addWhitelistAdmin(address account)
-内部#
+internal#
 
 #### _removeWhitelistAdmin(address account)
-内部#
+internal#
 
 #### WhitelistAdminAdded(address account)
 事件#
@@ -370,10 +370,10 @@ modifier#
 公开#
 
 #### _addWhitelisted(address account)
-内部#
+internal#
 
 #### _removeWhitelisted(address account)
-内部#
+internal#
 
 #### WhitelistedAdded(address account)
 事件#

@@ -63,7 +63,7 @@ IRELAYRECIPIENT
 返回此收件人的[IRelayHub](#irelayhub)合约的地址。
 
 #### _upgradeRelayHub(address newRelayHub)
-内部#
+internal#
 切换到新的[IRelayHub](#irelayhub)实例。此方法是为了未来的保护措施：没有理由不使用默认实例。
 
 > IMPORTANT
@@ -74,13 +74,13 @@ IRELAYRECIPIENT
 返回此接收方实现版本的[IRelayHub](#irelayhub)版本字符串。如果使用[_upgradeRelayHub](#_upgraderelayhubaddress-newrelayhub)，则新的[IRelayHub](#irelayhub)实例应与此版本兼容。
 
 #### _withdrawDeposits(uint256 amount, address payable payee)
-内部#
+internal#
 从RelayHub中撤回收款人的存款。
 
 衍生合约应该以外部接口的形式公开这一操作，并进行适当的访问控制。
 
 #### _msgSender() → address payable
-内部#
+internal#
 替代msg.sender的方法。返回交易的实际发送者：对于普通交易，返回msg.sender，对于GSNRelayer 调用，返回最终用户（其中msg.sender实际上是RelayHub）。
 
 > IMPORTANT
@@ -101,7 +101,7 @@ IRELAYRECIPIENT
     * 调用者必须是RelayHub合约。
 
 #### _preRelayedCall(bytes context) → bytes32
-内部#
+internal#
 请参阅IRelayRecipient.preRelayedCall。
 
 由GSNRecipient.preRelayedCall调用，用于断言调用者是RelayHub合约。派生合约必须实现此函数以执行任何他们希望进行的Relayer 调用预处理。
@@ -122,27 +122,27 @@ IRELAYRECIPIENT
     * 调用者必须是RelayHub合约。
 
 #### _postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)
-内部#
+internal#
 请参阅IRelayRecipient.postRelayedCall。
 
 通过GSNRecipient.postRelayedCall调用，该函数断言调用者是RelayHub合约。派生合约必须实现此函数，并进行任何它们希望进行的Relayer 调用后处理。
 
 #### _approveRelayedCall() → uint256, bytes
-内部#
+internal#
 返回此值以继续执行Relayer 调用。请注意，RelayHub将向此合约收取费用。
 
 #### _approveRelayedCall(bytes context) → uint256, bytes
-内部#
+internal#
 请参阅 GSNRecipient._approveRelayedCall。
 
 这个重载将上下文传递给 _preRelayedCall 和 _postRelayedCall。
 
 #### _rejectRelayedCall(uint256 errorCode) → uint256, bytes
-内部#
+internal#
 在acceptRelayedCall中返回此内容以阻止执行Relayer 调用。不会收取任何费用。
 
 #### _computeCharge(uint256 gas, uint256 gasPrice, uint256 serviceFee) → uint256
-内部#
+internal#
 
 #### RelayHubChanged(address oldRelayHub, address newRelayHub)
 事件#
@@ -198,10 +198,10 @@ GSNRECIPIENT
 确保只有带有可信签名的交易才能通过GSNRelayer 。
 
 #### _preRelayedCall(bytes) → bytes32
-内部#
+internal#
 
 #### _postRelayedCall(bytes, bool, uint256, bytes32)
-内部#
+internal#
 
 ### GSNRecipientERC20Fee
 一种[GSN策略](../Gas-Station-Network/Strategies.md)是以一种特殊目的的ERC20代币收取交易费用，我们将其称为gas支付代币。所收取的金额恰好等于收款方收取的以太金额。这意味着该代币基本上与以太的价值挂钩。
@@ -258,7 +258,7 @@ GSNRECIPIENT
 返回gas支付代币。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 内部函数用于铸造gas支付代币。派生合约应该在其公共API中公开此函数，并配备适当的访问控制机制。
 
 #### acceptRelayedCall(address, address from, bytes, uint256 transactionFee, uint256 gasPrice, uint256, uint256, bytes, uint256 maxPossibleCharge) → uint256, bytes
@@ -266,11 +266,11 @@ GSNRECIPIENT
 确保只有拥有足够的Gas支付代币余额的用户才能通过GSNRelayer 交易。
 
 #### _preRelayedCall(bytes context) → bytes32
-内部#
+internal#
 对用户进行预付费。最大可能的费用（取决于gas限制、gas价格和费用）将从用户的gas支付代币余额中扣除。请注意，这是对实际费用的过估计，这是因为我们无法预测执行实际需要多少gas。剩余部分将在[_postRelayedCall](#_postrelayedcallbytes-context-bool-uint256-actualcharge-bytes32)中退还给用户。
 
 #### _postRelayedCall(bytes context, bool, uint256 actualCharge, bytes32)
-内部#
+internal#
 一旦实际执行成本知道，将向用户返还之前多收取的金额。
 
 ## Protocol

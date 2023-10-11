@@ -59,7 +59,7 @@ modifier#
 当合约暂停时才能调用的修饰符。
 
 #### constructor()
-内部#
+internal#
 在未暂停状态下初始化合约。将Pauser角色分配给部署者。
 
 #### paused() → bool

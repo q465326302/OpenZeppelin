@@ -196,7 +196,7 @@ import "@openzeppelin/contracts/finance/VestingWallet.sol";
 计算已经归属的代币数量。默认实现是线性归属曲线。
 
 #### _vestingSchedule(uint256 totalAllocation, uint64 timestamp) → uint256
-内部#
+internal#
 实现分配公式的虚拟化。根据资产的总历史分配，这将返回随时间变化的已分配金额。
 
 #### EtherReleased(uint256 amount)

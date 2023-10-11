@@ -40,27 +40,27 @@ ERC-2981仅指定了一种信号版税信息的方式，不强制执行其支付
 根据可能以任何交换单位计价的销售价格，返回应支付的版税金额及其受益人。版税金额应以同一交换单位计价并支付。
 
 #### _feeDenominator() → uint96
-内部#
+internal#
 [_setTokenRoyalty](#_setdefaultroyaltyaddress-receiver-uint96-feenumerator)和[_setDefaultRoyalty](#_settokenroyaltyuint256-tokenid-address-receiver-uint96-feenumerator)中设置的费用的分母，用于将其解释为销售价格的分数。默认为10000，因此费用以基点表示，但可以通过重写进行自定义。
 
 #### _setDefaultRoyalty(address receiver, uint96 feeNumerator)
-内部#
+internal#
 设置所有合约中的ID默认的版税信息。
 要求：
 * 接收方地址不能为零地址。
 * 费用分子不能大于费用分母。
 
 #### _deleteDefaultRoyalty()
-内部#
+internal#
 移除默认版权信息。
 
 #### _setTokenRoyalty(uint256 tokenId, address receiver, uint96 feeNumerator)
-内部#
+internal#
 设置特定代币ID的版税信息，重写全局默认设置。
 要求：
 * 接收者不能为零地址。
 * 费用分子不能大于费用分母。
 
 #### _resetTokenRoyalty(uint256 tokenId)
-内部#
+internal#
 将代币ID的版税信息重置为全局默认值。

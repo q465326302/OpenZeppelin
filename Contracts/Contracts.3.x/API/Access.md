@@ -35,7 +35,7 @@ modifier#
 如果被除了所有者之外的任何账户调用，则会抛出异常。
 
 #### constructor()
-内部#
+internal#
 初始化合约，将部署者设为初始所有者。
 
 #### owner() → address
@@ -159,7 +159,7 @@ DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此�
 * 调用者必须是账户。
 
 #### _setupRole(bytes32 role, address account)
-内部#
+internal#
 将角色授予账户。
 
 如果账户尚未被授予角色，则触发[RoleGranted](#rolegrantedbytes32-role-address-account-address-sender)事件。请注意，与[grantRole](#grantrolebytes32-role-address-account)不同，此函数不会对调用账户进行任何检查。
@@ -170,7 +170,7 @@ DEFAULT_ADMIN_ROLE也是其自身的管理员：它有权限授予和撤销此�
 以其他方式使用此函数实际上是规避[AccessControl](#accesscontrol)强加的管理员系统。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
-内部#
+internal#
 将adminRole设置为role的管理员角色。
 
 发出[RoleAdminChanged](#roleadminchangedbytes32-role-bytes32-previousadminrole-bytes32-newadminrole)事件。

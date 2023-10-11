@@ -73,31 +73,31 @@ CONTEXT
 低级代币购买请勿**重写此函数**。此函数具有非重入保护，因此不应由另一个非重入函数调用。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 验证进货的有效性。使用require语句在条件不满足时恢复状态。在继承自Crowdsale的合约中使用super来扩展验证。CappedCrowdsale.sol的_preValidatePurchase方法的示例：super._preValidatePurchase（受益人，weiAmount）; require（weiRaised（）。add（weiAmount）⇐ cap）;
 
 #### _postValidatePurchase(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 验证已执行的购买。观察状态并使用回滚语句来撤销无效条件。
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
-内部#
+internal#
 代币的来源。重写此方法以修改众筹最终获取和发送其代币的方式。
 
 #### _processPurchase(address beneficiary, uint256 tokenAmount)
-内部#
+internal#
 当购买已经验证并准备执行时执行。不一定发出/发送代币。
 
 #### _updatePurchasingState(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 对于需要内部状态来检查有效性的扩展进行重写（例如当前用户的贡献等）。
 
 #### _getTokenAmount(uint256 weiAmount) → uint256
-内部#
+internal#
 重写以扩展将以太转换为代币的方式。
 
 #### _forwardFunds()
-内部#
+internal#
 确定以太坊在购买时如何存储/转发。
 
 #### TokensPurchased(address purchaser, address beneficiary, uint256 value, uint256 amount)
@@ -165,7 +165,7 @@ CONTEXT
 检查津贴中剩余的代币数量。
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
-内部#
+internal#
 通过从钱包中转移代币来重写父级行为。
 
 ### MintedCrowdsale
@@ -211,7 +211,7 @@ CONTEXT
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### _deliverTokens(address beneficiary, uint256 tokenAmount)
-内部#
+internal#
 通过购买时铸造代币来重写交付。
 
 ## Validation
@@ -277,7 +277,7 @@ CONTEXT
 检查是否达到了上限。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 扩展父类行为，要求购买必须遵守资金上限。
 
 ### IndividuallyCappedCrowdsale
@@ -364,11 +364,11 @@ CROWDSALE
 返回特定受益人迄今为止的捐款金额。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 扩展父级行为以尊重受益人的资金上限。
 
 #### _updatePurchasingState(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 扩展父级行为以更新受益人的捐款。
 
 ### PausableCrowdsale
@@ -454,7 +454,7 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### _preValidatePurchase(address _beneficiary, uint256 _weiAmount)
-内部#
+internal#
 验证即将进行的购买。使用require语句在条件不满足时回滚状态。使用super来连接验证。添加验证，众筹销售不能暂停。
 
 #### TimedCrowdsale
@@ -539,11 +539,11 @@ modifier#
 检查众筹开放的期限是否已经过去。
 
 #### _preValidatePurchase(address beneficiary, uint256 weiAmount)
-内部#
+internal#
 延长要求在贡献期内的父级行为。
 
 #### _extendTime(uint256 newClosingTime)
-内部#
+internal#
 延长众筹活动。
 
 #### TimedCrowdsaleExtended(uint256 prevClosingTime, uint256 newClosingTime)
@@ -636,7 +636,7 @@ WHITELISTADMINROLE
 [WhitelistAdminRemoved(account)](./Access.md#whitelistedremovedaddress-account)
 
 #### _preValidatePurchase(address _beneficiary, uint256 _weiAmount)
-内部#
+internal#
 扩展父行为，要求受益人必须在白名单中。请注意，对发送交易的账户没有任何限制。
 
 ## Distribution
@@ -715,7 +715,7 @@ CROWDSALE
 [TokensPurchased(purchaser, beneficiary, value, amount)](#tokenspurchasedaddress-purchaser-address-beneficiary-uint256-value-uint256-amount)
 
 #### constructor()
-内部#
+internal#
 
 #### finalized() → bool
 公开#
@@ -725,7 +725,7 @@ CROWDSALE
 必须在众筹结束后调用，以完成一些额外的最终工作。调用合约的最终化函数。
 
 #### _finalization()
-内部#
+internal#
 可以被重写以添加最终化逻辑。重写的函数应该调用super._finalization()来确保完整地执行最终化链。
 
 #### CrowdsaleFinalized()
@@ -806,7 +806,7 @@ CROWDSALE
 公开#
 
 #### _processPurchase(address beneficiary, uint256 tokenAmount)
-内部#
+internal#
 通过存储到期余额并将代币交付给保险库，重写了父级的功能。这样可以确保代币在提取时可用（如果稍后调用_deliverTokens可能不会这样）。
 
 ### RefundableCrowdsale
@@ -904,11 +904,11 @@ CROWDSALE
 检查是否达到了筹款目标。
 
 #### _finalization()
-内部#
+internal#
 当调用finalize()时，进行的最终化任务。
 
 #### _forwardFunds()
-内部#
+internal#
 重写众筹资金转发，将资金发送到托管账户。
 
 ### RefundablePostDeliveryCrowdsale

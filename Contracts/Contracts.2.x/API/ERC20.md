@@ -220,7 +220,7 @@ IERC20
 * spender必须至少有subtractValue的津贴给调用者。
 
 #### _transfer(address sender, address recipient, uint256 amount)
-内部#
+internal#
 将代币数量从发送者转移到接收者。
 
 这是一个内部函数，相当于[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)，可以用于实现自动代币费用、减持机制等。
@@ -235,7 +235,7 @@ IERC20
 * 发送者必须拥有至少amount数量的余额。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 创建一定数量的代币并将其分配给账户，增加总供应量。
 
 发出一个[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)事件，将from设置为零地址。
@@ -245,7 +245,7 @@ IERC20
 * to不能是零地址。
 
 #### _burn(address account, uint256 amount)
-内部#
+internal#
 销毁账户中的一定数量代币，从而减少总供应量。
 
 发出一个[transfer](#transferaddress-recipient-uint256-amount-e28692-bool-1)事件，将to设置为零地址。
@@ -257,7 +257,7 @@ IERC20
 * 账户必须至少拥有amount个代币。
 
 #### _approve(address owner, address spender, uint256 amount)
-内部#
+internal#
 将金额设置为spender对所有者代币的津贴。
 
 这个内部函数等同于approve，并可以用于设置某些子系统的自动津贴等。
@@ -271,7 +271,7 @@ IERC20
 * spender不能是零地址。
 
 #### _burnFrom(address account, uint256 amount)
-内部#
+internal#
 销毁账户中的代币数量。然后从调用者的可用额度中扣除相应的数量。
 
 请参考[_burn](#_burnaddress-account-uint256-amount)和[_approve](#_approveaddress-owner-address-spender-uint256-amount)。
@@ -644,7 +644,7 @@ IERC20
 返回代币总供应量的上限。
 
 #### _mint(address account, uint256 value)
-内部#
+internal#
 请参阅[ERC20Mintable.mint](#mintaddress-account-uint256-amount-→-bool)。
 
 要求：
@@ -668,19 +668,19 @@ IERC20
 [safeDecreaseAllowance(token, spender, value)](#safedecreaseallowancecontract-ierc20-token-address-spender-uint256-value)
 
 #### safeTransfer(contract IERC20 token, address to, uint256 value)
-内部#
+internal#
 
 #### safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)
-内部#
+internal#
 
 #### safeApprove(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 
 #### safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 
 #### safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 
 ### TokenTimelock
 一个代币持有者合约，允许受益人在给定的释放时间后提取代币。

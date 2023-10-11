@@ -346,7 +346,7 @@ modifier#
 治理执行地址可能与Governor自身的地址不同，例如可能是一个时间锁。这可以通过模块自定义，通过重写[_executor](#_executor-→-address)函数来实现。执行者只能在治理程序的[execute](#executeaddress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)函数执行期间调用这些函数，而不能在其他任何情况下调用。因此，例如，附加的时间锁提议者不能在不经过治理协议的情况下更改治理参数（自v4.6起）。
 
 #### constructor(string name_)
-内部#
+internal#
 设置[name](#name-e28692-string-1)和[version](#version-e28692-string-1)的值
 
 #### receive()
@@ -394,26 +394,26 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 返回创建给定提案的账户。
 
 #### _quorumReached(uint256 proposalId) → bool
-内部#
+internal#
 已经投票的数量超过了阈值限制。
 
 #### _voteSucceeded(uint256 proposalId) → bool
-内部#
+internal#
 提案成功与否
 
 #### _getVotes(address account, uint256 timepoint, bytes params) → uint256
-内部#
+internal#
 获取特定时间点的帐户的投票权重，用params描述的投票方式。
 
 #### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes params)
-内部#
+internal#
 
 根据给定的支持、投票权重和投票参数，为提案ID的账户注册一次投票。
 
 注意：支持是通用的，根据所使用的投票系统可以代表各种不同的含义。
 
 #### _defaultParams() → bytes
-内部#
+internal#
 默认情况下，castVote方法使用的附加编码参数（不包括它们）。
 
 注意：应该由特定的实现来重写以使用适当的值，附加参数的含义在该实现的上下文中。
@@ -431,19 +431,19 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 请参阅 [IGovernor.cancel](#canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256-proposalid).
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
-内部#
+internal#
 内部执行机制。可以被重写以实现不同的执行机制。
 
 #### _beforeExecute(uint256, address[] targets, uint256[], bytes[] calldatas, bytes32)
-内部#
+internal#
 在执行触发之前的 hooks 。
 
 #### _afterExecute(uint256, address[], uint256[], bytes[], bytes32)
-内部#
+internal#
 在执行被触发后的 hooks 。
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-内部#
+internal#
 内部取消机制：锁定提案计时器，防止其重新提交。将其标记为已取消，以便与已执行的提案区分。
 
 发出[IGovernor.ProposalCanceled](#proposalcanceleduint256-proposalid)事件。
@@ -477,14 +477,14 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 请参阅 [IGovernor.castVoteWithReasonAndParamsBySig](#castvotewithreasonandparamsbysiguint256-proposalid-uint8-support-string-reason-bytes-params-uint8-v-bytes32-r-bytes32-s-→-uint256-balance).
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason) → uint256
-内部#
+internal#
 
 内部投票机制：检查投票是否待定，尚未投票，使用[IGovernor.getVotes](#getvotesaddress-account-uint256-timepoint-→-uint256)检索投票权重，并调用[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)内部函数。使用_defaultParams()。
 
 触发[IGovernor.VoteCast](#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
-内部#
+internal#
 内部投票投票机制：检查投票是否挂起，是否尚未投票，使用[IGovernor.getVotes](#getvotesaddress-account-uint256-timepoint-→-uint256)检索投票权重，并调用[_countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)内部函数。
 
 发出(#votecastaddress-indexed-voter-uint256-proposalid-uint8-support-uint256-weight-string-reason)事件。
@@ -494,7 +494,7 @@ Governor Bravo界面的一部分：*“选民成为提案人所需的票数”*�
 将交易或函数调用转发到任意目标。在使用时间锁定等合约作为治理执行者的情况下，可以在治理提案中调用此函数来恢复错误发送到治理合约的代币或以太。请注意，如果执行者只是治理本身，则使用Relayer 是多余的。
 
 #### _executor() → address
-内部#
+internal#
 governor执行行动的地址。将通过执行通过另一个合约（如时间锁）的模块来进行重载。
 
 #### onERC721Received(address, address, uint256, bytes) → bytes4
@@ -510,7 +510,7 @@ governor执行行动的地址。将通过执行通过另一个合约（如时间
 请参阅 [IERC1155Receiver.onERC1155BatchReceived](./ERC1155.md#onerc1155batchreceivedaddress-operator-address-from-uint256-ids-uint256-values-bytes-data-→-bytes4).
 
 #### _isValidDescriptionForProposer(address proposer, string description) → bool
-内部#
+internal#
 检查提案人是否被授权提交具有给定描述的提案。
 
 如果提案描述以#proposer=0x???结尾，其中0x???是以十六进制字符串（不区分大小写）表示的地址，则只有该地址被授权提交此提案。
@@ -609,16 +609,16 @@ IERC5267
 访问内部投票计数器。
 
 #### _quorumReached(uint256 proposalId) → bool
-内部#
+internal#
 请参阅 [Governor._quorumReached](#_quorumreacheduint256-proposalid-→-bool).
 
 #### _voteSucceeded(uint256 proposalId) → bool
-内部#
+internal#
 请参阅 [Governor._voteSucceeded](#_votesucceededuint256-proposalid-→-bool).
 在这个模块中，forVotes必须严格超过againstVotes。
 
 #### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes)
-内部#
+internal#
 请参阅 [Governor._countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params)
 在这个模块中，支持遵循了从Governor Bravo中的VoteType枚举。
 
@@ -699,7 +699,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(contract IVotes tokenAddress)
-内部#
+internal#
 
 #### clock() → uint48
 公开#
@@ -710,7 +710,7 @@ IERC5267
 在EIP-6372中指定的时钟的机器可读描述。
 
 #### _getVotes(address account, uint256 timepoint, bytes) → uint256
-内部#
+internal#
 
 ### GovernorVotesQuorumFraction
 ```
@@ -798,7 +798,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(uint256 quorumNumeratorValue)
-内部#
+internal#
 将法定人数初始化为代币总供应量的一部分。
 
 该分数被指定为分子/分母。默认情况下，分母为100，因此法定人数被指定为百分比：分子为10对应于法定人数为总供应量的10％。可以通过重写[quorumDenominator](#quorumdenominator-→-uint256)来自定义分母。
@@ -830,7 +830,7 @@ IERC5267
 * 新的分子必须小于或等于分母。
 
 #### _updateQuorumNumerator(uint256 newQuorumNumerator)
-内部#
+internal#
 更改法定人数的分子。
 
 发出一个(#quorumnumeratorupdateduint256-oldquorumnumerator-uint256-newquorumnumerator)事件。
@@ -918,7 +918,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(contract ERC20VotesComp token_)
-内部#
+internal#
 
 #### clock() → uint48
 公开#
@@ -929,7 +929,7 @@ IERC5267
 在EIP-6372中指定的时钟的机器可读描述。
 
 #### _getVotes(address account, uint256 timepoint, bytes) → uint256
-内部#
+internal#
 
 ## 扩展
 
@@ -1025,7 +1025,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(contract TimelockController timelockAddress)
-内部#
+internal#
 设置时间锁。
 
 #### supportsInterface(bytes4 interfaceId) → bool
@@ -1049,15 +1049,15 @@ IERC5267
 将提案排队到时间锁的功能。
 
 #### _execute(uint256, address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash)
-内部#
+internal#
 重写的execute函数通过timelock定运行已排队的提案。
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-内部#
+internal#
 [Governor._cancel](#_canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256)函数的重写版本，用于取消已经排队的时间锁提案。
 
 #### _executor() → address
-内部#
+internal#
 通过这个地址，governor执行行动。在这种情况下，是指timelock定。
 
 #### updateTimelock(contract TimelockController newTimelock)
@@ -1161,7 +1161,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(contract ICompoundTimelock timelockAddress)
-内部#
+internal#
 设置时间锁。
 
 #### supportsInterface(bytes4 interfaceId) → bool
@@ -1185,15 +1185,15 @@ IERC5267
 将一个提案排队到时间锁定的函数。
 
 #### _execute(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
-内部#
+internal#
 重写的execute函数通过timelock定来运行已排队的提案。
 
 #### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
-内部#
+internal#
 重写版本的 [Governor._cancel](#_canceladdress-targets-uint256-values-bytes-calldatas-bytes32-descriptionhash-→-uint256) 函数，用于取消已经排队的时间锁定提案。
 
 #### _executor() → address
-内部#
+internal#
 行动的执行地址是governor。在这种情况下，时间锁。
 
 #### __acceptAdmin()
@@ -1301,7 +1301,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(uint256 initialVotingDelay, uint256 initialVotingPeriod, uint256 initialProposalThreshold)
-内部#
+internal#
 初始化治理参数。
 
 #### votingDelay() → uint256
@@ -1335,13 +1335,13 @@ IERC5267
 发出[ProposalThresholdSet](#proposalthresholdsetuint256-oldproposalthreshold-uint256-newproposalthreshold)事件。
 
 #### _setVotingDelay(uint256 newVotingDelay)
-内部#
+internal#
 为投票延迟设置一个内部的setter函数。
 
 触发一个[VotingDelaySet](#votingdelaysetuint256-oldvotingdelay-uint256-newvotingdelay)事件。
 
 #### _setVotingPeriod(uint256 newVotingPeriod)
-内部#
+internal#
 设置投票期的内部设置器。
 
 发出一个[VotingPeriodSet](#votingperiodsetuint256-oldvotingperiod-uint256-newvotingperiod)事件。
@@ -1444,7 +1444,7 @@ IERC5267
 [EIP712DomainChanged()](./Interfaces.md#eip712domainchanged)
 
 #### constructor(uint64 initialVoteExtension)
-内部#
+internal#
 初始化投票扩展参数：从提案达到法定人数到投票期结束所需的时间，以块数或秒数（取决于议长时钟模式）计算。如有需要，投票期限将延长超过提案创建时设定的期限。
 
 #### proposalDeadline(uint256 proposalId) → uint256
@@ -1452,7 +1452,7 @@ IERC5267
 如果提案在投票期结束时才达到法定人数，那么返回的提案截止日期可能会超过提案创建时设定的截止日期。请参阅[Governor.proposalDeadline](#proposaldeadlineuint256-proposalid-e28692-uint256-1)。
 
 #### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
-内部#
+internal#
 投票并检测是否导致法定人数达到，有可能延长投票期。参见[Governor._castVote](#_castvoteuint256-proposalid-address-account-uint8-support-string-reason-bytes-params-→-uint256)。
 
 可能会发出[ProposalExtended](#proposalextendeduint256-indexed-proposalid-uint64-extendeddeadline)事件。
@@ -1468,7 +1468,7 @@ IERC5267
 发出*LateQuorumVoteExtensionSet*事件。
 
 #### _setLateQuorumVoteExtension(uint64 newVoteExtension)
-内部#
+internal#
 更改[lateQuorumVoteExtension](#latequorumvoteextension-→-uint64)。这是一个内部函数，如果需要另一个访问控制机制，则可以在公共函数中公开，如[setLateQuorumVoteExtension](#setlatequorumvoteextensionuint64-newvoteextension)。
 
 发出[LateQuorumVoteExtensionSet](#latequorumvoteextensionsetuint64-oldvoteextension-uint64-newvoteextension)事件。
@@ -1636,15 +1636,15 @@ IERC5267
 请参阅 [IGovernor.hasVoted](#hasvoteduint256-proposalid-address-account-→-bool).
 
 #### _quorumReached(uint256 proposalId) → bool
-内部#
+internal#
 请参阅 [Governor._quorumReached](#_quorumreacheduint256-proposalid-→-bool)。在此模块中，只有对投票进行计数才能达到法定人数。
 
 #### _voteSucceeded(uint256 proposalId) → bool
-内部#
+internal#
 请参阅 [Governor._voteSucceeded](#_votesucceededuint256-proposalid-→-bool)。在这个模块中，支持票必须严格超过反对票。
 
 #### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes)
-内部#
+internal#
 请参阅 [Governor._countVote](#_countvoteuint256-proposalid-address-account-uint8-support-uint256-weight-bytes-params).在这个模块中，支持者们追随着 Governor Bravo。
 
 ### Deprecated
@@ -1806,7 +1806,7 @@ EIP-6372规定的时钟的机器可读描述。
 * timepoint必须在过去。如果使用区块号进行操作，则该区块必须已经被挖掘。
 
 #### _getTotalSupply() → uint256
-内部#
+internal#
 返回当前总投票供应量。
 
 #### delegates(address account) → address
@@ -1822,17 +1822,17 @@ EIP-6372规定的时钟的机器可读描述。
 将签名者的选票授予代表。
 
 #### _delegate(address account, address delegatee)
-内部#
+internal#
 将账户的所有投票单位委托给委托人。
 
 触发事件[IVotes.DelegateChanged]和[IVotes.DelegateVotesChanged]。
 
 #### _transferVotingUnits(address from, address to, uint256 amount)
-内部#
+internal#
 转让、铸造或销毁投票单位。要注册一个铸造，from 应该是零。要注册一个销毁，to 应该是零。铸造和销毁将调整投票单位的总供应量。
 
 #### _useNonce(address owner) → uint256 current
-内部#
+internal#
 消耗一个随机数。
 
 返回当前值并增加随机数。
@@ -1846,7 +1846,7 @@ EIP-6372规定的时钟的机器可读描述。
 返回合约[的EIP712](./Utils.md#eip712)域分隔符。
 
 #### _getVotingUnits(address) → uint256
-内部#
+internal#
 必须返回一个账户持有的投票单位。
 
 ## 时间锁定
@@ -2011,7 +2011,7 @@ modifier#
 * 调用者必须具有'executor'角色。
   
 #### _execute(address target, uint256 value, bytes data)
-内部#
+internal#
 执行一个操作的调用。
 
 #### updateDelay(uint256 newDelay)

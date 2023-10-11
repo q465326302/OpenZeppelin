@@ -149,7 +149,7 @@ ACCESSCONTROL
 * 调用者必须具有 PAUSER_ROLE。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 
 
 ### ERC721PresetMinterPauserAutoId
@@ -322,7 +322,7 @@ Token的URI将根据baseURI和它们的token ID自动生成。请参阅[ERC721.t
 调用者必须具有PAUSER_ROLE。
 
 #### _beforeTokenTransfer(address from, address to, uint256 tokenId)
-内部#
+internal#
 
 ### ERC1155PresetMinterPauser
 
@@ -471,7 +471,7 @@ ACCESSCONTROL
 * 调用者必须具有 PAUSER_ROLE。
 
 #### _beforeTokenTransfer(address operator, address from, address to, uint256[] ids, uint256[] amounts, bytes data)
-内部#
+internal#
 
 ### ERC20PresetFixedSupply
 [ERC20](./ERC20.md)代币，包括：

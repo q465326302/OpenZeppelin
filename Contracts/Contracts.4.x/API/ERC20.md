@@ -263,7 +263,7 @@ IERC20
 * spender必须至少具有减去值的调用者的津贴。
 
 #### _transfer(address from, address to, uint256 amount)
-内部#
+internal#
 将一定数量的代币从发送者账户转移到接收者账户。
 这个内部函数等同于[transfer](#transferaddress-to-uint256-amount-e28692-bool-1)函数，可以用于实现自动代币费用、惩罚机制等。
 触发一次[transfer](#transferaddress-to-uint256-amount-e28692-bool-1)事件。
@@ -273,7 +273,7 @@ IERC20
 * 发送者账户余额必须大于等于转移数量。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 创建一定数量的代币并将其分配给账户，增加总供应量。
 发出一个[transfer](#transferaddress-to-uint256-amount-e28692-bool-1)事件，其中from地址设置为零地址。
 
@@ -281,7 +281,7 @@ IERC20
 * 账户不能是零地址。
 
 #### _burn(address account, uint256 amount)
-内部#
+internal#
 销毁账户中的代币，减少总供应量。
 发出一个[transfer](#transferaddress-to-uint256-amount-e28692-bool-1)事件，把“to”设置为零地址。
 
@@ -290,7 +290,7 @@ IERC20
 * 账户必须至少拥有amount个代币。
 
 #### _approve(address owner, address spender, uint256 amount)
-内部#
+internal#
 将spender的数量设置为所有者代币的津贴。
 该内部函数相当于approve，并可用于为某些子系统设置自动津贴等。
 发出[Approval](#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)事件。
@@ -300,13 +300,13 @@ IERC20
 * spender不能为零地址。
 
 #### _spendAllowance(address owner, address spender, uint256 amount)
-内部#
+internal#
 根据已花费的金额更新支出者的拥有津贴。
 如果拥有无限制的津贴，则不更新津贴金额。如果津贴金额不足，则撤销操作。
 可能会发出一个[Approval](#approvaladdress-indexed-owner-address-indexed-spender-uint256-value)事件。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 在任何代币转移之前调用的挂钩。这包括铸造和销毁。
 调用条件：
 * 当 from 和 to 都不为零时，from 的代币数量将转移到 to。
@@ -316,7 +316,7 @@ IERC20
 要了解更多关于挂钩的信息，请前往 [Using Hooks](../Extending-Contracts.md#使用-hooks).
 
 #### _afterTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 在任何代币转移之后调用的 hooks 。这包括铸造和销毁。
 调用条件：
 * 当 from 和 to 都不为零时，将 from 的代币数量转移到 to。
@@ -415,7 +415,7 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(uint256 cap_)
-内部#
+internal#
 设置帽子的价值。这个值是不可变的，只能在构造过程中设置一次。
 
 #### cap() → uint256
@@ -423,7 +423,7 @@ IERC20
 返回代币总供应量的上限。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 请参阅[ERC20._mint](#_mintaddress-account-uint256-amount)。
 
 ### ERC20Pausable
@@ -477,7 +477,7 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 请参阅 [ERC20._beforeTokenTransfer](#_beforetokentransferaddress-from-address-to-uint256-amount).
 要求：
 * 合约不能暂停。
@@ -533,7 +533,7 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(string name)
-内部#
+internal#
 使用name参数初始化[EIP712](./Utils.md#eip712)域分隔符，并将version设置为“1”。最好使用与ERC20代币名称相同的名称。
 
 #### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
@@ -549,7 +549,7 @@ IERC20
 请参阅 [IERC20Permit.DOMAIN_SEPARATOR](#domain_separator-→-bytes32).
 
 #### _useNonce(address owner) → uint256 current
-内部#
+internal#
 "消耗一个随机数": 返回当前值并递增。 
 *自v4.1版本起可用。*
 
@@ -601,7 +601,7 @@ ERC20
 [_afterTokenTransfer(from, to, amount)](#_aftertokentransferaddress-from-address-to-uint256-amount)
 
 #### _snapshot() → uint256
-内部#
+internal#
 创建一个新的快照并返回其快照ID。
 触发一个包含相同ID的[Snapshot](#snapshotuint256-id) 事件。
 [_snapshot](#_snapshot-→-uint256)是内部的，你必须决定如何将其外部公开。它的使用可能会受到一组帐户的限制，例如使用[AccessControl](./Access.md#accesscontrol)，或者它可能向公众开放。
@@ -614,7 +614,7 @@ ERC20
 我们没有测量实际数字；如果你对此有兴趣，请与我们联系。
 
 #### _getCurrentSnapshotId() → uint256
-内部#
+internal#
 获取当前snapshotId
 
 #### balanceOfAt(address account, uint256 snapshotId) → uint256
@@ -626,7 +626,7 @@ ERC20
 检索创建snapshotId时的总供应量。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 在任何代币转移之前调用的 hooks 。这包括铸造和销毁。
 
 调用条件：
@@ -761,24 +761,24 @@ IERC20
 将签署者的投票委托给代表
 
 #### _maxSupply() → uint224
-内部#
+internal#
 最大代币供应量。默认为type(uint224).max（2^224-1）。
 
 #### _mint(address account, uint256 amount)
-内部#
+internal#
 在总供应量增加之后totalSupply。
 
 #### _burn(address account, uint256 amount)
-内部#
+internal#
 在减少totalSupply之后Snapshots。
 
 #### _afterTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 当代币转移时移动投票权。
 发出一个[IVotes.DelegateVotesChanged](./Governance.md)事件。
 
 #### _delegate(address delegator, address delegatee)
-内部#
+internal#
 将委托从委托者更改为委托受托人。
 
 发出事件 [IVotes.DelegateChanged](./Governance.md) 和 [IVotes.DelegateVotesChanged](./Governance.md)。
@@ -870,7 +870,7 @@ IERC20
 [getPastVotes](#getpastvotesaddress-account-uint256-timepoint-→-uint256)记录的访问器的Comp版本，返回类型为uint96。
 
 #### _maxSupply() → uint224
-内部#
+internal#
 最大代币供应量。缩小至type(uint96).max（2^96-1）以适应COMP接口。
 
 ### ERC20Wrapper
@@ -917,7 +917,7 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(contract IERC20 underlyingToken)
-内部#
+internal#
 
 #### decimals() → uint8
 公开#
@@ -936,7 +936,7 @@ IERC20
 允许用户烧掉一定数量的封装代币，并提取相应数量的基础代币。
 
 #### _recover(address account) → uint256
-内部#
+internal#
 Mint包装代币以重写可能因错误而转移的任何基础代币。如果需要，此内部函数可以通过访问控制公开。
 
 ### ERC20FlashMint
@@ -993,11 +993,11 @@ IERC20
 返回执行闪电贷款时应用的费用。该函数调用 [_flashFee](#_flashfeeaddress-token-uint256-amount-→-uint256) 函数，该函数返回执行闪电贷款时应用的费用。
 
 #### _flashFee(address token, uint256 amount) → uint256
-内部#
+internal#
 返回进行闪电贷款时应用的费用。默认情况下，此实现没有任何费用。可以重载此函数，使闪电贷款机制通缩。
 
 #### _flashFeeReceiver() → address
-内部#
+internal#
 返回闪电交易手续费的接收地址。默认情况下，此实现返回地址(0)，这意味着手续费金额将被烧掉。可以重载此函数以更改手续费接收者。
 
 #### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 amount, bytes data) → bool
@@ -1079,7 +1079,7 @@ IERC20
 [Approval(owner, spender, value)](#approveaddress-spender-uint256-amount-e28692-bool-1)
 
 #### constructor(contract IERC20 asset_)
-内部#
+internal#
 设置基础资产合约。这必须是一个ERC20兼容合约（ERC20或ERC777）。
 
 #### decimals() → uint8
@@ -1154,23 +1154,23 @@ IERC20
 请参阅 [IERC4626.redeem](./Interfaces.md#redeemuint256-shares-address-receiver-address-owner-→-uint256-assets).
 
 #### _convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 内部转换函数（从资产到股份），支持舍入方向。
 
 #### _convertToAssets(uint256 shares, enum Math.Rounding rounding) → uint256
-内部#
+internal#
 支持舍入方向的内部转换函数（从股份转换为资产）。
 
 #### _deposit(address caller, address receiver, uint256 assets, uint256 shares)
-内部#
+internal#
 存款/铸造常见工作流程。
 
 #### _withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)
-内部#
+internal#
 撤回/兑现常见的工作流程。
 
 #### _decimalsOffset() → uint8
-内部#
+internal#
 
 ## 预设
 这些合约是上述功能的预配置组合。它们可以通过继承或复制粘贴其源代码作为模型使用。
@@ -1287,7 +1287,7 @@ IACCESSCONTROL
 * 调用者必须具有PAUSER_ROLE。
 
 #### _beforeTokenTransfer(address from, address to, uint256 amount)
-内部#
+internal#
 
 ### ERC20PresetFixedSupply
 ```
@@ -1362,32 +1362,32 @@ SafeERC20是一种在ERC20操作失败时（当代币合约返回false时）抛�
 [safePermit(token, owner, spender, value, deadline, v, r, s)](#safepermitcontract-ierc20permit-token-address-owner-address-spender-uint256-value-uint256-deadline-uint8-v-bytes32-r-bytes32-s)
 
 #### safeTransfer(contract IERC20 token, address to, uint256 value)
-内部#
+internal#
 将代币的价值数量从调用合约转移到to地址。如果代币没有返回值，则假定不会发生错误的调用是成功的。
 
 #### safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)
-内部#
+internal#
 从发送者向接收者转移指定数量的代币价值，并使用发送者授权给调用合约的批准。如果代币没有返回任何值，则假定非撤销调用成功。
 
 #### safeApprove(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 已弃用。此功能存在与[IERC20.approve](#approveaddress-spender-uint256-amount-→-bool)类似的问题，不建议使用。
 尽可能使用[safeIncreaseAllowance](#safeincreaseallowancecontract-ierc20-token-address-spender-uint256-value)和[safeDecreaseAllowance](#safedecreaseallowancecontract-ierc20-token-address-spender-uint256-value)。
 
 #### safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 增加调用合约对spender的授权值。如果代币没有返回值，则假定非reverting调用成功。
 
 #### safeDecreaseAllowance(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 将调用合约对spender的授权减少value。如果代币没有返回值，则假定非回滚调用成功。
 
 #### forceApprove(contract IERC20 token, address spender, uint256 value)
-内部#
+internal#
 将调用合约的授权向spender设置为value。如果代币没有返回任何值，则假定非reverting调用成功。与需要将批准设置为0后再将其设置为非零值的代币兼容。
 
 #### safePermit(contract IERC20Permit token, address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
-内部#
+internal#
 使用 ERC-2612 签名来设置代币所有者对支出者的批准。在无效签名的情况下回滚。
 
 ### TokenTimelock

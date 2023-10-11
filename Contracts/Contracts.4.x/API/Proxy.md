@@ -71,17 +71,17 @@ import "@openzeppelin/contracts/proxy/Proxy.sol";
 [_beforeFallback()](#_beforefallback)
 
 #### _delegate(address implementation)
-内部#
+internal#
 将当前调用委托给实现。
 
 该函数不会返回到其内部调用点，而是直接返回给外部调用者。
 
 #### _implementation() → address
-内部#
+internal#
 这是一个应该被重写的虚函数，它应该返回fallback函数和[_fallback](#_fallback)函数委托的地址。
 
 #### _fallback()
-内部#
+internal#
 将当前调用委托给由_implementation()返回的地址。
 
 这个函数不会返回到它的内部调用点，它将直接返回给外部调用者。
@@ -95,7 +95,7 @@ import "@openzeppelin/contracts/proxy/Proxy.sol";
 回退函数将调用委托给 _implementation() 返回的地址。如果调用数据为空，则会运行。
 
 #### _beforeFallback()
-内部#
+internal#
 在回退到实现之前调用的 hooks 。可以作为手动回退调用的一部分，也可以作为Solidity回退或接收函数的一部分。
 
 如果被重写，应该调用super._beforeFallback()。
@@ -144,7 +144,7 @@ IERC1967
 如果_data非空，则将其用作对_logic的委托调用中的数据。这通常是一个编码的函数调用，并允许像Solidity构造函数一样初始化代理的存储。
 
 #### _implementation() → address impl
-内部#
+internal#
 返回当前实现地址。
 
 ### ERC1967Upgrade
@@ -173,43 +173,43 @@ IERC1967
 [BeaconUpgraded(beacon)]
 
 #### _getImplementation() → address
-内部#
+internal#
 返回当前实现地址。
 
 #### _upgradeTo(address newImplementation)
-内部#
+internal#
 执行升级实现
 
 发出{升级}事件。
 
 #### _upgradeToAndCall(address newImplementation, bytes data, bool forceCall)
-内部#
+internal#
 执行升级实施，并进行额外的设置调用。
 
 发出一个{升级}事件。
 
 #### _upgradeToAndCallUUPS(address newImplementation, bytes data, bool forceCall)
-内部#
+internal#
 进行UUPS代理的实施升级，包括安全检查和额外的设置调用。
 
 触发一个{Upgraded}事件。
 
 #### _getAdmin() → address
-内部#
+internal#
 返回当前管理员。
 
 #### _changeAdmin(address newAdmin)
-内部#
+internal#
 更改代理的管理员。
 
 触发一个{AdminChanged}事件。
 
 #### _getBeacon() → address
-内部#
+internal#
 返回当前的指引。
 
 #### _upgradeBeaconToAndCall(address newBeacon, bytes data, bool forceCall)
-内部#
+internal#
 进行Beacon升级并进行附加的设置调用。注意：这将升级Beacon的地址，而不是升级Beacon中包含的实现（有关此操作，请参阅 [UpgradeableBeacon._setImplementation](#_setbeaconaddress-beacon-bytes-data)）。
 
 发出 {BeaconUpgraded} 事件。
@@ -284,11 +284,11 @@ modifier#
 通过_admin初始化一个可升级的代理，由_logic的实现支持，并可选择使用[ERC1967Proxy.constructor](#constructoraddress-_logic-bytes-_data)中解释的_data进行初始化。
 
 #### _fallback()
-内部#
+internal#
 如果调用者是管理员进程，则在内部处理呼叫，否则透明地回退到代理行为。
 
 #### _admin() → address
-内部#
+internal#
 返回当前管理员。
 
 此函数已弃用。请使用[ERC1967Upgrade._getAdmin](#_getadmin-→-address)代替。
@@ -401,15 +401,15 @@ IERC1967
 Beacon必须是一个具有[IBeacon](#ibeacon)接口的合约。
 
 #### _beacon() → address
-内部#
+internal#
 返回当前Beacon地址。
 
 #### _implementation() → address
-内部#
+internal#
 返回关联Beacon的当前实施地址。
 
 #### _setBeacon(address beacon, bytes data)
-内部#
+internal#
 将代理更改为使用一个新的Beacon。已弃用：请参见[_upgradeBeaconToAndCall](#_upgradebeacontoandcalladdress-newbeacon-bytes-data-bool-forcecall)。
 
 如果数据不为空，则将其用作委托调用中使用的数据，该委托调用将发送到Beacon返回的实现。
@@ -501,23 +501,23 @@ import "@openzeppelin/contracts/proxy/Clones.sol";
 [predictDeterministicAddress(implementation, salt)](#predictdeterministicaddressaddress-implementation-bytes32-salt-→-address-predicted)
 
 #### clone(address implementation) → address instance
-内部#
+internal#
 部署并返回一个克隆实现行为的地址。
 
 该函数使用了create操作码，应该不会发生回滚。
 
 #### cloneDeterministic(address implementation, bytes32 salt) → address instance
-内部#
+internal#
 部署并返回一个模仿实现行为的克隆的地址。
 
 该函数使用create2操作码和盐值来确定性地部署克隆体。多次使用相同的实现和盐值将导致回滚，因为克隆体不能在相同的地址上重复部署。
 
 #### predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted
-内部#
+internal#
 计算使用[Clones.cloneDeterministic](#clonedeterministicaddress-implementation-bytes32-salt-→-address-instance)部署的克隆体的地址。
 
 #### predictDeterministicAddress(address implementation, bytes32 salt) → address predicted
-内部#
+internal#
 使用[Clones.cloneDeterministic](#clonedeterministicaddress-implementation-bytes32-salt-→-address-instance)部署的克隆体的地址计算。
 
 ## 实用程序
@@ -602,17 +602,17 @@ modifier#
 修改以保护初始化函数，使其只能被具有[initializer()](#initializer)和[reinitializer(version)](#reinitializeruint8-version)修饰符的函数直接或间接调用。
 
 #### _disableInitializers()
-内部# 
+internal# 
 锁定合约，阻止任何未来的重新初始化。这不能是初始化函数的一部分。在合约的构造函数中调用此函数将阻止该合约被初始化或重新初始化为任何版本。建议将此函数用于锁定通过代理调用的实现合约。
 
 在第一次成功执行时，会发出一个[Initialized(version)](#initializeduint8-version)事件。
 
 #### _getInitializedVersion() → uint8
-内部# 
+internal# 
 返回已初始化的最高版本。请参阅[reinitializer](#reinitializeruint8-version).
 
 #### _isInitializing() → bool
-内部# 
+internal# 
 如果合约当前正在初始化，则返回true。请参阅[onlyInitializing()](#onlyinitializing).
 
 #### Initialized(uint8 version)
@@ -690,7 +690,7 @@ modifier#
 发出一个[Upgraded](#upgradedaddress-indexed-implementation)事件。
 
 #### _authorizeUpgrade(address newImplementation)
-内部#
+internal#
 当msg.sender没有权限升级合约时，应该回滚的函数。由[upgradeTo](#upgradetoaddress-newimplementation-1)和[upgradeToAndCall](#upgradetoandcalladdress-newimplementation-bytes-data)调用。
 
 通常，这个函数会使用一个[access control](./Access.md)修饰符，比如[Ownable.onlyOwner](./Access.md#ownable)。

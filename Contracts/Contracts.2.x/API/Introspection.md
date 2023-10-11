@@ -24,7 +24,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 [supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
 
 #### supportsInterface(bytes4 interfaceId) → bool
-内部#
+internal#
 如果此合约实现了由interfaceId定义的接口，则返回true。有关如何创建这些id的详细信息，请参阅相应的[EIP部分](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)。
 
 此函数调用必须使用少于30,000 gas。
@@ -42,7 +42,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 [_registerInterface(interfaceId)](#_registerinterfacebytes4-interfaceid)
 
 #### constructor()
-内部#
+internal#
 
 #### supportsInterface(bytes4 interfaceId) → bool
 外部#
@@ -51,7 +51,7 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 时间复杂度为 O(1)，保证始终使用少于 30,000 gas。
 
 #### _registerInterface(bytes4 interfaceId)
-内部#
+internal#
 将合约注册为接口Id定义的接口的实现者。对于实际的ERC165接口的支持是自动的，不需要注册其接口Id。
 
 请参阅[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-e28692-bool-1)。
@@ -73,17 +73,17 @@ ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定�
 [_supportsAllInterfaces(account, interfaceIds)](#_supportsallinterfacesaddress-account-var-typebytes4-interfaceids-→-bool)
 
 #### _supportsERC165(address account) → bool
-内部#
+internal#
 如果账户支持[IERC165](#ierc165)接口，则返回真。
 
 #### _supportsInterface(address account, bytes4 interfaceId) → bool
-内部#
+internal#
 如果帐户支持由interfaceId定义的接口，则返回true。对于[IERC165](#ierc165)本身的支持会自动查询。
 
 请参阅[IERC165.supportsInterface](#supportsinterfacebytes4-interfaceid-→-bool)。
 
 #### _supportsAllInterfaces(address account, [.var-type]#bytes4[# interfaceIds) → bool]
-内部#
+internal#
 如果账户支持interfaceIds中定义的所有接口，则返回true。自动查询对[IERC165](#ierc165)的支持。
 
 通过批量查询可以节省gas费用，跳过对[IERC165](#ierc165)支持的重复检查。
@@ -213,7 +213,7 @@ ERC1820实现者的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-1820#int
 外部#
 
 #### _registerInterfaceForAddress(bytes32 interfaceHash, address account)
-内部#
+internal#
 声明该合约愿意成为账户的interfaceHash的实现者。
 
 参考 [IERC1820Registry.setInterfaceImplementer](#setinterfaceimplementeraddress-account-bytes32-interfacehash-address-implementer) 和 [IERC1820Registry.interfaceHash](#interfacehashstring-interfacename-→-bytes32)。
