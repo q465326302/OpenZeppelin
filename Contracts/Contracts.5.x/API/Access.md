@@ -20,7 +20,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 [onlyOwner()](#onlyowner)
 
 **FUNCTIONS**
-[constructor()](#constructor)
+constructor(initialOwner)
 [owner()](#owner-→-address)
 [_checkOwner()](#_checkowner)
 [renounceOwnership()](#renounceownership)
@@ -30,24 +30,29 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 **EVENTS**
 [OwnershipTransferred(previousOwner, newOwner)](#ownershiptransferredaddress-indexed-previousowner-address-indexed-newowner)
 
+**ERRORS**
+OwnableUnauthorizedAccount(account)
+
+OwnableInvalidOwner(owner)
+
 #### onlyOwner()
 modifier#
 如果被除了所有者以外的任何账户调用，就会抛出异常。
 
-#### constructor()
+#### constructor(address initialOwner)
 internal#
-初始化合约，将部署者设置为初始所有者。
+初始化合约，将部署者提供的地址设置为初始所有者。
 
 #### owner() → address
-公共函数
+public#
 返回当前所有者的地址。
 
 #### _checkOwner()
-内部函数#
+internal#
 如果发送方不是所有者，则抛出异常。
 
 #### renounceOwnership()
-函数公开可用#
+public#
 该函数使合约失去所有者身份。此后将无法调用仅限所有者使用的函数。只能由当前所有者调用。
 > NOTE
 放弃所有权将使合约没有所有者，从而禁用仅对所有者可用的任何功能。
@@ -63,7 +68,15 @@ internal#
 #### OwnershipTransferred(address indexed previousOwner, address indexed newOwner)
 event#
 
-### Ownable2Step
+#### OwnableUnauthorizedAccount(address account)
+error#
+呼叫者账户无权进行此操作。
+
+#### OwnableInvalidOwner(address owner)
+error#
+所有者不是一个有效的所有者账户。(例如，地址(0))
+
+### [Ownable2Step](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/Ownable2Step.sol)
 ```
 import "@openzeppelin/contracts/access/Ownable2Step.sol";
 ```
@@ -89,6 +102,12 @@ OWNABLE
 OWNABLE
 OwnershipTransferred(previousOwner, newOwner)
 
+**ERRORS**
+OWNABLE
+OwnableUnauthorizedAccount(account)
+
+OwnableInvalidOwner(owner)
+
 #### pendingOwner() → address
 public#
 返回待定所有者的地址。
@@ -108,7 +127,7 @@ public#
 #### OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)
 event#
 
-## IAccessControl
+## [IAccessControl](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/IAccessControl.sol)
 ```
 import "@openzeppelin/contracts/access/IAccessControl.sol";
 ```
@@ -125,6 +144,11 @@ AccessControl的外部接口声明支持ERC165检测。
 [RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
 [RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+
+**ERRORS**
+AccessControlUnauthorizedAccount(account, neededRole)
+
+AccessControlBadConfirmation()
 
 #### hasRole(bytes32 role, address account) → bool
 external#
@@ -162,19 +186,30 @@ external#
 event#
 当将newAdminRole设置为角色的管理员角色时，替换了previousAdminRole时，会发出此事件。
 尽管没有发出RoleAdminChanged信号，DEFAULT_ADMIN_ROLE仍是所有角色的起始管理员。
-自v3.1起可用。
 
 #### RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
 event#
 当账户被授予角色时发出。
-发送者是发起合约调用的账户，是管理员角色持有者，除非使用*AccessControl._setupRole*。
+
+发送者是发起合约调用的账户，除使用{AccessControl-_setupRole}时，其为管理员角色持有者。
 
 #### RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
 event#
 当账户被撤销角色时发出。
 发送者是发起合约调用的账户：- 如果使用revokeRole，则是管理员角色持有人- 如果使用renounceRole，则是角色持有人（即账户）。
 
-### AccessControl
+#### AccessControlUnauthorizedAccount(address account, bytes32 neededRole)
+error#
+该账户缺少一个角色。
+
+#### AccessControlBadConfirmation()
+error#
+函数的调用者不是预期的那个。
+
+> NOTE
+不要与AccessControlUnauthorizedAccount混淆。
+
+### [AccessControl](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/AccessControl.sol)
 ```
 import "@openzeppelin/contracts/access/AccessControl.sol";
 ```
@@ -213,11 +248,11 @@ DEFAULT_ADMIN_ROLE也是其自己的管理员：它有权限授予和撤销此�
 [getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
 [grantRole(role, account)](#grantrolebytes32-role-address-account)
 [revokeRole(role, account)](#revokerolebytes32-role-address-account)
-[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
-[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
-[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
-[_grantRole(role, account)](#_grantrolebytes32-role-address-account)
-[_revokeRole(role, account)](#_revokerolebytes32-role-address-account)
+renounceRole(role, callerConfirmation)
+_setRoleAdmin(role, adminRole)
+_grantRole(role, account)
+_revokeRole(role, account)
+DEFAULT_ADMIN_ROLE()
 
 **EVENTS**
 IACCESSCONTROL
@@ -225,16 +260,14 @@ IACCESSCONTROL
 [RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 [RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
 
+**ERRORS**
+IACCESSCONTROL
+AccessControlUnauthorizedAccount(account, neededRole)
+AccessControlBadConfirmation()
+
 #### onlyRole(bytes32 role)
 修饰词#
-检查账户是否具有特定角色的修饰符。如果没有，将返回包含所需角色的标准化消息。
-回滚原因的格式由以下正则表达式给出：
-
-```
-/^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/
-```
-
-*自v4.1版本以来可用。*
+检查账户是否具有特定角色的修饰符。如果没有所需角色，将返回包含所需角色的*AccessControlUnauthorizedAccount*错误。
 
 #### supportsInterface(bytes4 interfaceId) → bool
 public#
@@ -246,17 +279,11 @@ public#
 
 #### _checkRole(bytes32 role)
 internal#
-如果 _msgSender() 没有角色，则使用标准消息进行回退。重写此函数会更改 [onlyRole](#onlyrolebytes32-role) 修饰符的行为。
-回退消息的格式在 [_checkRole](#_checkrolebytes32-role-address-account) 中描述。
-*自 v4.6 起可用。*
+如果_msgSender()缺少角色，则会返回AccessControlUnauthorizedAccount错误。重写这个函数会改变onlyRole修饰符的行为。
 
 #### _checkRole(bytes32 role, address account)
 internal#
-如果账户缺少角色，请使用标准消息进行回退。
-回退原因的格式由以下正则表达式给出：
-```
-/^AccessControl: account (0x[0-9a-f]{40}) is missing role (0x[0-9a-f]{64})$/
-```
+如果账户缺少角色，则会以AccessControlUnauthorizedAccount错误进行回退。
 
 #### getRoleAdmin(bytes32 role) → bytes32
 public#
@@ -290,16 +317,9 @@ public#
 
 #### _setupRole(bytes32 role, address account)
 internal#
-授予账户角色。
-如果账户尚未被授予角色，则会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。请注意，与[grantRole](#grantrolebytes32-role-address-account-1)不同，此函数不对调用账户进行任何检查。
-可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
+将adminRole设置为角色的管理员角色。
 
-> WARNING
-只应该在设置系统的初始角色时从构造函数中调用此函数。
-在任何其他方式中使用此函数实际上是绕过[AccessControl](#accesscontrol)强制实施的管理系统。
-
-> NOTE
-此函数已过时，建议使用[_grantRole](#_grantrolebytes32-role-address-account)。
+触发一个*RoleAdminChanged*事件。
 
 #### _setRoleAdmin(bytes32 role, bytes32 adminRole)
 internal#
@@ -307,412 +327,129 @@ internal#
 
 触发一个[RoleAdminChanged](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)事件。
 
-#### _grantRole(bytes32 role, address account)
+#### _grantRole(bytes32 role, address account) → bool
 internal#
-授予账户角色。
-内部功能没有访问限制。
-可能会发出[RoleGranted](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
+尝试向账户授予角色，并返回一个布尔值，表示是否成功授予角色。
 
-#### _revokeRole(bytes32 role, address account)
+这是一个没有访问限制的内部函数。
+
+可能会触发一个*RoleGranted*事件。
+
+#### _revokeRole(bytes32 role, address account) → bool
 internal#
-从帐户中撤销角色。
-内部函数，没有访问限制。
-可能会发出[RoleRevoked](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)事件。
+尝试撤销账户的角色，并返回一个布尔值，表示角色是否被撤销。
 
-### AccessControlCrossChain
+这是一个没有访问限制的内部函数。
+
+可能会发出一个*RoleRevoked*事件。
+
+#### DEFAULT_ADMIN_ROLE() → bytes32
+public#
+
+## Extensions
+
+### [IAccessControlEnumerable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/extensions/IAccessControlEnumerable.sol)\
+
 ```
-import "@openzeppelin/contracts/access/AccessControlCrossChain.sol";
+import "@openzeppelin/contracts/access/extensions/IAccessControlEnumerable.sol";
 ```
 
-[AccessControl](#accesscontrol)的扩展，支持跨链访问管理。对于每个角色，该扩展实现了一个等效的“别名”角色，用于限制来自其他链的调用。
-
-例如，如果一个函数myFunction受到onlyRole(SOME_ROLE)的保护，如果一个地址x具有角色SOME_ROLE，它将能够直接调用myFunction。然而，来自另一条链上相同地址的钱包或合约将无法调用此函数。为了这样做，它需要拥有角色_crossChainRoleAlias(SOME_ROLE)。
-
-这种别名是必要的，以保护不同链上控制冲突实体的相同地址上存在的多个合约。
-
-*自v4.6以来可用。*
+声明AccessControlEnumerable的外部接口以支持ERC165检测。
 
 **FUNCTIONS**
-[_checkRole(role)](#_checkrolebytes32-role-1)
-[_crossChainRoleAlias(role)](#_crosschainrolealiasbytes32-role-→-bytes32)
+getRoleMember(role, index)
+getRoleMemberCount(role)
 
-CROSSCHAINENABLED
-[_isCrossChain()](./Crosschain.md#_iscrosschain-→-bool)
-[_crossChainSender()](./Crosschain.md#_crosschainsender-→-address)
-
-ACCESSCONTROL
-[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
-[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
-[_checkRole(role, account)](#_checkrolebytes32-role)
-[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
-[grantRole(role, account)](#grantrolebytes32-role-address-account-1)
-[revokeRole(role, account)](#revokerolebytes32-role-address-account-1)
-[renounceRole(role, account)](#renouncerolebytes32-role-address-account-1)
-[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
-[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
-[_grantRole(role, account)](#_grantrolebytes32-role-address-account)
-[_revokeRole(role, account)](#_revokerolebytes32-role-address-account)
+IACCESSCONTROL
+hasRole(role, account)
+getRoleAdmin(role)
+grantRole(role, account)
+revokeRole(role, account)
+renounceRole(role, callerConfirmation)
 
 **EVENTS**
 IACCESSCONTROL
-[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
-[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
-[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+RoleAdminChanged(role, previousAdminRole, newAdminRole)
+RoleGranted(role, account, sender)
+RoleRevoked(role, account, sender)
 
-#### _checkRole(bytes32 role)
-internal#
-请查看[AccessControl._checkRole](#_checkrolebytes32-role-address-account)。
-
-#### _crossChainRoleAlias(bytes32 role) → bytes32
-internal#
-返回与角色对应的别名角色。
-
-### IAccessControlEnumerable
-```
-import "@openzeppelin/contracts/access/IAccessControlEnumerable.sol";
-```
-AccessControlEnumerable的外部接口声明为支持ERC165检测。
-
-**FUNCTIONS**
-[getRoleMember(role, index)](#getrolememberbytes32-role-uint256-index-→-address)
-[getRoleMemberCount(role)](#getrolemembercountbytes32-role-→-uint256)
-
+**ERRORS**
 IACCESSCONTROL
-[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
-[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
-[grantRole(role, account)](#grantrolebytes32-role-address-account)
-[revokeRole(role, account)](#revokerolebytes32-role-address-account)
-[renounceRole(role, account)](#renouncerolebytes32-role-address-account)
-
-EVENTS
-IACCESSCONTROL
-[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
-[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
-[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+AccessControlUnauthorizedAccount(account, neededRole)
+AccessControlBadConfirmation()
 
 #### getRoleMember(bytes32 role, uint256 index) → address
 external#
-返回具有角色的帐户之一。索引必须是0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
+返回具有角色的其中一个账户。索引必须是0到*getRoleMemberCount*之间的值，不包括getRoleMemberCount。
 
-角色承载者没有特定的排序方式，其排序可能随时更改。
+角色承担者并未按任何特定方式排序，他们的排序可能在任何时候改变。
 
 > WARNING
-使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
+在使用*getRoleMember*和*getRoleMemberCount*时，确保在同一块上执行所有查询。有关更多信息，请参阅以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
 external#
-返回具有角色的帐户数量。可与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有承担者。
+返回具有角色的账户数量。可以与*getRoleMember*一起使用，枚举所有角色的承担者。
 
-### AccessControlEnumerable
+### [AccessControlEnumerable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/extensions/AccessControlEnumerable.sol)
 ```
-import "@openzeppelin/contracts/access/AccessControlEnumerable.sol";
+import "@openzeppelin/contracts/access/extensions/AccessControlEnumerable.sol";
 ```
 
-[AccessControl](#accesscontrol)的扩展，允许枚举每个角色的成员。
+扩展*访问控制*，允许枚举每个角色的成员。
 
 **FUNCTIONS**
-[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-→-bool)
-[getRoleMember(role, index)](#getrolememberbytes32-role-uint256-index-→-address)
-[getRoleMemberCount(role)](#getrolemembercountbytes32-role-→-uint256)
-[_grantRole(role, account)](#_grantrolebytes32-role-address-account-1)
-[_revokeRole(role, account)](#_revokerolebytes32-role-address-account-1)
+supportsInterface(interfaceId)
+getRoleMember(role, index)
+getRoleMemberCount(role)
+_grantRole(role, account)
+_revokeRole(role, account)
 
 ACCESSCONTROL
-[hasRole(role, account)](#hasrolebytes32-role-address-account-→-bool)
-[_checkRole(role)](#_checkrolebytes32-role)
-[_checkRole(role, account)](#_checkrolebytes32-role-address-account)
-[getRoleAdmin(role)](#getroleadminbytes32-role-→-bytes32)
-[grantRole(role, account)](#grantrolebytes32-role-address-account-1)
-[revokeRole(role, account)](#revokerolebytes32-role-address-account-1)
-[renounceRole(role, account)](#renouncerolebytes32-role-address-account-1)
-[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
-[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole)
+hasRole(role, account)
+_checkRole(role)
+_checkRole(role, account)
+getRoleAdmin(role)
+grantRole(role, account)
+revokeRole(role, account)
+renounceRole(role, callerConfirmation)
+_setRoleAdmin(role, adminRole)
+DEFAULT_ADMIN_ROLE()
 
 **EVENTS**
 IACCESSCONTROL
-[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
-[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
-[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
+RoleAdminChanged(role, previousAdminRole, newAdminRole)
+RoleGranted(role, account, sender)
+RoleRevoked(role, account, sender)
+
+**ERRORS**
+IACCESSCONTROL
+AccessControlUnauthorizedAccount(account, neededRole)
+AccessControlBadConfirmation()
 
 #### supportsInterface(bytes4 interfaceId) → bool
 public#
-请参见[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
+请查阅 *IERC165.supportsInterface*.
 
 #### getRoleMember(bytes32 role, uint256 index) → address
 public#
-返回具有该角色的帐户之一。索引必须是介于0和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)之间的值，不包括这两个值。
+返回具有角色的其中一个账户。索引必须是0到getRoleMemberCount之间的值，不包括*getRoleMemberCount*。
 
-角色持有人没有特定的排序方式，并且它们的顺序可能随时更改。
+角色承担者并未按任何特定方式排序，他们的排序可能会在任何时候改变。
 
 > WARNING
-在使用[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)和[getRoleMemberCount](#getrolemembercountbytes32-role-→-uint256)时，请确保在同一块上执行所有查询。有关更多信息，请参见以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
+在使用*getRoleMember*和*getRoleMemberCount*时，确保你在同一块上执行所有查询。有关更多信息，请参阅以下[论坛帖子](https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296)。
 
 #### getRoleMemberCount(bytes32 role) → uint256
 public#
-返回拥有某个角色的账户数量。可以与[getRoleMember](#getrolememberbytes32-role-uint256-index-→-address)一起使用，枚举角色的所有持有者。
+返回具有角色的账户数量。可以与*getRoleMember*一起使用，列举所有角色的持有者。
 
-#### _grantRole(bytes32 role, address account)
+#### _grantRole(bytes32 role, address account) → bool
 internal#
-重载[_grantRole](#_grantrolebytes32-role-address-account-1)以跟踪可枚举成员资格
+重载*AccessControl._grantRole*以跟踪可枚举的成员资格
 
-#### _revokeRole(bytes32 role, address account)
+#### _revokeRole(bytes32 role, address account) → bool
 internal#
-重载 [_revokeRole](#_revokerolebytes32-role-address-account-1) 以跟踪可枚举的成员资格
+重载*AccessControl._revokeRole*以跟踪可枚举的成员资格
 
-### AccessControlDefaultAdminRules
-```
-import "@openzeppelin/contracts/access/AccessControlDefaultAdminRules.sol";
-```
-
-[AccessControl](#accesscontrol)的扩展，允许指定特殊规则来管理DEFAULT_ADMIN_ROLE持有者，这是一个关键角色，具有对其他可能拥有特权权限的角色的特殊权限。
-
-如果没有为特定角色分配管理员角色，则DEFAULT_ADMIN_ROLE的持有者将能够授予和撤销管理员角色。
-
-该合约在[AccessControl](#accesscontrol)的基础上实现了以下风险缓解措施：
-* 自部署以来，只有一个帐户持有DEFAULT_ADMIN_ROLE，直到可能被放弃。
-* 强制执行将DEFAULT_ADMIN_ROLE转移到另一个帐户的2步过程。
-* 强制执行可配置的两个步骤之间的延迟，在接受转移之前可以取消。
-* 延迟可以通过调度进行更改，请参见[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
-* 不可能使用另一个角色来管理DEFAULT_ADMIN_ROLE。
-
-示例用法：
-```
-contract MyToken is AccessControlDefaultAdminRules {
-  constructor() AccessControlDefaultAdminRules(
-    3 days,
-    msg.sender // Explicit initial `DEFAULT_ADMIN_ROLE` holder
-   ) {}
-}
-```
-
-*自v4.9版本起可用。*
-
-**FUNCTIONS**
-[constructor(initialDelay, initialDefaultAdmin)](#constructoruint48-initialdelay-address-initialdefaultadmin)
-[supportsInterface(interfaceId)](#supportsinterfacebytes4-interfaceid-e28692-bool-2)
-[owner()](#owner-e28692-address-1)
-[grantRole(role, account)](#grantrolebytes32-role-address-account-2)
-[revokeRole(role, account)](#revokerolebytes32-role-address-account-2)
-[renounceRole(role, account)](#renouncerolebytes32-role-address-account-2)
-[_grantRole(role, account)](#_grantrolebytes32-role-address-account-2)
-[_revokeRole(role, account)](#_revokerolebytes32-role-address-account-2)
-[_setRoleAdmin(role, adminRole)](#_setroleadminbytes32-role-bytes32-adminrole-1)
-[defaultAdmin()](#defaultadmin-→-address)
-[pendingDefaultAdmin()](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)
-[defaultAdminDelay()](#defaultadmindelay-→-uint48)
-[pendingDefaultAdminDelay()](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)
-[defaultAdminDelayIncreaseWait()](#defaultadmindelayincreasewait-→-uint48)
-[beginDefaultAdminTransfer(newAdmin)](#begindefaultadmintransferaddress-newadmin)
-[_beginDefaultAdminTransfer(newAdmin)](#_begindefaultadmintransferaddress-newadmin)
-[cancelDefaultAdminTransfer()](#canceldefaultadmintransfer)
-[_cancelDefaultAdminTransfer()](#_canceldefaultadmintransfer)
-[acceptDefaultAdminTransfer()](#acceptdefaultadmintransfer)
-[_acceptDefaultAdminTransfer()](#_acceptdefaultadmintransfer)
-[changeDefaultAdminDelay(newDelay)](#changedefaultadmindelayuint48-newdelay)
-[_changeDefaultAdminDelay(newDelay)](#_changedefaultadmindelayuint48-newdelay)
-[rollbackDefaultAdminDelay()](#rollbackdefaultadmindelay)
-[_rollbackDefaultAdminDelay()](#_rollbackdefaultadmindelay)
-[_delayChangeWait(newDelay)](#_delaychangewaituint48-newdelay-→-uint48)
-
-ACCESSCONTROL
-[hasRole(role, account)](#hasrolebytes32-role-address-account-e28692-bool-1)
-[_checkRole(role)](#_checkrolebytes32-role)
-[_checkRole(role, account)](#_checkrolebytes32-role-address-account)
-[getRoleAdmin(role)](#getroleadminbytes32-role-e28692-bytes32-1)
-[_setupRole(role, account)](#_setuprolebytes32-role-address-account)
-
-**EVENTS**
-IACCESSCONTROLDEFAULTADMINRULES
-DefaultAdminTransferScheduled(newAdmin, acceptSchedule)
-DefaultAdminTransferCanceled()
-DefaultAdminDelayChangeScheduled(newDelay, effectSchedule)
-DefaultAdminDelayChangeCanceled()
-
-IACCESSCONTROL
-[RoleAdminChanged(role, previousAdminRole, newAdminRole)](#roleadminchangedbytes32-indexed-role-bytes32-indexed-previousadminrole-bytes32-indexed-newadminrole)
-[RoleGranted(role, account, sender)](#rolegrantedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
-[RoleRevoked(role, account, sender)](#rolerevokedbytes32-indexed-role-address-indexed-account-address-indexed-sender)
-
-#### constructor(uint48 initialDelay, address initialDefaultAdmin)
-internal#
-设置默认[管理员延迟](#defaultadmindelay-→-uint48)和默认管理员地址的[初始值](#defaultadmin-→-address)。
-
-#### supportsInterface(bytes4 interfaceId) → bool
-public#
-请参见[IERC165.supportsInterface](./Utils.md#supportsinterfacebytes4-interfaceid-→-bool)。
-
-#### owner() → address
-public#
-请参见[IERC5313.owner](./Interfaces.md#owner-→-address) .
-
-#### grantRole(bytes32 role, address account)
-public#
-查看[AccessControl.grantRole](#grantrolebytes32-role-address-account-1)。针对DEFAULT_ADMIN_ROLE进行还原。
-
-#### revokeRole(bytes32 role, address account)
-public#
-请参阅[AccessControl.revokeRole](#revokerolebytes32-role-address-account-1)。默认情况下撤销DEFAULT_ADMIN_ROLE角色。
-
-#### renounceRole(bytes32 role, address account)
-public#
-请参阅[AccessControl.renounceRole](#renouncerolebytes32-role-address-account-1)。
-
-对于DEFAULT_ADMIN_ROLE，它只允许通过首先调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin) 到address（0）来进行两步操作，因此在调用此函数时需要确认[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)计划也已经通过。
-
-执行后，将无法调用onlyRole(DEFAULT_ADMIN_ROLE)函数。
-
-> NOTE
-放弃DEFAULT_ADMIN_ROLE将使合约失去 [defaultAdmin](#defaultadmin-→-address)，从而禁用仅适用于其的任何功能，并且无法重新分配非受管理角色。
-
-#### _grantRole(bytes32 role, address account)
-internal#
-请参见[AccessControl._grantRole](#_grantrolebytes32-role-address-account-1)。
-
-对于DEFAULT_ADMIN_ROLE，只有在没有[defaultAdmin](#defaultadmin-→-address)或者该角色已被先前放弃的情况下才允许授予。
-
-> NOTE
-通过另一种机制公开此函数可能会使DEFAULT_ADMIN_ROLE再次可分配。请确保在你的实现中保证这是预期的行为。
-
-#### _revokeRole(bytes32 role, address account)
-internal#
-请查看[AccessControl._revokeRole](#_revokerolebytes32-role-address-account-1)函数。
-
-#### _setRoleAdmin(bytes32 role, bytes32 adminRole)
-internal#
-参见 [AccessControl._setRoleAdmin](#_setroleadminbytes32-role-bytes32-adminrole)。对于DEFAULT_ADMIN_ROLE进行还原。
-
-#### defaultAdmin() → address
-public#
-返回当前 DEFAULT_ADMIN_ROLE 持有者的地址。
-
-#### pendingDefaultAdmin() → address newAdmin, uint48 schedule
-public#
-返回一个新管理员和接受日程的元组。
-
-日程表过期后，新管理员将能够通过调用 [acceptDefaultAdminTransfer](#acceptdefaultadmintransfer) 接受 [defaultAdmin](#defaultadmin-→-address) 角色，完成角色转移。
-
-acceptSchedule 中只有零值表示没有待处理的管理员转移。
-
-> NOTE
-一个零地址的newAdmin意味着 [defaultAdmin](#defaultadmin-→-address)正在放弃。
-
-#### defaultAdminDelay() → uint48
-public#
-返回启动[defaultAdmin](#defaultadmin-→-address) 转移的接受所需的延迟时间。
-
-在调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)设置接受计划时，此延迟将添加到当前时间戳。
-
-> NOTE
-如果已经安排了延迟更改，则该函数将在安排过程中立即生效，返回新的延迟。请参见[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
-
-#### pendingDefaultAdminDelay() → uint48 newDelay, uint48 schedule
-public#
-返回一个新延迟和一个效果计划的元组。
-
-计划过期后，对于每个使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)开始的新[defaultAdmin](#defaultadmin-→-address)转移，新延迟将立即生效。
-
-仅在effectSchedule中为零表示没有挂起的延迟更改。
-
-> NOTE
-一个仅为newDelay的零值意味着在效果计划之后，下一个[defaultAdminDelay](#defaultadmindelay-→-uint48)将为零。
-
-#### defaultAdminDelayIncreaseWait() → uint48
-public#
-将默认[defaultAdminDelay](#defaultadmindelay-→-uint48) 增加的最长时间（使用[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)计划）生效的秒数。默认为5天。
-
-当计划增加[默认管理员延迟](#defaultadmindelay-→-uint48)时，它会在新的延迟时间过去后生效，目的是为了给予足够的时间来撤销任何意外更改（例如使用毫秒而不是秒），以避免合约被锁定。但是，为了避免过度计划，此函数将被限制等待时间，并且可以被重写以进行自定义的[默认管理员延迟](#defaultadmindelay-→-uint48)增加计划。
-
-> IMPORTANT
-在重写此值时，请确保添加合理的时间，否则存在设置新延迟的风险，该延迟几乎立即生效，而在输入错误的情况下无法进行人为干预（例如，设置毫秒而不是秒）。
-
-#### beginDefaultAdminTransfer(address newAdmin)
-public#
-通过设置一个待确认的[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)，以当前时间戳加上[defaultAdminDelay](#defaultadmindelay-→-uint48)为限，启动[defaultAdmin](#defaultadmin-→-address)转移。
-
-要求：
-* 只能由当前[defaultAdmin](#defaultadmin-→-address)调用。
-
-触发DefaultAdminRoleChangeStarted事件。
-
-#### _beginDefaultAdminTransfer(address newAdmin)
-internal#
-查看 [beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)。
-
-内部函数，没有访问限制。
-
-#### cancelDefaultAdminTransfer()
-public#
-取消先前使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)启动的[ defaultAdmin](#defaultadmin-→-address)转移。
-
-尚未接受的[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)也可以使用此函数取消。
-
-要求：
-* 只能由当前[defaultAdmin](#defaultadmin-→-address)调用。
-
-可能会发出DefaultAdminTransferCanceled事件。
-
-#### _cancelDefaultAdminTransfer()
-internal#
-查看[cancelDefaultAdminTransfer](#canceldefaultadmintransfer)。
-
-这是一个没有访问限制的内部函数。
-
-#### acceptDefaultAdminTransfer()
-public#
-完成之前使用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)开始的[defaultAdmin](#defaultadmin-→-address)转移。
-
-调用该函数后：
-* DEFAULT_ADMIN_ROLE应授予调用者。
-* DEFAULT_ADMIN_ROLE应从以前的持有者中撤销。
-* [pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)应重置为零值。
-
-要求：
-* 只能由[pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)的newAdmin调用。
-* [pendingDefaultAdmin](#pendingdefaultadmin-→-address-newadmin-uint48-schedule)的acceptSchedule应已通过。
-
-#### _acceptDefaultAdminTransfer()
-internal#
-查看[acceptDefaultAdminTransfer](#acceptdefaultadmintransfer)。
-这是一个没有访问限制的内部函数。
-
-#### changeDefaultAdminDelay(uint48 newDelay)
-public#
-通过设置一个[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)来启动一个[defaultAdminDelay](#defaultadmindelay-→-uint48)更新，该延迟计划在当前时间戳加上[defaultAdminDelay](#defaultadmindelay-→-uint48)后生效。
-
-该函数保证在调用此方法时和[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)生效计划之间的任何对[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)的调用都将使用在调用之前设置的当前[defaultAdminDelay](#defaultadmindelay-→-uint48)。
-
-[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)的生效计划设计为等待计划并使用新延迟调用[beginDefaultAdminTransfer](#begindefaultadmintransferaddress-newadmin)将至少需要与另一个[defaultAdmin](#defaultadmin-→-address)完整转移（包括接受）相同的时间。
-
-该计划适用于两种情况：
-* 当延迟更改为较大值时，计划是block.timestamp + newDelay，上限为[defaultAdminDelayIncreaseWait](#defaultadmindelayincreasewait-→-uint48)。
-* 当延迟更改为较短的时间时，计划是block.timestamp +（当前延迟 - 新延迟）。
-
-如果一个未生效的[pendingDefaultAdminDelay](#pendingdefaultadmindelay-→-uint48-newdelay-uint48-schedule)将被取消，以支持新的计划更改。
-要求：
-* 只能由当前的[defaultAdmin](#defaultadmin-→-address)调用。
-
-发出DefaultAdminDelayChangeScheduled事件，可能还会发出DefaultAdminDelayChangeCanceled事件。
-
-#### _changeDefaultAdminDelay(uint48 newDelay)
-internal#
-查看[changeDefaultAdminDelay](#changedefaultadmindelayuint48-newdelay)。
-内部函数，没有访问限制。
-
-#### rollbackDefaultAdminDelay()
-public#
-取消预定的[defaultAdminDelay](#defaultadmindelay-→-uint48)更改。
-要求：
-* 只能由当前的[defaultAdmin](#defaultadmin-→-address)调用。
-
-可能会发出DefaultAdminDelayChangeCanceled事件。
-
-#### _rollbackDefaultAdminDelay()
-internal#
-查看[rollbackDefaultAdminDelay](#rollbackdefaultadmindelay)。
-这是一个没有访问限制的内部函数。
-
-#### _delayChangeWait(uint48 newDelay) → uint48
-internal#
-返回在newDelay成为新的[defaultAdminDelay](#defaultadmindelay-→-uint48)之后需要等待的秒数。
-返回的值保证了如果延迟被减少，它将在遵守先前设置的延迟的等待后生效。
-请参阅[defaultAdminDelayIncreaseWait](#defaultadmindelayincreasewait-→-uint48)。
+### [IAccessControlDefaultAdminRules](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/extensions/IAccessControlDefaultAdminRules.sol)
