@@ -1764,3 +1764,269 @@ internal#
 
 #### _setRoleAdmin(uint64 roleId, uint64 admin)
 internal#
+内部版本的*setRoleAdmin*没有访问控制。
+
+会发出一个*RoleAdminChanged*事件。
+
+> NOTE
+允许将管理员角色设置为PUBLIC_ROLE，但这实际上会允许任何人设置或撤销此类角色。
+
+#### _setRoleGuardian(uint64 roleId, uint64 guardian)
+internal#
+内部版本的*setRoleGuardian*函数，没有访问控制。
+
+触发一个*RoleGuardianChanged*事件。
+
+> NOTE
+将监护人角色设置为PUBLIC_ROLE是允许的，但实际上它会允许任何人取消此类角色的任何计划操作。
+
+#### _setGrantDelay(uint64 roleId, uint32 newDelay)
+internal#
+内部版本的*setGrantDelay*函数，没有访问控制。
+
+触发一个*RoleGrantDelayChanged*事件。
+
+#### setTargetFunctionRole(address target, bytes4[] selectors, uint64 roleId)
+public#
+设置需要调用目标合约中由选择器标识的函数的角色。
+
+要求：
+* 调用者必须是全局管理员
+
+每个选择器会触发一个*TargetFunctionRoleUpdated*事件。
+
+#### _setTargetFunctionRole(address target, bytes4 selector, uint64 roleId)
+internal#
+内部版本的*setTargetFunctionRole*函数，没有访问控制。
+
+发出一个*TargetFunctionRoleUpdated*事件。
+
+#### setTargetAdminDelay(address target, uint32 newDelay)
+public#
+设置更改给定目标合同配置的延迟。
+
+要求：
+* 调用者必须是全局管理员
+
+会触发一个*TargetAdminDelayUpdated*事件。
+
+#### _setTargetAdminDelay(address target, uint32 newDelay)
+internal#
+内部版本的*setTargetAdminDelay*，没有访问控制。
+
+发出一个*TargetAdminDelayUpdated*事件。
+
+#### setTargetClosed(address target, bool closed)
+public#
+为合同设置关闭标志。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*TargetClosed*事件。
+
+#### _setTargetClosed(address target, bool closed)
+internal#
+为合同设置关闭标志。这是一个没有访问限制的内部设置器。
+
+发出一个*TargetClosed*事件。
+
+#### getSchedule(bytes32 id) → uint48
+public#
+返回计划操作准备执行的时间点。如果操作尚未计划，已过期，已执行或已取消，则返回0。
+
+#### getNonce(bytes32 id) → uint32
+public#
+返回具有给定ID的最新计划操作的nonce。如果操作从未被计划过，则返回0。
+
+#### schedule(address target, bytes data, uint48 when) → bytes32 operationId, uint32 nonce
+public#
+为未来的执行安排一个延迟操作，并返回操作标识符。只要满足调用者所需的执行延迟，就可以选择操作变为可执行的时间戳。特殊值零将自动设置为最早可能的时间。
+
+返回被安排的操作Id。由于此值是参数的哈希，因此当使用相同的参数时，它可以重新出现；如果这是相关的，返回的nonce可以用来唯一地识别这个安排的操作，从其他在*执行*和*取消调用*中的相同操作Id的出现中区分出来。
+
+发出一个*OperationScheduled*事件。
+
+> NOTE
+不可能同时安排具有相同目标和数据的多个操作。如果这是必要的，可以在数据后面附加一个随机字节，作为一个盐，如果目标合约使用标准的Solidity ABI编码，它将被忽略。
+
+#### execute(address target, bytes data) → uint32
+public#
+执行一个受到延迟限制的函数，前提是它之前已经被正确地安排过，或者执行延迟为0。
+
+返回标识之前安排的操作的nonce，如果操作之前没有被安排（如果调用者没有执行延迟）则返回0。
+
+只有在调用被安排并延迟时，才会触发一个*OperationExecuted*事件。
+
+#### cancel(address caller, address target, bytes data) → uint32
+public#
+取消预定（延迟）的操作。返回标识被取消的预定操作的随机数。
+
+要求：
+
+调用者必须是提议者，目标函数的监护人，或全局管理员
+
+触发一个*OperationCanceled*事件。
+
+#### consumeScheduledOp(address caller, bytes data)
+public#
+消费针对调用者的预定操作。如果此类操作存在，将其标记为已消费（发出*OperationExecuted*事件并清理状态）。否则，抛出错误。
+
+这对于希望强制在管理器上预定针对它们的调用的合同非常有用，这涉及所有的验证。
+
+发出一个*OperationExecuted*事件。
+
+#### _consumeScheduledOp(bytes32 operationId) → uint32
+internal#
+内部变体的*consumeScheduledOp*，该变体在bytes32 operationId上操作。
+
+返回被消耗的计划操作的nonce。
+
+#### hashOperation(address caller, address target, bytes data) → bytes32
+public#
+为延迟操作的哈希函数。
+
+#### updateAuthority(address target, address newAuthority)
+public#
+更改此管理实例管理的目标的权限。
+
+要求：
+* 调用者必须是全局管理员
+
+#### ADMIN_ROLE() → uint64
+public#
+
+#### PUBLIC_ROLE() → uint64
+public#
+
+### [IAccessManaged](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/manager/IAccessManaged.sol)
+```
+import "@openzeppelin/contracts/access/manager/IAccessManaged.sol";
+```
+
+**FUNCTIONS**
+authority()
+
+setAuthority()
+
+isConsumingScheduledOp()
+
+**EVENTS**
+AuthorityUpdated(authority)
+
+**ERRORS**
+AccessManagedUnauthorized(caller)
+
+AccessManagedRequiredDelay(caller, delay)
+
+AccessManagedInvalidAuthority(authority)
+
+#### authority() → address
+external#
+返回当前权限。
+
+#### setAuthority(address)
+external#
+将控制权转移给新的管理员。呼叫者必须是当前的管理员。
+
+#### isConsumingScheduledOp() → bytes4
+external#
+仅在延迟限制调用的上下文中返回真，即在计划操作被消耗的那一刻。防止在合同执行攻击者控制的调用的情况下，对延迟限制调用的服务拒绝。
+
+#### AuthorityUpdated(address authority)
+event#
+管理此合同的权力机构已更新。
+
+#### AccessManagedUnauthorized(address caller)
+error#
+
+#### AccessManagedRequiredDelay(address caller, uint32 delay)
+error#
+
+#### AccessManagedInvalidAuthority(address authority)
+error#
+
+### [AccessManaged](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/manager/AccessManaged.sol)
+```
+import "@openzeppelin/contracts/access/manager/AccessManaged.sol";
+```
+
+此合约模块提供了一个*restricted*修饰符。使用此修饰符修饰的函数将根据"权限"进行权限分配：像*AccessManager*这样的合约遵循*IAuthority*接口，实现一种策略，允许某些调用者访问某些函数。
+
+> IMPORTANT
+受限制的修饰符永远不应该用在内部函数上，应谨慎地用在公共函数上，理想情况下只用在外部函数上。参见*restricted*。
+
+**MODIFIERS**
+restricted()
+
+**FUNCTIONS**
+constructor(initialAuthority)
+
+authority()
+
+setAuthority(newAuthority)
+
+isConsumingScheduledOp()
+
+_setAuthority(newAuthority)
+
+_checkCanCall(caller, data)
+
+**EVENTS**
+IACCESSMANAGED
+AuthorityUpdated(authority)
+
+**ERRORS**
+IACCESSMANAGED
+AccessManagedUnauthorized(caller)
+
+AccessManagedRequiredDelay(caller, delay)
+
+AccessManagedInvalidAuthority(authority)
+
+#### restricted()
+modifier#
+此修饰符限制了对函数的访问，这是由此合约的连接权限、调用者和进入合约的函数的选择器定义的。
+
+> IMPORTANT
+通常，这个修饰符只应用于外部函数。在作为外部入口点使用并且不被内部调用的公共函数上使用它是可以的。除非你知道你在做什么，否则永远不应该在内部函数上使用它。不遵循这些规则可能会有严重的安全影响！这是因为权限是由进入合约的函数，即调用堆栈底部的函数，而不是源代码中可见修饰符的函数来确定的。
+
+> WARNING
+避免在*receive()*函数或*fallback()*函数中添加此修饰符。这些函数是唯一的执行路径，其中函数选择器不能从calldata中明确确定，因为在receive()函数中选择器默认为0x00000000，如果没有提供calldata，fallback()函数也是如此。（参见*_checkCanCall*）。
+
+receive()函数将始终出现panic，而fallback()函数可能会根据calldata的长度出现panic。
+
+#### constructor(address initialAuthority)
+internal#
+
+#### authority() → address
+public#
+返回当前权限。
+
+#### setAuthority(address newAuthority)
+public#
+将控制权转移给新的权威。调用者必须是当前的权威。
+
+#### isConsumingScheduledOp() → bytes4
+public#
+仅在延迟限制呼叫的上下文中返回真值，即在计划操作被消耗的时刻。防止在合约执行攻击者控制的呼叫的情况下，对延迟限制呼叫的服务拒绝。
+
+#### _setAuthority(address newAuthority)
+internal#
+将控制权转移给新的权儿。内部功能，没有访问限制。允许绕过当前权儿设置的权限。
+
+#### _checkCanCall(address caller, bytes data)
+internal#
+如果调用者不被允许调用由选择器标识的函数，则撤销。如果调用数据少于4字节，则会引发恐慌。
+
+### [AuthorityUtils](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/manager/AuthorityUtils.sol)
+```
+import "@openzeppelin/contracts/access/manager/AuthorityUtils.sol";
+```
+
+**FUNCTIONS**
+canCallWithDelay(authority, caller, target, selector)
+
+#### canCallWithDelay(address authority, address caller, address target, bytes4 selector) → bool immediate, uint32 delay
+internal#
+由于AccessManager实现了扩展的IAuthority接口，以向后兼容的方式调用canCall需要特别注意，以避免因返回数据不足而回退。这个辅助函数负责以向后兼容的方式调用canCall，而不会回退。
