@@ -1146,3 +1146,281 @@ external#
 #### isTargetClosed(address target) → bool
 external#
 判断合约是否已关闭并禁止任何访问。否则，将应用角色权限。
+
+#### getTargetFunctionRole(address target, bytes4 selector) → uint64
+external#
+调用函数所需的角色。
+
+#### getTargetAdminDelay(address target) → uint32
+external#
+获取目标合约的管理员延迟。对合约配置的更改将受到此延迟的影响。
+
+#### getRoleAdmin(uint64 roleId) → uint64
+external#
+获取作为给定角色的管理员的角色的ID。
+
+管理员权限是授予角色，撤销角色和更新执行延迟以执行仅限于此角色的操作所必需的。
+
+#### getRoleGuardian(uint64 roleId) → uint64
+external#
+获取作为给定角色的保护者的角色。
+
+保护者权限允许取消已经在角色下安排的操作。
+
+#### getRoleGrantDelay(uint64 roleId) → uint32
+external#
+获取当前角色授权延迟。
+
+此值可能在任何时候改变，而不会在调用*8*后发出事件。此值的更改，包括生效时间点，将通过*RoleGrantDelayChanged*事件提前通知。
+
+#### getAccess(uint64 roleId, address account) → uint48, uint32, uint32, uint48
+external#
+获取给定角色的给定账户的访问详情。这些详情包括会员资格生效的时间点，以及对需要此权限级别的用户的所有操作应用的延迟。
+
+返回：[0] 账户会员资格生效的时间戳。0表示未授予角色。[1] 账户当前的执行延迟。[2] 账户的待处理执行延迟。[3] 待处理执行延迟将生效的时间戳。0表示没有计划的延迟更新。
+
+#### hasRole(uint64 roleId, address account) → bool, uint32
+external#
+检查给定账户当前是否具有对应于给定角色的权限级别。请注意，这种权限可能与执行延迟相关联。*getAccess*可以提供更多详细信息。
+
+#### labelRole(uint64 roleId, string label)
+external#
+为角色添加标签，以便UI更好地发现角色。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*RoleLabel*事件。
+
+#### grantRole(uint64 roleId, address account, uint32 executionDelay)
+external#
+将账户添加到角色ID，或更改其执行延迟。
+
+这将授权账户调用任何限制为此角色的功能。可以设置一个可选的执行延迟（以秒为单位）。如果该延迟不为0，用户需要预定任何限制为此角色成员的操作。用户只能在延迟过后，且在其过期之前执行操作。在此期间，管理员和监护人可以取消操作（参见*cancel*）。
+
+如果账户已经被授予了这个角色，执行延迟将被更新。这个更新不是立即的，而是遵循延迟规则。例如，如果一个用户当前的延迟是3小时，然后调用这个来将延迟减少到1小时，新的延迟将需要一些时间才能生效，确保在此更新之后的3小时内执行的任何操作确实是在此更新之前预定的。
+
+要求：
+* 调用者必须是角色的管理员（参见*getRoleAdmin*）
+
+授予的角色不能是PUBLIC_ROLE
+
+触发一个*RoleGranted*事件。
+
+#### revokeRole(uint64 roleId, address account)
+external#
+从角色中移除一个账户，立即生效。如果账户没有该角色，此调用无效。
+
+要求：
+* 调用者必须是角色的管理员（参见*getRoleAdmin*）
+
+* 被撤销的角色不能是PUBLIC_ROLE
+
+如果账户拥有该角色，会触发一个*RoleRevoked*事件。
+
+#### renounceRole(uint64 roleId, address callerConfirmation)
+external#
+立即撤销呼叫账户的角色权限。如果发送者不在此角色中，此调用无效。
+
+要求：
+* 调用者必须是callerConfirmation。
+
+如果账户拥有角色，将触发*RoleRevoked*事件。
+
+#### setRoleAdmin(uint64 roleId, uint64 admin)
+external#
+更改给定角色的管理员角色。
+
+要求：
+
+调用者必须是全局管理员
+
+触发一个*RoleAdminChanged*事件
+
+#### setRoleGuardian(uint64 roleId, uint64 guardian)
+external#
+更改给定角色保护者角色。
+
+需求：
+
+调用者必须是全局管理员
+
+触发一个*RoleGuardianChanged*事件
+
+#### setGrantDelay(uint64 roleId, uint32 newDelay)
+external#
+更新授予角色ID的延迟。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*RoleGrantDelayChanged*事件。
+
+#### setTargetFunctionRole(address target, bytes4[] selectors, uint64 roleId)
+external#
+设置调用目标合约中由选择器标识的函数所需的角色。
+
+要求：
+* 调用者必须是全局管理员
+
+每个选择器都会触发一个*TargetFunctionRoleUpdated*事件。
+
+#### setTargetAdminDelay(address target, uint32 newDelay)
+external#
+设置更改给定目标合同配置的延迟。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*TargetAdminDelayUpdated*事件。
+
+#### setTargetClosed(address target, bool closed)
+external#
+为合同设置关闭标志。
+
+需求：
+* 调用者必须是全局管理员
+
+触发一个*TargetClosed*事件。
+
+#### getSchedule(bytes32 id) → uint48
+external#
+返回计划操作准备执行的时间点。如果操作尚未计划，已过期，已执行或已取消，则返回0。
+
+#### getNonce(bytes32 id) → uint32
+external#
+返回给定id的最新计划操作的随机数。如果操作从未被计划过，则返回0。
+
+#### schedule(address target, bytes data, uint48 when) → bytes32, uint32
+external#
+安排一个延迟操作在未来执行，并返回操作标识符。只要满足调用者所需的执行延迟，就可以选择操作可执行的时间戳。特殊值零将自动设置最早可能的时间。
+
+返回被安排的操作ID。由于此值是参数的哈希，因此当使用相同的参数时，它可以重复出现；如果这是相关的，返回的随机数可以用来唯一地识别这个安排的操作，从其他在*执行*和*取消调用*中的相同操作ID的发生中。
+
+发出一个*OperationScheduled*事件。
+
+> NOTE
+不可能同时安排具有相同目标和数据的多个操作。如果这是必要的，可以在数据后面附加一个随机字节作为盐，如果目标合约使用标准的Solidity ABI编码，它将被忽略。
+
+#### execute(address target, bytes data) → uint32
+external#
+执行一个受到延迟限制的函数，前提是它之前已经被正确地安排好，或者执行延迟为0。
+
+返回标识之前安排的操作的nonce，如果操作之前没有被安排（如果调用者没有执行延迟），则返回0。
+
+只有在调用被安排并延迟时，才会发出一个*OperationExecuted*事件。
+
+#### cancel(address caller, address target, bytes data) → uint32
+external#
+取消预定（延迟）的操作。返回标识被取消的预定操作的随机数。
+
+要求：
+* 调用者必须是提议者，目标函数的监护人，或全局管理员
+
+触发一个*OperationCanceled*事件。
+
+#### consumeScheduledOp(address caller, bytes data)
+external#
+消耗针对调用者的预定操作。如果存在这样的操作，将其标记为已消耗（发出*OperationExecuted*事件并清理状态）。否则，抛出错误。
+
+这对于想要强制在管理器上预定针对它们的调用的合同非常有用，这涉及到所有的验证。
+
+发出一个*OperationExecuted*事件。
+
+#### hashOperation(address caller, address target, bytes data) → bytes32
+external#
+为延迟操作的哈希函数
+
+#### updateAuthority(address target, address newAuthority)
+external#
+更改由此管理器实例管理的目标的权限。
+
+要求：
+* 调用者必须是全局管理员
+  
+#### OperationScheduled(bytes32 indexed operationId, uint32 indexed nonce, uint48 schedule, address caller, address target, bytes data)
+event#
+计划了一个延迟的操作。
+
+#### OperationExecuted(bytes32 indexed operationId, uint32 indexed nonce)
+event#
+一个预定的操作已经执行。
+
+#### OperationCanceled(bytes32 indexed operationId, uint32 indexed nonce)
+event#
+计划的操作被取消了。
+
+#### RoleLabel(uint64 indexed roleId, string label)
+event#
+为角色ID提供的信息标签
+
+#### RoleGranted(uint64 indexed roleId, address indexed account, uint32 delay, uint48 since, bool newMember)
+event#
+当账户被授予roleId时发出。
+
+> NOTE
+since参数的含义取决于newMember参数。如果角色被授予给新成员，since参数表示账户成为角色成员的时间，否则它表示此账户和roleId的执行延迟更新。
+
+#### RoleRevoked(uint64 indexed roleId, address indexed account)
+event#
+当账户成员资格或角色ID被撤销时发出。与授予权限不同，撤销是即时的。
+
+#### RoleAdminChanged(uint64 indexed roleId, uint64 indexed admin)
+event#
+作为给定角色ID的管理员的角色已更新。
+
+#### RoleGuardianChanged(uint64 indexed roleId, uint64 indexed guardian)
+event#
+更新作为指定角色ID的监护人的角色。
+
+#### RoleGrantDelayChanged(uint64 indexed roleId, uint32 delay, uint48 since)
+event#
+当达到指定的时间时，将会更新给定角色ID的授权延迟。
+
+#### TargetClosed(address indexed target, bool closed)
+event#
+目标模式已更新（true=关闭，false=开启）。
+
+#### TargetFunctionRoleUpdated(address indexed target, bytes4 selector, uint64 indexed roleId)
+event#
+需要更新为roleId以在目标上调用选择器的角色。
+
+#### TargetAdminDelayUpdated(address indexed target, uint32 delay, uint48 since)
+event#
+当达到给定的时间点时，将会更新给定目标的管理员延迟。
+
+#### AccessManagerAlreadyScheduled(bytes32 operationId)
+error#
+
+#### AccessManagerNotScheduled(bytes32 operationId)
+error#
+
+#### AccessManagerNotReady(bytes32 operationId)
+error#
+
+#### AccessManagerExpired(bytes32 operationId)
+error#
+
+#### AccessManagerLockedAccount(address account)
+error#
+
+#### AccessManagerLockedRole(uint64 roleId)
+error#
+
+#### AccessManagerBadConfirmation()
+error#
+
+#### AccessManagerUnauthorizedAccount(address msgsender, uint64 roleId)
+error#
+
+#### AccessManagerUnauthorizedCall(address caller, address target, bytes4 selector)
+error#
+
+#### AccessManagerUnauthorizedConsume(address target)
+error#
+
+#### AccessManagerUnauthorizedCancel(address msgsender, address caller, address target, bytes4 selector)
+error#
+
+#### AccessManagerInvalidInitialAdmin(address initialAdmin)
+error#
