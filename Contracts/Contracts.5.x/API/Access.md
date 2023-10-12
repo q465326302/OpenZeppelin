@@ -1424,3 +1424,343 @@ error#
 
 #### AccessManagerInvalidInitialAdmin(address initialAdmin)
 error#
+
+### [AccessManager](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/manager/AccessManager.sol)
+```
+import "@openzeppelin/contracts/access/manager/AccessManager.sol";
+```
+AccessManager是一个中心合约，用于存储系统的权限。
+
+一个由AccessManager实例控制的智能合约被称为目标，它将继承*AccessManaged*合约，作为其管理器与此合约连接，并在选定要进行权限管理的一组函数上实施*AccessManaged.restricted*修饰符。请注意，没有这种设置的任何函数都不会被有效地限制。
+
+这些函数的限制规则是以"角色"的形式定义的，这些角色由uint64标识，并由目标（地址）和函数选择器（bytes4）限定。这些角色存储在此合约中，可以由管理员（ADMIN_ROLE成员）在延迟后配置（参见*getTargetAdminDelay*）。
+
+对于每个目标合约，管理员可以立即配置以下内容：
+* 通过*updateAuthority*配置目标的*AccessManaged.authority*。
+
+* 通过*setTargetClosed*关闭或打开目标，同时保持权限不变。
+
+* 通过*setTargetFunctionRole*配置允许（或不允许）调用给定函数（由其选择器标识）的角色。
+
+默认情况下，每个地址都是PUBLIC_ROLE的成员，每个目标函数都限制为ADMIN_ROLE，直到配置为其他方式。此外，每个角色都有以下配置选项，限制为此管理器的管理员：
+
+* 可以授予或撤销角色的角色的管理员角色，通过*setRoleAdmin*设置。
+
+* 允许取消操作的角色的监护人角色，通过*setRoleGuardian*设置。
+
+* 通过*setGrantDelay*设置授予角色后生效的延迟。
+
+* 通过*setTargetAdminDelay*设置任何目标的管理员操作的延迟。
+
+* 用于发现目的的角色标签，通过*labelRole*设置。
+
+任何帐户都可以通过使用*grantRole*和*revokeRole*函数添加和删除这些角色，这些函数受到每个角色的管理员的限制（参见*getRoleAdmin*）。
+
+由于管理系统的所有权限都可以由此实例的管理员修改，因此预计他们将被高度保护（例如，多重签名或配置良好的DAO）。
+
+> NOTE
+此合约实现了*IAuthority*接口的一种形式，但是*canCall*有额外的返回数据，所以它不继承IAuthority。然而，它与IAuthority接口兼容，因为返回数据的前32字节是IAuthority接口所期望的布尔值。
+
+> NOTE
+实现其他访问控制机制的系统（例如使用*Ownable*）可以通过直接将权限（在*Ownable*的情况下为所有权）转移给*AccessManager*来配对。用户将能够通过*execute*函数与这些合约进行交互，遵循在*AccessManager*中注册的访问规则。请记住，在这种情况下，受限函数看到的msg.sender将是*AccessManager*本身。
+
+> WARNING
+在将*Ownable*或*AccessControl*合约的权限授予*AccessManager*时，要非常注意与{*Ownable.renounceOwnership*}或{*AccessControl.renounceRole*}等函数相关的危险。
+
+**MODIFIERS**
+onlyAuthorized()
+
+**FUNCTIONS**
+constructor(initialAdmin)
+
+canCall(caller, target, selector)
+
+expiration()
+
+minSetback()
+
+isTargetClosed(target)
+
+getTargetFunctionRole(target, selector)
+
+getTargetAdminDelay(target)
+
+getRoleAdmin(roleId)
+
+getRoleGuardian(roleId)
+
+getRoleGrantDelay(roleId)
+
+getAccess(roleId, account)
+
+hasRole(roleId, account)
+
+labelRole(roleId, label)
+
+grantRole(roleId, account, executionDelay)
+
+revokeRole(roleId, account)
+
+renounceRole(roleId, callerConfirmation)
+
+setRoleAdmin(roleId, admin)
+
+setRoleGuardian(roleId, guardian)
+
+setGrantDelay(roleId, newDelay)
+
+_grantRole(roleId, account, grantDelay, executionDelay)
+
+_revokeRole(roleId, account)
+
+_setRoleAdmin(roleId, admin)
+
+_setRoleGuardian(roleId, guardian)
+
+_setGrantDelay(roleId, newDelay)
+
+setTargetFunctionRole(target, selectors, roleId)
+
+_setTargetFunctionRole(target, selector, roleId)
+
+setTargetAdminDelay(target, newDelay)
+
+_setTargetAdminDelay(target, newDelay)
+
+setTargetClosed(target, closed)
+
+_setTargetClosed(target, closed)
+
+getSchedule(id)
+
+getNonce(id)
+
+schedule(target, data, when)
+
+execute(target, data)
+
+cancel(caller, target, data)
+
+consumeScheduledOp(caller, data)
+
+_consumeScheduledOp(operationId)
+
+hashOperation(caller, target, data)
+
+updateAuthority(target, newAuthority)
+
+ADMIN_ROLE()
+
+PUBLIC_ROLE()
+
+MULTICALL
+multicall(data)
+
+**EVENTS**
+IACCESSMANAGER
+OperationScheduled(operationId, nonce, schedule, caller, target, data)
+
+OperationExecuted(operationId, nonce)
+
+OperationCanceled(operationId, nonce)
+
+RoleLabel(roleId, label)
+
+RoleGranted(roleId, account, delay, since, newMember)
+
+RoleRevoked(roleId, account)
+
+RoleAdminChanged(roleId, admin)
+
+RoleGuardianChanged(roleId, guardian)
+
+RoleGrantDelayChanged(roleId, delay, since)
+
+TargetClosed(target, closed)
+
+TargetFunctionRoleUpdated(target, selector, roleId)
+
+TargetAdminDelayUpdated(target, delay, since)
+
+**ERRORS**
+IACCESSMANAGER
+AccessManagerAlreadyScheduled(operationId)
+
+AccessManagerNotScheduled(operationId)
+
+AccessManagerNotReady(operationId)
+
+AccessManagerExpired(operationId)
+
+AccessManagerLockedAccount(account)
+
+AccessManagerLockedRole(roleId)
+
+AccessManagerBadConfirmation()
+
+AccessManagerUnauthorizedAccount(msgsender, roleId)
+
+AccessManagerUnauthorizedCall(caller, target, selector)
+
+AccessManagerUnauthorizedConsume(target)
+
+AccessManagerUnauthorizedCancel(msgsender, caller, target, selector)
+
+AccessManagerInvalidInitialAdmin(initialAdmin)
+
+#### onlyAuthorized()
+modifier#
+检查呼叫者是否有权执行操作，遵循在{_getAdminRestrictions}中编码的限制。
+
+#### constructor(address initialAdmin)
+public#
+
+#### canCall(address caller, address target, bytes4 selector) → bool immediate, uint32 delay
+public#
+检查一个地址（调用者）是否被授权直接调用给定合约上的给定函数（无任何限制）。此外，它还返回*执行*和间接*调用*所需的延迟时间。
+
+这个函数通常由目标合约调用，以控制受限函数的即时执行。因此，我们只在可以无延迟执行调用时返回true。如果调用受到之前设置的延迟（非零）的影响，那么函数应返回false，调用者应安排将来执行操作。
+
+如果immediate为true，可以忽略延迟并立即执行操作，否则只有当延迟大于0时才能执行操作。
+
+> NOTE
+IAuthority接口不包括uint32延迟。这是该接口的向后兼容扩展。因此，一些合约可能会忽略第二个返回参数。在这种情况下，它们将无法识别间接工作流，并将认为需要延迟的调用是被禁止的。
+
+> NOTE
+此函数不报告此管理器本身的权限。这些权限由{_canCallSelf}函数定义。
+
+#### expiration() → uint32
+public#
+计划提案的到期延迟。默认为1周。
+
+避免将过期时间设置为0。否则，每个合同提案将立即过期，使得任何计划使用都无效。
+
+#### minSetback() → uint32
+public#
+除执行延迟外，所有延迟更新的最小回退。它可以在没有回退的情况下增加（并在意外增加的情况事件中通过*撤销角色*重置）。默认为5天。
+
+#### isTargetClosed(address target) → bool
+public#
+判断合同是否已关闭并禁止任何访问。否则，将应用角色权限。
+
+#### getTargetFunctionRole(address target, bytes4 selector) → uint64
+public#
+调用函数所需的角色。
+
+#### getTargetAdminDelay(address target) → uint32
+public#
+获取目标合同的管理员延迟。对合同配置的更改将受此延迟的影响。
+
+#### getRoleAdmin(uint64 roleId) → uint64
+public#
+获取作为给定角色的管理员的角色的ID。
+
+需要管理员权限才能授予角色，撤销角色和更新执行延迟以执行仅限于此角色的操作。
+
+#### getRoleGuardian(uint64 roleId) → uint64
+public#
+获取作为给定角色的监护人的角色。
+
+监护人权限允许取消已在角色下安排的操作。
+
+#### getRoleGrantDelay(uint64 roleId) → uint32
+public#
+获取当前角色授权延迟。
+
+此值可能在任何时候改变，而不会在调用*setGrantDelay*后发出事件。对此值的更改，包括生效时间点，都会通过*RoleGrantDelayChanged*事件提前通知。
+
+#### getAccess(uint64 roleId, address account) → uint48 since, uint32 currentDelay, uint32 pendingDelay, uint48 effect
+public#
+获取给定角色的给定账户的访问详情。这些详情包括会员资格生效的时间点，以及对该用户需要此权限级别的所有操作应用的延迟。
+
+返回：[0] 账户会员资格生效的时间戳。0表示未授予角色。[1] 账户当前的执行延迟。[2] 账户的待处理执行延迟。[3] 待处理执行延迟将生效的时间戳。0表示没有计划的延迟更新。
+
+#### hasRole(uint64 roleId, address account) → bool isMember, uint32 executionDelay
+public#
+检查给定账户当前是否具有对应于给定角色的权限级别。请注意，此权限可能与执行延迟相关联。*getAccess*可以提供更多详细信息。
+
+#### labelRole(uint64 roleId, string label)
+public#
+为角色添加标签，以便UI更好地发现角色。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*RoleLabel*事件。
+
+#### grantRole(uint64 roleId, address account, uint32 executionDelay)
+public#
+将账户添加到roleId，或更改其执行延迟。
+
+这将授权账户调用任何限制为此角色的功能。可以设置一个可选的执行延迟（以秒为单位）。如果该延迟非0，则要求用户安排任何限制为此角色成员的操作。用户只能在延迟过后，且在其过期之前执行操作。在此期间，管理员和监护人可以取消操作（参见 *cancel*）。
+
+如果账户已经被授予了这个角色，执行延迟将被更新。这个更新不是立即的，而是遵循延迟规则。例如，如果一个用户当前的延迟是3小时，然后调用这个来将延迟减少到1小时，新的延迟将需要一些时间才能生效，确保在这次更新后的3小时内执行的任何操作确实是在这次更新之前安排的。
+
+要求：
+* 调用者必须是角色的管理员（参见*getRoleAdmin*）
+
+* 授予的角色不能是PUBLIC_ROLE
+
+会触发一个*RoleGranted*事件。
+
+#### revokeRole(uint64 roleId, address account)
+public#
+从角色中移除一个账户，立即生效。如果账户没有该角色，此操作无效。
+
+要求：
+* 调用者必须是该角色的管理员（参见* *）
+
+* 被撤销的角色不能是PUBLIC_ROLE
+
+如果账户拥有该角色，会触发一个*RoleRevoked*事件。
+
+#### renounceRole(uint64 roleId, address callerConfirmation)
+public#
+立即放弃调用账户的角色权限。如果发送者不在该角色中，此调用无效。
+
+要求：
+* 调用者必须是callerConfirmation。
+
+如果账户拥有角色，将触发*RoleRevoked*事件。
+
+#### setRoleAdmin(uint64 roleId, uint64 admin)
+public#
+更改给定角色的管理员角色。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*RoleAdminChanged*事件
+
+#### setRoleGuardian(uint64 roleId, uint64 guardian)
+public#
+更改给定角色的监护人角色。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*RoleGuardianChanged*事件
+
+#### setGrantDelay(uint64 roleId, uint32 newDelay)
+public#
+更新授予角色ID的延迟。
+
+要求：
+* 调用者必须是全局管理员
+
+触发一个*RoleGrantDelayChanged*事件。
+
+#### _grantRole(uint64 roleId, address account, uint32 grantDelay, uint32 executionDelay) → bool
+internal#
+内部版本的*grantRole*没有访问控制。如果角色是新授予的，则返回true。
+
+触发一个*RoleGranted*事件。
+
+#### _revokeRole(uint64 roleId, address account) → bool
+internal#
+无访问控制的*撤销角色*的内部版本。这个逻辑也被*放弃角色*使用。如果之前授予了角色，返回true。
+
+如果账户拥有角色，会发出一个*RoleRevoked*事件。
+
+#### _setRoleAdmin(uint64 roleId, uint64 admin)
+internal#
