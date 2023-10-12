@@ -898,3 +898,251 @@ internal#
 请查阅 *beginDefaultAdminTransfer*.
 
 内部函数没有访问限制。
+
+#### cancelDefaultAdminTransfer()
+public#
+取消先前使用*beginDefaultAdminTransfer*开始的*默认管理员*转移。
+
+还可以使用此功能取消尚未接受的*待处理默认管理员*。
+
+要求：
+* 只能由当前的*默认管理员*调用。
+
+可能会发出DefaultAdminTransferCanceled事件。
+
+#### _cancelDefaultAdminTransfer()
+internal#
+请查阅 *cancelDefaultAdminTransfer*.
+内部函数，无访问限制。
+
+#### acceptDefaultAdminTransfer()
+public#
+完成先前通过*beginDefaultAdminTransfer*开始的*默认管理员*转移。
+
+调用此函数后：
+
+* DEFAULT_ADMIN_ROLE应授予给调用者。
+
+* DEFAULT_ADMIN_ROLE应从前持有者那里撤销。
+
+* *pendingDefaultAdmin*应重置为零值。
+
+要求：
+
+* 只能由*pendingDefaultAdmin*的newAdmin调用。
+
+* *pendingDefaultAdmin*的接受计划应已通过。
+
+#### _acceptDefaultAdminTransfer()
+internal#
+请查阅 *acceptDefaultAdminTransfer*.
+内部函数，无访问限制。
+
+#### changeDefaultAdminDelay(uint48 newDelay)
+public#
+此函数通过设置一个*待处理的默认管理员*延迟来启动*默认管理员*延迟的更新，该延迟将在当前时间戳加上*默认管理员*延迟后生效。
+
+该函数保证在此方法被调用的时间戳和*待处理的默认管理员延迟生效计划*之间进行的任何对*beginDefaultAdminTransfer*的调用都将使用在调用之前设置的当*前默认管理员延迟*。
+
+*待处理的默认管理员延迟的生效计划*是这样定义的：等待直到计划然后用新的延迟调用*beginDefaultAdminTransfer*将至少需要与另一个*默认管理员*完整转移（包括接受）一样的时间。
+
+计划设计有两种情况：
+
+* 当延迟被改为更长的时候，计划是block.timestamp + newDelay，上限是*defaultAdminDelayIncreaseWait*。
+
+* 当延迟被改为更短的时候，计划是block.timestamp + (当前延迟 - 新延迟)。
+
+一个从未生效的*待处理的默认管理员延迟*将被取消，以便进行新的计划更改。
+
+要求：
+* 只能由当前的*默认管理员*调用。
+
+会发出一个DefaultAdminDelayChangeScheduled事件，可能会发出一个DefaultAdminDelayChangeCanceled事件。
+
+#### _changeDefaultAdminDelay(uint48 newDelay)
+_changeDefaultAdminDelay(uint48 newDelay)
+internal#
+请查阅 *changeDefaultAdminDelay*.
+内部函数，无访问限制。
+
+#### rollbackDefaultAdminDelay()
+public#
+取消预定的*defaultAdminDelay*更改。
+
+要求：
+* 只能由当前的*defaultAdmin*调用。
+
+可能会触发一个DefaultAdminDelayChangeCanceled事件。
+
+#### _rollbackDefaultAdminDelay()
+internal#
+请查阅 *rollbackDefaultAdminDelay*.
+内部函数，无访问限制。
+
+#### _delayChangeWait(uint48 newDelay) → uint48
+internal#
+返回在newDelay成为新的*defaultAdminDelay*后需要等待的秒数。
+
+返回的值保证，如果延迟减少，它将在尊重之前设置的延迟后生效。
+
+参见*defaultAdminDelayIncreaseWait*。
+
+## AccessManager
+
+### [IAuthority](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/manager/IAuthority.sol)
+
+```
+import "@openzeppelin/contracts/access/manager/IAuthority.sol";
+```
+
+最初在Dappsys中定义的权限设置的标准接口。
+
+**FUNCTIONS**
+canCall(caller, target, selector)
+
+#### canCall(address caller, address target, bytes4 selector) → bool allowed
+external#
+如果调用者可以在目标上调用由函数选择器标识的函数，则返回true。
+
+#### [IAccessManager](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/access/manager/IAccessManager.sol)
+```
+import "@openzeppelin/contracts/access/manager/IAccessManager.sol";
+```
+
+**FUNCTIONS**
+canCall(caller, target, selector)
+
+expiration()
+
+minSetback()
+
+isTargetClosed(target)
+
+getTargetFunctionRole(target, selector)
+
+getTargetAdminDelay(target)
+
+getRoleAdmin(roleId)
+
+getRoleGuardian(roleId)
+
+getRoleGrantDelay(roleId)
+
+getAccess(roleId, account)
+
+hasRole(roleId, account)
+
+labelRole(roleId, label)
+
+grantRole(roleId, account, executionDelay)
+
+revokeRole(roleId, account)
+
+renounceRole(roleId, callerConfirmation)
+
+setRoleAdmin(roleId, admin)
+
+setRoleGuardian(roleId, guardian)
+
+setGrantDelay(roleId, newDelay)
+
+setTargetFunctionRole(target, selectors, roleId)
+
+setTargetAdminDelay(target, newDelay)
+
+setTargetClosed(target, closed)
+
+getSchedule(id)
+
+getNonce(id)
+
+schedule(target, data, when)
+
+execute(target, data)
+
+cancel(caller, target, data)
+
+consumeScheduledOp(caller, data)
+
+hashOperation(caller, target, data)
+
+updateAuthority(target, newAuthority)
+
+**EVENTS**
+OperationScheduled(operationId, nonce, schedule, caller, target, data)
+
+OperationExecuted(operationId, nonce)
+
+OperationCanceled(operationId, nonce)
+
+RoleLabel(roleId, label)
+
+RoleGranted(roleId, account, delay, since, newMember)
+
+RoleRevoked(roleId, account)
+
+RoleAdminChanged(roleId, admin)
+
+RoleGuardianChanged(roleId, guardian)
+
+RoleGrantDelayChanged(roleId, delay, since)
+
+TargetClosed(target, closed)
+
+TargetFunctionRoleUpdated(target, selector, roleId)
+
+TargetAdminDelayUpdated(target, delay, since)
+
+**ERRORS**
+AccessManagerAlreadyScheduled(operationId)
+
+AccessManagerNotScheduled(operationId)
+
+AccessManagerNotReady(operationId)
+
+AccessManagerExpired(operationId)
+
+AccessManagerLockedAccount(account)
+
+AccessManagerLockedRole(roleId)
+
+AccessManagerBadConfirmation()
+
+AccessManagerUnauthorizedAccount(msgsender, roleId)
+
+AccessManagerUnauthorizedCall(caller, target, selector)
+
+AccessManagerUnauthorizedConsume(target)
+
+AccessManagerUnauthorizedCancel(msgsender, caller, target, selector)
+
+AccessManagerInvalidInitialAdmin(initialAdmin)
+
+#### canCall(address caller, address target, bytes4 selector) → bool allowed, uint32 delay
+external#
+检查一个地址（调用者）是否被授权直接调用给定合约上的某个函数（无任何限制）。此外，它还返回通过*调度*和*执行*工作流间接执行调用所需的延迟。
+
+这个函数通常由目标合约调用，以控制受限函数的即时执行。因此，我们只在可以无延迟执行调用时返回true。如果调用受到之前设置的延迟（非零）的影响，那么函数应返回false，调用者应将操作安排在未来执行。
+
+如果immediate为true，可以忽略延迟，操作可以立即执行，否则操作只能在延迟大于0的情况下执行。
+
+> NOTE
+IAuthority接口不包括uint32延迟。这是该接口的一个向后兼容的扩展。因此，一些合约可能会忽略第二个返回参数。在这种情况下，它们将无法识别间接工作流，并将认为需要延迟的调用是被禁止的。
+
+> NOTE
+此函数不报告此管理器本身的权限。这些权限由{_canCallSelf}函数定义。
+
+#### expiration() → uint32
+external#
+计划提案的过期延迟。默认为1周。
+
+> IMPORTANT
+避免将过期时间设置为0。否则，每个合约提案将立即过期，使得任何计划使用都无效。
+
+#### minSetback() → uint32
+external#
+除执行延迟外，所有延迟更新的最小回退。它可以在没有回退的情况下增加（并在意外增加的情况事件中通过*撤销角色*重置）。默认为5天。
+
+#### isTargetClosed(address target) → bool
+external#
+判断合约是否已关闭并禁止任何访问。否则，将应用角色权限。

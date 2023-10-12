@@ -39,7 +39,7 @@ Upgradeable包复制了主要的OpenZeppelin Contracts包的结构，但是每�
 > CAUTION
 需要特别注意多重继承的使用。请参阅下面标题为*“多重继承”*的部分。
 
-一旦这个合同设置并编译完成，你可以使用*升级插件*进行部署。以下片段显示了使用Hardhat的示例部署脚本。
+一旦这个合约设置并编译完成，你可以使用*升级插件*进行部署。以下片段显示了使用Hardhat的示例部署脚本。
 ```
 // scripts/deploy-my-collectible.js
 const { ethers, upgrades } = require("hardhat");
