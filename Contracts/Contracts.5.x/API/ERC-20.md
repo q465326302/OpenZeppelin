@@ -1001,3 +1001,523 @@ internal#
 
 #### _getVotingUnits(address account) → uint256
 internal#
+返回账户的投票单位。
+
+> WARNING
+重写此功能可能会破坏内部投票账目。 ERC20Votes假设代币以1:1的比例映射到投票单位，这不容易改变。
+
+#### numCheckpoints(address account) → uint32
+public#
+获取帐户的检查点数目。
+
+#### checkpoints(address account, uint32 pos) → struct Checkpoints.Checkpoint208
+public#
+获取账户的pos位置的检查点。
+
+#### ERC20ExceededSafeSupply(uint256 increasedSupply, uint256 cap)
+error#
+供应上限已经超过，引入了票数溢出的风险。
+
+### [ERC20Wrapper](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20Wrapper.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Wrapper.sol";
+```
+
+扩展ERC20代币合约以支持代币包装。
+
+用户可以存入和取出"基础代币"，并获得相应数量的"包装代币"。这在与其他模块结合使用时非常有用。例如，将这种包装机制与*ERC20Votes*结合，将允许将现有的"基础" ERC20包装成治理代币。
+
+**FUNCTIONS**
+constructor(underlyingToken)
+
+decimals()
+
+underlying()
+
+depositFor(account, value)
+
+withdrawTo(account, value)
+
+_recover(account)
+
+ERC20
+name()
+
+symbol()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_update(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+ERC20InvalidUnderlying(token)
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### constructor(contract IERC20 underlyingToken)
+internal#
+
+#### decimals() → uint8
+public#
+请查阅 *ERC20.decimals*.
+
+#### underlying() → contract IERC20
+public#
+返回被封装的底层ERC-20代币的地址。
+
+#### depositFor(address account, uint256 value) → bool
+public#
+允许用户存入基础代币，并铸造相应数量的包装代币。
+
+#### withdrawTo(address account, uint256 value) → bool
+public#
+允许用户销毁一定数量的封装代币，并提取相应数量的基础代币。
+
+#### _recover(address account) → uint256
+internal#
+创建包装代币以覆盖任何可能被误转的底层代币。这是一个内部函数，如果需要，可以通过访问控制进行公开。
+
+#### ERC20InvalidUnderlying(address token)
+error#
+底层的令牌无法被封装。
+
+### [ERC20FlashMint](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20FlashMint.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20FlashMint.sol";
+```
+
+实现ERC3156闪电贷款扩展，如[ERC-3156](https://eips.ethereum.org/EIPS/eip-3156)中定义。
+
+添加了*flashLoan*方法，该方法在代币级别提供闪电贷款支持。默认情况下没有费用，但可以通过覆盖*flashFee*来更改。
+
+当这个扩展与*ERC20Capped*或*ERC20Votes*扩展一起使用时，*maxFlashLoan*将不能正确反映可以闪电铸造的最大值。我们建议覆盖*maxFlashLoan*，使其正确反映供应上限。
+
+**FUNCTIONS**
+maxFlashLoan(token)
+
+flashFee(token, value)
+
+_flashFee(token, value)
+
+_flashFeeReceiver()
+
+flashLoan(receiver, token, value, data)
+
+ERC20
+name()
+
+symbol()
+
+decimals()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_update(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+ERC3156UnsupportedToken(token)
+
+ERC3156ExceededMaxLoan(maxLoan)
+
+ERC3156InvalidReceiver(receiver)
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### maxFlashLoan(address token) → uint256
+public#
+返回可借贷的最大代币数量。
+
+#### flashFee(address token, uint256 value) → uint256
+public#
+返回执行闪电贷款时应用的费用。此函数调用 *_flashFee* 函数，该函数返回执行闪电贷款时应用的费用。
+
+#### _flashFee(address token, uint256 value) → uint256
+internal#
+返回执行闪电贷款时应用的费用。默认情况下，此实现没有任何费用。这个函数可以被重载，使闪电贷款机制变为通缩的。
+
+#### _flashFeeReceiver() → address
+internal#
+返回闪电费的接收地址。默认情况下，此实现返回地址(0)，这意味着费用金额将被销毁。可以重载此函数以更改费用接收者。
+
+#### flashLoan(contract IERC3156FlashBorrower receiver, address token, uint256 value, bytes data) → bool
+public#
+执行闪电贷款。新的代币被铸造并发送给接收者，接收者需要实现*IERC3156FlashBorrower*接口。在闪电贷款结束时，接收者预计将拥有价值+费用的代币，并已经得到批准返回到代币合约本身，以便它们可以被销毁。
+
+#### ERC3156UnsupportedToken(address token)
+error#
+贷款令牌无效。
+
+#### 超过最大贷款限额(uint256最大贷款)
+error#
+请求的贷款超过了代币的最大贷款值。
+
+#### ERC3156InvalidReceiver(address receiver)
+error#
+闪电贷的接收者不是一个有效的{onFlashLoan}实现者。
+
+### [ERC4626](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC4626.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC4626.sol";
+```
+
+这是ERC4626 "Tokenized Vault Standard"的实现，定义在[EIP-4626](https://eips.ethereum.org/EIPS/eip-4626)中。
+
+这个扩展允许通过标准化的*deposit*、*mint*、*redeem*和*burn*工作流程，以"资产"为交换铸造和销毁"份额"（使用ERC20继承表示）。这个合约扩展了ERC20标准。任何附加的扩展都会影响这个合约所代表的"份额"代币，而不是"资产"代币，后者是一个独立的合约。
+
+> CAUTION
+在空的（或几乎空的）ERC-4626保险库中，存款有很高的被盗风险，通过对保险库的"捐赠"进行前运行，这会使份额的价格膨胀。这被称为捐赠或通胀攻击，本质上是滑点问题。保险库部署者可以通过对资产进行大量的初始存款来防止这种攻击，使价格操纵变得不可行。取款也可能受到滑点的影响。用户可以通过验证收到的金额是否符合预期，使用执行这些检查的包装器如[ERC4626Router](https://github.com/fei-protocol/ERC4626#erc4626router-and-base)来防止这种攻击以及一般的意外滑点。
+从v4.9开始，这个实现使用虚拟资产和份额来降低这种风险。_decimalsOffset()对应于底层资产的小数和保险库小数之间的小数表示的偏移。这个偏移也决定了保险库中虚拟份额和虚拟资产的比率，这本身决定了初始的兑换率。虽然这并不能完全防止攻击，但分析显示默认的偏移（0）使得攻击变得不利可图，因为虚拟份额捕获的价值（来自攻击者的捐赠）与攻击者的预期收益相匹配。如果偏移更大，攻击的成本将比其利润大几个数量级。关于底层数学的更多细节可以在*这里*找到。
+这种方法的缺点是虚拟份额确实捕获了保险库增值的一小部分。此外，如果保险库遭受损失，用户试图退出保险库，虚拟份额和资产会导致第一个退出的用户损失减少，而最后的用户将承受更大的损失。希望回到v4.9之前行为的开发者只需要覆盖_convertToShares和_convertToAssets函数。
+要了解更多信息，请查看我们的*ERC-4626指南*。
+
+**FUNCTIONS**
+constructor(asset_)
+
+decimals()
+
+asset()
+
+totalAssets()
+
+convertToShares(assets)
+
+convertToAssets(shares)
+
+maxDeposit()
+
+maxMint()
+
+maxWithdraw(owner)
+
+maxRedeem(owner)
+
+previewDeposit(assets)
+
+previewMint(shares)
+
+previewWithdraw(assets)
+
+previewRedeem(shares)
+
+deposit(assets, receiver)
+
+mint(shares, receiver)
+
+withdraw(assets, receiver, owner)
+
+redeem(shares, receiver, owner)
+
+_convertToShares(assets, rounding)
+
+_convertToAssets(shares, rounding)
+
+_deposit(caller, receiver, assets, shares)
+
+_withdraw(caller, receiver, owner, assets, shares)
+
+_decimalsOffset()
+
+ERC20
+name()
+
+symbol()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_update(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IERC4626
+Deposit(sender, owner, assets, shares)
+
+Withdraw(sender, receiver, owner, assets, shares)
+
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+ERC4626ExceededMaxDeposit(receiver, assets, max)
+
+ERC4626ExceededMaxMint(receiver, shares, max)
+
+ERC4626ExceededMaxWithdraw(owner, assets, max)
+
+ERC4626ExceededMaxRedeem(owner, shares, max)
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### constructor(contract IERC20 asset_)
+internal#
+设置底层资产合约。这必须是一个与ERC20兼容的合约（ERC20或ERC777）。
+
+#### decimals() → uint8
+小数是通过在底层资产的小数上加上小数偏移来计算的。这个"原始"值在创建保险库合约时被缓存。如果这个读取操作失败（例如，资产还没有被创建），则默认使用18来表示底层资产的小数。
+
+请查阅*IERC20Metadata.decimals*。
+
+#### asset() → address
+public#
+请查阅 *IERC4626.asset*.
+
+#### totalAssets() → uint256
+public#
+请查阅 *IERC4626.totalAssets*.
+
+#### convertToShares(uint256 assets) → uint256
+public#
+请查阅 *IERC4626.convertToShares*.
+
+#### convertToAssets(uint256 shares) → uint256
+public#
+请查阅 *IERC4626.convertToAssets*.
+
+#### maxDeposit(address) → uint256
+public#
+请查阅 *IERC4626.maxDeposit*.
+
+#### maxMint(address) → uint256
+public#
+请查阅 *IERC4626.maxMint*.
+
+#### maxWithdraw(address owner) → uint256
+public#
+请查阅 *IERC4626.maxWithdraw*.
+
+#### maxRedeem(address owner) → uint256
+public#
+请查阅 *IERC4626.maxRedeem*.
+
+#### previewDeposit(uint256 assets) → uint256
+public#
+请查阅 *IERC4626.previewDeposit*.
+
+#### previewMint(uint256 shares) → uint256
+public#
+请查阅 *IERC4626.previewMint*.
+
+#### previewWithdraw(uint256 assets) → uint256
+public#
+请查阅 IERC4626.previewWithdraw.
+
+#### previewRedeem(uint256 shares) → uint256
+public#
+请查阅 IERC4626.previewRedeem.
+
+#### deposit(uint256 assets, address receiver) → uint256
+public#
+请查阅 IERC4626.deposit.
+
+#### mint(uint256 shares, address receiver) → uint256
+public#
+请查阅*IERC4626.mint*。
+
+与存款不同，即使保险库处于股份价格为零的状态，也允许铸造。在这种情况下，可以在不存入任何资产的情况下铸造股份。
+
+#### withdraw(uint256 assets, address receiver, address owner) → uint256
+public#
+请查阅 *IERC4626.withdraw*.
+
+#### redeem(uint256 shares, address receiver, address owner) → uint256
+public#
+请查阅 *IERC4626.redeem*.
+
+#### _convertToShares(uint256 assets, enum Math.Rounding rounding) → uint256
+internal#
+支持取舍方向的资产转股份的内部转换功能。
+
+#### _convertToAssets(uint256 shares, enum Math.Rounding rounding) → uint256
+internal#
+内部转换函数（从股份到资产），支持舍入方向。
+
+#### _deposit(address caller, address receiver, uint256 assets, uint256 shares)
+internal#
+存款/铸币常见工作流程。
+
+#### _withdraw(address caller, address receiver, address owner, uint256 assets, uint256 shares)
+internal#
+常见的提现/兑换工作流程。
+
+#### _decimalsOffset() → uint8
+internal#
+
+#### ERC4626ExceededMaxDeposit(address receiver, uint256 assets, uint256 max)
+error#
+尝试存入的资产超过了接收者的最大金额。
+
+#### ERC4626ExceededMaxMint(address receiver, uint256 shares, uint256 max)
+error#
+尝试为接收者铸造超过最大数量的股份。
+
+#### ERC4626ExceededMaxWithdraw(address owner, uint256 assets, uint256 max)
+error#
+尝试提取超过接收者的最大金额的资产。
+
+#### ERC4626ExceededMaxRedeem(address owner, uint256 shares, uint256 max)
+error#
+尝试兑换的股份超过接收者的最大数量。
+
+## Utilities
+
+### [SafeERC20](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/utils/SafeERC20.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+```
+
+这是一个在ERC20操作失败时抛出异常的封装器（当代币合约返回false时）。也支持返回无值的代币（在失败时反转或抛出异常），并假定非反转调用是成功的。要使用这个库，你可以在你的合约中添加一个使用SafeERC20 for IERC20;的声明，这样你就可以调用安全操作，如token.safeTransfer(…​)等。
+
+**FUNCTIONS**
+safeTransfer(token, to, value)
+
+safeTransferFrom(token, from, to, value)
+
+safeIncreaseAllowance(token, spender, value)
+
+safeDecreaseAllowance(token, spender, requestedDecrease)
+
+forceApprove(token, spender, value)
+
+**ERRORS**
+SafeERC20FailedOperation(token)
+
+SafeERC20FailedDecreaseAllowance(spender, currentAllowance, requestedDecrease)
+
+#### safeTransfer(contract IERC20 token, address to, uint256 value)
+internal#
+将代币的转账值从调用合约转到to。如果代币没有返回值，那么不会撤销的调用被认为是成功的。
+
+#### safeTransferFrom(contract IERC20 token, address from, address to, uint256 value)
+internal#
+将代币的转账值从“from”转移到“to”，消耗“from”给予调用合约的批准。如果代币没有返回值，那么不会撤销的调用被认为是成功的。
+
+#### safeIncreaseAllowance(contract IERC20 token, address spender, uint256 value)
+internal#
+增加呼叫合约对支出者的额度值。如果代币没有返回值，那么不会撤销的调用被认为是成功的。
+
+#### safeDecreaseAllowance(contract IERC20 token, address spender, uint256 requestedDecrease)
+internal#
+将调用合约对支出者的允许额度减少requestedDecrease。如果代币没有返回值，那么不会撤销的调用被认为是成功的。
+
+#### forceApprove(contract IERC20 token, address spender, uint256 value)
+internal#
+将呼叫合约的允许额度设置为向花费者的值。如果代币没有返回值，那么不会撤销的呼叫被认为是成功的。这是为了配合那些需要在设置为非零值之前将批准设置为零的代币（如USDT）而设计的。
+
+#### SafeERC20FailedOperation(address token)
+error#
+一个ERC20代币的操作失败了。
+
+#### SafeERC20FailedDecreaseAllowance(address spender, uint256 currentAllowance, uint256 requestedDecrease)
+error#
+表示减少许可请求失败。
