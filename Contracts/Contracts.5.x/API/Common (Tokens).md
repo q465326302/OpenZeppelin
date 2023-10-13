@@ -59,7 +59,7 @@ internal#
 
 #### _setDefaultRoyalty(address receiver, uint96 feeNumerator)
 internal#
-设置此合同中所有id默认的版权信息。
+设置此合约中所有id默认的版权信息。
 
 要求：
 * 接收者不能是零地址。

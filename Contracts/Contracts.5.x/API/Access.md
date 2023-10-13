@@ -1267,7 +1267,7 @@ external#
 
 #### setTargetAdminDelay(address target, uint32 newDelay)
 external#
-设置更改给定目标合同配置的延迟。
+设置更改给定目标合约配置的延迟。
 
 要求：
 * 调用者必须是全局管理员
@@ -1276,7 +1276,7 @@ external#
 
 #### setTargetClosed(address target, bool closed)
 external#
-为合同设置关闭标志。
+为合约设置关闭标志。
 
 需求：
 * 调用者必须是全局管理员
@@ -1323,7 +1323,7 @@ external#
 external#
 消耗针对调用者的预定操作。如果存在这样的操作，将其标记为已消耗（发出*OperationExecuted*事件并清理状态）。否则，抛出错误。
 
-这对于想要强制在管理器上预定针对它们的调用的合同非常有用，这涉及到所有的验证。
+这对于想要强制在管理器上预定针对它们的调用的合约非常有用，这涉及到所有的验证。
 
 发出一个*OperationExecuted*事件。
 
@@ -1633,7 +1633,7 @@ IAuthority接口不包括uint32延迟。这是该接口的向后兼容扩展。�
 public#
 计划提案的到期延迟。默认为1周。
 
-避免将过期时间设置为0。否则，每个合同提案将立即过期，使得任何计划使用都无效。
+避免将过期时间设置为0。否则，每个合约提案将立即过期，使得任何计划使用都无效。
 
 #### minSetback() → uint32
 public#
@@ -1641,7 +1641,7 @@ public#
 
 #### isTargetClosed(address target) → bool
 public#
-判断合同是否已关闭并禁止任何访问。否则，将应用角色权限。
+判断合约是否已关闭并禁止任何访问。否则，将应用角色权限。
 
 #### getTargetFunctionRole(address target, bytes4 selector) → uint64
 public#
@@ -1649,7 +1649,7 @@ public#
 
 #### getTargetAdminDelay(address target) → uint32
 public#
-获取目标合同的管理员延迟。对合同配置的更改将受此延迟的影响。
+获取目标合约的管理员延迟。对合约配置的更改将受此延迟的影响。
 
 #### getRoleAdmin(uint64 roleId) → uint64
 public#
@@ -1803,7 +1803,7 @@ internal#
 
 #### setTargetAdminDelay(address target, uint32 newDelay)
 public#
-设置更改给定目标合同配置的延迟。
+设置更改给定目标合约配置的延迟。
 
 要求：
 * 调用者必须是全局管理员
@@ -1818,7 +1818,7 @@ internal#
 
 #### setTargetClosed(address target, bool closed)
 public#
-为合同设置关闭标志。
+为合约设置关闭标志。
 
 要求：
 * 调用者必须是全局管理员
@@ -1827,7 +1827,7 @@ public#
 
 #### _setTargetClosed(address target, bool closed)
 internal#
-为合同设置关闭标志。这是一个没有访问限制的内部设置器。
+为合约设置关闭标志。这是一个没有访问限制的内部设置器。
 
 发出一个*TargetClosed*事件。
 
@@ -1872,7 +1872,7 @@ public#
 public#
 消费针对调用者的预定操作。如果此类操作存在，将其标记为已消费（发出*OperationExecuted*事件并清理状态）。否则，抛出错误。
 
-这对于希望强制在管理器上预定针对它们的调用的合同非常有用，这涉及所有的验证。
+这对于希望强制在管理器上预定针对它们的调用的合约非常有用，这涉及所有的验证。
 
 发出一个*OperationExecuted*事件。
 
@@ -1931,11 +1931,11 @@ external#
 
 #### isConsumingScheduledOp() → bytes4
 external#
-仅在延迟限制调用的上下文中返回真，即在计划操作被消耗的那一刻。防止在合同执行攻击者控制的调用的情况下，对延迟限制调用的服务拒绝。
+仅在延迟限制调用的上下文中返回真，即在计划操作被消耗的那一刻。防止在合约执行攻击者控制的调用的情况下，对延迟限制调用的服务拒绝。
 
 #### AuthorityUpdated(address authority)
 event#
-管理此合同的权力机构已更新。
+管理此合约的权力机构已更新。
 
 #### AccessManagedUnauthorized(address caller)
 error#

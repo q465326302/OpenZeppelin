@@ -438,3 +438,566 @@ external#
 #### DOMAIN_SEPARATOR() → bytes32
 external#
 返回用于*许可*签名编码的域分隔符，如*EIP712*所定义。
+
+### [ERC20Permit](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20Permit.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
+```
+实现ERC20许可扩展，允许通过签名进行批准，如[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义。
+
+添加了*permit*方法，可以通过呈现账户签名的消息来更改账户的ERC20额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有者账户不需要发送交易，因此完全不需要持有以太币。
+
+**FUNCTIONS**
+constructor(name)
+
+permit(owner, spender, value, deadline, v, r, s)
+
+nonces(owner)
+
+DOMAIN_SEPARATOR()
+
+NONCES
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+ERC20
+name()
+
+symbol()
+
+decimals()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_update(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IERC5267
+EIP712DomainChanged()
+
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+ERC2612ExpiredSignature(deadline)
+
+ERC2612InvalidSigner(signer, owner)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### constructor(string name)
+internal#
+使用名称参数初始化*EIP712*域分隔符，并将版本设置为"1"。
+
+使用与ERC20代币名称定义相同的名称是个好主意。
+
+#### permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)
+public#
+将值设置为支出者对所有者代币的允许额度，前提是所有者已签署批准。
+
+> IMPORTANT
+*IERC20.approve*在交易排序方面存在的问题在这里也同样适用。
+
+触发一个*Approval*事件。
+
+要求：
+* 支出者不能是零地址。
+
+* 截止日期必须是未来的时间戳。
+
+* v、r和s必须是所有者对EIP712格式化函数参数的有效secp256k1签名。
+
+* 签名必须使用所有者当前的nonce（参见*nonces*）。
+
+有关签名格式的更多信息，请参阅[相关的EIP部分](https://eips.ethereum.org/EIPS/eip-2612#specification)。
+
+> CAUTION
+请参阅上面的安全性考虑。
+
+#### nonces(address owner) → uint256
+public#
+返回所有者当前的随机数。每次生成*许可*签名时，都必须包含此值。
+
+每次成功调用*许可*都会将所有者的随机数增加一。这防止了签名被多次使用。
+
+#### DOMAIN_SEPARATOR() → bytes32
+external#
+返回用于*许可*签名编码的域分隔符，如*EIP712*所定义。
+
+#### ERC2612ExpiredSignature(uint256 deadline)
+error#
+许可证的截止日期已过。
+
+#### ERC2612InvalidSigner(address signer, address owner)
+error#
+签名不匹配。
+
+### [ERC20Burnable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20Burnable.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+```
+
+扩展*ERC20*允许代币持有者销毁他们自己的代币和他们有权使用的代币，这种方式可以在链下（通过事件分析）被识别。
+
+**FUNCTIONS**
+burn(value)
+
+burnFrom(account, value)
+
+ERC20
+name()
+
+symbol()
+
+decimals()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_update(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### burn(uint256 value)
+public#
+销毁来自调用者的一定数量的代币。
+
+请查阅*ERC20._burn*。
+
+#### burnFrom(address account, uint256 value)
+public#
+从账户中销毁一定数量的代币，从调用者的额度中扣除。
+
+参见*ERC20._burn*和*ERC20.allowance*。
+
+要求：
+* 调用者必须至少拥有账户代币的额度。
+
+### [ERC20Capped](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20Capped.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
+```
+
+扩展ERC20，增加了对代币供应的上限。
+
+**FUNCTIONS**
+constructor(cap_)
+
+cap()
+
+_update(from, to, value)
+
+ERC20
+name()
+
+symbol()
+
+decimals()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+ERC20ExceededCap(increasedSupply, cap)
+
+ERC20InvalidCap(cap)
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### constructor(uint256 cap_)
+internal#
+设置上限值。这个值是不可变的，只能在构造过程中设置一次。
+
+#### cap() → uint256
+public#
+返回代币总供应量的上限。
+
+#### _update(address from, address to, uint256 value)
+internal#
+请查阅 *ERC20._update*.
+
+#### ERC20ExceededCap(uint256 increasedSupply, uint256 cap)
+error#
+已超过总供应上限。
+
+#### ERC20InvalidCap(uint256 cap)
+error#
+提供的帽子不是有效的帽子。
+
+### [ERC20Pausable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20Pausable.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
+```
+
+ERC20代币具有可暂停的代币转移、铸币和销毁功能。
+
+这对于防止在评估期结束之前进行交易，或者在出现大错误时冻结所有代币转移的紧急开关等场景非常有用。
+
+> IMPORTANT
+该合约并未包含公开的暂停和恢复功能。除了继承这个合约，你还必须定义这两个功能，调用*Pausable._pause*和*Pausable._unpause*内部功能，并配以适当的访问控制，例如使用*AccessControl*或*Ownable*。如果不这样做，将使合约的暂停机制无法达到，从而无法使用。
+
+**FUNCTIONS**
+_update(from, to, value)
+
+PAUSABLE
+paused()
+
+_requireNotPaused()
+
+_requirePaused()
+
+_pause()
+
+_unpause()
+
+ERC20
+name()
+
+symbol()
+
+decimals()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+PAUSABLE
+Paused(account)
+
+Unpaused(account)
+
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+PAUSABLE
+EnforcedPause()
+
+ExpectedPause()
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### _update(address from, address to, uint256 value)
+internal#
+请查阅*ERC20._update*。
+
+要求：
+* 合约不能被暂停。
+
+### [ERC20Votes](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/token/ERC20/extensions/ERC20Votes.sol)
+```
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
+```
+
+这是ERC20的扩展，支持Compound-like的投票和委托。这个版本比Compound的更通用，并且支持的代币供应量高达2^208-1 ，而COMP的限制是2^96-1。
+
+> NOTE
+这个合约并不提供与Compound的COMP代币的接口兼容性。
+
+这个扩展保留了每个账户投票权力的历史（检查点）。投票权力可以通过直接调用{delegate}函数，或者提供一个签名来使用{delegateBySig}进行委托。投票权力可以通过公开访问器{getVotes}和{getPastVotes}进行查询。
+
+默认情况下，代币余额不考虑投票权力。这使得转账更便宜。缺点是，它要求用户委托给自己，以激活检查点并跟踪他们的投票权力。
+
+**FUNCTIONS**
+_maxSupply()
+
+_update(from, to, value)
+
+_getVotingUnits(account)
+
+numCheckpoints(account)
+
+checkpoints(account, pos)
+
+VOTES
+clock()
+
+CLOCK_MODE()
+
+getVotes(account)
+
+getPastVotes(account, timepoint)
+
+getPastTotalSupply(timepoint)
+
+_getTotalSupply()
+
+delegates(account)
+
+delegate(delegatee)
+
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+
+_delegate(account, delegatee)
+
+_transferVotingUnits(from, to, amount)
+
+_numCheckpoints(account)
+
+_checkpoints(account, pos)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+ERC20
+name()
+
+symbol()
+
+decimals()
+
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+_transfer(from, to, value)
+
+_mint(account, value)
+
+_burn(account, value)
+
+_approve(owner, spender, value)
+
+_approve(owner, spender, value, emitEvent)
+
+_spendAllowance(owner, spender, value)
+
+**EVENTS**
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+
+DelegateVotesChanged(delegate, previousVotes, newVotes)
+
+IERC5267
+EIP712DomainChanged()
+
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+**ERRORS**
+ERC20ExceededSafeSupply(increasedSupply, cap)
+
+VOTES
+ERC6372InconsistentClock()
+
+ERC5805FutureLookup(timepoint, clock)
+
+IVOTES
+VotesExpiredSignature(expiry)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+IERC20ERRORS
+ERC20InsufficientBalance(sender, balance, needed)
+
+ERC20InvalidSender(sender)
+
+ERC20InvalidReceiver(receiver)
+
+ERC20InsufficientAllowance(spender, allowance, needed)
+
+ERC20InvalidApprover(approver)
+
+ERC20InvalidSpender(spender)
+
+#### _maxSupply() → uint256
+internal#
+最大代币供应量默认为type(uint208).max (2^208-1)。
+
+这个最大值在*_update*中被强制执行。它限制了代币的总供应量，否则是一个uint256，因此可以在{*Votes*}使用的Trace208结构中存储检查点。增加这个值不会消除底层的限制，并且会导致*_update*因为在{_transferVotingUnits}中的数学溢出而失败。如果需要额外的逻辑，可以使用覆盖来进一步限制总供应量（到一个较低的值）。在解决此函数上的覆盖冲突时，应返回最小值。
+
+#### _update(address from, address to, uint256 value)
+internal#
+当代币转移时移动投票权。
+
+发出一个*IVotes.DelegateVotesChanged*事件。
+
+#### _getVotingUnits(address account) → uint256
+internal#
