@@ -379,7 +379,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/IERC20Permit.sol";
 
 ERC20许可扩展的接口允许通过签名进行批准，如[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义。
 
-添加了*permit*方法，可以通过呈现账户签名的消息来更改账户的ERC20额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有者账户不需要发送交易，因此不需要持有以太币。
+添加了*permit*方法，可以通过呈现账户签名的消息来更改账户的ERC20额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有者账户不需要发送交易，因此不需要持有以太。
 
 #### 安全考虑
 关于使用许可证，有两个重要的考虑因素。第一个是，有效的许可签名表示一个额度，不应假设它传达了额外的含义。特别是，不应将其视为以任何特定方式使用额度的意图。第二个是，由于许可证具有内置的重播保护，并且可以由任何人提交，因此它们可能会被提前运行。使用许可证的协议应考虑到这一点，并允许许可证调用失败。结合这两个方面，可能推荐的一种模式是:
@@ -445,7 +445,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
 ```
 实现ERC20许可扩展，允许通过签名进行批准，如[EIP-2612](https://eips.ethereum.org/EIPS/eip-2612)中定义。
 
-添加了*permit*方法，可以通过呈现账户签名的消息来更改账户的ERC20额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有者账户不需要发送交易，因此完全不需要持有以太币。
+添加了*permit*方法，可以通过呈现账户签名的消息来更改账户的ERC20额度（参见*IERC20.allowance*）。通过不依赖*IERC20.approve*，代币持有者账户不需要发送交易，因此完全不需要持有以太。
 
 **FUNCTIONS**
 constructor(name)
