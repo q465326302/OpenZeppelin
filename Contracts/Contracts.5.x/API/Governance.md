@@ -1458,3 +1458,535 @@ internal#
 将法定人数初始化为代币总供应量的一部分。
 
 该比例被指定为分子/分母。默认情况下，分母为100，所以法定人数被指定为百分比：分子为10对应于法定人数为总供应量的10%。可以通过覆盖*quorumDenominator*来自定义分母。
+
+#### quorumNumerator() → uint256
+public#
+返回当前的法定人数分子。参见*quorumDenominator*。
+
+#### quorumNumerator(uint256 timepoint) → uint256
+public#
+在特定时间点返回法定人数的分子。参见*quorumDenominator*。
+
+#### quorumDenominator() → uint256
+public#
+返回法定人数的分母。默认为100，但可以被覆盖。
+
+#### quorum(uint256 timepoint) → uint256
+public#
+返回一个时间点的法定人数，以投票数表示：供应量*分子/分母。
+
+#### updateQuorumNumerator(uint256 newQuorumNumerator)
+external#
+更改法定人数的分子。
+
+触发一个*QuorumNumeratorUpdated*事件。
+
+要求：
+* 必须通过治理提案来调用。
+
+* 新的分子必须小于或等于分母。
+
+#### _updateQuorumNumerator(uint256 newQuorumNumerator)
+internal#
+更改法定人数的分子。
+
+发出一个*QuorumNumeratorUpdated*事件。
+
+要求：
+* 新的分子必须小于或等于分母。
+
+#### QuorumNumeratorUpdated(uint256 oldQuorumNumerator, uint256 newQuorumNumerator)
+event#
+
+#### GovernorInvalidQuorumFraction(uint256 quorumNumerator, uint256 quorumDenominator)
+error#
+法定人数集合不是一个有效的比例。
+
+### Extensions
+
+### [GovernorTimelockControl](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorTimelockControl.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+```
+
+这是一个扩展*Governor*的模块，它将执行过程绑定到*TimelockController*的一个实例。这将为所有成功的提案（除了投票期限）增加一个由*TimelockController*强制执行的延迟。为了使*Governor*正常工作，需要提案者（理想情况下还需要执行者）的角色一起配合。
+
+使用这种模型意味着提案将由*TimelockController*操作，而不是由*Governor*操作。因此，资产和权限必须附加到*TimelockController*。任何发送到*Governor*的资产，除非通过*Governor.relay*执行，否则在提案中将无法访问。
+
+> WARNING
+将TimelockController设置为除governor之外的额外提案者或取消者是非常危险的，因为这将授予他们以下能力：1) 作为timelock执行操作，因此可能执行操作或访问只有通过投票才能访问的资金，2) 阻止已经得到选民批准的治理提案，有效地执行拒绝服务攻击。
+
+> NOTE
+AccessManager不支持同时调度具有相同目标和calldata的多个操作。请参阅*AccessManager.schedule*以获取解决方法。
+
+**FUNCTIONS**
+constructor(timelockAddress)
+
+state(proposalId)
+
+timelock()
+
+proposalNeedsQueuing()
+
+_queueOperations(proposalId, targets, values, calldatas, descriptionHash)
+
+_executeOperations(proposalId, targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+_executor()
+
+updateTimelock(newTimelock)
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_getVotes(account, timepoint, params)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+execute(targets, values, calldatas, descriptionHash)
+
+cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+clock()
+
+CLOCK_MODE()
+
+votingDelay()
+
+votingPeriod()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+TimelockChange(oldTimelock, newTimelock)
+
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### constructor(contract TimelockController timelockAddress)
+internal#
+设置时间锁。
+
+#### state(uint256 proposalId) → enum IGovernor.ProposalState
+public#
+覆盖版本的*Governor.state*函数，该函数考虑由时间锁报告的状态。
+
+#### timelock() → address
+public#
+公共访问器用于检查时间锁的地址
+
+#### proposalNeedsQueuing(uint256) → bool
+public#
+请查阅 *IGovernor.proposalNeedsQueuing*.
+
+#### _queueOperations(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint48
+internal#
+将提案排队到时间锁的函数。
+
+#### _executeOperations(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash)
+internal#
+已重写的*Governor._executeOperations*函数，该函数通过时间锁运行已排队的提案。
+
+#### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+internal#
+覆盖*Governor._cancel*函数的版本，用于取消已经排队的定时锁定提案。
+
+#### _executor() → address
+internal#
+执行行动的地址，即在这种情况下的时间锁。
+
+#### updateTimelock(contract TimelockController newTimelock)
+external#
+更新底层时间锁实例的公共端点。仅限于时间锁本身，因此必须通过治理提案提出、安排和执行更新。
+
+在有其他排队的治理提案时，不建议更改时间锁。
+
+#### TimelockChange(address oldTimelock, address newTimelock)
+event#
+当用于提案执行的时间锁控制器被修改时发出。
+
+### [GovernorTimelockCompound](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorTimelockCompound.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorTimelockCompound.sol";
+```
+
+这是一个扩展*Governor*的程序，它将执行过程绑定到一个Compound Timelock。这将在所有成功的提案上添加一个由外部timelock强制执行的延迟（除了投票期限）。*Governor*需要是timelock的管理员才能执行任何操作。一个公开的，不受限制的，*GovernorTimelockCompound.acceptAdmin*可用于接受timelock的所有权。
+
+使用这种模型意味着提案将由*TimelockController*操作，而不是由*Governor*操作。因此，资产和权限必须附加到*TimelockController*。发送给*Governor*的任何资产都将无法访问。
+
+**FUNCTIONS**
+constructor(timelockAddress)
+
+state(proposalId)
+
+timelock()
+
+proposalNeedsQueuing()
+
+_queueOperations(proposalId, targets, values, calldatas, )
+
+_executeOperations(proposalId, targets, values, calldatas, )
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+_executor()
+
+__acceptAdmin()
+
+updateTimelock(newTimelock)
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_getVotes(account, timepoint, params)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+execute(targets, values, calldatas, descriptionHash)
+
+cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+clock()
+
+CLOCK_MODE()
+
+votingDelay()
+
+votingPeriod()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+TimelockChange(oldTimelock, newTimelock)
+
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### constructor(contract ICompoundTimelock timelockAddress)
+internal#
+设置时间锁。
+
+#### state(uint256 proposalId) → enum IGovernor.ProposalState
+public#
+覆盖版本的*Governor.state*函数，增加了对过期状态的支持。
+
+#### timelock() → address
+public#
+公共访问器用于检查时间锁的地址
+
+#### proposalNeedsQueuing(uint256) → bool
+public#
+请查阅 IGovernor.proposalNeedsQueuing.
+
+#### _queueOperations(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32) → uint48
+internal#
+将提案排队到时间锁的函数。
+
+#### _executeOperations(uint256 proposalId, address[] targets, uint256[] values, bytes[] calldatas, bytes32)
+internal#
+已重写的Governor._executeOperations函数，该函数通过时间锁运行已排队的提案。
+
+#### _cancel(address[] targets, uint256[] values, bytes[] calldatas, bytes32 descriptionHash) → uint256
+internal#
+覆盖*Governor._cancel*函数的版本，用于取消已经排队的时间锁定提案。
+
+#### _executor() → address
+internal#
+州长通过该地址执行操作。在这种情况下，是时间锁。
+
+#### __acceptAdmin()
+public#
+接受对时间锁的管理员权限。
+
+#### updateTimelock(contract ICompoundTimelock newTimelock)
+external#
+公共端点用于更新底层的时间锁实例。这个操作仅限于时间锁本身，因此更新必须通过治理提案进行提出、安排和执行。
+
+出于安全考虑，在设置新的时间锁之前，必须将时间锁交给另一个管理员。这两个操作（交接时间锁和进行更新）可以在一个提案中进行批处理。
+
+请注意，如果时间锁管理员在之前的操作中已经被交接，我们会拒绝通过时间锁进行的更新，如果时间锁的管理员已经被接受，并且操作是在治理范围之外执行的。
+
+> CAUTION
+在有其他排队的治理提案时，不建议更改时间锁。
+
+#### TimelockChange(address oldTimelock, address newTimelock)
+event#
+当用于提案执行的时间锁控制器被修改时发出。
+
+### [GovernorSettings](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorSettings.sol)
