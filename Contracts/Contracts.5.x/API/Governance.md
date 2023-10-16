@@ -846,3 +846,615 @@ public#
 ```
 import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 ```
+
+为简单起见，对调控器的任期延长进行投票，有三个选项，进行投票计数。
+
+**FUNCTIONS**
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+proposalVotes(proposalId)
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_countVote(proposalId, account, support, weight, )
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+state(proposalId)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+proposalNeedsQueuing()
+
+_checkGovernance()
+
+_getVotes(account, timepoint, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+_queueOperations(, , , , )
+
+execute(targets, values, calldatas, descriptionHash)
+
+_executeOperations(, targets, values, calldatas, )
+
+cancel(targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+_executor()
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+clock()
+
+CLOCK_MODE()
+
+votingDelay()
+
+votingPeriod()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### COUNTING_MODE() → string
+public#
+请查阅 *IGovernor.COUNTING_MODE*.
+
+#### hasVoted(uint256 proposalId, address account) → bool
+public#
+请查阅 *IGovernor.hasVoted*.
+
+#### proposalVotes(uint256 proposalId) → uint256 againstVotes, uint256 forVotes, uint256 abstainVotes
+public#
+访问内部投票计数的访问器。
+
+#### _quorumReached(uint256 proposalId) → bool
+internal#
+请查阅 Governor._quorumReached.
+
+#### _voteSucceeded(uint256 proposalId) → bool
+internal#
+在*Governor._voteSucceeded*模块中，赞成票必须严格超过反对票。
+
+#### _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes)
+internal#
+在这个模块中，支持遵循Governor Bravo的VoteType枚举。请查看*Governor._countVote*。
+
+### [GovernorVotes](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorVotes.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
+```
+
+扩展投票权重提取的调控器，从ERC20Votes代币，或者从v4.5开始的ERC721Votes代币。
+
+**FUNCTIONS**
+constructor(tokenAddress)
+
+token()
+
+clock()
+
+CLOCK_MODE()
+
+_getVotes(account, timepoint, )
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+state(proposalId)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+proposalNeedsQueuing()
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+_queueOperations(, , , , )
+
+execute(targets, values, calldatas, descriptionHash)
+
+_executeOperations(, targets, values, calldatas, )
+
+cancel(targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+_executor()
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+votingDelay()
+
+votingPeriod()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### constructor(contract IVotes tokenAddress)
+internal#
+
+#### token() → contract IERC5805
+public#
+投票权来源的代币。
+
+#### clock() → uint48
+public#
+（根据EIP-6372规定的）时钟设定为与代币的时钟匹配。如果代币未实现EIP-6372，则回退到区块编号。
+
+#### CLOCK_MODE() → string
+public#
+EIP-6372中指定的时钟的机器可读描述。
+
+#### _getVotes(address account, uint256 timepoint, bytes) → uint256
+internal#
+
+### [GovernorVotesQuorumFraction](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorVotesQuorumFraction.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
+```
+扩展投票权重从*ERC20Votes*令牌中提取的*调控器*，并以总供应量的一部分表示的法定人数。
+
+**FUNCTIONS**
+constructor(quorumNumeratorValue)
+
+quorumNumerator()
+
+quorumNumerator(timepoint)
+
+quorumDenominator()
+
+quorum(timepoint)
+
+updateQuorumNumerator(newQuorumNumerator)
+
+_updateQuorumNumerator(newQuorumNumerator)
+
+GOVERNORVOTES
+token()
+
+clock()
+
+CLOCK_MODE()
+
+_getVotes(account, timepoint, )
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+state(proposalId)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+proposalNeedsQueuing()
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+_queueOperations(, , , , )
+
+execute(targets, values, calldatas, descriptionHash)
+
+_executeOperations(, targets, values, calldatas, )
+
+cancel(targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+_executor()
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+votingDelay()
+
+votingPeriod()
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+QuorumNumeratorUpdated(oldQuorumNumerator, newQuorumNumerator)
+
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+GovernorInvalidQuorumFraction(quorumNumerator, quorumDenominator)
+
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### constructor(uint256 quorumNumeratorValue)
+internal#
+将法定人数初始化为代币总供应量的一部分。
+
+该比例被指定为分子/分母。默认情况下，分母为100，所以法定人数被指定为百分比：分子为10对应于法定人数为总供应量的10%。可以通过覆盖*quorumDenominator*来自定义分母。
