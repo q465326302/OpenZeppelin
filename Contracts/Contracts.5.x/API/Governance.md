@@ -1990,3 +1990,697 @@ event#
 当用于提案执行的时间锁控制器被修改时发出。
 
 ### [GovernorSettings](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorSettings.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
+```
+
+通过治理进行设置更新的州长扩展。
+
+**FUNCTIONS**
+constructor(initialVotingDelay, initialVotingPeriod, initialProposalThreshold)
+
+votingDelay()
+
+votingPeriod()
+
+proposalThreshold()
+
+setVotingDelay(newVotingDelay)
+
+setVotingPeriod(newVotingPeriod)
+
+setProposalThreshold(newProposalThreshold)
+
+_setVotingDelay(newVotingDelay)
+
+_setVotingPeriod(newVotingPeriod)
+
+_setProposalThreshold(newProposalThreshold)
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+state(proposalId)
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+proposalNeedsQueuing()
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_getVotes(account, timepoint, params)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+_queueOperations(, , , , )
+
+execute(targets, values, calldatas, descriptionHash)
+
+_executeOperations(, targets, values, calldatas, )
+
+cancel(targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+_executor()
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+clock()
+
+CLOCK_MODE()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+VotingDelaySet(oldVotingDelay, newVotingDelay)
+
+VotingPeriodSet(oldVotingPeriod, newVotingPeriod)
+
+ProposalThresholdSet(oldProposalThreshold, newProposalThreshold)
+
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### constructor(uint48 initialVotingDelay, uint32 initialVotingPeriod, uint256 initialProposalThreshold)
+internal#
+初始化治理参数。
+
+#### votingDelay() → uint256
+public#
+请查阅 *IGovernor.votingDelay*.
+
+#### votingPeriod() → uint256
+public#
+请查阅 *IGovernor.votingPeriod*.
+
+#### proposalThreshold() → uint256
+public#
+请查阅 *Governor.proposalThreshold*.
+
+#### setVotingDelay(uint48 newVotingDelay)
+public#
+更新投票延迟。此操作只能通过治理提案进行。
+
+触发一个*VotingDelaySet*事件。
+
+#### setVotingPeriod(uint32 newVotingPeriod)
+public#
+更新投票期限。此操作只能通过治理提案进行。
+
+发出一个*VotingPeriodSet*事件。
+
+#### setProposalThreshold(uint256 newProposalThreshold)
+public#
+更新提案阈值。此操作只能通过治理提案执行。
+
+发出一个*ProposalThresholdSet*事件。
+
+#### _setVotingDelay(uint48 newVotingDelay)
+internal#
+内部设定投票延迟。
+
+发出一个*VotingDelaySet*事件。
+
+#### _setVotingPeriod(uint32 newVotingPeriod)
+internal#
+为投票期设置内部设定器。
+
+发出一个*VotingPeriodSet*事件。
+
+#### _setProposalThreshold(uint256 newProposalThreshold)
+internal#
+为提案阈值设置内部设定器。
+
+发出一个*ProposalThresholdSet*事件。
+
+#### VotingDelaySet(uint256 oldVotingDelay, uint256 newVotingDelay)
+event#
+
+#### VotingPeriodSet(uint256 oldVotingPeriod, uint256 newVotingPeriod)
+event#
+
+#### ProposalThresholdSet(uint256 oldProposalThreshold, uint256 newProposalThreshold)
+event#
+
+### [GovernorPreventLateQuorum](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorPreventLateQuorum.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorPreventLateQuorum.sol";
+```
+
+一个模块，确保在达到法定人数后有最短的投票期。这防止了大选民在最后一刻影响投票并触发法定人数，因为它始终确保其他选民有时间反应并试图反对决定。
+
+如果一次投票使得法定人数得以达到，那么提案的投票期可能会被延长，以确保在至少指定的时间（"投票延长"参数）过去之后才结束。这个参数可以通过治理提案来设定。
+
+**FUNCTIONS**
+constructor(initialVoteExtension)
+
+proposalDeadline(proposalId)
+
+_castVote(proposalId, account, support, reason, params)
+
+lateQuorumVoteExtension()
+
+setLateQuorumVoteExtension(newVoteExtension)
+
+_setLateQuorumVoteExtension(newVoteExtension)
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+state(proposalId)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+proposalNeedsQueuing()
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_getVotes(account, timepoint, params)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+_propose(targets, values, calldatas, description, proposer)
+
+queue(targets, values, calldatas, descriptionHash)
+
+_queueOperations(, , , , )
+
+execute(targets, values, calldatas, descriptionHash)
+
+_executeOperations(, targets, values, calldatas, )
+
+cancel(targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+relay(target, value, data)
+
+_executor()
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+clock()
+
+CLOCK_MODE()
+
+votingDelay()
+
+votingPeriod()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+ProposalExtended(proposalId, extendedDeadline)
+
+LateQuorumVoteExtensionSet(oldVoteExtension, newVoteExtension)
+
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### constructor(uint48 initialVoteExtension)
+internal#
+初始化投票扩展参数：自提案达到法定人数的那一刻起，需要经过的块数或秒数（取决于管理者时钟模式），直到其投票期结束。如果需要，投票期将超过在提案创建期间设置的时间。
+
+#### proposalDeadline(uint256 proposalId) → uint256
+public#
+返回提案截止日期，如果提案在投票期间晚些时候达到法定人数，该日期可能已经超过了提案创建时设定的日期。请参阅*Governor.proposalDeadline*。
+
+#### _castVote(uint256 proposalId, address account, uint8 support, string reason, bytes params) → uint256
+internal#
+投票并检测是否达到了法定人数，可能会延长投票期。请参阅*Governor._castVote*。
+
+可能会发出*ProposalExtended*事件。
+
+#### lateQuorumVoteExtension() → uint48
+public#
+返回投票扩展参数的当前值：从提案达到法定人数到其投票期结束所需的区块数量。
+
+#### setLateQuorumVoteExtension(uint48 newVoteExtension)
+public#
+更改*lateQuorumVoteExtension*。此操作只能由治理执行者执行，通常通过治理提案进行。
+
+触发一个*LateQuorumVoteExtensionSet*事件。
+
+#### _setLateQuorumVoteExtension(uint48 newVoteExtension)
+internal#
+更改*lateQuorumVoteExtension*。这是一个内部函数，如果需要其他访问控制机制，可以在公共函数（如*setLateQuorumVoteExtension*）中公开。
+
+发出一个*LateQuorumVoteExtensionSet*事件。
+
+#### ProposalExtended(uint256 indexed proposalId, uint64 extendedDeadline)
+event#
+当在投票期限内晚达到法定人数而推迟提案截止日期时发出。
+
+#### LateQuorumVoteExtensionSet(uint64 oldVoteExtension, uint64 newVoteExtension)
+event#
+当*lateQuorumVoteExtension*参数发生变化时发出。
+
+### [GovernorStorage](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/extensions/GovernorStorage.sol)
+```
+import "@openzeppelin/contracts/governance/extensions/GovernorStorage.sol";
+```
+
+这个模块是*Governor*的扩展，实现了提案详情的存储。此模块还为提案的可枚举性提供了原语。
+
+此模块的使用场景包括：- 不依赖事件索引就能探索提案状态的用户界面。- 在L2链中，只使用proposalId作为*Governor.queue*和*Governor.execute*函数的参数，因为在这些链中，存储的成本比calldata要便宜。
+
+**FUNCTIONS**
+_propose(targets, values, calldatas, description, proposer)
+
+queue(proposalId)
+
+execute(proposalId)
+
+cancel(proposalId)
+
+proposalCount()
+
+proposalDetails(proposalId)
+
+proposalDetailsAt(index)
+
+GOVERNOR
+receive()
+
+supportsInterface(interfaceId)
+
+name()
+
+version()
+
+hashProposal(targets, values, calldatas, descriptionHash)
+
+state(proposalId)
+
+proposalThreshold()
+
+proposalSnapshot(proposalId)
+
+proposalDeadline(proposalId)
+
+proposalProposer(proposalId)
+
+proposalEta(proposalId)
+
+proposalNeedsQueuing()
+
+_checkGovernance()
+
+_quorumReached(proposalId)
+
+_voteSucceeded(proposalId)
+
+_getVotes(account, timepoint, params)
+
+_countVote(proposalId, account, support, weight, params)
+
+_defaultParams()
+
+propose(targets, values, calldatas, description)
+
+queue(targets, values, calldatas, descriptionHash)
+
+_queueOperations(, , , , )
+
+execute(targets, values, calldatas, descriptionHash)
+
+_executeOperations(, targets, values, calldatas, )
+
+cancel(targets, values, calldatas, descriptionHash)
+
+_cancel(targets, values, calldatas, descriptionHash)
+
+getVotes(account, timepoint)
+
+getVotesWithParams(account, timepoint, params)
+
+castVote(proposalId, support)
+
+castVoteWithReason(proposalId, support, reason)
+
+castVoteWithReasonAndParams(proposalId, support, reason, params)
+
+castVoteBySig(proposalId, support, voter, signature)
+
+castVoteWithReasonAndParamsBySig(proposalId, support, voter, reason, params, signature)
+
+_castVote(proposalId, account, support, reason)
+
+_castVote(proposalId, account, support, reason, params)
+
+relay(target, value, data)
+
+_executor()
+
+onERC721Received(, , , )
+
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+_encodeStateBitmap(proposalState)
+
+_isValidDescriptionForProposer(proposer, description)
+
+clock()
+
+CLOCK_MODE()
+
+votingDelay()
+
+votingPeriod()
+
+quorum(timepoint)
+
+BALLOT_TYPEHASH()
+
+EXTENDED_BALLOT_TYPEHASH()
+
+IGOVERNOR
+COUNTING_MODE()
+
+hasVoted(proposalId, account)
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+IGOVERNOR
+ProposalCreated(proposalId, proposer, targets, values, signatures, calldatas, voteStart, voteEnd, description)
+
+ProposalQueued(proposalId, etaSeconds)
+
+ProposalExecuted(proposalId)
+
+ProposalCanceled(proposalId)
+
+VoteCast(voter, proposalId, support, weight, reason)
+
+VoteCastWithParams(voter, proposalId, support, weight, reason, params)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+IGOVERNOR
+GovernorInvalidProposalLength(targets, calldatas, values)
+
+GovernorAlreadyCastVote(voter)
+
+GovernorDisabledDeposit()
+
+GovernorOnlyProposer(account)
+
+GovernorOnlyExecutor(account)
+
+GovernorNonexistentProposal(proposalId)
+
+GovernorUnexpectedProposalState(proposalId, current, expectedStates)
+
+GovernorInvalidVotingPeriod(votingPeriod)
+
+GovernorInsufficientProposerVotes(proposer, votes, threshold)
+
+GovernorRestrictedProposer(proposer)
+
+GovernorInvalidVoteType()
+
+GovernorQueueNotImplemented()
+
+GovernorNotQueuedProposal(proposalId)
+
+GovernorAlreadyQueuedProposal(proposalId)
+
+GovernorInvalidSignature(voter)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### _propose(address[] targets, uint256[] values, bytes[] calldatas, string description, address proposer) → uint256
+internal#
