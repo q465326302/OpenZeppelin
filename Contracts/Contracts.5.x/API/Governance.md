@@ -2684,3 +2684,185 @@ InvalidAccountNonce(account, currentNonce)
 
 #### _propose(address[] targets, uint256[] values, bytes[] calldatas, string description, address proposer) → uint256
 internal#
+连接到提案机制
+
+#### queue(uint256 proposalId)
+public#
+{IGovernorTimelock-queue}版本，只有proposalId作为参数。
+
+#### execute(uint256 proposalId)
+public#
+*IGovernor.execute*仅以proposalId作为参数的版本。
+
+#### cancel(uint256 proposalId)
+public#
+*IGovernor.cancel*的ProposalId版本。
+
+#### proposalCount() → uint256
+public#
+返回存储提案的数量。
+
+#### proposalDetails(uint256 proposalId) → address[], uint256[], bytes[], bytes32
+public#
+返回提案Id的详细信息。如果提案Id不是已知的提案，则撤销。
+
+#### proposalDetailsAt(uint256 index) → uint256, address[], uint256[], bytes[], bytes32
+public#
+返回给定序列索引的提案的详细信息（包括提案Id）。
+
+## Utils
+
+### [Votes](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/utils/Votes.sol)
+```
+import "@openzeppelin/contracts/governance/utils/Votes.sol";
+```
+
+这是一个基础抽象合约，用于跟踪投票单位，这是一种可以转移的投票权力度量，并提供了一个投票委托系统，其中一个账户可以将其投票单位委托给一种“代表”，该代表将从不同的账户中汇集委托的投票单位，然后可以使用它来参与决策投票。实际上，投票单位必须被委托才能计算为实际的投票，如果一个账户希望参与决策并且没有信任的代表，那么它必须将这些投票委托给自己。
+
+这个合约通常与一个代币合约结合使用，使得投票单位对应于代币单位。有关示例，请参见*ERC721Votes*。
+
+完整的代表投票历史在链上进行跟踪，以便治理协议可以考虑在特定区块号分配的投票，以防止闪电贷款和双重投票。可选的代表系统使得这种历史跟踪的成本变得可选。
+
+在使用此模块时，派生合约必须实现*_getVotingUnits*（例如，使其返回*ERC721.balanceOf*），并可以使用*_transferVotingUnits*来跟踪这些单位分配的变化（在前面的例子中，它将包含在*ERC721._update*中）。
+
+**FUNCTIONS**
+clock()
+
+CLOCK_MODE()
+
+getVotes(account)
+
+getPastVotes(account, timepoint)
+
+getPastTotalSupply(timepoint)
+
+_getTotalSupply()
+
+delegates(account)
+
+delegate(delegatee)
+
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+
+_delegate(account, delegatee)
+
+_transferVotingUnits(from, to, amount)
+
+_numCheckpoints(account)
+
+_checkpoints(account, pos)
+
+_getVotingUnits()
+
+NONCES
+nonces(owner)
+
+_useNonce(owner)
+
+_useCheckedNonce(owner, nonce)
+
+EIP712
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+
+DelegateVotesChanged(delegate, previousVotes, newVotes)
+
+IERC5267
+EIP712DomainChanged()
+
+**ERRORS**
+ERC6372InconsistentClock()
+
+ERC5805FutureLookup(timepoint, clock)
+
+IVOTES
+VotesExpiredSignature(expiry)
+
+NONCES
+InvalidAccountNonce(account, currentNonce)
+
+#### clock() → uint48
+public#
+用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票），在这种情况下，*CLOCK_MODE*也应该被覆盖以匹配。
+
+#### CLOCK_MODE() → string
+public#
+EIP-6372中指定的时钟的机器可读描述。
+
+#### getVotes(address account) → uint256
+public#
+返回该账户当前的投票数量。
+
+#### getPastVotes(address account, uint256 timepoint) → uint256
+public#
+返回该账户在过去特定时刻的投票数量。如果clock()被配置为使用区块编号，那么这将返回相应区块结束时的值。
+
+要求：
+* 时间点必须在过去。如果操作使用区块编号，该区块必须已经被挖出。
+
+#### getPastTotalSupply(uint256 timepoint) → uint256
+public#
+返回过去某一特定时刻可用的投票总供应量。如果clock()被配置为使用区块编号，那么它将返回相应区块结束时的值。
+
+> NOTE
+这个值是所有可用投票的总和，不一定是所有委托投票的总和。尚未被委托的投票仍然是总供应的一部分，尽管它们不会参与投票。
+
+要求：
+* 时间点必须在过去。如果操作使用区块编号，区块必须已经被挖出。
+
+#### _getTotalSupply() → uint256
+internal#
+返回当前的总投票供应量。
+
+#### delegates(address account) → address
+public#
+返回账户选择的代表。
+
+#### delegate(address delegatee)
+public#
+将发送者的投票权代理给受托人。
+
+#### delegateBySig(address delegatee, uint256 nonce, uint256 expiry, uint8 v, bytes32 r, bytes32 s)
+public#
+将签署者的投票权委托给被委托人。
+
+#### _delegate(address account, address delegatee)
+internal#
+将账户的所有投票单位委托给`delegatee。
+
+触发事件*IVotes.DelegateChanged*和*IVotes.DelegateVotesChanged*。
+
+#### _transferVotingUnits(address from, address to, uint256 amount)
+internal#
+转移、铸造或销毁投票单位。要注册铸币，来源应为零。要注册销毁，目标应为零。投票单位的总供应量将随着铸币和销毁进行调整。
+
+#### _numCheckpoints(address account) → uint32
+internal#
+获取账户的检查点数量。
+
+#### _checkpoints(address account, uint32 pos) → struct Checkpoints.Checkpoint208
+internal#
+获取账户的第pos个检查点。
+
+#### _getVotingUnits(address) → uint256
+internal#
+必须返回账户持有的投票单位。
+
+#### ERC6372InconsistentClock()
+error#
+时间锁被错误地修改了。
+
+#### ERC5805FutureLookup(uint256 timepoint, uint48 clock)
+error#
+未来投票的查询不可用。
