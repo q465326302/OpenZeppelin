@@ -407,7 +407,7 @@ error#
 
 #### GovernorInvalidSignature(address voter)
 error#
-提供的签名对预期的投票者无效。如果投票者是合同，那么使用IERC1271.isValidSignature的签名无效。
+提供的签名对预期的投票者无效。如果投票者是合约，那么使用IERC1271.isValidSignature的签名无效。
 
 ### [Governor](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/Governor.sol)
 ```
@@ -615,7 +615,7 @@ internal#
 
 #### receive()
 external#
-接收ETH的函数将由管理员处理（如果执行者是第三方合同，则禁用）
+接收ETH的函数将由管理员处理（如果执行者是第三方合约，则禁用）
 
 #### supportsInterface(bytes4 interfaceId) → bool
 public#
@@ -780,11 +780,11 @@ internal#
 
 #### relay(address target, uint256 value, bytes data)
 external#
-将交易或函数调用转发到任意目标。在治理执行者是除了调控器本身之外的一些合同的情况下，例如在使用时间锁时，可以在治理提案中调用此功能来恢复错误地发送到调控器合同的代币或以太币。请注意，如果执行者只是调控器本身，那么使用中继是多余的。
+将交易或函数调用转发到任意目标。在治理执行者是除了调控器本身之外的一些合约的情况下，例如在使用时间锁时，可以在治理提案中调用此功能来恢复错误地发送到调控器合约的代币或以太币。请注意，如果执行者只是调控器本身，那么使用中继是多余的。
 
 #### _executor() → address
 internal#
-通过该地址，调控器执行操作。将被通过其他合同执行操作的模块重载，例如时间锁。
+通过该地址，调控器执行操作。将被通过其他合约执行操作的模块重载，例如时间锁。
 
 #### onERC721Received(address, address, uint256, bytes) → bytes4
 public#
@@ -1968,7 +1968,7 @@ internal#
 
 #### _executor() → address
 internal#
-州长通过该地址执行操作。在这种情况下，是时间锁。
+调控器通过该地址执行操作。在这种情况下，是时间锁。
 
 #### __acceptAdmin()
 public#
@@ -1994,7 +1994,7 @@ event#
 import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
 ```
 
-通过治理进行设置更新的州长扩展。
+通过治理进行设置更新的调控器扩展。
 
 **FUNCTIONS**
 constructor(initialVotingDelay, initialVotingPeriod, initialProposalThreshold)
@@ -2866,3 +2866,396 @@ error#
 #### ERC5805FutureLookup(uint256 timepoint, uint48 clock)
 error#
 未来投票的查询不可用。
+
+## Timelock
+在治理系统中，*TimelockController*合约负责在提案和执行之间引入延迟。它可以与*Governor*一起使用，也可以单独使用。
+
+### [TimelockController](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/governance/TimelockController.sol)
+```
+import "@openzeppelin/contracts/governance/TimelockController.sol";
+```
+
+这个合约模块充当一个时间锁控制器。当被设置为Ownable智能合约的所有者时，它会对所有只有所有者才能进行的维护操作强制执行时间锁。这给了受控合约的用户在可能危险的维护操作被应用之前退出的时间。
+
+默认情况下，这个合约是自我管理的，意味着管理任务必须通过时间锁过程。提议者（或执行者）角色负责提议（或执行）操作。一个常见的用例是将这个*TimelockController*定位为智能合约的所有者，而多签名或DAO则是唯一的提议者。
+
+**MODIFIERS**
+onlyRoleOrOpenRole(role)
+
+**FUNCTIONS**
+constructor(minDelay, proposers, executors, admin)
+
+receive()
+
+supportsInterface(interfaceId)
+
+isOperation(id)
+
+isOperationPending(id)
+
+isOperationReady(id)
+
+isOperationDone(id)
+
+getTimestamp(id)
+
+getOperationState(id)
+
+getMinDelay()
+
+hashOperation(target, value, data, predecessor, salt)
+
+hashOperationBatch(targets, values, payloads, predecessor, salt)
+
+schedule(target, value, data, predecessor, salt, delay)
+
+scheduleBatch(targets, values, payloads, predecessor, salt, delay)
+
+cancel(id)
+
+execute(target, value, payload, predecessor, salt)
+
+executeBatch(targets, values, payloads, predecessor, salt)
+
+_execute(target, value, data)
+
+updateDelay(newDelay)
+
+_encodeStateBitmap(operationState)
+
+PROPOSER_ROLE()
+
+EXECUTOR_ROLE()
+
+CANCELLER_ROLE()
+
+ERC1155HOLDER
+onERC1155Received(, , , , )
+
+onERC1155BatchReceived(, , , , )
+
+ERC721HOLDER
+onERC721Received(, , , )
+
+ACCESSCONTROL
+hasRole(role, account)
+
+_checkRole(role)
+
+_checkRole(role, account)
+
+getRoleAdmin(role)
+
+grantRole(role, account)
+
+revokeRole(role, account)
+
+renounceRole(role, callerConfirmation)
+
+_setRoleAdmin(role, adminRole)
+
+_grantRole(role, account)
+
+_revokeRole(role, account)
+
+DEFAULT_ADMIN_ROLE()
+
+**EVENTS**
+CallScheduled(id, index, target, value, data, predecessor, delay)
+
+CallExecuted(id, index, target, value, data)
+
+CallSalt(id, salt)
+
+Cancelled(id)
+
+MinDelayChange(oldDuration, newDuration)
+
+IACCESSCONTROL
+RoleAdminChanged(role, previousAdminRole, newAdminRole)
+
+RoleGranted(role, account, sender)
+
+RoleRevoked(role, account, sender)
+
+**ERRORS**
+TimelockInvalidOperationLength(targets, payloads, values)
+
+TimelockInsufficientDelay(delay, minDelay)
+
+TimelockUnexpectedOperationState(operationId, expectedStates)
+
+TimelockUnexecutedPredecessor(predecessorId)
+
+TimelockUnauthorizedCaller(caller)
+
+IACCESSCONTROL
+AccessControlUnauthorizedAccount(account, neededRole)
+
+AccessControlBadConfirmation()
+
+#### onlyRoleOrOpenRole(bytes32 role)
+modifier#
+使函数只能由特定角色调用的修饰符。除了检查发送者的角色，还会考虑地址(0)的角色。将角色授予地址(0)等同于为所有人启用此角色。
+
+#### constructor(uint256 minDelay, address[] proposers, address[] executors, address admin)
+public#
+该合约以以下参数进行初始化：
+
+* minDelay：操作的初始最小延迟（以秒为单位）
+
+* proposers：被授予提案者和取消者角色的账户
+
+* executors：被授予执行者角色的账户
+
+* admin：可选的被授予管理员角色的账户；通过零地址禁用
+
+> IMPORTANT
+可选的管理员可以在部署后帮助初步配置角色，而无需受到延迟的影响，但是，应该随后放弃这种角色，以支持通过时间锁定提案进行管理。此合约的前一版本会自动将此管理员分配给部署者，应该放弃这种角色。
+
+#### receive()
+external#
+合约可能会在维护过程中接收/持有ETH。
+
+#### supportsInterface(bytes4 interfaceId) → bool
+public#
+请查阅 *IERC165.supportsInterface*.
+
+#### isOperation(bytes32 id) → bool
+public#
+返回一个id是否对应于已注册的操作。这包括等待，准备和完成的操作。
+
+#### isOperationPending(bytes32 id) → bool
+public#
+返回一个操作是否处于待处理状态。请注意，"待处理"的操作也可能是"就绪"的。
+
+#### isOperationReady(bytes32 id) → bool
+public#
+返回一个操作是否准备好执行。请注意，一个“准备好的”操作也是“待处理的”。
+
+#### isOperationDone(bytes32 id) → bool
+public#
+返回操作是否已完成。
+
+#### getTimestamp(bytes32 id) → uint256
+public#
+返回操作准备就绪的时间戳（对于未设置的操作为0，对于完成的操作为1）。
+
+#### getOperationState(bytes32 id) → enum TimelockController.OperationState
+public#
+返回操作状态。
+
+#### getMinDelay() → uint256
+public#
+返回操作生效的最小延迟时间（以秒为单位）。
+
+通过执行调用updateDelay的操作，可以更改此值。
+
+#### hashOperation(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt) → bytes32
+public#
+返回包含单个交易的操作的标识符。
+
+#### hashOperationBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt) → bytes32
+public#
+返回包含一批交易的操作的标识符。
+
+#### schedule(address target, uint256 value, bytes data, bytes32 predecessor, bytes32 salt, uint256 delay)
+public#
+安排包含单个交易的操作。
+
+如果盐不为零，则发出*CallSalt*，并且发出*CallScheduled*。
+
+要求：
+* 调用者必须具有'提议者'角色。
+
+#### scheduleBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt, uint256 delay)
+public#
+安排包含一批交易的操作。
+
+如果盐不为零，发出*CallSalt*，每个批次交易发出一个*CallScheduled*事件。
+
+要求：
+* 调用者必须具有'提议者'角色。
+
+#### cancel(bytes32 id)
+public#
+取消一个操作。
+
+要求：
+* 调用者必须具有'取消者'角色。
+
+#### execute(address target, uint256 value, bytes payload, bytes32 predecessor, bytes32 salt)
+public#
+执行包含单个交易的（已准备好的）操作。
+
+发出*CallExecuted*事件。
+
+要求：
+* 调用者必须具有'执行者'角色。
+
+#### executeBatch(address[] targets, uint256[] values, bytes[] payloads, bytes32 predecessor, bytes32 salt)
+public#
+
+执行包含一批交易的（已准备好的）操作。
+
+每个批次的交易都会发出一个*CallExecuted*事件。
+
+要求：
+* 调用者必须具有'执行者'角色。
+
+#### _execute(address target, uint256 value, bytes data)
+internal#
+执行操作的调用。
+
+#### updateDelay(uint256 newDelay)
+external#
+更改未来操作的最小时间锁定持续时间。
+
+发出一个*MinDelayChange*事件。
+
+要求：
+* 调用者必须是时间锁本身。这只能通过安排并稍后执行一个操作来实现，其中时间锁是目标，数据是对此函数的ABI编码调用。
+
+#### _encodeStateBitmap(enum TimelockController.OperationState operationState) → bytes32
+internal#
+将OperationState编码为bytes32表示，其中每个启用的位对应于OperationState枚举中的基础位置。例如：
+
+0x000…​1000 ^^----- …​^---- 完成 ^--- 准备 ^-- 等待 ^- 未设置
+
+#### PROPOSER_ROLE() → bytes32
+public#
+
+#### EXECUTOR_ROLE() → bytes32
+public#
+
+#### CANCELLER_ROLE() → bytes32
+public#
+
+#### CallScheduled(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data, bytes32 predecessor, uint256 delay)
+event#
+当调用作为操作ID的一部分被安排时发出。
+
+#### CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data)
+event#
+在执行操作ID的一部分时发出的调用。
+
+#### CallSalt(bytes32 indexed id, bytes32 salt)
+event#
+当新的提案被安排并且含有非零盐值时发出。
+
+#### Cancelled(bytes32 indexed id)
+event#
+当操作ID被取消时发出。
+
+#### MinDelayChange(uint256 oldDuration, uint256 newDuration)
+event#
+最小延迟更改(旧持续时间，新持续时间)
+
+#### TimelockInvalidOperationLength(uint256 targets, uint256 payloads, uint256 values)
+error#
+操作调用的参数长度不匹配。
+
+#### TimelockInsufficientDelay(uint256 delay, uint256 minDelay)
+error#
+调度操作未达到最小延迟。
+
+#### TimelockUnexpectedOperationState(bytes32 operationId, bytes32 expectedStates)
+error#
+操作的当前状态不符合要求。expectedStates是一个位图，其中每个OperationState枚举位置从右到左计数的位都被启用。
+
+请参阅*_encodeStateBitmap*。
+
+#### TimelockUnexecutedPredecessor(bytes32 predecessorId)
+error#
+尚未进行的操作的前驱。
+
+#### TimelockUnauthorizedCaller(address caller)
+error#
+呼叫者账户未被授权。
+
+## 术语
+**Operation（操作）**：是时间锁的主题的交易（或一组交易）。它必须由提议者安排并由执行者执行。时间锁在提议和执行之间强制执行最小延迟（参见*操作生命周期*）。如果操作包含多个交易（批处理模式），它们将以原子方式执行。操作由其内容的哈希标识。
+
+* **Operation status（操作状态）：**
+
+  * **Unset（未设置）：**不是时间锁机制的一部分的操作。
+
+  * **Waiting（等待）：**已安排的操作，在计时器到期之前。
+
+  * **Ready（就绪）：**已安排的操作，在计时器到期后。
+
+  * **Pending（待处理）：**等待或就绪的操作。
+
+* **Done（完成）：**已执行的操作。
+
+* **Predecessor（前驱）**：操作之间的（可选）依赖关系。一个操作可以依赖于另一个操作（其前驱），强制执行这两个操作的顺序。
+
+* **Role（角色）：**
+
+* **Admin（管理员）：**负责授予提议者和执行者角色的地址（智能合约或EOA）。
+
+* **Proposer（提议者）：**负责安排（和取消）操作的地址（智能合约或EOA）。
+
+* **Executor（执行者）：**负责在时间锁到期后执行操作的地址（智能合约或EOA）。这个角色可以给予零地址，以允许任何人执行操作。
+
+## 操作结构
+由*TimelockController*执行的操作可以包含一个或多个后续调用。根据您是否需要多个调用被原子性地执行，您可以使用简单或批处理操作。
+
+两种操作都包含：
+
+* Target，时间锁应该操作的智能合约的地址。
+
+* Value，以wei为单位，应该与交易一起发送。大多数情况下这将是0。以太币可以在结束前存入或在执行交易时传递。
+
+* Data，包含编码的函数选择器和调用的参数。这可以使用许多工具生成。例如，授予角色ROLE给ACCOUNT的维护操作可以使用web3js编码如下：
+```
+const data = timelock.contract.methods.grantRole(ROLE, ACCOUNT).encodeABI()
+```
+
+* Predecessor，指定操作之间的依赖关系。这种依赖关系是可选的。如果操作没有任何依赖关系，使用bytes32(0)。
+
+* Salt，用于消除两个完全相同的操作的歧义。这可以是任何随机值。
+
+在批处理操作的情况下，目标，值和数据被指定为数组，它们必须具有相同的长度。
+
+## 操作生命周期
+时间锁操作由唯一的id（它们的哈希）标识，并遵循特定的生命周期：
+
+未设置→待处理→待处理+就绪→完成
+
+* 通过调用*schedule*（或*scheduleBatch*），提议者将操作从未设置状态移动到待处理状态。这启动了一个必须超过最小延迟的计时器。计时器在通过*getTimestamp*方法可访问的时间戳到期。
+
+* 一旦计时器到期，操作自动进入就绪状态。此时，它可以被执行。
+
+* 通过调用*execute*（或*executeBatch*），执行者触发操作的底层交易并将其移动到完成状态。如果操作有一个前驱，它必须处于完成状态，此转换才能成功。
+
+* *cancel*允许提议者取消任何待处理的操作。这将操作重置为未设置状态。因此，提议者可以重新安排已被取消的操作。在这种情况下，当操作被重新安排时，计时器重新开始。
+
+可以使用以下函数查询操作状态：
+
+* *isOperationPending(bytes32)*
+
+* *isOperationReady(bytes32)*
+
+* *isOperationDone(bytes32)*
+
+## Roles
+
+### Admin
+管理员负责管理提议者和执行者。为了使时间锁自我管理，这个角色应该只给时间锁本身。在部署时，管理员角色可以授予任何地址（除了时间锁本身）。在进一步配置和测试后，这个可选的管理员应该放弃其角色，以便所有进一步的维护操作都必须通过时间锁过程。
+
+### Proposer
+提议者负责安排（和取消）操作。这是一个关键角色，应该由治理实体担任。这可以是EOA，多签名，或DAO。
+
+> WARNING
+**Proposer fight：**虽然有多个提议者可以在一个变得不可用的情况下提供冗余，但也可能是危险的。因为提议者对所有操作都有发言权，他们可以取消他们不同意的操作，包括移除他们的提议者的操作。
+
+这个角色由**PROPOSER_ROLE**值标识：0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1
+
+### Executor
+执行者负责执行提议者安排的操作，一旦时间锁到期。逻辑规定，作为提议者的多签名或DAO应该也是执行者，以保证已经安排的操作最终会被执行。然而，有额外的执行者可以降低成本（执行交易不需要由提议它的多签名或DAO验证），同时确保负责执行的人不能触发没有被提议者安排的操作。另外，可以通过将执行者角色授予零地址，允许任何地址在时间锁到期后执行提议。
+
+这个角色由**EXECUTOR_ROLE**值标识：0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63
+
+> WARNING
+一个没有至少一个提议者和一个执行者的实时合约是锁定的。在部署者放弃其行政权利，以便时间锁合约本身之前，确保这些角色由可靠的实体填充。参见*AccessControl文档*，了解更多关于角色管理的信息。
