@@ -925,3 +925,320 @@ error#
 #### SafeCastOverflowedUintToInt(uint256 value)
 error#
 一个无符号整数值不适合在位大小的整数中。
+
+## Cryptography
+
+### [ECDSA](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/cryptography/ECDSA.sol)
+```
+import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+```
+
+椭圆曲线数字签名算法ECDSA操作。
+
+这些功能可以用来验证消息是否由给定地址的私钥持有者签名。
+
+**FUNCTIONS**
+tryRecover(hash, signature)
+
+recover(hash, signature)
+
+tryRecover(hash, r, vs)
+
+recover(hash, r, vs)
+
+tryRecover(hash, v, r, s)
+
+recover(hash, v, r, s)
+
+**ERRORS**
+ECDSAInvalidSignature()
+
+ECDSAInvalidSignatureLength(length)
+
+ECDSAInvalidSignatureS(s)
+
+#### tryRecover(bytes32 hash, bytes signature) → address, enum ECDSA.RecoverError, bytes32
+internal#
+返回签署了带有签名的哈希消息（哈希）的地址，或者返回一个错误。如果没有错误，那么这个地址可以用于验证目的。
+
+这个函数通过要求s值在较低的半序中，以及v值为27或28，来拒绝ecrecover EVM预编译允许的易变（非唯一）的签名。
+
+> IMPORTANT
+哈希必须是哈希操作的结果，验证才能安全：对于非哈希数据，可以制作出恢复到任意地址的签名。确保这一点的安全方式是接收原始消息的哈希（否则可能太长），然后在其上调用*MessageHashUtils.toEthSignedMessageHash*。
+
+签名生成的文档：- 使用[Web3.js](https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign) - 使用[ethers](https://docs.ethers.io/v5/api/signer/#Signer-signMessage)。
+
+#### recover(bytes32 hash, bytes signature) → address
+internal#
+返回签署了哈希消息（哈希）的地址。然后，可以用这个地址进行验证。
+
+ecrecover EVM 预编译允许可变形（非唯一）的签名：此函数通过要求 s 值在较低的半序中，以及 v 值为27或28来拒绝它们。
+
+> IMPORTANT
+哈希必须是哈希操作的结果，验证才能安全：对于非哈希数据，可以制作出恢复到任意地址的签名。确保这一点的安全方式是接收原始消息的哈希（否则可能太长），然后在其上调用*MessageHashUtils.toEthSignedMessageHash*。
+
+#### tryRecover(bytes32 hash, bytes32 r, bytes32 vs) → address, enum ECDSA.RecoverError, bytes32
+internal#
+*ECDSA.tryRecover*的重载，分别接收r和vs短签名字段。
+
+参见[EIP-2098短签名](https://eips.ethereum.org/EIPS/eip-2098)
+
+#### recover(bytes32 hash, bytes32 r, bytes32 vs) → address
+internal#
+重载*ECDSA.recover*，分别接收r和`vs短签名字段。
+
+#### recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) → address
+internal#
+对*ECDSA.recover*的重载，分别接收v，r和s签名字段。
+
+#### ECDSAInvalidSignature()
+error#
+签名导出地址(0)。
+
+#### ECDSAInvalidSignatureLength(uint256 length)
+error#
+签名的长度无效。
+
+#### ECDSAInvalidSignatureS(bytes32 s)
+error#
+签名中的S值位于上半顺序中。
+
+### [MessageHashUtils](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/cryptography/MessageHashUtils.sol)
+```
+import "@openzeppelin/contracts/utils/cryptography/MessageHashUtils.sol";
+```
+用于生成由ECDSA恢复或签名消费的摘要的签名消息哈希实用程序。
+此库提供了生成符合[EIP 191](https://eips.ethereum.org/EIPS/eip-191)和[EIP 712](https://eips.ethereum.org/EIPS/eip-712)规范的消息哈希的方法，用于生产由ECDSA恢复或签名消费的摘要。
+
+**FUNCTIONS**
+toEthSignedMessageHash(messageHash)
+
+toEthSignedMessageHash(message)
+
+toDataWithIntendedValidatorHash(validator, data)
+
+toTypedDataHash(domainSeparator, structHash)
+
+#### toEthSignedMessageHash(bytes32 messageHash) → bytes32 digest
+internal#
+返回版本为0x45（personal_sign消息）的EIP-191签名数据的keccak256摘要。
+
+通过在bytes32 messageHash前加上"\x19Ethereum Signed Message:\n32"并对结果进行哈希运算来计算摘要。它与使用[eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希相对应。
+
+> NOTE
+messageHash参数旨在是用keccak256对原始消息进行哈希运算的结果，尽管可以安全地使用任何bytes32值，因为最终的摘要将被重新哈希。
+参见*ECDSA.recover*。
+
+#### toEthSignedMessageHash(bytes message) → bytes32
+internal#
+返回EIP-191签名数据的keccak256摘要，版本为0x45（personal_sign消息）。
+
+通过在任意消息前加上"\x19Ethereum Signed Message:\n" + len(message)并对结果进行哈希来计算摘要。它对应于使用[eth_sign](https://eth.wiki/json-rpc/API#eth_sign) JSON-RPC方法签名的哈希。
+
+参见*ECDSA.recover*。
+
+#### toDataWithIntendedValidatorHash(address validator, bytes data) → bytes32
+internal#
+返回EIP-191签名数据的keccak256摘要，版本为0x00（带有预期验证器的数据）。
+
+通过在任意数据前加上"\x19\x00"和预期的验证器地址，然后对结果进行哈希，来计算摘要。
+
+参见*ECDSA.recover*。
+
+#### toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) → bytes32 digest
+internal#
+返回EIP-712类型数据的keccak256摘要（EIP-191版本0x01）。
+
+该摘要是通过在domainSeparator和structHash前加上\x19\x01并对结果进行哈希计算得到的。它对应于作为EIP-712一部分的[eth_signTypedData](https://eips.ethereum.org/EIPS/eip-712) JSON-RPC方法签名的哈希。
+
+参见*ECDSA.recover*。
+
+### [SignatureChecker](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/cryptography/SignatureChecker.sol)
+```
+import "@openzeppelin/contracts/utils/cryptography/SignatureChecker.sol";
+```
+
+签名验证助手，可以替代ECDSA.recover，无缝支持来自外部拥有账户（EOAs）的ECDSA签名以及来自像Argent和Safe Wallet（以前的Gnosis Safe）这样的智能合约钱包的ERC1271签名。
+
+**FUNCTIONS**
+isValidSignatureNow(signer, hash, signature)
+
+isValidERC1271SignatureNow(signer, hash, signature)
+
+#### isValidSignatureNow(address signer, bytes32 hash, bytes signature) → bool
+internal#
+检查签名是否对给定的签名者和数据哈希有效。如果签名者是一个智能合约，那么使用ERC1271对该签名进行验证，否则使用ECDSA.recover进行验证。
+
+> NOTE
+与ECDSA签名不同，合约签名是可以撤销的，因此这个函数的结果可能会随着时间的推移而改变。它可能在区块N返回true，而在区块N+1返回false（或者反过来）。
+
+#### isValidERC1271SignatureNow(address signer, bytes32 hash, bytes signature) → bool
+internal#
+检查签名是否对给定的签名者和数据哈希有效。该签名通过ERC1271对签名者智能合约进行验证。
+
+> NOTE
+与ECDSA签名不同，合约签名是可撤销的，因此该函数的结果可能会随时间变化。它可能在区块N返回true，在区块N+1返回false（或相反）。
+
+#### [MerkleProof](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/cryptography/MerkleProof.sol)
+```
+import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
+```
+
+这些函数处理Merkle树证明的验证。
+
+树和证明可以使用我们的[JavaScript库](https://github.com/OpenZeppelin/merkle-tree)生成。你可以在readme中找到一个快速入门指南。
+
+> WARNING
+你应该避免使用长度为64字节的叶值进行哈希，或者使用除keccak256之外的哈希函数进行叶的哈希。这是因为在Merkle树中，一个排序对的内部节点的连接可能被重新解释为一个叶值。OpenZeppelin的JavaScript库生成的Merkle树默认是安全的，不会受到这种攻击。
+
+**FUNCTIONS**
+verify(proof, root, leaf)
+
+verifyCalldata(proof, root, leaf)
+
+processProof(proof, leaf)
+
+processProofCalldata(proof, leaf)
+
+multiProofVerify(proof, proofFlags, root, leaves)
+
+multiProofVerifyCalldata(proof, proofFlags, root, leaves)
+
+processMultiProof(proof, proofFlags, leaves)
+
+processMultiProofCalldata(proof, proofFlags, leaves)
+
+**ERRORS**
+MerkleProofInvalidMultiproof()
+
+#### verify(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
+internal#
+如果可以证明一个叶子是由根定义的Merkle树的一部分，则返回真。为此，必须提供一个证明，包含从叶子到树根的分支上的兄弟哈希。假定每对叶子和每对预映像都是排序的。
+
+#### verifyCalldata(bytes32[] proof, bytes32 root, bytes32 leaf) → bool
+internal#
+*验证*调用数据版本
+
+#### processProof(bytes32[] proof, bytes32 leaf) → bytes32
+internal#
+返回通过使用证明从叶子向上遍历Merkle树获得的重建哈希。只有当重建的哈希与树的根匹配时，证明才有效。在处理证明时，假定叶子和预映像的对是排序的。
+
+#### processProofCalldata(bytes32[] proof, bytes32 leaf) → bytes32
+internal#
+*处理证明*的调用数据版本
+
+#### multiProofVerify(bytes32[] proof, bool[] proofFlags, bytes32 root, bytes32[] leaves) → bool
+internal#
+如果根据*processMultiProof*中描述的证明和证明标志，叶子可以同时被证明是由根定义的Merkle树的一部分，则返回true。
+
+> CAUTION
+并非所有的Merkle树都接受多重证明。详情请参阅*processMultiProof*。
+
+#### multiProofVerifyCalldata(bytes32[] proof, bool[] proofFlags, bytes32 root, bytes32[] leaves) → bool
+internal#
+*验证多重证明*的调用数据版本。
+
+> CAUTION
+并非所有的Merkle树都支持多重证明。具体详情请参见*processMultiProof*。
+
+#### processMultiProof(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
+internal#
+返回从证明中的叶子和兄弟节点重构的树的根。重构通过逐步重构所有内部节点来进行，通过将叶子/内部节点与另一个叶子/内部节点或证明兄弟节点结合，这取决于每个proofFlags项是真还是假。
+
+> CAUTION
+并非所有的默克尔树都承认多重证明。要使用多重证明，只需确保：1）树是完整的（但不一定是完美的），2）要证明的叶子是在树中的相反顺序（即，从最深层的右到左开始，然后继续在下一层）。
+
+#### processMultiProofCalldata(bytes32[] proof, bool[] proofFlags, bytes32[] leaves) → bytes32 merkleRoot
+internal#
+调用数据版本的*processMultiProof*。
+
+并非所有的Merkle树都支持多重证明。详情请参阅*processMultiProof*。
+
+#### MerkleProofInvalidMultiproof()
+error#
+提供的多重证明是无效的。
+
+### [EIP712](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/cryptography/EIP712.sol)
+```
+import "@openzeppelin/contracts/utils/cryptography/EIP712.sol";
+```
+
+[EIP 712](https://eips.ethereum.org/EIPS/eip-712)是一种用于哈希和签名类型化结构化数据的标准。
+
+EIP中指定的编码方案需要一个域分隔符和类型化结构化数据的哈希，其编码非常通用，因此在Solidity中无法实现，因此该合约并未实现编码本身。协议需要实现他们需要的类型特定编码，以便使用abi.encode和keccak256的组合产生他们的类型化数据的哈希。
+
+该合约实现了EIP 712域分隔符(*_domainSeparatorV4*)，该分隔符用作编码方案的一部分，以及获取消息摘要的编码的最后步骤，然后通过ECDSA进行签名(*_hashTypedDataV4*)。
+
+域分隔符的实现旨在尽可能高效，同时仍然正确地更新链id，以防止对链的可能分叉的重放攻击。
+
+> NOTE
+此合约实现了被称为"v4"的编码版本，该版本由[MetaMask中的JSON RPC方法eth_signTypedDataV4](https://docs.metamask.io/guide/signing-data.html)实现。
+
+> NOTE
+在这个可升级版本的合约中，缓存的值将对应于实施合约的地址和域分隔符。这将导致*_domainSeparatorV4*函数始终从不可变的值中重建分隔符，这比访问冷存储中的缓存版本更便宜。
+
+**FUNCTIONS**
+constructor(name, version)
+
+_domainSeparatorV4()
+
+_hashTypedDataV4(structHash)
+
+eip712Domain()
+
+_EIP712Name()
+
+_EIP712Version()
+
+**EVENTS**
+IERC5267
+EIP712DomainChanged()
+
+#### constructor(string name, string version)
+internal#
+初始化域分隔符和参数缓存。
+
+名称和版本的含义在[EIP 712](https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator)中有所规定：
+
+* 名称：签名域的用户可读名称，即DApp或协议的名称。
+
+* 版本：签名域的当前主要版本。
+
+> NOTE
+这些参数除非通过*智能合约升级*，否则无法更改。
+
+#### _domainSeparatorV4() → bytes32
+internal#
+返回当前链的域分隔符。
+
+#### _hashTypedDataV4(bytes32 structHash) → bytes32
+internal#
+这个函数返回一个已经[哈希过的结构](https://eips.ethereum.org/EIPS/eip-712#definition-of-hashstruct)完全编码的EIP712消息的哈希。
+
+这个哈希可以和*ECDSA.recover*一起使用，以获取消息的签名者。例如:
+```
+bytes32 digest = _hashTypedDataV4(keccak256(abi.encode(
+    keccak256("Mail(address to,string contents)"),
+    mailTo,
+    keccak256(bytes(mailContents))
+)));
+address signer = ECDSA.recover(digest, signature);
+```
+
+#### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
+public#
+查阅 {IERC-5267}.
+
+#### _EIP712Name() → string
+internal#
+EIP712域的名称参数。
+
+> NOTE
+默认情况下，此函数读取的是_name，这是一个不可变的值。只有在必要的时候（例如，值太大，无法放入ShortString中）才会从存储中读取。
+
+#### _EIP712Version() → string
+internal#
+EIP712域的版本参数。
+
+> NOTE
+默认情况下，此函数读取的是不可变值_version。只有在必要时（例如，值太大，无法放入ShortString中）才从存储中读取。
