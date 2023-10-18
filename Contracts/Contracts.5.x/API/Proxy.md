@@ -168,7 +168,7 @@ internal#
 
 #### upgradeToAndCall(address newImplementation, bytes data)
 internal#
-如果数据非空，则执行实现升级并进行额外的设置调用。只有在执行设置调用时，此功能才可支付，否则将拒绝msg.value以避免合同中的价值卡住。
+如果数据非空，则执行实现升级并进行额外的设置调用。只有在执行设置调用时，此功能才可支付，否则将拒绝msg.value以避免合约中的价值卡住。
 
 触发一个*IERC1967.Upgraded*事件。
 
@@ -190,7 +190,7 @@ internal#
 
 #### upgradeBeaconToAndCall(address newBeacon, bytes data)
 internal#
-如果数据非空，更改信标并触发设置调用。只有在执行设置调用时，此功能才可支付，否则将拒绝msg.value以避免合同中的价值卡住。
+如果数据非空，更改信标并触发设置调用。只有在执行设置调用时，此功能才可支付，否则将拒绝msg.value以避免合约中的价值卡住。
 
 发出一个*IERC1967.BeaconUpgraded*事件。
 
@@ -340,3 +340,390 @@ public#
 合约升级接口的版本。如果缺少这个getter，upgrade(address)和upgradeAndCall(address,bytes)都存在，如果不应调用任何函数，必须使用upgradeTo，而如果第二个参数是空字节字符串，upgradeAndCall将调用接收函数。如果getter返回"5.0.0"，只有upgradeAndCall(address,bytes)存在，如果不应调用任何函数，第二个参数必须是空字节字符串，这使得在升级过程中无法调用接收函数。
 
 ## Beacon
+
+### [BeaconProxy](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/beacon/BeaconProxy.sol)
+```
+import "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol";
+```
+
+此合约实现了一个代理，该代理从*UpgradeableBeacon*获取每个调用的实现地址。
+
+信标地址只能在构造期间设置一次，之后不能更改。它存储在一个不可变的变量中，以避免不必要的存储读取，并且也存储在[EIP1967](https://eips.ethereum.org/EIPS/eip-1967)指定的信标存储槽中，以便可以外部访问。
+
+> CAUTION
+由于信标地址永远不能更改，因此您必须确保您要么控制信标，要么信任信标不会恶意升级实现。
+
+> IMPORTANT
+不要使用实现逻辑来修改信标存储槽。这样做会使代理处于不一致的状态，其中信标存储槽与信标地址不匹配。
+
+FUNCTIONS
+constructor(beacon, data)
+
+_implementation()
+
+_getBeacon()
+
+PROXY
+_delegate(implementation)
+
+_fallback()
+
+fallback()
+
+#### constructor(address beacon, bytes data)
+public#
+初始化代理与信标。
+
+如果数据非空，则将其用作委托调用到信标返回的实现中的数据。这通常是一个编码的函数调用，允许像Solidity构造函数一样初始化代理的存储。
+
+要求：
+* 信标必须是具有*IBeacon*接口的合约。
+
+* 如果数据为空，msg.value必须为零。
+
+#### _implementation() → address
+internal#
+返回相关信标的当前实现地址。
+
+#### _getBeacon() → address
+internal#
+返回信标。
+
+### [IBeacon](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/beacon/IBeacon.sol)
+```
+import "@openzeppelin/contracts/proxy/beacon/IBeacon.sol";
+```
+
+这是*BeaconProxy*期望其信标的接口。
+
+**FUNCTIONS**
+implementation()
+
+#### implementation() → address
+external#
+必须返回一个可以用作委托调用目标的地址。
+
+*UpgradeableBeacon*将检查这个地址是否是一个合约。
+
+### [UpgradeableBeacon](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/beacon/UpgradeableBeacon.sol)
+```
+import "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol";
+```
+
+该合约与一个或多个*BeaconProxy*实例一起使用，以确定它们的实现合约，也就是它们将委托所有功能调用的地方。
+
+所有者能够改变信标指向的实现，从而升级使用此信标的代理。
+
+**FUNCTIONS**
+constructor(implementation_, initialOwner)
+
+implementation()
+
+upgradeTo(newImplementation)
+
+OWNABLE
+owner()
+
+_checkOwner()
+
+renounceOwnership()
+
+transferOwnership(newOwner)
+
+_transferOwnership(newOwner)
+
+**EVENTS**
+Upgraded(implementation)
+
+OWNABLE
+OwnershipTransferred(previousOwner, newOwner)
+
+**ERRORS**
+BeaconInvalidImplementation(implementation)
+
+OWNABLE
+OwnableUnauthorizedAccount(account)
+
+OwnableInvalidOwner(owner)
+
+#### constructor(address implementation_, address initialOwner)
+public#
+设置初始实现的地址，以及可以升级信标的初始所有者。
+
+#### implementation() → address
+public#
+返回当前实现地址。
+
+#### upgradeTo(address newImplementation)
+public#
+将信标升级到新的实现。
+
+发出一个*Upgraded*事件。
+
+要求：
+* msg.sender必须是合约的所有者。
+
+* newImplementation必须是一个合约。
+
+#### Upgraded(address indexed implementation)
+event#
+当信标返回的实现发生变化时发出。
+
+#### BeaconInvalidImplementation(address implementation)
+error#
+信标的实施是无效的。
+
+## Minimal Clones
+
+### [Clones](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/Clones.sol)
+```
+https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/Clones.sol
+```
+
+[EIP 1167](https://eips.ethereum.org/EIPS/eip-1167)是一种用于部署最小代理合约（也称为“克隆”）的标准。
+
+    为了以一种简单且低成本的方式克隆合约功能，这个标准规定了一种最小的字节码实现，该实现将所有调用委托给已知的固定地址。
+
+该库包含使用create（传统部署）或create2（带盐的确定性部署）部署代理的函数。它还包括用于预测使用确定性方法部署的克隆的地址的函数。
+
+**FUNCTIONS**
+clone(implementation)
+
+cloneDeterministic(implementation, salt)
+
+predictDeterministicAddress(implementation, salt, deployer)
+
+predictDeterministicAddress(implementation, salt)
+
+**ERRORS**
+ERC1167FailedCreateClone()
+
+#### clone(address implementation) → address instance
+internal#
+部署并返回一个克隆的地址，该克隆模仿实现的行为。
+
+这个函数使用了create操作码，它永远不应该回滚。
+
+#### cloneDeterministic(address implementation, bytes32 salt) → address instance
+internal#
+该函数部署并返回一个模拟实现行为的克隆的地址。
+
+此函数使用create2操作码和盐来确定性地部署克隆。多次使用相同的实现和盐将会撤销，因为克隆不能在同一地址上部署两次。
+
+#### predictDeterministicAddress(address implementation, bytes32 salt, address deployer) → address predicted
+internal#
+计算使用*Clones.cloneDeterministic*部署的克隆的地址。
+
+#### predictDeterministicAddress(address implementation, bytes32 salt) → address predicted
+internal#
+计算使用*Clones.cloneDeterministic*部署的克隆的地址。
+
+#### ERC1167FailedCreateClone()
+error#
+克隆实例部署失败。
+
+## Utils
+
+### [Initializable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/utils/Initializable.sol)
+```
+import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+```
+
+这是一个基础合约，用于编写可升级的合约，或者任何将在代理后部署的合约。由于代理合约不使用构造函数，因此通常会将构造函数逻辑移动到一个外部初始化函数中，通常称为initialize。然后，保护这个初始化函数变得必要，使其只能被调用一次。这个合约提供的*初始化器*修饰符将产生这种效果。
+
+初始化函数使用版本号。一旦使用了一个版本号，它就被消耗掉，不能再被重用。这种机制防止了每个"步骤"的重复执行，但允许创建新的初始化步骤，以防升级添加了需要初始化的模块。
+
+例如：
+```
+contract MyToken is ERC20Upgradeable {
+    function initialize() initializer public {
+        __ERC20_init("MyToken", "MTK");
+    }
+}
+
+contract MyTokenV2 is MyToken, ERC20PermitUpgradeable {
+    function initializeV2() reinitializer(2) public {
+        __ERC20Permit_init("MyToken");
+    }
+}
+```
+
+> TIP
+为了避免让代理处于未初始化的状态，应尽早调用初始化函数，通过将编码的函数调用作为_data参数提供给[ERC1967Proxy.constructor](https://docs.openzeppelin.com/contracts/5.x/api/proxy#ERC1967Proxy-constructor-address-bytes-)。
+
+> CAUTION
+在使用继承时，必须手动注意不要两次调用父初始化器，或确保所有初始化器都是幂等的。这不是由Solidity自动验证的，就像构造函数一样。
+
+> CAUTION
+避免让合约处于未初始化的状态。
+一个未初始化的合约可能被攻击者接管。这适用于代理和其实现合约，可能会影响代理。为了防止实现合约被使用，你应该在构造函数中调用*_disableInitializers*函数，当它被部署时自动锁定它：
+/// @custom:oz-upgrades-unsafe-allow constructor
+constructor() {
+    _disableInitializers();
+}
+
+**MODIFIERS**
+initializer()
+
+reinitializer(version)
+
+onlyInitializing()
+
+**FUNCTIONS**
+_checkInitializing()
+
+_disableInitializers()
+
+_getInitializedVersion()
+
+_isInitializing()
+
+**EVENTS**
+Initialized(version)
+
+**ERRORS**
+InvalidInitialization()
+
+NotInitializing()
+
+#### initializer()
+modifier#
+一个定义了受保护的初始化函数的修饰符，该函数最多只能被调用一次。在其作用范围内，只能使用initializing函数来初始化父合约。
+
+与reinitializer(1)类似，除了在构造函数的上下文中，初始化器可以被调用任意次数。这种在构造函数中的行为在测试中可能会很有用，但不期望在生产中使用。
+
+会发出一个*Initialized*事件。
+
+#### reinitializer(uint64 version)
+modifier#
+这是一个定义了受保护的重新初始化函数的修饰符，该函数最多只能被调用一次，并且只有在合约之前没有被初始化到更高版本时才能被调用。在其范围内，只能使用onlyInitializing函数来初始化父合约。
+
+重新初始化器可以在原始初始化步骤之后使用。这对于配置通过升级添加并需要初始化的模块至关重要。
+
+当版本为1时，此修饰符类似于初始化器，只是标记为重新初始化器的函数不能嵌套。如果在另一个的上下文中调用一个，执行将会恢复。
+
+请注意，版本可以以大于1的增量跳跃；这意味着如果一个合约中存在多个重新初始化器，按正确的顺序执行它们取决于开发者或操作员。
+
+> WARNING
+将版本设置为2**64 - 1将阻止任何未来的重新初始化。
+
+发出一个*Initialized*事件。
+
+#### onlyInitializing()
+modifier#
+修饰符用于保护初始化函数，使其只能被带有*初始化器*和*重新初始化器*修饰符的函数直接或间接调用。
+
+#### _checkInitializing()
+internal#
+如果合约不处于初始化状态，则撤销。参见*onlyInitializing*。
+
+#### _disableInitializers()
+internal#
+锁定合约，防止任何未来的重新初始化。这不能作为初始化器调用的一部分。在合约的构造函数中调用这个将阻止该合约被初始化或重新初始化到任何版本。建议使用这个来锁定设计通过代理调用的实现合约。
+
+第一次成功执行时，会发出一个*初始化*事件。
+
+#### _getInitializedVersion() → uint64
+internal#
+返回已初始化的最高版本。请参阅*reinitializer*。
+
+#### _isInitializing() → bool
+internal#
+如果合约当前正在初始化，则返回真。参见*onlyInitializing*。
+
+#### Initialized(uint64 version)
+event#
+在合约被初始化或重新初始化时触发。
+
+#### InvalidInitialization()
+error#
+合约已经初始化。
+
+#### NotInitializing()
+error#
+合约未初始化。
+
+### [UUPSUpgradeable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/proxy/utils/UUPSUpgradeable.sol)
+```
+import "@openzeppelin/contracts/proxy/utils/UUPSUpgradeable.sol";
+```
+这是一个为UUPS代理设计的可升级性机制。这里包含的函数可以执行*ERC1967Proxy*的升级，当这个合约被设置为这样一个代理的实现。
+
+一个安全机制确保升级不会意外地关闭可升级性，尽管如果升级保留了可升级性但移除了安全机制，例如通过替换UUPSUpgradeable与自定义的升级实现，这个风险会被重新引入。
+
+*_authorizeUpgrade*函数必须被重写以包含对升级机制的访问限制。
+
+**MODIFIERS**
+onlyProxy()
+
+notDelegated()
+
+**FUNCTIONS**
+proxiableUUID()
+
+upgradeToAndCall(newImplementation, data)
+
+_checkProxy()
+
+_checkNotDelegated()
+
+_authorizeUpgrade(newImplementation)
+
+UPGRADE_INTERFACE_VERSION()
+
+**ERRORS**
+UUPSUnauthorizedCallContext()
+
+UUPSUnsupportedProxiableUUID(slot)
+
+#### onlyProxy()
+modifier#
+检查执行是否通过delegatecall调用进行，并且执行上下文是一个代理合约，其实现（如ERC1967中定义）指向自身。这只应在使用当前合约作为其实现的UUPS和透明代理的情况下才是如此。通过ERC1167最小代理（克隆）执行函数通常不会通过此测试，但不能保证会失败。
+
+#### notDelegated()
+modifier#
+检查执行是否未通过委托调用进行。这允许在实现合约上调用函数，但不能通过代理进行。
+
+#### proxiableUUID() → bytes32
+external#
+实现ERC1822 *proxiableUUID*函数。这将返回实现使用的存储槽。在执行升级时，它用于验证实现的兼容性。
+
+> IMPORTANT
+指向可代理合约的代理本身不应被视为可代理的，因为这有可能使升级到它的代理变砖，通过代理到自身直到耗尽gas。因此，如果通过代理调用此函数，这个函数必须回滚，这是由notDelegated修饰符保证的。
+
+#### upgradeToAndCall(address newImplementation, bytes data)
+public#
+将代理的实现升级到newImplementation，并随后执行在数据中编码的函数调用。
+
+调用*_authorizeUpgrade*。
+
+发出一个*Upgraded*事件。
+
+#### _checkProxy()
+internal#
+如果执行不是通过delegatecall进行的，或者执行上下文不是指向自身的符合ERC1967标准的代理实现，则撤销。参见{_onlyProxy}。
+
+#### _checkNotDelegated()
+internal#
+如果执行是通过delegatecall进行的，则撤销。请参阅*notDelegated*。
+
+#### _authorizeUpgrade(address newImplementation)
+internal#
+该函数应在msg.sender未被授权升级合约时回滚。由*upgradeToAndCall*调用。
+
+通常，这个函数会使用一个*access control*修饰符，如*Ownable.onlyOwner*。
+```
+function _authorizeUpgrade(address) internal onlyOwner {}
+```
+
+#### UPGRADE_INTERFACE_VERSION() → string
+public#
+该升级接口的版本。如果缺少此getter，upgradeTo(address)和upgradeToAndCall(address,bytes)都存在，如果不应调用任何函数，则必须使用upgradeTo，而如果第二个参数是空字节字符串，upgradeToAndCall将调用接收函数。如果getter返回"5.0.0"，则只存在upgradeToAndCall(address,bytes)，如果不应调用任何函数，第二个参数必须是空字节字符串，这使得在升级过程中无法调用接收函数。
+
+#### UUPSUnauthorizedCallContext()
+error#
+该呼叫来自未经授权的上下文。
+
+#### UUPSUnsupportedProxiableUUID(bytes32 slot)
+error#
+存储插槽不支持作为UUID。

@@ -360,7 +360,7 @@ import "@openzeppelin/contracts/interfaces/IERC1820Registry.sol";
 
 全球ERC1820注册表的接口，根据[EIP](https://eips.ethereum.org/EIPS/eip-1820)定义。账户可以在此注册表中注册接口的实施者，也可以查询支持。
 
-实施者可以由多个账户共享，并且每个账户也可以实施多个接口。合同可以为自己实施接口，但是外部拥有的账户（EOA）必须将此委托给合同。
+实施者可以由多个账户共享，并且每个账户也可以实施多个接口。合约可以为自己实施接口，但是外部拥有的账户（EOA）必须将此委托给合约。
 
 还可以通过注册表查询*IERC165*接口。
 
@@ -810,9 +810,9 @@ event#
 import "@openzeppelin/contracts/interfaces/IERC5313.sol";
 ```
 
-为轻型合同所有权标准的接口。
+为轻型合约所有权标准的接口。
 
-一个标准化的最小接口，用于识别控制合同的账户。
+一个标准化的最小接口，用于识别控制合约的账户。
 
 **FUNCTIONS**
 owner()
