@@ -525,3 +525,366 @@ external#
 启动闪电贷款。
 
 ### [IERC3156FlashBorrower](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/interfaces/IERC3156FlashBorrower.sol)
+```
+import "@openzeppelin/contracts/interfaces/IERC3156FlashBorrower.sol";
+```
+
+ERC3156 FlashBorrower接口的定义，如在[ERC-3156](https://eips.ethereum.org/EIPS/eip-3156)中定义。
+
+**FUNCTIONS**
+onFlashLoan(initiator, token, amount, fee, data)
+
+#### onFlashLoan(address initiator, address token, uint256 amount, uint256 fee, bytes data) → bytes32
+external#
+接收闪电贷款。
+
+#### [IERC4626](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/interfaces/IERC4626.sol)
+```
+import "@openzeppelin/contracts/interfaces/IERC4626.sol";
+```
+
+ERC4626 "代币化保险库标准"的接口，如[ERC-4626](https://eips.ethereum.org/EIPS/eip-4626)中定义。
+
+**FUNCTIONS**
+asset()
+
+totalAssets()
+
+convertToShares(assets)
+
+convertToAssets(shares)
+
+maxDeposit(receiver)
+
+previewDeposit(assets)
+
+deposit(assets, receiver)
+
+maxMint(receiver)
+
+previewMint(shares)
+
+mint(shares, receiver)
+
+maxWithdraw(owner)
+
+previewWithdraw(assets)
+
+withdraw(assets, receiver, owner)
+
+maxRedeem(owner)
+
+previewRedeem(shares)
+
+redeem(shares, receiver, owner)
+
+IERC20METADATA
+name()
+
+symbol()
+
+decimals()
+
+IERC20
+totalSupply()
+
+balanceOf(account)
+
+transfer(to, value)
+
+allowance(owner, spender)
+
+approve(spender, value)
+
+transferFrom(from, to, value)
+
+**EVENTS**
+Deposit(sender, owner, assets, shares)
+
+Withdraw(sender, receiver, owner, assets, shares)
+
+IERC20
+Transfer(from, to, value)
+
+Approval(owner, spender, value)
+
+#### asset() → address assetTokenAddress
+external#
+返回用于Vault账户、存款和提款的底层代币的地址。
+
+* 必须是ERC-20代币合约。
+
+* 不得出现回滚。
+
+#### totalAssets() → uint256 totalManagedAssets
+external#
+返回由Vault“管理”的基础资产的总额。
+
+* 应包括来自收益的任何复利。
+
+* 必须包括对Vault中资产收取的任何费用。
+
+* 不得撤销。
+
+#### convertToShares(uint256 assets) → uint256 shares
+external#
+返回保险库在理想情况下，满足所有条件时，会为提供的资产兑换的股份数量。
+
+* 不得包含在保险库中对资产收取的任何费用。
+
+* 不得根据调用者显示任何变化。
+
+* 在实际进行交换时，不得反映滑点或其他链上条件。
+
+* 不得撤销。
+
+> NOTE
+这个计算可能不反映“每用户”的每股价格，而应反映“平均用户”的每股价格，即平均用户在兑换时应期望看到的价格。
+
+#### convertToAssets(uint256 shares) → uint256 assets
+external#
+返回保险库将为提供的股份交换的资产数量，在理想情况下，所有条件都满足的情况下。
+
+* 不得包含对保险库中资产收取的任何费用。
+
+* 不得显示取决于调用者的任何变化。
+
+* 在执行实际交换时，不得反映滑点或其他链上条件。
+
+* 不得撤销。
+
+> NOTE
+这个计算可能不反映“每用户”的每股价格，而应反映“平均用户”的每股价格，即平均用户在交换时应期望看到的价格。
+
+#### maxDeposit(address receiver) → uint256 maxAssets
+external#
+返回接收者可以通过存款调用存入保险库的基础资产的最大金额。
+
+* 如果接收者受到某些存款限制，必须返回一个限制值。
+
+* 如果对可以存入的资产的最大金额没有限制，必须返回2 ** 256 - 1。
+
+* 不得撤销。
+
+#### previewDeposit(uint256 assets) → uint256 shares
+external#
+允许链上或链下用户在当前区块模拟他们的存款效果，考虑当前链上条件。
+
+* 必须返回尽可能接近且不超过在同一交易中存款调用中会铸造的保险库份额的确切数量。即，如果在同一交易中调用，存款应返回与previewDeposit相同或更多的份额。
+
+* 不必考虑maxDeposit返回的存款限制，应始终假设存款会被接受，无论用户是否有足够的代币批准等。
+
+* 必须包含存款费用。集成商应注意存款费用的存在。
+
+* 不得撤销。
+
+> NOTE
+convertToShares和previewDeposit之间的任何不利差异应被视为份额价格的滑点或其他类型的条件，这意味着存款人将通过存款损失资产。
+
+#### deposit(uint256 assets, address receiver) → uint256 shares
+external#
+通过存入准确数量的基础代币，铸币厂将Vault股份分享给接收者。
+
+* 必须发出存款事件。
+
+* 可能支持额外的流程，其中底层代币在存款执行前由金库合约拥有，并在存款期间进行记账。
+
+* 如果所有资产无法存入（由于达到存款限额，滑点，用户未向金库合约批准足够的底层代币等），则必须撤销。
+
+> NOTE
+大多数实现将需要预先批准金库与金库的底层资产代币。
+
+#### maxMint(address receiver) → uint256 maxShares
+external#
+返回通过mint调用，可以为接收者铸造的Vault份额的最大数量。- 如果接收者受到某种铸币限制，必须返回一个有限的值。- 如果对可以铸造的份额数量没有限制，必须返回2 ** 256 - 1。- 不得还原。
+
+#### previewMint(uint256 shares) → uint256 assets
+external#
+允许链上或链下用户在当前区块模拟他们的铸币效果，根据当前链上条件。
+
+* 必须返回与铸币调用在同一交易中存入的资产数量尽可能接近且不少于确切的数量。也就是说，如果在同一交易中调用，mint应返回与previewMint相同或更少的资产。
+
+* 不必考虑像maxMint返回的铸币限制，应始终行事，就像铸币会被接受一样，无论用户是否有足够的已批准的代币等。
+
+* 必须包含存款费用。集成商应注意存款费用的存在。
+
+* 不得撤销。
+
+> NOTE
+convertToAssets和previewMint之间的任何不利差异应被视为份额价格的滑点或其他类型的条件，意味着存款人将通过铸币损失资产。
+
+#### mint(uint256 shares, address receiver) → uint256 assets
+external#
+通过存入底层代币，Mints会将Vault份额完全分享给接收者。
+
+* 必须触发存款事件。
+
+* 可能支持另一种流程，在这种流程中，底层代币在执行铸币之前由Vault合约拥有，并在铸币过程中进行记账。
+
+* 如果所有的份额无法被铸造（由于达到存款限额，滑点，用户未向Vault合约批准足够的底层代币等），则必须回滚。
+
+> NOTE
+大多数实现将需要预先批准Vault与Vault的底层资产代币。
+
+#### maxWithdraw(address owner) → uint256 maxAssets
+external#
+返回可以通过提款调用从Vault中的所有者余额中提取的基础资产的最大金额。
+
+* 如果所有者受到某些提款限制或时间锁定的影响，必须返回一个限制值。
+
+* 不得撤销。
+
+#### previewWithdraw(uint256 assets) → uint256 shares
+external#
+允许链上或链下用户在当前区块模拟他们的提款效果，考虑当前链上条件。
+
+* 必须返回与在同一交易中调用提款时燃烧的保险库份额尽可能接近且不少于确切数量。即，如果在同一交易中调用，提款应返回相同或更少的份额作为预览提款。
+
+* 不必考虑像maxWithdraw返回的提款限制，应始终假设提款会被接受，无论用户是否有足够的份额等。
+
+* 必须包含提款费用。集成者应注意提款费用的存在。
+
+* 不得撤销。
+
+> NOTE
+convertToShares和previewWithdraw之间的任何不利差异应被视为份额价格的滑点或其他类型的条件，这意味着存款人将通过存款损失资产。
+
+#### withdraw(uint256 assets, address receiver, address owner) → uint256 shares
+external#
+从所有者那里销毁股份，并将准确的底层代币资产发送给接收者。
+
+* 必须发出提款事件。
+
+* 可能支持另一种流程，即在执行提款之前，底层代币由Vault合约拥有，并在提款过程中进行记账。
+
+* 如果所有资产都无法提取（由于达到提款限额、滑点、所有者没有足够的股份等），则必须撤销。
+
+请注意，某些实现将需要在执行提款之前先向Vault发出请求。这些方法应该分别执行。
+
+#### maxRedeem(address owner) → uint256 maxShares
+external#
+返回Vault中可以通过赎回调用从所有者余额中赎回的最大Vault份额。
+
+* 如果所有者受到某些提款限制或时间锁定，必须返回一个限制值。
+
+* 如果所有者不受任何提款限制或时间锁定的影响，必须返回balanceOf(owner)。
+
+* 不得撤销。
+
+#### previewRedeem(uint256 shares) → uint256 assets
+external#
+允许链上或链下用户在当前区块模拟他们的赎回效果，考虑到当前的链上条件。
+
+* 必须返回尽可能接近且不超过在同一交易中赎回调用所提取的资产的确切数量。也就是说，如果在同一交易中调用，赎回应返回与previewRedeem相同或更多的资产。
+
+* 不必考虑像maxRedeem返回的赎回限制，应始终假设赎回会被接受，无论用户是否拥有足够的份额等。
+https://github.com/OpenZeppelin/openzeppelin-contracts/issues
+* 必须包含提现费用。集成商应注意提现费用的存在。
+
+* 不得撤销。
+
+> NOTE
+convertToAssets和previewRedeem之间的任何不利差异应被视为份额价格的滑点或其他类型的条件，这意味着赎回者将通过赎回而损失资产。
+
+#### redeem(uint256 shares, address receiver, address owner) → uint256 assets
+external#
+精确地从所有者那里销毁股份，并将底层代币的资产发送给接收者。
+
+* 必须发出提款事件。
+
+* 可能支持一个额外的流程，在这个流程中，底层代币在赎回执行之前由Vault合约拥有，并在赎回过程中进行记账。
+
+* 如果所有的股份无法赎回（由于达到提款限额、滑点、所有者没有足够的股份等），则必须回滚。
+
+> NOTE
+一些实现将需要在执行提款之前先向Vault发出预请求。这些方法应该分别执行。
+
+#### Deposit(address indexed sender, address indexed owner, uint256 assets, uint256 shares)
+event#
+
+#### Withdraw(address indexed sender, address indexed receiver, address indexed owner, uint256 assets, uint256 shares)
+event#
+
+### [IERC5313](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/interfaces/IERC5313.sol)
+```
+import "@openzeppelin/contracts/interfaces/IERC5313.sol";
+```
+
+为轻型合同所有权标准的接口。
+
+一个标准化的最小接口，用于识别控制合同的账户。
+
+**FUNCTIONS**
+owner()
+
+#### owner() → address
+external
+获取所有者的地址。
+
+### [IERC5267](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/interfaces/IERC5267.sol)
+```
+import "@openzeppelin/contracts/interfaces/IERC5267.sol";
+```
+
+**FUNCTIONS**
+eip712Domain()
+
+#### eip712Domain() → bytes1 fields, string name, string version, uint256 chainId, address verifyingContract, bytes32 salt, uint256[] extensions
+external#
+返回用于描述此合约用于EIP-712签名的域分隔符的字段和值。
+
+#### EIP712DomainChanged()
+event#
+可能会发出信号，表示域可能已经改变。
+
+### [IERC5805](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/interfaces/IERC5805.sol)
+```
+import "@openzeppelin/contracts/interfaces/IERC5805.sol";
+```
+
+**FUNCTIONS**
+IVOTES
+getVotes(account)
+
+getPastVotes(account, timepoint)
+
+getPastTotalSupply(timepoint)
+
+delegates(account)
+
+delegate(delegatee)
+
+delegateBySig(delegatee, nonce, expiry, v, r, s)
+
+IERC6372
+clock()
+
+CLOCK_MODE()
+
+**EVENTS**
+IVOTES
+DelegateChanged(delegator, fromDelegate, toDelegate)
+
+DelegateVotesChanged(delegate, previousVotes, newVotes)
+
+**ERRORS**
+IVOTES
+VotesExpiredSignature(expiry)
+
+### [IERC6372](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/interfaces/IERC6372.sol)
+```
+import "@openzeppelin/contracts/interfaces/IERC6372.sol";
+```
+
+FUNCTIONS
+clock()
+
+CLOCK_MODE()
+
+#### clock() → uint48
+external#
+用于标记检查点的时钟。可以被覆盖以实现基于时间戳的检查点（和投票）。
+
+#### CLOCK_MODE() → string
+external#
+时钟的描述
