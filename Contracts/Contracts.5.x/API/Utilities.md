@@ -1821,7 +1821,7 @@ internal#
 返回一个包含所有键的数组
 
 > WARNING
-这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何气体费用的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗的气体太多，无法适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何gas费用的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗的gas太多，无法适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
 
 #### set(struct EnumerableMap.AddressToUintMap map, address key, uint256 value) → bool
 internal#
@@ -1866,7 +1866,7 @@ internal#
 返回一个包含所有键的数组
 
 > WARNING
-这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了在没有任何气体费用的情况下查询视图访问器而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到复制到内存消耗太多气体以至于无法适应一个块，那么使用它作为一个改变状态的函数可能会使函数无法调用。
+这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了在没有任何gas费用的情况下查询视图访问器而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到复制到内存消耗太多gas以至于无法适应一个块，那么使用它作为一个改变状态的函数可能会使函数无法调用。
 
 #### set(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, uint256 value) → bool
 internal#
@@ -1911,8 +1911,476 @@ internal#
 返回一个包含所有键的数组
 
 > WARNING
-此操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何气体费用的视图访问器查询而设计的。开发人员应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗太多的气体以至于无法适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+此操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何gas费用的视图访问器查询而设计的。开发人员应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗太多的gas以至于无法适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
 
 #### EnumerableMapNonexistentKey(bytes32 key)
 error#
 查询一个不存在的映射键。
+
+### [EnumerableSet](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/structs/EnumerableSet.sol)
+```
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+```
+
+用于管理基本类型[集合](https://en.wikipedia.org/wiki/Set_(abstract_data_type))的库。
+
+集合具有以下属性：
+* 元素的添加、删除和存在性检查都是常数时间 (O(1))。
+
+* 元素的枚举是O(n)。不对排序做任何保证。
+
+```
+contract Example {
+    // Add the library methods
+    using EnumerableSet for EnumerableSet.AddressSet;
+
+    // Declare a set state variable
+    EnumerableSet.AddressSet private mySet;
+}
+```
+
+从v3.3.0开始，支持bytes32（Bytes32Set）、address（AddressSet）和uint256（UintSet）类型的集合。
+
+> WARNING
+尝试从存储中删除这样的结构可能会导致数据损坏，使结构无法使用。更多信息请参见[ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
+为了清理一个EnumerableSet，你可以逐一删除所有元素，或者使用EnumerableSet数组创建一个新的实例。
+
+**FUNCTIONS**
+add(set, value)
+
+remove(set, value)
+
+contains(set, value)
+
+length(set)
+
+at(set, index)
+
+values(set)
+
+add(set, value)
+
+remove(set, value)
+
+contains(set, value)
+
+length(set)
+
+at(set, index)
+
+values(set)
+
+add(set, value)
+
+remove(set, value)
+
+contains(set, value)
+
+length(set)
+
+at(set, index)
+
+values(set)
+
+#### add(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
+internal#
+向集合添加一个值。时间复杂度为O(1)。
+
+如果该值被添加到集合中，即如果它之前并未存在，则返回真。
+
+#### remove(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
+internal#
+从集合中移除一个值。时间复杂度为O(1)。
+
+如果该值已从集合中移除，即如果该值存在，则返回true。
+
+#### contains(struct EnumerableSet.Bytes32Set set, bytes32 value) → bool
+internal#
+如果值在集合中，则返回真。时间复杂度为O(1)。
+
+#### length(struct EnumerableSet.Bytes32Set set) → uint256
+internal#
+返回集合中的值的数量。时间复杂度为O(1)。
+
+#### at(struct EnumerableSet.Bytes32Set set, uint256 index) → bytes32
+internal#
+返回集合中位置索引处存储的值。O(1)。
+
+请注意，数组内部值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
+
+要求：
+
+索引必须严格小于 *length*。
+
+#### values(struct EnumerableSet.Bytes32Set set) → bytes32[]
+internal#
+将整个集合返回为数组
+
+> WARNING
+此操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何gas费用的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果集合增长到复制到内存消耗太多gas以至于不能适应一个区块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+
+#### add(struct EnumerableSet.AddressSet set, address value) → bool
+internal#
+向集合添加一个值。时间复杂度为O(1)。
+
+如果该值被添加到集合中，即它之前并未存在，则返回真。
+
+#### remove(struct EnumerableSet.AddressSet set, address value) → bool
+internal#
+从集合中移除一个值。时间复杂度为O(1)。
+
+如果该值从集合中被移除，即它原本就在集合中，则返回真。
+
+#### contains(struct EnumerableSet.AddressSet set, address value) → bool
+internal#
+如果值在集合中，则返回真。时间复杂度为O(1)。
+
+#### length(struct EnumerableSet.AddressSet set) → uint256
+internal#
+返回集合中的值数量。时间复杂度为O(1)。
+
+#### at(struct EnumerableSet.AddressSet set, uint256 index) → address
+internal#
+返回集合中索引位置存储的值。O(1)。
+
+请注意，数组内值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
+
+要求：
+* 索引必须严格小于长度。
+
+#### values(struct EnumerableSet.AddressSet set) → address[]
+internal#
+将整个集合返回为数组
+
+> WARNING
+此操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了在没有任何gas费用的情况下查询的视图访问器而设计的。开发者应该记住，这个函数的成本是无限的，如果集合增长到一个点，复制到内存消耗的gas太多以至于无法适应一个区块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+
+#### add(struct EnumerableSet.UintSet set, uint256 value) → bool
+internal#
+向集合添加一个值。时间复杂度为O(1)。
+
+如果该值被添加到集合中，即它之前并未存在于集合中，则返回真。
+
+#### remove(struct EnumerableSet.UintSet set, uint256 value) → bool
+internal#
+从集合中移除一个值。时间复杂度为O(1)。
+
+如果该值被从集合中移除，即它原本就存在于集合中，则返回真。
+
+#### contains(struct EnumerableSet.UintSet set, uint256 value) → bool
+internal#
+如果值在集合中，则返回真。时间复杂度为O(1)。
+
+#### length(struct EnumerableSet.UintSet set) → uint256
+internal#
+返回集合中的值的数量。时间复杂度为O(1)。
+
+#### at(struct EnumerableSet.UintSet set, uint256 index) → uint256
+internal#
+返回集合中索引位置存储的值。O(1)。
+
+请注意，数组内值的排序没有任何保证，当添加或删除更多值时，它可能会改变。
+
+要求：
+* 索引必须严格小于*length*。
+
+#### values(struct EnumerableSet.UintSet set) → uint256[]
+internal#
+将整个集合返回为数组
+
+> WARNING
+此操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何gas费的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果集合增长到一个点，复制到内存消耗的gas太多以至于无法适应一个区块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+
+### [DoubleEndedQueue](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/structs/DoubleEndedQueue.sol)
+```
+import "@openzeppelin/contracts/utils/structs/DoubleEndedQueue.sol";
+```
+
+这是一个项目序列，具有在序列的两端（称为前端和后端）有效地推送和弹出项目（即插入和移除）的能力。除了其他访问模式，它可以用来实现有效的LIFO和FIFO队列。存储使用已优化，所有操作都是O(1)常数时间。这包括[clear](https://docs.openzeppelin.com/contracts/5.x/api/utils#DoubleEndedQueue-clear-struct-DoubleEndedQueue-Bytes32Deque-)，前提是现有队列内容保留在存储中。
+
+这个结构被称为Bytes32Deque。其他类型可以被转换为bytes32。这种数据结构只能在存储中使用，不能在内存中使用。
+```
+DoubleEndedQueue.Bytes32Deque queue;
+```
+
+**FUNCTIONS**
+pushBack(deque, value)
+
+popBack(deque)
+
+pushFront(deque, value)
+
+popFront(deque)
+
+front(deque)
+
+back(deque)
+
+at(deque, index)
+
+clear(deque)
+
+length(deque)
+
+empty(deque)
+
+**ERRORS**
+QueueEmpty()
+
+QueueFull()
+
+QueueOutOfBounds()
+
+#### pushBack(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
+internal#
+在队列的末尾插入一个项目。
+
+如果队列已满，则返回*QueueFull*。
+
+#### popBack(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+internal#
+删除队列末尾的项目并返回它。
+
+如果队列为空，则以*QueueEmpty*为原因进行回滚。
+
+#### pushFront(struct DoubleEndedQueue.Bytes32Deque deque, bytes32 value)
+internal#
+在队列的开始插入一个项目。
+
+如果队列已满，则返回*QueueFull*。
+
+#### popFront(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+internal#
+从队列的开始处移除项目并返回它。
+
+如果队列为空，则以QueueEmpty为错误进行回退。
+
+#### front(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+internal#
+返回队列开始的项目。
+
+如果队列为空，则返回QueueEmpty。
+
+#### back(struct DoubleEndedQueue.Bytes32Deque deque) → bytes32 value
+internal#
+返回队列末尾的项目。
+
+如果队列为空，则返回QueueEmpty。
+
+#### at(struct DoubleEndedQueue.Bytes32Deque deque, uint256 index) → bytes32 value
+internal#
+返回队列中由索引给出位置的项目，第一个项目在0，最后一个项目在length(deque) - 1。
+
+如果索引超出范围，则返回QueueOutOfBounds。
+
+#### clear(struct DoubleEndedQueue.Bytes32Deque deque)
+internal#
+将队列重置为空。
+
+> NOTE
+当前的项目会被留在存储中。这不会影响队列的功能，但会错过潜在的gas退款。
+
+#### length(struct DoubleEndedQueue.Bytes32Deque deque) → uint256
+internal#
+返回队列中的项目数量。
+
+#### empty(struct DoubleEndedQueue.Bytes32Deque deque) → bool
+internal#
+如果队列为空，则返回真。
+
+#### QueueEmpty()
+error#
+由于队列为空，无法完成某项操作（例如，前端操作）。
+
+#### QueueFull()
+error#
+由于队列已满，无法完成推送操作。
+
+#### QueueOutOfBounds()
+error#
+由于索引超出范围，无法完成某项操作（例如*at*）。
+
+### [Checkpoints](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/structs/Checkpoints.sol)
+```
+import "@openzeppelin/contracts/utils/structs/Checkpoints.sol";
+```
+
+这个库定义了Trace*结构体，用于在不同时间点检查值的变化，并在以后通过区块号查找过去的值。请参阅*Votes*作为一个例子。
+
+要创建一个历史检查点，你需要在你的合约中定义一个Checkpoints.Trace*类型的变量，并使用*push*函数为当前交易块存储一个新的检查点。
+
+**FUNCTIONS**
+push(self, key, value)
+
+lowerLookup(self, key)
+
+upperLookup(self, key)
+
+upperLookupRecent(self, key)
+
+latest(self)
+
+latestCheckpoint(self)
+
+length(self)
+
+at(self, pos)
+
+push(self, key, value)
+
+lowerLookup(self, key)
+
+upperLookup(self, key)
+
+upperLookupRecent(self, key)
+
+latest(self)
+
+latestCheckpoint(self)
+
+length(self)
+
+at(self, pos)
+
+push(self, key, value)
+
+lowerLookup(self, key)
+
+upperLookup(self, key)
+
+upperLookupRecent(self, key)
+
+latest(self)
+
+latestCheckpoint(self)
+
+length(self)
+
+at(self, pos)
+
+**ERRORS**
+CheckpointUnorderedInsertion()
+
+#### push(struct Checkpoints.Trace224 self, uint32 key, uint224 value) → uint224, uint224
+internal#
+将一个(key, value)对推入Trace224，以便将其存储为检查点。
+
+返回前一个值和新值。
+
+> IMPORTANT
+永远不要接受键作为用户输入，因为任意类型(uint32).max键集将禁用库。
+
+#### lowerLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224
+internal#
+返回第一个（最旧的）检查点中大于或等于搜索键的值，如果没有，则返回零。
+
+#### upperLookup(struct Checkpoints.Trace224 self, uint32 key) → uint224
+internal#
+返回关键字小于或等于搜索关键字的最近（最后）检查点的值，如果没有则返回零。
+
+#### upperLookupRecent(struct Checkpoints.Trace224 self, uint32 key) → uint224
+internal#
+返回键值小于或等于搜索键的最近（最新）检查点中的值，如果没有则返回零。
+
+> NOTE
+这是*upperLookup*的一个变体，它被优化用于查找"最近"的检查点（具有高键值的检查点）。
+
+#### latest(struct Checkpoints.Trace224 self) → uint224
+internal#
+返回最近检查点的值，如果没有检查点，则返回零。
+
+#### latestCheckpoint(struct Checkpoints.Trace224 self) → bool exists, uint32 _key, uint224 _value
+internal#
+返回结构中是否有检查点（即它不为空），如果有，则返回最近检查点中的键和值。
+
+#### length(struct Checkpoints.Trace224 self) → uint256
+internal#
+返回检查点的数量。
+
+#### at(struct Checkpoints.Trace224 self, uint32 pos) → struct Checkpoints.Checkpoint224
+internal#
+返回给定位置的检查点。
+
+#### push(struct Checkpoints.Trace208 self, uint48 key, uint208 value) → uint208, uint208
+internal#
+将一个(key, value)对推入Trace208，使其作为检查点存储。
+
+返回前一个值和新的值。
+
+> IMPORTANT
+永远不要接受键作为用户输入，因为一个任意类型(uint48).max键集将禁用库。
+
+#### lowerLookup(struct Checkpoints.Trace208 self, uint48 key) → uint208
+internal#
+返回第一个（最旧的）检查点中大于或等于搜索键的值，如果没有则返回零。
+
+#### upperLookup(struct Checkpoints.Trace208 self, uint48 key) → uint208
+internal#
+返回关键字低于或等于搜索关键字的最近（最后）检查点的值，如果没有，则返回零。
+
+#### upperLookupRecent(struct Checkpoints.Trace208 self, uint48 key) → uint208
+internal#
+返回键值小于或等于搜索键的最近（最后）检查点中的值，如果没有则返回零。
+
+> NOTE
+这是*upperLookup*的一个变体，它经过优化以找到"最近"的检查点（具有高键的检查点）。
+
+#### latest(struct Checkpoints.Trace208 self) → uint208
+internal#
+返回最近检查点的值，如果没有检查点，则返回零。
+
+#### latestCheckpoint(struct Checkpoints.Trace208 self) → bool exists, uint48 _key, uint208 _value
+internal#
+返回结构中是否有检查点（即它不为空），如果有，则返回最近检查点中的键和值。
+
+#### length(struct Checkpoints.Trace208 self) → uint256
+internal#
+返回检查点的数量。
+
+#### at(struct Checkpoints.Trace208 self, uint32 pos) → struct Checkpoints.Checkpoint208
+internal#
+返回给定位置的检查点。
+
+#### push(struct Checkpoints.Trace160 self, uint96 key, uint160 value) → uint160, uint160
+internal#
+将一个(key, value)对推入Trace160，以便将其存储为检查点。
+
+返回前一个值和新的值。
+
+> IMPORTANT
+永远不要接受键作为用户输入，因为设置一个任意类型(uint96).max键将禁用库。
+
+#### lowerLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160
+internal#
+返回第一个（最旧的）检查点中键大于或等于搜索键的值，如果没有，则返回零。
+
+#### upperLookup(struct Checkpoints.Trace160 self, uint96 key) → uint160
+internal#
+返回关键字低于或等于搜索关键字的最后（最近）检查点的值，如果没有则返回零。
+
+#### upperLookupRecent(struct Checkpoints.Trace160 self, uint96 key) → uint160
+internal#
+返回关键字低于或等于搜索关键字的最近（最新）检查点的值，如果没有则返回零。
+
+> NOTE
+这是*upperLookup*的一个变体，优化了查找“最近”检查点（具有高关键字的检查点）。
+
+#### latest(struct Checkpoints.Trace160 self) → uint160
+internal#
+返回最近检查点的值，如果没有检查点，则返回零。
+
+#### latestCheckpoint(struct Checkpoints.Trace160 self) → bool exists, uint96 _key, uint160 _value
+internal#
+返回结构中是否有检查点（即它不为空），如果有，则返回最近检查点中的键和值。
+
+#### length(struct Checkpoints.Trace160 self) → uint256
+internal#
+返回检查点的数量。
+
+#### at(struct Checkpoints.Trace160 self, uint32 pos) → struct Checkpoints.Checkpoint160
+internal#
+返回给定位置的检查点。
+
+#### CheckpointUnorderedInsertion()
+error#
+尝试在过去的检查点插入一个值。
