@@ -1,5 +1,5 @@
 # OpenZeppelin Defender integration
-Hardhat Upgrades包可以使用[OpenZeppelin Defender](/Defender/Overview.md)进行部署，而不是使用ethers.js，这样可以使用诸如气体价格估计、重新提交以及自动化字节码和源代码验证等功能。
+Hardhat Upgrades包可以使用[OpenZeppelin Defender](/Defender/Overview.md)进行部署，而不是使用ethers.js，这样可以使用诸如gas价格估计、重新提交以及自动化字节码和源代码验证等功能。
 
 > NOTE
 OpenZeppelin Defender部署目前处于测试阶段，这里描述的功能可能会发生变化。

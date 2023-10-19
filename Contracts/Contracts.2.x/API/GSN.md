@@ -456,7 +456,7 @@ external#
 
 #### maxPossibleCharge(uint256 relayedCallStipend, uint256 gasPrice, uint256 transactionFee) → uint256
 external#
-给定转发的气体数量、气体价格和Relayer 费用，返回最大的接收方费用。
+给定转发的gas数量、gas价格和Relayer 费用，返回最大的接收方费用。
 
 #### penalizeRepeatedNonce(bytes unsignedTx1, bytes signature1, bytes unsignedTx2, bytes signature2)
 external#

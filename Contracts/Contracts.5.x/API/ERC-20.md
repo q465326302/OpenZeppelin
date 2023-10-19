@@ -360,7 +360,7 @@ internal#
 internal#
 批准的变体，带有一个可选标志，用于启用或禁用*Approval*事件。
 
-默认情况下（当调用*_approve*时），标志设置为true。另一方面，由_spendAllowance在transferFrom操作中进行的批准更改将标志设置为false。这通过在transferFrom操作中不发出任何批准事件来节省气体。
+默认情况下（当调用*_approve*时），标志设置为true。另一方面，由_spendAllowance在transferFrom操作中进行的批准更改将标志设置为false。这通过在transferFrom操作中不发出任何批准事件来节省gas。
 
 任何希望在transferFrom操作上继续发出批准事件的人可以使用以下覆盖强制标志为true：
 ```
