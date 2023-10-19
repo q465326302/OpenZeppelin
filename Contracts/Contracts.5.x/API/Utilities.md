@@ -2384,3 +2384,153 @@ internal#
 #### CheckpointUnorderedInsertion()
 error#
 尝试在过去的检查点插入一个值。
+
+## Libraries
+
+### [Create2](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Create2.sol)
+```
+import "@openzeppelin/contracts/utils/Create2.sol";
+```
+
+辅助使CREATE2 EVM操作码的使用更加简单和安全。CREATE2可以用于提前计算出将部署智能合约的地址，这允许实现被称为"反事实交互"的有趣新机制。
+
+更多信息请参阅[EIP](https://eips.ethereum.org/EIPS/eip-1014#motivation)。
+
+**FUNCTIONS**
+deploy(amount, salt, bytecode)
+
+computeAddress(salt, bytecodeHash)
+
+computeAddress(salt, bytecodeHash, deployer)
+
+**ERRORS**
+Create2InsufficientBalance(balance, needed)
+
+Create2EmptyBytecode()
+
+Create2FailedDeployment()
+
+#### deploy(uint256 amount, bytes32 salt, bytes bytecode) → address addr
+internal#
+使用CREATE2部署合约。合约将被部署的地址可以通过*computeAddress*提前知道。
+
+合约的字节码可以通过Solidity的type(contractName).creationCode获取。
+
+要求：
+* 字节码不能为空。
+
+* salt不能已经被字节码使用过。
+
+* 工厂必须至少有amount的余额。
+
+* 如果amount不为零，字节码必须有一个可支付的构造函数。
+
+#### computeAddress(bytes32 salt, bytes32 bytecodeHash) → address
+internal#
+返回如果通过部署进行*部署*，合约将被存储的地址。任何在字节码哈希或salt中的改变都将导致一个新的目标地址。
+
+#### computeAddress(bytes32 salt, bytes32 bytecodeHash, address deployer) → address addr
+internal#
+如果通过位于deployer的合约*部署*，返回将存储合约的地址。如果deployer是此合约的地址，返回与*computeAddress*相同的值。
+
+#### Create2InsufficientBalance(uint256 balance, uint256 needed)
+error#
+没有足够的余额来执行CREATE2部署。
+
+#### Create2EmptyBytecode()
+error#
+没有代码可以部署。
+
+#### Create2FailedDeployment()
+error#
+部署失败。
+
+### [Address](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Address.sol)
+```
+import "@openzeppelin/contracts/utils/Address.sol";
+```
+
+地址类型相关函数的集合
+
+**FUNCTIONS**
+sendValue(recipient, amount)
+
+functionCall(target, data)
+
+functionCallWithValue(target, data, value)
+
+functionStaticCall(target, data)
+
+functionDelegateCall(target, data)
+
+verifyCallResultFromTarget(target, success, returndata)
+
+verifyCallResult(success, returndata)
+
+**ERRORS**
+AddressInsufficientBalance(account)
+
+AddressEmptyCode(target)
+
+FailedInnerCall()
+
+#### sendValue(address payable recipient, uint256 amount)
+internal#
+替代Solidity的transfer：将金额wei发送给收款人，转发所有可用的gas并在错误时回滚。
+
+[EIP1884](https://eips.ethereum.org/EIPS/eip-1884)增加了某些操作码的gas成本，可能使合约超过transfer强加的2300 gas限制，使它们无法通过transfer接收资金。*sendValue*消除了这个限制。
+
+[了解更多](https://consensys.net/diligence/blog/2019/09/stop-using-soliditys-transfer-now/)。
+
+> IMPORTANT
+因为控制权被转移到收款人，必须小心不要创建重入漏洞。考虑使用*ReentrancyGuard*或者[检查-效果-交互模式](https://solidity.readthedocs.io/en/v0.8.20/security-considerations.html#use-the-checks-effects-interactions-pattern)。
+
+#### functionCall(address target, bytes data) → bytes
+internal#
+执行一个使用低级调用的Solidity函数调用。普通调用是函数调用的不安全替代品：请使用此函数代替。
+
+如果目标以恢复原因或自定义错误恢复，则此函数会冒泡上来（就像常规Solidity函数调用一样）。然而，如果调用没有返回原因就恢复，那么这个函数就会因为*FailedInnerCall*错误而恢复。
+
+返回原始返回的数据。要转换为预期的返回值，请使用[abi.decode](https://solidity.readthedocs.io/en/latest/units-and-global-variables.html?highlight=abi.decode#abi-encoding-and-decoding-functions)。
+
+要求：
+* 目标必须是一个合约。
+
+* 调用目标与数据不得恢复。
+
+#### functionCallWithValue(address target, bytes data, uint256 value) → bytes
+internal#
+与*functionCall*相同，但也将价值wei转移到目标。
+
+要求：
+* 调用合约必须至少拥有价值的ETH余额。
+
+* 被调用的Solidity函数必须是可支付的。
+
+#### functionStaticCall(address target, bytes data) → bytes
+internal#
+与*functionCall*相同，但执行静态调用。
+
+#### functionDelegateCall(address target, bytes data) → bytes
+internal#
+与*functionCall*相同，但执行委托调用。
+
+#### verifyCallResultFromTarget(address target, bool success, bytes returndata) → bytes
+internal#
+工具用于验证对智能合约的低级调用是否成功，并在目标不是合约或者因调用不成功而产生的还原原因（回退到*FailedInnerCall*）时进行还原。
+
+#### verifyCallResult(bool success, bytes returndata) → bytes
+internal#
+工具用于验证低级调用是否成功，并在不成功时进行回滚，通过冒泡回滚原因或默认的*FailedInnerCall*错误。
+
+#### AddressInsufficientBalance(address account)
+error#
+账户的ETH余额不足以执行此操作。
+
+#### AddressEmptyCode(address target)
+error#
+在目标处没有代码（它不是合约）。
+
+#### FailedInnerCall()
+error#
+在目标处没有代码（它不是合约）。
