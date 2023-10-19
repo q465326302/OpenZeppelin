@@ -1686,7 +1686,7 @@ internal#
 返回一个包含所有键的数组
 
 > WARNING
-这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被视图访问器使用，这些访问器在没有任何gas费用的情况下被查询。开发者应该记住，这个函数的成本是无限的，如果地图增长到一个点，复制到内存消耗太多的gas以至于无法适应一个块，那么使用它作为一个状态改变的函数可能会使函数无法调用。
+这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被视图访问器使用，这些访问器在没有任何gas费用的情况下被查询。开发者应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗太多的gas以至于无法适应一个块，那么使用它作为一个状态改变的函数可能会使函数无法调用。
 
 #### set(struct EnumerableMap.UintToUintMap map, uint256 key, uint256 value) → bool
 internal#
@@ -1710,7 +1710,7 @@ internal#
 
 #### at(struct EnumerableMap.UintToUintMap map, uint256 index) → uint256, uint256
 internal#
-返回存储在地图中位置索引的元素。 O(1)。请注意，数组内部值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
+返回存储在映射中位置索引的元素。 O(1)。请注意，数组内部值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
 
 要求：
 * 索引必须严格小于 *length*。
@@ -1731,7 +1731,7 @@ internal#
 返回一个包含所有键的数组
 
 > WARNING
-这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被查询时不需要任何gas费用的视图访问器设计的。开发者应该记住，这个函数的成本是无限的，如果地图增长到一个点，复制到内存消耗太多的gas以至于不能适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被查询时不需要任何gas费用的视图访问器设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗太多的gas以至于不能适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
 
 #### set(struct EnumerableMap.UintToAddressMap map, uint256 key, address value) → bool
 internal#
@@ -1751,11 +1751,11 @@ internal#
 
 #### length(struct EnumerableMap.UintToAddressMap map) → uint256
 internal#
-返回地图中元素的数量。时间复杂度为O(1)。
+返回映射中元素的数量。时间复杂度为O(1)。
 
 #### at(struct EnumerableMap.UintToAddressMap map, uint256 index) → uint256, address
 internal#
-返回存储在地图中位置索引的元素。O(1)。请注意，数组内值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
+返回存储在映射中位置索引的元素。O(1)。请注意，数组内值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
 
 要求：
 索引必须严格小于*length*。
@@ -1776,7 +1776,7 @@ internal#
 返回一个包含所有键的数组
 
 > WARNING
-这个操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何gas费用的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果地图增长到一个点，复制到内存消耗的gas太多以至于无法适应一个块，那么使用它作为一个状态改变函数可能会使函数无法调用。
+这个操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何gas费用的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗的gas太多以至于无法适应一个块，那么使用它作为一个状态改变函数可能会使函数无法调用。
 
 #### set(struct EnumerableMap.AddressToUintMap map, address key, uint256 value) → bool
 internal#
@@ -1800,3 +1800,119 @@ internal#
 
 #### at(struct EnumerableMap.AddressToUintMap map, uint256 index) → address, uint256
 internal#
+返回存储在映射中位置索引的元素。 O(1)。请注意，数组内部值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
+
+要求：
+* 索引必须严格小于*length*。
+
+#### tryGet(struct EnumerableMap.UintToAddressMap map, uint256 key) → bool, address
+internal#
+尝试返回与键关联的值。时间复杂度为O(1)。如果键不在映射中，不会还原。
+
+#### get(struct EnumerableMap.UintToAddressMap map, uint256 key) → address
+internal#
+返回与键关联的值。O(1)。
+
+要求：
+* 键必须在映射中。
+
+#### keys(struct EnumerableMap.UintToAddressMap map) → uint256[]
+internal#
+返回一个包含所有键的数组
+
+> WARNING
+这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何气体费用的视图访问器查询而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗的气体太多，无法适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+
+#### set(struct EnumerableMap.AddressToUintMap map, address key, uint256 value) → bool
+internal#
+向映射中添加一个键值对，或更新现有键的值。 O(1)。
+
+如果键被添加到映射中，即它之前不存在，则返回true。
+
+#### remove(struct EnumerableMap.AddressToUintMap map, address key) → bool
+internal#
+从映射中移除一个值。时间复杂度为O(1)。
+
+如果键已从映射中移除，即它原本存在，那么返回真。
+
+#### contains(struct EnumerableMap.AddressToUintMap map, address key) → bool
+internal#
+如果键在映射中，则返回真。时间复杂度为O(1)。
+
+#### length(struct EnumerableMap.AddressToUintMap map) → uint256
+internal#
+返回映射中元素的数量。时间复杂度为O(1)。
+
+#### at(struct EnumerableMap.AddressToUintMap map, uint256 index) → address, uint256
+internal#
+返回存储在映射中位置索引的元素。 O(1)。请注意，数组内部值的排序没有保证，并且在添加或删除更多值时可能会改变。
+
+要求：
+* 索引必须严格小于*长度*。
+
+#### tryGet(struct EnumerableMap.AddressToUintMap map, address key) → bool, uint256
+internal#
+尝试返回与键关联的值。时间复杂度为O(1)。如果键不在映射中，不会恢复。
+
+#### get(struct EnumerableMap.AddressToUintMap map, address key) → uint256
+internal#
+返回与键关联的值。O(1)。
+
+要求：
+* 键必须在映射中。
+
+#### keys(struct EnumerableMap.AddressToUintMap map) → address[]
+internal#
+返回一个包含所有键的数组
+
+> WARNING
+这个操作会将整个存储复制到内存中，这可能相当昂贵。这主要是为了在没有任何气体费用的情况下查询视图访问器而设计的。开发者应该记住，这个函数的成本是无限的，如果映射增长到复制到内存消耗太多气体以至于无法适应一个块，那么使用它作为一个改变状态的函数可能会使函数无法调用。
+
+#### set(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, uint256 value) → bool
+internal#
+向映射添加一个键值对，或更新现有键的值。O(1)。
+
+如果键被添加到映射中，即如果它之前不存在，则返回true。
+
+#### remove(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
+internal#
+从映射中删除一个值。时间复杂度为O(1)。
+
+如果键已从映射中删除，即如果它存在，则返回true。
+
+#### contains(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
+internal#
+如果键在映射中，则返回真。时间复杂度为O(1)。
+
+#### length(struct EnumerableMap.Bytes32ToUintMap map) → uint256
+internal#
+返回映射中的元素数量。时间复杂度为O(1)。
+
+#### at(struct EnumerableMap.Bytes32ToUintMap map, uint256 index) → bytes32, uint256
+internal#
+返回存储在映射中位置索引的元素。O(1)。请注意，数组内值的排序没有任何保证，并且在添加或删除更多值时可能会改变。
+
+要求：
+* 索引必须严格小于长度。
+
+#### tryGet(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool, uint256
+internal#
+尝试返回与键关联的值。时间复杂度为O(1)。如果键不在映射中，不会恢复。
+
+#### get(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → uint256
+internal#
+返回与键关联的值。O(1)。
+
+要求：
+* 键必须在映射中。
+
+#### keys(struct EnumerableMap.Bytes32ToUintMap map) → bytes32[]
+internal#
+返回一个包含所有键的数组
+
+> WARNING
+此操作将把整个存储复制到内存中，这可能相当昂贵。这主要是为了被无需任何气体费用的视图访问器查询而设计的。开发人员应该记住，这个函数的成本是无限的，如果映射增长到一个点，复制到内存消耗太多的气体以至于无法适应一个块，那么作为状态改变函数的一部分使用它可能会使函数无法调用。
+
+#### EnumerableMapNonexistentKey(bytes32 key)
+error#
+查询一个不存在的映射键。

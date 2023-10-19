@@ -1988,7 +1988,7 @@ contract Example {
 }
 ```
 
-支持以下地图类型：
+支持以下映射类型：
 
 * uint256 → 地址 (UintToAddressMap) 自v3.0.0起
 
@@ -2002,7 +2002,7 @@ contract Example {
 
 > WARNING
 尝试从存储中删除这样的结构可能会导致数据损坏，使该结构无法使用。有关更多信息，请参阅[ethereum/solidity#11843](https://github.com/ethereum/solidity/pull/11843)。
-要清理一个可枚举地图，你可以逐个删除所有元素，或者使用一个可枚举地图的数组创建一个新的实例。
+要清理一个可枚举映射，你可以逐个删除所有元素，或者使用一个可枚举映射的数组创建一个新的实例。
 
 **FUNCTIONS**
 [set(map, key, value)](#setstruct-enumerablemapbytes32tobytes32map-map-bytes32-key-bytes32-value-→-bool)
@@ -2113,11 +2113,11 @@ internal#
 
 #### length(struct EnumerableMap.Bytes32ToBytes32Map map) → uint256
 internal#
-返回地图中键值对的数量。O(1)。
+返回映射中键值对的数量。O(1)。
 
 #### at(struct EnumerableMap.Bytes32ToBytes32Map map, uint256 index) → bytes32, bytes32
 internal#
-在地图中返回存储在位置索引处的键值对。 O(1)。
+在映射中返回存储在位置索引处的键值对。 O(1)。
 
 请注意，对于数组中条目的顺序没有任何保证，并且当添加或删除更多条目时，它可能会发生变化。
 
@@ -2184,7 +2184,7 @@ internal#
 返回与键关联的值。O(1)。
 
 要求：
-* 键必须在地图中。
+* 键必须在映射中。
 
 #### get(struct EnumerableMap.UintToUintMap map, uint256 key, string errorMessage) → uint256
 internal#
@@ -2201,9 +2201,9 @@ internal#
 
 #### set(struct EnumerableMap.UintToAddressMap map, uint256 key, address value) → bool
 internal#
-向地图中添加一个键值对，或更新现有键的值。O(1)。
+向映射中添加一个键值对，或更新现有键的值。O(1)。
 
-如果键被添加到地图中，即它之前不存在，则返回true。
+如果键被添加到映射中，即它之前不存在，则返回true。
 
 #### remove(struct EnumerableMap.UintToAddressMap map, uint256 key) → bool
 internal#
@@ -2216,7 +2216,7 @@ internal#
 
 #### length(struct EnumerableMap.UintToAddressMap map) → uint256
 internal#
-返回地图中的元素数量。O(1)。
+返回映射中的元素数量。O(1)。
 
 #### at(struct EnumerableMap.UintToAddressMap map, uint256 index) → uint256, address
 internal#
@@ -2251,15 +2251,15 @@ internal#
 
 #### set(struct EnumerableMap.AddressToUintMap map, address key, uint256 value) → bool
 internal#
-向地图中添加一个键值对，或者更新现有键的值。O(1)。
+向映射中添加一个键值对，或者更新现有键的值。O(1)。
 
-如果键被添加到地图中，即如果它之前不存在，则返回true。
+如果键被添加到映射中，即如果它之前不存在，则返回true。
 
 #### remove(struct EnumerableMap.AddressToUintMap map, address key) → bool
 internal#
-从地图中删除一个值。O(1)。
+从映射中删除一个值。O(1)。
 
-如果键从地图中被删除，即存在，则返回true。
+如果键从映射中被删除，即存在，则返回true。
 
 #### contains(struct EnumerableMap.AddressToUintMap map, address key) → bool
 internal#
@@ -2303,9 +2303,9 @@ internal#
 
 #### set(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key, uint256 value) → bool
 internal#
-向地图中添加一个键值对，或者更新一个已存在键的值。O(1)。
+向映射中添加一个键值对，或者更新一个已存在键的值。O(1)。
 
-如果键被添加到地图中（即原先不存在），则返回true。
+如果键被添加到映射中（即原先不存在），则返回true。
 
 #### remove(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
 internal#
@@ -2315,7 +2315,7 @@ internal#
 
 #### contains(struct EnumerableMap.Bytes32ToUintMap map, bytes32 key) → bool
 internal#
-如果键在地图中，则返回true。O(1)。
+如果键在映射中，则返回true。O(1)。
 
 #### length(struct EnumerableMap.Bytes32ToUintMap map) → uint256
 internal#
@@ -2323,7 +2323,7 @@ internal#
 
 #### at(struct EnumerableMap.Bytes32ToUintMap map, uint256 index) → bytes32, uint256
 internal#
-在地图中返回存储在位置索引处的元素。O(1)。请注意，数组中的值的排序没有任何保证，并且当添加或删除更多值时，它可能会发生变化。
+在映射中返回存储在位置索引处的元素。O(1)。请注意，数组中的值的排序没有任何保证，并且当添加或删除更多值时，它可能会发生变化。
 
 要求：
 * 索引必须严格小于[length](#lengthstruct-enumerablemapbytes32touintmap-map-→-uint256)。
