@@ -4,7 +4,7 @@
 # 探索使用OpenZeppelin
 OpenZeppelin提供了完整的安全产品套件，用于构建、管理和检查以太坊项目的软件开发和运营的所有方面。
 
-## [Contracts](../Contracts/Contracts.4.x/Overview.md)
+## [Contracts](../Contracts/Contracts.5.x/Overview.md)
 由Solidity编写的模块化、可重用和安全的智能合约库。
 
 ## [Upgrades](./Upgrades.md)
@@ -13,8 +13,8 @@ OpenZeppelin提供了完整的安全产品套件，用于构建、管理和检�
 ## [Defender](../Defender/Overview.md)
 Defender是一个安全的平台，用于自动化以太坊操作。
 
-## [Test Helpers](./Test-Helpers/Overview.md)
-JavaScript库，用于测试智能合约的常见断言。
+## [Contracts for Cairo](../Contracts-for-Cairo/Contracts-for-Cairo.7.0/Overview.md)
+一个用Cairo编写的，用于Starknet的安全智能合约开发的库。
 
 ## [Solidity Docgen](https://github.com/OpenZeppelin/solidity-docgen)
 一种工具，可根据你的Solidity合约的natspec注释自动生成文档。
