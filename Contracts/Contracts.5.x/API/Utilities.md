@@ -2534,3 +2534,236 @@ error#
 #### FailedInnerCall()
 error#
 在目标处没有代码（它不是合约）。
+
+### [Arrays](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Arrays.sol)
+```
+import "@openzeppelin/contracts/utils/Arrays.sol";
+```
+
+与数组类型相关的函数集合。
+
+FUNCTIONS
+findUpperBound(array, element)
+
+unsafeAccess(arr, pos)
+
+unsafeAccess(arr, pos)
+
+unsafeAccess(arr, pos)
+
+unsafeMemoryAccess(arr, pos)
+
+unsafeMemoryAccess(arr, pos)
+
+#### findUpperBound(uint256[] array, uint256 element) → uint256
+internal#
+搜索一个已排序的数组并返回第一个包含大于或等于元素的值的索引。如果不存在这样的索引（即数组中的所有值都严格小于元素），则返回数组长度。时间复杂度为O(log n)。
+
+数组预期按升序排序，并且不包含重复元素。
+
+#### unsafeAccess(address[] arr, uint256 pos) → struct StorageSlot.AddressSlot
+internal#
+以"不安全"的方式访问数组。跳过solidity的"索引超出范围"检查。
+
+> WARNING
+只有在你确定pos小于数组长度的情况下才使用。
+
+#### unsafeAccess(bytes32[] arr, uint256 pos) → struct StorageSlot.Bytes32Slot
+internal#
+以"不安全"的方式访问数组。跳过solidity的"索引超出范围"检查。
+
+> WARNING
+只有当你确定pos小于数组长度时才使用。
+
+#### unsafeAccess(uint256[] arr, uint256 pos) → struct StorageSlot.Uint256Slot
+internal#
+以"不安全"的方式访问数组。跳过solidity的"索引超出范围"检查。
+
+> WARNING
+只有在你确定pos小于数组长度的情况下才使用。
+
+#### unsafeMemoryAccess(uint256[] arr, uint256 pos) → uint256 res
+internal#
+以"不安全"的方式访问数组。跳过solidity的"索引超出范围"检查。
+
+> WARNING
+只有在你确定pos小于数组长度的情况下才使用。
+
+#### unsafeMemoryAccess(address[] arr, uint256 pos) → address res
+internal#
+以"不安全"的方式访问数组。跳过solidity的"索引超出范围"检查。
+
+> WARNING
+只有当你确定pos小于数组长度时才使用。
+
+### [Base64](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Base64.sol)
+```
+import "@openzeppelin/contracts/utils/Base64.sol";
+```
+
+提供一组用于操作Base64字符串的函数。
+
+**FUNCTIONS**
+encode(data)
+
+#### encode(bytes data) → string
+internal#
+将字节转换为其Bytes64字符串表示形式。
+
+### [Strings](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Strings.sol)
+```
+import "@openzeppelin/contracts/utils/Strings.sol";
+```
+
+字符串操作。
+
+**FUNCTIONS**
+toString(value)
+
+toStringSigned(value)
+
+toHexString(value)
+
+toHexString(value, length)
+
+toHexString(addr)
+
+equal(a, b)
+
+**ERRORS**
+StringsInsufficientHexLength(value, length)
+
+#### toString(uint256 value) → string
+internal#
+将uint256转换为其ASCII字符串十进制表示。
+
+#### toStringSigned(int256 value) → string
+internal#
+将int256转换为其ASCII字符串十进制表示。
+
+#### toHexString(uint256 value) → string
+internal#
+将uint256转换为其ASCII字符串十六进制表示。
+
+#### toHexString(uint256 value, uint256 length) → string
+internal#
+将uint256转换为其ASCII字符串十六进制表示形式，长度固定。
+
+#### toHexString(address addr) → string
+internal#
+将固定长度为20字节的地址转换为其未校验的ASCII字符串十六进制表示形式。
+
+#### equal(string a, string b) → bool
+internal#
+如果两个字符串相等，则返回真。
+
+#### StringsInsufficientHexLength(uint256 value, uint256 length)
+error#
+指定长度内无法容纳该值字符串。
+
+### [ShortStrings](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/ShortStrings.sol)
+```
+import "@openzeppelin/contracts/utils/ShortStrings.sol";
+```
+
+这个库提供了将短内存字符串转换为ShortString类型的函数，该类型可以作为不可变变量使用。
+
+如果字符串足够短（最多31字节），则可以使用此库优化任意长度的字符串，通过将它们与其长度（1字节）打包在一个EVM字（32字节）中。此外，还可以使用后备机制处理所有其他情况。
+
+使用示例:
+```
+contract Named {
+    using ShortStrings for *;
+
+    ShortString private immutable _name;
+    string private _nameFallback;
+
+    constructor(string memory contractName) {
+        _name = contractName.toShortStringWithFallback(_nameFallback);
+    }
+
+    function name() external view returns (string memory) {
+        return _name.toStringWithFallback(_nameFallback);
+    }
+}
+```
+
+**FUNCTIONS**
+toShortString(str)
+
+toString(sstr)
+
+byteLength(sstr)
+
+toShortStringWithFallback(value, store)
+
+toStringWithFallback(value, store)
+
+byteLengthWithFallback(value, store)
+
+**ERRORS**
+StringTooLong(str)
+
+InvalidShortString()
+
+#### toShortString(string str) → ShortString
+internal#
+将最多31个字符的字符串编码为ShortString。
+
+如果输入字符串过长，将触发StringTooLong错误。
+
+#### toString(ShortString sstr) → string
+internal#
+将短字符串解码回“正常”字符串。
+
+#### byteLength(ShortString sstr) → uint256
+internal#
+返回ShortString的长度。
+
+#### toShortStringWithFallback(string value, string store) → ShortString
+internal#
+将字符串编码为ShortString，或者如果它太长则将其写入存储。
+
+#### toStringWithFallback(ShortString value, string store) → string
+internal#
+解码一个使用ShortString编码或使用{setWithFallback}写入存储的字符串。
+
+#### byteLengthWithFallback(ShortString value, string store) → uint256
+internal#
+返回编码为ShortString或使用{setWithFallback}写入存储的字符串的长度。
+
+> WARNING
+这将返回字符串的“字节长度”。这可能并不反映实际字符的实际长度，因为单个字符的UTF-8编码可以跨越多个字节。
+
+#### StringTooLong(string str)
+error#
+
+#### InvalidShortString()
+error#
+
+### [StorageSlot](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/StorageSlot.sol)
+```
+import "@openzeppelin/contracts/utils/StorageSlot.sol";
+```
+
+用于读取和写到特定存储槽的基本类型的库。
+
+存储槽通常用于处理可升级合约时避免存储冲突。这个库可以帮助读取和写入这些槽，无需内联汇编。
+
+这个库中的函数返回包含一个可以用于读取或写入的值成员的Slot结构体。
+
+示例用法设置ERC1967实现槽
+```
+contract ERC1967 {
+    bytes32 internal constant _IMPLEMENTATION_SLOT = 0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;
+
+    function _getImplementation() internal view returns (address) {
+        return StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value;
+    }
+
+    function _setImplementation(address newImplementation) internal {
+        require(newImplementation.code.length > 0);
+        StorageSlot.getAddressSlot(_IMPLEMENTATION_SLOT).value = newImplementation;
+    }
+}
+```
