@@ -1242,3 +1242,237 @@ EIP712域的版本参数。
 
 > NOTE
 默认情况下，此函数读取的是不可变值_version。只有在必要时（例如，值太大，无法放入ShortString中）才从存储中读取。
+
+## Security
+
+### [ReentrancyGuard](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/ReentrancyGuard.sol)
+```
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+```
+
+该合约模块有助于防止对函数的重入调用。
+
+继承ReentrancyGuard将使*nonReentrant*修饰符可用，可以将其应用于函数，以确保它们没有嵌套（重入）调用。
+
+请注意，由于只有一个nonReentrant保护，因此标记为nonReentrant的函数可能无法相互调用。可以通过将这些函数设为私有，然后为它们添加外部nonReentrant入口点来解决这个问题。
+
+> TIP
+如果你想了解更多关于重入性以及防止重入的替代方法，可以查看我们的博客文章[《伊斯坦布尔后的重入性》](https://blog.openzeppelin.com/reentrancy-after-istanbul/)。
+
+**MODIFIERS**
+nonReentrant()
+
+**FUNCTIONS**
+constructor()
+
+_reentrancyGuardEntered()
+
+**ERRORS**
+ReentrancyGuardReentrantCall()
+
+#### nonReentrant()
+modifier#
+防止合约直接或间接地调用自身。不支持从另一个非重入函数调用非重入函数。可以通过将非重入函数设为外部函数，并让它调用一个执行实际工作的私有函数来防止这种情况发生。
+
+#### constructor()
+internal#
+
+#### _reentrancyGuardEntered() → bool
+internal#
+如果重入保护当前设置为"entered"，表示调用堆栈中存在一个nonReentrant函数，则返回true。
+
+#### ReentrancyGuardReentrantCall()
+error#
+未经授权的重入调用。
+
+### [Pausable](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Pausable.sol)
+```
+import "@openzeppelin/contracts/utils/Pausable.sol";
+```
+
+这个合约模块允许子合约实现一个紧急停止机制，该机制可以由授权账户触发。
+
+这个模块是通过继承来使用的。它将提供whenNotPaused和whenPaused修饰符，这些修饰符可以应用到你的合约函数上。请注意，仅仅包含这个模块并不能使它们可暂停，只有当修饰符被放置后才能暂停。
+
+**MODIFIERS**
+whenNotPaused()
+
+whenPaused()
+
+**FUNCTIONS**
+constructor()
+
+paused()
+
+_requireNotPaused()
+
+_requirePaused()
+
+_pause()
+
+_unpause()
+
+**EVENTS**
+Paused(account)
+
+Unpaused(account)
+
+**ERRORS**
+EnforcedPause()
+
+ExpectedPause()
+
+#### whenNotPaused()
+modifier#
+修饰符用于使函数仅在合约未暂停时可调用。
+
+要求：
+* 合约必须未处于暂停状态。
+
+#### whenPaused()
+modifier#
+修饰符用于使函数仅在合约未暂停时可调用。
+
+要求：
+* 合约必须未处于暂停状态。
+
+#### constructor()
+internal#
+将合约初始化为未暂停状态。
+
+#### paused() → bool
+public#
+如果合约被暂停，则返回真，否则返回假。
+
+#### _requireNotPaused()
+internal#
+如果合约被暂停，则抛出异常。
+
+#### _requirePaused()
+internal#
+如果合约没有暂停，就会抛出异常。
+
+#### _pause()
+internal#
+触发停止状态。
+
+要求：
+* 合约不能被暂停。
+
+#### _unpause()
+返回到正常状态。
+
+要求：
+* 合约必须被暂停。
+
+#### Paused(address account)
+event#
+当账户触发暂停时发出。
+
+#### Unpaused(address account)
+event#
+当账户解除暂停时发出。
+
+#### EnforcedPause()
+error#
+操作失败，因为合约已暂停。
+
+#### ExpectedPause()
+error#
+操作失败，因为合约并未暂停。
+
+## Introspection
+这套接口和合约处理合约的类型自省，也就是检查可以在合约上调用哪些函数。这通常被称为合约的接口。
+
+以太坊合约没有接口的原生概念，所以应用程序通常只能信任它们没有进行错误的调用。对于可信的设置，这不是问题，但是经常需要与未知的和不可信的第三方地址进行交互。甚至可能没有对它们的直接调用！（例如，ERC20代币可能被发送到一个没有转移它们的方式的合约，永远锁定它们）。在这些情况下，一个声明其接口的合约可以非常有效地防止错误。
+
+### [IERC165](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/introspection/IERC165.sol)
+```
+import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+```
+
+ERC165标准的接口，如[EIP](https://eips.ethereum.org/EIPS/eip-165)中定义的那样。
+
+实施者可以声明支持合约接口，然后可以由其他人（*ERC165Checker*）查询。
+
+有关实施，请参阅*ERC165*。
+
+**FUNCTIONS**
+supportsInterface(interfaceId)
+
+#### supportsInterface(bytes4 interfaceId) → bool
+external#
+如果此合约实现了由interfaceId定义的接口，则返回true。请参阅相应的[EIP部分](https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified)，了解更多关于如何创建这些id的信息。
+
+此函数调用必须使用少于30,000个气体。
+
+### [ERC165](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/introspection/ERC165.sol)
+```
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+```
+
+想要实现*ERC165*接口的合约应该继承自这个合约，并重写*supportsInterface*以检查将被支持的额外接口id。例如:
+```
+function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+    return interfaceId == type(MyInterface).interfaceId || super.supportsInterface(interfaceId);
+}
+```
+
+**FUNCTIONS**
+supportsInterface(interfaceId)
+
+#### supportsInterface(bytes4 interfaceId) → bool
+public#
+请查阅 *IERC165.supportsInterface*.
+
+### [ERC165Checker](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/introspection/ERC165Checker.sol)
+```
+import "@openzeppelin/contracts/utils/introspection/ERC165Checker.sol";
+```
+
+用于查询通过*IERC165*声明的接口支持的库。
+
+请注意，这些函数返回查询的实际结果：如果不支持接口，它们不会恢复。这取决于调用者在这些情况下该做什么。
+
+**FUNCTIONS**
+supportsERC165(account)
+
+supportsInterface(account, interfaceId)
+
+getSupportedInterfaces(account, interfaceIds)
+
+supportsAllInterfaces(account, interfaceIds)
+
+supportsERC165InterfaceUnchecked(account, interfaceId)
+
+#### supportsERC165(address account) → bool
+internal#
+如果账户支持*IERC165*接口，则返回真。
+
+#### supportsInterface(address account, bytes4 interfaceId) → bool
+internal#
+如果账户支持由interfaceId定义的接口，则返回true。*IERC165*本身的支持会自动查询。
+
+参见*IERC165.supportsInterface*。
+
+#### getSupportedInterfaces(address account, bytes4[] interfaceIds) → bool[]
+internal#
+返回一个布尔数组，其中每个值对应于传入的接口以及是否支持它们。这允许你批量检查合约的接口，你的期望是可能有些接口不被支持。
+
+参见*IERC165.supportsInterface*。
+
+#### supportsAllInterfaces(address account, bytes4[] interfaceIds) → bool
+internal#
+如果账户支持interfaceIds中定义的所有接口，则返回true。*IERC165*本身的支持会自动查询。
+
+批量查询可以通过跳过对*IERC165*支持的重复检查来节省gas。
+
+参见*IERC165.supportsInterface*。
+
+#### supportsERC165InterfaceUnchecked(address account, bytes4 interfaceId) → bool
+internal#
+假设账户包含支持ERC165的合约，否则此方法的行为是未定义的。可以通过*supportsERC165*来检查这个前提条件。
+
+一些预编译的合约会错误地表示支持给定的接口，因此在使用此函数时应谨慎。
+
+接口识别在ERC-165中有规定。
