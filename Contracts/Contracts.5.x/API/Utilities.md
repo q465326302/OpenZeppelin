@@ -2767,3 +2767,66 @@ contract ERC1967 {
     }
 }
 ```
+
+FUNCTIONS
+getAddressSlot(slot)
+
+getBooleanSlot(slot)
+
+getBytes32Slot(slot)
+
+getUint256Slot(slot)
+
+getStringSlot(slot)
+
+getStringSlot(store)
+
+getBytesSlot(slot)
+
+getBytesSlot(store)
+
+#### getAddressSlot(bytes32 slot) → struct StorageSlot.AddressSlot r
+internal#
+返回位于插槽处的带有成员值的地址插槽。
+
+#### getBooleanSlot(bytes32 slot) → struct StorageSlot.BooleanSlot r
+internal#
+返回一个位于插槽的成员值的布尔插槽。
+
+#### getBytes32Slot(bytes32 slot) → struct StorageSlot.Bytes32Slot r
+internal#
+返回位于插槽的成员值的Bytes32Slot。
+
+#### getUint256Slot(bytes32 slot) → struct StorageSlot.Uint256Slot r
+internal#
+返回位于插槽的成员值的Uint256Slot。
+
+#### getStringSlot(bytes32 slot) → struct StorageSlot.StringSlot r
+internal#
+返回一个字符串插槽，其成员值位于插槽中。
+
+#### getStringSlot(string store) → struct StorageSlot.StringSlot r
+internal#
+返回字符串存储指针存储的StringSlot表示。
+
+#### getBytesSlot(bytes32 slot) → struct StorageSlot.BytesSlot r
+internal#
+返回位于插槽的成员值的BytesSlot。
+
+#### getBytesSlot(bytes store) → struct StorageSlot.BytesSlot r
+internal#
+返回字节存储指针存储的BytesSlot表示。
+
+### [Multicall](https://github.com/OpenZeppelin/openzeppelin-contracts/blob/v5.0.0/contracts/utils/Multicall.sol)
+```
+import "@openzeppelin/contracts/utils/Multicall.sol";
+```
+
+提供一个函数，将多个调用批量在单个外部调用中进行。
+
+**FUNCTIONS**
+multicall(data)
+
+#### multicall(bytes[] data) → bytes[] results
+external#
+接收并执行此合约上的一批函数调用。
