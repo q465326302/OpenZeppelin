@@ -28,7 +28,7 @@ Upgradeable包复制了主要的OpenZeppelin Contracts包的结构，但是每�
 > NOTE
 接口和库不包含在可升级包中，而是从主OpenZeppelin合约包中导入的。
 
-构造函数被内部初始化函数替换，遵循__{ContractName}_init的命名约定。由于这些是内部的，您必须始终定义自己的公共初始化函数，并调用您扩展的合约的父初始化器。
+构造函数被内部初始化函数替换，遵循__{ContractName}_init的命名约定。由于这些是内部的，你必须始终定义自己的公共初始化函数，并调用你扩展的合约的父初始化器。
 ```
 -    constructor() ERC721("MyCollectible", "MCO") public {
 +    function initialize() initializer public {

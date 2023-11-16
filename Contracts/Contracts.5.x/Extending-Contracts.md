@@ -1,5 +1,5 @@
 # Extending Contracts
-大多数OpenZeppelin合约预计将通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用：当编写自己的合约时，您将从它们继承。
+大多数OpenZeppelin合约预计将通过[继承](https://solidity.readthedocs.io/en/latest/contracts.html#inheritance)来使用：当编写自己的合约时，你将从它们继承。
 
 这是常见的is语法，如在contract MyToken is ERC20中。
 
@@ -8,9 +8,9 @@
 OpenZeppelin合约有一些库：大多数在*Utils*目录中。
 
 ## 覆盖
-继承通常用于将父合约的功能添加到您自己的合约中，但这并非它的全部功能。您还可以使用覆盖来更改父合约的某些部分的行为。
+继承通常用于将父合约的功能添加到你自己的合约中，但这并非它的全部功能。你还可以使用覆盖来更改父合约的某些部分的行为。
 
-例如，假设您想要更改*AccessControl*，使得*revokeRole*不能再被调用。这可以通过覆盖来实现。
+例如，假设你想要更改*AccessControl*，使得*revokeRole*不能再被调用。这可以通过覆盖来实现。
 ```
 // contracts/ModifiedAccessControl.sol
 // SPDX-License-Identifier: MIT

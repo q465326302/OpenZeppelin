@@ -1,8 +1,8 @@
 # Automatic generation
-作为@amxx/graphprotocol-utils包的一部分提供的graph-compile工具可以用来自动生成为您的应用量身定制的模式和清单。作为OpenZeppelin子图的一部分实现的模块与此兼容。
+作为@amxx/graphprotocol-utils包的一部分提供的graph-compile工具可以用来自动生成为你的应用量身定制的模式和清单。作为OpenZeppelin子图的一部分实现的模块与此兼容。
 
-## 描述您的应用
-为了生成模式和清单，您需要提供您希望索引的合约的描述。
+## 描述你的应用
+为了生成模式和清单，你需要提供你希望索引的合约的描述。
 
 以下是一个配置文件示例，它在主网上索引了6个合约:
 ```

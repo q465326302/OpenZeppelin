@@ -70,5 +70,5 @@ Defender 2.0与大多数主网和测试网，以及本地主网分叉兼容。
 Defender 2.0的集成功能允许用户连接其他服务和工具。在*这里*找到集成列表和更多信息。
 
 ## Feedback
-作为Defender 2.0的用户，您的反馈非常重要！请通过屏幕右下角的表格向我们提供反馈。
+作为Defender 2.0的用户，你的反馈非常重要！请通过屏幕右下角的表格向我们提供反馈。
 ![feedback-button.png](img/feedback-button.png)

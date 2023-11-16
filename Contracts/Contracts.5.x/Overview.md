@@ -33,7 +33,7 @@ forge install OpenZeppelin/openzeppelin-contracts
 在remappings.txt中添加@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/。
 
 ### 使用方法
-安装后，您可以通过导入它们来使用库中的合约:
+安装后，你可以通过导入它们来使用库中的合约:
 ```
 // contracts/MyNFT.sol
 // SPDX-License-Identifier: MIT
