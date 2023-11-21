@@ -21,10 +21,10 @@ Deploy分为生产和测试环境，前者使用主网网络，后者使用测�
 为了保持最佳安全实践，向导将仅显示根据所选环境类型的网络，以防止混合网络。
 
 #### Step 2: Deploying
-在这一步中，用户为每个网络选择默认的批准流程。与此批准流程关联的资源将用于支付和执行部署交易；然而，你可以在Hardhat脚本中为每次部署指定不同的批准流程。如果你没有网络的批准流程，向导将允许你创建Relayer、Safe或EOA（“外部拥有的账户”）类型之一。你可以在*这里*了解更多关于批准流程的信息。
+在这一步中，用户为每个网络选择默认的批准流程。与此批准流程关联的资源将用于支付和执行部署交易；然而，你可以在Hardhat脚本中为每次部署指定不同的批准流程。如果你没有网络的批准流程，向导将允许你创建Relayer、Safe或EOA（“外部拥有的账户”）类型之一。你可以在[这里](../Manage/Manage.md#approval-processes)了解更多关于批准流程的信息。
 
 #### Step 3: Upgrading
-这最后一步是可选的，但如果你计划部署可升级的合约，建议执行此步骤。在*这里*，你为每个网络选择升级的批准流程。你可以在这里找到支持的流程列表。
+这最后一步是可选的，但如果你计划部署可升级的合约，建议执行此步骤。在[这里](../Manage/Manage.md#approval-processes)，你为每个网络选择升级的批准流程。你可以在这里找到支持的流程列表。
 
 ## Environment Page
 进入环境后，你可以查看环境内部署的配置和活动。
@@ -42,12 +42,12 @@ Deploy分为生产和测试环境，前者使用主网网络，后者使用测�
 * FAILED：部署失败。确保与批准流程关联的中继器或EOA有足够的资金，并且智能合约有效。
 
 ## Deploying and Upgrading
-配置环境后，你可以用它进行部署和升级。为此，我们提供了一个*API*和一个*Hardhat插件*。Deploy API推荐用于非Hardhat项目。另一方面，Hardhat插件在Hardhat项目中非常容易使用，因为它只需要几行代码就可以实现。
+配置环境后，你可以用它进行部署和升级。为此，我们提供了一个[API](https://www.npmjs.com/package/@openzeppelin/defender-sdk-deploy-client)和一个[Hardhat插件](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades)。Deploy API推荐用于非Hardhat项目。另一方面，Hardhat插件在Hardhat项目中非常容易使用，因为它只需要几行代码就可以实现。
 
 API和Hardhat插件都允许为每个合约部署使用不同的批准流程。然而，如果没有指定，Defender 2.0将识别目标网络并使用关联的默认批准流程。如果环境配置了区块浏览器API密钥，Defender 2.0还将自动验证合约。
 
 > NOTE
-我们提供了一个快速入门教程，使用Defender 2.0部署和升级智能合约。在*这里*查看！
+我们提供了一个快速入门教程，使用Defender 2.0部署和升级智能合约。在[这里](../Tutorials/Deploy/Deploy.md)查看！
 
 > WARNING
-使用CREATE2可能会影响msg.sender的行为；有关详细信息，请参阅*这里*的文档！
+使用CREATE2可能会影响msg.sender的行为；有关详细信息，请参阅[这里](../Tutorials/Deploy/Deploy.md#caveats)的文档！
