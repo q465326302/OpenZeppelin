@@ -1,15 +1,15 @@
 # Automate smart contract transaction for hourly activity
-Defender 2.0允许您自动化智能合约的运营任务，并且可以轻松集成到Defender 2.0的其他部分。本教程将展示如何构建一个动作，该动作每小时发送一次链上交易，向一个箱子中添加一个物体，并增加箱内物体的数量。
+Defender 2.0允许你自动化智能合约的运营任务，并且可以轻松集成到Defender 2.0的其他部分。本教程将展示如何构建一个动作，该动作每小时发送一次链上交易，向一个箱子中添加一个物体，并增加箱内物体的数量。
 
 ## Pre-requisites
-您可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 OpenZeppelin Defender 2.0 的早期访问权限。
+你可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 OpenZeppelin Defender 2.0 的早期访问权限。
 
 学习如何通过 Defender 2.0 *部署*和*监控*合约！
 
 ## 1. Set up action
-您将配置一个操作，该操作每小时发送一次带有 addObject() 函数的交易到 Goerli 网络中的 0x7A99C479775C945C2Ea4CF6986425de1d816DaE4 合约，该合约是在*部署*教程中部署的 Box 合约的一个示例。要执行此操作，请按照以下步骤操作：
+你将配置一个操作，该操作每小时发送一次带有 addObject() 函数的交易到 Goerli 网络中的 0x7A99C479775C945C2Ea4CF6986425de1d816DaE4 合约，该合约是在*部署*教程中部署的 Box 合约的一个示例。要执行此操作，请按照以下步骤操作：
 
-1. 在您的终端运行以下命令：
+1. 在你的终端运行以下命令：
 
 2. 在网络浏览器中打开 [Defender 2.0 管理](https://defender.openzeppelin.com/v2/#/manage/relayers)界面。
 
@@ -55,17 +55,17 @@ exports.handler = async function(credentials) {
 
 ![tutorial-actions-action](img/tutorial-actions-action.png)
 
-您的操作现在将每小时运行一次！您可以查看 [Defender 2.0 日志](https://defender.openzeppelin.com/v2/#/logs)以获取更详细的活动信息。
+你的操作现在将每小时运行一次！你可以查看 [Defender 2.0 日志](https://defender.openzeppelin.com/v2/#/logs)以获取更详细的活动信息。
 
 ## 2. Verify activity
-操作运行一段时间后，您可以验证交易是否每小时被发送一次。为此，请打开 [Etherscan 合约](https://goerli.etherscan.io/address/0x7A99C479775C945C2Ea4CF6986425de1d816DaE4)页面并查找来自配置的中继器的交易。另一种方法是在 Etherscan 中搜索您的中继器，并查找发送到合约的交易。
+操作运行一段时间后，你可以验证交易是否每小时被发送一次。为此，请打开 [Etherscan 合约](https://goerli.etherscan.io/address/0x7A99C479775C945C2Ea4CF6986425de1d816DaE4)页面并查找来自配置的中继器的交易。另一种方法是在 Etherscan 中搜索你的中继器，并查找发送到合约的交易。
 
-如果操作失败（例如，如果中继器耗尽了气体），您还将收到警报。它们看起来像这样：
+如果操作失败（例如，如果中继器耗尽了气体），你还将收到警报。它们看起来像这样：
 
 ![tutorial-actions-alert](img/tutorial-actions-alert.png)
 
 ## Next steps
-恭喜！您可以修改操作以自动化其他合约并构建更复杂的交易。如果您对高级用例感兴趣，我们正在编写与操作相关的指南。
+恭喜！你可以修改操作以自动化其他合约并构建更复杂的交易。如果你对高级用例感兴趣，我们正在编写与操作相关的指南。
 
 > NOTE
 除了操作之外，我们还建议使用访问控制通过 Defender 2.0 管理合约的权限。在*这里*了解如何使用其教程中的访问控制。

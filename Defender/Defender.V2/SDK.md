@@ -5,13 +5,13 @@
 有关更详细信息，请参阅[sdk仓库](https://github.com/OpenZeppelin/defender-sdk)或[sdk文档](https://www.api-docs.defender.openzeppelin.com/)。
 
 ## Installation
-您可以使用NPM或任何您喜欢的包管理器安装整个包：
+你可以使用NPM或任何你喜欢的包管理器安装整个包：
 
 ```bash
 npm install @openzeppelin/defender-sdk
 ```
 
-或者您可以安装单个子包：
+或者你可以安装单个子包：
 
 ```bash
 npm install @openzeppelin/defender-sdk-deploy-client

@@ -1,8 +1,8 @@
 # Securely deploy and upgrade a smart contract
-Defender 2.0 允许您在保持最佳安全实践的同时，轻松地跨链部署和升级智能合约。本教程将展示如何使用 *Relayer* 通过 [Safe 钱包](https://safe.global/)（多签名）部署名为 Box 的合约，并使用 UUPS 代理模式对其进行升级。
+Defender 2.0 允许你在保持最佳安全实践的同时，轻松地跨链部署和升级智能合约。本教程将展示如何使用 *Relayer* 通过 [Safe 钱包](https://safe.global/)（多签名）部署名为 Box 的合约，并使用 UUPS 代理模式对其进行升级。
 
 ## Pre-requisites
-* OpenZeppelin Defender 2.0 账户。您可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 Defender 2.0 的早期访问权限。
+* OpenZeppelin Defender 2.0 账户。你可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 Defender 2.0 的早期访问权限。
 
 * [NodeJS和NPM](https://nodejs.org/en)已安装[Hardhat](https://hardhat.org/hardhat-runner/docs/getting-started#installation)，并配有ethers v6（推荐的Hardhat版本为v2.19.0）
 
@@ -12,17 +12,17 @@ Defender 2.0 允许您在保持最佳安全实践的同时，轻松地跨链部�
 
 ## 1. Configure
 ### Safe wallet
-首先，您需要创建 Safe 钱包来管理升级过程。为此，请按照以下步骤操作：
+首先，你需要创建 Safe 钱包来管理升级过程。为此，请按照以下步骤操作：
 
-1. 在网络浏览器中打开 [Safe 应用](https://app.safe.global/welcome)，并连接您的钱包（确保您已连接到 [Goerli 测试网](https://goerli.etherscan.io/)）。
+1. 在网络浏览器中打开 [Safe 应用](https://app.safe.global/welcome)，并连接你的钱包（确保你已连接到 [Goerli 测试网](https://goerli.etherscan.io/)）。
 
 2. 点击**Create new Account**并按照步骤操作。
 
-3. 记下您创建的 Safe 钱包的地址，稍后您将需要它。
+3. 记下你创建的 Safe 钱包的地址，稍后你将需要它。
 ![tutorial-deploy-safe](img/tutorial-deploy-safe.png)
 
 ### Environment setup
-现在，您将创建一个Defender 2.0测试环境，并在Goerli测试网上部署和升级智能合约。请按照以下步骤操作：
+现在，你将创建一个Defender 2.0测试环境，并在Goerli测试网上部署和升级智能合约。请按照以下步骤操作：
 
 1. 打开[Defender 2.0 Deploy](https://defender.openzeppelin.com/v2/#/deploy)。
 
@@ -34,14 +34,14 @@ Defender 2.0 允许您在保持最佳安全实践的同时，轻松地跨链部�
 
 ![tutorial-deploy-step1-wizard](img/tutorial-deploy-step1-wizard.png)
 
-4. 选择与您已资金注入的中继器相关联的审批流程，该中继器将执行测试环境的部署。如果您还没有审批流程，Defender 2.0将允许您在向导流程中创建一个。中继器自动支付燃气费，并负责私钥的安全存储、交易签名、nonce管理、燃气价格估算和重新提交。不过，您也可以选择使用EOA（“外部拥有的账户”）或Safe钱包进行部署。
+4. 选择与你已资金注入的中继器相关联的审批流程，该中继器将执行测试环境的部署。如果你还没有审批流程，Defender 2.0将允许你在向导流程中创建一个。中继器自动支付燃气费，并负责私钥的安全存储、交易签名、nonce管理、燃气价格估算和重新提交。不过，你也可以选择使用EOA（“外部拥有的账户”）或Safe钱包进行部署。
 
 > NOTE
 在*这里*阅读更多关于中继器以及如何管理它们的信息。
 
 ![tutorial-deploy-step2-wizard](img/tutorial-deploy-step2-wizard.png)
 
-5. 点击“审批流程”字段以展开下拉菜单，然后点击**Create an Approval Process**。输入“Safe Wallet审批流程”作为名称，展开合约字段并点击**Add contract**。输入“Safe Wallet”作为名称，粘贴您之前复制的Safe钱包地址并点击**Create**。在合约下拉菜单中选择“Safe Wallet”，然后点击**Continue**。
+5. 点击“审批流程”字段以展开下拉菜单，然后点击**Create an Approval Process**。输入“Safe Wallet审批流程”作为名称，展开合约字段并点击**Add contract**。输入“Safe Wallet”作为名称，粘贴你之前复制的Safe钱包地址并点击**Create**。在合约下拉菜单中选择“Safe Wallet”，然后点击**Continue**。
 
 ![tutorial-deploy-step3-wizard](img/tutorial-deploy-step3-wizard.png)
 6. Defender 2.0将为这个环境生成一个API密钥和密钥，所以请复制并安全地存储它们。点击**Let’s Deploy**访问环境页面。
@@ -49,7 +49,7 @@ Defender 2.0 允许您在保持最佳安全实践的同时，轻松地跨链部�
 ![tutorial-deploy-step4-wizard](img/tutorial-deploy-step4-wizard.png)
 
 > NOTE
-您配置了测试环境，以便在不冒失去实际资金的风险的情况下学习。设置生产环境的步骤是相同的。
+你配置了测试环境，以便在不冒失去实际资金的风险的情况下学习。设置生产环境的步骤是相同的。
 
 ### Hardhat Integration
 通过 Defender 2.0 部署非常简单，一旦安装了 Hardhat，按照以下步骤创建一个新目录和项目：
@@ -77,7 +77,7 @@ npm i @openzeppelin/hardhat-upgrades @openzeppelin/contracts-upgradeable@4.9.3 d
 安装完所有东西后，你的初始目录结构应该看起来像这样:
 ![tutorial-deploy-directory](img/tutorial-deploy-directory.png)
 
-4. 您现在需要编辑您的 Hardhat 配置，以添加 Defender 2.0 密钥和 Goerli 网络。打开 hardhat.config.ts 文件，并用以下代码替换其内容:
+4. 你现在需要编辑你的 Hardhat 配置，以添加 Defender 2.0 密钥和 Goerli 网络。打开 hardhat.config.ts 文件，并用以下代码替换其内容:
 ```
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
@@ -197,7 +197,7 @@ main().catch((error) => {
 npx hardhat run --network goerli scripts/deploy.ts
 ```
 
-成功！您的合约应该已经在Goerli测试网络中部署。导航至Defender 2.0中的“部署”页面，并检查代理和实现是否已在测试环境中部署。所有Box交易都应发送到代理地址，因为它将存储状态并指向给定的实现。复制代理的地址以便下一步升级它。
+成功！你的合约应该已经在Goerli测试网络中部署。导航至Defender 2.0中的“部署”页面，并检查代理和实现是否已在测试环境中部署。所有Box交易都应发送到代理地址，因为它将存储状态并指向给定的实现。复制代理的地址以便下一步升级它。
 ![tutorial-deploy-contract](img/tutorial-deploy-contract.png)
 
 ### Caveats
@@ -237,7 +237,7 @@ contract BoxV2 is Box {
 }
 ```
 
-这是一个合约，为您的盒子添加了两个新功能：
+这是一个合约，为你的盒子添加了两个新功能：
 
 * addObject()：通过添加一个物体来增加盒子中物体的数量。
 
