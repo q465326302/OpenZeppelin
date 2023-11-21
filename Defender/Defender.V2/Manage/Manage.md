@@ -2,7 +2,7 @@
 管理与Defender 2.0配置相关的一切，包括中继器、通知渠道、地址、团队成员、API密钥等。
 
 ## Relayers
-中继器用于通过Defender 2.0自动向区块链发送交易。在*中继器部分*阅读更多信息。
+中继器用于通过Defender 2.0自动向区块链发送交易。在[中继器](../Manage/Relayers/Relayers.md)部分阅读更多信息。
 
 ## Approval Processes
 审批流程作为执行链上交易的包装器。它们目前包装以下内容：
@@ -19,7 +19,7 @@
 
 * Fireblocks
 
-它们按网络定义，并在Defender 2.0中用于执行交易，例如在*部署向导*、*操作*和*事件响应*中。
+它们按网络定义，并在Defender 2.0中用于执行交易，例如在[部署向导](../Modules/Deploy.md)、[操作](../Modules/Actions/Actions.md)和[事件响应](../Modules/Incident-Response/Incident-Response.md)中。
 ![manage-approvals](img/manage-approvals.png)
 
 ## Notification Channels
@@ -113,7 +113,7 @@ Datadog配置允许Defender 2.0将自定义指标转发到你的Datadog账户。
 }
 ```
 
-有关事件模式的更多信息，请参阅*Monitor*或*Actions*的文档。
+有关事件模式的更多信息，请参阅[Monitor](../Modules/Monitor/Monitor.md)或[Actions](../Modules/Actions/Actions.md)的文档。
 
 ### OpsGenie Configuration
 请参阅[OpsGenie集成文档](https://support.atlassian.com/opsgenie/docs/create-a-default-api-integration/)，以配置可以创建警报的OpsGenie API集成。
@@ -126,7 +126,7 @@ Datadog配置允许Defender 2.0将自定义指标转发到你的Datadog账户。
 
 * **Visible To** 警报将对其可见但不发送任何通知的团队和用户。每个项目的type字段是必需的，可能的值是team和user。除了type字段外，还应为团队提供id或name，为用户提供id或username。请注意：警报默认情况下将对在responders字段中指定的团队可见，因此无需在visibleTo字段中重新指定它们。你可以参考下面的示例值（总共50个团队或用户）
 
-* **Alias** 客户定义的警报标识符，也是警报去重的关键元素（最多512个字符）
+* **Alias** 客户定义的警报标识符，也是[警报去重](https://support.atlassian.com/opsgenie/docs/what-is-alert-de-duplication/)的关键元素（最多512个字符）
 
 * **Priority** 警报的优先级。可能的值是P1、P2、P3、P4和P5。默认值是P3
 
@@ -220,9 +220,9 @@ exports.handler = async function(event) {
 你可以使用秘密来存储访问外部API的安全密钥，或者你不想在操作代码中暴露的任何其他秘密值。
 
 > NOTE
-虽然你也可以使用操作秘密来存储用于签名消息或交易的私钥，但我们建议你使用*中继器*代替。中继器的签名操作是在安全的保险库中执行的，提供了比在操作运行中加载私钥并在那里签名更高的安全级别。
+虽然你也可以使用操作秘密来存储用于签名消息或交易的私钥，但我们建议你使用[中继器](../Manage/Manage.md#relayers)代替。中继器的签名操作是在安全的保险库中执行的，提供了比在操作运行中加载私钥并在那里签名更高的安全级别。
 
-## 
+## API Keys
 在API密钥中，你可以管理客户端用于访问你账户的Defender 2.0 API的密钥，以及如果你使用Fireblocks进行审批，则输入集成API密钥。请注意，中继器有自己的API密钥，这些密钥与这些API密钥分开，并且直接在管理中继器中配置。
 
 要添加API密钥，请点击“创建API密钥”按钮。
