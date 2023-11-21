@@ -1,5 +1,5 @@
 # Securely deploy and upgrade a smart contract
-Defender 2.0 允许你在保持最佳安全实践的同时，轻松地跨链部署和升级智能合约。本教程将展示如何使用 *Relayer* 通过 [Safe 钱包](https://safe.global/)（多签名）部署名为 Box 的合约，并使用 UUPS 代理模式对其进行升级。
+Defender 2.0 允许你在保持最佳安全实践的同时，轻松地跨链部署和升级智能合约。本教程将展示如何使用 [Relayer](../../Manage/Relayers/Relayers.md) 通过 [Safe 钱包](https://safe.global/)（多签名）部署名为 Box 的合约，并使用 UUPS 代理模式对其进行升级。
 
 ## Pre-requisites
 * OpenZeppelin Defender 2.0 账户。你可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 Defender 2.0 的早期访问权限。
@@ -11,6 +11,7 @@ Defender 2.0 允许你在保持最佳安全实践的同时，轻松地跨链部�
 * 安装了 Metamask（或任何其他兼容钱包）的网络浏览器，并在 Goerli 测试网上充值了 ETH。
 
 ## 1. Configure
+
 ### Safe wallet
 首先，你需要创建 Safe 钱包来管理升级过程。为此，请按照以下步骤操作：
 
@@ -37,7 +38,7 @@ Defender 2.0 允许你在保持最佳安全实践的同时，轻松地跨链部�
 4. 选择与你已资金注入的中继器相关联的审批流程，该中继器将执行测试环境的部署。如果你还没有审批流程，Defender 2.0将允许你在向导流程中创建一个。中继器自动支付燃气费，并负责私钥的安全存储、交易签名、nonce管理、燃气价格估算和重新提交。不过，你也可以选择使用EOA（“外部拥有的账户”）或Safe钱包进行部署。
 
 > NOTE
-在*这里*阅读更多关于中继器以及如何管理它们的信息。
+在[这里](../../Manage/Relayers/Relayers.md#relayers)阅读更多关于中继器以及如何管理它们的信息。
 
 ![tutorial-deploy-step2-wizard](img/tutorial-deploy-step2-wizard.png)
 
@@ -61,7 +62,7 @@ mkdir deploy-tutorial && cd deploy-tutorial && npx hardhat init
 
 2. Hardhat 会询问一些问题来设置配置，因此请按照以下回答：
 
-* 你想做什么：创建一个 Typescript 项目
+* 你想做什么：创建一个 **Typescript** 项目
 
 * Hardhat 项目根目录：保持原样
 
@@ -119,37 +120,37 @@ import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/U
 import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 
 /// @title Box
-/// @notice A box with objects inside.
+/// @一个装有物体的盒子。
 contract Box is Initializable, UUPSUpgradeable, OwnableUpgradeable {
     /*//////////////////////////////////////////////////////////////
                                 VARIABLES
     //////////////////////////////////////////////////////////////*/
 
-    /// @notice Number of objects inside the box.
+    /// @盒子内物体的数量。
     uint256 public numberOfObjects;
 
     /*//////////////////////////////////////////////////////////////
                                 FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
-    /// @notice No constructor in upgradable contracts, so initialized with this function.
+    /// @notice 可升级合约中没有构造函数，因此使用此函数进行初始化。
     function initialize(uint256 objects, address multisig) public initializer {
         __UUPSUpgradeable_init();
         __Ownable_init();
 
         numberOfObjects = objects;
 
-        // Initialize OwnableUpgradeable explicitly with given multisig address.
+        // 显式地使用给定的多签地址初始化 OwnableUpgradeable。
         transferOwnership(multisig);
     }
 
-    /// @notice Remove an object from the box.
+    /// @从盒子中移除一个物体。
     function removeObject() external {
         require(numberOfObjects > 1, "Nothing inside");
         numberOfObjects -= 1;
     }
 
-    /// @dev Upgrades the implementation of the proxy to new address.
+    /// @开发者注释：将代理的实现升级到新地址。
     function _authorizeUpgrade(address) internal override onlyOwner {}
 }
 ```
@@ -182,8 +183,7 @@ async function main() {
   console.log(`Contract deployed to ${await deployment.getAddress()}`);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+// 我们推荐这种模式，以便能够在任何地方使用 async/await 并且正确处理错误。
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
@@ -219,18 +219,18 @@ pragma solidity ^0.8.18;
 import {Box} from "./Box.sol";
 
 /// @title BoxV2
-/// @notice An improved box with objects inside.
+/// @notice 一个改进的盒子里面有物品。
 contract BoxV2 is Box {
     /*//////////////////////////////////////////////////////////////
                                 FUNCTIONS
     //////////////////////////////////////////////////////////////*/
 
-    /// @notice Add an object to the box.
+    /// @notice 向盒子中添加一个物品。
     function addObject() external {
         numberOfObjects += 1;
     }
 
-    /// @notice Returns the box version.
+    /// @notice 返回盒子的版本。
     function boxVersion() external pure returns (uint256) {
         return 2;
     }
@@ -256,8 +256,7 @@ async function main() {
   console.log(`Upgrade proposed with URL: ${proposal.url}`);
 }
 
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
+// 我们推荐这种模式，以便能够在任何地方使用 async/await 并且正确处理错误。
 main().catch((error) => {
   console.error(error);
   process.exitCode = 1;
@@ -284,7 +283,7 @@ npx hardhat run --network goerli scripts/upgrade.ts
 部署合约后，我们推荐使用Defender 2.0来监控其状态和交易。在*这里*学习如何使用Monitor的教程。
 
 ## Reference
-[部署文档](https://docs.openzeppelin.com/defender/v2/module/deploy)
+[部署文档](../../Modules/Deploy.md)
 
 [Hardhat Upgrades包](https://www.npmjs.com/package/@openzeppelin/hardhat-upgrades)
 
