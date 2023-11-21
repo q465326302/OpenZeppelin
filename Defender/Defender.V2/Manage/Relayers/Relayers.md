@@ -14,15 +14,17 @@
 
 * 构建具有完整自定义逻辑和灵活性的机器人。
 
-* What’s a Relayer?
+## What’s a Relayer?
 中继器是一个专门分配给你团队的基于以太坊的外部拥有账户（EOA）。每次你创建一个新的中继器时，Defender 2.0都会在一个安全的保险库中创建一个新的私钥。每当你请求Defender 2.0通过该中继器发送交易时，都会使用相应的私钥进行签名。
 
 你可以将每个中继器视为发送交易的队列，通过同一个中继器发送的所有交易都将按顺序发送，并且由你的团队专有控制。在这里了解更多技术实现。
 
 ![manage-relayers](img/manage-relayers.png)
+
 要创建中继器，只需点击页面右上部分的**Create Relayer**按钮，指定一个名称并选择网络。
 
 ![manage-relayers-detail](img/manage-relayers-detail.png)
+
 > IMPORTANT
 请记住，你需要为每个中继器单独注资ETH（或原生链代币），以确保它们有足够的资金支付你发送的交易的gas。如果中继器的资金降至0.1 ETH以下，Defender 2.0将向你发送电子邮件通知。
 
@@ -35,12 +37,13 @@
 要为中继器创建API密钥，请点击中继器，然后点击**More**按钮以展开下拉菜单并选择**Create API Key**。
 
 ![manage-relayers-create-api-key](img/manage-relayers-create-api-key.png)
+
 创建API密钥后，请务必记下密钥。API密钥在创建时只显示一次——如果你没有记下来，它将永远丢失。
 
 ![manage-relayer-api-key](img/manage-relayers-create-api-key.png)
 
 > IMPORTANT
-中继器的API密钥与其私钥无关。私钥始终保存在安全的密钥库中，且从不暴露（有关更多信息，请参阅*安全考虑部分*）。这种解耦允许你自由地轮换API密钥，同时保持中继器的同一地址。
+中继器的API密钥与其私钥无关。私钥始终保存在安全的密钥库中，且从不暴露（有关更多信息，请参阅[安全考虑部分](#security-considerations)）。这种解耦允许你自由地轮换API密钥，同时保持中继器的同一地址。
 
 ### Addresses
 每当你创建一个中继器时，都会创建一个新的EOA来支持它。出于安全原因，不可能将现有的私钥导入到中继器中，也不可能导出Defender 2.0创建的中继器的私钥。如果你在系统中授予中继器地址一个特权角色以避免锁定，请考虑拥有一个行政方法，以便在需要时将其切换到不同的地址。
@@ -144,11 +147,11 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 中继者可以通过以下方式发送EIP1559交易：
 
-* 通过用户界面发送交易，并启用*EIP1559定价*策略（EIP1559Pricing policy）
+* 通过用户界面发送交易，并启用[EIP1559定价](#eip1559-pricing)策略（EIP1559Pricing policy）
 
 * 通过API发送交易，并指定maxFeePerGas和maxPriorityFeePerGas
 
-* 通过API发送交易，并指定速度以及启用*EIP1559定价*策略
+* 通过API发送交易，并指定速度以及启用[EIP1559定价](#eip1559-pricing)策略
 
 一旦发送任何交易，它在其生命周期的每个阶段（如替换和重新定价）都将**保持相同的类型**，因此如果交易已经提交，目前无法更改其类型。
 
@@ -165,13 +168,14 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 
 中继者可以通过以下任何方式发送私有交易：
 
-* 通过API发送交易，并启用*privateTransactions*策略
+* 通过API发送交易，并启用[privateTransactions](#private-transactions)策略
 
 * 通过API发送交易，并将isPrivate参数设置为true
 
 * 通过用户界面发送交易，并勾选Mempool Visibility复选框
 
 ![relayer-mempool-visibility-check](img/relayer-mempool-visibility-check.png)
+
 > NOTE
 向不支持私有交易的网络发送带有isPrivate标志设置为true的交易将被中继者拒绝并丢弃。
 目前，只有以下网络得到支持
@@ -189,7 +193,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 主网的燃料价格和优先费用是基于[EthGasStation](https://ethgasstation.info/)、[EtherChain](https://etherchain.org/tools/gasPriceOracle)、[GasNow](https://www.gasnow.org/)、[Blockative](https://docs.blocknative.com/gas-platform)和[Etherscan](https://etherscan.io/gastracker)报告的值计算的。在Polygon及其测试网中，使用的是[gas station](https://gasstation-mainnet.matic.network/v2)。在其他网络中，燃料价格是通过对网络的eth_gasPrice或eth_feeHistory调用获得的。
 
 ### Fixed Gas Pricing
-或者，你可以为交易指定*一个固定的gasPrice*或**一个固定的maxFeePerGas和maxPriorityFeePerGas**组合，通过设置gasPrice参数或maxFeePerGas和maxPriorityFeePerGas参数。具有固定定价的交易要么以指定的定价被挖掘，要么如果在*validUntil*时间之前不能被挖掘，就会被替换为NOOP交易。
+或者，你可以为交易指定*一个固定的gasPrice*或**一个固定的maxFeePerGas和maxPriorityFeePerGas**组合，通过设置gasPrice参数或maxFeePerGas和maxPriorityFeePerGas参数。具有固定定价的交易要么以指定的定价被挖掘，要么如果在[validUntil](#valid-until)时间之前不能被挖掘，就会被替换为NOOP交易。
 
 请记住，你必须提供速度、gasPrice、maxFeePerGas/maxPriorityFeePerGas中的一个，或者不提供，但不能在发送交易请求时混合使用它们。
 
@@ -202,7 +206,7 @@ const tx = await erc20.methods.transfer(beneficiary, (1e18).toString()).send();
 ### Valid Until
 通过中继者的每笔交易都有效，直到有效期至（validUntil）时间。在有效期至时间之后，交易将被替换为NOOP交易，以防止中继者在交易的nonce上卡住。NOOP交易除了推进中继者的nonce之外，不做任何事情。
 
-validUntil默认为交易创建后的8小时。请注意，你可以将validUntil与*固定定价*结合使用，以实现极快的挖掘时间，并在gasPrice或maxFeePerGas上超过其他交易。
+validUntil默认为交易创建后的8小时。请注意，你可以将validUntil与[固定定价](#fixed-gas-pricing)结合使用，以实现极快的挖掘时间，并在gasPrice或maxFeePerGas上超过其他交易。
 
 如果你使用的是ethers.js，你可以设置一个validForSeconds选项，而不是validUntil。在下面的例子中，我们配置了一个DefenderRelaySigner来发出一个交易，该交易在创建后的120秒内有效。
 ```
@@ -226,7 +230,7 @@ const tx = await relayer.query(tx.transactionId);
 
 为此，请使用@openzeppelin/defender-sdk-relay-client的replaceByNonce或replaceById功能。
 ```
-// Cancel tx payload (tx to a random address with zero value and data)
+// 取消交易负载（向一个随机地址发送零值和数据的交易）
 replacement = {
   to: '0x6b175474e89094c44da98b954eedeac495271d0f',
   value: '0x00',
@@ -235,10 +239,10 @@ replacement = {
   gasLimit: 21000
 };
 
-// Replace a tx by nonce
+// 通过nonce替换交易
 tx = await relayer.replaceTransactionByNonce(42, replacement);
 
-// Or by transactionId
+// 或者通过transactionId替换
 tx = await relayer.replaceTransactionById('5fcb8a6d-8d3e-403a-b33d-ade27ce0f85a', replacement);
 ```
 
@@ -265,8 +269,8 @@ replaced = await erc20.methods.transfer(beneficiary, (1e18).toString()).send({
 ```
 const txs = await relayer.list({
   since: new Date(Date.now() - 60 * 1000),
-  status: 'pending', // can be 'pending', 'mined', or 'failed'
-  limit: 5, // newest txs will be returned first
+  status: 'pending', // 可以是'待处理'、'已挖矿'或'失败'
+  limit: 5, // 最新的交易将首先返回
 })
 ```
 
@@ -326,6 +330,7 @@ const balance = await provider.getBalance('0x6b175474e89094c44da98b954eedeac4952
 你可以在[Relayers管理页面](https://defender.openzeppelin.com/v2/#/manage/relayers)上提取资金，选择一个Relayer，然后点击提取（**Withdraw**）。
 
 ![relayer-withdraw](img/relayer-withdraw.png)
+
 在提取屏幕上，你可以选择以ETH发送资金，或者从内置的ERC20代币列表中选择。
 
 ![relayer-withdraw-screen](img/relayer-withdraw-screen.png)
@@ -333,7 +338,7 @@ const balance = await provider.getBalance('0x6b175474e89094c44da98b954eedeac4952
 ## Under the hood
 每个Relayer都关联着一个私钥。当收到发送交易的请求时，Relayer会验证请求，原子性地分配一个nonce，为支付其gas用预留余额，根据其EIP1559定价政策解析其速度为gasPrice或maxFeePerGas/maxPriorityFeePerGas，用其私钥签名，并将其排队等待提交到区块链。只有在这个过程完成后，才会将响应发送回客户端。然后，交易通过多个节点提供商广播以实现冗余，并在API出现故障的情况下尝试重试最多三次。
 
-系统每分钟都会检查所有正在进行的交易。如果它们还没有被挖出，并且已经过去了一定的时间（这取决于交易的速度），它们会以其各自交易类型定价的10%重新提交（或者如果更高的话，以其速度的最新定价），这可能高达其速度所报告的燃气定价的150%。这个过程会导致交易哈希改变，但它们的ID被保留。另一方面，如果交易已经被挖出，系统仍然会监控它几个区块，直到我们认为它被确认。
+系统每分钟都会检查所有正在进行的交易。如果它们还没有被挖出，并且已经过去了一定的时间（这取决于交易的速度），它们会以其各自交易类型定价的10%重新提交（或者如果更高的话，以其速度的最新定价），**这可能高达其速度所报告的燃气定价的150%**。这个过程会导致交易哈希改变，但它们的ID被保留。另一方面，如果交易已经被挖出，系统仍然会监控它几个区块，直到我们认为它被确认。
 
 ## Concurrency and Rate Limiting
 Relayers原子性地分配nonces，这使它们能够处理许多并发交易。然而，确实存在限制以优化基础设施（下面所有数字是所有Relayer账户的累计）：
