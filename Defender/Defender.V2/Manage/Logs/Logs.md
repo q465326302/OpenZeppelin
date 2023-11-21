@@ -58,7 +58,9 @@ Defender 2.0 生成系统中每个可能相关事件的日志记录。这包括�
 ### Splunk
 将日志转发到 Splunk 是通过使用 Splunk HEC（HTTP 事件收集器）完成的。设置 Splunk HEC 日志记录的文档可以在[这里](https://docs.splunk.com/Documentation/Splunk/latest/Data/UsetheHTTPEventCollector)找到。
 
+> NOTE
 日志转发不适用于 Splunk 试用账户，因为 Splunk 内部原因。
+
 示例：
 
 * **URL：**https://username.splunkcloud.com/services/collector/raw
