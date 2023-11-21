@@ -5,7 +5,7 @@ OpenZeppelin Defender 2.0 允许你跨链监控智能合约的交易和事件。
 * OpenZeppelin Defender 2.0 账户。你可以在[这里](https://www.openzeppelin.com/defender2-waitlist)注册 Defender 2.0 的早期访问权限。
 
 > NOTE
-学习如何使用 Defender 2.0 部署合约，请点击*这里*！
+学习如何使用 Defender 2.0 部署合约，请点击[这里](../Deploy/Deploy.md)！
 
 ## 1. Configure the monitor
 你将监控以太坊主网上的 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc 合约，这是 [Uniswap V2 的 USDC-ETH 池](https://etherscan.io/address/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc)。由于该合约活动频繁，因此非常适合观察监控器的响应速度。按照以下步骤配置监控器：
@@ -20,7 +20,7 @@ OpenZeppelin Defender 2.0 允许你跨链监控智能合约的交易和事件。
 
 4. 选择“金融风险”类别。
 
-5. 点击Contracts字段并选择添加一个新地址。
+5. 点击**Contracts**字段并选择添加一个新地址。
 
 6. 用以下参数填写表单，并选择它作为要监控的合约：
 
@@ -34,7 +34,7 @@ OpenZeppelin Defender 2.0 允许你跨链监控智能合约的交易和事件。
 
 ![tutorial-monitor-first](img/tutorial-monitor-first.png)
 
-8. 添加 status == "success" 参数到交易属性中，以便按交易级数据过滤，并确认交易已成功确认且未被回滚。
+8. 添加 status == "success" 参数到**交易属性**中，以便按交易级数据过滤，并确认交易已成功确认且未被回滚。
 
 ![tutorial-monitor-transaction-filters](img/tutorial-monitor-transaction-filters.png)
 
@@ -46,7 +46,7 @@ OpenZeppelin Defender 2.0 允许你跨链监控智能合约的交易和事件。
 
 11. 选择与你选择的频道（如电子邮件）绑定的“高严重性”通知类别。
 
-12. 点击*Save Monitor*。
+12. 点击**Save Monitor**。
 
 ![tutorial-monitor-alerts](img/tutorial-monitor-alerts.png)
 
@@ -67,11 +67,11 @@ OpenZeppelin Defender 2.0 允许你跨链监控智能合约的交易和事件。
 恭喜！你可以修改监视器以过滤特定的Swap数据或针对另一个池。如果你对高级用例感兴趣，我们正在编写与监视器相关的指南。
 
 > NOTE
-设置监视器后，我们建议在Defender 2.0上创建动作。在*这里*学习如何使用动作及其教程。
+设置监视器后，我们建议在Defender 2.0上创建动作。在[这里](../Actions/Actions.md)学习如何使用动作及其教程。
 
 ## Reference
-* [Actions Documentation](https://docs.openzeppelin.com/defender/v2/module/actions)
+* [Actions Documentation](../../Modules/Actions/Actions.md)
 
-* [Manage Notificacion Channels Documentation](https://docs.openzeppelin.com/defender/v2/manage#notifications)
+* [Manage Notificacion Channels Documentation](../../Manage/Manage.md#notification-channels)
 
 * [Uniswap V2 USDC-ETH Pool](https://etherscan.io/address/0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc)
