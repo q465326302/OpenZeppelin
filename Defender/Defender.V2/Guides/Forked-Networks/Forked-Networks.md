@@ -93,7 +93,7 @@ const deploymentStatus = await client.deploy.getDeployedContract(deployment.depl
 console.log(deploymentStatus);
 ```
 
-3. 运行脚本以部署合约。**请注意，**提供盐将使用 CREATE2 部署合约。否则，合约将使用 CREATE 操作码部署。有关部署的注意事项，请*访问文档*。
+1. 运行脚本以部署合约。**请注意，**提供盐将使用 CREATE2 部署合约。否则，合约将使用 CREATE 操作码部署。有关[部署的注意事项](../../Tutorials/Deploy/Deploy.md#caveats)，请访问文档。
 
 部署完成后，你可以在 [Defender 2.0 部署仪表板](https://defender.openzeppelin.com/v2/#/deploy/environment/production)上跟踪部署状态。
 
@@ -101,14 +101,14 @@ console.log(deploymentStatus);
 恭喜！你已经成功在分叉网络上部署了智能合约。如果你提供了 blockExplorerUrl，你可以在分叉网络的区块浏览器上验证交易。
 
 > NOTE
-部署合约后，我们建议在 Defender 2.0 上创建监控器并设置操作。了解如何设置监控器，请点击*这里*，使用操作的教程，请点击*这里*。
+部署合约后，我们建议在 Defender 2.0 上创建监控器并设置操作。了解如何设置监控器，请点击[这里](../../Tutorials/Monitor/Monitor.md)，使用操作的教程，请点击[这里](../../Tutorials/Actions/Actions.md)。
 
 ## Reference
-* *Deploy Documentation*
+* [Deploy Documentation](../../Modules/Deploy.md)
 
-* *Actions Documentation*
+* [Actions Documentation](../../Modules/Actions/Actions.md)
 
-* *Monitor Documentation*
+* [Monitor Documentation](../../Modules/Monitor/Monitor.md)
 
 * [Phalcon](https://phalcon.xyz/)
 

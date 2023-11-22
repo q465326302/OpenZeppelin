@@ -27,7 +27,7 @@ OpenZeppelin Defender 2.0账户。你可以在[此处](https://www.openzeppelin.
 
 * **地址：**0x7A99C479775C945C2Ea4CF6986425de1d816DaE4
 
-6. 导航至Defender 2.0事件响应交易模板创建页面。
+6. 导航至[Defender 2.0事件响应交易模板创建页面](https://defender.openzeppelin.com/v2/#/incident-response/actions/executable/new?)。
 
 7. 在**通用信息部分**填写以下参数：
 
@@ -92,7 +92,7 @@ OpenZeppelin Defender 2.0账户。你可以在[此处](https://www.openzeppelin.
 ## 4. Seeing it in action
 当监控器运行时，它将检测任何与addObject()函数匹配的交易以触发事件响应场景。要手动执行这样的交易，请按照以下步骤操作：
 
-1. 打开Defender 2.0交易提案创建页面。
+1. 打开[Defender 2.0交易提案创建页面](https://defender.openzeppelin.com/v2/#/actions/executable/new?)。
 
 2. 填写以下参数：
 
@@ -104,7 +104,7 @@ OpenZeppelin Defender 2.0账户。你可以在[此处](https://www.openzeppelin.
 
 * **审批流程：**BoxV2 IR发送者
 
-3. 点击提交交易提案。
+3. 点击**Submit Transaction Proposal**。
 
 ![tutorial-ir-proposal-action](img/tutorial-ir-first-action.png)
 
@@ -127,6 +127,6 @@ OpenZeppelin Defender 2.0账户。你可以在[此处](https://www.openzeppelin.
 恭喜！你现在有了一个完整的事件响应场景，它将运行并检查每个确认的区块。场景可以通过并行动作进行扩展，以实现更多技术组合。如果你对高级用例感兴趣，我们正在编写与事件响应相关的指南。
 
 ## Reference
-* [Incident Response Documentation](https://docs.openzeppelin.com/defender/v2/module/incident-response)
+* [Incident Response Documentation](../../Modules/Incident-Response/Incident-Response.md)
 
 * [BoxV2](https://goerli.etherscan.io/address/0x7A99C479775C945C2Ea4CF6986425de1d816DaE4)

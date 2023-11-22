@@ -2,12 +2,13 @@
 Defender 2.0允许你自动化智能合约的运营任务，并且可以轻松集成到Defender 2.0的其他部分。本教程将展示如何构建一个动作，该动作每小时发送一次链上交易，向一个箱子中添加一个物体，并增加箱内物体的数量。
 
 ## Pre-requisites
-你可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 OpenZeppelin Defender 2.0 的早期访问权限。
+* 你可以在[此处](https://www.openzeppelin.com/defender2-waitlist)注册 OpenZeppelin Defender 2.0 的早期访问权限。
 
-学习如何通过 Defender 2.0 *部署*和*监控*合约！
+> NOTE
+学习如何通过 Defender 2.0 [部署](../Deploy/Deploy.md)和[监控](../Monitor/Monitor.md)合约！
 
 ## 1. Set up action
-你将配置一个操作，该操作每小时发送一次带有 addObject() 函数的交易到 Goerli 网络中的 0x7A99C479775C945C2Ea4CF6986425de1d816DaE4 合约，该合约是在*部署*教程中部署的 Box 合约的一个示例。要执行此操作，请按照以下步骤操作：
+你将配置一个操作，该操作每小时发送一次带有 addObject() 函数的交易到 Goerli 网络中的 0x7A99C479775C945C2Ea4CF6986425de1d816DaE4 合约，该合约是在[部署](../Deploy/Deploy.md)教程中部署的 Box 合约的一个示例。要执行此操作，请按照以下步骤操作：
 
 1. 在你的终端运行以下命令：
 
@@ -72,8 +73,8 @@ exports.handler = async function(credentials) {
 
 ## Reference
 
-* [Actions Documentation](https://docs.openzeppelin.com/defender/v2/module/actions)
+* [Actions Documentation](../../Modules/Actions/Actions.md)
 
-* [More information on Action’s Javascript code](https://docs.openzeppelin.com/defender/v2/module/actions#defining-code)
+* [More information on Action’s Javascript code](../../Modules/Actions/Actions.md#defining-code)
 
 * [Box Goerli contract](https://goerli.etherscan.io/address/0x7A99C479775C945C2Ea4CF6986425de1d816DaE4)

@@ -109,9 +109,9 @@ Defender 2.0 允许你无缝地监督和指挥合约权限，具有查看和控�
 恭喜你！你可以导入其他合约并修改它们的角色。
 
 > NOTE
-在配置访问控制后，我们建议设置事故响应场景。在此处了解如何使用事故响应的教程。
+在配置访问控制后，我们建议设置事故响应场景。在[此处](../Incident-Response/Incident-Response.md)了解如何使用事故响应的教程。
 
 ## Reference
-* [Access Control Documentation](https://docs.openzeppelin.com/defender/v2/module/access-control)
+* [Access Control Documentation](../../Modules/Access-Control/Access-Control.md)
 
 * [Access Control Contract](https://etherscan.io/address/0xbC760FAa5d2366B38C0EF7eC6814A61952504B72)
