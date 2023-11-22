@@ -2,7 +2,7 @@
 Defender as Code (DaC) 是一个用于自动化资源管理和代码配置的 Serverless Framework 插件。
 
 > WARNING
-该插件正在开发中，行为可能会发生变化。请小心使用。
+该插件正在开发中，可能会发生变化。请小心使用。
 
 ## Prerequisites
 Serverless Framework: https://www.serverless.com/framework/docs/getting-started/
@@ -144,7 +144,7 @@ monitors:
 从 serverless.yml 文件中删除的任何资源不会自动删除，以防止意外删除资源。要预期此行为，必须启用 SSOT 模式。
 
 ### Secrets (Actions)
-操作秘密可以全局定义，也可以按堆栈定义。在 global 下定义的秘密不受 stackName 更改的影响，并且在重新部署为新堆栈时会保留。在 stack 下定义的秘密将在重新部署为新 stackName 时被删除（条件是启用了 SSOT 模式）。要引用在 stack 下定义的秘密，请使用以下格式：<stackname>_<secretkey>，例如 mystack_test。
+操作秘密可以全局定义，也可以按堆栈定义。在 global 下定义的秘密不受 stackName 更改的影响，并且在重新部署为新堆栈时会保留。在 stack 下定义的秘密将在重新部署为新 stackName 时被删除（条件是启用了 [SSOT 模式](#ssot-mode)）。要引用在 stack 下定义的秘密，请使用以下格式：<stackname>_<secretkey>，例如 mystack_test。
 ```
 secrets:
   # optional - global secrets are not affected by stackName changes
@@ -215,7 +215,7 @@ notify-config:
 
 * API 密钥权限不足
 
-* serverless.yml 文件的验证错误（参见*类型和模式验证*）
+* serverless.yml 文件的验证错误（参见[类型和模式验证](#types-and-schema-validation)）
 
 通常，修复错误并重试部署应该足够，因为任何现有资源都将在部署的更新条款中。但是，如果不确定，你始终可以调用 sls remove 来删除整个堆栈，并重试。
 
